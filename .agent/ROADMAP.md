@@ -14,7 +14,7 @@ Goal: make repository-driven development reliable.
 
 - `TASK-001` — ACCEPTED — initialize repository and pnpm workspace
 - `TASK-002` — ACCEPTED — add deterministic project checks
-- `TASK-003` — create basic local development environment
+- `TASK-003` — ACCEPTED — create basic local development environment
 
 ## Epic 1 — Data Foundation
 
@@ -112,5 +112,6 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
+
 
 

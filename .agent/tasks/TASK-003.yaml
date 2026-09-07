@@ -1,7 +1,7 @@
 id: TASK-003
 title: Add local PostgreSQL development environment
 epic: Epic 0 — Agent Harness
-status: BUILDING
+status: ACCEPTED
 priority: P1
 
 objective: >
@@ -74,3 +74,6 @@ supervisor_refinement:
   - Ensure lifecycle tooling is included in strict typecheck and lint; cover meaningful error paths.
   - Prefer a small native lifecycle helper over implementing two untestable provisioning paths.
   - Supervisor will run the lifecycle independently before acceptance.
+
+accepted_commit: 2cbc81abd67a5b765faa81bc7b361fc392514fbb
+review_file: .agent/reviews/TASK-003-review-01.md
