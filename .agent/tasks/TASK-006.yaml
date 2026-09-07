@@ -1,0 +1,66 @@
+id: TASK-006
+title: Add 25 fixture questions and import command
+epic: Epic 1 — Data Foundation
+status: PLANNED
+priority: P1
+
+objective: >
+  Create a small, explicit development fixture dataset and a repeatable import path
+  so the question engine can be built without mixing product coding with large-scale
+  content acquisition.
+
+context:
+  - Fixtures are development/testing content, not a claim of an official complete DLT bank.
+
+acceptance:
+  - Exactly 25 development fixture questions exist.
+  - Fixture categories cover at least signs, traffic law, safe driving, vehicle maintenance and hazard perception.
+  - Both CAR and MOTORCYCLE are represented where appropriate.
+  - Fixture format is human-reviewable (JSON/YAML/TS data as refined by Supervisor).
+  - Import validates structure before writing.
+  - Re-running import is deterministic/idempotent or has explicitly documented reset behavior.
+  - Source metadata clearly marks fixture/development provenance.
+  - At least one question includes Thai, exam-style English, normalized English and Russian.
+  - Tests cover malformed fixture rejection and successful import.
+
+non_goals:
+  - Do not scrape external sites.
+  - Do not claim fixtures are official DLT questions.
+  - Do not add hundreds of questions yet.
+  - Do not add AI generation.
+
+files_allowed:
+  - content/**
+  - packages/database/**
+  - packages/shared/**
+  - tools/**
+  - package.json
+  - README.md
+  - tests/**
+
+files_forbidden:
+  - apps/web/**
+  - apps/bot/**
+
+required_tests:
+  - Valid fixture import succeeds.
+  - Malformed fixture fails validation.
+  - Repeated import behavior matches documented policy.
+
+required_checks:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test
+
+dependencies:
+  - TASK-005
+
+security_notes: []
+
+documentation:
+  - README.md
+  - content/README.md
+
+commit_hint: "feat(content): add development question fixtures"
+
+owner_decision_required: false

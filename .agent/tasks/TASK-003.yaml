@@ -1,0 +1,62 @@
+id: TASK-003
+title: Add local PostgreSQL development environment
+epic: Epic 0 — Agent Harness
+status: PLANNED
+priority: P1
+
+objective: >
+  Provide a reproducible local PostgreSQL development environment and environment
+  variable convention, without defining the application schema yet.
+
+context:
+  - PostgreSQL is accepted in ADR-002.
+  - Prisma schema belongs to the next data-foundation task.
+
+acceptance:
+  - A local PostgreSQL instance can be started using documented project commands.
+  - Docker Compose may be used for local development.
+  - `.env.example` documents required database variables with non-secret examples.
+  - Real `.env` files are gitignored.
+  - A health/readiness mechanism exists for local PostgreSQL.
+  - README documents start/stop/reset commands.
+  - No production credentials or production deployment configuration is introduced.
+
+non_goals:
+  - Do not define the final Prisma schema.
+  - Do not create production infrastructure.
+  - Do not add Redis.
+
+files_allowed:
+  - compose*.yml
+  - docker-compose*.yml
+  - .env.example
+  - .gitignore
+  - package.json
+  - README.md
+  - tools/**
+
+files_forbidden:
+  - apps/web/**
+  - apps/bot/**
+  - content/**
+
+required_tests:
+  - Local database start command can be invoked successfully in an environment with Docker.
+  - Configuration syntax is valid.
+
+required_checks:
+  - pnpm check
+
+dependencies:
+  - TASK-002
+
+security_notes:
+  - Example credentials must be local-development-only.
+  - Real secrets must remain ignored.
+
+documentation:
+  - README.md
+
+commit_hint: "chore(db): add local PostgreSQL environment"
+
+owner_decision_required: false

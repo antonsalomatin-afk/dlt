@@ -1,0 +1,68 @@
+id: TASK-004
+title: Create Prisma database package and initial user model
+epic: Epic 1 — Data Foundation
+status: PLANNED
+priority: P1
+
+objective: >
+  Introduce Prisma in the shared database package and define the initial User model
+  needed for Telegram authentication.
+
+context:
+  - PostgreSQL local environment exists.
+  - Keep the first schema intentionally small.
+
+acceptance:
+  - `packages/database` exists as a workspace package.
+  - Prisma is configured for PostgreSQL.
+  - User has an internal primary key.
+  - Telegram user id is stored and uniquely constrained.
+  - Optional username and first name are supported.
+  - createdAt and updatedAt are stored.
+  - lastSeenAt can be stored.
+  - selected vehicle type may be nullable until onboarding.
+  - A migration is generated and applies cleanly.
+  - Prisma client is generated through documented commands.
+  - Basic integration test verifies user persistence and Telegram id uniqueness.
+
+non_goals:
+  - Do not add questions yet.
+  - Do not add sessions/auth tokens yet.
+  - Do not add payments or referrals.
+
+files_allowed:
+  - packages/database/**
+  - package.json
+  - pnpm-workspace.yaml
+  - .env.example
+  - README.md
+  - tests/**
+
+files_forbidden:
+  - apps/web/**
+  - apps/bot/**
+  - content/**
+
+required_tests:
+  - Can create a User.
+  - Duplicate Telegram user id is rejected or handled according to unique constraint.
+
+required_checks:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test
+  - pnpm prisma validate
+
+dependencies:
+  - TASK-003
+
+security_notes:
+  - Do not store Telegram auth payloads unnecessarily.
+
+documentation:
+  - README.md
+  - .agent/ARCHITECTURE.md only if implementation materially diverges
+
+commit_hint: "feat(db): add Prisma user model"
+
+owner_decision_required: false

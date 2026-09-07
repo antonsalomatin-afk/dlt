@@ -1,0 +1,14 @@
+{
+  "project": "ThaiDLT",
+  "workflowVersion": 1,
+  "currentEpic": "Epic 0 \u2014 Agent Harness",
+  "currentTask": "TASK-001",
+  "lastAcceptedTask": null,
+  "lastAcceptedCommit": null,
+  "status": "READY",
+  "reviewAttempt": 0,
+  "maxReviewAttempts": 3,
+  "blockedReason": null,
+  "updatedBy": "starter-pack",
+  "notes": "Begin with TASK-001. Supervisor owns all future state transitions."
+}

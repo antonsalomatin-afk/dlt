@@ -1,0 +1,67 @@
+id: TASK-005
+title: Create question domain schema
+epic: Epic 1 — Data Foundation
+status: PLANNED
+priority: P1
+
+objective: >
+  Model categories, concepts, questions, localized text, choices and source/review
+  metadata without yet implementing question delivery endpoints.
+
+context:
+  - The model must support Thai, exam-style English, normalized English and Russian.
+  - The API must later be able to hide correctness before submission.
+
+acceptance:
+  - Vehicle type supports CAR and MOTORCYCLE.
+  - Category can be assigned to questions.
+  - Concept/variant grouping is representable.
+  - Question stores the required language fields or a normalized localization structure.
+  - Four-choice questions are representable.
+  - Correct answer is stored server-side.
+  - Source/review metadata is representable.
+  - Question verification status is representable.
+  - An image reference is optional.
+  - Schema supports querying active verified questions by vehicle type/category.
+  - Migration applies cleanly.
+  - Tests verify key constraints.
+
+non_goals:
+  - Do not implement the API.
+  - Do not build admin UI.
+  - Do not implement spaced repetition.
+
+files_allowed:
+  - packages/database/**
+  - packages/shared/**
+  - tests/**
+  - README.md
+  - .agent/ARCHITECTURE.md if needed
+
+files_forbidden:
+  - apps/web/**
+  - apps/bot/**
+
+required_tests:
+  - Question can be created with four choices.
+  - Invalid/duplicate structural conditions are rejected where enforced.
+  - Query can select verified questions for a vehicle type.
+
+required_checks:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test
+  - pnpm prisma validate
+
+dependencies:
+  - TASK-004
+
+security_notes:
+  - Model correctness metadata so it can remain server-only in delivery DTOs.
+
+documentation:
+  - README.md if developer commands change
+
+commit_hint: "feat(db): model driving theory questions"
+
+owner_decision_required: false

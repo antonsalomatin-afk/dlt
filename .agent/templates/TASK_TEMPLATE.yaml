@@ -1,0 +1,49 @@
+id: TASK-XXX
+title: Short task title
+epic: Epic X
+status: PLANNED
+priority: P1
+
+objective: >
+  Describe exactly one user-visible or engineering outcome.
+
+context:
+  - Why this task exists.
+  - Relevant architecture or predecessor task.
+
+acceptance:
+  - Criterion 1 is externally or programmatically verifiable.
+  - Criterion 2 is precise.
+  - Criterion 3 avoids implementation ambiguity.
+
+non_goals:
+  - Explicitly list tempting adjacent work that must not be done.
+
+files_allowed:
+  - path/**
+  - another/path/**
+
+files_forbidden:
+  - unrelated/path/**
+
+required_tests:
+  - Test behavior A.
+  - Test negative behavior B.
+
+required_checks:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test
+
+dependencies:
+  - TASK-YYY
+
+security_notes:
+  - Add security-specific requirements if relevant.
+
+documentation:
+  - List docs that must be updated.
+
+commit_hint: "feat(scope): short imperative summary"
+
+owner_decision_required: false

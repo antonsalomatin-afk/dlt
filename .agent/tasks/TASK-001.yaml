@@ -1,0 +1,68 @@
+id: TASK-001
+title: Initialize pnpm TypeScript monorepo
+epic: Epic 0 — Agent Harness
+status: READY
+priority: P0
+
+objective: >
+  Create the minimal executable repository foundation for ThaiDLT using pnpm
+  workspaces and strict TypeScript, without yet implementing product features.
+
+context:
+  - This is the first coding task.
+  - The repository already contains agent governance documents.
+
+acceptance:
+  - Root package.json exists and uses pnpm.
+  - pnpm-workspace.yaml exists.
+  - A shared strict TypeScript base configuration exists.
+  - Placeholder directories can be created only where needed for workspace validity.
+  - Root scripts exist for lint, typecheck and test, even if they initially delegate to workspace packages.
+  - The repository can install dependencies successfully.
+  - `pnpm typecheck` succeeds.
+  - `pnpm test` succeeds with at least one trivial repository-level sanity test or an explicitly configured zero-test-safe runner.
+  - README developer section explains the minimum local prerequisites.
+
+non_goals:
+  - Do not implement Telegram bot behavior.
+  - Do not implement Next.js UI.
+  - Do not implement Fastify API.
+  - Do not add Prisma/PostgreSQL yet.
+  - Do not add Redis, queues, deployment, payments or auth.
+
+files_allowed:
+  - package.json
+  - pnpm-workspace.yaml
+  - tsconfig*.json
+  - README.md
+  - apps/**
+  - packages/**
+  - tests/**
+  - tooling configuration files
+  - .gitignore
+  - .npmrc
+
+files_forbidden:
+  - .agent/decisions/**
+  - content/**
+
+required_tests:
+  - Repository typecheck is executable.
+  - Repository test command is executable and green.
+
+required_checks:
+  - pnpm install
+  - pnpm typecheck
+  - pnpm test
+
+dependencies: []
+
+security_notes:
+  - No secrets or real tokens.
+
+documentation:
+  - README.md
+
+commit_hint: "chore(repo): initialize pnpm TypeScript workspace"
+
+owner_decision_required: false

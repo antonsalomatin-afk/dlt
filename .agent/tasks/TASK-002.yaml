@@ -1,0 +1,64 @@
+id: TASK-002
+title: Add deterministic lint and test quality gates
+epic: Epic 0 — Agent Harness
+status: PLANNED
+priority: P0
+
+objective: >
+  Establish deterministic repository checks that every later Builder task can run
+  locally and CI can run unchanged.
+
+context:
+  - Depends on TASK-001.
+  - Quality gates must be simple and fast.
+
+acceptance:
+  - ESLint is configured for TypeScript.
+  - Formatting policy is documented or configured.
+  - `pnpm lint` is deterministic and green.
+  - `pnpm typecheck` is deterministic and green.
+  - `pnpm test` is deterministic and green.
+  - A single root command `pnpm check` runs the mandatory gates in a stable order.
+  - No check silently ignores failures.
+
+non_goals:
+  - Do not add GitHub Actions unless Supervisor explicitly refines this task to include it.
+  - Do not add product code.
+  - Do not add E2E browser tooling yet.
+
+files_allowed:
+  - package.json
+  - eslint.config.*
+  - prettier.config.*
+  - .prettierignore
+  - .eslintignore
+  - tsconfig*.json
+  - tests/**
+  - README.md
+  - packages/**
+  - apps/**
+  - tooling configuration files
+
+files_forbidden:
+  - content/**
+
+required_tests:
+  - A deliberately failing lint/type/test condition would produce a non-zero command status (verify safely without committing broken code).
+
+required_checks:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test
+  - pnpm check
+
+dependencies:
+  - TASK-001
+
+security_notes: []
+
+documentation:
+  - README.md
+
+commit_hint: "chore(quality): add deterministic repository checks"
+
+owner_decision_required: false
