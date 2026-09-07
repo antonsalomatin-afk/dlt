@@ -1,7 +1,7 @@
 id: TASK-002
 title: Add deterministic lint and test quality gates
 epic: Epic 0 — Agent Harness
-status: BUILDING
+status: ACCEPTED
 priority: P0
 
 objective: >
@@ -64,3 +64,6 @@ commit_hint: "chore(quality): add deterministic repository checks"
 
 owner_decision_required: false
 
+
+accepted_commit: 03812e5f142293ed64896c3e01a74c771874da93
+review_file: .agent/reviews/TASK-002-review-01.md
