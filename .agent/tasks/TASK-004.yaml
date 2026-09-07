@@ -1,7 +1,7 @@
 id: TASK-004
 title: Create Prisma database package and initial user model
 epic: Epic 1 — Data Foundation
-status: PLANNED
+status: BUILDING
 priority: P1
 
 objective: >
@@ -33,6 +33,11 @@ non_goals:
 files_allowed:
   - packages/database/**
   - package.json
+  - pnpm-lock.yaml
+  - tsconfig*.json
+  - eslint.config.*
+  - vitest.config.*
+  - .gitignore
   - pnpm-workspace.yaml
   - .env.example
   - README.md
@@ -52,6 +57,7 @@ required_checks:
   - pnpm typecheck
   - pnpm test
   - pnpm prisma validate
+  - pnpm test:integration
 
 dependencies:
   - TASK-003
@@ -66,3 +72,13 @@ documentation:
 commit_hint: "feat(db): add Prisma user model"
 
 owner_decision_required: false
+
+supervisor_refinement:
+  - Store Telegram ids as PostgreSQL bigint/Prisma BigInt to preserve identity beyond 32 bits.
+  - Include nullable CAR/MOTORCYCLE vehicle enum as already specified by architecture.
+  - Generated client output is ignored, not handwritten or committed; generation must be reproducible from a fresh checkout.
+  - Include new package source and tests in strict typecheck and lint; narrowly ignore only generated code.
+  - Integration command must run real PostgreSQL tests, fail if unavailable, and never silently skip.
+  - Integration tests must isolate their records/schema and clean up only test-owned data; no broad destructive reset of application tables.
+  - Demonstrate fresh migration apply and repeated deploy no-op using the local database. Do not add production deployment.
+  - Pin compatible Prisma CLI/client/adapter versions; use official documentation matching the selected release.

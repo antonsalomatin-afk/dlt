@@ -1,14 +1,14 @@
 {
   "project": "ThaiDLT",
   "workflowVersion": 1,
-  "currentEpic": "Epic 0 — Agent Harness",
-  "currentTask": "TASK-003",
+  "currentEpic": "Epic 1 — Data Foundation",
+  "currentTask": "TASK-004",
   "lastAcceptedTask": "TASK-003",
   "lastAcceptedCommit": "2cbc81abd67a5b765faa81bc7b361fc392514fbb",
-  "status": "ACCEPTED",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-003 accepted into main; local database stopped after verification."
+  "notes": "TASK-004 assigned: Prisma User model and real isolated PostgreSQL integration tests."
 }
