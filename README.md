@@ -19,7 +19,7 @@ pnpm check
 ```
 
 Use `pnpm install --frozen-lockfile` for reproducible installs in automated checks.
-No database, credentials, or external services are needed for this foundation.
+The default quality checks need no running database or external services.
 
 The root currently runs ESLint, a strict TypeScript check of the repository tests,
 and a Vitest sanity test. Workspace packages will live in `apps/*` and
@@ -53,3 +53,47 @@ Never commit the probes.
 
 Inspect `$LASTEXITCODE` in PowerShell or `$?` in a POSIX shell immediately after
 the command. The output should show that gates after the failure did not run.
+
+## Local PostgreSQL (Windows x64)
+
+The native development runner currently supports Windows x64 with Node 24.
+`pnpm install` supplies pinned PostgreSQL 18.4 binaries through
+`embedded-postgres`; its Windows binary package has a narrowly approved install
+script. Docker, administrator privileges, OS users and Windows services are
+not required. This is development tooling only.
+
+Copy `.env.example` to `.env` (PowerShell: `Copy-Item .env.example .env`), then:
+
+```sh
+pnpm db:start
+pnpm db:ready
+pnpm db:stop
+pnpm db:reset
+```
+
+Start initializes the cluster if necessary, starts a background server, creates
+the configured database if missing, and checks it with an authenticated query.
+Ready performs an authenticated `SELECT 1` with five-second connection/query
+timeouts. Stop uses PostgreSQL's graceful fast shutdown (disconnecting clients).
+Reset stops the cluster and **deletes all local development database data**;
+run start again to initialize an empty cluster. Repeated stop/reset are safe.
+Run lifecycle commands sequentially, never concurrently.
+
+`DATABASE_URL` is the sole required variable. Its host must be `127.0.0.1`, port
+must be 1024–65535 (default example: 55432), and user/database identifiers must
+start with a lowercase letter and contain only lowercase letters, digits or
+underscores (maximum 63 characters). Passwords must be nonempty and URL-encoded
+when needed; newline/NUL characters and URL query/fragment options are rejected.
+The server binds only to IPv4 loopback and uses SCRAM password authentication.
+Example credentials are public local-only examples. Never use production
+credentials. Node loads `.env`, with existing process environment taking precedence.
+Changing initialized cluster credentials requires a reset; changing the port
+requires stop then start. A stopped database makes ready return nonzero.
+
+Data stays under the fixed gitignored `.local-postgres/cluster` directory;
+server diagnostics are in `.local-postgres/server.log`. An ownership marker and
+directory link checks prevent reset from deleting unmanaged or redirected data.
+Initialization briefly writes the local password to a gitignored file and
+removes it in a finally block. Keep this workspace private to your OS account.
+The runner returns nonzero on configuration, process or connection failure and
+suppresses raw subprocess/database errors to avoid printing credentials.
