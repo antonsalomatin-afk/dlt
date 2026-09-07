@@ -5,10 +5,10 @@
   "currentTask": "TASK-002",
   "lastAcceptedTask": "TASK-001",
   "lastAcceptedCommit": "b6b33109e36149d23bf7956cf1611cac9103b913",
-  "status": "BUILDING",
-  "reviewAttempt": 0,
+  "status": "ACCEPTING",
+  "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-002 selected; establish combined gates and prove nonzero failures."
+  "notes": "TASK-002 independent PASS; Supervisor accepts 03812e5f142293ed64896c3e01a74c771874da93."
 }
