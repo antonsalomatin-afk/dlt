@@ -3,12 +3,12 @@
   "workflowVersion": 1,
   "currentEpic": "Epic 0 — Agent Harness",
   "currentTask": "TASK-001",
-  "lastAcceptedTask": null,
-  "lastAcceptedCommit": null,
-  "status": "ACCEPTING",
-  "reviewAttempt": 1,
+  "lastAcceptedTask": "TASK-001",
+  "lastAcceptedCommit": "b6b33109e36149d23bf7956cf1611cac9103b913",
+  "status": "ACCEPTED",
+  "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "Independent review 01 PASS; all authoritative checks green. Supervisor accepts b6b33109e36149d23bf7956cf1611cac9103b913."
+  "notes": "TASK-001 accepted into main after authoritative checks and independent PASS."
 }

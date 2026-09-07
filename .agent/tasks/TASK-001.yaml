@@ -1,7 +1,7 @@
 id: TASK-001
 title: Initialize pnpm TypeScript monorepo
 epic: Epic 0 — Agent Harness
-status: BUILDING
+status: ACCEPTED
 priority: P0
 
 objective: >
@@ -69,3 +69,6 @@ commit_hint: "chore(repo): initialize pnpm TypeScript workspace"
 
 owner_decision_required: false
 
+
+accepted_commit: b6b33109e36149d23bf7956cf1611cac9103b913
+review_file: .agent/reviews/TASK-001-review-01.md
