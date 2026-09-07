@@ -1,0 +1,58 @@
+Commit: 2cbc81abd67a5b765faa81bc7b361fc392514fbb
+
+COMMAND: pnpm install --frozen-lockfile
+Already up to date
+Done in 669ms using pnpm v11.19.0
+EXIT_CODE: 0; EXPECTED_FAILURE: False
+
+COMMAND: pnpm check
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ tsc --noEmit
+$ vitest run
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  3 passed (3)
+      Tests  17 passed (17)
+   Start at  10:52:23
+   Duration  1.85s (tests 72%, transform 18%, import 9%, worker 1%)
+
+EXIT_CODE: 0; EXPECTED_FAILURE: False
+
+COMMAND: pnpm db:start
+$ node --env-file=.env tools/database/local.ts start
+Local PostgreSQL start: OK
+EXIT_CODE: 0; EXPECTED_FAILURE: False
+
+COMMAND: pnpm db:ready
+$ node --env-file=.env tools/database/local.ts ready
+Local PostgreSQL ready: OK
+EXIT_CODE: 0; EXPECTED_FAILURE: False
+
+COMMAND: pnpm db:start
+$ node --env-file=.env tools/database/local.ts start
+Local PostgreSQL start: OK
+EXIT_CODE: 0; EXPECTED_FAILURE: False
+
+COMMAND: pnpm db:stop
+$ node --env-file=.env tools/database/local.ts stop
+Local PostgreSQL stop: OK
+EXIT_CODE: 0; EXPECTED_FAILURE: False
+
+COMMAND: pnpm db:ready
+$ node --env-file=.env tools/database/local.ts ready
+Local PostgreSQL connection or query failed; check configuration and readiness.
+[ELIFECYCLE] Command failed with exit code 1.
+EXIT_CODE: 1; EXPECTED_FAILURE: True
+
+COMMAND: pnpm db:reset
+$ node --env-file=.env tools/database/local.ts reset
+Local PostgreSQL reset: OK
+EXIT_CODE: 0; EXPECTED_FAILURE: False
+
+COMMAND: pnpm db:reset
+$ node --env-file=.env tools/database/local.ts reset
+Local PostgreSQL reset: OK
+EXIT_CODE: 0; EXPECTED_FAILURE: False
