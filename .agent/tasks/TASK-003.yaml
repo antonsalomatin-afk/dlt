@@ -1,7 +1,7 @@
 id: TASK-003
 title: Add local PostgreSQL development environment
 epic: Epic 0 — Agent Harness
-status: PLANNED
+status: BUILDING
 priority: P1
 
 objective: >
@@ -14,7 +14,7 @@ context:
 
 acceptance:
   - A local PostgreSQL instance can be started using documented project commands.
-  - Docker Compose may be used for local development.
+  - Use a project-local native PostgreSQL development runner because Docker is unavailable on this host; Docker Compose is optional.
   - `.env.example` documents required database variables with non-secret examples.
   - Real `.env` files are gitignored.
   - A health/readiness mechanism exists for local PostgreSQL.
@@ -32,6 +32,10 @@ files_allowed:
   - .env.example
   - .gitignore
   - package.json
+  - pnpm-lock.yaml
+  - pnpm-workspace.yaml
+  - tsconfig*.json
+  - tests/**
   - README.md
   - tools/**
 
@@ -41,8 +45,9 @@ files_forbidden:
   - content/**
 
 required_tests:
-  - Local database start command can be invoked successfully in an environment with Docker.
+  - Local database start, readiness, stop and reset commands execute successfully on this Windows host without Docker.
   - Configuration syntax is valid.
+  - Lifecycle commands reject invalid configuration and reset is confined to the documented project-local development data directory.
 
 required_checks:
   - pnpm check
@@ -60,3 +65,12 @@ documentation:
 commit_hint: "chore(db): add local PostgreSQL environment"
 
 owner_decision_required: false
+
+supervisor_refinement:
+  - embedded-postgres may supply real native PostgreSQL binaries as a devDependency; pin the version and narrowly permit required install scripts.
+  - Bind database to loopback only. Keep data in a gitignored fixed project-local directory.
+  - Never create OS users or services. Avoid dependence on admin privileges.
+  - Validate environment ports and config; never print credentials. Document local-only defaults in .env.example.
+  - Ensure lifecycle tooling is included in strict typecheck and lint; cover meaningful error paths.
+  - Prefer a small native lifecycle helper over implementing two untestable provisioning paths.
+  - Supervisor will run the lifecycle independently before acceptance.

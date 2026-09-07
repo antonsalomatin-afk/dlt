@@ -2,13 +2,13 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 0 — Agent Harness",
-  "currentTask": "TASK-002",
+  "currentTask": "TASK-003",
   "lastAcceptedTask": "TASK-002",
   "lastAcceptedCommit": "03812e5f142293ed64896c3e01a74c771874da93",
-  "status": "ACCEPTED",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-002 accepted into main."
+  "notes": "Native project-local PostgreSQL development tooling selected; Docker absent. Same accepted database technology, no production provisioning."
 }
