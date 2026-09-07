@@ -36,7 +36,7 @@ files_allowed:
   - pnpm-lock.yaml
   - tsconfig*.json
   - eslint.config.*
-  - vitest.config.*
+  - vitest*.config.*
   - .gitignore
   - pnpm-workspace.yaml
   - .env.example
@@ -82,3 +82,4 @@ supervisor_refinement:
   - Integration tests must isolate their records/schema and clean up only test-owned data; no broad destructive reset of application tables.
   - Demonstrate fresh migration apply and repeated deploy no-op using the local database. Do not add production deployment.
   - Pin compatible Prisma CLI/client/adapter versions; use official documentation matching the selected release.
+
