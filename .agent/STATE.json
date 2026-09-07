@@ -2,13 +2,13 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 0 — Agent Harness",
-  "currentTask": "TASK-001",
+  "currentTask": "TASK-002",
   "lastAcceptedTask": "TASK-001",
   "lastAcceptedCommit": "b6b33109e36149d23bf7956cf1611cac9103b913",
-  "status": "ACCEPTED",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-001 accepted into main after authoritative checks and independent PASS."
+  "notes": "TASK-002 selected; establish combined gates and prove nonzero failures."
 }

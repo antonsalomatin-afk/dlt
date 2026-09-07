@@ -1,7 +1,7 @@
 id: TASK-002
 title: Add deterministic lint and test quality gates
 epic: Epic 0 — Agent Harness
-status: PLANNED
+status: BUILDING
 priority: P0
 
 objective: >
@@ -28,6 +28,7 @@ non_goals:
 
 files_allowed:
   - package.json
+  - pnpm-lock.yaml
   - eslint.config.*
   - prettier.config.*
   - .prettierignore
@@ -62,3 +63,4 @@ documentation:
 commit_hint: "chore(quality): add deterministic repository checks"
 
 owner_decision_required: false
+
