@@ -5,10 +5,10 @@
   "currentTask": "TASK-001",
   "lastAcceptedTask": null,
   "lastAcceptedCommit": null,
-  "status": "BUILDING",
-  "reviewAttempt": 0,
+  "status": "ACCEPTING",
+  "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "Governance baseline fab1293; Builder assigned TASK-001 on codex/task-001. Lockfile explicitly permitted as package-manager configuration."
+  "notes": "Independent review 01 PASS; all authoritative checks green. Supervisor accepts b6b33109e36149d23bf7956cf1611cac9103b913."
 }
