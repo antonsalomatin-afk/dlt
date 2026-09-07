@@ -1,7 +1,7 @@
 id: TASK-001
 title: Initialize pnpm TypeScript monorepo
 epic: Epic 0 — Agent Harness
-status: READY
+status: BUILDING
 priority: P0
 
 objective: >
@@ -14,7 +14,8 @@ context:
 
 acceptance:
   - Root package.json exists and uses pnpm.
-  - pnpm-workspace.yaml exists.
+  - pnpm-workspace.yaml
+  - pnpm-lock.yaml exists.
   - A shared strict TypeScript base configuration exists.
   - Placeholder directories can be created only where needed for workspace validity.
   - Root scripts exist for lint, typecheck and test, even if they initially delegate to workspace packages.
@@ -33,6 +34,7 @@ non_goals:
 files_allowed:
   - package.json
   - pnpm-workspace.yaml
+  - pnpm-lock.yaml
   - tsconfig*.json
   - README.md
   - apps/**
@@ -66,3 +68,4 @@ documentation:
 commit_hint: "chore(repo): initialize pnpm TypeScript workspace"
 
 owner_decision_required: false
+

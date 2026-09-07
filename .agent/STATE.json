@@ -1,14 +1,14 @@
 {
   "project": "ThaiDLT",
   "workflowVersion": 1,
-  "currentEpic": "Epic 0 \u2014 Agent Harness",
+  "currentEpic": "Epic 0 — Agent Harness",
   "currentTask": "TASK-001",
   "lastAcceptedTask": null,
   "lastAcceptedCommit": null,
-  "status": "READY",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
-  "updatedBy": "starter-pack",
-  "notes": "Begin with TASK-001. Supervisor owns all future state transitions."
+  "updatedBy": "Supervisor",
+  "notes": "Governance baseline fab1293; Builder assigned TASK-001 on codex/task-001. Lockfile explicitly permitted as package-manager configuration."
 }
