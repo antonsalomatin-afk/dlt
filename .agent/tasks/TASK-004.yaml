@@ -1,7 +1,7 @@
 id: TASK-004
 title: Create Prisma database package and initial user model
 epic: Epic 1 — Data Foundation
-status: BUILDING
+status: ACCEPTED
 priority: P1
 
 objective: >
@@ -83,3 +83,6 @@ supervisor_refinement:
   - Demonstrate fresh migration apply and repeated deploy no-op using the local database. Do not add production deployment.
   - Pin compatible Prisma CLI/client/adapter versions; use official documentation matching the selected release.
 
+
+accepted_commit: 8de115fe6cbe0a9f8ff10e2f44d6176378dcf14e
+review_file: .agent/reviews/TASK-004-review-01.md
