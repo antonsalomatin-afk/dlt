@@ -1,7 +1,7 @@
 id: TASK-005
 title: Create question domain schema
 epic: Epic 1 — Data Foundation
-status: BUILDING
+status: ACCEPTED
 priority: P1
 
 objective: >
@@ -79,3 +79,6 @@ supervisor_refinement:
   - Keep correctness in database-only fields; no client DTO or delivery endpoint in this task.
   - Integration tests create their own records and clean only those records; cover duplicate choice key, invalid reference, active verified filtering and the four-choice multilingual case.
   - Apply the incremental migration and verify the full migration chain on an empty local verification database.
+
+accepted_commit: 8e82b8fe5ee1e9d6a5d263e7f17d829ba76f72ba
+review_file: .agent/reviews/TASK-005-review-01.md

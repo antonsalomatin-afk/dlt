@@ -20,7 +20,7 @@ Goal: make repository-driven development reliable.
 
 - `TASK-004` — ACCEPTED — Prisma/PostgreSQL foundation and initial user model
 - User persistence and Telegram id uniqueness verified
-- category/vehicle/question models
+- `TASK-005` — ACCEPTED — category/vehicle/question models
 - fixture import format
 - initial 25 fixture questions
 
@@ -112,6 +112,7 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
+
 
 
 
