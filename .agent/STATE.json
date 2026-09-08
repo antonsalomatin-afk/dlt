@@ -10,10 +10,10 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-005 assigned: question domain schema, constraints, source metadata and real integration coverage.",
+  "notes": "TASK-005 BUILDING. Usage52 percent; final candidate this session, reserve checks/review capacity before user cap80. Do not start TASK-006 without checking remaining budget.",
   "usagePolicy": {
     "maxSessionUsedPercent": 80,
-    "latestObservedUsedPercent": 21,
+    "latestObservedUsedPercent": 52,
     "windowMinutes": 300,
     "checkedAt": "2026-09-08",
     "instruction": "Stop at a clean handoff before 80 percent usage; do not redeem resets without explicit authorization."
