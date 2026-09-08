@@ -5,19 +5,19 @@
   "currentTask": "TASK-006",
   "lastAcceptedTask": "TASK-005",
   "lastAcceptedCommit": "8e82b8fe5ee1e9d6a5d263e7f17d829ba76f72ba",
-  "status": "BUILDING",
+  "status": "REVIEW",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-006 assigned:25 synthetic draft fixtures and atomic validated idempotent local import.",
+  "notes": "TASK-006 candidatef4109ae065bb1779be862f978c55c581dfcafe59 passed authoritative checks and repeat CLI import. Independent review not assigned; no acceptance or main merge. TASK-007 remains planned.",
   "usagePolicy": {
     "maxSessionUsedPercent": 80,
-    "latestObservedUsedPercent": 16,
+    "latestObservedUsedPercent": 67,
     "windowMinutes": 300,
     "checkedAt": "2026-09-08",
     "instruction": "Check five-hour account usage frequently; stop new Builder work by 55 percent and checkpoint by 70 percent to reserve margin below user ceiling80. Never redeem reset credits without authorization."
   },
-  "executionPaused": false,
-  "pauseReason": null
+  "executionPaused": true,
+  "pauseReason": "Budget reserve: paused at67 percent of five-hour window before independent review to stay below80."
 }
