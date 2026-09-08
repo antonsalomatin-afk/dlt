@@ -1,0 +1,37 @@
+id: TASK-009
+title: Add API authentication and user session
+status: PLANNED
+epic: Epic 2 — Telegram Entry and Authentication
+priority: P1
+objective: Establish the Fastify API authentication boundary and persist validated Telegram users.
+acceptance:
+  - An accepted session-strategy ADR exists before implementation.
+  - API accepts raw signed initData and delegates validation to packages/telegram.
+  - Invalid auth creates no user and returns a stable unauthorized response.
+  - Valid identity upserts the unique Telegram user and updates lastSeenAt.
+  - Server-issued authentication is bounded by the accepted session policy.
+  - API input and response boundaries are runtime-validated and never expose bot tokens.
+  - Real database integration tests cover user creation, repeated login and invalid login.
+non_goals:
+  - No question delivery, payments or production deployment.
+files_allowed:
+  - apps/api/**
+  - packages/database/**
+  - packages/shared/**
+  - package.json
+  - pnpm-lock.yaml
+  - pnpm-workspace.yaml
+  - tsconfig*.json
+  - .env.example
+  - README.md
+  - tests/**
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-008
+supervisor_refinement_required:
+  - Accept session ADR and specify API request/response contracts and tests before Builder assignment.
+owner_decision_required: false
+commit_hint: 'feat(api): authenticate Telegram users and issue sessions'

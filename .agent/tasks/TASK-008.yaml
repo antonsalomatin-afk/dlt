@@ -1,0 +1,35 @@
+id: TASK-008
+title: Validate signed Telegram Mini App initData
+status: PLANNED
+epic: Epic 2 — Telegram Entry and Authentication
+priority: P0
+objective: Add a server-only validation library for raw Telegram Mini App authentication data.
+acceptance:
+  - packages/telegram validates signatures using the current official Telegram Mini Apps protocol.
+  - Signature comparison is constant-time for correctly sized signatures.
+  - Required signed identity and auth_date fields are runtime-validated after signature verification.
+  - Missing or malformed hashes, duplicate fields, tampering and malformed user data are rejected.
+  - Configurable freshness and future-skew policy uses an injected clock and is documented before implementation.
+  - Only validated user identity is returned; raw secrets or authentication payloads are not logged.
+  - Package and tests participate in root quality gates.
+non_goals:
+  - No API session issuance, database writes or frontend use of initDataUnsafe.
+files_allowed:
+  - packages/telegram/**
+  - package.json
+  - pnpm-lock.yaml
+  - tsconfig*.json
+  - tests/**
+  - README.md
+required_tests:
+  - Valid signed vector plus tampered, stale, future, malformed and missing-field negative vectors.
+  - Unicode and URL encoding are covered against independent expected signatures.
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+dependencies:
+  - TASK-007
+supervisor_refinement_required:
+  - Verify official protocol and record exact freshness/future-skew policy before assigning Builder.
+owner_decision_required: false
+commit_hint: 'feat(auth): validate Telegram Mini App initData'

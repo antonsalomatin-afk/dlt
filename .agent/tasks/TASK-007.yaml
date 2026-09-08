@@ -1,0 +1,35 @@
+id: TASK-007
+title: Add Telegram bot entry point
+status: PLANNED
+epic: Epic 2 — Telegram Entry and Authentication
+priority: P1
+objective: Implement a grammY bot factory and local entry point for /start and the Mini App launch button.
+acceptance:
+  - apps/bot is a strict TypeScript workspace package using grammY.
+  - Server-only BOT_TOKEN and MINI_APP_URL configuration is runtime-validated without secret logging.
+  - Private-chat /start responds with a launch button using the configured HTTPS Mini App URL.
+  - Non-private contexts are handled without sending an unsupported web_app button.
+  - Bot construction is testable without polling or network calls; tests inject a mocked Telegram transport.
+  - Local start and graceful shutdown commands are documented; missing configuration exits nonzero.
+  - Root lint, typecheck and tests include bot source and tests.
+non_goals:
+  - No production deployment or real Telegram messages during automated checks.
+  - No auth, persistence, payments, notifications or UI in this task.
+files_allowed:
+  - apps/bot/**
+  - package.json
+  - pnpm-lock.yaml
+  - tsconfig*.json
+  - .env.example
+  - README.md
+  - tests/**
+required_tests:
+  - Private /start returns the intended button through mocked transport.
+  - Group context and invalid or missing configuration are covered.
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+dependencies:
+  - TASK-006
+owner_decision_required: false
+commit_hint: 'feat(bot): add Telegram Mini App entry point'
