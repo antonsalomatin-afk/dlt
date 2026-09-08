@@ -1,7 +1,7 @@
 id: TASK-005
 title: Create question domain schema
 epic: Epic 1 — Data Foundation
-status: PLANNED
+status: BUILDING
 priority: P1
 
 objective: >
@@ -34,6 +34,9 @@ non_goals:
 files_allowed:
   - packages/database/**
   - packages/shared/**
+  - package.json
+  - pnpm-lock.yaml
+  - tsconfig*.json
   - tests/**
   - README.md
   - .agent/ARCHITECTURE.md if needed
@@ -52,6 +55,7 @@ required_checks:
   - pnpm typecheck
   - pnpm test
   - pnpm prisma validate
+  - pnpm test:integration
 
 dependencies:
   - TASK-004
@@ -65,3 +69,13 @@ documentation:
 commit_hint: "feat(db): model driving theory questions"
 
 owner_decision_required: false
+
+supervisor_refinement:
+  - Use explicit typed language fields or validated localization; preserve Thai, exam English, normalized English and Russian distinctly.
+  - Stable choice keys and per-question uniqueness must be enforced in PostgreSQL; category and concept references must have foreign keys.
+  - Document which invariants are database-enforced and which require the next import boundary (such as exactly four choices if not database-enforced).
+  - Store source type/reference/date, legal citation, reviewer/review date and verification state without claiming external content is licensed or verified.
+  - Default new questions to inactive or unverified; verified active querying must exclude draft/inactive questions.
+  - Keep correctness in database-only fields; no client DTO or delivery endpoint in this task.
+  - Integration tests create their own records and clean only those records; cover duplicate choice key, invalid reference, active verified filtering and the four-choice multilingual case.
+  - Apply the incremental migration and verify the full migration chain on an empty local verification database.
