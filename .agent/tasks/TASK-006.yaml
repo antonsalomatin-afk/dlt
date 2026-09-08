@@ -1,7 +1,7 @@
 id: TASK-006
 title: Add 25 fixture questions and import command
 epic: Epic 1 — Data Foundation
-status: PLANNED
+status: BUILDING
 priority: P1
 
 objective: >
@@ -35,6 +35,8 @@ files_allowed:
   - packages/shared/**
   - tools/**
   - package.json
+  - pnpm-lock.yaml
+  - tsconfig*.json
   - README.md
   - tests/**
 
@@ -51,6 +53,7 @@ required_checks:
   - pnpm lint
   - pnpm typecheck
   - pnpm test
+  - pnpm test:integration
 
 dependencies:
   - TASK-005
@@ -64,3 +67,14 @@ documentation:
 commit_hint: "feat(content): add development question fixtures"
 
 owner_decision_required: false
+
+supervisor_refinement:
+  - Use human-reviewable JSON for exactly25 original synthetic development questions; do not scrape or claim official DLT wording/legal verification.
+  - Mark sourceType FIXTURE with explicit development provenance; import as inactive DRAFT without pretending AI/human legal review occurred.
+  - Validate the entire unknown input before any writes, including exactly25 questions, five required categories, both vehicles, unique stable IDs, nonempty required text, exactly A/B/C/D once each and exactly one correct choice.
+  - At least one question supplies all four wording fields and localized choices/explanations. Exam-English field must be labelled synthetic, not official.
+  - Use stable fixture IDs and namespace; repeated imports preserve IDs/counts and never overwrite nonfixture questions or delete unrelated records.
+  - Use a transaction for the whole import so conflicts/failures cannot leave partial data.
+  - Expose a documented local-only CLI command; validate destination as loopback using existing local database configuration convention.
+  - Integration tests run the real import, repeat it, prove malformed rejection/no partial writes and preservation of unrelated records; clean only test-owned data.
+  - No network content acquisition, runtime AI integration, production writes or activation of fixtures in this task.
