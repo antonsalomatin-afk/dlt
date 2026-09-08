@@ -10,14 +10,14 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-001 through TASK-004 accepted. TASK-005 implementation uncommitted on codex/task-005; Builder interrupted at usage85. Migration applied per Builder; mandatory gates in progress, no independent review or acceptance. Resume from HANDOFF.md; do not merge yet.",
+  "notes": "Resuming TASK-005 after five-hour window reset; finish existing Builder work, checks and independent review.",
   "usagePolicy": {
     "maxSessionUsedPercent": 80,
-    "latestObservedUsedPercent": 85,
+    "latestObservedUsedPercent": 0,
     "windowMinutes": 300,
     "checkedAt": "2026-09-08",
-    "instruction": "Stop at a clean handoff before 80 percent usage; do not redeem resets without explicit authorization."
+    "instruction": "Check five-hour account usage frequently; stop new Builder work by 55 percent and checkpoint by 70 percent to reserve margin below user ceiling80. Never redeem reset credits without authorization."
   },
-  "executionPaused": true,
-  "pauseReason": "User session budget: latest account-wide usage85 percent exceeds requested80. Stop and resume in a later session."
+  "executionPaused": false,
+  "pauseReason": null
 }
