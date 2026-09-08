@@ -1,0 +1,107 @@
+Commit: 8e82b8fe5ee1e9d6a5d263e7f17d829ba76f72ba
+
+COMMAND: pnpm check
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ pnpm db:generate && tsc --noEmit
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 105ms
+
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 99ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  4 passed (4)
+      Tests  21 passed (21)
+   Start at  11:58:49
+   Duration  1.93s (tests 54%, transform 20%, import 18%, worker 8%)
+
+EXIT_CODE: 0
+
+COMMAND: pnpm prisma validate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "validate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+The schema at packages\database\prisma\schema.prisma is valid 🚀
+EXIT_CODE: 0
+
+COMMAND: pnpm db:start
+$ node --env-file=.env tools/database/local.ts start
+Local PostgreSQL start: OK
+EXIT_CODE: 0
+
+COMMAND: pnpm db:migrate
+$ pnpm prisma migrate deploy
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "migrate" "deploy"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+Datasource "db": PostgreSQL database "thaidlt_verify_task005", schema "public" at "127.0.0.1:55432"
+
+2 migrations found in prisma/migrations
+
+Applying migration `20260907183951_initial_user`
+Applying migration `20260908055549_question_domain`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260907183951_initial_user/
+    └─ migration.sql
+  └─ 20260908055549_question_domain/
+    └─ migration.sql
+
+All migrations have been successfully applied.
+EXIT_CODE: 0
+
+COMMAND: pnpm db:migrate
+$ pnpm prisma migrate deploy
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "migrate" "deploy"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+Datasource "db": PostgreSQL database "thaidlt_verify_task005", schema "public" at "127.0.0.1:55432"
+
+2 migrations found in prisma/migrations
+
+
+No pending migrations to apply.
+EXIT_CODE: 0
+
+COMMAND: pnpm test:integration
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 237ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:38980) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  2 passed (2)
+      Tests  3 passed (3)
+   Start at  11:59:11
+   Duration  1.08s (tests 58%, import 27%, transform 15%, worker 1%)
+
+EXIT_CODE: 0
