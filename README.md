@@ -97,3 +97,39 @@ Initialization briefly writes the local password to a gitignored file and
 removes it in a finally block. Keep this workspace private to your OS account.
 The runner returns nonzero on configuration, process or connection failure and
 suppresses raw subprocess/database errors to avoid printing credentials.
+
+## Database package and migrations
+
+`packages/database` contains the PostgreSQL schema and generated Prisma client.
+Prisma CLI, client and PostgreSQL adapter use matching pinned version 7.10.0,
+following the [Prisma 7 driver adapter setup](https://www.prisma.io/docs/orm/v7/core-concepts/supported-databases/database-drivers).
+The package exports `createDatabaseClient(connectionString)`; callers must
+disconnect their client on shutdown. Telegram identities use PostgreSQL bigint
+and JavaScript `bigint`; convert them to strings when a future JSON API needs them.
+
+After installing dependencies and copying `.env.example` to `.env`:
+
+```sh
+pnpm db:generate
+pnpm prisma validate
+pnpm db:start
+pnpm db:migrate
+pnpm test:integration
+```
+
+Generation writes ignored code to `packages/database/generated/`. Typecheck,
+unit tests and integration tests regenerate it automatically, so a fresh
+checkout does not depend on committed generated code. Generation and unit
+checks need no running database. Prisma configuration lives in
+`packages/database/prisma.config.ts`; root commands load `.env` explicitly.
+
+`db:migrate` applies committed migrations; repeating it is a no-op when current.
+After an intentional local `db:reset`, run `db:start` and `db:migrate` again.
+To create a future migration during development, run
+`pnpm prisma migrate dev --name descriptive_name`, then review the generated SQL.
+These commands do not provision or deploy production infrastructure.
+
+Integration tests require the running, migrated PostgreSQL database and fail
+when it is unavailable. They use random test identities and delete only the
+specific row created by that run, preserving other application data. Unit tests
+remain separate under `pnpm test`; database changes require both commands.

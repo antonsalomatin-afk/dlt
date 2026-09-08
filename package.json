@@ -9,13 +9,17 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "typecheck": "pnpm db:generate && tsc --noEmit",
+    "test": "pnpm db:generate && vitest run",
     "check": "pnpm lint && pnpm typecheck && pnpm test",
     "db:start": "node --env-file=.env tools/database/local.ts start",
     "db:ready": "node --env-file=.env tools/database/local.ts ready",
     "db:stop": "node --env-file=.env tools/database/local.ts stop",
-    "db:reset": "node --env-file=.env tools/database/local.ts reset"
+    "db:reset": "node --env-file=.env tools/database/local.ts reset",
+    "prisma": "node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts",
+    "db:generate": "pnpm prisma generate",
+    "db:migrate": "pnpm prisma migrate deploy",
+    "test:integration": "pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -24,6 +28,7 @@
     "embedded-postgres": "18.4.0-beta.17",
     "eslint": "^10.10.0",
     "pg": "8.23.0",
+    "prisma": "7.10.0",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.69.0",
     "vitest": "^5.0.0"

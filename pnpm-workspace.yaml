@@ -3,4 +3,6 @@ packages:
   - 'packages/*'
 allowBuilds:
   '@embedded-postgres/windows-x64': true
+  '@prisma/engines': true
   esbuild: true
+  prisma: true
