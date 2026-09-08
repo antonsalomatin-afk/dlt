@@ -133,3 +133,26 @@ Integration tests require the running, migrated PostgreSQL database and fail
 when it is unavailable. They use random test identities and delete only the
 specific row created by that run, preserving other application data. Unit tests
 remain separate under `pnpm test`; database changes require both commands.
+
+### Question data invariants
+
+Categories and concepts have unique slugs and explicit Thai/English/Russian
+names. Questions retain Thai, exam-style English, normalized English and Russian
+separately, with optional localized explanations, trap explanations and images.
+Unavailable translations and source/review dates can remain null; normalized
+English and source type are required. Source metadata records provenance, not
+permission to republish. New questions default to inactive and `DRAFT`.
+
+PostgreSQL enforces category/concept references, prevents deleting referenced
+categories/concepts, and enforces one choice per stable A–D key per question.
+This permits at most four choices. Deleting a question cascades to its choices.
+The next import boundary must enforce exactly four choices, exactly one correct
+choice, nonempty text, and required publication/review metadata before publishing.
+Direct database writes can represent incomplete drafts; the schema alone does
+not certify publishable content.
+
+Practice queries must filter `active: true`, `verificationStatus: 'VERIFIED'`,
+vehicle type and category; a composite index supports those predicates. Shared
+concept IDs group question variants. Choice `isCorrect` is database-only answer
+metadata: future delivery DTOs must explicitly select safe fields and omit it
+until submission. No delivery endpoint or client DTO exists yet.

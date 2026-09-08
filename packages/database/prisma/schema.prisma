@@ -23,3 +23,89 @@ model User {
   updatedAt           DateTime     @updatedAt @db.Timestamptz(3)
   lastSeenAt          DateTime?    @db.Timestamptz(3)
 }
+
+enum ChoiceKey {
+  A
+  B
+  C
+  D
+}
+
+enum VerificationStatus {
+  DRAFT
+  VERIFIED
+  REJECTED
+}
+
+enum SourceType {
+  FIXTURE
+  ORIGINAL
+  OFFICIAL
+  THIRD_PARTY
+}
+
+model Category {
+  id          String     @id @default(uuid()) @db.Uuid
+  slug        String     @unique
+  nameThai    String
+  nameEnglish String
+  nameRussian String
+  sortOrder   Int        @default(0)
+  questions   Question[]
+}
+
+model Concept {
+  id          String     @id @default(uuid()) @db.Uuid
+  slug        String     @unique
+  nameThai    String
+  nameEnglish String
+  nameRussian String
+  questions   Question[]
+}
+
+model Question {
+  id                     String             @id @default(uuid()) @db.Uuid
+  vehicleType            VehicleType
+  categoryId             String             @db.Uuid
+  category               Category           @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  conceptId              String?            @db.Uuid
+  concept                Concept?           @relation(fields: [conceptId], references: [id], onDelete: Restrict)
+  textThai               String?
+  textExamEnglish        String?
+  textEnglish            String
+  textRussian            String?
+  explanationThai        String?
+  explanationEnglish     String?
+  explanationRussian     String?
+  trapExplanationThai    String?
+  trapExplanationEnglish String?
+  trapExplanationRussian String?
+  imageReference         String?
+  sourceType             SourceType
+  sourceReference        String?
+  sourceDate             DateTime?          @db.Date
+  legalCitation          String?
+  verificationStatus     VerificationStatus @default(DRAFT)
+  reviewer               String?
+  reviewedAt             DateTime?          @db.Timestamptz(3)
+  active                 Boolean            @default(false)
+  createdAt              DateTime           @default(now()) @db.Timestamptz(3)
+  updatedAt              DateTime           @updatedAt @db.Timestamptz(3)
+  choices                QuestionChoice[]
+
+  @@index([vehicleType, categoryId, active, verificationStatus])
+  @@index([conceptId])
+}
+
+model QuestionChoice {
+  id          String    @id @default(uuid()) @db.Uuid
+  questionId  String    @db.Uuid
+  question    Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  key         ChoiceKey
+  textThai    String?
+  textEnglish String
+  textRussian String?
+  isCorrect   Boolean   @default(false)
+
+  @@unique([questionId, key])
+}

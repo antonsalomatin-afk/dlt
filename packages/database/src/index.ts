@@ -2,7 +2,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../generated/client.ts';
 
 export { PrismaClient, Prisma } from '../generated/client.ts';
-export { VehicleType } from '../generated/enums.ts';
+export { VehicleType, ChoiceKey, VerificationStatus, SourceType } from '../generated/enums.ts';
 
 /** The caller owns this client's lifetime and must call $disconnect on shutdown. */
 export function createDatabaseClient(connectionString: string) {
