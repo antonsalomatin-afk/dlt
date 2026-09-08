@@ -156,3 +156,11 @@ vehicle type and category; a composite index supports those predicates. Shared
 concept IDs group question variants. Choice `isCorrect` is database-only answer
 metadata: future delivery DTOs must explicitly select safe fields and omit it
 until submission. No delivery endpoint or client DTO exists yet.
+
+### Import development fixtures
+
+After `pnpm db:start` and `pnpm db:migrate`, run `pnpm content:import`.
+The command imports 25 original synthetic questions as inactive drafts and can
+be repeated with stable IDs/counts. It only accepts the loopback `.env` database
+configuration. See [content conventions](content/README.md) for validation,
+collision protection and provenance. These fixtures are not official DLT content.

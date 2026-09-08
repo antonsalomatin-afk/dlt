@@ -19,6 +19,7 @@
     "prisma": "node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts",
     "db:generate": "pnpm prisma generate",
     "db:migrate": "pnpm prisma migrate deploy",
+    "content:import": "pnpm db:generate && node --env-file=.env tools/content/import.ts",
     "test:integration": "pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts"
   },
   "devDependencies": {
@@ -31,6 +32,7 @@
     "prisma": "7.10.0",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.69.0",
-    "vitest": "^5.0.0"
+    "vitest": "^5.0.0",
+    "zod": "^4.5.4"
   }
 }
