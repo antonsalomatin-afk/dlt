@@ -10,5 +10,12 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-004 assigned: Prisma User model and real isolated PostgreSQL integration tests."
+  "notes": "TASK-004 Builder interrupted by workspace-credit error; resumed once. Working implementation awaits final checks/commit. User caps session use at 80 percent.",
+  "usagePolicy": {
+    "maxSessionUsedPercent": 80,
+    "latestObservedUsedPercent": 21,
+    "windowMinutes": 300,
+    "checkedAt": "2026-09-08",
+    "instruction": "Stop at a clean handoff before 80 percent usage; do not redeem resets without explicit authorization."
+  }
 }
