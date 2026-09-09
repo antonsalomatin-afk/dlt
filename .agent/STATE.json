@@ -10,16 +10,16 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-009 API authentication/session Builder assigned under ADR-004; preserve budget for independent acceptance.",
+  "notes": "TASK-008 accepted; TASK-009 uncommitted, Builder check103 tests/prisma validation/forward migration PASS; integration7of8 with helper default-username failure. Fresh chain verification outstanding. See HANDOFF.md.",
   "usagePolicy": {
     "maxSessionUsedPercent": 80,
-    "latestObservedUsedPercent": 18,
+    "latestObservedUsedPercent": 71,
     "windowMinutes": 300,
     "checkedAt": "2026-09-09",
     "instruction": "Check five-hour account usage frequently; stop new Builder work by 55 percent and checkpoint by 70 percent to reserve margin below user ceiling80. Never redeem reset credits without authorization."
   },
-  "executionPaused": false,
-  "pauseReason": null,
+  "executionPaused": true,
+  "pauseReason": "Budget checkpoint at71 percent of five-hour window, below user80 ceiling.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-09T10:45:12Z",
