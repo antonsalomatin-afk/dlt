@@ -10,16 +10,16 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-006 accepted. TASK-007 uncommitted; Builder lint passed, typecheck failed; tests not run. See HANDOFF.md. No review/acceptance for TASK-007.",
+  "notes": "Pre-reset authorized100 percent run; fresh Builder fixing TASK-007 compatibility only. Checkpoint by06:02:30Z; independent acceptance gates remain required.",
   "usagePolicy": {
     "maxSessionUsedPercent": 80,
-    "latestObservedUsedPercent": 68,
+    "latestObservedUsedPercent": 85,
     "windowMinutes": 300,
     "checkedAt": "2026-09-09",
     "instruction": "Check five-hour account usage frequently; stop new Builder work by 55 percent and checkpoint by 70 percent to reserve margin below user ceiling80. Never redeem reset credits without authorization."
   },
-  "executionPaused": true,
-  "pauseReason": "Budget reserve: usage68 percent; preserve margin below80 before fixing TASK-007 type errors.",
+  "executionPaused": false,
+  "pauseReason": null,
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-09T05:42:30Z",
