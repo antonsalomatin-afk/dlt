@@ -30,6 +30,10 @@ required_checks:
 dependencies:
   - TASK-007
 supervisor_refinement_required:
-  - Verify official protocol and record exact freshness/future-skew policy before assigning Builder.
+  - Resolved by accepted ADR-003; read and implement its exact validation boundaries.
 owner_decision_required: false
 commit_hint: 'feat(auth): validate Telegram Mini App initData'
+
+relevant_adrs:
+  - ADR-003-init-data-policy.md
+
