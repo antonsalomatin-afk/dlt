@@ -26,9 +26,9 @@ Goal: make repository-driven development reliable.
 
 ## Epic 2 — Telegram Entry and Authentication
 
-- Telegram bot skeleton
-- `/start`
-- Mini App launch
+- `TASK-007` — ACCEPTED — Telegram bot entry point
+- Private /start and Mini App button verified with mocked transport
+- Live Telegram launch remains unverified until credentials/UI are available
 - signed initData server validation
 - auth freshness validation
 - user upsert/session behavior
@@ -112,6 +112,7 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
+
 
 
 
