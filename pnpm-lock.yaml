@@ -66,6 +66,8 @@ importers:
         specifier: 7.10.0
         version: 7.10.0(prisma@7.10.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.9.3))(typescript@5.9.3)
 
+  packages/telegram: {}
+
 packages:
 
   '@cacheable/memory@2.2.0':

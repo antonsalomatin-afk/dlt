@@ -1,0 +1,7 @@
+{
+  "name": "@thaidlt/telegram",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": { "node": "./src/index.ts" } }
+}
