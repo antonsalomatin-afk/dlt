@@ -22,9 +22,9 @@
   "pauseReason": "Post-reset budget checkpoint at72 percent; preserve margin below80.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
-    "preResetAt": "2026-09-09T05:42:30Z",
-    "resetAt": "2026-09-09T06:02:30Z",
-    "postResetAt": "2026-09-09T06:04:30Z",
+    "preResetAt": "2026-09-09T10:45:12Z",
+    "resetAt": "2026-09-09T11:05:12Z",
+    "postResetAt": "2026-09-09T11:07:12Z",
     "preResetUsageCeiling": 100,
     "postResetUsageCeiling": 80,
     "executions": 2

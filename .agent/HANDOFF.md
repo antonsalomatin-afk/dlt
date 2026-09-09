@@ -9,3 +9,5 @@ TASK-008 candidate822cb96a01a1c6e8da810b3bae6bf63569f89984 is committed on codex
 On resume check five-hour usage first, read governance/task/ADR-003 and actual validator/diff/tests, then assign independent Reviewer to write TASK-008-review-01.md. Follow fix/check/review loop if needed; accept only after PASS. TASK-009 session policy is refined in ADR-004 on this branch and remains planned. No actual Telegram credentials/messages/deployment were used.
 
 Preserve user starter ZIP. Clear executionPaused when resuming. Use bounded fresh agent contexts and reserve review capacity before the80 percent ceiling. Local PostgreSQL may remain running.
+
+Newly authorized pair:2026-09-09 12:45:12 and13:07:12 Europe/Madrid around reset13:05:12. First permits100 percent of ending window; second restores80 percent ceiling. Existing automation updated for these two executions only.
