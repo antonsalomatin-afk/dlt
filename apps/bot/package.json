@@ -1,0 +1,10 @@
+{
+  "name": "@thaidlt/bot",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "abort-controller": "3.0.0",
+    "grammy": "1.46.0"
+  }
+}

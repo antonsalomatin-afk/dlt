@@ -9,6 +9,7 @@
   },
   "scripts": {
     "lint": "eslint .",
+    "bot:start": "node --env-file-if-exists=.env apps/bot/src/main.ts",
     "typecheck": "pnpm db:generate && tsc --noEmit",
     "test": "pnpm db:generate && vitest run",
     "check": "pnpm lint && pnpm typecheck && pnpm test",
@@ -25,9 +26,11 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^24.13.3",
+    "@types/node-fetch": "2.6.13",
     "@types/pg": "8.23.1",
     "embedded-postgres": "18.4.0-beta.17",
     "eslint": "^10.10.0",
+    "node-fetch": "2.7.0",
     "pg": "8.23.0",
     "prisma": "7.10.0",
     "typescript": "5.9.3",

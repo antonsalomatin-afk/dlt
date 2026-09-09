@@ -5,5 +5,5 @@
     "allowImportingTsExtensions": true,
     "types": ["node"]
   },
-  "include": ["tests/**/*.ts", "tools/**/*.ts", "packages/database/src/**/*.ts", "packages/database/prisma.config.ts", "vitest.config.ts", "vitest.integration.config.ts"]
+  "include": ["tests/**/*.ts", "tools/**/*.ts", "apps/bot/src/**/*.ts", "packages/database/src/**/*.ts", "packages/database/prisma.config.ts", "vitest.config.ts", "vitest.integration.config.ts"]
 }

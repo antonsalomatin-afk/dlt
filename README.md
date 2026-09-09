@@ -164,3 +164,24 @@ The command imports 25 original synthetic questions as inactive drafts and can
 be repeated with stable IDs/counts. It only accepts the loopback `.env` database
 configuration. See [content conventions](content/README.md) for validation,
 collision protection and provenance. These fixtures are not official DLT content.
+
+## Telegram bot
+
+`apps/bot` uses grammY. Its factory registers `/start` without network access or
+polling. Private chats receive an HTTPS Mini App launch button; groups receive
+instructions to open a private chat. Automated tests inject an in-memory
+transport and never send Telegram messages.
+
+To run a bot manually when a token and hosted Mini App URL are available, set
+server-only `BOT_TOKEN` and `MINI_APP_URL` in ignored `.env`, then run
+`pnpm bot:start`. Configuration is checked before polling; missing/invalid values
+exit nonzero. Never expose the token in frontend variables or commit it.
+The configured URL must use HTTPS without embedded credentials. This task does
+not host the Mini App or provision a Telegram bot.
+
+Stop the foreground bot with Ctrl+C (`SIGINT`); `SIGTERM` is also supported.
+Shutdown cancels initialization or stops long polling and waits for in-flight
+handlers. Fixed error messages avoid logging tokens or raw Telegram payloads.
+Live polling contacts Telegram and may reply to users, so use a dedicated
+development bot when manually testing. No real token is needed for repository
+checks. The lifecycle follows the [grammY bot API](https://grammy.dev/ref/core/bot).
