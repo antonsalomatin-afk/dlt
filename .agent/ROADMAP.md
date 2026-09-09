@@ -29,8 +29,8 @@ Goal: make repository-driven development reliable.
 - `TASK-007` — ACCEPTED — Telegram bot entry point
 - Private /start and Mini App button verified with mocked transport
 - Live Telegram launch remains unverified until credentials/UI are available
-- signed initData server validation
-- auth freshness validation
+- `TASK-008` — ACCEPTED — signed initData server validation
+- Freshness policy validated under ADR-003
 - user upsert/session behavior
 
 ## Epic 3 — Question Vertical Slice
@@ -112,6 +112,7 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
+
 
 
 
