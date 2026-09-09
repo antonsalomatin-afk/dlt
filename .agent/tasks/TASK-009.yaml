@@ -32,6 +32,11 @@ required_checks:
 dependencies:
   - TASK-008
 supervisor_refinement_required:
-  - Accept session ADR and specify API request/response contracts and tests before Builder assignment.
+  - Resolved by accepted ADR-004; apply its endpoint, token, expiry and integration-test contracts.
 owner_decision_required: false
 commit_hint: 'feat(api): authenticate Telegram users and issue sessions'
+
+relevant_adrs:
+  - ADR-003-init-data-policy.md
+  - ADR-004-api-sessions.md
+
