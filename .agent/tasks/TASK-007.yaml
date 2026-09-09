@@ -1,6 +1,6 @@
 id: TASK-007
 title: Add Telegram bot entry point
-status: PLANNED
+status: BUILDING
 epic: Epic 2 — Telegram Entry and Authentication
 priority: P1
 objective: Implement a grammY bot factory and local entry point for /start and the Mini App launch button.
@@ -33,3 +33,4 @@ dependencies:
   - TASK-006
 owner_decision_required: false
 commit_hint: 'feat(bot): add Telegram Mini App entry point'
+
