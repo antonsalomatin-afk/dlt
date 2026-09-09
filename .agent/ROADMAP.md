@@ -21,8 +21,8 @@ Goal: make repository-driven development reliable.
 - `TASK-004` — ACCEPTED — Prisma/PostgreSQL foundation and initial user model
 - User persistence and Telegram id uniqueness verified
 - `TASK-005` — ACCEPTED — category/vehicle/question models
-- fixture import format
-- initial 25 fixture questions
+- `TASK-006` — ACCEPTED — validated fixture import and 25 development questions
+- Development fixtures remain inactive drafts
 
 ## Epic 2 — Telegram Entry and Authentication
 
@@ -112,6 +112,7 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
+
 
 
 

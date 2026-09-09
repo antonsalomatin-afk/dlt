@@ -1,7 +1,7 @@
 id: TASK-006
 title: Add 25 fixture questions and import command
 epic: Epic 1 — Data Foundation
-status: REVIEW
+status: ACCEPTED
 priority: P1
 
 objective: >
@@ -79,3 +79,6 @@ supervisor_refinement:
   - Integration tests run the real import, repeat it, prove malformed rejection/no partial writes and preservation of unrelated records; clean only test-owned data.
   - No network content acquisition, runtime AI integration, production writes or activation of fixtures in this task.
 
+
+accepted_commit: f4109ae065bb1779be862f978c55c581dfcafe59
+review_file: .agent/reviews/TASK-006-review-01.md
