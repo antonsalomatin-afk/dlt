@@ -19,5 +19,14 @@
     "instruction": "Check five-hour account usage frequently; stop new Builder work by 55 percent and checkpoint by 70 percent to reserve margin below user ceiling80. Never redeem reset credits without authorization."
   },
   "executionPaused": true,
-  "pauseReason": "Budget reserve: usage68 percent; preserve margin below80 before fixing TASK-007 type errors."
+  "pauseReason": "Budget reserve: usage68 percent; preserve margin below80 before fixing TASK-007 type errors.",
+  "scheduledContinuations": {
+    "automationId": "thaidlt-pre-reset-continuation",
+    "preResetAt": "2026-09-09T05:42:30Z",
+    "resetAt": "2026-09-09T06:02:30Z",
+    "postResetAt": "2026-09-09T06:04:30Z",
+    "preResetUsageCeiling": 100,
+    "postResetUsageCeiling": 80,
+    "executions": 2
+  }
 }

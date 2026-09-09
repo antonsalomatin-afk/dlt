@@ -14,3 +14,5 @@ Unit/integration gates have not run for this candidate. No implementation commit
 Resume Builder only for these compatibility fixes, then complete required gates and commit. Supervisor must run authoritative checks and independent review before acceptance. Never merge unaccepted work into main. Preserve user's untracked starter ZIP.
 
 TASK-008 authentication policy has been refined in accepted ADR-003, recorded on the task branch; read it before TASK-008 implementation. TASK-009 still needs a session ADR. These remain planned, not implemented. Clear executionPaused when resuming.
+
+Two wakeups scheduled for2026-09-09:07:42:30 and08:04:30 Europe/Madrid, around reset08:02:30. User permits100 percent before reset only; normal80 percent cap after reset. Automation:thaidlt-pre-reset-continuation. Check live usage/time on each run; no reset credits authorized.
