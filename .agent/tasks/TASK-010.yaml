@@ -1,0 +1,26 @@
+id: TASK-010
+title: Persist authenticated vehicle selection
+status: PLANNED
+epic: Epic 3 — Question Vertical Slice
+priority: P1
+objective: Allow a logged-in user to choose CAR or MOTORCYCLE for practice.
+acceptance:
+  - PATCH /me/vehicle requires a valid session and a strict vehicleType request.
+  - CAR and MOTORCYCLE persist only on the authenticated User and are reflected by GET /me.
+  - Invalid payloads and unauthorized calls cause no writes and return sanitized stable errors.
+  - Response uses the existing validated user DTO.
+files_allowed:
+  - apps/api/**
+  - tests/**
+  - README.md
+non_goals:
+  - No question delivery, UI or new database schema.
+required_tests:
+  - Select/change vehicle, retrieve preference, reject invalid/missing/extra fields and unauthorized requests.
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+dependencies:
+  - TASK-009
+owner_decision_required: false
+commit_hint: 'feat(onboarding): persist vehicle selection'

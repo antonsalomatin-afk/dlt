@@ -1,0 +1,36 @@
+id: TASK-011
+title: Present a question without exposing its answer
+status: PLANNED
+epic: Epic 3 — Question Vertical Slice
+priority: P1
+objective: Return an eligible question and persist its user-owned presentation for later submission.
+acceptance:
+  - POST /practice/next requires authentication and a selected vehicle.
+  - Only active VERIFIED questions for the selected vehicle are eligible; no fixture auto-activation.
+  - Empty question bank has a documented stable response.
+  - Returned DTO contains a presentation ID, question wording and exactly four stable choice IDs/texts.
+  - Response excludes correctness, explanations and source fields that could reveal the answer.
+  - Server persists the authoritative presented content/answer snapshot so later edits cannot change scoring.
+  - Invalid eligible-question structure is rejected safely before presentation is stored.
+files_allowed:
+  - apps/api/**
+  - packages/database/**
+  - packages/question-engine/**
+  - packages/shared/**
+  - package.json
+  - pnpm-lock.yaml
+  - tsconfig*.json
+  - tests/**
+  - README.md
+non_goals:
+  - No answer submission, UI, production content import or spaced repetition.
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-010
+supervisor_refinement_required:
+  - Specify DTO, empty/onboarding responses, presentation schema and snapshot runtime validation before Builder assignment.
+owner_decision_required: false
+commit_hint: 'feat(practice): present questions with server-owned snapshots'
