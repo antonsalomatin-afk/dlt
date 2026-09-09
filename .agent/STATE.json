@@ -10,10 +10,10 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "Pre-reset authorized100 percent run; fresh Builder fixing TASK-007 compatibility only. Checkpoint by06:02:30Z; independent acceptance gates remain required.",
+  "notes": "Post-reset wakeup verified new window at2 percent. Normal80 percent ceiling restored. Builder007_fix resumed after pre-reset credit error; no duplicate Builder.",
   "usagePolicy": {
     "maxSessionUsedPercent": 80,
-    "latestObservedUsedPercent": 85,
+    "latestObservedUsedPercent": 2,
     "windowMinutes": 300,
     "checkedAt": "2026-09-09",
     "instruction": "Check five-hour account usage frequently; stop new Builder work by 55 percent and checkpoint by 70 percent to reserve margin below user ceiling80. Never redeem reset credits without authorization."
