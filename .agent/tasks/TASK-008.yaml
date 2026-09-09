@@ -1,6 +1,6 @@
 id: TASK-008
 title: Validate signed Telegram Mini App initData
-status: BUILDING
+status: REVIEW
 epic: Epic 2 — Telegram Entry and Authentication
 priority: P0
 objective: Add a server-only validation library for raw Telegram Mini App authentication data.
@@ -36,5 +36,6 @@ commit_hint: 'feat(auth): validate Telegram Mini App initData'
 
 relevant_adrs:
   - ADR-003-init-data-policy.md
+
 
 
