@@ -10,14 +10,14 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-007 bot entry assigned; use mocked Telegram transport, no live token/messages required for acceptance.",
+  "notes": "TASK-006 accepted. TASK-007 uncommitted; Builder lint passed, typecheck failed; tests not run. See HANDOFF.md. No review/acceptance for TASK-007.",
   "usagePolicy": {
     "maxSessionUsedPercent": 80,
-    "latestObservedUsedPercent": 14,
+    "latestObservedUsedPercent": 68,
     "windowMinutes": 300,
     "checkedAt": "2026-09-09",
     "instruction": "Check five-hour account usage frequently; stop new Builder work by 55 percent and checkpoint by 70 percent to reserve margin below user ceiling80. Never redeem reset credits without authorization."
   },
-  "executionPaused": false,
-  "pauseReason": null
+  "executionPaused": true,
+  "pauseReason": "Budget reserve: usage68 percent; preserve margin below80 before fixing TASK-007 type errors."
 }
