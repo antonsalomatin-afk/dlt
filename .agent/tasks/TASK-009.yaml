@@ -1,6 +1,6 @@
 id: TASK-009
 title: Add API authentication and user session
-status: PLANNED
+status: BUILDING
 epic: Epic 2 — Telegram Entry and Authentication
 priority: P1
 objective: Establish the Fastify API authentication boundary and persist validated Telegram users.
@@ -40,3 +40,12 @@ relevant_adrs:
   - ADR-003-init-data-policy.md
   - ADR-004-api-sessions.md
 
+
+supervisor_refinement:
+  - Implement POST /auth/telegram and GET /me exactly as ADR-004; return stable sanitized errors with no secrets or raw signed data.
+  - Expiry comparison is exclusive (valid only when now is strictly before expiresAt); use injectable clock with deterministic tests.
+  - Invalid body or invalid initData must cause no writes. Database failures must not leave a User/session partial transaction.
+  - Tests use Fastify injection plus real local PostgreSQL, synthetic signed inputs and isolated test-owned records; no Telegram HTTP calls.
+  - Include concurrent or repeated login consistency, preference preservation, missing/malformed/unknown/expired bearer tokens and digest-only storage.
+  - Apply a forward-only migration; verify full migration chain on a fresh isolated local database.
+  - Include source and tests in strict root gates. Keep generated client uncommitted; no deployment configuration.
