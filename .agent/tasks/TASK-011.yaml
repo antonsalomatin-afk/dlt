@@ -34,3 +34,14 @@ supervisor_refinement_required:
   - Specify DTO, empty/onboarding responses, presentation schema and snapshot runtime validation before Builder assignment.
 owner_decision_required: false
 commit_hint: 'feat(practice): present questions with server-owned snapshots'
+
+supervisor_refinement:
+  - POST /practice/next accepts no body or an empty object only; authenticated invalid payloads return400 {error: Bad Request}.
+  - Missing vehicle returns409 {error: Vehicle selection required}; no eligible question returns404 {error: No questions available}; neither stores a presentation.
+  - Choose one active VERIFIED question matching the selected vehicle; deterministic ordering by question ID is sufficient for this first slice, with no repetition-avoidance promise.
+  - Return200 {presentationId, question} where question has id, textThai, textExamEnglish, textEnglish, textRussian and choices; choices have id, key, textThai, textEnglish, textRussian. Nullable translations stay null. Exclude all other fields, including imageReference until a safe media contract exists.
+  - Validate the selected question has exactly four choices with distinct UUIDs and keys A/B/C/D, nonempty English text and exactly one correct choice before writing. Malformed content returns sanitized500 and stores nothing.
+  - Persist a UUID presentation owned by User, source question UUID, creation time and a versioned JSON snapshot containing all returned wording/choices plus correct choice ID and explanation/trap explanation fields. Runtime-validate snapshot writes and future reads; no client-supplied snapshot.
+  - Read the question and its choices consistently and store the exact validated snapshot; use a suitable database transaction so concurrent content edits cannot mix versions. Source edits must not mutate existing snapshots.
+  - Use Cache-Control no-store and existing session authentication; test absent/expired sessions, vehicle mismatch, inactive/draft exclusion, empty bank, malformed content, hidden-field absence and persisted snapshot stability after source edits.
+  - Tests create and remove only owned synthetic data; never activate imported development fixtures. Verify forward migration and full fresh isolated migration chain.
