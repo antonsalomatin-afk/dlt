@@ -1,0 +1,26 @@
+Datasource "db": PostgreSQL database "task009_supervisor_5d08f73e030a", schema "public" at "127.0.0.1:55432"
+
+3 migrations found in prisma/migrations
+
+Applying migration `20260907183951_initial_user`
+Applying migration `20260908055549_question_domain`
+Applying migration `20260909120000_auth_sessions`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260907183951_initial_user/
+    └─ migration.sql
+  └─ 20260908055549_question_domain/
+    └─ migration.sql
+  └─ 20260909120000_auth_sessions/
+    └─ migration.sql
+
+All migrations have been successfully applied.
+
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+PASS: fresh database migration chain,3 completed migrations
+PASS: isolated database removed
