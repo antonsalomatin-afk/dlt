@@ -24,3 +24,11 @@ dependencies:
   - TASK-009
 owner_decision_required: false
 commit_hint: 'feat(onboarding): persist vehicle selection'
+
+supervisor_refinement:
+  - Request body is exactly {vehicleType: CAR or MOTORCYCLE}; all other values, missing fields and extra fields return400 {error: Bad Request} for authenticated requests.
+  - Missing, malformed, unknown, revoked and expired bearer sessions return401 {error: Unauthorized}, consistent with GET /me.
+  - Successful response is200 with the existing user DTO directly, with Cache-Control no-store.
+  - Reuse the accepted session validation behavior without changing expiry, identity or login contracts.
+  - Integration tests cover both vehicles, changing preference, GET /me persistence, two-user isolation and unchanged records for rejected requests.
+  - Keep errors sanitized and validate response DTOs; do not introduce frontend work or schema changes.
