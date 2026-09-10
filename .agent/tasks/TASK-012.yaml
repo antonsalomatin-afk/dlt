@@ -33,3 +33,13 @@ supervisor_refinement_required:
   - Specify endpoint/DTO/status codes and concurrent-duplicate tests before Builder assignment.
 owner_decision_required: false
 commit_hint: 'feat(practice): persist one scored answer per presentation'
+
+supervisor_refinement:
+  - POST /practice/answer requires the existing bearer session and a strict body with presentationId and choiceId UUID strings only.
+  - Invalid body or choice absent from the saved snapshot returns400 {error: Bad Request}; unknown and foreign presentations share404 {error: Presentation not found}; duplicate owned submission returns409 {error: Answer already submitted}. Authentication failures use the existing401 shape.
+  - Successful response is200 with presentationId, selectedChoiceId, correctChoiceId, isCorrect, explanationThai, explanationEnglish, explanationRussian, trapExplanationThai, trapExplanationEnglish and trapExplanationRussian. Explanations remain nullable, taken solely from the saved validated snapshot.
+  - Persist a UUID answer row linked uniquely to the owned presentation with selected choice UUID, correctness and submitted time. Database uniqueness is mandatory; no check-then-insert race without constraint handling.
+  - Validate the saved versioned snapshot at submission. Corrupt snapshots produce sanitized500 and no answer. Do not recompute against current source question or choices.
+  - Transactionally validate ownership and snapshot, insert answer and validate the result DTO; classify only the expected presentation uniqueness conflict as duplicate, keeping other errors sanitized500.
+  - Test correct and incorrect answers, malformed requests, unknown choices, foreign ownership without disclosure, repeated submission and concurrent submissions with exactly one200 and one persisted row; later source edits must not change grading or explanations.
+  - Invalid or duplicate submissions must not alter the persisted answer. Use no-store responses and test-owned synthetic records only. Verify forward migration and fresh isolated migration chain.
