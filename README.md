@@ -214,3 +214,14 @@ Keep future Mini App tokens in memory; use HTTPS for any nonlocal transport.
 
 `pnpm test:integration` includes synthetic signed authentication requests through Fastify
 injection and real PostgreSQL transactions. No live Telegram token is needed for tests.
+
+### Question presentation API
+
+`POST /practice/next` uses the existing bearer session and accepts no body or `{}`.
+It returns `200 {presentationId, question}` with question ID, Thai/exam-English/English/Russian wording and four choices (ID, A–D key, Thai/English/Russian text). Missing translations remain null. No correctness, explanations, source metadata or image reference is returned. Responses use `Cache-Control: no-store`.
+
+Missing/expired authentication returns `401 {error: "Unauthorized"}`; invalid bodies return `400 {error: "Bad Request"}`; missing vehicle selection returns `409 {error: "Vehicle selection required"}`; an empty eligible bank returns `404 {error: "No questions available"}`. Invalid eligible content returns sanitized `500 {error: "Internal Server Error"}` without storing a presentation.
+
+Selection is the first active VERIFIED question for the selected vehicle ordered by ID; repetitions are possible. A repeatable-read transaction snapshots question wording, choices, correct choice ID and explanations into a user-owned `QuestionPresentation`. Source edits do not alter prior snapshots. Snapshot version 1 is runtime validated; future consumers must use `parsePresentationSnapshot` when reading persisted JSON. Answer submission is not implemented yet.
+
+The practice integration suite creates a temporary randomly named database, applies the full migration chain and drops only that database after testing. The local integration database role therefore needs permission to create databases. Imported development fixtures are never activated by this endpoint or its tests.
