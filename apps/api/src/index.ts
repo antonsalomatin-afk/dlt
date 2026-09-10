@@ -11,6 +11,7 @@ export const userSchema = z.strictObject({
 export const loginSchema = z.strictObject({ token: z.string().regex(/^[A-Za-z0-9_-]{43}$/u), expiresAt: z.iso.datetime(), user: userSchema });
 const bodySchema = z.strictObject({ initData: z.string().min(1).max(16384).refine((value) => Buffer.byteLength(value, 'utf8') <= 16384) });
 const bearerSchema = z.string().regex(/^Bearer [A-Za-z0-9_-]{43}$/u);
+const vehicleSchema = z.strictObject({ vehicleType: z.enum(['CAR', 'MOTORCYCLE']) });
 const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error']) });
 const userSelect = { id: true, username: true, firstName: true, selectedVehicleType: true } as const;
 const digest = (token: string) => createHash('sha256').update(token).digest('hex');
@@ -21,6 +22,13 @@ export function createApi(options: { database: PrismaClient; botToken: string; n
   if (!options.botToken.trim()) throw new Error('BOT_TOKEN is required');
   const app = Fastify({ logger: false, bodyLimit: 100000 });
   const now = options.now ?? (() => new Date());
+  async function authenticatedUser(header: unknown) {
+    const authorization = bearerSchema.safeParse(header);
+    if (!authorization.success) return null;
+    const session = await options.database.session.findUnique({ where: { tokenHash: digest(authorization.data.slice(7)) }, select: { expiresAt: true, user: { select: userSelect } } });
+    if (!session || now().getTime() >= session.expiresAt.getTime()) return null;
+    return userSchema.parse(session.user);
+  }
   app.setErrorHandler((error, _request, reply) => {
     const badRequest = error instanceof Error && 'statusCode' in error && typeof error.statusCode === 'number' && error.statusCode >= 400 && error.statusCode < 500;
     return reply.code(badRequest ? 400 : 500).send(errorSchema.parse({ error: badRequest ? 'Bad Request' : 'Internal Server Error' }));
@@ -50,11 +58,20 @@ export function createApi(options: { database: PrismaClient; botToken: string; n
   });
   app.get('/me', async (request, reply) => {
     reply.header('Cache-Control', 'no-store');
-    const authorization = bearerSchema.safeParse(request.headers.authorization);
-    if (!authorization.success) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
-    const session = await options.database.session.findUnique({ where: { tokenHash: digest(authorization.data.slice(7)) }, select: { expiresAt: true, user: { select: userSelect } } });
-    if (!session || now().getTime() >= session.expiresAt.getTime()) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
-    return userSchema.parse(session.user);
+    const user = await authenticatedUser(request.headers.authorization);
+    if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+    return user;
+  });
+  app.patch('/me/vehicle', async (request, reply) => {
+    reply.header('Cache-Control', 'no-store');
+    const user = await authenticatedUser(request.headers.authorization);
+    if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+    const body = vehicleSchema.safeParse(request.body);
+    if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+    return options.database.$transaction(async (tx) => {
+      const updated = await tx.user.update({ where: { id: user.id }, data: { selectedVehicleType: body.data.vehicleType }, select: userSelect });
+      return userSchema.parse(updated);
+    });
   });
   return app;
 }

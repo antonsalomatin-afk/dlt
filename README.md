@@ -199,6 +199,11 @@ Invalid authentication/body shape returns `401 { "error": "Unauthorized" }`;
 malformed HTTP JSON returns a sanitized 400. Internal failures return a sanitized 500.
 
 Use `Authorization: Bearer <token>` for `GET /me`, which returns the same user DTO.
+`PATCH /me/vehicle` uses the same session and accepts exactly
+`{ "vehicleType": "CAR" }` or `{ "vehicleType": "MOTORCYCLE" }`. It persists the
+authenticated user's preference and returns the user DTO with caching disabled.
+`GET /me` reflects the selection. Invalid values, missing fields and extra fields
+return `400 { "error": "Bad Request" }` without changing the user.
 Missing, malformed, unknown, revoked and expired sessions return the same 401.
 Sessions expire exactly 24 hours after issuance; equality with expiry is expired.
 Only SHA-256 token digests are persisted. Deleting a session revokes it; deleting its

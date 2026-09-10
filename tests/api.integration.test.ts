@@ -20,11 +20,70 @@ function signed(id: bigint, firstName = 'Synthetic', username: string | null = '
 }
 const login = (initData: string) => app.inject({ method: 'POST', url: '/auth/telegram', payload: { initData } });
 const me = (token: string) => app.inject({ method: 'GET', url: '/me', headers: { authorization: `Bearer ${token}` } });
+const vehicle = (token: string, payload: object) => app.inject({ method: 'PATCH', url: '/me/vehicle', headers: { authorization: `Bearer ${token}` }, payload });
 beforeAll(async () => { await database.$connect(); });
 afterAll(async () => {
   await app.close();
   try { await database.user.deleteMany({ where: { telegramUserId: { in: ids } } }); }
   finally { await database.$disconnect(); }
+});
+
+it('persists both vehicle selections, returns the user DTO and isolates users', async () => {
+  const first = loginSchema.parse((await login(signed(nextId()))).json());
+  const second = loginSchema.parse((await login(signed(nextId()))).json());
+  const otherBefore = await database.user.findUniqueOrThrow({ where: { id: second.user.id } });
+  const sessionsBefore = await database.session.findMany({ where: { userId: first.user.id } });
+  for (const vehicleType of ['CAR', 'MOTORCYCLE', 'CAR']) {
+    const response = await vehicle(first.token, { vehicleType });
+    expect(response.statusCode).toBe(200);
+    expect(response.headers['cache-control']).toBe('no-store');
+    const expected = { ...first.user, selectedVehicleType: vehicleType };
+    expect(userSchema.parse(response.json())).toEqual(expected);
+    expect((await me(first.token)).json()).toEqual(expected);
+    expect((await database.user.findUniqueOrThrow({ where: { id: first.user.id } })).selectedVehicleType).toBe(vehicleType);
+    expect(await database.user.findUniqueOrThrow({ where: { id: second.user.id } })).toEqual(otherBefore);
+    expect((await me(second.token)).json()).toEqual(second.user);
+  }
+  expect(await database.session.findMany({ where: { userId: first.user.id } })).toEqual(sessionsBefore);
+});
+
+it('rejects invalid vehicle bodies without changing user or session records', async () => {
+  const body = loginSchema.parse((await login(signed(nextId()))).json());
+  await vehicle(body.token, { vehicleType: 'CAR' });
+  const userBefore = await database.user.findUniqueOrThrow({ where: { id: body.user.id } });
+  const sessionsBefore = await database.session.findMany({ where: { userId: body.user.id } });
+  const invalid = [{}, { vehicleType: 'car' }, { vehicleType: 'TRUCK' }, { vehicleType: null }, { vehicleType: 1 }, { vehicleType: true }, { vehicleType: [] }, { vehicleType: {} }, { vehicleType: 'CAR', userId: body.user.id }, []];
+  for (const payload of invalid) {
+    const response = await vehicle(body.token, payload);
+    expect(response.statusCode).toBe(400);
+    expect(response.json()).toEqual({ error: 'Bad Request' });
+  }
+  for (const payload of [undefined, 'null', '"CAR"', '{']) {
+    const response = await app.inject({ method: 'PATCH', url: '/me/vehicle', headers: { authorization: `Bearer ${body.token}`, 'content-type': 'application/json' }, ...(payload === undefined ? {} : { payload }) });
+    expect(response.statusCode).toBe(400);
+    expect(response.json()).toEqual({ error: 'Bad Request' });
+  }
+  expect(await database.user.findUniqueOrThrow({ where: { id: body.user.id } })).toEqual(userBefore);
+  expect(await database.session.findMany({ where: { userId: body.user.id } })).toEqual(sessionsBefore);
+});
+
+it('rejects unauthorized vehicle writes including revoked and exactly expired sessions', async () => {
+  const body = loginSchema.parse((await login(signed(nextId()))).json());
+  const revoked = loginSchema.parse((await login(signed(nextId()))).json());
+  await database.session.deleteMany({ where: { userId: revoked.user.id } });
+  const where = { id: { in: [body.user.id, revoked.user.id] } };
+  const usersBefore = await database.user.findMany({ where, orderBy: { id: 'asc' } });
+  const sessionsBefore = await database.session.findMany({ where: { userId: body.user.id } });
+  try {
+    clock = new Date(body.expiresAt);
+    for (const authorization of [undefined, '', 'Basic abc', 'Bearer short', `Bearer ${'!'.repeat(43)}`, `Bearer ${randomBytes(32).toString('base64url')}`, `Bearer ${revoked.token}`, `Bearer ${body.token}`]) {
+      const response = await app.inject({ method: 'PATCH', url: '/me/vehicle', headers: authorization === undefined ? {} : { authorization }, payload: { vehicleType: 'MOTORCYCLE' } });
+      expect(response.statusCode).toBe(401);
+      expect(response.json()).toEqual({ error: 'Unauthorized' });
+    }
+    expect(await database.user.findMany({ where, orderBy: { id: 'asc' } })).toEqual(usersBefore);
+    expect(await database.session.findMany({ where: { userId: body.user.id } })).toEqual(sessionsBefore);
+  } finally { clock = new Date('2026-09-09T12:00:00Z'); }
 });
 
 it('creates one user across concurrent first logins, stores only digests, preserves preference and refreshes profile', async () => {
