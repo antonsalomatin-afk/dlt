@@ -9,3 +9,5 @@ Authoritative .agent/checks/TASK-012-checks-01.txt PASS: pnpm check105 unit test
 Paused2026-09-10 at five-hour58 percent / weekly98 percent. User five-hour ceiling80 remains. Verify both live limits before resume; preserve reserve for review/fixes/checkpoint. Never redeem reset credits without authorization. No new automation authorized.
 
 Next: read task/governance/diff/check evidence, assign independent Reviewer TASK-012-review-01.md. Fix and rerun gates if needed, accept only PASS. Then refine next roadmap task (Mini App frontend needed for end-to-end vertical slice; not yet specified). Preserve untracked thai-dlt-agent-starter.zip. No Product Owner blocker currently exists.
+
+User authorized one scheduled continuation2026-09-15T04:53:27Z (06:53Madrid), two minutes after weekly reset. Automation thaidlt-pre-reset-continuation updated; verify live limits and resume pending TASK-012 review. Preserve80 percent five-hour ceiling.

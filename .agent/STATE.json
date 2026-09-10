@@ -22,11 +22,9 @@
   "pauseReason": "Weekly usage98 percent; checkpoint before independent review to avoid exhausting remaining account allowance. Five-hour58 percent remains below user80 ceiling.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
-    "preResetAt": "2026-09-09T10:45:12Z",
-    "resetAt": "2026-09-09T11:05:12Z",
-    "postResetAt": "2026-09-09T11:07:12Z",
-    "preResetUsageCeiling": 100,
-    "postResetUsageCeiling": 80,
-    "executions": 2
+    "weeklyResetAt": "2026-09-15T04:51:27Z",
+    "resumeAt": "2026-09-15T04:53:27Z",
+    "executions": 1,
+    "maxSessionUsedPercent": 80
   }
 }
