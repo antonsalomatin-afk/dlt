@@ -1,6 +1,6 @@
 id: TASK-011
 title: Present a question without exposing its answer
-status: BUILDING
+status: ACCEPTED
 epic: Epic 3 — Question Vertical Slice
 priority: P1
 objective: Return an eligible question and persist its user-owned presentation for later submission.
@@ -46,3 +46,7 @@ supervisor_refinement:
   - Use Cache-Control no-store and existing session authentication; test absent/expired sessions, vehicle mismatch, inactive/draft exclusion, empty bank, malformed content, hidden-field absence and persisted snapshot stability after source edits.
   - Tests create and remove only owned synthetic data; never activate imported development fixtures. Verify forward migration and full fresh isolated migration chain.
 
+
+
+accepted_commit: 9eaf55cd75abb871c453f153d06e9d38a57b083e
+review_file: .agent/reviews/TASK-011-review-01.md
