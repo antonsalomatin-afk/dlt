@@ -5,6 +5,7 @@ import { afterAll, beforeAll, expect, it } from 'vitest';
 import { createDatabaseClient } from '../packages/database/src/index.ts';
 import { parsePresentationSnapshot, presentationResponseSchema } from '../packages/database/src/presentation.ts';
 import { createApi } from '../apps/api/src/index.ts';
+import { answerResponseSchema } from '../packages/database/src/answer.ts';
 
 const url = process.env.DATABASE_URL;
 if (!url) throw new Error('DATABASE_URL required');
@@ -86,10 +87,62 @@ it('authenticates, filters, validates, and preserves exactly the presented snaps
   expect(snapshot.question).toEqual(body.question);
   expect(snapshot.correctChoiceId).toBe(question.choices.find((choice) => choice.isCorrect)?.id);
   expect(snapshot.explanationEnglish).toBe('Secret explanation');
+  const submit = (payload: unknown, authorization = headers.authorization) => app.inject({ method: 'POST', url: '/practice/answer', headers: { authorization, 'content-type': 'application/json' }, payload: typeof payload === 'string' ? payload : JSON.stringify(payload) });
+  const validAnswer = { presentationId: row.id, choiceId: snapshot.correctChoiceId };
+  const assertError = async (payload: unknown, status: number, error: string, authorization = headers.authorization) => {
+    const response = await submit(payload, authorization);
+    expect(response.statusCode).toBe(status);
+    expect(response.json()).toEqual({ error });
+    expect(response.headers['cache-control']).toBe('no-store');
+  };
+  await assertError(validAnswer, 401, 'Unauthorized', 'Bearer invalid');
+  await db.session.updateMany({ where: { userId }, data: { expiresAt: now } });
+  await assertError(validAnswer, 401, 'Unauthorized');
+  await db.session.updateMany({ where: { userId }, data: { expiresAt: new Date(now.getTime() + 1000) } });
+  for (const payload of [{}, [], null, '{', { ...validAnswer, extra: true }, { ...validAnswer, choiceId: 'bad' }, { ...validAnswer, presentationId: 'bad' }, { ...validAnswer, choiceId: randomUUID() }]) await assertError(payload, 400, 'Bad Request');
+  await assertError({ ...validAnswer, presentationId: randomUUID() }, 404, 'Presentation not found');
+  const foreign = await db.user.create({ data: { telegramUserId: BigInt(`0x${randomBytes(6).toString('hex')}`) } });
+  try {
+    const presentation = await db.questionPresentation.create({ data: { userId: foreign.id, questionId: question.id, snapshot } });
+    await assertError({ ...validAnswer, presentationId: presentation.id }, 404, 'Presentation not found');
+    expect(await db.answerAttempt.count({ where: { presentationId: presentation.id } })).toBe(0);
+  } finally { await db.user.delete({ where: { id: foreign.id } }); }
+  const corrupt = await db.questionPresentation.create({ data: { userId, questionId: question.id, snapshot: { version: 999 } } });
+  await assertError({ ...validAnswer, presentationId: corrupt.id }, 500, 'Internal Server Error');
+  expect(await db.answerAttempt.count()).toBe(0);
+  await db.questionPresentation.delete({ where: { id: corrupt.id } });
+  const incorrectPresentation = await db.questionPresentation.create({ data: { userId, questionId: question.id, snapshot } });
+  const wrongChoice = snapshot.question.choices.find((choice) => choice.id !== snapshot.correctChoiceId);
+  if (!wrongChoice) throw new Error('Missing test choice');
+  const wrongResponse = await submit({ presentationId: incorrectPresentation.id, choiceId: wrongChoice.id });
+  expect(wrongResponse.statusCode).toBe(200);
+  expect(answerResponseSchema.parse(wrongResponse.json())).toMatchObject({ isCorrect: false, correctChoiceId: snapshot.correctChoiceId });
   await db.question.update({ where: { id: question.id }, data: { textEnglish: 'Edited', explanationEnglish: 'Edited explanation', choices: { updateMany: { where: {}, data: { isCorrect: false } } } } });
   expect(parsePresentationSnapshot((await db.questionPresentation.findUniqueOrThrow({ where: { id: row.id } })).snapshot)).toEqual(snapshot);
+  const concurrent = await Promise.all([submit(validAnswer), submit({ ...validAnswer, choiceId: wrongChoice.id })]);
+  expect(concurrent.map((response) => response.statusCode).sort()).toEqual([200, 409]);
+  const success = concurrent.find((response) => response.statusCode === 200);
+  if (!success) throw new Error('Missing success');
+  const result = answerResponseSchema.parse(success.json());
+  expect(result).toEqual({
+    presentationId: row.id, selectedChoiceId: result.selectedChoiceId, correctChoiceId: snapshot.correctChoiceId,
+    isCorrect: result.selectedChoiceId === snapshot.correctChoiceId,
+    explanationThai: null, explanationEnglish: 'Secret explanation', explanationRussian: null,
+    trapExplanationThai: null, trapExplanationEnglish: 'Secret trap', trapExplanationRussian: null,
+  });
+  expect(success.headers['cache-control']).toBe('no-store');
+  expect(concurrent.find((response) => response.statusCode === 409)?.json()).toEqual({ error: 'Answer already submitted' });
+  const saved = await db.answerAttempt.findUniqueOrThrow({ where: { presentationId: row.id } });
+  expect(saved).toMatchObject({ presentationId: row.id, selectedChoiceId: result.selectedChoiceId, isCorrect: result.isCorrect, submittedAt: now });
+  expect(await db.answerAttempt.count({ where: { presentationId: row.id } })).toBe(1);
+  await assertError(validAnswer, 409, 'Answer already submitted');
+  await assertError({ ...validAnswer, choiceId: randomUUID() }, 400, 'Bad Request');
+  expect(await db.answerAttempt.findUniqueOrThrow({ where: { presentationId: row.id } })).toEqual(saved);
+  // A separate correct answer ensures both score branches are covered regardless of the race winner.
+  const correctPresentation = await db.questionPresentation.create({ data: { userId, questionId: question.id, snapshot } });
+  expect(answerResponseSchema.parse((await submit({ ...validAnswer, presentationId: correctPresentation.id })).json()).isCorrect).toBe(true);
   const malformed = await next();
   expect(malformed.statusCode).toBe(500);
   expect(malformed.json()).toEqual({ error: 'Internal Server Error' });
-  expect(await db.questionPresentation.count({ where: { userId } })).toBe(1);
+  expect(await db.questionPresentation.count({ where: { userId } })).toBe(3);
 });

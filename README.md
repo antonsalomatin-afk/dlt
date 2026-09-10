@@ -225,3 +225,27 @@ Missing/expired authentication returns `401 {error: "Unauthorized"}`; invalid bo
 Selection is the first active VERIFIED question for the selected vehicle ordered by ID; repetitions are possible. A repeatable-read transaction snapshots question wording, choices, correct choice ID and explanations into a user-owned `QuestionPresentation`. Source edits do not alter prior snapshots. Snapshot version 1 is runtime validated; future consumers must use `parsePresentationSnapshot` when reading persisted JSON. Answer submission is not implemented yet.
 
 The practice integration suite creates a temporary randomly named database, applies the full migration chain and drops only that database after testing. The local integration database role therefore needs permission to create databases. Imported development fixtures are never activated by this endpoint or its tests.
+
+### Submit a practice answer
+
+`POST /practice/answer` uses the existing bearer session and accepts only
+`{ "presentationId": "<UUID>", "choiceId": "<UUID>" }`. A successful200 response
+contains `presentationId`, `selectedChoiceId`, `correctChoiceId`, `isCorrect`,
+`explanationThai`, `explanationEnglish`, `explanationRussian`,
+`trapExplanationThai`, `trapExplanationEnglish`, and `trapExplanationRussian`.
+The six explanation fields are nullable. Grading and explanations use the validated
+versioned presentation snapshot, even after source questions or choices change.
+
+Missing/invalid/expired authentication returns401 `{ "error": "Unauthorized" }`.
+Malformed bodies or choices absent from the snapshot return400
+`{ "error": "Bad Request" }`; unknown and foreign presentations both return404
+`{ "error": "Presentation not found" }`. A repeated valid owned submission returns409
+`{ "error": "Answer already submitted" }`. Corrupt snapshots and unexpected failures
+return sanitized500 `{ "error": "Internal Server Error" }`. All responses use
+`Cache-Control: no-store`. Validation precedes insertion: an unknown choice remains400
+even on an already answered presentation. Each presentation has at most one persisted
+answer, enforced by a database unique constraint, including concurrent requests.
+Ownership/snapshot checks, answer insertion and result validation share one transaction;
+failed submissions cannot change an existing answer. Selected choice UUIDs refer to
+snapshot choices, so they deliberately have no foreign key to mutable source choices.
+The practice integration test applies the full migration chain to a fresh isolated database.

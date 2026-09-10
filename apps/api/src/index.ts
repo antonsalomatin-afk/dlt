@@ -2,7 +2,8 @@ import { createHash, randomBytes } from 'node:crypto';
 import Fastify from 'fastify';
 import { z } from 'zod';
 import type { PrismaClient } from '../../../packages/database/src/index.ts';
-import { presentationResponseSchema, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
+import { parsePresentationSnapshot, presentationResponseSchema, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
+import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '../../../packages/database/src/answer.ts';
 import { InvalidInitDataError, validateInitData } from '../../../packages/telegram/src/index.ts';
 
 export const userSchema = z.strictObject({
@@ -13,7 +14,7 @@ export const loginSchema = z.strictObject({ token: z.string().regex(/^[A-Za-z0-9
 const bodySchema = z.strictObject({ initData: z.string().min(1).max(16384).refine((value) => Buffer.byteLength(value, 'utf8') <= 16384) });
 const bearerSchema = z.string().regex(/^Bearer [A-Za-z0-9_-]{43}$/u);
 const vehicleSchema = z.strictObject({ vehicleType: z.enum(['CAR', 'MOTORCYCLE']) });
-const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available']) });
+const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available', 'Presentation not found', 'Answer already submitted']) });
 const userSelect = { id: true, username: true, firstName: true, selectedVehicleType: true } as const;
 const digest = (token: string) => createHash('sha256').update(token).digest('hex');
 const lifetimeMs = 24 * 60 * 60 * 1000;
@@ -24,7 +25,7 @@ export function createApi(options: { database: PrismaClient; botToken: string; n
   const app = Fastify({ logger: false, bodyLimit: 100000 });
   const now = options.now ?? (() => new Date());
   app.addHook('onRequest', async (request, reply) => {
-    if (request.routeOptions.url === '/practice/next') reply.header('Cache-Control', 'no-store');
+    if (['/practice/next', '/practice/answer'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown) {
     const authorization = bearerSchema.safeParse(header);
@@ -97,6 +98,35 @@ export function createApi(options: { database: PrismaClient; botToken: string; n
     }, { isolationLevel: 'RepeatableRead' });
     if (!result) return reply.code(404).send(errorSchema.parse({ error: 'No questions available' }));
     return result;
+  });
+  app.post('/practice/answer', async (request, reply) => {
+    const user = await authenticatedUser(request.headers.authorization);
+    if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+    const body = answerRequestSchema.safeParse(request.body);
+    if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+    try {
+      const result = await options.database.$transaction(async (tx) => {
+        const presentation = await tx.questionPresentation.findFirst({ where: { id: body.data.presentationId, userId: user.id } });
+        if (!presentation) return { error: 'Presentation not found' } as const;
+        const snapshot = parsePresentationSnapshot(presentation.snapshot);
+        if (!snapshot.question.choices.some((choice) => choice.id === body.data.choiceId)) return { error: 'Bad Request' } as const;
+        const answer = await tx.answerAttempt.create({ data: {
+          presentationId: presentation.id, selectedChoiceId: body.data.choiceId,
+          isCorrect: body.data.choiceId === snapshot.correctChoiceId, submittedAt: now(),
+        } });
+        return answerResponseSchema.parse({
+          presentationId: presentation.id, selectedChoiceId: answer.selectedChoiceId, isCorrect: answer.isCorrect,
+          correctChoiceId: snapshot.correctChoiceId,
+          explanationThai: snapshot.explanationThai, explanationEnglish: snapshot.explanationEnglish, explanationRussian: snapshot.explanationRussian,
+          trapExplanationThai: snapshot.trapExplanationThai, trapExplanationEnglish: snapshot.trapExplanationEnglish, trapExplanationRussian: snapshot.trapExplanationRussian,
+        });
+      });
+      if ('error' in result) return reply.code(result.error === 'Bad Request' ? 400 : 404).send(errorSchema.parse(result));
+      return result;
+    } catch (error) {
+      if (isDuplicateAnswer(error)) return reply.code(409).send(errorSchema.parse({ error: 'Answer already submitted' }));
+      throw error;
+    }
   });
   return app;
 }
