@@ -35,7 +35,7 @@ Goal: make repository-driven development reliable.
 
 ## Epic 3 — Question Vertical Slice
 
-- choose vehicle type
+- TASK-010 — ACCEPTED — authenticated vehicle selection
 - fetch next question
 - hide correctness before submission
 - submit answer
@@ -112,6 +112,7 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
+
 
 
 

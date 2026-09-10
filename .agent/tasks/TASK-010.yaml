@@ -1,6 +1,6 @@
 id: TASK-010
 title: Persist authenticated vehicle selection
-status: BUILDING
+status: ACCEPTED
 epic: Epic 3 — Question Vertical Slice
 priority: P1
 objective: Allow a logged-in user to choose CAR or MOTORCYCLE for practice.
@@ -33,3 +33,7 @@ supervisor_refinement:
   - Integration tests cover both vehicles, changing preference, GET /me persistence, two-user isolation and unchanged records for rejected requests.
   - Keep errors sanitized and validate response DTOs; do not introduce frontend work or schema changes.
 
+
+
+accepted_commit: 3a993bc8af34d6ba53f74be22cfbbc266eb76dd1
+review_file: .agent/reviews/TASK-010-review-01.md
