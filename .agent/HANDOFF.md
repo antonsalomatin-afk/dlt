@@ -1,7 +1,6 @@
-# Supervisor handoff — TASK-010 accepted, budget checkpoint
+# Supervisor handoff — TASK-011 review pending
+TASK-001 through010 accepted in main. TASK-011 implementation9eaf55cd75abb871c453f153d06e9d38a57b083e committed on codex/task-011. Authoritative .agent/checks/TASK-011-checks-01.txt PASS: pnpm check104 unit tests, Prisma validation, integration12 tests including fresh isolated four-migration chain. Independent review not yet assigned; no acceptance or merge permitted until PASS.
 
-TASK-001 through TASK-010 accepted. TASK-009 implementation279a31cafb7d6d7a375df6fff47ea45d322c89e4; TASK-010 implementation3a993bc8af34d6ba53f74be22cfbbc266eb76dd1. Independent review01 PASS for each. TASK-010 authoritative pnpm check PASS103 unit tests and integration PASS11; TASK-009 also Prisma/fresh migration chain PASS. Evidence and review files are committed under .agent.
+User permitted remaining window use, then restored80 percent ceiling. Latest observed five-hour usage100 percent on2026-09-10. Reset advertised2026-09-10T09:27:14Z (11:27Madrid). Pause now; verify live usage before resume. No reset credits authorized. No new schedules created. Preserve untracked user ZIP.
 
-Paused2026-09-10 at last observed61 percent five-hour usage to preserve margin below user80 percent ceiling. No active Builder. Current next task TASK-011 is PLANNED with detailed refinements in its YAML; read and resolve its refinement-required note before assignment. TASK-012 remains planned. Do not begin next Builder until budget is adequate; check live account usage before resuming. Never redeem reset credits without authorization.
-
-Follow Supervisor -> Builder -> authoritative checks -> independent Reviewer -> fix -> PASS -> accept -> next task. Main contains accepted work only. Preserve untracked thai-dlt-agent-starter.zip. No additional scheduled continuations are authorized; prior two executions finished. No Product Owner blocker currently exists.
+Next: read governance/task/diff and authoritative evidence, assign independent Reviewer TASK-011-review-01.md, fix/check/review if necessary, accept only PASS. TASK-012 refinement prepared, still PLANNED. No Product Owner blocker. No running Builder/check process.
