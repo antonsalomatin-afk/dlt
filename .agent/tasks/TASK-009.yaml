@@ -1,6 +1,6 @@
 id: TASK-009
 title: Add API authentication and user session
-status: BUILDING
+status: ACCEPTED
 epic: Epic 2 — Telegram Entry and Authentication
 priority: P1
 objective: Establish the Fastify API authentication boundary and persist validated Telegram users.
@@ -49,3 +49,7 @@ supervisor_refinement:
   - Include concurrent or repeated login consistency, preference preservation, missing/malformed/unknown/expired bearer tokens and digest-only storage.
   - Apply a forward-only migration; verify full migration chain on a fresh isolated local database.
   - Include source and tests in strict root gates. Keep generated client uncommitted; no deployment configuration.
+
+
+accepted_commit: 279a31cafb7d6d7a375df6fff47ea45d322c89e4
+review_file: .agent/reviews/TASK-009-review-01.md

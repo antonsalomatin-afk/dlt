@@ -31,7 +31,7 @@ Goal: make repository-driven development reliable.
 - Live Telegram launch remains unverified until credentials/UI are available
 - `TASK-008` — ACCEPTED — signed initData server validation
 - Freshness policy validated under ADR-003
-- user upsert/session behavior
+- TASK-009 — ACCEPTED — authenticated user upsert and opaque sessions
 
 ## Epic 3 — Question Vertical Slice
 
@@ -112,6 +112,7 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
+
 
 
 
