@@ -14,6 +14,7 @@ enum VehicleType {
 }
 
 model User {
+  sessions            Session[]
   id                  String       @id @default(uuid()) @db.Uuid
   telegramUserId      BigInt       @unique
   username            String?
@@ -108,4 +109,15 @@ model QuestionChoice {
   isCorrect   Boolean   @default(false)
 
   @@unique([questionId, key])
+}
+
+model Session {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique @db.Char(64)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  expiresAt DateTime @db.Timestamptz(3)
+
+  @@index([userId])
 }

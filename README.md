@@ -185,3 +185,27 @@ handlers. Fixed error messages avoid logging tokens or raw Telegram payloads.
 Live polling contacts Telegram and may reply to users, so use a dedicated
 development bot when manually testing. No real token is needed for repository
 checks. The lifecycle follows the [grammY bot API](https://grammy.dev/ref/core/bot).
+
+## API authentication (local development)
+
+Run `pnpm db:start`, `pnpm db:migrate`, then `pnpm api:start` with server-only
+`BOT_TOKEN` and `DATABASE_URL` in `.env`. The API binds to `127.0.0.1:3001`;
+`API_PORT` optionally changes the port. It does not contact Telegram.
+
+`POST /auth/telegram` accepts exactly `{ "initData": "<raw signed data>" }`.
+Successful login returns `{ token, expiresAt, user }`, where user contains only
+`id`, nullable `username`, nullable `firstName`, and nullable `selectedVehicleType`.
+Invalid authentication/body shape returns `401 { "error": "Unauthorized" }`;
+malformed HTTP JSON returns a sanitized 400. Internal failures return a sanitized 500.
+
+Use `Authorization: Bearer <token>` for `GET /me`, which returns the same user DTO.
+Missing, malformed, unknown, revoked and expired sessions return the same 401.
+Sessions expire exactly 24 hours after issuance; equality with expiry is expired.
+Only SHA-256 token digests are persisted. Deleting a session revokes it; deleting its
+user cascades sessions. Login refreshes Telegram profile and lastSeenAt while preserving
+vehicle preference. Repeated signed data within the 300-second validation window is allowed.
+Responses disable caching, and this API disables request logging to keep credentials out of logs.
+Keep future Mini App tokens in memory; use HTTPS for any nonlocal transport.
+
+`pnpm test:integration` includes synthetic signed authentication requests through Fastify
+injection and real PostgreSQL transactions. No live Telegram token is needed for tests.
