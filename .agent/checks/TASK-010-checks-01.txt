@@ -1,0 +1,54 @@
+Commit: 3a993bc8af34d6ba53f74be22cfbbc266eb76dd1
+COMMAND: pnpm check
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ pnpm db:generate && tsc --noEmit
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 170ms
+
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 144ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  7 passed (7)
+      Tests  103 passed (103)
+   Start at  06:39:44
+   Duration  2.00s (tests 49%, import 31%, transform 18%, worker 2%)
+
+EXIT_CODE: 0
+COMMAND: pnpm test:integration
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 162ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:46720) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  4 passed (4)
+      Tests  11 passed (11)
+   Start at  06:39:53
+   Duration  7.61s (tests 74%, import 20%, transform 6%)
+
+EXIT_CODE: 0
