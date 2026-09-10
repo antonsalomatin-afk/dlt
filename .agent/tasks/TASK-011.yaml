@@ -1,6 +1,6 @@
 id: TASK-011
 title: Present a question without exposing its answer
-status: PLANNED
+status: BUILDING
 epic: Epic 3 — Question Vertical Slice
 priority: P1
 objective: Return an eligible question and persist its user-owned presentation for later submission.
@@ -31,7 +31,7 @@ required_checks:
 dependencies:
   - TASK-010
 supervisor_refinement_required:
-  - Specify DTO, empty/onboarding responses, presentation schema and snapshot runtime validation before Builder assignment.
+  - Resolved by supervisor_refinement below; follow its exact contracts.
 owner_decision_required: false
 commit_hint: 'feat(practice): present questions with server-owned snapshots'
 
@@ -45,3 +45,4 @@ supervisor_refinement:
   - Read the question and its choices consistently and store the exact validated snapshot; use a suitable database transaction so concurrent content edits cannot mix versions. Source edits must not mutate existing snapshots.
   - Use Cache-Control no-store and existing session authentication; test absent/expired sessions, vehicle mismatch, inactive/draft exclusion, empty bank, malformed content, hidden-field absence and persisted snapshot stability after source edits.
   - Tests create and remove only owned synthetic data; never activate imported development fixtures. Verify forward migration and full fresh isolated migration chain.
+
