@@ -1,6 +1,6 @@
 id: TASK-012
 title: Submit one answer per question presentation
-status: PLANNED
+status: BUILDING
 epic: Epic 3 — Question Vertical Slice
 priority: P1
 objective: Score and persist an authenticated answer against the exact presented snapshot.
@@ -30,7 +30,7 @@ required_checks:
 dependencies:
   - TASK-011
 supervisor_refinement_required:
-  - Specify endpoint/DTO/status codes and concurrent-duplicate tests before Builder assignment.
+  - Resolved by supervisor_refinement below.
 owner_decision_required: false
 commit_hint: 'feat(practice): persist one scored answer per presentation'
 
@@ -43,3 +43,4 @@ supervisor_refinement:
   - Transactionally validate ownership and snapshot, insert answer and validate the result DTO; classify only the expected presentation uniqueness conflict as duplicate, keeping other errors sanitized500.
   - Test correct and incorrect answers, malformed requests, unknown choices, foreign ownership without disclosure, repeated submission and concurrent submissions with exactly one200 and one persisted row; later source edits must not change grading or explanations.
   - Invalid or duplicate submissions must not alter the persisted answer. Use no-store responses and test-owned synthetic records only. Verify forward migration and fresh isolated migration chain.
+
