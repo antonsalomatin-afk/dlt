@@ -13,13 +13,13 @@
   "notes": "TASK-013 uncommitted; Builder production build/lint PASS. Check failed Prisma generation collision from concurrent commands; integration DB stopped; Chromium download failed, E2E not run. See HANDOFF.",
   "usagePolicy": {
     "maxSessionUsedPercent": 80,
-    "latestObservedUsedPercent": 77,
+    "latestObservedUsedPercent": 99,
     "windowMinutes": 300,
-    "checkedAt": "2026-09-14",
+    "checkedAt": "2026-09-14T07:50:24Z",
     "instruction": "Check five-hour account usage frequently; stop new Builder work by 55 percent and checkpoint by 70 percent to reserve margin below user ceiling80. Never redeem reset credits without authorization."
   },
   "executionPaused": true,
-  "pauseReason": "Five-hour usage77 percent; checkpoint below user80 ceiling.",
+  "pauseReason": "Pre-reset continuation found99 percent usage; preserve checkpoint for authorized post-reset run at08:12:06Z.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
