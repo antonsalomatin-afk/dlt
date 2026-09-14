@@ -10,3 +10,7 @@ coverage/
 *.log
 .local-postgres/
 packages/database/generated/
+
+playwright-report/
+test-results/
+apps/web/next-env.d.ts

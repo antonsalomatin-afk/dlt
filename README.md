@@ -22,8 +22,8 @@ Use `pnpm install --frozen-lockfile` for reproducible installs in automated chec
 The default quality checks need no running database or external services.
 
 The root currently runs ESLint, a strict TypeScript check of the repository tests,
-and a Vitest sanity test. Workspace packages will live in `apps/*` and
-`packages/*` as their tasks require them; no application is implemented yet.
+and Vitest tests. Workspace packages live in `apps/*` and
+`packages/*`, including the API, bot and Mini App.
 New TypeScript packages should extend `tsconfig.base.json` and connect their
 checks to the root scripts when introduced.
 
@@ -155,7 +155,7 @@ Practice queries must filter `active: true`, `verificationStatus: 'VERIFIED'`,
 vehicle type and category; a composite index supports those predicates. Shared
 concept IDs group question variants. Choice `isCorrect` is database-only answer
 metadata: future delivery DTOs must explicitly select safe fields and omit it
-until submission. No delivery endpoint or client DTO exists yet.
+until submission. The presentation endpoint below uses an explicit safe DTO.
 
 ### Import development fixtures
 
@@ -222,7 +222,7 @@ It returns `200 {presentationId, question}` with question ID, Thai/exam-English/
 
 Missing/expired authentication returns `401 {error: "Unauthorized"}`; invalid bodies return `400 {error: "Bad Request"}`; missing vehicle selection returns `409 {error: "Vehicle selection required"}`; an empty eligible bank returns `404 {error: "No questions available"}`. Invalid eligible content returns sanitized `500 {error: "Internal Server Error"}` without storing a presentation.
 
-Selection is the first active VERIFIED question for the selected vehicle ordered by ID; repetitions are possible. A repeatable-read transaction snapshots question wording, choices, correct choice ID and explanations into a user-owned `QuestionPresentation`. Source edits do not alter prior snapshots. Snapshot version 1 is runtime validated; future consumers must use `parsePresentationSnapshot` when reading persisted JSON. Answer submission is not implemented yet.
+Selection is the first active VERIFIED question for the selected vehicle ordered by ID; repetitions are possible. A repeatable-read transaction snapshots question wording, choices, correct choice ID and explanations into a user-owned `QuestionPresentation`. Source edits do not alter prior snapshots. Snapshot version 1 is runtime validated; future consumers must use `parsePresentationSnapshot` when reading persisted JSON. Answer submission is described below.
 
 The practice integration suite creates a temporary randomly named database, applies the full migration chain and drops only that database after testing. The local integration database role therefore needs permission to create databases. Imported development fixtures are never activated by this endpoint or its tests.
 
@@ -249,3 +249,33 @@ Ownership/snapshot checks, answer insertion and result validation share one tran
 failed submissions cannot change an existing answer. Selected choice UUIDs refer to
 snapshot choices, so they deliberately have no foreign key to mutable source choices.
 The practice integration test applies the full migration chain to a fresh isolated database.
+
+
+## Mini App (local development)
+
+`apps/web` is the Next.js / React / Tailwind Mini App. Run `pnpm web:dev`
+from the root and open http://127.0.0.1:3000. Run the API in a separate
+terminal using the API setup above. A regular browser shows Telegram launch
+guidance; authentication requires signed raw data supplied by Telegram.
+There is no development login bypass.
+
+The server-only `API_ORIGIN` defaults to `http://127.0.0.1:3001`. To override,
+set it in your shell (PowerShell: `$env:API_ORIGIN = 'http://127.0.0.1:3001'`)
+or in ignored `apps/web/.env.local`. The root `.env` is used by API/database
+commands, not automatically loaded by Next. Only HTTP(S) origins without
+credentials, paths, query strings or fragments are accepted; nonlocal origins
+require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`
+and `/me/vehicle` only. Set the destination before building; rewrites are
+included in the production build. Never prefix secrets with `NEXT_PUBLIC_`.
+
+The official Telegram bridge loads before authentication. Login and vehicle
+responses are runtime validated. Bearer sessions remain in memory and disappear
+on reload or protected 401. Saved vehicle preferences come from the API.
+
+`pnpm build` makes a production web build; `pnpm web:start` serves it locally.
+For browser checks, run `pnpm exec playwright install chromium` once, then
+`pnpm build` and `pnpm test:e2e`. Tests start the production server on port3000
+(which must be free), intercept Telegram/API traffic only in the test harness,
+and need no API, database or live Telegram credentials. `pnpm check` also checks
+web TypeScript and tests API-origin validation. Integration checks remain
+`pnpm test:integration` against local migrated PostgreSQL.

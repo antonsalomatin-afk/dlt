@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root { color: #233b32; background: #f5f3eb; font-family: Arial, Helvetica, sans-serif; }
+body { margin: 0; }
+button, input, a { -webkit-tap-highlight-color: transparent; }
+button, a, input { outline-offset: 5px; }
+:focus-visible { outline: 3px solid #ba580f; }
+.brand { display: flex; align-items: center; font-size: 24px; font-weight: 800; letter-spacing: -1px; text-decoration: none; }
+.brand-mark { display: grid; place-items: center; margin-right: 9px; width: 34px; height: 34px; background: #244c3d; color: #f5f3eb; border-radius: 10px; }
+.eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 1.7px; }
+.accent { color: #61774c; }
+.onboarding-grid { display: grid; gap: 28px; margin: 42px 0; flex: 1; align-items: center; }
+h1 { font-size: clamp(38px, 5vw, 58px); line-height: 1.04; letter-spacing: -2.6px; font-weight: 600; margin: 18px 0; }
+.intro-copy { max-width: 310px; color: #59675e; font-size: 16px; line-height: 1.6; }
+.road-art { display: none; position: relative; margin-top: 36px; height: 170px; overflow: hidden; border-radius: 120px 120px 20px 20px; background: #e6e8d8; }
+.sun { position: absolute; height: 62px; width: 62px; border-radius: 50%; background: #deb463; top: 24px; right: 48px; }
+.road { position: absolute; height: 280px; width: 100px; background: #698068; transform: rotate(27deg); left: 95px; top: 35px; border: 8px solid #c8cfb6; border-radius: 45% 45% 0 0; display: flex; flex-direction: column; align-items: center; gap: 20px; padding-top: 20px; }
+.road i { width: 3px; height: 30px; background: #f5f3eb; }
+.road-caption { position: absolute; bottom: 14px; right: 14px; font-size: 9px; letter-spacing: 1px; }
+.panel { padding: 27px 22px; background: #fffef9; border: 1px solid #e2e3d7; border-radius: 24px; box-shadow: 0 15px 50px #243d3208; }
+h2 { margin: 13px 0 10px; font-size: 27px; line-height: 1.15; font-weight: 600; letter-spacing: -1px; }
+.panel-copy { color: #667167; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+.vehicle-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.vehicle-card { cursor: pointer; border: 1px solid #dce0d4; border-radius: 14px; padding: 12px; background: #fbfbf4; position: relative; text-align: center; }
+.vehicle-card.selected { border: 2px solid #3e674f; padding: 11px; background: #eef1e5; }
+.vehicle-card input { display: block; margin-left: auto; width: 17px; height: 17px; accent-color: #31563f; }
+.vehicle-card svg { width: 100%; margin: 6px 0 10px; }
+.vehicle-card span { font-size: 14px; font-weight: 700; }
+fieldset:disabled .vehicle-card { cursor: wait; opacity: .7; }
+.saved { margin-top: 18px; font-size: 12px; color: #657060; }
+.message { display: flex; align-items: flex-start; gap: 9px; margin: 19px 0; font-size: 13px; line-height: 1.55; color: #52674e; }
+.message > span { font-weight: bold; }
+.message.error { color: #8d3c24; }
+.primary { display: flex; justify-content: space-between; width: 100%; background: #244c3d; color: white; padding: 16px 20px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; }
+.primary:hover:enabled { background: #163a2c; }
+.primary:disabled { opacity: .6; cursor: default; }
+.footnote { text-align: center; font-size: 11px; color: #738070; margin-top: 15px; }
+footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; color: #697466; }
+@media (min-width: 720px) { .onboarding-grid { grid-template-columns: 1fr 1fr; gap: 70px; margin: 60px 0; } .panel { padding: 34px 28px; } .road-art { display: block; } }

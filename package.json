@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "api:start": "node --env-file-if-exists=.env apps/api/src/main.ts",
     "bot:start": "node --env-file-if-exists=.env apps/bot/src/main.ts",
-    "typecheck": "pnpm db:generate && tsc --noEmit",
+    "typecheck": "pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck",
     "test": "pnpm db:generate && vitest run",
     "check": "pnpm lint && pnpm typecheck && pnpm test",
     "db:start": "node --env-file=.env tools/database/local.ts start",
@@ -22,10 +22,15 @@
     "db:generate": "pnpm prisma generate",
     "db:migrate": "pnpm prisma migrate deploy",
     "content:import": "pnpm db:generate && node --env-file=.env tools/content/import.ts",
-    "test:integration": "pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts"
+    "test:integration": "pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts",
+    "build": "pnpm --filter @thai-dlt/web build",
+    "web:dev": "pnpm --filter @thai-dlt/web dev",
+    "test:e2e": "playwright test",
+    "web:start": "pnpm --filter @thai-dlt/web start"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "1.63.0",
     "@types/node": "^24.13.3",
     "@types/node-fetch": "2.6.13",
     "@types/pg": "8.23.1",
