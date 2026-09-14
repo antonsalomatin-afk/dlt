@@ -1,6 +1,6 @@
 id: TASK-014
 title: Connect Mini App question and answer flow
-status: PLANNED
+status: BUILDING
 epic: Epic 3 — Question Vertical Slice
 objective: Display questions, submit one answer, show explanations and continue using the accepted API.
 acceptance:
@@ -18,7 +18,7 @@ required_checks:
   - pnpm test:e2e
   - pnpm test:integration
 supervisor_refinement_required:
-  - Refine display-language controls, response validation, retry semantics and explicit proxy paths after TASK-013 acceptance.
+  - Resolved by supervisor_refinement below; apply ADR005.
 dependencies:
   - TASK-013
 owner_decision_required: false
@@ -34,3 +34,4 @@ supervisor_refinement:
   - Empty bank404 shows a friendly no-questions message without activating content; missing vehicle409 returns to selection. Authentication401 clears token/session. Malformed response and unknown errors show safe local recovery guidance.
   - Browser tests mock API only from test harness and cover correct/incorrect results, all four choices, language fallback, continuation, empty bank,401, failed submit retry409 and invalid DTO. No live content or Telegram credentials.
   - Validate answer response presentationId and selectedChoiceId against the submitted request, require correctChoiceId belongs to the current question and isCorrect agrees with the two choice IDs; inconsistent responses show recovery guidance instead of a result.
+
