@@ -33,3 +33,4 @@ supervisor_refinement:
   - Continue clears prior result and selection only when starting the next request, and never submits an old presentation. Disable overlapping fetches and ignore stale responses after session loss or vehicle change.
   - Empty bank404 shows a friendly no-questions message without activating content; missing vehicle409 returns to selection. Authentication401 clears token/session. Malformed response and unknown errors show safe local recovery guidance.
   - Browser tests mock API only from test harness and cover correct/incorrect results, all four choices, language fallback, continuation, empty bank,401, failed submit retry409 and invalid DTO. No live content or Telegram credentials.
+  - Validate answer response presentationId and selectedChoiceId against the submitted request, require correctChoiceId belongs to the current question and isCorrect agrees with the two choice IDs; inconsistent responses show recovery guidance instead of a result.
