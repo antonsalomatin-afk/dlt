@@ -124,3 +124,5 @@ Potential scope:
 
 
 
+
+- TASK-013 — ACCEPTED — Mini App authentication and vehicle onboarding; TASK-014 practice UI next.

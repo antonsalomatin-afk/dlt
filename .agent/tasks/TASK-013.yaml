@@ -1,6 +1,6 @@
 id: TASK-013
 title: Add Mini App authentication and vehicle onboarding
-status: BUILDING
+status: ACCEPTED
 epic: Epic 3 — Question Vertical Slice
 priority: P1
 objective: Establish a usable Next.js Mini App that authenticates through the existing API and persists vehicle selection.
@@ -46,3 +46,7 @@ commit_hint: 'feat(web): add Telegram authentication and vehicle onboarding'
 supervisor_refinement:
   - During README setup update, remove stale claim that answer submission is unimplemented (TASK-012 review01 minor).
 
+
+
+accepted_commit: 053c0fc44e7f3f4ce77a567c0fb0e9c411e6a991
+review_file: .agent/reviews/TASK-013-review-01.md
