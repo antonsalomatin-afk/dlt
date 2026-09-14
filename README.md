@@ -279,3 +279,10 @@ For browser checks, run `pnpm exec playwright install chromium` once, then
 and need no API, database or live Telegram credentials. `pnpm check` also checks
 web TypeScript and tests API-origin validation. Integration checks remain
 `pnpm test:integration` against local migrated PostgreSQL.
+
+Practice is available after saving a vehicle. The Mini App requests same-origin
+`POST /practice/next` and `/practice/answer` through the explicit API rewrites.
+English is the default; Russian/Thai wording and explanations fall back to English.
+Answers remain selected after a connection failure so Retry sends the same IDs.
+An already-submitted response offers a new question without reconstructing a score.
+Sessions stay in memory; expired sessions require reopening from Telegram.

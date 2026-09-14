@@ -5,7 +5,8 @@ const origin = apiOrigin(process.env.API_ORIGIN);
 const config: NextConfig = {
   poweredByHeader: false,
   async rewrites() {
-    return ['/auth/telegram', '/me', '/me/vehicle'].map((path) => ({ source: path, destination: `${origin}${path}` }));
+    return ['/auth/telegram', '/me', '/me/vehicle', '/practice/next', '/practice/answer'].map((path) => ({ source: path, destination: `${origin}${path}` }));
   },
 };
 export default config;
+

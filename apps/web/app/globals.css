@@ -37,3 +37,18 @@ fieldset:disabled .vehicle-card { cursor: wait; opacity: .7; }
 .footnote { text-align: center; font-size: 11px; color: #738070; margin-top: 15px; }
 footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; color: #697466; }
 @media (min-width: 720px) { .onboarding-grid { grid-template-columns: 1fr 1fr; gap: 70px; margin: 60px 0; } .panel { padding: 34px 28px; } .road-art { display: block; } }
+.secondary { font-size: 13px; text-decoration: underline; cursor: pointer; margin: 8px 0 16px; }
+.languages { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; margin: 12px 0 20px; }
+.languages legend { margin-bottom: 10px; font-weight: bold; }
+.question { font-size: 21px; line-height: 1.4; margin: 18px 0; }
+.answers { display: grid; gap: 10px; margin-top: 20px; }
+.answer-choice { display: flex; align-items: baseline; gap: 10px; border: 1px solid #dce0d4; border-radius: 12px; padding: 14px; font-size: 14px; line-height: 1.5; cursor: pointer; }
+.answer-choice.selected { border-color: #3e674f; background: #eef1e5; }
+.answers:disabled .answer-choice { cursor: default; }
+.practice input { accent-color: #31563f; }
+.practice details { font-size: 13px; line-height: 1.5; }
+.practice summary { cursor: pointer; }
+.result { background: #eef1e5; border-radius: 14px; padding: 18px; margin-top: 20px; font-size: 14px; line-height: 1.6; }
+.result h3 { font-size: 22px; font-weight: bold; }
+.result h4 { font-weight: bold; margin-top: 12px; }
+.next { margin-top: 12px; }
