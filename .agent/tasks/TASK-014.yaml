@@ -22,3 +22,14 @@ supervisor_refinement_required:
 dependencies:
   - TASK-013
 owner_decision_required: false
+
+supervisor_refinement:
+  - Add explicit ADR005 rewrites only for /practice/next and /practice/answer; retain existing authenticated memory session.
+  - Render normalized English by default; offer English/Russian/Thai wording controls with English fallback when translation is null. Exam English can be shown separately on request when available. Language choice is local UI state; do not add a persisted preference API.
+  - Begin practice only after vehicle choice is saved. POST /practice/next with an empty object; validate complete strict presentation DTO before display.
+  - Use radio-group answer selection and explicit Submit; no correctness or explanation is displayed until a validated successful answer response. Preserve the submitted choice in the result and identify the correct choice by stable ID, never position.
+  - On success, show correct/incorrect text and localized explanation/trap explanation, with English fallback and a plain unavailable message when all relevant text is null.
+  - While submitting, disable further submission. Transport failure leaves the presentation and selected choice visible with Retry; a409 retry result shows already-submitted guidance and allows a new question without inventing a score.
+  - Continue clears prior result and selection only when starting the next request, and never submits an old presentation. Disable overlapping fetches and ignore stale responses after session loss or vehicle change.
+  - Empty bank404 shows a friendly no-questions message without activating content; missing vehicle409 returns to selection. Authentication401 clears token/session. Malformed response and unknown errors show safe local recovery guidance.
+  - Browser tests mock API only from test harness and cover correct/incorrect results, all four choices, language fallback, continuation, empty bank,401, failed submit retry409 and invalid DTO. No live content or Telegram credentials.
