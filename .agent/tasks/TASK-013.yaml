@@ -42,3 +42,6 @@ dependencies:
   - TASK-012
 owner_decision_required: false
 commit_hint: 'feat(web): add Telegram authentication and vehicle onboarding'
+
+supervisor_refinement:
+  - During README setup update, remove stale claim that answer submission is unimplemented (TASK-012 review01 minor).

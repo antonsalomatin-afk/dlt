@@ -1,6 +1,6 @@
 id: TASK-012
 title: Submit one answer per question presentation
-status: BUILDING
+status: ACCEPTED
 epic: Epic 3 — Question Vertical Slice
 priority: P1
 objective: Score and persist an authenticated answer against the exact presented snapshot.
@@ -44,3 +44,7 @@ supervisor_refinement:
   - Test correct and incorrect answers, malformed requests, unknown choices, foreign ownership without disclosure, repeated submission and concurrent submissions with exactly one200 and one persisted row; later source edits must not change grading or explanations.
   - Invalid or duplicate submissions must not alter the persisted answer. Use no-store responses and test-owned synthetic records only. Verify forward migration and fresh isolated migration chain.
 
+
+
+accepted_commit: ee8583614a98dd9b6379af361a1ceb0ae4095f38
+review_file: .agent/reviews/TASK-012-review-01.md

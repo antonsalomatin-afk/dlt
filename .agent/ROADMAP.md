@@ -38,7 +38,7 @@ Goal: make repository-driven development reliable.
 - TASK-010 — ACCEPTED — authenticated vehicle selection
 - TASK-011 — ACCEPTED — present eligible question with server-owned snapshot
 - hide correctness before submission
-- submit answer
+- TASK-012 — ACCEPTED — submit one snapshot-scored answer with persisted result
 - persist answer
 - return result/explanation
 - continue to next question
@@ -112,6 +112,7 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
+
 
 
 
