@@ -1,0 +1,24 @@
+id: TASK-014
+title: Connect Mini App question and answer flow
+status: PLANNED
+epic: Epic 3 — Question Vertical Slice
+objective: Display questions, submit one answer, show explanations and continue using the accepted API.
+acceptance:
+  - Fetch a presentation for the saved vehicle and render wording and four accessible answer choices without hidden correctness.
+  - Submit only the selected presentation/choice IDs, prevent duplicate UI submission and render the validated server result and explanation.
+  - Continue fetches a new presentation and clears previous choice/result; empty bank, expired session and network errors are recoverable.
+  - Browser tests cover correct and incorrect results, continuation, empty bank, session expiry and duplicate/network failures.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Refine display-language controls, response validation, retry semantics and explicit proxy paths after TASK-013 acceptance.
+dependencies:
+  - TASK-013
+owner_decision_required: false

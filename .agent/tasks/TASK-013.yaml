@@ -1,0 +1,44 @@
+id: TASK-013
+title: Add Mini App authentication and vehicle onboarding
+status: PLANNED
+epic: Epic 3 — Question Vertical Slice
+priority: P1
+objective: Establish a usable Next.js Mini App that authenticates through the existing API and persists vehicle selection.
+acceptance:
+  - Use Next.js, React, strict TypeScript and Tailwind in apps/web with local dev and production build commands; include source in root lint/typecheck gates without scanning generated build files.
+  - Apply ADR-005 with explicit same-origin rewrites for /auth/telegram and /me and /me/vehicle; configure and validate server-only API_ORIGIN; no generic proxy.
+  - Load the official Telegram WebApp script, wait for readiness, read only raw initData for authentication and call ready when available; handle script failure or missing data with useful launch/retry guidance.
+  - POST raw initData to the existing endpoint; runtime validate login/user DTOs before accepting them. Keep bearer token in memory only and never ship server secrets, database code, test mocks or auth bypasses.
+  - Show distinct loading, error and authenticated states. Authenticated users can choose CAR or MOTORCYCLE, persist via PATCH /me/vehicle and see the saved selection. Preserve existing choice from login.
+  - Clear session on protected401; show reopen/retry guidance. Failed saves preserve previous saved choice and permit retry; prevent duplicate requests while pending.
+  - Provide an original responsive mobile-first interface with ThaiDLT identity, readable type, labelled controls, visible focus and accessible status messages; use plain English UI for this slice.
+  - Browser tests cover absent Telegram data, valid login, existing preference, vehicle save/change, malformed API responses, transport failure and401 session loss using test-only Telegram/API mocks.
+  - Document local web/API startup and environmental configuration; production build and browser tests must pass. No live Telegram credentials are needed for this task.
+files_allowed:
+  - apps/web/**
+  - package.json
+  - pnpm-lock.yaml
+  - pnpm-workspace.yaml
+  - tsconfig*.json
+  - eslint.config.*
+  - vitest*.ts
+  - playwright.config.*
+  - tests/**
+  - .gitignore
+  - .env.example
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+  - pnpm test:integration
+non_goals:
+  - No question UI, production deployment, credentials, content activation or new backend business behavior.
+relevant_adrs:
+  - ADR-002-core-stack.md
+  - ADR-004-api-sessions.md
+  - ADR-005-mini-app-boundary.md
+dependencies:
+  - TASK-012
+owner_decision_required: false
+commit_hint: 'feat(web): add Telegram authentication and vehicle onboarding'
