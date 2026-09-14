@@ -8,3 +8,5 @@ Builder production build and lint PASS. pnpm check failed Prisma generation EEXI
 Resume after checking usage: delegate remaining verification/fixes. Start local database and apply migrations; run check and integration sequentially, install Chromium, run E2E and capture mobile onboarding screenshot. Only commit when all required gates pass. Supervisor then runs authoritative checks and independent review; never merge before PASS. TASK014 refined/planned, not started.
 
 Paused2026-09-14 at77 percent five-hour usage to honor80 ceiling. Never redeem reset credits without authorization. Prior scheduled continuation15September06:53Madrid remains authorized; read latest state and avoid overlap. No Product Owner blocker. Preserve ZIP and existing changes.
+
+Latest schedule replaces obsolete weekly-reset wakeup:14September09:50:06Madrid (pre-reset up to100 allowance) and10:12:06Madrid (post-reset80 ceiling). Reset10:10:06Madrid. Two executions only; resume current TASK-013 checkpoint.

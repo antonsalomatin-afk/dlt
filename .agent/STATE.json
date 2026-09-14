@@ -22,9 +22,11 @@
   "pauseReason": "Five-hour usage77 percent; checkpoint below user80 ceiling.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
-    "weeklyResetAt": "2026-09-15T04:51:27Z",
-    "resumeAt": "2026-09-15T04:53:27Z",
-    "executions": 1,
-    "maxSessionUsedPercent": 80
+    "preResetAt": "2026-09-14T07:50:06Z",
+    "resetAt": "2026-09-14T08:10:06Z",
+    "postResetAt": "2026-09-14T08:12:06Z",
+    "executions": 2,
+    "preResetUsageCeiling": 100,
+    "postResetUsageCeiling": 80
   }
 }
