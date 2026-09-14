@@ -1,0 +1,109 @@
+Commit: 053c0fc44e7f3f4ce77a567c0fb0e9c411e6a991
+COMMAND: pnpm check
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 112ms
+
+$ tsc --noEmit
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 148ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  10 passed (10)
+      Tests  106 passed (106)
+   Start at  10:50:25
+   Duration  1.98s (import 40%, tests 36%, transform 21%, worker 3%)
+
+EXIT_CODE: 0
+COMMAND: pnpm build
+$ pnpm --filter @thai-dlt/web build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 89ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.5s
+  Running TypeScript ...
+  Finished TypeScript in 1982ms ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/3) ...
+✓ Generating static pages using 4 workers (3/3) in 915ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+EXIT_CODE: 0
+COMMAND: pnpm test:e2e
+$ playwright test
+[WebServer] (node:40920) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ pnpm --filter @thai-dlt/web start
+[WebServer] (node:28712) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1
+[WebServer] (node:6796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 11 tests using 2 workers
+
+(node:35784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\onboarding.spec.ts:18:1 › missing Telegram data provides launch guidance without login request (496ms)
+  ok  2 tests\e2e\onboarding.spec.ts:27:1 › script failure can be retried (543ms)
+  ok  4 tests\e2e\onboarding.spec.ts:58:1 › preserves existing preference and prevents pending duplicate saves (486ms)
+  ok  3 tests\e2e\onboarding.spec.ts:36:1 › login, save and change vehicle with in-memory credentials (707ms)
+  ok  5 tests\e2e\onboarding.spec.ts:74:3 › rejects malformed login response (351ms)
+  ok  6 tests\e2e\onboarding.spec.ts:80:3 › malformed save retains confirmed preference and permits retry (453ms)
+  ok  7 tests\e2e\onboarding.spec.ts:74:3 › rejects transport login response (359ms)
+  ok  8 tests\e2e\onboarding.spec.ts:80:3 › transport save retains confirmed preference and permits retry (529ms)
+  ok  9 tests\e2e\onboarding.spec.ts:74:3 › rejects http login response (405ms)
+  ok 11 tests\e2e\onboarding.spec.ts:90:1 › protected 401 clears session and offers reopening guidance (584ms)
+  ok 10 tests\e2e\onboarding.spec.ts:80:3 › http save retains confirmed preference and permits retry (650ms)
+
+  11 passed (8.0s)
+EXIT_CODE: 0
+COMMAND: pnpm test:integration
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 158ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:17484) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  5 passed (5)
+      Tests  12 passed (12)
+   Start at  10:50:59
+   Duration  8.37s (tests 79%, import 16%, transform 4%)
+
+EXIT_CODE: 0

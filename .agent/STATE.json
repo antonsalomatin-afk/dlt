@@ -5,21 +5,21 @@
   "currentTask": "TASK-013",
   "lastAcceptedTask": "TASK-012",
   "lastAcceptedCommit": "ee8583614a98dd9b6379af361a1ceb0ae4095f38",
-  "status": "BUILDING",
+  "status": "REVIEW",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "Post-reset scheduled continuation verified renewed window; Builder013 resumed sequential verification and browser setup.",
+  "notes": "TASK-013053c0fc44e7f3f4ce77a567c0fb0e9c411e6a991 committed; authoritative check106/build/e2e11/integration12 PASS. Mobile screenshot visually inspected. Independent review pending.",
   "usagePolicy": {
     "maxSessionUsedPercent": 80,
-    "latestObservedUsedPercent": 11,
+    "latestObservedUsedPercent": 75,
     "windowMinutes": 300,
     "checkedAt": "2026-09-14T08:20:29Z",
     "instruction": "Check five-hour account usage frequently; stop new Builder work by 55 percent and checkpoint by 70 percent to reserve margin below user ceiling80. Never redeem reset credits without authorization."
   },
-  "executionPaused": false,
-  "pauseReason": null,
+  "executionPaused": true,
+  "pauseReason": "Budget checkpoint at75 percent of five-hour window, below80 ceiling.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
@@ -27,6 +27,7 @@
     "postResetAt": "2026-09-14T08:12:06Z",
     "executions": 2,
     "preResetUsageCeiling": 100,
-    "postResetUsageCeiling": 80
+    "postResetUsageCeiling": 80,
+    "status": "Completed both executions; automation deleted"
   }
 }
