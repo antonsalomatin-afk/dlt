@@ -1,0 +1,29 @@
+id: TASK-015
+title: Verify the local Mini App vertical slice end to end
+status: PLANNED
+epic: Epic 3 — Question Vertical Slice
+objective: Exercise the browser, Next proxy, Fastify authentication and PostgreSQL together without production credentials.
+acceptance:
+  - An isolated local test harness starts real web/API processes and a fresh test-owned database with the full migration chain.
+  - Harness creates synthetic test-only verified questions and signed initData using a synthetic server token; browser mocks only the Telegram bridge, not API responses.
+  - Browser signs in, selects a vehicle, receives a question, submits an answer, sees the authoritative result/explanation and continues.
+  - Database assertions verify authenticated user preference, owned presentation and exactly one scored answer; HTTP paths exercise actual rewrites.
+  - Test cleanup stops only owned processes and removes only its isolated database, including failure paths. No fixtures in the normal database are activated.
+  - No test credential or bypass path is introduced in production app code. Document repeatable local execution and distinguish synthetic testing from live Telegram validation.
+files_allowed:
+  - tests/**
+  - playwright*.ts
+  - package.json
+  - pnpm-lock.yaml
+  - README.md
+  - .gitignore
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Define harness ports, owned-process cleanup and exact full-stack command after TASK-014 acceptance; authorize any required helper scope explicitly.
+dependencies:
+  - TASK-014
+owner_decision_required: false
