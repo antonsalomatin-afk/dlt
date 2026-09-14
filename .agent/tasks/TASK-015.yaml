@@ -27,3 +27,12 @@ supervisor_refinement_required:
 dependencies:
   - TASK-014
 owner_decision_required: false
+
+supervisor_refinement:
+  - Provide pnpm test:fullstack as a distinct opt-in local browser gate; preserve the existing mocked browser suite. Use dedicated loopback ports3100(web) and3101(API), failing clearly if either is occupied without terminating unrelated processes.
+  - Build the web app with API_ORIGIN=http://127.0.0.1:3101 for this harness and pass the web port explicitly at startup. Document that subsequent normal local use must rebuild with its intended API_ORIGIN.
+  - Create a cryptographically random database name under a fixed test prefix using the existing local PostgreSQL service. Apply migrations and seed only that database; pass its URL and a synthetic bot token only to the owned API child environment.
+  - Start API with API_PORT3101 and web with port3100; wait for bounded readiness and capture safe diagnostics without logging credentials. The browser receives test-generated signed initData solely through the mocked official bridge script; never intercept API requests.
+  - Verify a correct and incorrect answer, persisted preference and exactly one answer per presentation via the test database; capture a mobile result screenshot for visual inspection.
+  - In finally/teardown close browser and owned services, await their exit, disconnect clients and drop only the exact created database. Validate the generated database identifier before SQL interpolation; no broad resets or unrelated process termination.
+  - Add pnpm test:fullstack to this task required gates; setup failures must fail visibly rather than silently skip tests. Keep full-stack test files excluded from the ordinary unit/integration suites where needed within allowed scope.
