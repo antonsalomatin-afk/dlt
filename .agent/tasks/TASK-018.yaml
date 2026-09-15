@@ -1,0 +1,25 @@
+id: TASK-018
+title: Expose authenticated mistakes feed
+status: PLANNED
+epic: Epic 4 — Learning
+objective: Let an authenticated learner retrieve persisted incorrect answer attempts for focused review.
+acceptance:
+  - A protected GET /me/mistakes returns only the authenticated user's incorrect submitted attempts, newest first, with bounded keyset pagination.
+  - Mistake items use the immutable presentation snapshot and persisted attempt fields, matching the accepted history item contract.
+  - Correct attempts, unanswered presentations and other users' data are excluded at the database query boundary.
+  - Strict query, cursor, response and persisted-data integrity behavior is documented and tested.
+  - Integration tests verify ownership, outcome filtering, stable pagination, repeated incorrect attempts, later correct attempts and snapshot stability.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Reuse the accepted history envelope and cursor contract without introducing a second incompatible pagination format.
+  - Define whether mistakes are attempt-based or deduplicated/resolved before Builder assignment.
+dependencies:
+  - TASK-017
+owner_decision_required: false

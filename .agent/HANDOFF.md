@@ -1,9 +1,9 @@
-# Supervisor handoff — TASK-017 integration diagnosis pending
+# Supervisor handoff — TASK-017 accepted
 
 TASK-001 through TASK-016 are accepted or ready to accept into main. TASK-016 implementation 798725cc905ce3573cda2a81de257e81b3abc8f3 passed authoritative check 114, integration 18, and independent review 01 with no findings.
 
-TASK-017 implementation is committed at d70fa14 across eight allowed web, E2E and README files. Builder pnpm check PASS (114 tests), build PASS, e2e PASS (37 tests), and mobile screenshot visual inspection PASS. No backend, dependency or governance implementation changes.
+TASK-017 implementation d70fa14 passed authoritative check114/build/e2e37/integration18, Supervisor mobile visual inspection, and independent review 01 with no findings. It is ready to merge into main.
 
-The required pnpm test:integration gate is not green. Two full runs each passed five of six files and all history integration coverage, but different unchanged concurrent-login tests in tests/api.integration.test.ts returned transient500 responses. The first failed case passed immediately in isolation. On resume, check live usage, inspect both exact failures/output if available, diagnose the existing auth concurrency instability with a bounded Builder fix only if reproducible, then rerun integration. Do not begin authoritative checks or review until every Builder gate is green.
+Next is TASK-018, an authenticated mistakes feed API derived from persisted incorrect attempts; TASK-019 will add its Mini App UI.
 
 The five-hour window reset to0 percent and the user authorized continuing this window up to95 percent. Resume with one clean integration run before considering a bounded fix. Preserve the unrelated untracked thai-dlt-agent-starter.zip. Local PostgreSQL is running. No Product Owner blocker, active automation, or reset-credit authorization.

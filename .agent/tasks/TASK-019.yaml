@@ -1,0 +1,23 @@
+id: TASK-019
+title: Show mistakes review in the Mini App
+status: PLANNED
+epic: Epic 4 — Learning
+objective: Let learners revisit persisted incorrect answers through the accepted mistakes API.
+acceptance:
+  - An authenticated learner can open mistakes and inspect incorrect snapshot wording, choices and explanations.
+  - Empty, loading, pagination, retry, expired-session and stale-response states are accessible and recoverable.
+  - Browser tests cover mistakes navigation, stable-ID labels, localization, pagination and return to practice.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Specify navigation and whether to reuse or extract the accepted history presentation after TASK-018 acceptance.
+dependencies:
+  - TASK-018
+owner_decision_required: false

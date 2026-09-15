@@ -1,6 +1,6 @@
 id: TASK-017
 title: Show submitted answer history in the Mini App
-status: REVIEW
+status: ACCEPTED
 epic: Epic 4 — Learning
 objective: Let learners revisit their submitted answers and explanations through the accepted history API.
 acceptance:
@@ -32,3 +32,5 @@ supervisor_refinement:
   - Load more appears only when nextCursor is non-null, appends one validated page and rejects duplicate presentation IDs across accumulated pages. A synchronous busy guard prevents overlapping requests. Ignore all late responses and errors after navigation, session loss or component replacement; leaving history must remain immediate even while a request is pending.
   - Browser tests may mock API responses only in the test harness. Cover opening history from practice, correct and incorrect entries, stable-ID choice labels, language and English fallback, expansion/details, two-page append, disabled duplicate load, empty history, initial and pagination retry, malformed/cross-field/duplicate-page rejection, 401 session clearing, leaving during a delayed response, and return to a clean practice view.
   - No backend behavior, persistence, new dependency, full-stack harness expansion or production credential is part of this task.
+accepted_commit: d70fa14ea62fb6c6d46620449db2d9f6dcdc0349
+review_file: .agent/reviews/TASK-017-review-01.md
