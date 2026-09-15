@@ -1,6 +1,6 @@
 id: TASK-016
 title: Expose authenticated answer history
-status: BUILDING
+status: REVIEW
 epic: Epic 4 — Learning
 objective: Let an authenticated learner retrieve their persisted submitted answers and snapshot explanations.
 acceptance:
