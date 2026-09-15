@@ -10,16 +10,16 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-015 accepted after all authoritative gates and independent review 01 PASS. TASK-016 authenticated history API is next and requires final Supervisor refinement before assignment.",
+  "notes": "TASK-015 accepted into main at 7e1e8fb after all authoritative gates and independent review 01 PASS. TASK-016 authenticated history API is next and requires final Supervisor refinement before assignment.",
   "usagePolicy": {
     "maxSessionUsedPercent": 80,
-    "latestObservedUsedPercent": 2,
+    "latestObservedUsedPercent": 41,
     "windowMinutes": 300,
-    "checkedAt": "2026-09-15T03:15:51.2947086Z",
+    "checkedAt": "2026-09-15T06:40:42.4994513Z",
     "instruction": "Check five-hour account usage frequently. Stop new Builder work by 40 percent and checkpoint by 60 percent to reserve margin below the user ceiling of 80 percent. Never redeem reset credits without authorization."
   },
-  "executionPaused": false,
-  "pauseReason": null,
+  "executionPaused": true,
+  "pauseReason": "Five-hour usage reached 41 percent, past the conservative 40 percent threshold for starting a new Builder cycle while preserving the user ceiling of 80 percent.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
