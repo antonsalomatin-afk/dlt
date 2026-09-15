@@ -1,6 +1,6 @@
 id: TASK-018
 title: Expose authenticated mistakes feed
-status: BUILDING
+status: REVIEW
 epic: Epic 4 — Learning
 objective: Let an authenticated learner retrieve persisted incorrect answer attempts for focused review.
 acceptance:
