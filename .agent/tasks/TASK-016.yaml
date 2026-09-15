@@ -1,6 +1,6 @@
 id: TASK-016
 title: Expose authenticated answer history
-status: REVIEW
+status: ACCEPTED
 epic: Epic 4 — Learning
 objective: Let an authenticated learner retrieve their persisted submitted answers and snapshot explanations.
 acceptance:
@@ -31,3 +31,5 @@ supervisor_refinement:
   - Parse every persisted presentation snapshot with parsePresentationSnapshot. Validate selectedChoiceId belongs to the snapshot and persisted isCorrect equals selectedChoiceId === correctChoiceId. Any malformed or unsupported stored snapshot or inconsistent persisted result fails the whole request through the stable 500 response; never silently omit or partially return corrupt history.
   - Add focused unit tests for cursor and response boundaries plus real PostgreSQL integration coverage for authentication, strict malformed query behavior, empty history, ordering/ties, both pagination pages without duplicates on unchanged data, ownership isolation, unanswered exclusion, snapshot stability after source edits, and fail-closed malformed snapshot/result behavior.
   - Reuse accepted opaque sessions and snapshot contracts. No schema migration, learning score, UI, content activation, generic pagination framework or new dependency.
+accepted_commit: 798725cc905ce3573cda2a81de257e81b3abc8f3
+review_file: .agent/reviews/TASK-016-review-01.md

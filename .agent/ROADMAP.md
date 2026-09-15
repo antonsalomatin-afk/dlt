@@ -51,7 +51,7 @@ At the end of this epic the core end-to-end flow must work.
 
 ## Epic 4 — Learning
 
-- TASK-016 — PLANNED — authenticated answer history API
+- TASK-016 — ACCEPTED — authenticated answer history API
 - TASK-017 — PLANNED — Mini App answer history UI
 - categories
 - random practice
