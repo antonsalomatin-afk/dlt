@@ -1,6 +1,6 @@
 id: TASK-015
 title: Verify the local Mini App vertical slice end to end
-status: BUILDING
+status: REVIEW
 epic: Epic 3 — Question Vertical Slice
 objective: Exercise the browser, Next proxy, Fastify authentication and PostgreSQL together without production credentials.
 acceptance:
