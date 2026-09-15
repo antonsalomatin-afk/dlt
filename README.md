@@ -286,3 +286,34 @@ English is the default; Russian/Thai wording and explanations fall back to Engli
 Answers remain selected after a connection failure so Retry sends the same IDs.
 An already-submitted response offers a new question without reconstructing a score.
 Sessions stay in memory; expired sessions require reopening from Telegram.
+
+### Real local full-stack browser gate
+
+Run `pnpm db:start`, ensure the local role in ignored `.env` has CREATE DATABASE
+permission, and install Chromium once with `pnpm exec playwright install chromium`.
+Then run `pnpm test:fullstack` from the repository root. This opt-in gate generates
+Prisma, creates a random `fullstack_test_` database, applies every committed
+migration, seeds synthetic verified content only there, builds Next with
+`API_ORIGIN=http://127.0.0.1:3101`, and starts real API/web processes on loopback
+ports3101/3100. Both ports must be free; existing listeners are never stopped.
+
+The mobile Chromium browser mocks only the official Telegram bridge script,
+which supplies freshly signed synthetic initData. Authentication, vehicle saving,
+question delivery and scoring use real HTTP through Next rewrites and PostgreSQL.
+Assertions cover correct/incorrect results, explanations, ownership, one answer per
+presentation and continuation. Screenshots are saved under
+`test-results/fullstack/`. This verifies synthetic local integration, not a live
+Telegram launch or production configuration; no real bot token is needed.
+
+Cleanup runs after success or failure, closes the browser, stops and awaits only
+owned Node children, disconnects clients and drops only the exact database created
+by that run. Setup/test/cleanup failures return nonzero, with safe phase diagnostics
+instead of raw credential-bearing errors. Forced termination of the runner or OS
+can prevent cleanup; a reported cleanup failure includes its exact database name
+for inspection. Never reset the normal database to clean up this test.
+
+The full-stack build replaces the local web build. Before normal local use,
+rebuild with your intended `API_ORIGIN` (default port3001). Run quality gates
+sequentially: `pnpm check`, `pnpm build`, `pnpm test:e2e`,
+`pnpm test:integration`, `pnpm test:fullstack`. The existing mocked browser suite
+and ordinary unit/integration suites remain separate.

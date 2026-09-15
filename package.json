@@ -26,6 +26,7 @@
     "build": "pnpm --filter @thai-dlt/web build",
     "web:dev": "pnpm --filter @thai-dlt/web dev",
     "test:e2e": "playwright test",
+    "test:fullstack": "pnpm db:generate && node --env-file=.env tests/fullstack/run.ts",
     "web:start": "pnpm --filter @thai-dlt/web start"
   },
   "devDependencies": {
