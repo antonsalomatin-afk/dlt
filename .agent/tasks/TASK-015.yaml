@@ -1,6 +1,6 @@
 id: TASK-015
 title: Verify the local Mini App vertical slice end to end
-status: PLANNED
+status: BUILDING
 epic: Epic 3 — Question Vertical Slice
 objective: Exercise the browser, Next proxy, Fastify authentication and PostgreSQL together without production credentials.
 acceptance:
@@ -22,8 +22,9 @@ required_checks:
   - pnpm build
   - pnpm test:e2e
   - pnpm test:integration
+  - pnpm test:fullstack
 supervisor_refinement_required:
-  - Define harness ports, owned-process cleanup and exact full-stack command after TASK-014 acceptance; authorize any required helper scope explicitly.
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
 dependencies:
   - TASK-014
 owner_decision_required: false
