@@ -68,4 +68,11 @@ const historyItemSchema = z.strictObject({
 export const historyResponseSchema = z.strictObject({
   items: z.array(historyItemSchema).max(50), nextCursor: historyCursorSchema.nullable(),
 });
+export const mistakesResponseSchema = historyResponseSchema.superRefine((page, context) => {
+  page.items.forEach((item, index) => {
+    if (item.isCorrect || item.selectedChoiceId === item.correctChoiceId) {
+      context.addIssue({ code: 'custom', path: ['items', index], message: 'Mistakes must contain only incorrect attempts' });
+    }
+  });
+});
 export type HistoryItem = z.infer<typeof historyItemSchema>;

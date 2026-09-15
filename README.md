@@ -320,7 +320,8 @@ or in ignored `apps/web/.env.local`. The root `.env` is used by API/database
 commands, not automatically loaded by Next. Only HTTP(S) origins without
 credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
-`/me/vehicle`, `/me/history`, `/practice/next` and `/practice/answer` only.
+`/me/vehicle`, `/me/history`, `/me/mistakes`, `/practice/next` and
+`/practice/answer` only.
 Set the destination before building; rewrites are
 included in the production build. Never prefix secrets with `NEXT_PUBLIC_`.
 
@@ -351,6 +352,14 @@ submission time. English is the default; missing Russian or Thai wording falls b
 English. Returning from setup goes back to vehicle setup, while returning from history
 opened during practice starts a clean practice view. A protected 401 clears the memory-only
 session.
+
+Authenticated learners can also open Mistakes from vehicle setup or practice. It uses
+`GET /me/mistakes?limit=10` and the same validated, accessible expansion, localization,
+opaque-cursor paging and retry behavior as history. Every visible entry is one immutable
+incorrect submitted attempt with stable Your answer and Correct answer labels; a later
+correct attempt does not resolve, deduplicate or remove it. Returning preserves the opening
+origin, and returning to practice starts a clean practice view. Malformed responses and any
+item that claims a correct result are rejected before rendering.
 
 ### Real local full-stack browser gate
 

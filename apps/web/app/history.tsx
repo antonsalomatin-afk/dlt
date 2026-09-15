@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { historyResponseSchema, type HistoryItem, type Session } from '../lib/contracts';
+import { historyResponseSchema, mistakesResponseSchema, type HistoryItem, type Session } from '../lib/contracts';
 
 type Language = 'English' | 'Russian' | 'Thai';
 
@@ -12,7 +12,27 @@ function readableTime(timestamp: string) {
   return new Date(timestamp).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
 }
 
-export function History({ session, onBack, onExpired }: { session: Session; onBack: () => void; onExpired: () => void }) {
+type FeedKind = 'history' | 'mistakes';
+
+const feedCopy = {
+  history: {
+    endpoint: '/me/history', eyebrow: '03 / YOUR ANSWERS', title: 'Answer history', language: 'History language',
+    loading: 'Loading your answer history…',
+    empty: 'You have not submitted any answers yet. Start practicing when you are ready.',
+    error: 'We could not load your answer history. Check your connection and retry.', retry: 'Retry history',
+  },
+  mistakes: {
+    endpoint: '/me/mistakes', eyebrow: '03 / LEARN FROM MISTAKES', title: 'Mistakes to review', language: 'Mistakes language',
+    loading: 'Loading your incorrect submitted answers…',
+    empty: 'You have no incorrect submitted answers to review yet. Keep practicing and check back after a mistake.',
+    error: 'We could not load your incorrect submitted answers. Check your connection and retry.', retry: 'Retry mistakes',
+  },
+} as const satisfies Record<FeedKind, {
+  endpoint: string; eyebrow: string; title: string; language: string; loading: string; empty: string; error: string; retry: string;
+}>;
+
+export function History({ session, onBack, onExpired, kind = 'history' }: { session: Session; onBack: () => void; onExpired: () => void; kind?: FeedKind }) {
+  const copy = feedCopy[kind];
   const [items, setItems] = useState<HistoryItem[]>([]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [retryCursor, setRetryCursor] = useState<string | null>(null);
@@ -28,7 +48,7 @@ export function History({ session, onBack, onExpired }: { session: Session; onBa
     setPending(true);
     setError(false);
     try {
-      const query = cursor === null ? '/me/history?limit=10' : `/me/history?limit=10&cursor=${encodeURIComponent(cursor)}`;
+      const query = cursor === null ? `${copy.endpoint}?limit=10` : `${copy.endpoint}?limit=10&cursor=${encodeURIComponent(cursor)}`;
       const response = await fetch(query, {
         method: 'GET', headers: { Authorization: `Bearer ${session.token}` },
         cache: 'no-store', signal: AbortSignal.timeout(15000),
@@ -38,7 +58,7 @@ export function History({ session, onBack, onExpired }: { session: Session; onBa
       if (!response.ok) throw new Error();
       const payload: unknown = await response.json();
       if (!active.current) return;
-      const page = historyResponseSchema.parse(payload);
+      const page = (kind === 'mistakes' ? mistakesResponseSchema : historyResponseSchema).parse(payload);
       const accumulatedIds = new Set(items.map((item) => item.presentationId));
       for (const item of page.items) {
         if (accumulatedIds.has(item.presentationId)) throw new Error();
@@ -62,13 +82,14 @@ export function History({ session, onBack, onExpired }: { session: Session; onBa
 
   const leave = () => { active.current = false; onBack(); };
 
-  return <section className="panel history" aria-labelledby="history-title" aria-busy={pending}>
-    <p className="eyebrow accent">03 / YOUR ANSWERS</p>
-    <h2 id="history-title">Answer history</h2>
+  return <section className="panel history" aria-labelledby={`${kind}-title`} aria-busy={pending}>
+    <p className="eyebrow accent">{copy.eyebrow}</p>
+    <h2 id={`${kind}-title`}>{copy.title}</h2>
+    {kind === 'mistakes' && <p className="panel-copy">Review each incorrect submitted answer as its own attempt. Later answers do not change this list.</p>}
     <button className="secondary" onClick={leave}>Back</button>
-    <fieldset className="languages"><legend>History language</legend>{(['English', 'Russian', 'Thai'] as const).map((item) => <label key={item}><input type="radio" name="history-language" checked={language === item} onChange={() => setLanguage(item)} /> {item}</label>)}</fieldset>
-    {pending && items.length === 0 && <div className="message" role="status"><span aria-hidden="true">◌</span><p>Loading your answer history…</p></div>}
-    {!pending && !error && items.length === 0 && <div className="empty-history"><p>You have not submitted any answers yet. Start practicing when you are ready.</p><button className="primary" onClick={leave}>Back</button></div>}
+    <fieldset className="languages"><legend>{copy.language}</legend>{(['English', 'Russian', 'Thai'] as const).map((item) => <label key={item}><input type="radio" name={`${kind}-language`} checked={language === item} onChange={() => setLanguage(item)} /> {item}</label>)}</fieldset>
+    {pending && items.length === 0 && <div className="message" role="status"><span aria-hidden="true">◌</span><p>{copy.loading}</p></div>}
+    {!pending && !error && items.length === 0 && <div className="empty-history"><p>{copy.empty}</p><button className="primary" onClick={leave}>Back</button></div>}
     {items.length > 0 && <div className="history-list">{items.map((item) => <details className={`history-entry ${item.isCorrect ? 'correct' : 'incorrect'}`} key={item.presentationId}>
       <summary>
         <span className="history-outcome">{item.isCorrect ? 'Correct' : 'Incorrect'}</span>
@@ -92,8 +113,8 @@ export function History({ session, onBack, onExpired }: { session: Session; onBa
         </div>
       </div>
     </details>)}</div>}
-    {error && <div className="message error" role="alert"><span aria-hidden="true">!</span><p>We could not load your answer history. Check your connection and retry.</p></div>}
-    {error && <button className="primary" disabled={pending} onClick={() => void request(retryCursor)}>{pending ? 'Please wait…' : 'Retry history'}</button>}
+    {error && <div className="message error" role="alert"><span aria-hidden="true">!</span><p>{copy.error}</p></div>}
+    {error && <button className="primary" disabled={pending} onClick={() => void request(retryCursor)}>{pending ? 'Please wait…' : copy.retry}</button>}
     {!error && nextCursor !== null && <button className="primary next" disabled={pending} onClick={() => void request(nextCursor)}>{pending ? 'Loading more…' : 'Load more'}</button>}
   </section>;
 }

@@ -7,7 +7,7 @@ type Language = 'English' | 'Russian' | 'Thai';
 const localized = (language: Language, english: string | null, russian: string | null, thai: string | null) =>
   (language === 'Russian' ? russian : language === 'Thai' ? thai : english) || english || null;
 
-export function Practice({ session, onExpired, onVehicle, onHistory }: { session: Session; onExpired: () => void; onVehicle: (missing?: boolean) => void; onHistory: () => void }) {
+export function Practice({ session, onExpired, onVehicle, onHistory, onMistakes }: { session: Session; onExpired: () => void; onVehicle: (missing?: boolean) => void; onHistory: () => void; onMistakes: () => void }) {
   const [presentation, setPresentation] = useState<Presentation | null>(null);
   const [choice, setChoice] = useState<string | null>(null);
   const [answer, setAnswer] = useState<Answer | null>(null);
@@ -58,7 +58,7 @@ export function Practice({ session, onExpired, onVehicle, onHistory }: { session
   return <section className="panel practice" aria-labelledby="practice-title" aria-busy={pending}>
     <p className="eyebrow accent">02 / ONE QUESTION AT A TIME</p>
     <h2 id="practice-title">Your next step</h2>
-    <div className="panel-nav"><button className="secondary" onClick={() => { active.current = false; onVehicle(); }}>Change vehicle</button><button className="secondary" onClick={() => { active.current = false; onHistory(); }}>History</button></div>
+    <div className="panel-nav"><button className="secondary" onClick={() => { active.current = false; onVehicle(); }}>Change vehicle</button><button className="secondary" onClick={() => { active.current = false; onHistory(); }}>History</button><button className="secondary" onClick={() => { active.current = false; onMistakes(); }}>Mistakes</button></div>
     {presentation && <>
       <fieldset className="languages"><legend>Question language</legend>{(['English', 'Russian', 'Thai'] as const).map((item) => <label key={item}><input type="radio" name="language" checked={language === item} onChange={() => setLanguage(item)} /> {item}</label>)}</fieldset>
       <h3 className="question">{localized(language, presentation.question.textEnglish, presentation.question.textRussian, presentation.question.textThai)}</h3>

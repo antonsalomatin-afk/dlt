@@ -40,7 +40,7 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 .secondary { font-size: 13px; text-decoration: underline; cursor: pointer; margin: 8px 0 16px; }
 .secondary:disabled { cursor: default; opacity: .6; }
 .panel-nav { display: flex; gap: 18px; }
-.history-link { display: block; margin: 16px auto 0; }
+.setup-links { justify-content: center; margin-top: 8px; }
 .languages { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; margin: 12px 0 20px; }
 .languages legend { margin-bottom: 10px; font-weight: bold; }
 .question { font-size: 21px; line-height: 1.4; margin: 18px 0; }
