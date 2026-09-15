@@ -9,4 +9,4 @@ Builder results: pnpm check PASS (lint, typecheck, 110 tests); pnpm test:fullsta
 Next: check live five-hour usage; resume Builder for pnpm test:e2e and pnpm test:integration, then its scoped feature commit once every required gate remains green. Earlier fullstack PASS need not be rerun solely to reorder checks. Supervisor must subsequently run all five authoritative gates sequentially and save SHA-bound logs, then assign fresh independent Reviewer. No acceptance or merge before PASS. Fullstack rebuilds the web app for API port3101, so rebuild the ordinary web app afterwards for normal development as documented.
 
 Paused proactively after observing55 percent five-hour usage to preserve reserve under the user80 percent ceiling. Check live allowance on resume; no reset-credit authorization and no active scheduled continuation. TASK-016 history API and TASK-017 history UI are planned governance only, with refinement required before assignment. No Product Owner blocker.
-`nFinal usage observation:61 percent; execution remains paused.
+Final prior-window usage observation: 61 percent. Execution resumed after the five-hour window reset to 2 percent.
