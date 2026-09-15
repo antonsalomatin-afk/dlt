@@ -1,0 +1,25 @@
+id: TASK-017
+title: Show submitted answer history in the Mini App
+status: PLANNED
+epic: Epic 4 — Learning
+objective: Let learners revisit their submitted answers and explanations through the accepted history API.
+acceptance:
+  - An authenticated learner can open history, read submitted outcomes and inspect snapshot wording and explanations.
+  - Empty history, pagination, loading, retry and expired-session states are accessible and recoverable.
+  - Responses are runtime validated and credentials remain memory-only under ADR-004 and ADR-005.
+  - Browser tests cover owned history display, multiple pages, empty/error states and return to practice.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Specify exact navigation, detail layout, language fallback, pagination and stale-request handling after TASK-016 acceptance.
+  - Add only the explicit accepted history rewrite; no progress scoring, favorites or new backend behavior.
+dependencies:
+  - TASK-016
+owner_decision_required: false

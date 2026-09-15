@@ -1,0 +1,25 @@
+id: TASK-016
+title: Expose authenticated answer history
+status: PLANNED
+epic: Epic 4 — Learning
+objective: Let an authenticated learner retrieve their persisted submitted answers and snapshot explanations.
+acceptance:
+  - A protected GET /me/history returns only the authenticated user's submitted answer attempts, newest first, with bounded pagination.
+  - Each item uses the stored presentation snapshot for question wording, choices, correct answer and explanation, and persisted attempt fields for selection, correctness and submission time.
+  - Unanswered presentations and other users' data are never returned; missing, invalid and expired credentials retain the established 401 response.
+  - Strict request and response validation, stable ordering, empty history and malformed input behavior are documented and tested.
+  - Integration tests verify ownership isolation, pagination without duplicates on unchanged data, snapshot stability after source edits and exclusion of unanswered presentations.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Before assignment, specify the exact response envelope, cursor encoding/validation, maximum page size, tie-breaking order and malformed stored-snapshot behavior.
+  - Reuse accepted sessions and snapshot parsing; no schema migration, new learning score or UI in this task.
+dependencies:
+  - TASK-015
+owner_decision_required: false
