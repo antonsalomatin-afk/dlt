@@ -1,6 +1,6 @@
 id: TASK-017
 title: Show submitted answer history in the Mini App
-status: READY
+status: BUILDING
 epic: Epic 4 — Learning
 objective: Let learners revisit their submitted answers and explanations through the accepted history API.
 acceptance:
