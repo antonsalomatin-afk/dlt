@@ -1,6 +1,6 @@
 id: TASK-019
 title: Show mistakes review in the Mini App
-status: BUILDING
+status: REVIEW
 epic: Epic 4 — Learning
 objective: Let learners revisit persisted incorrect answers through the accepted mistakes API.
 acceptance:

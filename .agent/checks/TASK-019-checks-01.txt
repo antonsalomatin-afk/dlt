@@ -1,0 +1,154 @@
+Implementation-Commit: df45cc2c10df9ab0ffa50ba4a312ed8c58751646
+Checked-HEAD: df45cc2c10df9ab0ffa50ba4a312ed8c58751646
+COMMAND: pnpm check
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 180ms
+
+$ tsc --noEmit
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+┌─────────────────────────────────────────────────────────┐
+│  Update available 7.10.0 -> 8.0.0-rc.15                 │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 160ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  12 passed (12)
+      Tests  115 passed (115)
+   Start at  14:39:40
+   Duration  2.18s (import 38%, tests 33%, transform 26%, worker 3%)
+
+EXIT_CODE: 0
+COMMAND: pnpm build
+$ pnpm --filter @thai-dlt/web build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 73ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1119ms
+  Running TypeScript ...
+  Finished TypeScript in 2.3s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/3) ...
+✓ Generating static pages using 4 workers (3/3) in 1116ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+EXIT_CODE: 0
+COMMAND: pnpm test:e2e
+$ playwright test
+[WebServer] (node:14096) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ pnpm --filter @thai-dlt/web start
+[WebServer] (node:28356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1
+[WebServer] (node:43396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 45 tests using 2 workers
+
+(node:35436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:14796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 tests\e2e\history.spec.ts:112:1 › loads two pages once, appends valid items, and preserves the cursor for pagination retry (730ms)
+  ok  1 tests\e2e\history.spec.ts:63:1 › opens owned correct and incorrect history, expands localized snapshots, and returns to clean practice (1.4s)
+  ok  3 tests\e2e\history.spec.ts:141:1 › shows initial loading, retries a transport failure, and returns from empty history to setup (656ms)
+  ok  4 tests\e2e\history.spec.ts:163:3 › rejects malformed history responses and allows retry (527ms)
+  ok  5 tests\e2e\history.spec.ts:163:3 › rejects cross-field history responses and allows retry (522ms)
+  ok  7 tests\e2e\history.spec.ts:199:1 › a history 401 clears the in-memory session (515ms)
+  ok  6 tests\e2e\history.spec.ts:181:1 › rejects duplicate presentation IDs across pages while preserving the valid first page (705ms)
+  ok  8 tests\e2e\history.spec.ts:207:1 › leaving history is immediate and ignores a delayed response (835ms)
+  ok 10 tests\e2e\mistakes.spec.ts:103:1 › loads two mistake pages once and retries the exact failed pagination cursor (847ms)
+  ok  9 tests\e2e\mistakes.spec.ts:62:1 › opens mistakes from practice, expands an incorrect localized snapshot, and returns to clean practice (1.8s)
+  ok 11 tests\e2e\mistakes.spec.ts:132:1 › shows initial loading, retries a transport failure, and returns from empty mistakes to setup (780ms)
+  ok 12 tests\e2e\mistakes.spec.ts:154:3 › rejects a malformed mistakes response and allows retry (712ms)
+  ok 13 tests\e2e\mistakes.spec.ts:154:3 › rejects a logically-correct mistakes response and allows retry (669ms)
+  ok 14 tests\e2e\mistakes.spec.ts:172:1 › rejects a duplicate presentation on a later mistakes page and preserves validated items (729ms)
+  ok 15 tests\e2e\mistakes.spec.ts:190:1 › a mistakes 401 clears the in-memory session (633ms)
+  ok 16 tests\e2e\mistakes.spec.ts:198:1 › leaving mistakes is immediate and ignores a delayed response (809ms)
+  ok 17 tests\e2e\onboarding.spec.ts:18:1 › missing Telegram data provides launch guidance without login request (546ms)
+  ok 18 tests\e2e\onboarding.spec.ts:27:1 › script failure can be retried (713ms)
+  ok 20 tests\e2e\onboarding.spec.ts:58:1 › preserves existing preference and prevents pending duplicate saves (723ms)
+  ok 19 tests\e2e\onboarding.spec.ts:36:1 › login, save and change vehicle with in-memory credentials (1.4s)
+  ok 21 tests\e2e\onboarding.spec.ts:74:3 › rejects malformed login response (585ms)
+  ok 22 tests\e2e\onboarding.spec.ts:80:3 › malformed save retains confirmed preference and permits retry (722ms)
+  ok 23 tests\e2e\onboarding.spec.ts:74:3 › rejects transport login response (520ms)
+  ok 24 tests\e2e\onboarding.spec.ts:80:3 › transport save retains confirmed preference and permits retry (675ms)
+  ok 25 tests\e2e\onboarding.spec.ts:74:3 › rejects http login response (498ms)
+  ok 26 tests\e2e\onboarding.spec.ts:80:3 › http save retains confirmed preference and permits retry (690ms)
+  ok 27 tests\e2e\onboarding.spec.ts:90:1 › protected 401 clears session and offers reopening guidance (672ms)
+  ok 28 tests\e2e\practice.spec.ts:16:3 › choice 1, server result, language fallback and continuation (1.2s)
+  ok 29 tests\e2e\practice.spec.ts:16:3 › choice 2, server result, language fallback and continuation (1.1s)
+  ok 31 tests\e2e\practice.spec.ts:16:3 › choice 4, server result, language fallback and continuation (1.2s)
+  ok 30 tests\e2e\practice.spec.ts:16:3 › choice 3, server result, language fallback and continuation (1.8s)
+  ok 32 tests\e2e\practice.spec.ts:40:1 › one pending submission, transport retry and already-submitted guidance (968ms)
+  ok 33 tests\e2e\practice.spec.ts:52:3 › next handles HTTP 401 (777ms)
+  ok 34 tests\e2e\practice.spec.ts:52:3 › next handles HTTP 404 (742ms)
+  ok 35 tests\e2e\practice.spec.ts:52:3 › next handles HTTP 409 (717ms)
+  ok 36 tests\e2e\practice.spec.ts:52:3 › next handles HTTP 500 (801ms)
+  ok 37 tests\e2e\practice.spec.ts:61:3 › rejects hidden presentation DTO (738ms)
+  ok 38 tests\e2e\practice.spec.ts:61:3 › rejects duplicate presentation DTO (748ms)
+  ok 39 tests\e2e\practice.spec.ts:61:3 › rejects missing presentation DTO (744ms)
+  ok 40 tests\e2e\practice.spec.ts:68:3 › rejects inconsistent answer presentationId (831ms)
+  ok 41 tests\e2e\practice.spec.ts:68:3 › rejects inconsistent answer selectedChoiceId (776ms)
+  ok 42 tests\e2e\practice.spec.ts:68:3 › rejects inconsistent answer correctChoiceId (822ms)
+  ok 43 tests\e2e\practice.spec.ts:68:3 › rejects inconsistent answer isCorrect (835ms)
+  ok 44 tests\e2e\practice.spec.ts:75:1 › ignores a late response after leaving practice (750ms)
+  ok 45 tests\e2e\practice.spec.ts:81:1 › missing vehicle allows resaving the previously confirmed vehicle (790ms)
+
+  45 passed (25.3s)
+EXIT_CODE: 0
+COMMAND: pnpm test:integration
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 141ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:51932) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  7 passed (7)
+      Tests  24 passed (24)
+   Start at  14:40:26
+   Duration  10.27s (tests 82%, import 14%, transform 3%)
+
+EXIT_CODE: 0
