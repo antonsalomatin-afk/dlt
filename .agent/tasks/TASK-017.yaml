@@ -1,6 +1,6 @@
 id: TASK-017
 title: Show submitted answer history in the Mini App
-status: PLANNED
+status: READY
 epic: Epic 4 — Learning
 objective: Let learners revisit their submitted answers and explanations through the accepted history API.
 acceptance:
@@ -18,8 +18,17 @@ required_checks:
   - pnpm test:e2e
   - pnpm test:integration
 supervisor_refinement_required:
-  - Specify exact navigation, detail layout, language fallback, pagination and stale-request handling after TASK-016 acceptance.
-  - Add only the explicit accepted history rewrite; no progress scoring, favorites or new backend behavior.
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
 dependencies:
   - TASK-016
 owner_decision_required: false
+supervisor_refinement:
+  - Add only the explicit same-origin GET /me/history rewrite under ADR-005. Use the current in-memory bearer session and never place the token in a URL, storage, logs or rendered content.
+  - Model authenticated navigation explicitly between vehicle setup, practice and history. Show a History control from setup and practice. Opening from practice records that return destination; Back to practice remounts a clean practice view, while history opened from setup returns to vehicle setup. Session expiry always returns to signed-out guidance.
+  - On history mount fetch /me/history?limit=10. Runtime-validate a strict browser-safe copy of the accepted TASK-016 envelope and item contract, including exactly four distinct choice IDs/keys, canonical timestamps, bounded base64url nextCursor, selected/correct membership and isCorrect consistency. Do not import server/database code into the client bundle.
+  - Present newest-first outcome summaries as accessible expandable history entries. Each expanded entry shows localized snapshot question and all four choices, marks the selected and correct choices by stable ID, optionally exposes exam English, and shows explanation and trap text. Use one global English/Russian/Thai control, normalized English by default, English fallback for missing Russian/Thai text, and the existing plain unavailable messages when explanation text is absent.
+  - Render submittedAt in a time element with the canonical timestamp as dateTime and a user-local readable label. Do not add progress percentages, scores, favorites, source metadata or edit actions.
+  - Initial loading has an accessible status. Empty history gives friendly guidance and a Back control. Initial or pagination transport/HTTP/malformed-response failure shows a safe alert and Retry while preserving already validated items and the exact cursor for a failed next page. A 401 clears in-memory session through the parent expired-session path.
+  - Load more appears only when nextCursor is non-null, appends one validated page and rejects duplicate presentation IDs across accumulated pages. A synchronous busy guard prevents overlapping requests. Ignore all late responses and errors after navigation, session loss or component replacement; leaving history must remain immediate even while a request is pending.
+  - Browser tests may mock API responses only in the test harness. Cover opening history from practice, correct and incorrect entries, stable-ID choice labels, language and English fallback, expansion/details, two-page append, disabled duplicate load, empty history, initial and pagination retry, malformed/cross-field/duplicate-page rejection, 401 session clearing, leaving during a delayed response, and return to a clean practice view.
+  - No backend behavior, persistence, new dependency, full-stack harness expansion or production credential is part of this task.
