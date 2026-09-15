@@ -10,16 +10,16 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-017 refined with explicit authenticated navigation, strict browser history DTO validation, accessible localized details, bounded pagination/retry and stale-response handling; assigned to Builder.",
+  "notes": "TASK-017 implementation d70fa14 committed. Builder check114/build/e2e37 PASS and mobile visual PASS. Required integration is not green: two full runs each had transient500 failures in different unchanged concurrent-auth tests; five other files and history integration passed, first failed auth case passed alone. Diagnose before authoritative checks/review.",
   "usagePolicy": {
     "maxSessionUsedPercent": 99,
-    "latestObservedUsedPercent": 43,
+    "latestObservedUsedPercent": 91,
     "windowMinutes": 300,
-    "checkedAt": "2026-09-15T07:13:59.6784194Z",
+    "checkedAt": "2026-09-15T07:51:37.2227132Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 99 percent. Check usage frequently and checkpoint before reaching 99 percent. Never redeem reset credits without authorization."
   },
-  "executionPaused": false,
-  "pauseReason": null,
+  "executionPaused": true,
+  "pauseReason": "Five-hour usage reached 91 percent. Paused before the user-authorized 99 percent ceiling with TASK-017 integration instability still requiring diagnosis.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
