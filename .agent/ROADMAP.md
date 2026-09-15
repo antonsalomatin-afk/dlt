@@ -43,6 +43,10 @@ Goal: make repository-driven development reliable.
 - return result/explanation
 - continue to next question
 
+- TASK-013 — ACCEPTED — Mini App authentication and vehicle onboarding
+- TASK-014 — ACCEPTED — Mini App practice, results and continuation
+- TASK-015 — PLANNED — local full-stack browser/API/database verification
+
 At the end of this epic the core end-to-end flow must work.
 
 ## Epic 4 — Learning
@@ -112,17 +116,3 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
-
-
-
-
-
-
-
-
-
-
-
-
-
-- TASK-013 — ACCEPTED — Mini App authentication and vehicle onboarding; TASK-014 practice UI next.
