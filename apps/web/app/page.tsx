@@ -2,10 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { loginSchema, userSchema, type Session, type Vehicle } from '../lib/contracts';
+import { History } from './history';
 import { Practice } from './practice';
 import { loadTelegram } from '../lib/telegram';
 
 const labels: Record<Vehicle, string> = { CAR: 'Car', MOTORCYCLE: 'Motorcycle' };
+type View = 'setup' | 'practice' | 'history';
 
 function VehicleArt({ vehicle }: { vehicle: Vehicle }) {
   return <svg viewBox="0 0 160 80" fill="none" aria-hidden="true">
@@ -28,7 +30,8 @@ export default function Home() {
   const [message, setMessage] = useState('Connecting to Telegram…');
   const [error, setError] = useState(false);
   const busy = useRef(false);
-  const [practicing, setPracticing] = useState(false);
+  const [view, setView] = useState<View>('setup');
+  const [historyReturn, setHistoryReturn] = useState<'setup' | 'practice'>('setup');
 
   async function authenticate() {
     if (busy.current) return;
@@ -97,7 +100,7 @@ export default function Home() {
         <p className="intro-copy">Make sense of Thai driving theory, one step at a time.</p>
         <div className="road-art" aria-hidden="true"><span className="sun" /><div className="road"><i /><i /><i /></div><span className="road-caption">THAILAND, AHEAD ↗</span></div>
       </section>
-      {practicing && session ? <Practice key={`${session.token}:${session.user.selectedVehicleType}`} session={session} onVehicle={(missing) => { if (missing) setSession({ ...session, user: { ...session.user, selectedVehicleType: null } }); setPracticing(false); setChoice(null); setMessage('Choose and save your vehicle to continue.'); }} onExpired={() => { setPracticing(false); setSession(null); setChoice(null); setError(true); setMessage('Your session has ended. Close and reopen ThaiDLT in Telegram, then try again.'); }} /> : <section className="panel" aria-labelledby="onboarding-title" aria-busy={pending}>
+      {view === 'history' && session ? <History key={session.token} session={session} onBack={() => setView(historyReturn)} onExpired={() => { setView('setup'); setSession(null); setChoice(null); setError(true); setMessage('Your session has ended. Close and reopen ThaiDLT in Telegram, then try again.'); }} /> : view === 'practice' && session ? <Practice key={`${session.token}:${session.user.selectedVehicleType}`} session={session} onVehicle={(missing) => { if (missing) setSession({ ...session, user: { ...session.user, selectedVehicleType: null } }); setView('setup'); setChoice(null); setMessage('Choose and save your vehicle to continue.'); }} onHistory={() => { setHistoryReturn('practice'); setView('history'); }} onExpired={() => { setView('setup'); setSession(null); setChoice(null); setError(true); setMessage('Your session has ended. Close and reopen ThaiDLT in Telegram, then try again.'); }} /> : <section className="panel" aria-labelledby="onboarding-title" aria-busy={pending}>
         <p className="eyebrow accent">01 / GET STARTED</p>
         <h2 id="onboarding-title">{session ? 'What will you drive?' : pending ? 'Welcome to ThaiDLT' : 'Let’s get you connected'}</h2>
         <p className="panel-copy">{session ? 'Choose your vehicle to make this journey yours.' : 'Start inside Telegram for a simple, secure sign-in.'}</p>
@@ -112,7 +115,8 @@ export default function Home() {
         </>}
         <div className={`message ${error ? 'error' : ''}`} role={error ? 'alert' : 'status'}><span aria-hidden="true">{pending ? '◌' : error ? '!' : '✓'}</span><p>{message}</p></div>
         {session ? <button className="primary" onClick={() => void save()} disabled={pending || !choice || choice === session.user.selectedVehicleType}>{pending ? 'Saving…' : choice === session.user.selectedVehicleType ? 'Selection saved' : 'Save vehicle'}<span aria-hidden="true">↗</span></button> : <button className="primary" onClick={() => void authenticate()} disabled={pending}>{pending ? 'Connecting…' : 'Try again'}<span aria-hidden="true">↗</span></button>}
-        {session?.user.selectedVehicleType && choice === session.user.selectedVehicleType && <button className="primary next" disabled={pending} onClick={() => setPracticing(true)}>Start practice</button>}
+        {session && <button className="secondary history-link" disabled={pending} onClick={() => { setHistoryReturn('setup'); setView('history'); }}>History</button>}
+        {session?.user.selectedVehicleType && choice === session.user.selectedVehicleType && <button className="primary next" disabled={pending} onClick={() => setView('practice')}>Start practice</button>}
         <p className="footnote">{session ? 'Connected with Telegram' : 'No email. No password. Just Telegram.'}</p>
       </section>}
     </div>

@@ -299,8 +299,9 @@ set it in your shell (PowerShell: `$env:API_ORIGIN = 'http://127.0.0.1:3001'`)
 or in ignored `apps/web/.env.local`. The root `.env` is used by API/database
 commands, not automatically loaded by Next. Only HTTP(S) origins without
 credentials, paths, query strings or fragments are accepted; nonlocal origins
-require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`
-and `/me/vehicle` only. Set the destination before building; rewrites are
+require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
+`/me/vehicle`, `/me/history`, `/practice/next` and `/practice/answer` only.
+Set the destination before building; rewrites are
 included in the production build. Never prefix secrets with `NEXT_PUBLIC_`.
 
 The official Telegram bridge loads before authentication. Login and vehicle
@@ -321,6 +322,15 @@ English is the default; Russian/Thai wording and explanations fall back to Engli
 Answers remain selected after a connection failure so Retry sends the same IDs.
 An already-submitted response offers a new question without reconstructing a score.
 Sessions stay in memory; expired sessions require reopening from Telegram.
+
+Authenticated learners can open answer history from vehicle setup or practice. History
+loads ten newest submissions at a time, keeps validated entries visible if loading a later
+page fails, and retries that page with its same opaque cursor. Entries expand to show the
+presented snapshot, stable selected/correct choices, localized explanations and the local
+submission time. English is the default; missing Russian or Thai wording falls back to
+English. Returning from setup goes back to vehicle setup, while returning from history
+opened during practice starts a clean practice view. A protected 401 clears the memory-only
+session.
 
 ### Real local full-stack browser gate
 
