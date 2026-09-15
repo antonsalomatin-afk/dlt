@@ -1,6 +1,6 @@
 id: TASK-020
 title: List eligible practice categories
-status: PLANNED
+status: READY
 epic: Epic 4 — Learning
 objective: Let an authenticated learner discover categories that contain practice questions for their saved vehicle.
 acceptance:
@@ -17,8 +17,15 @@ required_checks:
   - pnpm check
   - pnpm test:integration
 supervisor_refinement_required:
-  - Define exact response fields, ordering, query behavior and missing-vehicle precedence before Builder assignment.
-  - No question-delivery filter or UI in this task.
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
 dependencies:
   - TASK-019
 owner_decision_required: false
+supervisor_refinement:
+  - GET /practice/categories uses the accepted bearer session. Authenticate first, then require a strict empty query object, then require the authenticated user's selected vehicle. This preserves uniform401 even with malformed query; authenticated unknown/duplicate query keys return400; missing vehicle returns the established409 Vehicle selection required.
+  - Return the strict envelope { categories: [...] }. Each item contains only id UUID, slug, nameThai, nameEnglish, nameRussian and questionCount. Text fields must be nonblank, trimmed persisted strings; questionCount must be a positive integer. Do not return question IDs, correctness, verification/source metadata or other category fields.
+  - Include a category only when it has at least one Question matching the saved vehicle, active true and verificationStatus VERIFIED. Compute questionCount using that exact same database filter, not all related questions and not application-memory filtering.
+  - Order categories by sortOrder ascending, then unique slug ascending. Cap the response at100 categories by fetching at most101; more than100 eligible categories is treated as invalid server state and returns the stable sanitized500 rather than truncating silently.
+  - Empty eligibility returns200 with { categories: [] }. Add Cache-Control no-store and validate the complete response before sending; malformed persisted identity/count data fails with the established500 shape.
+  - Add a focused response contract module only if useful; no generic repository/pagination layer. Real PostgreSQL integration tests cover auth/query/vehicle precedence, both vehicle types, active/verification filtering, exact counts, exclusion of empty categories, deterministic tied sort order, empty result, response field leakage,100/101 boundary and malformed persisted category data.
+  - Document the endpoint and eligibility rules. No schema migration, question-delivery filter, randomization, UI, content mutation/activation, new dependency or production credential.
