@@ -56,6 +56,18 @@ export const historyResponseSchema = z.strictObject({
   }),
 });
 
+export const mistakesResponseSchema = historyResponseSchema.superRefine((response, context) => {
+  response.items.forEach((item, index) => {
+    if (item.isCorrect || item.selectedChoiceId === item.correctChoiceId) {
+      context.addIssue({
+        code: 'custom',
+        message: 'Mistake items must be incorrect',
+        path: ['items', index],
+      });
+    }
+  });
+});
+
 export function encodeHistoryCursor(cursor: HistoryCursor): string {
   const parsed = historyCursorSchema.parse(cursor);
   const json = JSON.stringify({ v: parsed.v, submittedAt: parsed.submittedAt, attemptId: parsed.attemptId });

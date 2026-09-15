@@ -285,6 +285,26 @@ The history integration suite uses a fresh temporary PostgreSQL database and cov
 authentication, strict queries, deterministic pagination, ownership, unanswered
 presentations, snapshot stability and corrupt stored data.
 
+### Mistakes feed
+
+`GET /me/mistakes` is the authenticated, attempt-based view of incorrect answers.
+It uses the same strict `limit` and opaque `cursor` contract, ordering, response
+item fields, error shapes and `Cache-Control: no-store` behavior as answer history.
+Authentication runs before query validation. Each returned record is one persisted
+`AnswerAttempt` whose `isCorrect` value is false; repeated incorrect presentations
+of the same question remain separate items, and a later correct attempt does not
+remove an earlier mistake.
+
+The database query applies both presentation ownership and `isCorrect: false`
+before rows are returned. Correct attempts, unanswered presentations and attempts
+owned by another user are therefore never parsed or filtered in application memory.
+Cursors only identify the strict `(submittedAt, attemptId)` navigation boundary and
+confer no ownership. Question content, choices, correct answer and explanations come
+only from the immutable presentation snapshot, while selection, result and submission
+time come from the attempt. Malformed or unsupported snapshots, absent selected
+choices, and any contradiction between selection, stored outcome and snapshot fail
+the whole request with sanitized `500 { "error": "Internal Server Error" }`.
+
 
 ## Mini App (local development)
 

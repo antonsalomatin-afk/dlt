@@ -3,6 +3,7 @@ import { expect, it } from 'vitest';
 import {
   encodeHistoryCursor,
   historyResponseSchema,
+  mistakesResponseSchema,
   parseHistoryCursor,
   parseHistoryQuery,
 } from '../packages/database/src/history.ts';
@@ -71,4 +72,28 @@ it('enforces the strict history response envelope and result integrity', () => {
     { ...response, nextCursor: `${encodeHistoryCursor(cursor)}=` },
     { ...response, nextCursor: Buffer.from('{}', 'utf8').toString('base64url') },
   ]) expect(() => historyResponseSchema.parse(invalid)).toThrow();
+});
+
+it('reuses the history query, cursor, and envelope while enforcing the mistakes invariant', () => {
+  const choices = (['A', 'B', 'C', 'D'] as const).map((key) => ({
+    id: randomUUID(), key, textThai: null, textEnglish: `Choice ${key}`, textRussian: null,
+  }));
+  const nextCursor = encodeHistoryCursor(cursor);
+  expect(parseHistoryQuery({ limit: '1', cursor: nextCursor })).toEqual({ limit: 1, cursor });
+  const item = {
+    presentationId: randomUUID(), submittedAt, selectedChoiceId: choices[1]?.id,
+    correctChoiceId: choices[0]?.id, isCorrect: false,
+    question: {
+      id: randomUUID(), textThai: null, textExamEnglish: null,
+      textEnglish: 'Question', textRussian: null, choices,
+    },
+    explanationThai: null, explanationEnglish: 'Explanation', explanationRussian: null,
+    trapExplanationThai: null, trapExplanationEnglish: 'Trap', trapExplanationRussian: null,
+  };
+  const response = { items: [item], nextCursor };
+  expect(mistakesResponseSchema.parse(response)).toEqual(response);
+  expect(() => mistakesResponseSchema.parse({
+    ...response,
+    items: [{ ...item, selectedChoiceId: item.correctChoiceId, isCorrect: true }],
+  })).toThrow();
 });

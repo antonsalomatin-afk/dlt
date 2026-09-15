@@ -4,7 +4,7 @@ import { z } from 'zod';
 import type { PrismaClient } from '../../../packages/database/src/index.ts';
 import { parsePresentationSnapshot, presentationResponseSchema, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
 import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '../../../packages/database/src/answer.ts';
-import { encodeHistoryCursor, historyResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
+import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
 import { InvalidInitDataError, validateInitData } from '../../../packages/telegram/src/index.ts';
 
 export const userSchema = z.strictObject({
@@ -20,13 +20,46 @@ const userSelect = { id: true, username: true, firstName: true, selectedVehicleT
 const digest = (token: string) => createHash('sha256').update(token).digest('hex');
 const lifetimeMs = 24 * 60 * 60 * 1000;
 
+function mapHistoryAttempt(attempt: {
+  id: string;
+  selectedChoiceId: string;
+  isCorrect: boolean;
+  submittedAt: Date;
+  presentation: { id: string; snapshot: unknown };
+}) {
+  const snapshot = parsePresentationSnapshot(attempt.presentation.snapshot);
+  if (!snapshot.question.choices.some((choice) => choice.id === attempt.selectedChoiceId)) {
+    throw new Error('Stored answer choice is absent from presentation snapshot');
+  }
+  if (attempt.isCorrect !== (attempt.selectedChoiceId === snapshot.correctChoiceId)) {
+    throw new Error('Stored answer result is inconsistent with presentation snapshot');
+  }
+  return {
+    cursor: { v: 1 as const, submittedAt: attempt.submittedAt.toISOString(), attemptId: attempt.id },
+    item: {
+      presentationId: attempt.presentation.id,
+      submittedAt: attempt.submittedAt.toISOString(),
+      selectedChoiceId: attempt.selectedChoiceId,
+      correctChoiceId: snapshot.correctChoiceId,
+      isCorrect: attempt.isCorrect,
+      question: snapshot.question,
+      explanationThai: snapshot.explanationThai,
+      explanationEnglish: snapshot.explanationEnglish,
+      explanationRussian: snapshot.explanationRussian,
+      trapExplanationThai: snapshot.trapExplanationThai,
+      trapExplanationEnglish: snapshot.trapExplanationEnglish,
+      trapExplanationRussian: snapshot.trapExplanationRussian,
+    },
+  };
+}
+
 /** Caller owns the database connection. Credentials are never logged. */
 export function createApi(options: { database: PrismaClient; botToken: string; now?: () => Date }) {
   if (!options.botToken.trim()) throw new Error('BOT_TOKEN is required');
   const app = Fastify({ logger: false, bodyLimit: 100000 });
   const now = options.now ?? (() => new Date());
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/practice/next', '/practice/answer'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/practice/next', '/practice/answer'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown) {
     const authorization = bearerSchema.safeParse(header);
@@ -100,35 +133,39 @@ export function createApi(options: { database: PrismaClient; botToken: string; n
         presentation: { select: { id: true, snapshot: true } },
       },
     });
-    const validated = attempts.map((attempt) => {
-      const snapshot = parsePresentationSnapshot(attempt.presentation.snapshot);
-      if (!snapshot.question.choices.some((choice) => choice.id === attempt.selectedChoiceId)) {
-        throw new Error('Stored answer choice is absent from presentation snapshot');
-      }
-      if (attempt.isCorrect !== (attempt.selectedChoiceId === snapshot.correctChoiceId)) {
-        throw new Error('Stored answer result is inconsistent with presentation snapshot');
-      }
-      return {
-        cursor: { v: 1 as const, submittedAt: attempt.submittedAt.toISOString(), attemptId: attempt.id },
-        item: {
-          presentationId: attempt.presentation.id,
-          submittedAt: attempt.submittedAt.toISOString(),
-          selectedChoiceId: attempt.selectedChoiceId,
-          correctChoiceId: snapshot.correctChoiceId,
-          isCorrect: attempt.isCorrect,
-          question: snapshot.question,
-          explanationThai: snapshot.explanationThai,
-          explanationEnglish: snapshot.explanationEnglish,
-          explanationRussian: snapshot.explanationRussian,
-          trapExplanationThai: snapshot.trapExplanationThai,
-          trapExplanationEnglish: snapshot.trapExplanationEnglish,
-          trapExplanationRussian: snapshot.trapExplanationRussian,
-        },
-      };
-    });
+    const validated = attempts.map(mapHistoryAttempt);
     const page = validated.slice(0, query.limit);
     const last = page.at(-1);
     return historyResponseSchema.parse({
+      items: page.map(({ item }) => item),
+      nextCursor: validated.length > query.limit && last ? encodeHistoryCursor(last.cursor) : null,
+    });
+  });
+  app.get('/me/mistakes', async (request, reply) => {
+    const user = await authenticatedUser(request.headers.authorization);
+    if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+    let query;
+    try { query = parseHistoryQuery(request.query); }
+    catch { return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' })); }
+    const after = query.cursor === null ? {} : {
+      OR: [
+        { submittedAt: { lt: new Date(query.cursor.submittedAt) } },
+        { submittedAt: new Date(query.cursor.submittedAt), id: { lt: query.cursor.attemptId } },
+      ],
+    };
+    const attempts = await options.database.answerAttempt.findMany({
+      where: { isCorrect: false, presentation: { userId: user.id }, ...after },
+      orderBy: [{ submittedAt: 'desc' }, { id: 'desc' }],
+      take: query.limit + 1,
+      select: {
+        id: true, selectedChoiceId: true, isCorrect: true, submittedAt: true,
+        presentation: { select: { id: true, snapshot: true } },
+      },
+    });
+    const validated = attempts.map(mapHistoryAttempt);
+    const page = validated.slice(0, query.limit);
+    const last = page.at(-1);
+    return mistakesResponseSchema.parse({
       items: page.map(({ item }) => item),
       nextCursor: validated.length > query.limit && last ? encodeHistoryCursor(last.cursor) : null,
     });
