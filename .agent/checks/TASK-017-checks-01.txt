@@ -1,0 +1,136 @@
+Implementation-Commit: d70fa14
+Checked-HEAD: 34ac29d7db1e09caaafd2bf6e0da11f6f196cc94
+COMMAND: pnpm check
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 177ms
+
+$ tsc --noEmit
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 138ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  12 passed (12)
+      Tests  114 passed (114)
+   Start at  14:05:55
+   Duration  3.35s (import 55%, tests 26%, transform 17%, worker 2%)
+
+EXIT_CODE: 0
+COMMAND: pnpm build
+$ pnpm --filter @thai-dlt/web build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 1951ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 22.3s
+  Running TypeScript ...
+  Finished TypeScript in 2.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/3) ...
+✓ Generating static pages using 4 workers (3/3) in 3.3s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+EXIT_CODE: 0
+COMMAND: pnpm test:e2e
+$ playwright test
+[WebServer] (node:13896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ pnpm --filter @thai-dlt/web start
+[WebServer] (node:25844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1
+[WebServer] (node:5556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 37 tests using 2 workers
+
+(node:32800) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:8308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\history.spec.ts:112:1 › loads two pages once, appends valid items, and preserves the cursor for pagination retry (971ms)
+  ok  2 tests\e2e\history.spec.ts:63:1 › opens owned correct and incorrect history, expands localized snapshots, and returns to clean practice (1.7s)
+  ok  3 tests\e2e\history.spec.ts:141:1 › shows initial loading, retries a transport failure, and returns from empty history to setup (697ms)
+  ok  5 tests\e2e\history.spec.ts:163:3 › rejects cross-field history responses and allows retry (508ms)
+  ok  4 tests\e2e\history.spec.ts:163:3 › rejects malformed history responses and allows retry (552ms)
+  ok  7 tests\e2e\history.spec.ts:199:1 › a history 401 clears the in-memory session (481ms)
+  ok  6 tests\e2e\history.spec.ts:181:1 › rejects duplicate presentation IDs across pages while preserving the valid first page (596ms)
+  ok  9 tests\e2e\onboarding.spec.ts:18:1 › missing Telegram data provides launch guidance without login request (417ms)
+  ok  8 tests\e2e\history.spec.ts:207:1 › leaving history is immediate and ignores a delayed response (652ms)
+  ok 10 tests\e2e\onboarding.spec.ts:27:1 › script failure can be retried (675ms)
+  ok 12 tests\e2e\onboarding.spec.ts:58:1 › preserves existing preference and prevents pending duplicate saves (692ms)
+  ok 11 tests\e2e\onboarding.spec.ts:36:1 › login, save and change vehicle with in-memory credentials (1.3s)
+  ok 13 tests\e2e\onboarding.spec.ts:74:3 › rejects malformed login response (546ms)
+  ok 14 tests\e2e\onboarding.spec.ts:80:3 › malformed save retains confirmed preference and permits retry (670ms)
+  ok 15 tests\e2e\onboarding.spec.ts:74:3 › rejects transport login response (526ms)
+  ok 16 tests\e2e\onboarding.spec.ts:80:3 › transport save retains confirmed preference and permits retry (662ms)
+  ok 17 tests\e2e\onboarding.spec.ts:74:3 › rejects http login response (472ms)
+  ok 18 tests\e2e\onboarding.spec.ts:80:3 › http save retains confirmed preference and permits retry (666ms)
+  ok 19 tests\e2e\onboarding.spec.ts:90:1 › protected 401 clears session and offers reopening guidance (714ms)
+  ok 20 tests\e2e\practice.spec.ts:16:3 › choice 1, server result, language fallback and continuation (1.2s)
+  ok 21 tests\e2e\practice.spec.ts:16:3 › choice 2, server result, language fallback and continuation (1.3s)
+  ok 23 tests\e2e\practice.spec.ts:16:3 › choice 4, server result, language fallback and continuation (1.2s)
+  ok 22 tests\e2e\practice.spec.ts:16:3 › choice 3, server result, language fallback and continuation (1.7s)
+  ok 25 tests\e2e\practice.spec.ts:52:3 › next handles HTTP 401 (574ms)
+  ok 24 tests\e2e\practice.spec.ts:40:1 › one pending submission, transport retry and already-submitted guidance (852ms)
+  ok 26 tests\e2e\practice.spec.ts:52:3 › next handles HTTP 404 (614ms)
+  ok 27 tests\e2e\practice.spec.ts:52:3 › next handles HTTP 409 (584ms)
+  ok 29 tests\e2e\practice.spec.ts:61:3 › rejects hidden presentation DTO (620ms)
+  ok 28 tests\e2e\practice.spec.ts:52:3 › next handles HTTP 500 (654ms)
+  ok 30 tests\e2e\practice.spec.ts:61:3 › rejects duplicate presentation DTO (637ms)
+  ok 31 tests\e2e\practice.spec.ts:61:3 › rejects missing presentation DTO (622ms)
+  ok 33 tests\e2e\practice.spec.ts:68:3 › rejects inconsistent answer selectedChoiceId (711ms)
+  ok 32 tests\e2e\practice.spec.ts:68:3 › rejects inconsistent answer presentationId (718ms)
+  ok 35 tests\e2e\practice.spec.ts:68:3 › rejects inconsistent answer isCorrect (698ms)
+  ok 34 tests\e2e\practice.spec.ts:68:3 › rejects inconsistent answer correctChoiceId (723ms)
+  ok 36 tests\e2e\practice.spec.ts:75:1 › ignores a late response after leaving practice (698ms)
+  ok 37 tests\e2e\practice.spec.ts:81:1 › missing vehicle allows resaving the previously confirmed vehicle (704ms)
+
+  37 passed (21.9s)
+EXIT_CODE: 0
+COMMAND: pnpm test:integration
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 174ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:11528) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  6 passed (6)
+      Tests  18 passed (18)
+   Start at  14:07:52
+   Duration  8.93s (tests 80%, import 16%, transform 3%)
+
+EXIT_CODE: 0
