@@ -215,6 +215,28 @@ Keep future Mini App tokens in memory; use HTTPS for any nonlocal transport.
 `pnpm test:integration` includes synthetic signed authentication requests through Fastify
 injection and real PostgreSQL transactions. No live Telegram token is needed for tests.
 
+### Practice category API
+
+`GET /practice/categories` uses the existing bearer session and accepts no query
+parameters. Authentication runs before strict query validation, followed by the saved
+vehicle check. Missing, malformed, unknown, revoked, or expired authentication returns
+`401 { "error": "Unauthorized" }`; any query key, including duplicate keys, returns
+`400 { "error": "Bad Request" }` for an authenticated user; and a user without a saved
+vehicle receives `409 { "error": "Vehicle selection required" }`.
+
+A successful response has the strict shape
+`{ "categories": [{ "id", "slug", "nameThai", "nameEnglish", "nameRussian", "questionCount" }] }`.
+It includes only categories with at least one active `VERIFIED` question for the user's
+saved vehicle. `questionCount` uses that same vehicle, active, and verification filter.
+Categories are ordered by `sortOrder` ascending and then unique `slug` ascending; empty
+eligibility returns `200 { "categories": [] }`.
+
+The endpoint fetches at most 101 eligible rows. Exactly 100 are returned, while more
+than 100 produces the sanitized `500 { "error": "Internal Server Error" }` instead of
+silent truncation. Persisted category identity strings must be nonblank and already
+trimmed, and counts must be positive integers; malformed output fails as the same
+sanitized 500. Every response uses `Cache-Control: no-store`.
+
 ### Question presentation API
 
 `POST /practice/next` uses the existing bearer session and accepts no body or `{}`.

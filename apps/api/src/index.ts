@@ -5,6 +5,7 @@ import type { PrismaClient } from '../../../packages/database/src/index.ts';
 import { parsePresentationSnapshot, presentationResponseSchema, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
 import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '../../../packages/database/src/answer.ts';
 import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
+import { practiceCategoriesResponseSchema } from '../../../packages/database/src/practice-categories.ts';
 import { InvalidInitDataError, validateInitData } from '../../../packages/telegram/src/index.ts';
 
 export const userSchema = z.strictObject({
@@ -15,6 +16,7 @@ export const loginSchema = z.strictObject({ token: z.string().regex(/^[A-Za-z0-9
 const bodySchema = z.strictObject({ initData: z.string().min(1).max(16384).refine((value) => Buffer.byteLength(value, 'utf8') <= 16384) });
 const bearerSchema = z.string().regex(/^Bearer [A-Za-z0-9_-]{43}$/u);
 const vehicleSchema = z.strictObject({ vehicleType: z.enum(['CAR', 'MOTORCYCLE']) });
+const emptyQuerySchema = z.strictObject({});
 const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available', 'Presentation not found', 'Answer already submitted']) });
 const userSelect = { id: true, username: true, firstName: true, selectedVehicleType: true } as const;
 const digest = (token: string) => createHash('sha256').update(token).digest('hex');
@@ -59,7 +61,7 @@ export function createApi(options: { database: PrismaClient; botToken: string; n
   const app = Fastify({ logger: false, bodyLimit: 100000 });
   const now = options.now ?? (() => new Date());
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/practice/next', '/practice/answer'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/practice/categories', '/practice/next', '/practice/answer'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown) {
     const authorization = bearerSchema.safeParse(header);
@@ -168,6 +170,37 @@ export function createApi(options: { database: PrismaClient; botToken: string; n
     return mistakesResponseSchema.parse({
       items: page.map(({ item }) => item),
       nextCursor: validated.length > query.limit && last ? encodeHistoryCursor(last.cursor) : null,
+    });
+  });
+  app.get('/practice/categories', async (request, reply) => {
+    const user = await authenticatedUser(request.headers.authorization);
+    if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+    if (!emptyQuerySchema.safeParse(request.query).success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+    if (!user.selectedVehicleType) return reply.code(409).send(errorSchema.parse({ error: 'Vehicle selection required' }));
+    const eligibleQuestion = {
+      vehicleType: user.selectedVehicleType,
+      active: true,
+      verificationStatus: 'VERIFIED',
+    } as const;
+    const categories = await options.database.category.findMany({
+      where: { questions: { some: eligibleQuestion } },
+      orderBy: [{ sortOrder: 'asc' }, { slug: 'asc' }],
+      take: 101,
+      select: {
+        id: true,
+        slug: true,
+        nameThai: true,
+        nameEnglish: true,
+        nameRussian: true,
+        _count: { select: { questions: { where: eligibleQuestion } } },
+      },
+    });
+    if (categories.length > 100) throw new Error('Eligible practice category limit exceeded');
+    return practiceCategoriesResponseSchema.parse({
+      categories: categories.map(({ _count, ...category }) => ({
+        ...category,
+        questionCount: _count.questions,
+      })),
     });
   });
   app.post('/practice/next', async (request, reply) => {
