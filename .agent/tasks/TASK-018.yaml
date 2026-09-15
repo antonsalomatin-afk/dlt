@@ -1,6 +1,6 @@
 id: TASK-018
 title: Expose authenticated mistakes feed
-status: REVIEW
+status: ACCEPTED
 epic: Epic 4 — Learning
 objective: Let an authenticated learner retrieve persisted incorrect answer attempts for focused review.
 acceptance:
@@ -32,3 +32,5 @@ supervisor_refinement:
   - Reuse or extract a small history-item mapping helper when it reduces route duplication, but do not introduce a generic repository/pagination framework or alter the accepted /me/history behavior.
   - Unit tests cover the mistakes response invariant and shared cursor/query compatibility. Real PostgreSQL integration tests cover uniform auth, strict malformed query, empty feed, correct/unanswered/foreign exclusion, deterministic tied ordering, two pages without duplicates, repeated incorrect attempts for the same question, persistence after a later correct attempt, snapshot stability and fail-closed corrupt data.
   - No schema migration, UI, content activation, progress/mastery calculation, edit/delete/resolve endpoint, new dependency or production credential.
+accepted_commit: 871114003e7daa5f44122efb527f6e399b95cfff
+review_file: .agent/reviews/TASK-018-review-01.md

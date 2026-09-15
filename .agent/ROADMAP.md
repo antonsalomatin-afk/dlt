@@ -53,7 +53,7 @@ At the end of this epic the core end-to-end flow must work.
 
 - TASK-016 — ACCEPTED — authenticated answer history API
 - TASK-017 — ACCEPTED — Mini App answer history UI
-- TASK-018 — PLANNED — authenticated mistakes feed API
+- TASK-018 — ACCEPTED — authenticated mistakes feed API
 - TASK-019 — PLANNED — Mini App mistakes review UI
 - categories
 - random practice
