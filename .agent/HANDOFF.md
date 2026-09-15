@@ -1,12 +1,7 @@
-# Supervisor handoff — TASK-015 checkpoint
+# Supervisor handoff — TASK-015 accepted
 
-TASK-001 through TASK-014 are accepted in main. TASK-014 implementation: 3c0d0820066e73efac13b33530c0ff2ac8d3f599; acceptance: 16bc3d4. All authoritative checks and independent review 01 passed.
+TASK-001 through TASK-015 are accepted. TASK-015 implementation commit 88beb607743a9f87594537ccbe2decd7a6eb492b passed authoritative check (110 tests), build, e2e (29), integration (12), fullstack, and the normal-origin restore build. Independent review 01 returned PASS with no findings. The full-stack Pixel 7 result screenshots were visually inspected and are readable without clipping.
 
-Current branch: codex/task-015. TASK-015 implementation is saved in the working tree, not committed: README.md, package.json, tests/fullstack/run.ts, tests/fullstack/lifecycle.ts and tests/fullstack-lifecycle.test.ts. No production app changes or new dependencies. Preserve these files and the unrelated untracked thai-dlt-agent-starter.zip.
+Current branch remains codex/task-015 until its acceptance commit is fast-forwarded into main. Next task is TASK-016, authenticated answer history API, currently PLANNED and requiring exact cursor/response refinement before Builder assignment. TASK-017 history UI is also planned.
 
-Builder results: pnpm check PASS (lint, typecheck, 110 tests); pnpm test:fullstack PASS (real Next/API/Postgres authentication, vehicle persistence, correct and incorrect scoring, owned presentations, continuation and cleanup); pnpm build PASS afterwards, restoring the ordinary default API_ORIGIN. Initial check found unsupported toReversed; fixed with copied reverse before passing checks. Builder visually inspected test-results/fullstack/incorrect-mobile.png, readable without clipping. Runner reported owned resources cleaned up; PostgreSQL service remains available. Builder stopped; no active gate process.
-
-Next: check live five-hour usage; resume Builder for pnpm test:e2e and pnpm test:integration, then its scoped feature commit once every required gate remains green. Earlier fullstack PASS need not be rerun solely to reorder checks. Supervisor must subsequently run all five authoritative gates sequentially and save SHA-bound logs, then assign fresh independent Reviewer. No acceptance or merge before PASS. Fullstack rebuilds the web app for API port3101, so rebuild the ordinary web app afterwards for normal development as documented.
-
-Paused proactively after observing55 percent five-hour usage to preserve reserve under the user80 percent ceiling. Check live allowance on resume; no reset-credit authorization and no active scheduled continuation. TASK-016 history API and TASK-017 history UI are planned governance only, with refinement required before assignment. No Product Owner blocker.
-Final prior-window usage observation: 61 percent. Execution resumed after the five-hour window reset to 2 percent.
+Five-hour usage was 38 percent immediately before acceptance. The standing user ceiling is 80 percent; policy stops new Builder work by 40 percent and checkpoints by 60 percent. Check live usage before assigning TASK-016. Preserve the unrelated untracked thai-dlt-agent-starter.zip. Local PostgreSQL is running. No Product Owner blocker, active automation, or reset-credit authorization.
