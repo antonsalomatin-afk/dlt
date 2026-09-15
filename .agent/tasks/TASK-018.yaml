@@ -1,6 +1,6 @@
 id: TASK-018
 title: Expose authenticated mistakes feed
-status: PLANNED
+status: READY
 epic: Epic 4 — Learning
 objective: Let an authenticated learner retrieve persisted incorrect answer attempts for focused review.
 acceptance:
@@ -18,8 +18,17 @@ required_checks:
   - pnpm check
   - pnpm test:integration
 supervisor_refinement_required:
-  - Reuse the accepted history envelope and cursor contract without introducing a second incompatible pagination format.
-  - Define whether mistakes are attempt-based or deduplicated/resolved before Builder assignment.
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
 dependencies:
   - TASK-017
 owner_decision_required: false
+supervisor_refinement:
+  - Define a mistake as one persisted AnswerAttempt with isCorrect false. The feed is attempt-based and immutable: repeated incorrect presentations may each appear, and a later correct attempt does not remove or resolve earlier mistakes. Deduplication, mastery and resolution state remain later work.
+  - GET /me/mistakes uses the accepted history query and cursor contract unchanged: only optional canonical limit 1 through 50 and bounded canonical cursor, default20, order submittedAt descending then attempt ID descending, fetch limit plus one, and strict keyset pagination. Authentication must run before query validation.
+  - Return the same strict { items, nextCursor } envelope and history item fields so clients can reuse validation. Every returned item must additionally have isCorrect false and selectedChoiceId different from correctChoiceId; fail closed if persisted data contradicts the snapshot.
+  - Filter at the database query boundary with AnswerAttempt.isCorrect false and presentation.userId equal to the authenticated user. Correct attempts, unanswered presentations and other users must not be fetched and filtered later in application memory.
+  - Derive question, choices, correctChoiceId and explanation fields only from parsePresentationSnapshot; use persisted selectedChoiceId, isCorrect and submittedAt for attempt data. Malformed/unsupported snapshots or inconsistent selection/result fail the whole request with the stable sanitized500 response.
+  - Add Cache-Control no-store and retain established401/400/500 shapes. Cursors are navigation data and confer no ownership. Do not return user/session IDs, raw attempt IDs outside the opaque cursor, current source metadata or other hidden fields.
+  - Reuse or extract a small history-item mapping helper when it reduces route duplication, but do not introduce a generic repository/pagination framework or alter the accepted /me/history behavior.
+  - Unit tests cover the mistakes response invariant and shared cursor/query compatibility. Real PostgreSQL integration tests cover uniform auth, strict malformed query, empty feed, correct/unanswered/foreign exclusion, deterministic tied ordering, two pages without duplicates, repeated incorrect attempts for the same question, persistence after a later correct attempt, snapshot stability and fail-closed corrupt data.
+  - No schema migration, UI, content activation, progress/mastery calculation, edit/delete/resolve endpoint, new dependency or production credential.
