@@ -13,9 +13,9 @@
   "notes": "TASK-015 implementation is saved but uncommitted. Builder check PASS (110 tests), fullstack PASS, build PASS with normal API origin restored. Remaining Builder e2e/integration, then commit, authoritative checks and independent review. No Product Owner blocker.",
   "usagePolicy": {
     "maxSessionUsedPercent": 80,
-    "latestObservedUsedPercent": 55,
+    "latestObservedUsedPercent": 61,
     "windowMinutes": 300,
-    "checkedAt": "2026-09-15T03:15:40.5342940Z",
+    "checkedAt": "2026-09-15T03:15:51.2947086Z",
     "instruction": "Check five-hour account usage frequently. Stop new Builder work by 40 percent and checkpoint by 60 percent to reserve margin below the user ceiling of 80 percent. Never redeem reset credits without authorization."
   },
   "executionPaused": true,
