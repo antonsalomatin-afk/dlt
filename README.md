@@ -250,6 +250,41 @@ failed submissions cannot change an existing answer. Selected choice UUIDs refer
 snapshot choices, so they deliberately have no foreign key to mutable source choices.
 The practice integration test applies the full migration chain to a fresh isolated database.
 
+### Answer history
+
+`GET /me/history` uses the existing bearer session and returns the authenticated
+learner's submitted answers as `{ "items": [...], "nextCursor": string | null }`.
+Authentication is checked before query validation. Missing, malformed, unknown,
+revoked and expired credentials return the same `401 { "error": "Unauthorized" }`.
+All responses use `Cache-Control: no-store`.
+
+The only query parameters are optional `limit` and `cursor`. `limit` defaults to
+20 and accepts canonical unsigned decimal integers from 1 through 50. Empty,
+signed, fractional, padded, duplicate or out-of-range values, unknown parameters,
+and invalid cursors return `400 { "error": "Bad Request" }`. Cursors are opaque,
+unpadded base64url UTF-8 JSON with version, submission timestamp and attempt ID.
+They are limited to 512 characters, strictly validated and canonicalized, and do
+not grant access to another user's records.
+
+Items are ordered by submission time descending, then answer-attempt ID descending.
+Pagination uses that tuple as a strict keyset boundary and returns a cursor for the
+last item only when another item exists. An empty history is
+`{ "items": [], "nextCursor": null }`.
+
+Each item contains `presentationId`, ISO `submittedAt`, `selectedChoiceId`,
+`correctChoiceId`, `isCorrect`, the complete presented question DTO, and the six
+nullable explanation/trap fields. Wording, choices, the correct answer and
+explanations come from the persisted versioned presentation snapshot; later source
+edits cannot change history. Selection, correctness and submission time come from
+the persisted answer attempt. Unanswered presentations and other users' attempts
+are excluded in the database query. A malformed/unsupported snapshot, a selected
+choice absent from its snapshot, or inconsistent stored correctness fails the whole
+request with sanitized `500 { "error": "Internal Server Error" }`.
+
+The history integration suite uses a fresh temporary PostgreSQL database and covers
+authentication, strict queries, deterministic pagination, ownership, unanswered
+presentations, snapshot stability and corrupt stored data.
+
 
 ## Mini App (local development)
 

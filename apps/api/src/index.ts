@@ -4,6 +4,7 @@ import { z } from 'zod';
 import type { PrismaClient } from '../../../packages/database/src/index.ts';
 import { parsePresentationSnapshot, presentationResponseSchema, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
 import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '../../../packages/database/src/answer.ts';
+import { encodeHistoryCursor, historyResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
 import { InvalidInitDataError, validateInitData } from '../../../packages/telegram/src/index.ts';
 
 export const userSchema = z.strictObject({
@@ -25,7 +26,7 @@ export function createApi(options: { database: PrismaClient; botToken: string; n
   const app = Fastify({ logger: false, bodyLimit: 100000 });
   const now = options.now ?? (() => new Date());
   app.addHook('onRequest', async (request, reply) => {
-    if (['/practice/next', '/practice/answer'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/practice/next', '/practice/answer'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown) {
     const authorization = bearerSchema.safeParse(header);
@@ -76,6 +77,60 @@ export function createApi(options: { database: PrismaClient; botToken: string; n
     return options.database.$transaction(async (tx) => {
       const updated = await tx.user.update({ where: { id: user.id }, data: { selectedVehicleType: body.data.vehicleType }, select: userSelect });
       return userSchema.parse(updated);
+    });
+  });
+  app.get('/me/history', async (request, reply) => {
+    const user = await authenticatedUser(request.headers.authorization);
+    if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+    let query;
+    try { query = parseHistoryQuery(request.query); }
+    catch { return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' })); }
+    const after = query.cursor === null ? {} : {
+      OR: [
+        { submittedAt: { lt: new Date(query.cursor.submittedAt) } },
+        { submittedAt: new Date(query.cursor.submittedAt), id: { lt: query.cursor.attemptId } },
+      ],
+    };
+    const attempts = await options.database.answerAttempt.findMany({
+      where: { presentation: { userId: user.id }, ...after },
+      orderBy: [{ submittedAt: 'desc' }, { id: 'desc' }],
+      take: query.limit + 1,
+      select: {
+        id: true, selectedChoiceId: true, isCorrect: true, submittedAt: true,
+        presentation: { select: { id: true, snapshot: true } },
+      },
+    });
+    const validated = attempts.map((attempt) => {
+      const snapshot = parsePresentationSnapshot(attempt.presentation.snapshot);
+      if (!snapshot.question.choices.some((choice) => choice.id === attempt.selectedChoiceId)) {
+        throw new Error('Stored answer choice is absent from presentation snapshot');
+      }
+      if (attempt.isCorrect !== (attempt.selectedChoiceId === snapshot.correctChoiceId)) {
+        throw new Error('Stored answer result is inconsistent with presentation snapshot');
+      }
+      return {
+        cursor: { v: 1 as const, submittedAt: attempt.submittedAt.toISOString(), attemptId: attempt.id },
+        item: {
+          presentationId: attempt.presentation.id,
+          submittedAt: attempt.submittedAt.toISOString(),
+          selectedChoiceId: attempt.selectedChoiceId,
+          correctChoiceId: snapshot.correctChoiceId,
+          isCorrect: attempt.isCorrect,
+          question: snapshot.question,
+          explanationThai: snapshot.explanationThai,
+          explanationEnglish: snapshot.explanationEnglish,
+          explanationRussian: snapshot.explanationRussian,
+          trapExplanationThai: snapshot.trapExplanationThai,
+          trapExplanationEnglish: snapshot.trapExplanationEnglish,
+          trapExplanationRussian: snapshot.trapExplanationRussian,
+        },
+      };
+    });
+    const page = validated.slice(0, query.limit);
+    const last = page.at(-1);
+    return historyResponseSchema.parse({
+      items: page.map(({ item }) => item),
+      nextCursor: validated.length > query.limit && last ? encodeHistoryCursor(last.cursor) : null,
     });
   });
   app.post('/practice/next', async (request, reply) => {
