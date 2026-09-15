@@ -1,0 +1,24 @@
+id: TASK-021
+title: Deliver questions for a selected category
+status: PLANNED
+epic: Epic 4 — Learning
+objective: Allow authenticated practice delivery to select eligible questions from one requested category.
+acceptance:
+  - POST /practice/next accepts an optional validated category selector while preserving unfiltered practice compatibility.
+  - Category-filtered delivery enforces the saved vehicle and active verified eligibility and retains the accepted server-owned snapshot contract.
+  - Unknown or empty eligible categories and malformed selectors have stable tested behavior without leaking content metadata.
+  - Integration tests verify category and vehicle isolation, unfiltered regression and snapshot safety.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Select ID or slug as the API selector and define empty/unknown behavior after TASK-020 acceptance.
+  - No category UI or randomized selection in this task.
+dependencies:
+  - TASK-020
+owner_decision_required: false

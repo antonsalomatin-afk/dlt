@@ -1,0 +1,24 @@
+id: TASK-020
+title: List eligible practice categories
+status: PLANNED
+epic: Epic 4 — Learning
+objective: Let an authenticated learner discover categories that contain practice questions for their saved vehicle.
+acceptance:
+  - A protected GET /practice/categories returns categories with eligible active verified question counts for the authenticated user's saved vehicle.
+  - Results contain strict localized category identity fields and positive counts in deterministic order, excluding empty categories and ineligible questions.
+  - Missing vehicle, invalid session, empty results and malformed persisted values use stable documented behavior.
+  - Real PostgreSQL integration tests verify vehicle filtering, active/verification filtering, counts, ordering, ownership context and empty results.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Define exact response fields, ordering, query behavior and missing-vehicle precedence before Builder assignment.
+  - No question-delivery filter or UI in this task.
+dependencies:
+  - TASK-019
+owner_decision_required: false
