@@ -1,6 +1,6 @@
 id: TASK-016
 title: Expose authenticated answer history
-status: PLANNED
+status: READY
 epic: Epic 4 — Learning
 objective: Let an authenticated learner retrieve their persisted submitted answers and snapshot explanations.
 acceptance:
@@ -18,8 +18,16 @@ required_checks:
   - pnpm check
   - pnpm test:integration
 supervisor_refinement_required:
-  - Before assignment, specify the exact response envelope, cursor encoding/validation, maximum page size, tie-breaking order and malformed stored-snapshot behavior.
-  - Reuse accepted sessions and snapshot parsing; no schema migration, new learning score or UI in this task.
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
 dependencies:
   - TASK-015
 owner_decision_required: false
+supervisor_refinement:
+  - GET /me/history accepts only optional limit and cursor query keys. limit defaults to 20 and must be an unsigned decimal integer from 1 through 50; duplicate, empty, signed, fractional, padded or otherwise malformed values return the established 400 Bad Request shape.
+  - Return the strict envelope { items, nextCursor }. Each item contains presentationId, submittedAt as an ISO timestamp, selectedChoiceId, correctChoiceId, isCorrect, the complete presented question DTO, and the six nullable explanation/trap fields from snapshot version 1. Do not return current source rows, user/session identifiers or hidden fields beyond the correct answer required for submitted history.
+  - Order by AnswerAttempt.submittedAt descending, then AnswerAttempt.id descending as the deterministic tie-breaker. Fetch limit plus one; nextCursor is null when exhausted and otherwise identifies the last returned item.
+  - Encode cursors as canonical unpadded base64url UTF-8 JSON with strict shape { v: 1, submittedAt: ISO timestamp, attemptId: UUID }. Bound encoded input to 512 characters, reject decoding/UTF-8/JSON/schema/canonicalization failures with 400, and apply keyset conditions strictly after the cursor tuple. Cursor contents are navigation data, not authorization.
+  - Query AnswerAttempt through its presentation constrained by the authenticated user. Unanswered presentations and other users are excluded at the database query boundary. Preserve the accepted uniform 401 behavior before query validation so invalid credentials do not expose parser differences.
+  - Parse every persisted presentation snapshot with parsePresentationSnapshot. Validate selectedChoiceId belongs to the snapshot and persisted isCorrect equals selectedChoiceId === correctChoiceId. Any malformed or unsupported stored snapshot or inconsistent persisted result fails the whole request through the stable 500 response; never silently omit or partially return corrupt history.
+  - Add focused unit tests for cursor and response boundaries plus real PostgreSQL integration coverage for authentication, strict malformed query behavior, empty history, ordering/ties, both pagination pages without duplicates on unchanged data, ownership isolation, unanswered exclusion, snapshot stability after source edits, and fail-closed malformed snapshot/result behavior.
+  - Reuse accepted opaque sessions and snapshot contracts. No schema migration, learning score, UI, content activation, generic pagination framework or new dependency.
