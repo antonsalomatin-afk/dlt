@@ -1,6 +1,6 @@
 id: TASK-019
 title: Show mistakes review in the Mini App
-status: PLANNED
+status: READY
 epic: Epic 4 — Learning
 objective: Let learners revisit persisted incorrect answers through the accepted mistakes API.
 acceptance:
@@ -17,7 +17,17 @@ required_checks:
   - pnpm test:e2e
   - pnpm test:integration
 supervisor_refinement_required:
-  - Specify navigation and whether to reuse or extract the accepted history presentation after TASK-018 acceptance.
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
 dependencies:
   - TASK-018
 owner_decision_required: false
+supervisor_refinement:
+  - Add only the explicit same-origin GET /me/mistakes rewrite. Use the existing in-memory bearer session in the Authorization header and the established401 session-clearing path; never persist or render credentials.
+  - Add a Mistakes control from authenticated vehicle setup and practice. Record the origin exactly as accepted for history: Back returns to setup when opened there and remounts a clean practice view when opened from practice. Leaving during a request remains immediate and late responses, errors and401 callbacks are ignored.
+  - Reuse or parameterize the accepted history component and styling rather than cloning its pagination, localization and stale-request state machine. Preserve every existing /me/history behavior and browser test.
+  - Fetch /me/mistakes?limit=10 and paginate with the returned opaque cursor. Validate with the accepted browser history envelope plus a mistakes-specific invariant requiring every item to be incorrect and selectedChoiceId to differ from correctChoiceId before rendering or appending.
+  - Present only incorrect attempt entries under the heading Mistakes to review. Use the accepted accessible expandable details, global English/Russian/Thai control with English fallback, canonical time element, four snapshot choices, stable-ID Your answer and Correct answer labels, optional exam English, explanation/trap text and unavailable messages.
+  - The feed is an immutable attempt list: do not imply that mistakes are resolved, deduplicated or removed after a later correct answer. Do not add scoring, mastery, delete/edit/retry-question actions or source metadata.
+  - Reuse accepted initial loading, friendly empty state, safe alert/retry, pagination retry preserving validated items/exact cursor, duplicate presentation rejection, synchronous overlap guard and Load more visibility. Mistakes-specific copy must clearly describe incorrect submitted answers.
+  - Browser tests may mock API only from Playwright. Cover entry from practice and setup, only incorrect item rendering, stable-ID labels, language fallback, expansion, two-page append and duplicate-load prevention, empty and transport/pagination retry, malformed or logically-correct item rejection, duplicate-page rejection,401, delayed response departure, clean-practice return, and regression of existing history navigation.
+  - Update README for the explicit rewrite, attempt-based meaning and UI behavior. No backend change, dependency, full-stack harness expansion or production credential.
