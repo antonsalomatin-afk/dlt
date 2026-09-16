@@ -317,6 +317,37 @@ direct database writes. The response is exactly the requested
 `{ "presentationId", "favorite" }`; it exposes no favorite ID, owner/question ID,
 snapshot, correctness, timestamps or prior-existence state.
 
+### Favorites feed
+
+`GET /me/favorites` uses the existing bearer session and returns only the
+authenticated learner's current favorites as
+`{ "items": [...], "nextCursor": string | null }`. Authentication runs before
+query validation. The optional `limit` must be the canonical decimal form of an
+integer from 1 through 50 and defaults to 20. The optional cursor is a bounded,
+opaque, versioned base64url value. Unknown or duplicate query parameters,
+noncanonical limits, padded or malformed cursors, and unsupported cursor versions
+return `400 { "error": "Bad Request" }`. All responses use `Cache-Control: no-store`.
+
+Favorites are ordered by `updatedAt` descending and then favorite ID descending.
+Pagination uses that tuple as a keyset and reads one lookahead row, so tied
+timestamps remain deterministic. The database query always includes the
+authenticated user ID; a cursor is navigation data and never grants access to
+another learner's rows.
+
+Each item contains exactly `presentationId`, `favoritedAt`, and the safe presented
+question boundary: question ID, localized wording, and four localized choices.
+The question is parsed only from the immutable presentation snapshot anchored by
+the favorite. Current mutable question content, correctness, explanations, answer
+state, favorite/user IDs, and source or image metadata are not returned. Before a
+page is returned, the API validates every fetched snapshot, canonical timestamp,
+snapshot question ID, and the anchor's learner/question relationship. Corrupt or
+unsupported persisted data fails the whole request with the sanitized
+`500 { "error": "Internal Server Error" }` response.
+
+Favoriting a newer owned presentation updates the favorite's recency and snapshot
+anchor; unfavoriting removes it from later feed reads. Reading the feed does not
+change favorite rows.
+
 ### Answer history
 
 `GET /me/history` uses the existing bearer session and returns the authenticated

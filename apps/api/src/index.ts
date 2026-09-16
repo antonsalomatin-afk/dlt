@@ -7,6 +7,7 @@ import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '..
 import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
 import { practiceCategoriesResponseSchema } from '../../../packages/database/src/practice-categories.ts';
 import { favoriteRequestSchema, favoriteResponseSchema } from '../../../packages/database/src/favorite.ts';
+import { encodeFavoriteCursor, favoriteFeedResponseSchema, parseFavoriteFeedQuery } from '../../../packages/database/src/favorite-feed.ts';
 import { InvalidInitDataError, validateInitData } from '../../../packages/telegram/src/index.ts';
 
 export const userSchema = z.strictObject({
@@ -102,6 +103,29 @@ function mapHistoryAttempt(attempt: {
   };
 }
 
+function mapFavorite(row: {
+  id: string;
+  userId: string;
+  questionId: string;
+  updatedAt: Date;
+  presentation: null | { id: string; userId: string; questionId: string; snapshot: unknown };
+}) {
+  if (
+    row.presentation === null
+    || row.presentation.userId !== row.userId
+    || row.presentation.questionId !== row.questionId
+  ) throw new Error('Stored favorite presentation relationship is inconsistent');
+  const snapshot = parsePresentationSnapshot(row.presentation.snapshot);
+  if (snapshot.question.id !== row.questionId || snapshot.question.id !== row.presentation.questionId) {
+    throw new Error('Stored favorite snapshot question is inconsistent');
+  }
+  const favoritedAt = row.updatedAt.toISOString();
+  return {
+    cursor: { v: 1 as const, updatedAt: favoritedAt, favoriteId: row.id },
+    item: { presentationId: row.presentation.id, favoritedAt, question: snapshot.question },
+  };
+}
+
 type RandomOffset = (eligibleCount: number) => unknown;
 
 function checkedRandomOffset(randomOffset: RandomOffset, eligibleCount: number) {
@@ -124,7 +148,7 @@ export function createApi(options: {
   const now = options.now ?? (() => new Date());
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown) {
     const authorization = bearerSchema.safeParse(header);
@@ -233,6 +257,35 @@ export function createApi(options: {
     return mistakesResponseSchema.parse({
       items: page.map(({ item }) => item),
       nextCursor: validated.length > query.limit && last ? encodeHistoryCursor(last.cursor) : null,
+    });
+  });
+  app.get('/me/favorites', async (request, reply) => {
+    const user = await authenticatedUser(request.headers.authorization);
+    if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+    let query;
+    try { query = parseFavoriteFeedQuery(request.query); }
+    catch { return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' })); }
+    const after = query.cursor === null ? {} : {
+      OR: [
+        { updatedAt: { lt: new Date(query.cursor.updatedAt) } },
+        { updatedAt: new Date(query.cursor.updatedAt), id: { lt: query.cursor.favoriteId } },
+      ],
+    };
+    const favorites = await options.database.favorite.findMany({
+      where: { userId: user.id, ...after },
+      orderBy: [{ updatedAt: 'desc' }, { id: 'desc' }],
+      take: query.limit + 1,
+      select: {
+        id: true, userId: true, questionId: true, updatedAt: true,
+        presentation: { select: { id: true, userId: true, questionId: true, snapshot: true } },
+      },
+    });
+    const validated = favorites.map(mapFavorite);
+    const page = validated.slice(0, query.limit);
+    const last = page.at(-1);
+    return favoriteFeedResponseSchema.parse({
+      items: page.map(({ item }) => item),
+      nextCursor: validated.length > query.limit && last ? encodeFavoriteCursor(last.cursor) : null,
     });
   });
   app.get('/practice/categories', async (request, reply) => {
