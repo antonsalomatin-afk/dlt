@@ -1,6 +1,6 @@
 id: TASK-025
 title: Expose authenticated favorites feed
-status: READY
+status: BUILDING
 epic: Epic 4 — Learning
 objective: Let an authenticated learner retrieve their saved favorite question snapshots in stable recency order.
 acceptance:
