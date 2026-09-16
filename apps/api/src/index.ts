@@ -1,7 +1,7 @@
-import { createHash, randomBytes } from 'node:crypto';
+import { createHash, randomBytes, randomInt } from 'node:crypto';
 import Fastify from 'fastify';
 import { z } from 'zod';
-import type { PrismaClient } from '../../../packages/database/src/index.ts';
+import type { Prisma, PrismaClient } from '../../../packages/database/src/index.ts';
 import { parsePresentationSnapshot, practiceNextRequestSchema, presentationResponseSchema, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
 import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '../../../packages/database/src/answer.ts';
 import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
@@ -101,11 +101,27 @@ function mapHistoryAttempt(attempt: {
   };
 }
 
+type RandomOffset = (eligibleCount: number) => unknown;
+
+function checkedRandomOffset(randomOffset: RandomOffset, eligibleCount: number) {
+  const offset = randomOffset(eligibleCount);
+  if (typeof offset !== 'number' || !Number.isSafeInteger(offset) || offset < 0 || offset >= eligibleCount) {
+    throw new Error('Random offset is outside the eligible question range');
+  }
+  return offset;
+}
+
 /** Caller owns the database connection. Credentials are never logged. */
-export function createApi(options: { database: PrismaClient; botToken: string; now?: () => Date }) {
+export function createApi(options: {
+  database: PrismaClient;
+  botToken: string;
+  now?: () => Date;
+  randomOffset?: RandomOffset;
+}) {
   if (!options.botToken.trim()) throw new Error('BOT_TOKEN is required');
   const app = Fastify({ logger: false, bodyLimit: 100000 });
   const now = options.now ?? (() => new Date());
+  const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   app.addHook('onRequest', async (request, reply) => {
     if (['/me/history', '/me/mistakes', '/practice/categories', '/practice/next', '/practice/answer'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
@@ -273,15 +289,25 @@ export function createApi(options: { database: PrismaClient; botToken: string; n
       if (!user.selectedVehicleType) return reply.code(409).send(errorSchema.parse({ error: 'Vehicle selection required' }));
       const vehicleType = user.selectedVehicleType;
       const categoryId = body.data?.categoryId;
-      const categoryFilter = categoryId === undefined ? {} : { categoryId };
+      const eligibleQuestion: Prisma.QuestionWhereInput = {
+        vehicleType,
+        active: true,
+        verificationStatus: 'VERIFIED',
+        ...(categoryId === undefined ? {} : { categoryId }),
+      };
       const result = await options.database.$transaction(async (tx) => {
-        // Repeatable read also covers Prisma's separate relation query: wording and choices
-        // come from one MVCC view even when an editor commits between those reads.
+        const eligibleCount = await tx.question.count({ where: eligibleQuestion });
+        if (eligibleCount === 0) return null;
+        const offset = checkedRandomOffset(randomOffset, eligibleCount);
+        // Repeatable read covers the count, offset lookup and Prisma's separate relation
+        // query so selection, wording and choices all come from one MVCC view.
         const question = await tx.question.findFirst({
-          where: { vehicleType, active: true, verificationStatus: 'VERIFIED', ...categoryFilter },
-          orderBy: { id: 'asc' }, include: { choices: { orderBy: { key: 'asc' } } },
+          where: eligibleQuestion,
+          orderBy: { id: 'asc' },
+          skip: offset,
+          include: { choices: { orderBy: { key: 'asc' } } },
         });
-        if (!question) return null;
+        if (!question) throw new Error('Eligible question offset did not resolve');
         const snapshot = snapshotQuestion(question);
         const presentation = await tx.questionPresentation.create({ data: { userId: user.id, questionId: question.id, createdAt: now(), snapshot } });
         return presentationResponseSchema.parse({ presentationId: presentation.id, question: snapshot.question });

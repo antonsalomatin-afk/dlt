@@ -15,7 +15,7 @@ const isolatedUrl = new URL(url);
 isolatedUrl.pathname = `/${databaseName}`;
 const db = createDatabaseClient(isolatedUrl.toString());
 const now = new Date('2026-09-10T12:00:00Z');
-const app = createApi({ database: db, botToken: 'synthetic', now: () => now });
+const app = createApi({ database: db, botToken: 'synthetic', now: () => now, randomOffset: () => 0 });
 const categoryId = randomUUID();
 const userId = randomUUID();
 const token = randomBytes(32).toString('base64url');
