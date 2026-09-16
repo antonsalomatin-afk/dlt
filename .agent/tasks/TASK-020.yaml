@@ -1,6 +1,6 @@
 id: TASK-020
 title: List eligible practice categories
-status: CHECKING
+status: REVIEW
 epic: Epic 4 — Learning
 objective: Let an authenticated learner discover categories that contain practice questions for their saved vehicle.
 acceptance:

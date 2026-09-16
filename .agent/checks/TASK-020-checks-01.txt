@@ -1,0 +1,66 @@
+Implementation-Commit: 5d7f807554a4bd8e04e3c23856a397f0cd856be7
+Checked-HEAD: 63a1ee098fa1dbbfdf677d0600937c31c0ff103f
+COMMAND: pnpm check
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 223ms
+
+$ tsc --noEmit
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 148ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  13 passed (13)
+      Tests  118 passed (118)
+   Start at  06:24:18
+   Duration  2.27s (import 44%, tests 31%, transform 22%, worker 3%)
+
+EXIT_CODE: 0
+COMMAND: pnpm test:integration
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+┌─────────────────────────────────────────────────────────┐
+│  Update available 7.10.0 -> 8.0.0-rc.15                 │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 150ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:25460) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  8 passed (8)
+      Tests  30 passed (30)
+   Start at  06:24:26
+   Duration  11.35s (tests 82%, import 16%, transform 2%)
+
+EXIT_CODE: 0
