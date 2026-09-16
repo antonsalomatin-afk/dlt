@@ -1,6 +1,6 @@
 id: TASK-020
 title: List eligible practice categories
-status: REVIEW
+status: ACCEPTED
 epic: Epic 4 — Learning
 objective: Let an authenticated learner discover categories that contain practice questions for their saved vehicle.
 acceptance:
@@ -29,3 +29,5 @@ supervisor_refinement:
   - Empty eligibility returns200 with { categories: [] }. Add Cache-Control no-store and validate the complete response before sending; malformed persisted identity/count data fails with the established500 shape.
   - Add a focused response contract module only if useful; no generic repository/pagination layer. Real PostgreSQL integration tests cover auth/query/vehicle precedence, both vehicle types, active/verification filtering, exact counts, exclusion of empty categories, deterministic tied sort order, empty result, response field leakage,100/101 boundary and malformed persisted category data.
   - Document the endpoint and eligibility rules. No schema migration, question-delivery filter, randomization, UI, content mutation/activation, new dependency or production credential.
+accepted_commit: 5d7f807554a4bd8e04e3c23856a397f0cd856be7
+review_file: .agent/reviews/TASK-020-review-01.md
