@@ -63,6 +63,7 @@ At the end of this epic the core end-to-end flow must work.
 - history
 - mistakes
 - TASK-024 — ACCEPTED — persist favorite presented questions
+- TASK-025 — READY — authenticated favorites feed API
 - basic progress
 
 ## Epic 5 — Mock Exam
