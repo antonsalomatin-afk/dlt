@@ -274,9 +274,35 @@ describe('POST /practice/favorite', () => {
     await expect(database.favorite.create({ data: {
       userId: userIds.bob,
       questionId: concurrentQuestionId,
-      presentationId: randomUUID(),
+      presentationId: concurrentPresentationId,
+    } })).rejects.toMatchObject({ code: 'P2003' });
+    await expect(database.favorite.create({ data: {
+      userId: userIds.bob,
+      questionId: concurrentQuestionId,
+      presentationId: bobPresentationId,
     } })).rejects.toMatchObject({ code: 'P2003' });
     await expect(database.question.delete({ where: { id: firstQuestionId } })).rejects.toMatchObject({ code: 'P2003' });
+
+    const concurrentPresentation = await database.questionPresentation.findUniqueOrThrow({
+      where: { id: concurrentPresentationId },
+    });
+    const matchingBobPresentation = await database.questionPresentation.create({ data: {
+      userId: userIds.bob,
+      questionId: concurrentQuestionId,
+      snapshot: parsePresentationSnapshot(concurrentPresentation.snapshot),
+    } });
+    const matchingFavorite = await database.favorite.create({ data: {
+      userId: userIds.bob,
+      questionId: concurrentQuestionId,
+      presentationId: matchingBobPresentation.id,
+    } });
+    expect(matchingFavorite).toMatchObject({
+      userId: userIds.bob,
+      questionId: concurrentQuestionId,
+      presentationId: matchingBobPresentation.id,
+    });
+    await database.favorite.delete({ where: { id: matchingFavorite.id } });
+    await database.questionPresentation.delete({ where: { id: matchingBobPresentation.id } });
 
     const cascadeUserId = randomUUID();
     const cascadeToken = randomBytes(32).toString('base64url');

@@ -311,7 +311,9 @@ question. The ownership lookup, snapshot validation and mutation share one
 transaction, and a database uniqueness constraint on learner and question protects
 concurrent requests. The database indexes each learner's favorites by update recency,
 cascades favorites when that learner is deleted, and prevents deletion of a referenced
-question or snapshot anchor while the favorite exists. The response is exactly the requested
+question or snapshot anchor while the favorite exists. A composite foreign key requires the
+anchor presentation to have the same learner and question as the favorite row, including for
+direct database writes. The response is exactly the requested
 `{ "presentationId", "favorite" }`; it exposes no favorite ID, owner/question ID,
 snapshot, correctness, timestamps or prior-existence state.
 

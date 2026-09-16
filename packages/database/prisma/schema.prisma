@@ -137,6 +137,7 @@ model QuestionPresentation {
   createdAt  DateTime       @default(now()) @db.Timestamptz(3)
   snapshot   Json
 
+  @@unique([id, userId, questionId])
   @@index([userId])
   @@index([questionId])
 }
@@ -148,7 +149,7 @@ model Favorite {
   questionId     String               @db.Uuid
   question       Question             @relation(fields: [questionId], references: [id], onDelete: Restrict)
   presentationId String               @db.Uuid
-  presentation   QuestionPresentation @relation(fields: [presentationId], references: [id], onDelete: Restrict)
+  presentation   QuestionPresentation @relation(fields: [presentationId, userId, questionId], references: [id, userId, questionId], onDelete: Restrict)
   createdAt      DateTime             @default(now()) @db.Timestamptz(3)
   updatedAt      DateTime             @updatedAt @db.Timestamptz(3)
 
