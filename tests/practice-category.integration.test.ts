@@ -51,6 +51,14 @@ const nextWithBody = (payload: unknown, token = tokens.car) => app.inject({
   headers: { ...authorization(token), 'content-type': 'application/json' },
   payload: JSON.stringify(payload),
 });
+const nextWithRawBody = (payload: string, authorizationHeader: string | undefined) => app.inject({
+  method: 'POST',
+  url: '/practice/next',
+  headers: authorizationHeader === undefined
+    ? { 'content-type': 'application/json' }
+    : { authorization: authorizationHeader, 'content-type': 'application/json' },
+  payload,
+});
 
 async function createQuestion(input: {
   id?: string;
@@ -174,6 +182,39 @@ describe('POST /practice/next category selector', () => {
     expect(validWithoutVehicle.statusCode).toBe(409);
     expect(validWithoutVehicle.json()).toEqual({ error: 'Vehicle selection required' });
     expect(await database.questionPresentation.count()).toBe(0);
+  });
+
+  it('authenticates before parsing malformed JSON and rejects it for authenticated users', async () => {
+    const unknownToken = randomBytes(32).toString('base64url');
+    for (const authorizationHeader of [
+      undefined,
+      'Bearer invalid',
+      `Bearer ${unknownToken}`,
+      `Bearer ${tokens.expired}`,
+    ]) {
+      const response = await nextWithRawBody('{', authorizationHeader);
+      expect(response.statusCode).toBe(401);
+      expect(response.json()).toEqual({ error: 'Unauthorized' });
+      expect(response.headers['cache-control']).toBe('no-store');
+    }
+
+    const authenticated = await nextWithRawBody('{', `Bearer ${tokens.car}`);
+    expect(authenticated.statusCode).toBe(400);
+    expect(authenticated.json()).toEqual({ error: 'Bad Request' });
+    expect(authenticated.headers['cache-control']).toBe('no-store');
+    expect(await database.questionPresentation.count()).toBe(0);
+  });
+
+  it('rejects duplicate raw JSON object members before either selector can win', async () => {
+    const before = await database.questionPresentation.count();
+    const response = await nextWithRawBody(
+      `{"categoryId":"${categoryIds.selected}","categoryId":"${categoryIds.other}"}`,
+      `Bearer ${tokens.car}`,
+    );
+    expect(response.statusCode).toBe(400);
+    expect(response.json()).toEqual({ error: 'Bad Request' });
+    expect(response.headers['cache-control']).toBe('no-store');
+    expect(await database.questionPresentation.count()).toBe(before);
   });
 
   it('strictly rejects malformed and extra selectors without creating presentations', async () => {

@@ -22,6 +22,52 @@ const userSelect = { id: true, username: true, firstName: true, selectedVehicleT
 const digest = (token: string) => createHash('sha256').update(token).digest('hex');
 const lifetimeMs = 24 * 60 * 60 * 1000;
 
+class BadRequestJsonError extends Error {
+  readonly statusCode = 400;
+}
+
+function parseJsonWithUniqueTopLevelMembers(raw: string): unknown {
+  let value: unknown;
+  try { value = JSON.parse(raw); }
+  catch { throw new BadRequestJsonError(); }
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) return value;
+
+  const keys = new Set<string>();
+  let depth = 0;
+  let expectingKey = false;
+  let inString = false;
+  let escaped = false;
+  let keyStart = -1;
+  for (let index = 0; index < raw.length; index++) {
+    const character = raw[index];
+    if (inString) {
+      if (escaped) escaped = false;
+      else if (character === '\\') escaped = true;
+      else if (character === '"') {
+        inString = false;
+        if (keyStart >= 0) {
+          const key: unknown = JSON.parse(raw.slice(keyStart, index + 1));
+          if (typeof key !== 'string' || keys.has(key)) throw new BadRequestJsonError();
+          keys.add(key);
+          keyStart = -1;
+          expectingKey = false;
+        }
+      }
+    } else if (character === '"') {
+      inString = true;
+      if (depth === 1 && expectingKey) keyStart = index;
+    } else if (character === '{' || character === '[') {
+      depth++;
+      if (depth === 1 && character === '{') expectingKey = true;
+    } else if (character === '}' || character === ']') {
+      depth--;
+    } else if (character === ',' && depth === 1) {
+      expectingKey = true;
+    }
+  }
+  return value;
+}
+
 function mapHistoryAttempt(attempt: {
   id: string;
   selectedChoiceId: string;
@@ -203,29 +249,47 @@ export function createApi(options: { database: PrismaClient; botToken: string; n
       })),
     });
   });
-  app.post('/practice/next', async (request, reply) => {
-    const user = await authenticatedUser(request.headers.authorization);
-    if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
-    const body = practiceNextRequestSchema.safeParse(request.body);
-    if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
-    if (!user.selectedVehicleType) return reply.code(409).send(errorSchema.parse({ error: 'Vehicle selection required' }));
-    const vehicleType = user.selectedVehicleType;
-    const categoryId = body.data?.categoryId;
-    const categoryFilter = categoryId === undefined ? {} : { categoryId };
-    const result = await options.database.$transaction(async (tx) => {
-      // Repeatable read also covers Prisma's separate relation query: wording and choices
-      // come from one MVCC view even when an editor commits between those reads.
-      const question = await tx.question.findFirst({
-        where: { vehicleType, active: true, verificationStatus: 'VERIFIED', ...categoryFilter },
-        orderBy: { id: 'asc' }, include: { choices: { orderBy: { key: 'asc' } } },
-      });
-      if (!question) return null;
-      const snapshot = snapshotQuestion(question);
-      const presentation = await tx.questionPresentation.create({ data: { userId: user.id, questionId: question.id, createdAt: now(), snapshot } });
-      return presentationResponseSchema.parse({ presentationId: presentation.id, question: snapshot.question });
-    }, { isolationLevel: 'RepeatableRead' });
-    if (!result) return reply.code(404).send(errorSchema.parse({ error: 'No questions available' }));
-    return result;
+  app.register((practiceApp, _pluginOptions, done) => {
+    const authenticatedUsers = new WeakMap<object, z.infer<typeof userSchema>>();
+    practiceApp.removeContentTypeParser('application/json');
+    practiceApp.addContentTypeParser('application/json', { parseAs: 'string' }, (_request, body, parseDone) => {
+      if (typeof body !== 'string') {
+        parseDone(new BadRequestJsonError(), undefined);
+        return;
+      }
+      try { parseDone(null, parseJsonWithUniqueTopLevelMembers(body)); }
+      catch (error) { parseDone(error instanceof BadRequestJsonError ? error : new BadRequestJsonError(), undefined); }
+    });
+    practiceApp.addHook('onRequest', async (request, reply) => {
+      const user = await authenticatedUser(request.headers.authorization);
+      if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+      authenticatedUsers.set(request, user);
+    });
+    practiceApp.post('/practice/next', async (request, reply) => {
+      const user = authenticatedUsers.get(request);
+      if (!user) throw new Error('Authenticated practice user missing');
+      const body = practiceNextRequestSchema.safeParse(request.body);
+      if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      if (!user.selectedVehicleType) return reply.code(409).send(errorSchema.parse({ error: 'Vehicle selection required' }));
+      const vehicleType = user.selectedVehicleType;
+      const categoryId = body.data?.categoryId;
+      const categoryFilter = categoryId === undefined ? {} : { categoryId };
+      const result = await options.database.$transaction(async (tx) => {
+        // Repeatable read also covers Prisma's separate relation query: wording and choices
+        // come from one MVCC view even when an editor commits between those reads.
+        const question = await tx.question.findFirst({
+          where: { vehicleType, active: true, verificationStatus: 'VERIFIED', ...categoryFilter },
+          orderBy: { id: 'asc' }, include: { choices: { orderBy: { key: 'asc' } } },
+        });
+        if (!question) return null;
+        const snapshot = snapshotQuestion(question);
+        const presentation = await tx.questionPresentation.create({ data: { userId: user.id, questionId: question.id, createdAt: now(), snapshot } });
+        return presentationResponseSchema.parse({ presentationId: presentation.id, question: snapshot.question });
+      }, { isolationLevel: 'RepeatableRead' });
+      if (!result) return reply.code(404).send(errorSchema.parse({ error: 'No questions available' }));
+      return result;
+    });
+    done();
   });
   app.post('/practice/answer', async (request, reply) => {
     const user = await authenticatedUser(request.headers.authorization);

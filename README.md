@@ -242,7 +242,8 @@ sanitized 500. Every response uses `Cache-Control: no-store`.
 `POST /practice/next` uses the existing bearer session and accepts no body, `{}`, or
 the strict selector `{ "categoryId": "<category UUID>" }`. Omitting `categoryId`
 preserves unfiltered practice. `categoryId` must be a UUID; null, arrays, malformed
-values, and unknown body keys return `400 {error: "Bad Request"}`.
+values, duplicate JSON object members, and unknown body keys return
+`400 {error: "Bad Request"}`.
 It returns `200 {presentationId, question}` with question ID, Thai/exam-English/English/Russian wording and four choices (ID, A–D key, Thai/English/Russian text). Missing translations remain null. No correctness, explanations, source metadata or image reference is returned. Responses use `Cache-Control: no-store`.
 
 Missing/expired authentication returns `401 {error: "Unauthorized"}`; invalid bodies return `400 {error: "Bad Request"}`; missing vehicle selection returns `409 {error: "Vehicle selection required"}`; an empty eligible bank returns `404 {error: "No questions available"}`. Invalid eligible content returns sanitized `500 {error: "Internal Server Error"}` without storing a presentation.
