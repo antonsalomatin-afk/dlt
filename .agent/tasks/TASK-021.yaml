@@ -1,6 +1,6 @@
 id: TASK-021
 title: Deliver questions for a selected category
-status: BUILDING
+status: REVIEW
 epic: Epic 4 — Learning
 objective: Allow authenticated practice delivery to select eligible questions from one requested category.
 acceptance:
