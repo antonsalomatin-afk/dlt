@@ -239,12 +239,24 @@ sanitized 500. Every response uses `Cache-Control: no-store`.
 
 ### Question presentation API
 
-`POST /practice/next` uses the existing bearer session and accepts no body or `{}`.
+`POST /practice/next` uses the existing bearer session and accepts no body, `{}`, or
+the strict selector `{ "categoryId": "<category UUID>" }`. Omitting `categoryId`
+preserves unfiltered practice. `categoryId` must be a UUID; null, arrays, malformed
+values, and unknown body keys return `400 {error: "Bad Request"}`.
 It returns `200 {presentationId, question}` with question ID, Thai/exam-English/English/Russian wording and four choices (ID, A–D key, Thai/English/Russian text). Missing translations remain null. No correctness, explanations, source metadata or image reference is returned. Responses use `Cache-Control: no-store`.
 
 Missing/expired authentication returns `401 {error: "Unauthorized"}`; invalid bodies return `400 {error: "Bad Request"}`; missing vehicle selection returns `409 {error: "Vehicle selection required"}`; an empty eligible bank returns `404 {error: "No questions available"}`. Invalid eligible content returns sanitized `500 {error: "Internal Server Error"}` without storing a presentation.
 
-Selection is the first active VERIFIED question for the selected vehicle ordered by ID; repetitions are possible. A repeatable-read transaction snapshots question wording, choices, correct choice ID and explanations into a user-owned `QuestionPresentation`. Source edits do not alter prior snapshots. Snapshot version 1 is runtime validated; future consumers must use `parsePresentationSnapshot` when reading persisted JSON. Answer submission is described below.
+Selection is the first active VERIFIED question for the selected vehicle ordered by ID;
+when `categoryId` is present, that category is added to the same database predicate.
+Unknown categories, categories for another vehicle, and categories with no eligible
+questions all return the same `404 {error: "No questions available"}` without creating
+a presentation, so the endpoint does not reveal category existence or hidden content
+state. Repetitions are possible. A repeatable-read transaction snapshots question
+wording, choices, correct choice ID and explanations into a user-owned
+`QuestionPresentation`. Source edits do not alter prior snapshots. Snapshot version 1
+is runtime validated; future consumers must use `parsePresentationSnapshot` when
+reading persisted JSON. Answer submission is described below.
 
 The practice integration suite creates a temporary randomly named database, applies the full migration chain and drops only that database after testing. The local integration database role therefore needs permission to create databases. Imported development fixtures are never activated by this endpoint or its tests.
 

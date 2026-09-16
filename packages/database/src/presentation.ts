@@ -15,6 +15,7 @@ export const presentedQuestionSchema = z.strictObject({
     .refine((choices) => new Set(choices.map((choice) => choice.key)).size === 4),
 });
 export const presentationResponseSchema = z.strictObject({ presentationId: z.uuid(), question: presentedQuestionSchema });
+export const practiceNextRequestSchema = z.strictObject({ categoryId: z.uuid().optional() }).optional();
 export const presentationSnapshotSchema = z.strictObject({
   version: z.literal(1), question: presentedQuestionSchema, correctChoiceId: z.uuid(),
   explanationThai: translation, explanationEnglish: translation, explanationRussian: translation,

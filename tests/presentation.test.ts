@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { expect, it } from 'vitest';
-import { parsePresentationSnapshot } from '../packages/database/src/presentation.ts';
+import { parsePresentationSnapshot, practiceNextRequestSchema } from '../packages/database/src/presentation.ts';
 
 const choices = (['A', 'B', 'C', 'D'] as const).map((key) => ({ id: randomUUID(), key, textThai: null, textEnglish: key, textRussian: null }));
 const valid = { version: 1, question: { id: randomUUID(), textThai: null, textExamEnglish: null, textEnglish: 'Question', textRussian: null, choices }, correctChoiceId: choices[0]?.id, explanationThai: null, explanationEnglish: null, explanationRussian: null, trapExplanationThai: null, trapExplanationEnglish: null, trapExplanationRussian: null };
@@ -16,4 +16,20 @@ it('validates snapshot reads and rejects corrupt or unsupported snapshots', () =
     { ...valid.question, choices: choices.map((choice) => ({ ...choice, textEnglish: '' })) },
     { ...valid.question, choices: choices.map((choice) => ({ ...choice, id: 'invalid' })) },
   ]) expect(() => parsePresentationSnapshot({ ...valid, question })).toThrow();
+});
+
+it('accepts only an optional strict category UUID selector for the next question', () => {
+  const categoryId = randomUUID();
+  for (const value of [undefined, {}, { categoryId }]) {
+    expect(practiceNextRequestSchema.safeParse(value).success).toBe(true);
+  }
+  for (const value of [
+    null,
+    [],
+    { categoryId: null },
+    { categoryId: 'not-a-uuid' },
+    { categoryId: [categoryId, categoryId] },
+    { unknown: true },
+    { categoryId, unknown: true },
+  ]) expect(practiceNextRequestSchema.safeParse(value).success).toBe(false);
 });

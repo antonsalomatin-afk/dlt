@@ -2,7 +2,7 @@ import { createHash, randomBytes } from 'node:crypto';
 import Fastify from 'fastify';
 import { z } from 'zod';
 import type { PrismaClient } from '../../../packages/database/src/index.ts';
-import { parsePresentationSnapshot, presentationResponseSchema, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
+import { parsePresentationSnapshot, practiceNextRequestSchema, presentationResponseSchema, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
 import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '../../../packages/database/src/answer.ts';
 import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
 import { practiceCategoriesResponseSchema } from '../../../packages/database/src/practice-categories.ts';
@@ -206,14 +206,17 @@ export function createApi(options: { database: PrismaClient; botToken: string; n
   app.post('/practice/next', async (request, reply) => {
     const user = await authenticatedUser(request.headers.authorization);
     if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
-    if (!z.strictObject({}).optional().safeParse(request.body).success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+    const body = practiceNextRequestSchema.safeParse(request.body);
+    if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
     if (!user.selectedVehicleType) return reply.code(409).send(errorSchema.parse({ error: 'Vehicle selection required' }));
     const vehicleType = user.selectedVehicleType;
+    const categoryId = body.data?.categoryId;
+    const categoryFilter = categoryId === undefined ? {} : { categoryId };
     const result = await options.database.$transaction(async (tx) => {
       // Repeatable read also covers Prisma's separate relation query: wording and choices
       // come from one MVCC view even when an editor commits between those reads.
       const question = await tx.question.findFirst({
-        where: { vehicleType, active: true, verificationStatus: 'VERIFIED' },
+        where: { vehicleType, active: true, verificationStatus: 'VERIFIED', ...categoryFilter },
         orderBy: { id: 'asc' }, include: { choices: { orderBy: { key: 'asc' } } },
       });
       if (!question) return null;
