@@ -1,6 +1,6 @@
 id: TASK-024
 title: Persist favorite presented questions
-status: READY
+status: BUILDING
 epic: Epic 4 — Learning
 objective: Let an authenticated learner add or remove a presented question from their favorites through an ownership-safe API.
 acceptance:
