@@ -62,7 +62,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-023 — ACCEPTED — random eligible practice delivery
 - history
 - mistakes
-- TASK-024 — READY — persist favorite presented questions
+- TASK-024 — ACCEPTED — persist favorite presented questions
 - basic progress
 
 ## Epic 5 — Mock Exam

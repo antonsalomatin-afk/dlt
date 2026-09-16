@@ -1,6 +1,6 @@
 id: TASK-024
 title: Persist favorite presented questions
-status: REVIEW
+status: ACCEPTED
 epic: Epic 4 — Learning
 objective: Let an authenticated learner add or remove a presented question from their favorites through an ownership-safe API.
 acceptance:
@@ -31,3 +31,5 @@ supervisor_refinement:
   - Use a transaction for ownership lookup, snapshot validation and mutation. Concurrent duplicate favorite=true requests must not create duplicate rows. User isolation must be enforced by query predicates and the database uniqueness constraint, not application-memory filtering.
   - Real PostgreSQL tests cover fresh favorite, repeated idempotent favorite, two owned presentations of the same question updating the anchor, favorite=false when present/absent, concurrent true requests, two users favoriting the same question independently, foreign/unknown presentation privacy, malformed/auth precedence including raw JSON duplicates, corrupt snapshot rollback, response boundary and deletion/integrity behavior.
   - Document the endpoint and snapshot anchor. No favorites feed, UI, current-practice favorite flag, question-content mutation, progress/mastery, new dependency, production credential or deployment change.
+accepted_commit: d8dcc2c0a61e0742b0b95de84477efb14f59d394
+review_file: .agent/reviews/TASK-024-review-02.md
