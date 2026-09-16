@@ -1,6 +1,6 @@
 id: TASK-022
 title: Choose a practice category in the Mini App
-status: READY
+status: BUILDING
 epic: Epic 4 — Learning
 objective: Let an authenticated learner choose all eligible questions or one eligible category before requesting the next practice question.
 acceptance:
