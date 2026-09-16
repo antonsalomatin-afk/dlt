@@ -1,6 +1,6 @@
 id: TASK-023
 title: Randomize eligible practice delivery
-status: BUILDING
+status: REVIEW
 epic: Epic 4 — Learning
 objective: Select each next practice question uniformly at random from the current eligible vehicle and optional category scope.
 acceptance:
