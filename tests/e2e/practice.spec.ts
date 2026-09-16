@@ -1,11 +1,11 @@
 import { expect, test, type Page } from '@playwright/test';
 
 const ids = ['550e8400-e29b-41d4-a716-446655440001', '550e8400-e29b-41d4-a716-446655440002', '550e8400-e29b-41d4-a716-446655440003', '550e8400-e29b-41d4-a716-446655440004'];
-const categoryIds = ['550e8400-e29b-41d4-a716-446655440101', '550e8400-e29b-41d4-a716-446655440102'];
+const categoryIds = ['550e8400-e29b-41d4-a716-446655440101', '550e8400-e29b-41d4-a716-446655440102'] as const;
 const categories = [
   { id: categoryIds[0], slug: 'signs', nameThai: 'ป้ายจราจร', nameEnglish: 'Road signs', nameRussian: 'Дорожные знаки', questionCount: 7 },
   { id: categoryIds[1], slug: 'safety', nameThai: 'ความปลอดภัย', nameEnglish: 'Safety', nameRussian: 'Безопасность', questionCount: 1 },
-];
+] as const;
 const presentation = { presentationId: '550e8400-e29b-41d4-a716-446655440010', question: {
   id: '550e8400-e29b-41d4-a716-446655440020', textEnglish: 'Which action is safe?', textRussian: 'Какое действие безопасно?', textThai: null, textExamEnglish: 'Select safe action.',
   choices: ids.map((id, index) => ({ id, key: ['D', 'B', 'A', 'C'][index], textEnglish: `Action ${index + 1}`, textRussian: null, textThai: null })),
@@ -118,7 +118,7 @@ for (const invalid of ['malformed', 'duplicate ID', 'duplicate slug'] as const) 
       const invalidCategories = invalid === 'malformed'
         ? [{ ...categories[0], questionCount: 0, extra: true }]
         : invalid === 'duplicate ID'
-          ? [categories[0], { ...categories[1], id: categories[0]?.id }]
+          ? [categories[0], { ...categories[1], id: categories[0]?.id.toUpperCase() }]
           : [categories[0], { ...categories[1], slug: categories[0]?.slug }];
       return route.fulfill({ json: { categories: invalidCategories } });
     });

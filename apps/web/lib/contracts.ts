@@ -46,9 +46,10 @@ export const practiceCategoriesSchema = z.strictObject({
   const ids = new Set<string>();
   const slugs = new Set<string>();
   categories.forEach((category, index) => {
-    if (ids.has(category.id)) context.addIssue({ code: 'custom', path: ['categories', index, 'id'], message: 'Duplicate category ID' });
+    const canonicalId = category.id.toLowerCase();
+    if (ids.has(canonicalId)) context.addIssue({ code: 'custom', path: ['categories', index, 'id'], message: 'Duplicate category ID' });
     if (slugs.has(category.slug)) context.addIssue({ code: 'custom', path: ['categories', index, 'slug'], message: 'Duplicate category slug' });
-    ids.add(category.id);
+    ids.add(canonicalId);
     slugs.add(category.slug);
   });
 });
