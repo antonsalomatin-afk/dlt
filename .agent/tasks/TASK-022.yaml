@@ -1,6 +1,6 @@
 id: TASK-022
 title: Choose a practice category in the Mini App
-status: REVIEW
+status: ACCEPTED
 epic: Epic 4 — Learning
 objective: Let an authenticated learner choose all eligible questions or one eligible category before requesting the next practice question.
 acceptance:
@@ -32,3 +32,5 @@ supervisor_refinement:
   - An empty category list is valid and still permits All categories. A filtered404 uses category-specific no-question guidance and preserves the selection so the learner can change scope or retry; do not silently fall back to all questions. Preserve established unfiltered404, answer submission, duplicate-answer, navigation and stale-response behavior.
   - Browser tests may mock APIs only from Playwright. Cover rewrite-facing fetch auth, server order/counts, localized labels and fallback, All {} request, selected {categoryId} request, selected continuation and post-result scope change, empty list, category-load retry, malformed/duplicate payload rejection,401,409, filtered/unfiltered404 copy, and late response after departure. Keep existing practice/history/mistakes tests green.
   - Update README for category selection and request semantics. No backend, database, schema, content, randomization, repeat-avoidance, persistence, dependency, full-stack harness expansion or production credential.
+accepted_commit: 7465e28299face0391a108ebaa1e3832c872e877
+review_file: .agent/reviews/TASK-022-review-02.md
