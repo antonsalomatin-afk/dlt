@@ -1,0 +1,33 @@
+id: TASK-024
+title: Persist favorite presented questions
+status: READY
+epic: Epic 4 — Learning
+objective: Let an authenticated learner add or remove a presented question from their favorites through an ownership-safe API.
+acceptance:
+  - A forward-only migration stores at most one favorite per user and question, anchored to an owned immutable presentation snapshot.
+  - A protected mutation endpoint idempotently favorites or unfavorites a question that the authenticated user was presented.
+  - Unknown and foreign presentations reveal no ownership metadata and produce no favorite writes.
+  - Strict request, response, authentication precedence and database behavior are documented and covered by real PostgreSQL tests.
+files_allowed:
+  - apps/api/**
+  - packages/database/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-023
+owner_decision_required: false
+supervisor_refinement:
+  - Add a Favorite model related to User, Question and the anchoring QuestionPresentation. Store UUID id, userId, questionId, presentationId, createdAt and updatedAt; enforce one row per user/question, index user recency for a later feed, cascade on user deletion and keep referenced question/presentation integrity. Apply a forward-only migration and verify the full migration chain on a fresh isolated database.
+  - Add POST /practice/favorite inside the existing route-scoped auth-first JSON boundary used by /practice/next. Accept exactly { presentationId: UUID, favorite: boolean }; malformed JSON, duplicate members, nulls and unknown keys return400 after valid authentication, while invalid/missing/expired credentials return401 before body parsing.
+  - Look up the presentation at the database boundary by both presentationId and authenticated userId. Unknown and another user's presentation return the same established404 { error: Presentation not found } and cause no favorite change. Parse and validate the stored presentation snapshot before any mutation; corrupt/unsupported snapshots fail with sanitized500.
+  - For favorite true, atomically upsert by userId plus questionId. Create the favorite from the owned presentation; if already favored, update presentationId to the newly supplied owned presentation and updatedAt while retaining a single row. For favorite false, idempotently delete any favorite for that user/question after resolving the owned presentation.
+  - Return only the strict response { presentationId: requested UUID, favorite: requested boolean }. Add Cache-Control no-store. Do not return favorite IDs, user/question IDs, snapshot, correctness, timestamps or existence history.
+  - Use a transaction for ownership lookup, snapshot validation and mutation. Concurrent duplicate favorite=true requests must not create duplicate rows. User isolation must be enforced by query predicates and the database uniqueness constraint, not application-memory filtering.
+  - Real PostgreSQL tests cover fresh favorite, repeated idempotent favorite, two owned presentations of the same question updating the anchor, favorite=false when present/absent, concurrent true requests, two users favoriting the same question independently, foreign/unknown presentation privacy, malformed/auth precedence including raw JSON duplicates, corrupt snapshot rollback, response boundary and deletion/integrity behavior.
+  - Document the endpoint and snapshot anchor. No favorites feed, UI, current-practice favorite flag, question-content mutation, progress/mastery, new dependency, production credential or deployment change.
