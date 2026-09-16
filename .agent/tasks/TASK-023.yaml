@@ -1,0 +1,31 @@
+id: TASK-023
+title: Randomize eligible practice delivery
+status: READY
+epic: Epic 4 — Learning
+objective: Select each next practice question uniformly at random from the current eligible vehicle and optional category scope.
+acceptance:
+  - POST /practice/next chooses a random eligible question instead of always choosing the lowest question ID.
+  - Random selection uses the exact accepted vehicle, category, active and verification eligibility boundary inside the presentation transaction.
+  - Empty scopes, response privacy, immutable snapshots and answer submission behavior remain unchanged.
+  - Automated tests deterministically verify first, middle and last candidate selection and all existing delivery regressions.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-022
+owner_decision_required: false
+supervisor_refinement:
+  - Preserve the accepted POST /practice/next request, authentication/body/vehicle precedence, optional categoryId semantics, error shapes, no-store response behavior and strict before-answer response boundary.
+  - Define the eligible set with one shared Prisma predicate: saved vehicle, active true, verificationStatus VERIFIED and the optional requested categoryId. Within the existing RepeatableRead transaction, count that exact set, return the established uniform404 without calling randomness when the count is zero, choose one zero-based offset uniformly, and fetch that offset using stable question-ID ascending order and the same predicate.
+  - Use a cryptographically sound unbiased server-side integer source by default. Permit a narrow createApi dependency-injection seam for deterministic tests; runtime-check its result as an integer in [0, eligibleCount). Invalid injected output is invalid server state and must produce the sanitized500 without a presentation.
+  - Keep count, selection, snapshot validation and QuestionPresentation creation in the same repeatable-read transaction so the offset and selected row share one database view. Treat a missing row after a positive count as invalid server state; do not retry with weaker isolation or fall back to a different question.
+  - Each request is an independent draw. Repeats are allowed, no user attempt/history data influences selection, and no repeat-avoidance, weighting, mastery or category balancing is included.
+  - Update existing tests that rely on deterministic first-ID delivery to inject offset zero explicitly. Add real PostgreSQL coverage with controlled offsets for first, middle and last eligible rows; filtered category and vehicle isolation; exclusion of inactive/draft/rejected rows; empty scope skipping the random source; invalid offset sanitization/no-write; exact response boundary; and immutable snapshot regression.
+  - Document independent random draws and eligibility. No UI, schema migration, content mutation, persistence beyond the accepted presentation, new dependency, analytics, experiment, production credential or statistical-distribution/flaky sampling test.
