@@ -51,6 +51,7 @@ async function authenticate(page: Page, vehicle: 'CAR' | null = 'CAR') {
     token, expiresAt: '2099-01-01T00:00:00.000Z',
     user: { id: userId, username: null, firstName: null, selectedVehicleType: vehicle },
   } }));
+  await page.route('**/practice/categories', (route) => route.fulfill({ json: { categories: [] } }));
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
 }

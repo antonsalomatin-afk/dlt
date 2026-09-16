@@ -31,6 +31,29 @@ export const answerSchema = z.strictObject({
 export type Presentation = z.infer<typeof presentationSchema>;
 export type Answer = z.infer<typeof answerSchema>;
 
+const trimmedNonblankString = z.string().min(1).refine((value) => value === value.trim());
+const practiceCategorySchema = z.strictObject({
+  id: z.uuid(),
+  slug: trimmedNonblankString,
+  nameThai: trimmedNonblankString,
+  nameEnglish: trimmedNonblankString,
+  nameRussian: trimmedNonblankString,
+  questionCount: z.number().int().positive(),
+});
+export const practiceCategoriesSchema = z.strictObject({
+  categories: z.array(practiceCategorySchema).max(100),
+}).superRefine(({ categories }, context) => {
+  const ids = new Set<string>();
+  const slugs = new Set<string>();
+  categories.forEach((category, index) => {
+    if (ids.has(category.id)) context.addIssue({ code: 'custom', path: ['categories', index, 'id'], message: 'Duplicate category ID' });
+    if (slugs.has(category.slug)) context.addIssue({ code: 'custom', path: ['categories', index, 'slug'], message: 'Duplicate category slug' });
+    ids.add(category.id);
+    slugs.add(category.slug);
+  });
+});
+export type PracticeCategory = z.infer<typeof practiceCategorySchema>;
+
 const canonicalTimestampSchema = z.iso.datetime().refine((value) => {
   try { return new Date(value).toISOString() === value; }
   catch { return false; }

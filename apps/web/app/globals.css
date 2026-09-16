@@ -43,6 +43,12 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 .setup-links { justify-content: center; margin-top: 8px; }
 .languages { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; margin: 12px 0 20px; }
 .languages legend { margin-bottom: 10px; font-weight: bold; }
+.practice-scope { display: grid; gap: 8px; margin: 0 0 20px; }
+.practice-scope legend { margin-bottom: 10px; font-size: 13px; font-weight: bold; }
+.practice-scope label { display: flex; align-items: center; gap: 10px; border: 1px solid #dce0d4; border-radius: 10px; padding: 11px 12px; font-size: 13px; line-height: 1.35; cursor: pointer; }
+.practice-scope label.selected { border-color: #3e674f; background: #eef1e5; }
+.practice-scope small { display: block; color: #697466; font-size: 11px; }
+.practice-scope:disabled label { cursor: default; opacity: .7; }
 .question { font-size: 21px; line-height: 1.4; margin: 18px 0; }
 .answers { display: grid; gap: 10px; margin-top: 20px; }
 .answer-choice { display: flex; align-items: baseline; gap: 10px; border: 1px solid #dce0d4; border-radius: 12px; padding: 14px; font-size: 14px; line-height: 1.5; cursor: pointer; }

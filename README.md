@@ -355,8 +355,8 @@ or in ignored `apps/web/.env.local`. The root `.env` is used by API/database
 commands, not automatically loaded by Next. Only HTTP(S) origins without
 credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
-`/me/vehicle`, `/me/history`, `/me/mistakes`, `/practice/next` and
-`/practice/answer` only.
+`/me/vehicle`, `/me/history`, `/me/mistakes`, `/practice/categories`,
+`/practice/next` and `/practice/answer` only.
 Set the destination before building; rewrites are
 included in the production build. Never prefix secrets with `NEXT_PUBLIC_`.
 
@@ -372,12 +372,26 @@ and need no API, database or live Telegram credentials. `pnpm check` also checks
 web TypeScript and tests API-origin validation. Integration checks remain
 `pnpm test:integration` against local migrated PostgreSQL.
 
-Practice is available after saving a vehicle. The Mini App requests same-origin
-`POST /practice/next` and `/practice/answer` through the explicit API rewrites.
-English is the default; Russian/Thai wording and explanations fall back to English.
-Answers remain selected after a connection failure so Retry sends the same IDs.
-An already-submitted response offers a new question without reconstructing a score.
-Sessions stay in memory; expired sessions require reopening from Telegram.
+Practice is available after saving a vehicle. On every fresh practice view, the Mini App
+first requests same-origin `GET /practice/categories` with the in-memory bearer session and
+validates the complete response before enabling question delivery. The accessible scope
+control defaults to All categories; eligible categories stay in server order and show their
+question counts. Category labels follow the English, Russian or Thai practice language.
+
+All categories sends `POST /practice/next` with `{}`, while a selected category sends exactly
+`{ "categoryId": "<category UUID>" }`. Continue uses the currently selected scope. Scope is
+locked while a presented question is unanswered and unlocks after a scored result, allowing
+the next request to use another scope without changing the completed result. A filtered 404
+keeps its category selected and offers another scope or retry; an unfiltered 404 keeps the
+vehicle-level guidance. Category loading has its own retry state, and an empty category list
+still permits All categories.
+
+Question delivery and answer submission use the same-origin `/practice/next` and
+`/practice/answer` rewrites. English is the default; Russian/Thai question wording and
+explanations fall back to English. Answers remain selected after a connection failure so
+Retry sends the same IDs. An already-submitted response offers a new question without
+reconstructing a score. Sessions stay in memory; expired sessions require reopening from
+Telegram.
 
 Authenticated learners can open answer history from vehicle setup or practice. History
 loads ten newest submissions at a time, keeps validated entries visible if loading a later
