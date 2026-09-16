@@ -1,6 +1,6 @@
 id: TASK-021
 title: Deliver questions for a selected category
-status: REVIEW
+status: ACCEPTED
 epic: Epic 4 — Learning
 objective: Allow authenticated practice delivery to select eligible questions from one requested category.
 acceptance:
@@ -29,3 +29,5 @@ supervisor_refinement:
   - Preserve unfiltered behavior byte-for-byte at the response boundary and do not change answer submission. Before-answer responses must still omit correctness, explanations, source/image metadata and other hidden fields.
   - Add focused body-schema tests if extracted and real PostgreSQL integration coverage for absent body, {}, category match, another category, another vehicle, inactive/draft/rejected questions, unknown UUID, malformed/extra body, no-presentation failure paths, unfiltered regression and immutable snapshot behavior after source edits.
   - Document selector semantics and uniform404 privacy behavior. No category UI, randomization, repeat-avoidance, schema migration, content mutation/activation, new dependency or production credential.
+accepted_commit: 07b421582a2b739dfde2dc5aa639aa07096474e8
+review_file: .agent/reviews/TASK-021-review-02.md

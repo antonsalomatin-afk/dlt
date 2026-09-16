@@ -56,7 +56,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-018 — ACCEPTED — authenticated mistakes feed API
 - TASK-019 — ACCEPTED — Mini App mistakes review UI
 - TASK-020 — ACCEPTED — list eligible practice categories
-- TASK-021 — PLANNED — category-filtered question delivery
+- TASK-021 — ACCEPTED — category-filtered question delivery
 - categories
 - random practice
 - history
