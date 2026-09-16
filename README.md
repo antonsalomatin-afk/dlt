@@ -287,6 +287,34 @@ failed submissions cannot change an existing answer. Selected choice UUIDs refer
 snapshot choices, so they deliberately have no foreign key to mutable source choices.
 The practice integration test applies the full migration chain to a fresh isolated database.
 
+### Favorite a presented question
+
+`POST /practice/favorite` uses the existing bearer session and accepts exactly
+`{ "presentationId": "<UUID>", "favorite": true | false }`. Authentication is
+checked before JSON parsing. Missing, malformed, unknown or expired credentials
+return `401 { "error": "Unauthorized" }`; malformed JSON, duplicate top-level
+members, nulls, arrays and unknown keys return `400 { "error": "Bad Request" }`
+after valid authentication. Unknown and another learner's presentations both return
+`404 { "error": "Presentation not found" }`. All responses use
+`Cache-Control: no-store`.
+
+The API resolves ownership with the presentation ID and authenticated user ID in
+one database predicate, then validates the stored versioned presentation snapshot
+before changing favorites. Corrupt or unsupported snapshots return the sanitized
+`500 { "error": "Internal Server Error" }` and leave favorites unchanged.
+
+Setting `favorite` to true atomically creates or updates the learner's single
+favorite for that question. A later owned presentation of the same question moves
+the favorite's immutable snapshot anchor to that presentation without adding a
+second row. Setting it to false idempotently removes the favorite for the presented
+question. The ownership lookup, snapshot validation and mutation share one
+transaction, and a database uniqueness constraint on learner and question protects
+concurrent requests. The database indexes each learner's favorites by update recency,
+cascades favorites when that learner is deleted, and prevents deletion of a referenced
+question or snapshot anchor while the favorite exists. The response is exactly the requested
+`{ "presentationId", "favorite" }`; it exposes no favorite ID, owner/question ID,
+snapshot, correctness, timestamps or prior-existence state.
+
 ### Answer history
 
 `GET /me/history` uses the existing bearer session and returns the authenticated

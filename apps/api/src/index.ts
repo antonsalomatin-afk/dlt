@@ -6,6 +6,7 @@ import { parsePresentationSnapshot, practiceNextRequestSchema, presentationRespo
 import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '../../../packages/database/src/answer.ts';
 import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
 import { practiceCategoriesResponseSchema } from '../../../packages/database/src/practice-categories.ts';
+import { favoriteRequestSchema, favoriteResponseSchema } from '../../../packages/database/src/favorite.ts';
 import { InvalidInitDataError, validateInitData } from '../../../packages/telegram/src/index.ts';
 
 export const userSchema = z.strictObject({
@@ -123,7 +124,7 @@ export function createApi(options: {
   const now = options.now ?? (() => new Date());
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/practice/categories', '/practice/next', '/practice/answer'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown) {
     const authorization = bearerSchema.safeParse(header);
@@ -313,6 +314,41 @@ export function createApi(options: {
         return presentationResponseSchema.parse({ presentationId: presentation.id, question: snapshot.question });
       }, { isolationLevel: 'RepeatableRead' });
       if (!result) return reply.code(404).send(errorSchema.parse({ error: 'No questions available' }));
+      return result;
+    });
+    practiceApp.post('/practice/favorite', async (request, reply) => {
+      const user = authenticatedUsers.get(request);
+      if (!user) throw new Error('Authenticated practice user missing');
+      const body = favoriteRequestSchema.safeParse(request.body);
+      if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      const result = await options.database.$transaction(async (transaction) => {
+        const presentation = await transaction.questionPresentation.findFirst({
+          where: { id: body.data.presentationId, userId: user.id },
+          select: { id: true, questionId: true, snapshot: true },
+        });
+        if (!presentation) return null;
+        parsePresentationSnapshot(presentation.snapshot);
+        if (body.data.favorite) {
+          const changedAt = now();
+          await transaction.favorite.upsert({
+            where: { userId_questionId: { userId: user.id, questionId: presentation.questionId } },
+            create: {
+              userId: user.id,
+              questionId: presentation.questionId,
+              presentationId: presentation.id,
+              createdAt: changedAt,
+              updatedAt: changedAt,
+            },
+            update: { presentationId: presentation.id, updatedAt: changedAt },
+          });
+        } else {
+          await transaction.favorite.deleteMany({
+            where: { userId: user.id, questionId: presentation.questionId },
+          });
+        }
+        return favoriteResponseSchema.parse(body.data);
+      });
+      if (!result) return reply.code(404).send(errorSchema.parse({ error: 'Presentation not found' }));
       return result;
     });
     done();

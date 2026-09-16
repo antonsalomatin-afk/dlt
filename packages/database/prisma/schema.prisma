@@ -14,16 +14,17 @@ enum VehicleType {
 }
 
 model User {
+  favorites           Favorite[]
   presentations       QuestionPresentation[]
   sessions            Session[]
-  id                  String       @id @default(uuid()) @db.Uuid
-  telegramUserId      BigInt       @unique
+  id                  String                 @id @default(uuid()) @db.Uuid
+  telegramUserId      BigInt                 @unique
   username            String?
   firstName           String?
   selectedVehicleType VehicleType?
-  createdAt           DateTime     @default(now()) @db.Timestamptz(3)
-  updatedAt           DateTime     @updatedAt @db.Timestamptz(3)
-  lastSeenAt          DateTime?    @db.Timestamptz(3)
+  createdAt           DateTime               @default(now()) @db.Timestamptz(3)
+  updatedAt           DateTime               @updatedAt @db.Timestamptz(3)
+  lastSeenAt          DateTime?              @db.Timestamptz(3)
 }
 
 enum ChoiceKey {
@@ -66,13 +67,14 @@ model Concept {
 }
 
 model Question {
+  favorites              Favorite[]
   presentations          QuestionPresentation[]
-  id                     String             @id @default(uuid()) @db.Uuid
+  id                     String                 @id @default(uuid()) @db.Uuid
   vehicleType            VehicleType
-  categoryId             String             @db.Uuid
-  category               Category           @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  conceptId              String?            @db.Uuid
-  concept                Concept?           @relation(fields: [conceptId], references: [id], onDelete: Restrict)
+  categoryId             String                 @db.Uuid
+  category               Category               @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  conceptId              String?                @db.Uuid
+  concept                Concept?               @relation(fields: [conceptId], references: [id], onDelete: Restrict)
   textThai               String?
   textExamEnglish        String?
   textEnglish            String
@@ -86,14 +88,14 @@ model Question {
   imageReference         String?
   sourceType             SourceType
   sourceReference        String?
-  sourceDate             DateTime?          @db.Date
+  sourceDate             DateTime?              @db.Date
   legalCitation          String?
-  verificationStatus     VerificationStatus @default(DRAFT)
+  verificationStatus     VerificationStatus     @default(DRAFT)
   reviewer               String?
-  reviewedAt             DateTime?          @db.Timestamptz(3)
-  active                 Boolean            @default(false)
-  createdAt              DateTime           @default(now()) @db.Timestamptz(3)
-  updatedAt              DateTime           @updatedAt @db.Timestamptz(3)
+  reviewedAt             DateTime?              @db.Timestamptz(3)
+  active                 Boolean                @default(false)
+  createdAt              DateTime               @default(now()) @db.Timestamptz(3)
+  updatedAt              DateTime               @updatedAt @db.Timestamptz(3)
   choices                QuestionChoice[]
 
   @@index([vehicleType, categoryId, active, verificationStatus])
@@ -126,16 +128,32 @@ model Session {
 
 model QuestionPresentation {
   answer     AnswerAttempt?
-  id         String   @id @default(uuid()) @db.Uuid
-  userId     String   @db.Uuid
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  questionId String   @db.Uuid
-  question   Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
-  createdAt  DateTime @default(now()) @db.Timestamptz(3)
+  favorites  Favorite[]
+  id         String         @id @default(uuid()) @db.Uuid
+  userId     String         @db.Uuid
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questionId String         @db.Uuid
+  question   Question       @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  createdAt  DateTime       @default(now()) @db.Timestamptz(3)
   snapshot   Json
 
   @@index([userId])
   @@index([questionId])
+}
+
+model Favorite {
+  id             String               @id @default(uuid()) @db.Uuid
+  userId         String               @db.Uuid
+  user           User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questionId     String               @db.Uuid
+  question       Question             @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  presentationId String               @db.Uuid
+  presentation   QuestionPresentation @relation(fields: [presentationId], references: [id], onDelete: Restrict)
+  createdAt      DateTime             @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime             @updatedAt @db.Timestamptz(3)
+
+  @@unique([userId, questionId])
+  @@index([userId, updatedAt(sort: Desc), id(sort: Desc)])
 }
 
 model AnswerAttempt {
