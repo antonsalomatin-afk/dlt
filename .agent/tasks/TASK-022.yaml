@@ -1,0 +1,34 @@
+id: TASK-022
+title: Choose a practice category in the Mini App
+status: READY
+epic: Epic 4 — Learning
+objective: Let an authenticated learner choose all eligible questions or one eligible category before requesting the next practice question.
+acceptance:
+  - The Mini App loads and strictly validates eligible categories for the saved vehicle through the accepted API.
+  - A learner can practice all questions or select one category, and every next-question request carries the exact corresponding selector.
+  - Loading, empty, retry, expired-session, missing-vehicle, malformed-response and no-question states remain accessible and recoverable.
+  - Browser tests cover category rendering, localization, selection, request bodies, continuation and established practice regressions.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-021
+owner_decision_required: false
+supervisor_refinement:
+  - Add only the explicit same-origin GET /practice/categories rewrite. Use the existing in-memory bearer session and no-store requests; never persist or render credentials.
+  - When practice mounts, fetch /practice/categories before enabling question delivery. Validate a strict { categories: [...] } envelope with at most100 items. Each item has only id UUID, nonblank trimmed slug/nameThai/nameEnglish/nameRussian and positive integer questionCount; reject duplicate IDs or slugs before rendering.
+  - Present an accessible single-choice practice-scope control containing All categories plus the API categories in server order with their counts. Default to All categories on every fresh practice mount. Use the existing English/Russian/Thai choice for category names with English then Thai then Russian fallback, and keep stable category IDs as option values/keys.
+  - Keep the language control available before a question so it also controls category labels. Preserve its accepted behavior for question, choice and explanation text.
+  - An All categories next request sends the established {} body. A category selection sends exactly { categoryId: selected UUID }. Continue uses the currently selected scope. Disable scope changes while an unanswered presentation or answer submission is active; after a result, allow changing scope before Continue. A scope change must not mutate the completed presentation or its result.
+  - A categories401 clears the session through the established expired callback. A categories409 returns to vehicle setup as a missing saved vehicle. Transport, non-success or invalid category payload shows a safe retry state and does not enable question delivery. Ignore late category responses after leaving practice.
+  - An empty category list is valid and still permits All categories. A filtered404 uses category-specific no-question guidance and preserves the selection so the learner can change scope or retry; do not silently fall back to all questions. Preserve established unfiltered404, answer submission, duplicate-answer, navigation and stale-response behavior.
+  - Browser tests may mock APIs only from Playwright. Cover rewrite-facing fetch auth, server order/counts, localized labels and fallback, All {} request, selected {categoryId} request, selected continuation and post-result scope change, empty list, category-load retry, malformed/duplicate payload rejection,401,409, filtered/unfiltered404 copy, and late response after departure. Keep existing practice/history/mistakes tests green.
+  - Update README for category selection and request semantics. No backend, database, schema, content, randomization, repeat-avoidance, persistence, dependency, full-stack harness expansion or production credential.
