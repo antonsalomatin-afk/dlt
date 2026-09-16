@@ -59,7 +59,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-021 — ACCEPTED — category-filtered question delivery
 - TASK-022 — ACCEPTED — Mini App category practice selection
 - categories
-- TASK-023 — READY — random eligible practice delivery
+- TASK-023 — ACCEPTED — random eligible practice delivery
 - history
 - mistakes
 - favorites

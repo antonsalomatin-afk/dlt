@@ -1,6 +1,6 @@
 id: TASK-023
 title: Randomize eligible practice delivery
-status: REVIEW
+status: ACCEPTED
 epic: Epic 4 — Learning
 objective: Select each next practice question uniformly at random from the current eligible vehicle and optional category scope.
 acceptance:
@@ -29,3 +29,5 @@ supervisor_refinement:
   - Each request is an independent draw. Repeats are allowed, no user attempt/history data influences selection, and no repeat-avoidance, weighting, mastery or category balancing is included.
   - Update existing tests that rely on deterministic first-ID delivery to inject offset zero explicitly. Add real PostgreSQL coverage with controlled offsets for first, middle and last eligible rows; filtered category and vehicle isolation; exclusion of inactive/draft/rejected rows; empty scope skipping the random source; invalid offset sanitization/no-write; exact response boundary; and immutable snapshot regression.
   - Document independent random draws and eligibility. No UI, schema migration, content mutation, persistence beyond the accepted presentation, new dependency, analytics, experiment, production credential or statistical-distribution/flaky sampling test.
+accepted_commit: 95d2b2578b6ffc4bbecfd1012550563739603225
+review_file: .agent/reviews/TASK-023-review-01.md
