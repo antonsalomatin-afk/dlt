@@ -1,0 +1,31 @@
+id: TASK-027
+title: Expose authenticated basic progress summary
+status: READY
+epic: Epic 4 — Learning
+objective: Give an authenticated learner a strict lifetime summary of submitted practice attempts.
+acceptance:
+  - A protected GET /me/progress returns the authenticated learner's submitted-attempt total, correct count, incorrect count and rounded accuracy percentage.
+  - The summary is computed from authoritative persisted answer outcomes in one consistent database query and excludes unsubmitted presentations and every other user's attempts.
+  - Authentication, empty-query, empty-progress, response-invariant, privacy and no-store behavior are strict, documented and tested.
+  - Real PostgreSQL tests verify ownership, repeated-question attempts, mixed outcomes, empty progress and rounding.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-026
+owner_decision_required: false
+supervisor_refinement:
+  - Add GET /me/progress under the existing opaque bearer session boundary with Cache-Control no-store. Authenticate before validating the query. Accept only an empty query object; unknown or duplicate query members return the stable400 response for a valid session, while missing, malformed, unknown, expired or revoked credentials retain the uniform401 response.
+  - Return exactly { answered, correct, incorrect, accuracyPercent }. Counts are nonnegative safe integers and answered must equal correct plus incorrect. accuracyPercent is null when answered is zero; otherwise it is the whole integer from0 through100 produced by Math.round((correct / answered) *100). Validate the response invariant at runtime before returning it.
+  - Define progress as the learner's lifetime submitted practice attempts across vehicle types and categories. Count every AnswerAttempt owned through QuestionPresentation.userId, including repeated attempts of the same question. Exclude unsubmitted presentations. Do not filter by the learner's current selected vehicle, current question/category state, favorites, or content activity/verification changes.
+  - Obtain correct and incorrect counts in one consistent database statement grouped by the persisted server-owned AnswerAttempt.isCorrect outcome and filtered by presentation ownership. Do not load all attempt rows, perform separate count queries, or filter another learner's results in application memory.
+  - Empty progress returns { answered:0, correct:0, incorrect:0, accuracyPercent:null }. Database errors or impossible/unsafe aggregate data fail with the established sanitized500 response; no partial summary is returned.
+  - Add strict unit coverage for the response envelope, unknown fields, safe-integer/count-sum invariant, empty accuracy, exact rounding and mismatched accuracy rejection. Add isolated PostgreSQL coverage for authentication/query precedence, empty progress, ownership exclusion, unsubmitted exclusion, repeated-question counting, mixed vehicle/category attempts, correct whole-percent rounding, exact field boundary and no-store behavior.
+  - Document the endpoint and lifetime/all-vehicle meaning. No UI, pagination, date ranges, per-vehicle/category breakdown, streak, mastery/readiness score, schema migration, attempt mutation, analytics, new dependency, production credential or deployment change.
