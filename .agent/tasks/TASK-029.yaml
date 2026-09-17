@@ -1,6 +1,6 @@
 id: TASK-029
 title: Persist mock exam session foundation
-status: BUILDING
+status: REVIEW
 epic: Epic 5 — Mock Exam
 objective: Add a forward-only relational foundation for immutable 50-question mock exams, timed configuration and later scoring.
 acceptance:
