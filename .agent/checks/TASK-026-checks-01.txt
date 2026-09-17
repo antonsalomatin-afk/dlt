@@ -1,0 +1,192 @@
+Implementation-Commit: afe27160bf6e8990dbc137bda42ee335d58f2dfb
+Checked-Implementation: afe27160bf6e8990dbc137bda42ee335d58f2dfb
+Started-At: 2026-09-17T05:41:57.2367826Z
+
+=== pnpm check ===
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+┌─────────────────────────────────────────────────────────┐
+
+│  Update available 7.10.0 -> 8.0.0-rc.15                 │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 185ms
+
+$ tsc --noEmit
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 145ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  15 passed (15)
+      Tests  131 passed (131)
+   Start at  07:42:24
+   Duration  2.21s (import 47%, tests 28%, transform 23%, worker 3%)
+
+
+=== pnpm build ===
+$ pnpm --filter @thai-dlt/web build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 70ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1060ms
+  Running TypeScript ...
+  Finished TypeScript in 2.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/3) ...
+✓ Generating static pages using 4 workers (3/3) in 1089ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+
+=== pnpm test:e2e ===
+$ playwright test
+[WebServer] (node:38956) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ pnpm --filter @thai-dlt/web start
+[WebServer] (node:24664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1
+[WebServer] (node:53588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 79 tests using 2 workers
+
+(node:18324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\favorites.spec.ts:71:1 › saves the visible presentation exactly once and blocks answer submission while pending (768ms)
+  ok  2 tests\e2e\favorites.spec.ts:98:3 › preserves the question and retries a transport favorite save failure (897ms)
+  ok  3 tests\e2e\favorites.spec.ts:98:3 › preserves the question and retries a http favorite save failure (712ms)
+  ok  4 tests\e2e\favorites.spec.ts:98:3 › preserves the question and retries a malformed favorite save failure (714ms)
+  ok  5 tests\e2e\favorites.spec.ts:120:1 › handles unavailable and expired favorite saves safely (697ms)
+  ok  6 tests\e2e\favorites.spec.ts:134:1 › favorites navigation is immediate during save and ignores its late response (869ms)
+  ok  7 tests\e2e\favorites.spec.ts:149:1 › a newly loaded presentation starts unsaved after saving the previous one (839ms)
+  ok  8 tests\e2e\favorites.spec.ts:173:1 › renders immutable favorites in server order with localization and returns to clean practice (1.0s)
+  ok  9 tests\e2e\favorites.spec.ts:200:1 › appends a second page once and retries the exact failed cursor (822ms)
+  ok 10 tests\e2e\favorites.spec.ts:227:1 › retries initial transport failure and shows the friendly empty state (827ms)
+  ok 11 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with unknown field and allows retry (774ms)
+  ok 12 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with timestamp and allows retry (753ms)
+  ok 13 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with cursor and allows retry (746ms)
+  ok 14 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with duplicate presentation and allows retry (751ms)
+  ok 15 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with duplicate question and allows retry (765ms)
+  ok 16 tests\e2e\favorites.spec.ts:267:3 › rejects a duplicate presentation across favorites pages and preserves the first page (787ms)
+  ok 17 tests\e2e\favorites.spec.ts:267:3 › rejects a duplicate question across favorites pages and preserves the first page (817ms)
+  ok 18 tests\e2e\favorites.spec.ts:288:1 › a favorites 401 clears the in-memory session (640ms)
+  ok 19 tests\e2e\favorites.spec.ts:295:1 › a removal 401 clears the in-memory session (703ms)
+  ok 20 tests\e2e\favorites.spec.ts:304:1 › leaving favorites ignores a delayed feed response (849ms)
+  ok 21 tests\e2e\favorites.spec.ts:317:1 › removes only after exact confirmation, prevents duplicates, retries failure, and reaches empty state (835ms)
+  ok 22 tests\e2e\favorites.spec.ts:346:1 › leaving during removal is immediate and ignores its late 401 (933ms)
+  ok 24 tests\e2e\history.spec.ts:113:1 › loads two pages once, appends valid items, and preserves the cursor for pagination retry (791ms)
+  ok 23 tests\e2e\history.spec.ts:64:1 › opens owned correct and incorrect history, expands localized snapshots, and returns to clean practice (2.1s)
+  ok 25 tests\e2e\history.spec.ts:142:1 › shows initial loading, retries a transport failure, and returns from empty history to setup (758ms)
+  ok 26 tests\e2e\history.spec.ts:164:3 › rejects malformed history responses and allows retry (688ms)
+  ok 27 tests\e2e\history.spec.ts:164:3 › rejects cross-field history responses and allows retry (676ms)
+  ok 29 tests\e2e\history.spec.ts:200:1 › a history 401 clears the in-memory session (661ms)
+  ok 28 tests\e2e\history.spec.ts:182:1 › rejects duplicate presentation IDs across pages while preserving the valid first page (859ms)
+  ok 30 tests\e2e\history.spec.ts:208:1 › leaving history is immediate and ignores a delayed response (808ms)
+  ok 32 tests\e2e\mistakes.spec.ts:104:1 › loads two mistake pages once and retries the exact failed pagination cursor (802ms)
+  ok 31 tests\e2e\mistakes.spec.ts:63:1 › opens mistakes from practice, expands an incorrect localized snapshot, and returns to clean practice (1.8s)
+  ok 33 tests\e2e\mistakes.spec.ts:133:1 › shows initial loading, retries a transport failure, and returns from empty mistakes to setup (785ms)
+  ok 34 tests\e2e\mistakes.spec.ts:155:3 › rejects a malformed mistakes response and allows retry (727ms)
+  ok 35 tests\e2e\mistakes.spec.ts:155:3 › rejects a logically-correct mistakes response and allows retry (754ms)
+  ok 36 tests\e2e\mistakes.spec.ts:173:1 › rejects a duplicate presentation on a later mistakes page and preserves validated items (862ms)
+  ok 37 tests\e2e\mistakes.spec.ts:191:1 › a mistakes 401 clears the in-memory session (611ms)
+  ok 38 tests\e2e\mistakes.spec.ts:199:1 › leaving mistakes is immediate and ignores a delayed response (798ms)
+  ok 39 tests\e2e\onboarding.spec.ts:18:1 › missing Telegram data provides launch guidance without login request (493ms)
+  ok 40 tests\e2e\onboarding.spec.ts:27:1 › script failure can be retried (582ms)
+  ok 41 tests\e2e\onboarding.spec.ts:36:1 › login, save and change vehicle with in-memory credentials (1.2s)
+  ok 42 tests\e2e\onboarding.spec.ts:58:1 › preserves existing preference and prevents pending duplicate saves (692ms)
+  ok 43 tests\e2e\onboarding.spec.ts:74:3 › rejects malformed login response (549ms)
+  ok 44 tests\e2e\onboarding.spec.ts:80:3 › malformed save retains confirmed preference and permits retry (715ms)
+  ok 45 tests\e2e\onboarding.spec.ts:74:3 › rejects transport login response (554ms)
+  ok 46 tests\e2e\onboarding.spec.ts:80:3 › transport save retains confirmed preference and permits retry (763ms)
+  ok 47 tests\e2e\onboarding.spec.ts:74:3 › rejects http login response (538ms)
+  ok 48 tests\e2e\onboarding.spec.ts:80:3 › http save retains confirmed preference and permits retry (666ms)
+  ok 49 tests\e2e\onboarding.spec.ts:90:1 › protected 401 clears session and offers reopening guidance (693ms)
+  ok 50 tests\e2e\practice.spec.ts:27:1 › loads categories with bearer auth, preserves server order and localizes labels (827ms)
+  ok 51 tests\e2e\practice.spec.ts:46:1 › an empty category list keeps All categories available and sends the exact empty selector (648ms)
+  ok 53 tests\e2e\practice.spec.ts:96:3 › retries a category transport failure before enabling questions (660ms)
+  ok 52 tests\e2e\practice.spec.ts:59:1 › selected scope continues, can change after a result and never changes that result (1.1s)
+  ok 54 tests\e2e\practice.spec.ts:96:3 › retries a category http failure before enabling questions (507ms)
+  ok 55 tests\e2e\practice.spec.ts:113:3 › rejects a malformed category payload and allows retry (539ms)
+  ok 56 tests\e2e\practice.spec.ts:113:3 › rejects a duplicate ID category payload and allows retry (519ms)
+  ok 57 tests\e2e\practice.spec.ts:113:3 › rejects a duplicate slug category payload and allows retry (517ms)
+  ok 58 tests\e2e\practice.spec.ts:134:3 › category loading handles HTTP 401 (487ms)
+  ok 59 tests\e2e\practice.spec.ts:134:3 › category loading handles HTTP 409 (463ms)
+  ok 60 tests\e2e\practice.spec.ts:147:1 › shows distinct filtered and unfiltered no-question guidance without changing selection (652ms)
+  ok 61 tests\e2e\practice.spec.ts:166:1 › shows category loading and ignores a late category response after departure (614ms)
+  ok 62 tests\e2e\practice.spec.ts:181:3 › choice 1, server result, language fallback and continuation (842ms)
+  ok 63 tests\e2e\practice.spec.ts:181:3 › choice 2, server result, language fallback and continuation (810ms)
+  ok 64 tests\e2e\practice.spec.ts:181:3 › choice 3, server result, language fallback and continuation (1.2s)
+  ok 65 tests\e2e\practice.spec.ts:181:3 › choice 4, server result, language fallback and continuation (861ms)
+  ok 67 tests\e2e\practice.spec.ts:217:3 › next handles HTTP 401 (529ms)
+  ok 66 tests\e2e\practice.spec.ts:205:1 › one pending submission, transport retry and already-submitted guidance (759ms)
+  ok 68 tests\e2e\practice.spec.ts:217:3 › next handles HTTP 404 (530ms)
+  ok 69 tests\e2e\practice.spec.ts:217:3 › next handles HTTP 409 (538ms)
+  ok 70 tests\e2e\practice.spec.ts:217:3 › next handles HTTP 500 (519ms)
+  ok 71 tests\e2e\practice.spec.ts:226:3 › rejects hidden presentation DTO (511ms)
+  ok 72 tests\e2e\practice.spec.ts:226:3 › rejects duplicate presentation DTO (529ms)
+  ok 73 tests\e2e\practice.spec.ts:226:3 › rejects missing presentation DTO (548ms)
+  ok 74 tests\e2e\practice.spec.ts:233:3 › rejects inconsistent answer presentationId (644ms)
+  ok 75 tests\e2e\practice.spec.ts:233:3 › rejects inconsistent answer selectedChoiceId (649ms)
+  ok 76 tests\e2e\practice.spec.ts:233:3 › rejects inconsistent answer correctChoiceId (693ms)
+  ok 77 tests\e2e\practice.spec.ts:233:3 › rejects inconsistent answer isCorrect (668ms)
+  ok 78 tests\e2e\practice.spec.ts:240:1 › ignores a late response after leaving practice (558ms)
+  ok 79 tests\e2e\practice.spec.ts:246:1 › missing vehicle allows resaving the previously confirmed vehicle (642ms)
+
+  79 passed (36.7s)
+
+=== pnpm test:integration ===
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 158ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:14568) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  12 passed (12)
+      Tests  57 passed (57)
+   Start at  07:43:21
+   Duration  11.05s (tests 81%, import 16%, transform 2%)
+
+
+Completed-At: 2026-09-17T05:43:32.8226805Z
+Result: PASS
