@@ -1,0 +1,33 @@
+id: TASK-029
+title: Persist mock exam session foundation
+status: READY
+epic: Epic 5 — Mock Exam
+objective: Add a forward-only relational foundation for immutable 50-question mock exams, timed configuration and later scoring.
+acceptance:
+  - A forward-only migration adds owned mock exam sessions with vehicle, timing, pass-mark and completion-result snapshots.
+  - Each session can own exactly positioned, question-unique exam rows containing immutable server-side question snapshots and an optional atomic answer result.
+  - Database constraints reject invalid configuration, partial completion results, partial answers and duplicate question positions or identities within one exam.
+  - Real PostgreSQL tests verify the migration chain, relational constraints, deletion behavior and independent reuse of questions across exams.
+files_allowed:
+  - packages/database/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-028
+owner_decision_required: false
+supervisor_refinement:
+  - Add ExamSession related to User with UUID id, userId, vehicleType, fixed questionCount, per-session passingScore, startedAt, expiresAt, nullable completedAt, nullable score and nullable passed. User deletion cascades exams. Index userId plus startedAt descending plus id descending for later history.
+  - Add ExamQuestion related to ExamSession and Question with UUID id, examSessionId, one-based position, questionId, immutable JSON snapshot, nullable selectedChoiceId UUID, nullable isCorrect and nullable answeredAt. Session deletion cascades rows; question deletion is restricted. Index questionId.
+  - Enforce one ExamQuestion per session position and one per session questionId. The same source question may be reused by different sessions. Do not relate selectedChoiceId to mutable current QuestionChoice rows; later scoring must validate it against the immutable snapshot.
+  - The database fixes questionCount at50 for this roadmap mock-exam type. Enforce passingScore from1 through questionCount and expiresAt strictly after startedAt. Do not choose a duration or passing score value in this task; each future session stores the policy values active when it starts.
+  - Enforce completion fields as an all-null or all-present tuple. A completed score must be from0 through questionCount, passed must exactly equal score greater than or equal to passingScore, and completedAt cannot precede startedAt. Do not require completedAt to be before expiresAt because timeout finalization may run after the deadline.
+  - Enforce answer fields selectedChoiceId, isCorrect and answeredAt as an all-null or all-present tuple, and positions from1 through questionCount. Cross-table bounds and exactly50 rows per session cannot be expressed by ordinary foreign keys/checks; require the later start API to create and validate all rows atomically in one transaction.
+  - Use Prisma relations/types plus explicit named PostgreSQL CHECK constraints in the migration where Prisma cannot express the invariant. Keep schema and SQL aligned and preserve the existing migration chain.
+  - Add isolated real PostgreSQL coverage for a fresh full migration, valid in-progress/completed sessions, exact50 configuration, invalid count/pass/timing/completion tuples, valid unanswered/answered rows, invalid position/partial-answer tuples, same-session duplicate position/question rejection, cross-session reuse, user/session cascading deletion and referenced-question deletion restriction.
+  - Document the persistence boundary and deferred application invariants. No API, UI, exam-policy value, question selection, timer execution, answer submission, scoring operation, practice-history mixing, content mutation, dependency, production credential or deployment change.
