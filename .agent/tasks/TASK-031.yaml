@@ -1,6 +1,6 @@
 id: TASK-031
 title: Submit one server-scored mock-exam answer
-status: READY
+status: BUILDING
 epic: Epic 5 — Mock Exam
 objective: Atomically accept one owned answer per active mock-exam question, score it from the immutable snapshot, and return a safe progress acknowledgement.
 acceptance:
