@@ -1,6 +1,6 @@
 id: TASK-027
 title: Expose authenticated basic progress summary
-status: BUILDING
+status: REVIEW
 epic: Epic 4 — Learning
 objective: Give an authenticated learner a strict lifetime summary of submitted practice attempts.
 acceptance:
