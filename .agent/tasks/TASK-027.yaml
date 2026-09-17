@@ -1,6 +1,6 @@
 id: TASK-027
 title: Expose authenticated basic progress summary
-status: REVIEW
+status: ACCEPTED
 epic: Epic 4 — Learning
 objective: Give an authenticated learner a strict lifetime summary of submitted practice attempts.
 acceptance:
@@ -29,3 +29,5 @@ supervisor_refinement:
   - Empty progress returns { answered:0, correct:0, incorrect:0, accuracyPercent:null }. Database errors or impossible/unsafe aggregate data fail with the established sanitized500 response; no partial summary is returned.
   - Add strict unit coverage for the response envelope, unknown fields, safe-integer/count-sum invariant, empty accuracy, exact rounding and mismatched accuracy rejection. Add isolated PostgreSQL coverage for authentication/query precedence, empty progress, ownership exclusion, unsubmitted exclusion, repeated-question counting, mixed vehicle/category attempts, correct whole-percent rounding, exact field boundary and no-store behavior.
   - Document the endpoint and lifetime/all-vehicle meaning. No UI, pagination, date ranges, per-vehicle/category breakdown, streak, mastery/readiness score, schema migration, attempt mutation, analytics, new dependency, production credential or deployment change.
+accepted_commit: 67fa791997d01518b03e5c20bf3c0519523c3a76
+review_file: .agent/reviews/TASK-027-review-01.md
