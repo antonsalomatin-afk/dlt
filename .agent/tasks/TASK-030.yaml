@@ -1,6 +1,6 @@
 id: TASK-030
 title: Start an authenticated timed mock exam
-status: BUILDING
+status: REVIEW
 epic: Epic 5 — Mock Exam
 objective: Atomically create an owned 50-question mock exam from eligible immutable question snapshots and return a safe timed session boundary.
 acceptance:
