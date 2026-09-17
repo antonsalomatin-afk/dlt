@@ -23,6 +23,8 @@ export function Favorites({ session, onBack, onExpired }: { session: Session; on
   const [removeErrors, setRemoveErrors] = useState<Set<string>>(new Set());
   const feedBusy = useRef(false);
   const removeBusy = useRef(new Set<string>());
+  const observedPresentationIds = useRef(new Set<string>());
+  const observedQuestionIds = useRef(new Set<string>());
   const active = useRef(true);
   const itemsRef = useRef(items);
   itemsRef.current = items;
@@ -44,15 +46,18 @@ export function Favorites({ session, onBack, onExpired }: { session: Session; on
       const payload: unknown = await response.json();
       if (!active.current) return;
       const page = favoritesResponseSchema.parse(payload);
-      const presentationIds = new Set(itemsRef.current.map((item) => item.presentationId.toLowerCase()));
-      const questionIds = new Set(itemsRef.current.map((item) => item.question.id.toLowerCase()));
+      const pagePresentationIds = new Set<string>();
+      const pageQuestionIds = new Set<string>();
       for (const item of page.items) {
         const presentationId = item.presentationId.toLowerCase();
         const questionId = item.question.id.toLowerCase();
-        if (presentationIds.has(presentationId) || questionIds.has(questionId)) throw new Error();
-        presentationIds.add(presentationId);
-        questionIds.add(questionId);
+        if (observedPresentationIds.current.has(presentationId) || observedQuestionIds.current.has(questionId) ||
+          pagePresentationIds.has(presentationId) || pageQuestionIds.has(questionId)) throw new Error();
+        pagePresentationIds.add(presentationId);
+        pageQuestionIds.add(questionId);
       }
+      pagePresentationIds.forEach((id) => observedPresentationIds.current.add(id));
+      pageQuestionIds.forEach((id) => observedQuestionIds.current.add(id));
       const updated = cursor === null ? page.items : [...itemsRef.current, ...page.items];
       itemsRef.current = updated;
       setItems(updated);

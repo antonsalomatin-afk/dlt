@@ -426,8 +426,9 @@ or in ignored `apps/web/.env.local`. The root `.env` is used by API/database
 commands, not automatically loaded by Next. Only HTTP(S) origins without
 credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
-`/me/vehicle`, `/me/history`, `/me/mistakes`, `/practice/categories`,
-`/practice/next` and `/practice/answer` only.
+`/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`,
+`/practice/categories`, `/practice/next`, `/practice/answer` and
+`/practice/favorite` only.
 Set the destination before building; rewrites are
 included in the production build. Never prefix secrets with `NEXT_PUBLIC_`.
 

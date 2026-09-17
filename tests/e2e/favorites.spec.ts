@@ -285,6 +285,55 @@ for (const duplicate of ['presentation', 'question'] as const) {
   });
 }
 
+for (const duplicate of ['presentation', 'question'] as const) {
+  test(`rejects a repeated ${duplicate} after the first-page favorite is removed`, async ({ page }) => {
+    let pageCalls = 0;
+    const first = favorite(1);
+    await page.route('**/me/favorites?limit=10*', (route) => {
+      const url = new URL(route.request().url());
+      if (url.searchParams.get('cursor') === null) return route.fulfill({ json: { items: [first], nextCursor: cursor } });
+      pageCalls++;
+      const next = pageCalls === 1
+        ? duplicate === 'presentation' ? { ...favorite(2), presentationId: first.presentationId } : { ...favorite(2), question: { ...favorite(2).question, id: first.question.id } }
+        : favorite(2);
+      return route.fulfill({ json: { items: [next], nextCursor: null } });
+    });
+    await page.route('**/practice/favorite', (route) => route.fulfill({ json: route.request().postDataJSON() }));
+    await openFavorites(page);
+    await expect(page.locator('.favorite-entry')).toHaveCount(1);
+    await page.getByRole('button', { name: 'Remove' }).click();
+    await expect(page.locator('.favorite-entry')).toHaveCount(0);
+    await page.getByRole('button', { name: 'Load more' }).click();
+    await expect(page.getByRole('main').getByRole('alert')).toContainText('could not load your favorites');
+    await expect(page.locator('.favorite-entry')).toHaveCount(0);
+    await page.getByRole('button', { name: 'Retry favorites' }).click();
+    await expect(page.locator('.favorite-entry')).toHaveCount(1);
+    expect(pageCalls).toBe(2);
+  });
+}
+
+test('does not resurrect a removed favorite when pending page validation finishes later', async ({ page }) => {
+  let releasePage: (() => void) | undefined;
+  const pageGate = new Promise<void>((resolve) => { releasePage = resolve; });
+  const first = favorite(1);
+  await page.route('**/me/favorites?limit=10*', async (route) => {
+    const url = new URL(route.request().url());
+    if (url.searchParams.get('cursor') === null) return route.fulfill({ json: { items: [first], nextCursor: cursor } });
+    await pageGate;
+    return route.fulfill({ json: { items: [first], nextCursor: null } });
+  });
+  await page.route('**/practice/favorite', (route) => route.fulfill({ json: route.request().postDataJSON() }));
+  await openFavorites(page);
+  await expect(page.locator('.favorite-entry')).toHaveCount(1);
+  await page.getByRole('button', { name: 'Load more' }).click();
+  await expect(page.getByRole('button', { name: 'Loading more' })).toBeDisabled();
+  await page.getByRole('button', { name: 'Remove' }).click();
+  await expect(page.locator('.favorite-entry')).toHaveCount(0);
+  releasePage?.();
+  await expect(page.getByRole('main').getByRole('alert')).toContainText('could not load your favorites');
+  await expect(page.locator('.favorite-entry')).toHaveCount(0);
+});
+
 test('a favorites 401 clears the in-memory session', async ({ page }) => {
   await page.route('**/me/favorites?limit=10', (route) => route.fulfill({ status: 401, json: { error: 'Unauthorized' } }));
   await openFavorites(page);
@@ -327,6 +376,8 @@ test('removes only after exact confirmation, prevents duplicates, retries failur
     return route.fulfill({ json: { presentationId: item.presentationId, favorite: false } });
   });
   await openFavorites(page);
+  await expect(page.locator('.favorite-entry')).toHaveCount(1);
+  await expect(page.getByRole('button', { name: 'Remove' })).toBeVisible();
   await page.evaluate(() => {
     const button = [...document.querySelectorAll('button')].find((candidate) => candidate.textContent === 'Remove');
     button?.click(); button?.click();
