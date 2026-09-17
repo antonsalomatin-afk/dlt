@@ -157,6 +157,31 @@ concept IDs group question variants. Choice `isCorrect` is database-only answer
 metadata: future delivery DTOs must explicitly select safe fields and omit it
 until submission. The presentation endpoint below uses an explicit safe DTO.
 
+### Mock exam persistence boundary
+
+`ExamSession` stores the learner and vehicle together with the policy snapshot
+for one mock exam: exactly 50 questions, a per-session passing score, start and
+expiry times, and an optional completed score/result tuple. PostgreSQL requires
+the pass mark to be from 1 through 50, expiry to follow the start, and completion
+fields to be either all null or all present. Completed scores must be from 0
+through 50, `passed` must agree with the stored pass mark, and completion cannot
+precede the start. Completion may occur after expiry so timeout finalization can
+record its result. This persistence layer does not choose a timer duration or
+passing score.
+
+`ExamQuestion` fixes a one-based position, source question ID and immutable JSON
+snapshot within a session. A session cannot repeat a position or source question;
+the same source question can be used by another session. Answers are stored only
+as the all-null or all-present tuple of selected choice UUID, correctness and
+answer time. The selected choice deliberately has no foreign key to mutable
+`QuestionChoice` rows. Deleting a learner or exam cascades through owned exam
+data, while a source question referenced by an exam cannot be deleted.
+
+Ordinary checks and foreign keys cannot require exactly 50 `ExamQuestion` rows
+per session or prove that an answer belongs to and matches the immutable snapshot.
+The future exam-start and answer APIs must enforce those invariants atomically in
+transactions before a session or answer is made visible.
+
 ### Import development fixtures
 
 After `pnpm db:start` and `pnpm db:migrate`, run `pnpm content:import`.
