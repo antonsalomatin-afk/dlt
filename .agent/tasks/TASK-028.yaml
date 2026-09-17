@@ -1,6 +1,6 @@
 id: TASK-028
 title: Show basic progress in the Mini App
-status: REVIEW
+status: ACCEPTED
 epic: Epic 4 — Learning
 objective: Let an authenticated learner view their lifetime practice totals and accuracy in the Mini App.
 acceptance:
@@ -32,3 +32,5 @@ supervisor_refinement:
   - Provide an English/Russian/Thai selector local to the Progress view, defaulting to English. Localize the view title, metric labels, loading/error/empty copy and action labels; numeric values remain unchanged. No locale, token or response persistence is included.
   - Add Playwright coverage for exact method/auth/no-body/no-store request behavior and single initial call; nonempty metrics; zero/null state; all three languages; setup and practice origins with clean return; transport, HTTP and strict malformed-response retry;401 clearing; immediate departure and ignored late success/error/401; synchronous retry overlap prevention. Keep all existing E2E suites green.
   - Update README. No backend/schema/API response change, progress mutation, offline persistence, chart, historical trend, category/vehicle breakdown, streak/mastery/readiness, dependency, full-stack harness expansion, production credential or deployment change.
+accepted_commit: f9fe0846870a3d6fb3ee2549ff32307308a6409e
+review_file: .agent/reviews/TASK-028-review-02.md

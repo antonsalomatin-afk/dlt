@@ -66,7 +66,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-025 — ACCEPTED — authenticated favorites feed API
 - TASK-026 — ACCEPTED — Mini App favorite save and review UI
 - TASK-027 — ACCEPTED — authenticated basic progress summary API
-- TASK-028 — READY — Mini App basic progress view
+- TASK-028 — ACCEPTED — Mini App basic progress view
 
 ## Epic 5 — Mock Exam
 
