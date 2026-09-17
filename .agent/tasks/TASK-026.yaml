@@ -1,6 +1,6 @@
 id: TASK-026
 title: Save and review favorites in the Mini App
-status: REVIEW
+status: ACCEPTED
 epic: Epic 4 — Learning
 objective: Let learners save a presented question, browse their immutable favorites and remove saved questions in the Mini App.
 acceptance:
@@ -33,3 +33,5 @@ supervisor_refinement:
   - Reuse small localization, request-state or feed helpers when it reduces duplication, but do not weaken or regress accepted history/mistakes behavior. Preserve initial loading, retry of the exact failed page cursor, validated items on pagination failure, synchronous overlap guards and duplicate rejection across pages.
   - Browser tests may mock API calls only from Playwright. Cover exact auth/mutation bodies, saved state, duplicate-click prevention, transport/HTTP/malformed mutation retry,401/404, late save; feed rendering/localization/fallback, two-page append, cursor retry, empty/invalid/duplicate responses,401, delayed departure, exact removal, removal retry/duplicate prevention, last-item empty state and return to clean practice. Keep all existing E2E suites green.
   - Update README. No backend, schema, favorite-status response change, answer/correctness reveal, offline persistence, progress/mastery, dependency, full-stack harness expansion, production credential or deployment change.
+accepted_commit: 04fed8adb26a8f6ae3aaffed5a7fb4d795ebc3e2
+review_file: .agent/reviews/TASK-026-review-02.md
