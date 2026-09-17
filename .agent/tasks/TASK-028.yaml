@@ -1,0 +1,34 @@
+id: TASK-028
+title: Show basic progress in the Mini App
+status: READY
+epic: Epic 4 — Learning
+objective: Let an authenticated learner view their lifetime practice totals and accuracy in the Mini App.
+acceptance:
+  - Progress is accessible from vehicle setup and practice and loads the accepted progress summary with the in-memory bearer session.
+  - The view presents localized answered, correct, incorrect and accuracy metrics, including a friendly no-answers state.
+  - Loading, retry, expired-session, malformed-response and stale-response behavior is accessible, safe and recoverable.
+  - Browser tests cover exact request behavior, strict response validation, localization, navigation origins, empty progress and existing practice/history/mistakes/favorites regressions.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-027
+owner_decision_required: false
+supervisor_refinement:
+  - Add only the explicit same-origin rewrite for GET /me/progress. Use the existing in-memory bearer token, GET, no request body, cache no-store and the established15-second timeout. Never persist or render the credential.
+  - Add a strict browser response contract for exactly { answered, correct, incorrect, accuracyPercent }. Counts must be nonnegative safe integers, answered must equal correct plus incorrect, accuracyPercent must be null only for zero answers and otherwise the exact whole0-through100 Math.round((correct / answered) *100) result. Reject unknown, missing, fractional, unsafe or inconsistent values before rendering.
+  - Add Progress controls from authenticated setup and practice, regardless of whether a vehicle is selected. Record the origin like accepted history/mistakes/favorites behavior: Back returns to setup when opened there and remounts a clean practice view when opened from practice.
+  - On mount, issue exactly one GET /me/progress with Authorization: Bearer <memory token> and no-store. Use a synchronous overlap guard. Show an accessible loading state; transport, non-success and invalid responses show safe retry guidance without partial metrics. Retry sends the same request. A401 expires and clears the session through the established path.
+  - Leaving Progress during a request must be immediate and invalidate the request lifecycle so any late success, error or401 is ignored. A fresh Progress mount starts a fresh request and no response is cached in browser persistence.
+  - Present a compact accessible metric summary for answered, correct, incorrect and accuracy. For zero answers render all zero counts, an em dash for null accuracy and friendly start-practicing guidance. Otherwise render the accuracy with a percent sign. Do not infer or add category, vehicle, date-range, streak, mastery or readiness breakdowns.
+  - Provide an English/Russian/Thai selector local to the Progress view, defaulting to English. Localize the view title, metric labels, loading/error/empty copy and action labels; numeric values remain unchanged. No locale, token or response persistence is included.
+  - Add Playwright coverage for exact method/auth/no-body/no-store request behavior and single initial call; nonempty metrics; zero/null state; all three languages; setup and practice origins with clean return; transport, HTTP and strict malformed-response retry;401 clearing; immediate departure and ignored late success/error/401; synchronous retry overlap prevention. Keep all existing E2E suites green.
+  - Update README. No backend/schema/API response change, progress mutation, offline persistence, chart, historical trend, category/vehicle breakdown, streak/mastery/readiness, dependency, full-stack harness expansion, production credential or deployment change.
