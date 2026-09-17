@@ -89,3 +89,8 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 .favorite-choices li { border: 1px solid #dce0d4; border-radius: 10px; padding: 12px; font-size: 13px; line-height: 1.45; }
 .remove-favorite { margin-bottom: 0; }
 .inline-error { color: #8d3c24; font-size: 13px; line-height: 1.45; }
+.progress-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+.progress-metric { border: 1px solid #dce0d4; border-radius: 14px; padding: 16px; background: #fbfbf4; }
+.progress-metric dt { color: #697466; font-size: 12px; line-height: 1.35; }
+.progress-metric dd { margin: 7px 0 0; color: #244c3d; font-size: 28px; font-weight: 700; }
+.empty-progress { color: #59675e; font-size: 14px; line-height: 1.6; }

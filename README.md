@@ -449,7 +449,7 @@ or in ignored `apps/web/.env.local`. The root `.env` is used by API/database
 commands, not automatically loaded by Next. Only HTTP(S) origins without
 credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
-`/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`,
+`/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
 `/practice/categories`, `/practice/next`, `/practice/answer` and
 `/practice/favorite` only.
 Set the destination before building; rewrites are
@@ -504,6 +504,20 @@ incorrect submitted attempt with stable Your answer and Correct answer labels; a
 correct attempt does not resolve, deduplicate or remove it. Returning preserves the opening
 origin, and returning to practice starts a clean practice view. Malformed responses and any
 item that claims a correct result are rejected before rendering.
+
+Authenticated learners can open Progress from vehicle setup, even before choosing a
+vehicle, or from practice. The view sends one same-origin `GET /me/progress` request on
+each mount with the memory-only bearer session, no request body, `no-store`, and the
+standard 15-second timeout. It validates the exact lifetime summary before rendering
+answered, correct, incorrect, and whole-percent accuracy values. Zero answers show zero
+counts, an em dash for accuracy, and start-practicing guidance.
+
+Progress copy and controls can be switched locally among English, Russian, and Thai;
+the language choice and response are not persisted. Transport, HTTP, and invalid-response
+failures show retry guidance without partial metrics, while a protected 401 clears the
+session. Leaving during a request returns immediately and ignores every late outcome.
+Returning to setup preserves that origin, while returning to practice mounts a clean
+practice view.
 
 ### Real local full-stack browser gate
 

@@ -137,3 +137,23 @@ export const favoritesResponseSchema = z.strictObject({
   });
 });
 export type FavoriteItem = z.infer<typeof favoriteItemSchema>;
+
+const progressCountSchema = z.number().int().nonnegative().refine(Number.isSafeInteger);
+export const progressResponseSchema = z.strictObject({
+  answered: progressCountSchema,
+  correct: progressCountSchema,
+  incorrect: progressCountSchema,
+  accuracyPercent: z.number().int().min(0).max(100).nullable(),
+}).superRefine((progress, context) => {
+  const answered = progress.correct + progress.incorrect;
+  if (!Number.isSafeInteger(answered) || progress.answered !== answered) {
+    context.addIssue({ code: 'custom', message: 'Progress counts are inconsistent' });
+  }
+  const expectedAccuracy = progress.answered === 0
+    ? null
+    : Math.round((progress.correct / progress.answered) * 100);
+  if (progress.accuracyPercent !== expectedAccuracy) {
+    context.addIssue({ code: 'custom', message: 'Progress accuracy is inconsistent' });
+  }
+});
+export type ProgressSummary = z.infer<typeof progressResponseSchema>;
