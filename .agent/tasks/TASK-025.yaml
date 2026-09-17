@@ -1,6 +1,6 @@
 id: TASK-025
 title: Expose authenticated favorites feed
-status: REVIEW
+status: ACCEPTED
 epic: Epic 4 — Learning
 objective: Let an authenticated learner retrieve their saved favorite question snapshots in stable recency order.
 acceptance:
@@ -30,3 +30,5 @@ supervisor_refinement:
   - Anchor replacement through POST /practice/favorite updates recency and causes the favorite to appear according to its new updatedAt with the newer owned presentation snapshot. Unfavorite removes it from subsequent feeds. No feed read mutates rows.
   - Unit tests cover strict response/cursor/query parsing and cursor canonicalization. Real PostgreSQL tests cover auth/query precedence, empty feed, ownership exclusion, deterministic tied ordering, two pages without gaps/duplicates, anchor replacement ordering/snapshot, unfavorite exclusion, immutable source edits, exact safe field boundary and fail-closed corrupt snapshot/relationship data where constraints permit.
   - Document pagination and immutable safe snapshot semantics. No UI, favorite mutation change, correctness/explanation reveal, schema migration, progress/mastery, new dependency, production credential or deployment change.
+accepted_commit: 906a4097d6b2cfb1fe87b0db45b467f7d78e54e0
+review_file: .agent/reviews/TASK-025-review-01.md
