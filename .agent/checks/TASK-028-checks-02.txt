@@ -1,0 +1,215 @@
+TASK-028 authoritative checks attempt 2
+Started-At: 2026-09-17T06:57:37.8965725Z
+Builder-Commits: cb5bf187f34d75e39e0fde15b78af89e05b06f65, f9fe0846870a3d6fb3ee2549ff32307308a6409e
+
+=== pnpm check ===
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+┌─────────────────────────────────────────────────────────┐
+│  Update available 7.10.0 -> 8.0.0-rc.15                 │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 151ms
+
+$ tsc --noEmit
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 91ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  17 passed (17)
+      Tests  137 passed (137)
+   Start at  08:57:57
+   Duration  2.77s (import 47%, tests 30%, transform 20%, worker 3%)
+
+
+=== pnpm build ===
+$ pnpm --filter @thai-dlt/web build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 59ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1213ms
+  Running TypeScript ...
+  Finished TypeScript in 1877ms ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/3) ...
+✓ Generating static pages using 4 workers (3/3) in 1066ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+
+=== pnpm test:e2e ===
+$ playwright test
+[WebServer] (node:20884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ pnpm --filter @thai-dlt/web start
+[WebServer] (node:2820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1
+[WebServer] (node:22084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 102 tests using 2 workers
+
+(node:37260) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok   2 tests\e2e\favorites.spec.ts:71:1 › saves the visible presentation exactly once and blocks answer submission while pending (1.3s)
+  ok   1 tests\e2e\favorites.spec.ts:98:3 › preserves the question and retries a transport favorite save failure (1.4s)
+  ok   3 tests\e2e\favorites.spec.ts:98:3 › preserves the question and retries a http favorite save failure (604ms)
+  ok   4 tests\e2e\favorites.spec.ts:98:3 › preserves the question and retries a malformed favorite save failure (629ms)
+  ok   5 tests\e2e\favorites.spec.ts:120:1 › handles unavailable and expired favorite saves safely (572ms)
+  ok   6 tests\e2e\favorites.spec.ts:134:1 › favorites navigation is immediate during save and ignores its late response (591ms)
+  ok   7 tests\e2e\favorites.spec.ts:149:1 › a newly loaded presentation starts unsaved after saving the previous one (657ms)
+  ok   8 tests\e2e\favorites.spec.ts:173:1 › renders immutable favorites in server order with localization and returns to clean practice (723ms)
+  ok   9 tests\e2e\favorites.spec.ts:200:1 › appends a second page once and retries the exact failed cursor (600ms)
+  ok  10 tests\e2e\favorites.spec.ts:227:1 › retries initial transport failure and shows the friendly empty state (524ms)
+  ok  11 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with unknown field and allows retry (500ms)
+  ok  12 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with timestamp and allows retry (600ms)
+  ok  13 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with cursor and allows retry (706ms)
+  ok  14 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with duplicate presentation and allows retry (761ms)
+  ok  15 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with duplicate question and allows retry (536ms)
+  ok  16 tests\e2e\favorites.spec.ts:267:3 › rejects a duplicate presentation across favorites pages and preserves the first page (549ms)
+  ok  17 tests\e2e\favorites.spec.ts:267:3 › rejects a duplicate question across favorites pages and preserves the first page (609ms)
+  ok  18 tests\e2e\favorites.spec.ts:289:3 › rejects a repeated presentation after the first-page favorite is removed (660ms)
+  ok  19 tests\e2e\favorites.spec.ts:289:3 › rejects a repeated question after the first-page favorite is removed (617ms)
+  ok  20 tests\e2e\favorites.spec.ts:315:1 › does not resurrect a removed favorite when pending page validation finishes later (575ms)
+  ok  21 tests\e2e\favorites.spec.ts:337:1 › a favorites 401 clears the in-memory session (432ms)
+  ok  22 tests\e2e\favorites.spec.ts:344:1 › a removal 401 clears the in-memory session (479ms)
+  ok  23 tests\e2e\favorites.spec.ts:353:1 › leaving favorites ignores a delayed feed response (567ms)
+  ok  24 tests\e2e\favorites.spec.ts:366:1 › removes only after exact confirmation, prevents duplicates, retries failure, and reaches empty state (536ms)
+  ok  25 tests\e2e\favorites.spec.ts:397:1 › leaving during removal is immediate and ignores its late 401 (793ms)
+  ok  27 tests\e2e\history.spec.ts:113:1 › loads two pages once, appends valid items, and preserves the cursor for pagination retry (527ms)
+  ok  26 tests\e2e\history.spec.ts:64:1 › opens owned correct and incorrect history, expands localized snapshots, and returns to clean practice (1.0s)
+  ok  28 tests\e2e\history.spec.ts:142:1 › shows initial loading, retries a transport failure, and returns from empty history to setup (591ms)
+  ok  29 tests\e2e\history.spec.ts:164:3 › rejects malformed history responses and allows retry (937ms)
+  ok  30 tests\e2e\history.spec.ts:164:3 › rejects cross-field history responses and allows retry (499ms)
+  ok  32 tests\e2e\history.spec.ts:200:1 › a history 401 clears the in-memory session (447ms)
+  ok  31 tests\e2e\history.spec.ts:182:1 › rejects duplicate presentation IDs across pages while preserving the valid first page (567ms)
+  ok  33 tests\e2e\history.spec.ts:208:1 › leaving history is immediate and ignores a delayed response (579ms)
+  ok  34 tests\e2e\mistakes.spec.ts:63:1 › opens mistakes from practice, expands an incorrect localized snapshot, and returns to clean practice (981ms)
+  ok  35 tests\e2e\mistakes.spec.ts:104:1 › loads two mistake pages once and retries the exact failed pagination cursor (512ms)
+  ok  37 tests\e2e\mistakes.spec.ts:155:3 › rejects a malformed mistakes response and allows retry (456ms)
+  ok  36 tests\e2e\mistakes.spec.ts:133:1 › shows initial loading, retries a transport failure, and returns from empty mistakes to setup (651ms)
+  ok  38 tests\e2e\mistakes.spec.ts:155:3 › rejects a logically-correct mistakes response and allows retry (504ms)
+  ok  39 tests\e2e\mistakes.spec.ts:173:1 › rejects a duplicate presentation on a later mistakes page and preserves validated items (530ms)
+  ok  40 tests\e2e\mistakes.spec.ts:191:1 › a mistakes 401 clears the in-memory session (380ms)
+  ok  42 tests\e2e\onboarding.spec.ts:18:1 › missing Telegram data provides launch guidance without login request (260ms)
+  ok  41 tests\e2e\mistakes.spec.ts:199:1 › leaving mistakes is immediate and ignores a delayed response (555ms)
+  ok  43 tests\e2e\onboarding.spec.ts:27:1 › script failure can be retried (405ms)
+  ok  44 tests\e2e\onboarding.spec.ts:36:1 › login, save and change vehicle with in-memory credentials (739ms)
+  ok  45 tests\e2e\onboarding.spec.ts:58:1 › preserves existing preference and prevents pending duplicate saves (417ms)
+  ok  46 tests\e2e\onboarding.spec.ts:74:3 › rejects malformed login response (307ms)
+  ok  47 tests\e2e\onboarding.spec.ts:80:3 › malformed save retains confirmed preference and permits retry (513ms)
+  ok  48 tests\e2e\onboarding.spec.ts:74:3 › rejects transport login response (304ms)
+  ok  50 tests\e2e\onboarding.spec.ts:74:3 › rejects http login response (292ms)
+  ok  49 tests\e2e\onboarding.spec.ts:80:3 › transport save retains confirmed preference and permits retry (507ms)
+  ok  51 tests\e2e\onboarding.spec.ts:80:3 › http save retains confirmed preference and permits retry (454ms)
+  ok  52 tests\e2e\onboarding.spec.ts:90:1 › protected 401 clears session and offers reopening guidance (458ms)
+  ok  53 tests\e2e\practice.spec.ts:27:1 › loads categories with bearer auth, preserves server order and localizes labels (516ms)
+  ok  54 tests\e2e\practice.spec.ts:46:1 › an empty category list keeps All categories available and sends the exact empty selector (425ms)
+  ok  56 tests\e2e\practice.spec.ts:96:3 › retries a category transport failure before enabling questions (476ms)
+  ok  55 tests\e2e\practice.spec.ts:59:1 › selected scope continues, can change after a result and never changes that result (879ms)
+  ok  57 tests\e2e\practice.spec.ts:96:3 › retries a category http failure before enabling questions (457ms)
+  ok  58 tests\e2e\practice.spec.ts:113:3 › rejects a malformed category payload and allows retry (485ms)
+  ok  59 tests\e2e\practice.spec.ts:113:3 › rejects a duplicate ID category payload and allows retry (430ms)
+  ok  61 tests\e2e\practice.spec.ts:134:3 › category loading handles HTTP 401 (382ms)
+  ok  60 tests\e2e\practice.spec.ts:113:3 › rejects a duplicate slug category payload and allows retry (507ms)
+  ok  62 tests\e2e\practice.spec.ts:134:3 › category loading handles HTTP 409 (366ms)
+  ok  63 tests\e2e\practice.spec.ts:147:1 › shows distinct filtered and unfiltered no-question guidance without changing selection (691ms)
+  ok  64 tests\e2e\practice.spec.ts:166:1 › shows category loading and ignores a late category response after departure (515ms)
+  ok  65 tests\e2e\practice.spec.ts:181:3 › choice 1, server result, language fallback and continuation (721ms)
+  ok  66 tests\e2e\practice.spec.ts:181:3 › choice 2, server result, language fallback and continuation (757ms)
+  ok  68 tests\e2e\practice.spec.ts:181:3 › choice 4, server result, language fallback and continuation (832ms)
+  ok  67 tests\e2e\practice.spec.ts:181:3 › choice 3, server result, language fallback and continuation (1.0s)
+  ok  70 tests\e2e\practice.spec.ts:217:3 › next handles HTTP 401 (467ms)
+  ok  69 tests\e2e\practice.spec.ts:205:1 › one pending submission, transport retry and already-submitted guidance (638ms)
+  ok  71 tests\e2e\practice.spec.ts:217:3 › next handles HTTP 404 (415ms)
+  ok  72 tests\e2e\practice.spec.ts:217:3 › next handles HTTP 409 (389ms)
+  ok  73 tests\e2e\practice.spec.ts:217:3 › next handles HTTP 500 (430ms)
+  ok  74 tests\e2e\practice.spec.ts:226:3 › rejects hidden presentation DTO (452ms)
+  ok  75 tests\e2e\practice.spec.ts:226:3 › rejects duplicate presentation DTO (436ms)
+  ok  76 tests\e2e\practice.spec.ts:226:3 › rejects missing presentation DTO (386ms)
+  ok  77 tests\e2e\practice.spec.ts:233:3 › rejects inconsistent answer presentationId (558ms)
+  ok  78 tests\e2e\practice.spec.ts:233:3 › rejects inconsistent answer selectedChoiceId (536ms)
+  ok  79 tests\e2e\practice.spec.ts:233:3 › rejects inconsistent answer correctChoiceId (538ms)
+  ok  80 tests\e2e\practice.spec.ts:233:3 › rejects inconsistent answer isCorrect (584ms)
+  ok  81 tests\e2e\practice.spec.ts:240:1 › ignores a late response after leaving practice (449ms)
+  ok  82 tests\e2e\practice.spec.ts:246:1 › missing vehicle allows resaving the previously confirmed vehicle (488ms)
+  ok  83 tests\e2e\progress.spec.ts:28:1 › sends one exact no-store progress request and renders a nonempty accessible summary (437ms)
+  ok  84 tests\e2e\progress.spec.ts:67:1 › shows the zero state and localizes the complete view in English, Russian, and Thai (503ms)
+  ok  85 tests\e2e\progress.spec.ts:88:1 › opens without a selected vehicle and returns to setup (580ms)
+  ok  86 tests\e2e\progress.spec.ts:96:1 › returns from progress opened in practice to a clean fresh practice view (546ms)
+  ok  87 tests\e2e\progress.spec.ts:128:3 › shows safe guidance without partial metrics and retries a transport failure (507ms)
+  ok  88 tests\e2e\progress.spec.ts:128:3 › shows safe guidance without partial metrics and retries a http failure (430ms)
+  ok  89 tests\e2e\progress.spec.ts:128:3 › shows safe guidance without partial metrics and retries a malformed failure (475ms)
+  ok  90 tests\e2e\progress.spec.ts:158:3 › rejects the strict missing progress response and permits retry (447ms)
+  ok  91 tests\e2e\progress.spec.ts:158:3 › rejects the strict fractional progress response and permits retry (491ms)
+  ok  92 tests\e2e\progress.spec.ts:158:3 › rejects the strict unsafe progress response and permits retry (438ms)
+  ok  93 tests\e2e\progress.spec.ts:158:3 › rejects the strict negative progress response and permits retry (436ms)
+  ok  94 tests\e2e\progress.spec.ts:158:3 › rejects the strict counts progress response and permits retry (424ms)
+  ok  95 tests\e2e\progress.spec.ts:158:3 › rejects the strict rounding progress response and permits retry (470ms)
+  ok  96 tests\e2e\progress.spec.ts:158:3 › rejects the strict zeroAccuracy progress response and permits retry (501ms)
+  ok  97 tests\e2e\progress.spec.ts:158:3 › rejects the strict nullAccuracy progress response and permits retry (464ms)
+  ok  98 tests\e2e\progress.spec.ts:172:1 › a progress 401 clears the in-memory session (381ms)
+  ok  99 tests\e2e\progress.spec.ts:181:3 › a replacement mount stays authoritative after a stale success (546ms)
+  ok 100 tests\e2e\progress.spec.ts:181:3 › a replacement mount stays authoritative after a stale error (571ms)
+  ok 102 tests\e2e\progress.spec.ts:234:1 › the synchronous guard prevents overlapping retries (364ms)
+  ok 101 tests\e2e\progress.spec.ts:181:3 › a replacement mount stays authoritative after a stale 401 (572ms)
+
+  102 passed (35.5s)
+
+=== pnpm test:integration ===
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 144ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:35104) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  13 passed (13)
+      Tests  60 passed (60)
+   Start at  08:58:54
+   Duration  17.74s (tests 86%, import 13%, transform 2%)
+
+
+Completed-At: 2026-09-17T06:59:12.2671556Z
+Result: PASS
