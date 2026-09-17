@@ -1,6 +1,6 @@
 id: TASK-030
 title: Start an authenticated timed mock exam
-status: REVIEW
+status: ACCEPTED
 epic: Epic 5 — Mock Exam
 objective: Atomically create an owned 50-question mock exam from eligible immutable question snapshots and return a safe timed session boundary.
 acceptance:
@@ -36,3 +36,5 @@ supervisor_refinement:
   - Never expose user IDs, correctChoiceId, correctness flags, explanations, selected answers, source/image metadata or current mutable content. Later source edits must not change persisted exam snapshots. No ExamQuestion answer fields are set at start.
   - Add unit coverage for start request/response contracts, safe boundary, exact policy, canonical timestamps, uniqueness/positions and sampling bounds. Add isolated PostgreSQL coverage for auth/query/body/vehicle precedence, exact policy/timestamps, deterministic unique sampling, eligibility exclusions, insufficient and oversized pools, corrupt selected content rollback, invalid randomness rollback, response privacy,50 stored immutable snapshots, existing active/completed/expired behavior, concurrent same-user start and different-user isolation.
   - Update README. No schema migration, UI, answer submission, completion, score response, resume/read endpoint, exam review/history, practice AnswerAttempt/history/progress mutation, production content, dependency, credential or deployment change.
+accepted_commit: baaaf76f38639d5368b84a1609c5544641eb40a1
+review_file: .agent/reviews/TASK-030-review-01.md
