@@ -1,6 +1,6 @@
 id: TASK-028
 title: Show basic progress in the Mini App
-status: REVIEW
+status: BUILDING
 epic: Epic 4 — Learning
 objective: Let an authenticated learner view their lifetime practice totals and accuracy in the Mini App.
 acceptance:
