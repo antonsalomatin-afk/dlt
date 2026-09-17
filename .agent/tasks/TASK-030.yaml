@@ -1,6 +1,6 @@
 id: TASK-030
 title: Start an authenticated timed mock exam
-status: BLOCKED
+status: READY
 epic: Epic 5 — Mock Exam
 objective: Atomically create an owned 50-question mock exam from eligible immutable question snapshots and return a safe timed session boundary.
 acceptance:
@@ -17,17 +17,22 @@ required_checks:
   - pnpm check
   - pnpm prisma validate
   - pnpm test:integration
-supervisor_refinement_required: true
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
 dependencies:
   - TASK-029
-owner_decision_required: true
-blocked_decision:
-  - Choose the mock-exam duration in minutes. Supervisor recommendation:60 minutes.
-  - Choose the passing score out of50. Supervisor recommendation:45 correct answers (90 percent).
-decision_context:
-  - These values are visible to learners, control server deadlines and pass/fail results, and therefore require Product Owner approval rather than an engineering default.
-  - The accepted TASK-029 schema stores both values per session, so this decision requires no schema redesign.
-  - Current DLT primary pages found during review show one-hour theory-exam booking blocks but do not clearly establish both the actual test duration and pass threshold; the recommendation is a product default, not a verified legal claim.
-non_goals_pending_refinement:
-  - Do not implement until both policy values are approved.
-  - No answer submission, completion, score response, review UI, exam history, production content or deployment in this task.
+owner_decision_required: false
+approved_policy:
+  - Product Owner approved a60-minute duration and passing score of45 correct answers out of50.
+supervisor_refinement:
+  - Add POST /exam/start with Cache-Control no-store under the existing opaque bearer boundary. Authenticate before strict query/body validation. Accept only an empty query and exact JSON object {}; malformed JSON, null, arrays, duplicate/unknown members and unsupported content types return the stable400 after valid authentication. Missing, malformed, unknown, expired or revoked credentials retain the uniform401 response.
+  - Require a saved vehicle after request validation; otherwise return the established409 Vehicle selection required. Use exactly50 questions,60 minutes and passingScore45. Capture now once per request, persist startedAt at that instant and expiresAt exactly3,600,000 milliseconds later.
+  - Eligible questions are the saved vehicle, active true and verificationStatus VERIFIED. Read at most10,001 eligible IDs in stable ID order; fewer than50 returns409 Not enough questions available without writes, while more than10,000 is invalid bounded server state and returns sanitized500.
+  - Select50 unique candidates with an unbiased partial Fisher-Yates sample over the bounded ID list using a cryptographically sound server default. Add a narrow exam-only injected random-offset seam for deterministic tests and runtime-check every result as an integer in [0, remainingCount). Invalid injected output fails sanitized500 without writes.
+  - Fetch the selected questions and ordered choices inside the same database transaction, validate each with the accepted immutable presentation snapshot contract, restore the sampled order as positions1 through50, and fail the whole transaction if any selected row is absent, no longer eligible, malformed, duplicate or inconsistent.
+  - Atomically create one ExamSession and exactly50 ExamQuestion rows with the approved policy and full server-only immutable snapshots. Use Serializable isolation and a bounded retry for Prisma serialization conflicts. An owned, uncompleted exam whose expiresAt is strictly after captured now blocks starting another with409 Exam already in progress. Completed or expired sessions do not block.
+  - Concurrent starts for one user must produce exactly one new session: one request succeeds and competitors return the active-exam409 after serialization retry. Different users remain independent. Do not rely on process-memory locks.
+  - Return exactly { examId, vehicleType, questionCount, passingScore, startedAt, expiresAt, questions }. questions contains exactly50 entries in position order, each with only examQuestionId, position and the accepted safe presented question. Validate canonical timestamps, exact policy values, consecutive unique positions, unique exam-question IDs and unique source-question IDs at the response boundary.
+  - Never expose user IDs, correctChoiceId, correctness flags, explanations, selected answers, source/image metadata or current mutable content. Later source edits must not change persisted exam snapshots. No ExamQuestion answer fields are set at start.
+  - Add unit coverage for start request/response contracts, safe boundary, exact policy, canonical timestamps, uniqueness/positions and sampling bounds. Add isolated PostgreSQL coverage for auth/query/body/vehicle precedence, exact policy/timestamps, deterministic unique sampling, eligibility exclusions, insufficient and oversized pools, corrupt selected content rollback, invalid randomness rollback, response privacy,50 stored immutable snapshots, existing active/completed/expired behavior, concurrent same-user start and different-user isolation.
+  - Update README. No schema migration, UI, answer submission, completion, score response, resume/read endpoint, exam review/history, practice AnswerAttempt/history/progress mutation, production content, dependency, credential or deployment change.

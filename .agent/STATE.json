@@ -5,12 +5,12 @@
   "currentTask": "TASK-030",
   "lastAcceptedTask": "TASK-029",
   "lastAcceptedCommit": "bec03590e3fe3848a5a30c665565bb8d197f81dd",
-  "status": "BLOCKED",
+  "status": "READY",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": "Product Owner must approve the mock-exam duration and passing score before the start API can snapshot deadlines and pass/fail policy.",
+  "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-029 is accepted. TASK-030 is blocked only on Product Owner approval of duration and passing score; Supervisor recommends60 minutes and45 correct answers out of50.",
+  "notes": "Product Owner approved60 minutes and45 correct answers out of50. TASK-030 is fully refined as the atomic authenticated exam-start API and ready for Builder assignment.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
     "latestObservedUsedPercent": 32,
@@ -18,8 +18,8 @@
     "checkedAt": "2026-09-17T13:01:07.9210685Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization."
   },
-  "executionPaused": true,
-  "pauseReason": "Awaiting Product Owner decision for TASK-030 mock-exam duration and passing score.",
+  "executionPaused": false,
+  "pauseReason": null,
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
