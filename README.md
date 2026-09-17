@@ -179,8 +179,8 @@ data, while a source question referenced by an exam cannot be deleted.
 
 Ordinary checks and foreign keys cannot require exactly 50 `ExamQuestion` rows
 per session or prove that an answer belongs to and matches the immutable snapshot.
-The future exam-start and answer APIs must enforce those invariants atomically in
-transactions before a session or answer is made visible.
+The exam-start API below enforces the 50-row invariant atomically. A future answer
+API must validate answers against the immutable snapshot before making them visible.
 
 ### Import development fixtures
 
@@ -239,6 +239,52 @@ Keep future Mini App tokens in memory; use HTTPS for any nonlocal transport.
 
 `pnpm test:integration` includes synthetic signed authentication requests through Fastify
 injection and real PostgreSQL transactions. No live Telegram token is needed for tests.
+
+### Mock exam start API
+
+`POST /exam/start` uses the existing opaque bearer session and accepts only an empty
+query and the exact JSON object `{}`. Authentication runs before query and body parsing.
+Missing, malformed, unknown, revoked, or expired credentials return the uniform
+`401 { "error": "Unauthorized" }`. For an authenticated learner, missing or malformed
+JSON, null, arrays, duplicate or unknown object members, unsupported content types, and
+any query member return `400 { "error": "Bad Request" }`. A learner without a saved
+vehicle receives `409 { "error": "Vehicle selection required" }`. Every response uses
+`Cache-Control: no-store`.
+
+The approved mock-exam policy is exactly 50 questions, 60 minutes, and a passing score
+of 45. One request timestamp becomes `startedAt`; `expiresAt` is exactly 3,600,000
+milliseconds later. An owned, incomplete exam whose expiry is strictly later than that
+timestamp blocks another start with `409 { "error": "Exam already in progress" }`.
+Completed and expired exams do not block a new one.
+
+Eligible questions match the saved vehicle and are both active and `VERIFIED`. The API
+reads IDs in stable order with a hard limit of 10,000, then uses a cryptographically
+random partial Fisher-Yates sample to select 50 unique questions without replacement.
+Fewer than 50 eligible rows returns
+`409 { "error": "Not enough questions available" }`; more than 10,000 is treated as
+invalid bounded server state and returns the sanitized
+`500 { "error": "Internal Server Error" }`. Selection, content validation, session
+creation, and all 50 question writes share a serializable transaction with bounded retry
+for serialization conflicts. Concurrent starts for one learner therefore create one
+session; starts by different learners are independent.
+
+Each selected question is rechecked for eligibility and validated with the same versioned
+immutable presentation-snapshot contract used by practice. Invalid, missing, duplicate,
+or changed selected content rolls back the whole start. Wording, choices, correct choice,
+and explanations are stored in the server-only snapshot, and all answer fields begin null.
+Later source edits cannot change an exam already started.
+
+A successful response is exactly
+`{ examId, vehicleType, questionCount, passingScore, startedAt, expiresAt, questions }`.
+The 50 questions are returned in consecutive position order, and each contains only
+`examQuestionId`, `position`, and the safe presented question wording and choices. The
+response excludes learner IDs, correct-answer data, correctness, explanations, selected
+answers, source/image metadata, and mutable current content. Starting an exam does not
+write practice presentations, attempts, history, or progress.
+
+The isolated PostgreSQL integration suite creates and drops a randomly named database,
+applies the complete migration chain, and seeds only synthetic local test content. These
+fixtures are not official DLT questions and make no claim about official exam wording.
 
 ### Practice category API
 

@@ -1,7 +1,7 @@
 import { createHash, randomBytes, randomInt } from 'node:crypto';
 import Fastify from 'fastify';
 import { z } from 'zod';
-import type { Prisma, PrismaClient } from '../../../packages/database/src/index.ts';
+import { Prisma, type PrismaClient } from '../../../packages/database/src/index.ts';
 import { parsePresentationSnapshot, practiceNextRequestSchema, presentationResponseSchema, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
 import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '../../../packages/database/src/answer.ts';
 import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
@@ -9,6 +9,16 @@ import { practiceCategoriesResponseSchema } from '../../../packages/database/src
 import { favoriteRequestSchema, favoriteResponseSchema } from '../../../packages/database/src/favorite.ts';
 import { encodeFavoriteCursor, favoriteFeedResponseSchema, parseFavoriteFeedQuery } from '../../../packages/database/src/favorite-feed.ts';
 import { buildProgressSummary } from '../../../packages/database/src/progress.ts';
+import {
+  EXAM_DURATION_MS,
+  EXAM_ELIGIBLE_LIMIT,
+  EXAM_PASSING_SCORE,
+  EXAM_QUESTION_COUNT,
+  examStartRequestSchema,
+  examStartResponseSchema,
+  sampleExamQuestionIds,
+  type ExamRandomOffset,
+} from '../../../packages/database/src/exam.ts';
 import { InvalidInitDataError, validateInitData } from '../../../packages/telegram/src/index.ts';
 
 export const userSchema = z.strictObject({
@@ -20,7 +30,7 @@ const bodySchema = z.strictObject({ initData: z.string().min(1).max(16384).refin
 const bearerSchema = z.string().regex(/^Bearer [A-Za-z0-9_-]{43}$/u);
 const vehicleSchema = z.strictObject({ vehicleType: z.enum(['CAR', 'MOTORCYCLE']) });
 const emptyQuerySchema = z.strictObject({});
-const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available', 'Presentation not found', 'Answer already submitted']) });
+const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available', 'Presentation not found', 'Answer already submitted', 'Not enough questions available', 'Exam already in progress']) });
 const userSelect = { id: true, username: true, firstName: true, selectedVehicleType: true } as const;
 const digest = (token: string) => createHash('sha256').update(token).digest('hex');
 const lifetimeMs = 24 * 60 * 60 * 1000;
@@ -143,19 +153,21 @@ export function createApi(options: {
   botToken: string;
   now?: () => Date;
   randomOffset?: RandomOffset;
+  examRandomOffset?: ExamRandomOffset;
 }) {
   if (!options.botToken.trim()) throw new Error('BOT_TOKEN is required');
   const app = Fastify({ logger: false, bodyLimit: 100000 });
   const now = options.now ?? (() => new Date());
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
+  const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
-  async function authenticatedUser(header: unknown) {
+  async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
     if (!authorization.success) return null;
     const session = await options.database.session.findUnique({ where: { tokenHash: digest(authorization.data.slice(7)) }, select: { expiresAt: true, user: { select: userSelect } } });
-    if (!session || now().getTime() >= session.expiresAt.getTime()) return null;
+    if (!session || referenceTime.getTime() >= session.expiresAt.getTime()) return null;
     return userSchema.parse(session.user);
   }
   app.setErrorHandler((error, _request, reply) => {
@@ -417,6 +429,129 @@ export function createApi(options: {
       });
       if (!result) return reply.code(404).send(errorSchema.parse({ error: 'Presentation not found' }));
       return result;
+    });
+    done();
+  });
+  app.register((examApp, _pluginOptions, done) => {
+    const authenticatedRequests = new WeakMap<object, {
+      user: z.infer<typeof userSchema>;
+      startedAt: Date;
+    }>();
+    examApp.removeContentTypeParser('application/json');
+    examApp.addContentTypeParser('application/json', { parseAs: 'string' }, (_request, body, parseDone) => {
+      if (typeof body !== 'string') {
+        parseDone(new BadRequestJsonError(), undefined);
+        return;
+      }
+      try { parseDone(null, parseJsonWithUniqueTopLevelMembers(body)); }
+      catch (error) { parseDone(error instanceof BadRequestJsonError ? error : new BadRequestJsonError(), undefined); }
+    });
+    examApp.addHook('onRequest', async (request, reply) => {
+      const startedAt = now();
+      const user = await authenticatedUser(request.headers.authorization, startedAt);
+      if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+      authenticatedRequests.set(request, { user, startedAt });
+    });
+    examApp.post('/exam/start', async (request, reply) => {
+      const authenticated = authenticatedRequests.get(request);
+      if (!authenticated) throw new Error('Authenticated exam user missing');
+      if (!emptyQuerySchema.safeParse(request.query).success || !examStartRequestSchema.safeParse(request.body).success) {
+        return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      }
+      const { user, startedAt } = authenticated;
+      const vehicleType = user.selectedVehicleType;
+      if (!vehicleType) {
+        return reply.code(409).send(errorSchema.parse({ error: 'Vehicle selection required' }));
+      }
+      const expiresAt = new Date(startedAt.getTime() + EXAM_DURATION_MS);
+      const eligibleQuestion = {
+        vehicleType,
+        active: true,
+        verificationStatus: 'VERIFIED',
+      } as const;
+
+      const startTransaction = () => options.database.$transaction(async (transaction) => {
+        const active = await transaction.examSession.findFirst({
+          where: { userId: user.id, completedAt: null, expiresAt: { gt: startedAt } },
+          select: { id: true },
+        });
+        if (active) return { kind: 'active' } as const;
+
+        const eligible = await transaction.question.findMany({
+          where: eligibleQuestion,
+          orderBy: { id: 'asc' },
+          take: EXAM_ELIGIBLE_LIMIT + 1,
+          select: { id: true },
+        });
+        if (eligible.length > EXAM_ELIGIBLE_LIMIT) throw new Error('Eligible exam question limit exceeded');
+        if (eligible.length < EXAM_QUESTION_COUNT) return { kind: 'insufficient' } as const;
+
+        const selectedIds = sampleExamQuestionIds(eligible.map(({ id }) => id), examRandomOffset);
+        const selectedQuestions = await transaction.question.findMany({
+          where: { ...eligibleQuestion, id: { in: selectedIds } },
+          include: { choices: { orderBy: { key: 'asc' } } },
+        });
+        if (selectedQuestions.length !== EXAM_QUESTION_COUNT) throw new Error('Selected exam questions changed eligibility');
+        const byId = new Map(selectedQuestions.map((question) => [question.id, question]));
+        if (byId.size !== EXAM_QUESTION_COUNT) throw new Error('Selected exam questions are not unique');
+        const snapshots = selectedIds.map((questionId) => {
+          const question = byId.get(questionId);
+          if (!question) throw new Error('Selected exam question is absent');
+          const snapshot = snapshotQuestion(question);
+          if (snapshot.question.id !== questionId) throw new Error('Selected exam snapshot is inconsistent');
+          return { questionId, snapshot };
+        });
+
+        const exam = await transaction.examSession.create({
+          data: {
+            userId: user.id,
+            vehicleType,
+            questionCount: EXAM_QUESTION_COUNT,
+            passingScore: EXAM_PASSING_SCORE,
+            startedAt,
+            expiresAt,
+            questions: { create: snapshots.map(({ questionId, snapshot }, index) => ({
+              position: index + 1,
+              questionId,
+              snapshot,
+            })) },
+          },
+          include: { questions: { orderBy: { position: 'asc' } } },
+        });
+        if (exam.questions.length !== EXAM_QUESTION_COUNT) throw new Error('Exam question creation was incomplete');
+        const response = examStartResponseSchema.parse({
+          examId: exam.id,
+          vehicleType: exam.vehicleType,
+          questionCount: exam.questionCount,
+          passingScore: exam.passingScore,
+          startedAt: exam.startedAt.toISOString(),
+          expiresAt: exam.expiresAt.toISOString(),
+          questions: exam.questions.map((examQuestion) => {
+            if (examQuestion.selectedChoiceId !== null || examQuestion.isCorrect !== null || examQuestion.answeredAt !== null) {
+              throw new Error('New exam question has answer state');
+            }
+            const snapshot = parsePresentationSnapshot(examQuestion.snapshot);
+            if (snapshot.question.id !== examQuestion.questionId) throw new Error('Stored exam snapshot is inconsistent');
+            return { examQuestionId: examQuestion.id, position: examQuestion.position, question: snapshot.question };
+          }),
+        });
+        return { kind: 'created', response } as const;
+      }, { isolationLevel: 'Serializable' });
+
+      let result: Awaited<ReturnType<typeof startTransaction>> | undefined;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          result = await startTransaction();
+          break;
+        } catch (error) {
+          const retryable = error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2034';
+          if (!retryable || attempt === 2) throw error;
+        }
+      }
+      if (!result) throw new Error('Exam start retry did not resolve');
+      if (result.kind === 'active') return reply.code(409).send(errorSchema.parse({ error: 'Exam already in progress' }));
+      if (result.kind === 'insufficient') return reply.code(409).send(errorSchema.parse({ error: 'Not enough questions available' }));
+      return result.response;
     });
     done();
   });
