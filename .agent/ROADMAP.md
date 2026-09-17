@@ -64,6 +64,7 @@ At the end of this epic the core end-to-end flow must work.
 - mistakes
 - TASK-024 — ACCEPTED — persist favorite presented questions
 - TASK-025 — ACCEPTED — authenticated favorites feed API
+- TASK-026 — READY — Mini App favorite save and review UI
 - basic progress
 
 ## Epic 5 — Mock Exam

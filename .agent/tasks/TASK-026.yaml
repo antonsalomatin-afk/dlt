@@ -1,0 +1,35 @@
+id: TASK-026
+title: Save and review favorites in the Mini App
+status: READY
+epic: Epic 4 — Learning
+objective: Let learners save a presented question, browse their immutable favorites and remove saved questions in the Mini App.
+acceptance:
+  - An authenticated learner can save the current presented question through the accepted favorite mutation API.
+  - Favorites are accessible from setup and practice as a localized, paginated immutable question list with removal controls.
+  - Loading, retry, empty, expired-session, malformed-response, duplicate-page and stale-response states are accessible and recoverable.
+  - Browser tests cover save, browse, pagination, removal, navigation, localization and existing practice/history/mistakes regressions.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-025
+owner_decision_required: false
+supervisor_refinement:
+  - Add only explicit same-origin rewrites for GET /me/favorites and POST /practice/favorite. Use the existing in-memory bearer session, no-store requests and established401 session-clearing path; never persist or render credentials.
+  - Add strict browser contracts for the accepted favorite mutation response and favorites feed. Validate UUIDs, canonical timestamps, bounded canonical opaque cursors, strict safe presented-question fields and an envelope of at most50 items. Reject unknown fields, malformed items/cursors, duplicate presentation IDs and duplicate question IDs before rendering or appending.
+  - While a presentation is visible, provide an accessible Save to favorites action. Send exactly { presentationId, favorite: true }, require the exact matching strict response, prevent overlapping duplicate saves, and show a saved state only for that presentation. A transport, non-success or invalid response preserves the question/answer state and offers retry.401 expires the session;404 uses safe unavailable guidance.
+  - A pending favorite save must prevent submission/continuation races that could associate visible status with a different presentation, while Change vehicle, History, Mistakes and Favorites navigation remain immediate and ignore late responses. A newly loaded presentation starts unsaved because this slice has no current-favorite status endpoint. Re-saving an already stored question is intentionally idempotent and refreshes its anchor/recency.
+  - Add Favorites controls from authenticated setup and practice. Record the origin like accepted history/mistakes: Back returns to setup when opened there and remounts a clean practice view when opened from practice. Leaving during any feed or removal request is immediate and ignores late success/error/401 callbacks.
+  - Fetch /me/favorites?limit=10 and paginate with the returned cursor. Show server order, global English/Russian/Thai selection with English fallback, canonical time elements, question wording, optional exam-English wording and four choices. Do not display or infer answer selections, correctness, explanations, source/image metadata or current mutable content.
+  - Each favorite entry has an accessible Remove action that sends exactly { presentationId, favorite: false }. Require a matching strict response before removing the item locally. Prevent duplicate removal calls per item; failures keep the item and provide retry guidance;401 expires the session. After the last local item is removed and no next page exists, show the friendly empty state.
+  - Reuse small localization, request-state or feed helpers when it reduces duplication, but do not weaken or regress accepted history/mistakes behavior. Preserve initial loading, retry of the exact failed page cursor, validated items on pagination failure, synchronous overlap guards and duplicate rejection across pages.
+  - Browser tests may mock API calls only from Playwright. Cover exact auth/mutation bodies, saved state, duplicate-click prevention, transport/HTTP/malformed mutation retry,401/404, late save; feed rendering/localization/fallback, two-page append, cursor retry, empty/invalid/duplicate responses,401, delayed departure, exact removal, removal retry/duplicate prevention, last-item empty state and return to clean practice. Keep all existing E2E suites green.
+  - Update README. No backend, schema, favorite-status response change, answer/correctness reveal, offline persistence, progress/mastery, dependency, full-stack harness expansion, production credential or deployment change.
