@@ -411,6 +411,29 @@ time come from the attempt. Malformed or unsupported snapshots, absent selected
 choices, and any contradiction between selection, stored outcome and snapshot fail
 the whole request with sanitized `500 { "error": "Internal Server Error" }`.
 
+### Progress summary
+
+`GET /me/progress` uses the existing bearer session and accepts no query
+parameters. Authentication runs before strict query validation. Missing, malformed,
+unknown, revoked, and expired credentials return the uniform
+`401 { "error": "Unauthorized" }`; any query member returns
+`400 { "error": "Bad Request" }`. Every response uses `Cache-Control: no-store`.
+
+The response is exactly `{ "answered", "correct", "incorrect", "accuracyPercent" }`.
+It summarizes all lifetime submitted practice attempts owned by the authenticated
+learner across vehicle types and categories, including repeated attempts of the same
+question. Unsubmitted presentations and every other learner's attempts are excluded.
+Current vehicle selection and later question activity or verification changes do not
+alter the totals.
+
+Correct and incorrect counts come from the persisted server-owned answer outcome in
+one ownership-filtered grouped database query. `answered` equals `correct + incorrect`.
+For no answers the response is
+`{ "answered": 0, "correct": 0, "incorrect": 0, "accuracyPercent": null }`;
+otherwise accuracy is `Math.round((correct / answered) * 100)`. The complete result
+is runtime validated, and invalid aggregate data or database failures return the
+sanitized `500 { "error": "Internal Server Error" }` without a partial summary.
+
 
 ## Mini App (local development)
 

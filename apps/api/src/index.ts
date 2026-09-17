@@ -8,6 +8,7 @@ import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, par
 import { practiceCategoriesResponseSchema } from '../../../packages/database/src/practice-categories.ts';
 import { favoriteRequestSchema, favoriteResponseSchema } from '../../../packages/database/src/favorite.ts';
 import { encodeFavoriteCursor, favoriteFeedResponseSchema, parseFavoriteFeedQuery } from '../../../packages/database/src/favorite-feed.ts';
+import { buildProgressSummary } from '../../../packages/database/src/progress.ts';
 import { InvalidInitDataError, validateInitData } from '../../../packages/telegram/src/index.ts';
 
 export const userSchema = z.strictObject({
@@ -148,7 +149,7 @@ export function createApi(options: {
   const now = options.now ?? (() => new Date());
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown) {
     const authorization = bearerSchema.safeParse(header);
@@ -287,6 +288,19 @@ export function createApi(options: {
       items: page.map(({ item }) => item),
       nextCursor: validated.length > query.limit && last ? encodeFavoriteCursor(last.cursor) : null,
     });
+  });
+  app.get('/me/progress', async (request, reply) => {
+    const user = await authenticatedUser(request.headers.authorization);
+    if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+    if (!emptyQuerySchema.safeParse(request.query).success) {
+      return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+    }
+    const aggregates = await options.database.answerAttempt.groupBy({
+      by: ['isCorrect'],
+      where: { presentation: { userId: user.id } },
+      _count: { _all: true },
+    });
+    return buildProgressSummary(aggregates);
   });
   app.get('/practice/categories', async (request, reply) => {
     const user = await authenticatedUser(request.headers.authorization);
