@@ -1,0 +1,33 @@
+id: TASK-030
+title: Start an authenticated timed mock exam
+status: BLOCKED
+epic: Epic 5 — Mock Exam
+objective: Atomically create an owned 50-question mock exam from eligible immutable question snapshots and return a safe timed session boundary.
+acceptance:
+  - A protected start endpoint creates exactly50 unique eligible questions for the learner's saved vehicle in one transaction.
+  - The session snapshots the approved timer duration and passing score and exposes only safe pre-answer question data.
+  - Insufficient eligible content, authentication, vehicle selection, concurrent starts, response privacy and rollback behavior are deterministic and tested against PostgreSQL.
+  - The selected policy and start/resume behavior are documented without claiming synthetic fixtures are official DLT content.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+supervisor_refinement_required: true
+dependencies:
+  - TASK-029
+owner_decision_required: true
+blocked_decision:
+  - Choose the mock-exam duration in minutes. Supervisor recommendation:60 minutes.
+  - Choose the passing score out of50. Supervisor recommendation:45 correct answers (90 percent).
+decision_context:
+  - These values are visible to learners, control server deadlines and pass/fail results, and therefore require Product Owner approval rather than an engineering default.
+  - The accepted TASK-029 schema stores both values per session, so this decision requires no schema redesign.
+  - Current DLT primary pages found during review show one-hour theory-exam booking blocks but do not clearly establish both the actual test duration and pass threshold; the recommendation is a product default, not a verified legal claim.
+non_goals_pending_refinement:
+  - Do not implement until both policy values are approved.
+  - No answer submission, completion, score response, review UI, exam history, production content or deployment in this task.
