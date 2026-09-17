@@ -1,6 +1,6 @@
 id: TASK-029
 title: Persist mock exam session foundation
-status: REVIEW
+status: ACCEPTED
 epic: Epic 5 — Mock Exam
 objective: Add a forward-only relational foundation for immutable 50-question mock exams, timed configuration and later scoring.
 acceptance:
@@ -31,3 +31,5 @@ supervisor_refinement:
   - Use Prisma relations/types plus explicit named PostgreSQL CHECK constraints in the migration where Prisma cannot express the invariant. Keep schema and SQL aligned and preserve the existing migration chain.
   - Add isolated real PostgreSQL coverage for a fresh full migration, valid in-progress/completed sessions, exact50 configuration, invalid count/pass/timing/completion tuples, valid unanswered/answered rows, invalid position/partial-answer tuples, same-session duplicate position/question rejection, cross-session reuse, user/session cascading deletion and referenced-question deletion restriction.
   - Document the persistence boundary and deferred application invariants. No API, UI, exam-policy value, question selection, timer execution, answer submission, scoring operation, practice-history mixing, content mutation, dependency, production credential or deployment change.
+accepted_commit: bec03590e3fe3848a5a30c665565bb8d197f81dd
+review_file: .agent/reviews/TASK-029-review-01.md

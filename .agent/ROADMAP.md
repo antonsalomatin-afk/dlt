@@ -70,7 +70,7 @@ At the end of this epic the core end-to-end flow must work.
 
 ## Epic 5 — Mock Exam
 
-- TASK-029 — READY — mock exam session and question persistence foundation
+- TASK-029 — ACCEPTED — mock exam session and question persistence foundation
 - TASK-030 — PLANNED — start an authenticated 50-question timed exam snapshot
 - TASK-031 — PLANNED — submit one server-scored answer per exam question
 - completion
