@@ -4,6 +4,9 @@ const token = 'p'.repeat(43);
 const userId = '550e8400-e29b-41d4-a716-446655440000';
 const validProgress = { answered: 7, correct: 5, incorrect: 2, accuracyPercent: 71 };
 const metric = (page: Page, label: string) => page.locator('.progress-metric').getByText(label, { exact: true }).locator('..');
+const renderCheckpoint = (page: Page) => page.evaluate(() => new Promise<void>((resolve) => {
+  requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+}));
 
 async function authenticate(page: Page, vehicle: 'CAR' | null = null) {
   await page.route('https://telegram.org/js/telegram-web-app.js', (route) => route.fulfill({
@@ -53,7 +56,7 @@ test('sends one exact no-store progress request and renders a nonempty accessibl
   await expect(metric(page, 'Incorrect')).toContainText('2');
   await expect(metric(page, 'Accuracy')).toContainText('71%');
   await expect(page.locator('.progress-summary')).toHaveAttribute('aria-label', 'Lifetime progress summary');
-  await page.waitForTimeout(100);
+  await renderCheckpoint(page);
   expect(requests).toBe(1);
   expect(await page.evaluate(() => (window as unknown as { __progressFetches: unknown }).__progressFetches)).toEqual([
     { method: 'GET', hasBody: false, cache: 'no-store' },
@@ -174,43 +177,59 @@ test('a progress 401 clears the in-memory session', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Progress', exact: true })).toHaveCount(0);
 });
 
-for (const late of ['success', 'error', '401'] as const) {
-  test(`leaving progress is immediate and ignores a late ${late}`, async ({ page }) => {
-    let release: (() => void) | undefined;
-    const gate = new Promise<void>((resolve) => { release = resolve; });
-    await page.route('**/me/progress', async (route) => {
-      await gate;
-      if (late === 'success') return route.fulfill({ json: validProgress });
-      return route.fulfill({ status: late === '401' ? 401 : 500, json: { error: late } });
+for (const stale of ['success', 'error', '401'] as const) {
+  test(`a replacement mount stays authoritative after a stale ${stale}`, async ({ page }) => {
+    const replacement = { answered: 4, correct: 1, incorrect: 3, accuracyPercent: 25 };
+    let releaseOld: (() => void) | undefined;
+    const oldGate = new Promise<void>((resolve) => { releaseOld = resolve; });
+    let resolveOldCompletion: (() => void) | undefined;
+    let rejectOldCompletion: ((reason: unknown) => void) | undefined;
+    const oldCompletion = new Promise<void>((resolve, reject) => {
+      resolveOldCompletion = resolve;
+      rejectOldCompletion = reject;
     });
+    let requests = 0;
+    await page.route('**/me/progress', async (route) => {
+      requests++;
+      if (requests !== 1) return route.fulfill({ json: replacement });
+      await oldGate;
+      try {
+        if (stale === 'success') await route.fulfill({ json: validProgress });
+        else await route.fulfill({ status: stale === '401' ? 401 : 500, json: { error: stale } });
+        resolveOldCompletion?.();
+      } catch (error) {
+        rejectOldCompletion?.(error);
+      }
+    });
+
     await openFromSetup(page);
     await expect(page.getByRole('status')).toContainText('Loading your progress');
     await page.getByRole('button', { name: 'Back' }).click();
     await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
-    release?.();
-    await page.waitForTimeout(100);
-    await expect(page.getByRole('button', { name: 'Progress', exact: true })).toBeEnabled();
+    await page.getByRole('button', { name: 'Progress', exact: true }).click();
+    await expect(metric(page, 'Answered')).toContainText('4');
+    await expect(metric(page, 'Accuracy')).toContainText('25%');
+    expect(requests).toBe(2);
+
+    releaseOld?.();
+    await oldCompletion;
+    await renderCheckpoint(page);
+
+    await expect(page.getByRole('heading', { name: 'Progress' })).toBeVisible();
+    await expect(metric(page, 'Answered')).toContainText('4');
+    await expect(metric(page, 'Correct')).toContainText('1');
+    await expect(metric(page, 'Incorrect')).toContainText('3');
+    await expect(metric(page, 'Accuracy')).toContainText('25%');
     await expect(page.getByRole('main').getByRole('alert')).toHaveCount(0);
+    expect(requests).toBe(2);
+
+    if (stale === '401') {
+      await page.getByRole('button', { name: 'Back' }).click();
+      await expect(page.getByRole('button', { name: 'Progress', exact: true })).toBeEnabled();
+      await expect(page.getByRole('button', { name: 'Try again' })).toHaveCount(0);
+    }
   });
 }
-
-test('a fresh progress mount starts a fresh request after leaving an in-flight mount', async ({ page }) => {
-  let release: (() => void) | undefined;
-  const gate = new Promise<void>((resolve) => { release = resolve; });
-  let requests = 0;
-  await page.route('**/me/progress', async (route) => {
-    requests++;
-    if (requests === 1) { await gate; return route.fulfill({ json: validProgress }); }
-    return route.fulfill({ json: { answered: 1, correct: 1, incorrect: 0, accuracyPercent: 100 } });
-  });
-  await openFromSetup(page);
-  await page.getByRole('button', { name: 'Back' }).click();
-  release?.();
-  await page.waitForTimeout(100);
-  await page.getByRole('button', { name: 'Progress', exact: true }).click();
-  await expect(metric(page, 'Answered')).toContainText('1');
-  expect(requests).toBe(2);
-});
 
 test('the synchronous guard prevents overlapping retries', async ({ page }) => {
   let release: (() => void) | undefined;
