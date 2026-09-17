@@ -1,0 +1,33 @@
+id: TASK-031
+title: Submit one server-scored mock-exam answer
+status: READY
+epic: Epic 5 — Mock Exam
+objective: Atomically accept one owned answer per active mock-exam question, score it from the immutable snapshot, and return a safe progress acknowledgement.
+acceptance:
+  - A protected answer endpoint accepts one choice for one exam question owned by the authenticated learner in an active, uncompleted, unexpired exam.
+  - Scoring uses only the persisted immutable exam snapshot and atomically stores one complete answer tuple with the captured submission time.
+  - Sequential and concurrent duplicate submissions, invalid choices, ownership, expiry, completion, corruption and rollback behavior are deterministic and tested against PostgreSQL.
+  - The response acknowledges progress without exposing correctness, the correct answer or explanations before exam completion, and the contract is documented.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-030
+owner_decision_required: false
+supervisor_refinement:
+  - Add POST /exam/answer with Cache-Control no-store inside the existing exam bearer-authentication boundary. Authenticate and capture one request time before strict query/body validation. Accept only an empty query and exact JSON object { examQuestionId, choiceId } with UUID values. Malformed JSON, null, arrays, missing, duplicate or unknown members, unsupported content types and noncanonical inputs return the stable400 after valid authentication; invalid credentials retain the uniform401 response.
+  - Resolve the exam question through its ExamSession ownership in one database transaction. An absent or other-user exam question returns404 Exam question not found without revealing its existence. Check deterministic state precedence after ownership: completed session returns409 Exam already completed; expiresAt less than or equal to the captured request time returns409 Exam expired; an already answered question returns409 Answer already submitted.
+  - Parse and validate the persisted versioned snapshot, require its question ID to equal ExamQuestion.questionId, require the submitted choice ID to be one of its four snapshot choices, and score only by equality with the snapshot correctChoiceId. Current mutable Question or QuestionChoice content must never affect scoring; a choice outside the snapshot returns400 Bad Request.
+  - Atomically change exactly one fully unanswered ExamQuestion tuple to { selectedChoiceId, isCorrect, answeredAt } using the captured request time. Use a conditional database write so sequential and concurrent duplicate submissions persist exactly one result and all losers receive the duplicate409. Fail closed with sanitized500 and no partial write for malformed/inconsistent stored state or unexpected write cardinality.
+  - Require the owned session to retain the accepted50-question configuration and exactly50 persisted ExamQuestion rows. After the write, count answered rows in the same transaction and return exactly { examId, examQuestionId, selectedChoiceId, answeredAt, answeredCount, remainingCount }. Validate canonical timestamp, matching IDs, answeredCount from1 through50, remainingCount from0 through49 and answeredCount plus remainingCount equals50.
+  - Do not return isCorrect, correctChoiceId, score, passed, explanations, other questions or user data. Do not write ExamSession completedAt/score/passed in this task, even for the 50th answer; completion and result disclosure remain the next bounded task. Do not create or mutate practice presentations, AnswerAttempt history, favorites or progress.
+  - Add unit coverage for the strict request/response contracts and privacy/count invariants. Add isolated PostgreSQL coverage for auth/query/body precedence, ownership non-disclosure, exact request-time persistence, correct and incorrect server scoring from immutable snapshots after source edits, invalid choice, malformed snapshot rollback, incomplete session cardinality, completed/expired boundaries, sequential duplicate behavior, concurrent duplicate submission with exactly one stored tuple, progress counts, the 50th-answer acknowledgement and no practice-side effects.
+  - Update README. No schema migration, exam start/resume/read endpoint, session completion, score/pass response, explanation or mistake disclosure, exam history/review, Mini App UI, production content, dependency, credential or deployment change.
