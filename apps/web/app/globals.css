@@ -39,7 +39,7 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 @media (min-width: 720px) { .onboarding-grid { grid-template-columns: 1fr 1fr; gap: 70px; margin: 60px 0; } .panel { padding: 34px 28px; } .road-art { display: block; } }
 .secondary { font-size: 13px; text-decoration: underline; cursor: pointer; margin: 8px 0 16px; }
 .secondary:disabled { cursor: default; opacity: .6; }
-.panel-nav { display: flex; gap: 18px; }
+.panel-nav { display: flex; flex-wrap: wrap; gap: 8px 18px; }
 .setup-links { justify-content: center; margin-top: 8px; }
 .languages { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; margin: 12px 0 20px; }
 .languages legend { margin-bottom: 10px; font-weight: bold; }
@@ -78,3 +78,14 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 .choice-labels strong { border-radius: 999px; padding: 2px 7px; background: #fffef9; color: #31563f; font-size: 10px; text-transform: uppercase; letter-spacing: .5px; }
 .empty-history { color: #59675e; font-size: 14px; line-height: 1.6; }
 .empty-history .primary { margin-top: 18px; }
+.favorite-action { display: block; margin: 12px 0 4px; }
+.favorites-list { display: grid; gap: 12px; }
+.favorite-entry { border: 1px solid #dce0d4; border-radius: 14px; padding: 16px; }
+.favorite-entry time { color: #697466; font-size: 11px; }
+.favorite-entry h3 { font-size: 18px; line-height: 1.4; margin: 8px 0 14px; }
+.favorite-entry details { font-size: 13px; line-height: 1.5; }
+.favorite-entry summary { cursor: pointer; }
+.favorite-choices { display: grid; gap: 8px; margin: 16px 0 8px; padding: 0; list-style: none; }
+.favorite-choices li { border: 1px solid #dce0d4; border-radius: 10px; padding: 12px; font-size: 13px; line-height: 1.45; }
+.remove-favorite { margin-bottom: 0; }
+.inline-error { color: #8d3c24; font-size: 13px; line-height: 1.45; }

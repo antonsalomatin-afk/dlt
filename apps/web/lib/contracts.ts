@@ -17,7 +17,7 @@ export type Session = z.infer<typeof loginSchema>;
 
 const text = z.string().refine((value) => value.trim().length > 0);
 const translation = z.string().nullable();
-const presentedQuestionSchema = z.strictObject({
+export const presentedQuestionSchema = z.strictObject({
   id: z.uuid(), textThai: translation, textExamEnglish: translation, textEnglish: text, textRussian: translation,
   choices: z.array(z.strictObject({ id: z.uuid(), key: z.enum(['A', 'B', 'C', 'D']), textThai: translation, textEnglish: text, textRussian: translation })).length(4)
     .refine((choices) => new Set(choices.map((choice) => choice.id)).size === 4 && new Set(choices.map((choice) => choice.key)).size === 4),
@@ -30,6 +30,11 @@ export const answerSchema = z.strictObject({
 });
 export type Presentation = z.infer<typeof presentationSchema>;
 export type Answer = z.infer<typeof answerSchema>;
+export type PresentedQuestion = z.infer<typeof presentedQuestionSchema>;
+
+export const favoriteResponseSchema = z.strictObject({
+  presentationId: z.uuid(), favorite: z.boolean(),
+});
 
 const trimmedNonblankString = z.string().min(1).refine((value) => value === value.trim());
 const practiceCategorySchema = z.strictObject({
@@ -100,3 +105,35 @@ export const mistakesResponseSchema = historyResponseSchema.superRefine((page, c
   });
 });
 export type HistoryItem = z.infer<typeof historyItemSchema>;
+
+const favoriteCursorPayloadSchema = z.strictObject({
+  v: z.literal(1), updatedAt: canonicalTimestampSchema, favoriteId: z.uuid(),
+});
+const favoriteCursorSchema = z.string().min(1).max(512).regex(/^[A-Za-z0-9_-]+$/u).refine((value) => {
+  try {
+    const padding = '='.repeat((4 - (value.length % 4)) % 4);
+    const decoded = new TextDecoder('utf-8', { fatal: true }).decode(
+      Uint8Array.from(atob(value.replace(/-/gu, '+').replace(/_/gu, '/') + padding), (character) => character.charCodeAt(0)),
+    );
+    const cursor = favoriteCursorPayloadSchema.parse(JSON.parse(decoded) as unknown);
+    return btoa(JSON.stringify(cursor)).replace(/\+/gu, '-').replace(/\//gu, '_').replace(/=+$/u, '') === value;
+  } catch { return false; }
+});
+const favoriteItemSchema = z.strictObject({
+  presentationId: z.uuid(), favoritedAt: canonicalTimestampSchema, question: presentedQuestionSchema,
+});
+export const favoritesResponseSchema = z.strictObject({
+  items: z.array(favoriteItemSchema).max(50), nextCursor: favoriteCursorSchema.nullable(),
+}).superRefine(({ items }, context) => {
+  const presentationIds = new Set<string>();
+  const questionIds = new Set<string>();
+  items.forEach((item, index) => {
+    const presentationId = item.presentationId.toLowerCase();
+    const questionId = item.question.id.toLowerCase();
+    if (presentationIds.has(presentationId)) context.addIssue({ code: 'custom', path: ['items', index, 'presentationId'], message: 'Duplicate presentation ID' });
+    if (questionIds.has(questionId)) context.addIssue({ code: 'custom', path: ['items', index, 'question', 'id'], message: 'Duplicate question ID' });
+    presentationIds.add(presentationId);
+    questionIds.add(questionId);
+  });
+});
+export type FavoriteItem = z.infer<typeof favoriteItemSchema>;

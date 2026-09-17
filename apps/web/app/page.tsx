@@ -4,10 +4,11 @@ import { useEffect, useRef, useState } from 'react';
 import { loginSchema, userSchema, type Session, type Vehicle } from '../lib/contracts';
 import { History } from './history';
 import { Practice } from './practice';
+import { Favorites } from './favorites';
 import { loadTelegram } from '../lib/telegram';
 
 const labels: Record<Vehicle, string> = { CAR: 'Car', MOTORCYCLE: 'Motorcycle' };
-type View = 'setup' | 'practice' | 'history' | 'mistakes';
+type View = 'setup' | 'practice' | 'history' | 'mistakes' | 'favorites';
 
 function VehicleArt({ vehicle }: { vehicle: Vehicle }) {
   return <svg viewBox="0 0 160 80" fill="none" aria-hidden="true">
@@ -100,7 +101,7 @@ export default function Home() {
         <p className="intro-copy">Make sense of Thai driving theory, one step at a time.</p>
         <div className="road-art" aria-hidden="true"><span className="sun" /><div className="road"><i /><i /><i /></div><span className="road-caption">THAILAND, AHEAD ↗</span></div>
       </section>
-      {(view === 'history' || view === 'mistakes') && session ? <History key={`${session.token}:${view}`} kind={view} session={session} onBack={() => setView(feedReturn)} onExpired={() => { setView('setup'); setSession(null); setChoice(null); setError(true); setMessage('Your session has ended. Close and reopen ThaiDLT in Telegram, then try again.'); }} /> : view === 'practice' && session ? <Practice key={`${session.token}:${session.user.selectedVehicleType}`} session={session} onVehicle={(missing) => { if (missing) setSession({ ...session, user: { ...session.user, selectedVehicleType: null } }); setView('setup'); setChoice(null); setMessage('Choose and save your vehicle to continue.'); }} onHistory={() => { setFeedReturn('practice'); setView('history'); }} onMistakes={() => { setFeedReturn('practice'); setView('mistakes'); }} onExpired={() => { setView('setup'); setSession(null); setChoice(null); setError(true); setMessage('Your session has ended. Close and reopen ThaiDLT in Telegram, then try again.'); }} /> : <section className="panel" aria-labelledby="onboarding-title" aria-busy={pending}>
+      {view === 'favorites' && session ? <Favorites key={session.token} session={session} onBack={() => setView(feedReturn)} onExpired={() => { setView('setup'); setSession(null); setChoice(null); setError(true); setMessage('Your session has ended. Close and reopen ThaiDLT in Telegram, then try again.'); }} /> : (view === 'history' || view === 'mistakes') && session ? <History key={`${session.token}:${view}`} kind={view} session={session} onBack={() => setView(feedReturn)} onExpired={() => { setView('setup'); setSession(null); setChoice(null); setError(true); setMessage('Your session has ended. Close and reopen ThaiDLT in Telegram, then try again.'); }} /> : view === 'practice' && session ? <Practice key={`${session.token}:${session.user.selectedVehicleType}`} session={session} onVehicle={(missing) => { if (missing) setSession({ ...session, user: { ...session.user, selectedVehicleType: null } }); setView('setup'); setChoice(null); setMessage('Choose and save your vehicle to continue.'); }} onHistory={() => { setFeedReturn('practice'); setView('history'); }} onMistakes={() => { setFeedReturn('practice'); setView('mistakes'); }} onFavorites={() => { setFeedReturn('practice'); setView('favorites'); }} onExpired={() => { setView('setup'); setSession(null); setChoice(null); setError(true); setMessage('Your session has ended. Close and reopen ThaiDLT in Telegram, then try again.'); }} /> : <section className="panel" aria-labelledby="onboarding-title" aria-busy={pending}>
         <p className="eyebrow accent">01 / GET STARTED</p>
         <h2 id="onboarding-title">{session ? 'What will you drive?' : pending ? 'Welcome to ThaiDLT' : 'Let’s get you connected'}</h2>
         <p className="panel-copy">{session ? 'Choose your vehicle to make this journey yours.' : 'Start inside Telegram for a simple, secure sign-in.'}</p>
@@ -115,7 +116,7 @@ export default function Home() {
         </>}
         <div className={`message ${error ? 'error' : ''}`} role={error ? 'alert' : 'status'}><span aria-hidden="true">{pending ? '◌' : error ? '!' : '✓'}</span><p>{message}</p></div>
         {session ? <button className="primary" onClick={() => void save()} disabled={pending || !choice || choice === session.user.selectedVehicleType}>{pending ? 'Saving…' : choice === session.user.selectedVehicleType ? 'Selection saved' : 'Save vehicle'}<span aria-hidden="true">↗</span></button> : <button className="primary" onClick={() => void authenticate()} disabled={pending}>{pending ? 'Connecting…' : 'Try again'}<span aria-hidden="true">↗</span></button>}
-        {session && <div className="panel-nav setup-links"><button className="secondary" disabled={pending} onClick={() => { setFeedReturn('setup'); setView('history'); }}>History</button><button className="secondary" disabled={pending} onClick={() => { setFeedReturn('setup'); setView('mistakes'); }}>Mistakes</button></div>}
+        {session && <div className="panel-nav setup-links"><button className="secondary" disabled={pending} onClick={() => { setFeedReturn('setup'); setView('history'); }}>History</button><button className="secondary" disabled={pending} onClick={() => { setFeedReturn('setup'); setView('mistakes'); }}>Mistakes</button><button className="secondary" disabled={pending} onClick={() => { setFeedReturn('setup'); setView('favorites'); }}>Favorites</button></div>}
         {session?.user.selectedVehicleType && choice === session.user.selectedVehicleType && <button className="primary next" disabled={pending} onClick={() => setView('practice')}>Start practice</button>}
         <p className="footnote">{session ? 'Connected with Telegram' : 'No email. No password. Just Telegram.'}</p>
       </section>}

@@ -348,6 +348,14 @@ Favoriting a newer owned presentation updates the favorite's recency and snapsho
 anchor; unfavoriting removes it from later feed reads. Reading the feed does not
 change favorite rows.
 
+The Mini App exposes Favorites from both setup and practice. A visible practice
+question can be saved once per presentation state; failed saves remain retryable
+without changing the selected answer or result. The favorites screen requests ten
+immutable snapshots at a time, preserves server order, supports English, Russian and
+Thai with English fallback, and removes an item only after the API confirms the exact
+presentation. Credentials remain in memory, all browser requests use `no-store`, and
+leaving practice or Favorites ignores late request results.
+
 ### Answer history
 
 `GET /me/history` uses the existing bearer session and returns the authenticated
