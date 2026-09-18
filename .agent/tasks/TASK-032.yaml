@@ -1,6 +1,6 @@
 id: TASK-032
 title: Complete and score an owned mock exam
-status: REVIEW
+status: BUILDING
 epic: Epic 5 — Mock Exam
 objective: Atomically finalize an eligible mock exam from its immutable server-scored answers and return the authoritative score and pass result.
 acceptance:
@@ -31,4 +31,6 @@ supervisor_refinement:
   - Return exactly { examId, questionCount, answeredCount, unansweredCount, score, passingScore, passed, completedAt }. Validate canonical IDs/timestamp, fixed policy, count ranges and identities: answeredCount plus unansweredCount equals50, score cannot exceed answeredCount, and passed must agree with score and passingScore.
   - Do not disclose selectedChoiceId, correctChoiceId, per-question correctness, questions, explanations, source metadata or user data. Do not create or mutate practice presentations, AnswerAttempt history, favorites or practice progress. Per-question result review, exam history and Mini App UI remain separate tasks.
   - Add unit coverage for strict request/response contracts, score/pass and count invariants, and privacy. Add isolated PostgreSQL coverage for auth/query/body precedence, ownership non-disclosure, early incomplete rejection, all-answered early completion, exact-expiry and later-expiry completion with unanswered rows, immutable scoring after source edits, corrupt snapshot/answer/config/cardinality rollback, pass/fail boundaries44 and45, repeated idempotency, concurrent completion with one immutable tuple, exact response privacy and no practice-side effects.
-  - Update README. No schema migration, exam start/answer/resume/read changes, per-question result or explanation disclosure, mistake review, exam history, Mini App UI, production content, dependency, credential or deployment change.
+  - Update README. No schema migration, exam start/resume/read changes, unrelated exam-answer contract change, per-question result or explanation disclosure, mistake review, exam history, Mini App UI, production content, dependency, credential or deployment change.
+review_fix_refinement:
+  - Review attempt1 reproduced a cross-endpoint race: a final answer admitted before expiry can update ExamQuestion after completion has scored the row as unanswered, leaving the persisted ExamSession result inconsistent. Add one shared database-owned serialization boundary used by both POST /exam/answer and POST /exam/complete, acquire it before the authoritative state/answer read and hold it through the conditional write, and re-read state after acquiring it. Preserve accepted answer request/response/error behavior. Add an isolated PostgreSQL overlap test that pauses the final pre-expiry answer at the serialized boundary while completion begins at exact expiry, then proves the operations serialize to one immutable result and no answer can mutate after completion.
