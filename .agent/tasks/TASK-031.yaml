@@ -13,6 +13,7 @@ files_allowed:
   - packages/database/src/**
   - tests/**
   - README.md
+  - vitest.integration.config.ts
 required_checks:
   - pnpm check
   - pnpm prisma validate
@@ -33,3 +34,4 @@ supervisor_refinement:
   - Update README. No schema migration, exam start/resume/read endpoint, session completion, score/pass response, explanation or mistake disclosure, exam history/review, Mini App UI, production content, dependency, credential or deployment change.
 check_failure_refinement:
   - Authoritative integration runs exposed an accepted TASK-030 reliability defect under contention: serializable POST /exam/start transactions can exhaust three immediate P2034 retries and return500 for one of two different-user starts. Within the already allowed API/tests scope, stabilize the existing bounded retry with a small bounded contention delay and sufficient finite attempts, preserve all TASK-030 contracts, add deterministic focused coverage for retry timing/exhaustion if a seam is introduced, and keep unrelated start behavior unchanged.
+  - After the retry fix, authoritative runs showed the16 isolated PostgreSQL suites starting database creation and migrations in parallel can exhaust the local test service, causing unrelated setup/teardown timeouts and sanitized500 responses. The task was impossible to gate reliably within the original file boundary, so vitest.integration.config.ts is explicitly added. Disable file-level parallelism for integration tests while preserving existing hook/test timeouts and test semantics.

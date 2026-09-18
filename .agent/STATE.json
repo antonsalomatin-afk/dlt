@@ -10,7 +10,7 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-031 authoritative standard checks and Prisma validation passed, but repeated full integration runs exposed TASK-030 exam-start serialization retry exhaustion under contention. Task returned to Builder for a narrow bounded-retry stabilization fix before review.",
+  "notes": "TASK-031 retry stabilization passed standard checks, but authoritative integration attempt 2 exposed systemic isolated-database setup timeouts from file-level parallelism. Task scope now includes the integration config and is returned to Builder to serialize files before review.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
     "latestObservedUsedPercent": 0,

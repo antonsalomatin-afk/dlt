@@ -1,0 +1,19 @@
+TASK-031 authoritative checks attempt 02
+Date: 2026-09-18
+
+## pnpm check
+PASS
+- Test files: 19 passed
+- Tests: 147 passed
+
+## pnpm prisma validate
+PASS
+- packages/database/prisma/schema.prisma is valid
+
+## pnpm test:integration
+FAIL
+- The exam-start retry stabilization remained in place, but the full runner launched 16 isolated PostgreSQL suites and migrations concurrently.
+- Seven unrelated suites timed out in beforeAll/afterAll database setup, one accepted login test received a sanitized500 under load, and 33 tests were skipped after hook failures.
+- This is a runner-concurrency failure rather than a TASK-031 product-behavior failure.
+
+Required correction: configure the integration runner to execute test files without file-level parallelism so isolated database creation, migration and teardown cannot exhaust local PostgreSQL. Preserve test-level behavior and timeouts.
