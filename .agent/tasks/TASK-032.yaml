@@ -1,6 +1,6 @@
 id: TASK-032
 title: Complete and score an owned mock exam
-status: REVIEW
+status: ACCEPTED
 epic: Epic 5 — Mock Exam
 objective: Atomically finalize an eligible mock exam from its immutable server-scored answers and return the authoritative score and pass result.
 acceptance:
@@ -34,3 +34,5 @@ supervisor_refinement:
   - Update README. No schema migration, exam start/resume/read changes, unrelated exam-answer contract change, per-question result or explanation disclosure, mistake review, exam history, Mini App UI, production content, dependency, credential or deployment change.
 review_fix_refinement:
   - Review attempt1 reproduced a cross-endpoint race: a final answer admitted before expiry can update ExamQuestion after completion has scored the row as unanswered, leaving the persisted ExamSession result inconsistent. Add one shared database-owned serialization boundary used by both POST /exam/answer and POST /exam/complete, acquire it before the authoritative state/answer read and hold it through the conditional write, and re-read state after acquiring it. Preserve accepted answer request/response/error behavior. Add an isolated PostgreSQL overlap test that pauses the final pre-expiry answer at the serialized boundary while completion begins at exact expiry, then proves the operations serialize to one immutable result and no answer can mutate after completion.
+accepted_commit: 8268e91c50ea5527316a9efbf4e36d5fb53d976e
+review_file: .agent/reviews/TASK-032-review-02.md
