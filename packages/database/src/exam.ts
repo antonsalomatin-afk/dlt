@@ -13,7 +13,26 @@ const canonicalTimestampSchema = z.string().refine((value) => {
   return !Number.isNaN(timestamp.getTime()) && timestamp.toISOString() === value;
 });
 
+const canonicalUuidSchema = z.uuid().refine((value) => value === value.toLowerCase());
+
 export const examStartRequestSchema = z.strictObject({});
+
+export const examAnswerRequestSchema = z.strictObject({
+  examQuestionId: canonicalUuidSchema,
+  choiceId: canonicalUuidSchema,
+});
+
+export const examAnswerResponseSchema = z.strictObject({
+  examId: canonicalUuidSchema,
+  examQuestionId: canonicalUuidSchema,
+  selectedChoiceId: canonicalUuidSchema,
+  answeredAt: canonicalTimestampSchema,
+  answeredCount: z.number().int().min(1).max(EXAM_QUESTION_COUNT),
+  remainingCount: z.number().int().min(0).max(EXAM_QUESTION_COUNT - 1),
+}).refine(
+  ({ answeredCount, remainingCount }) => answeredCount + remainingCount === EXAM_QUESTION_COUNT,
+  { path: ['remainingCount'], message: 'Exam answer counts must total 50' },
+);
 
 export const examStartResponseSchema = z.strictObject({
   examId: z.uuid(),

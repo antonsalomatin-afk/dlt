@@ -286,6 +286,35 @@ The isolated PostgreSQL integration suite creates and drops a randomly named dat
 applies the complete migration chain, and seeds only synthetic local test content. These
 fixtures are not official DLT questions and make no claim about official exam wording.
 
+### Mock exam answer API
+
+`POST /exam/answer` uses the same bearer-authenticated, no-store exam boundary. It
+accepts an empty query and exactly
+`{ "examQuestionId": "<uuid>", "choiceId": "<uuid>" }`; both UUIDs must use the
+canonical lowercase form. Authentication and the single request timestamp are captured
+before strict query and JSON validation. Invalid credentials return the uniform 401,
+invalid input returns `400 { "error": "Bad Request" }`, and an absent or other-user
+exam question returns `404 { "error": "Exam question not found" }`.
+
+The owned exam must retain its 50-question, 45-pass, 60-minute policy snapshot and all
+50 exam-question rows. Completed, expired, and already answered questions return stable
+409 errors in that order. The selected choice must belong to the immutable versioned
+snapshot. Scoring compares it only with that snapshot's correct choice, so later edits to
+the source question or choices cannot change an exam answer.
+
+One conditional transaction update stores the complete
+`{ selectedChoiceId, isCorrect, answeredAt }` tuple. Sequential or concurrent duplicates
+therefore persist one result and return `409 { "error": "Answer already submitted" }`
+for every loser. Corrupt snapshots, invalid session cardinality, and unexpected write
+cardinality fail closed with a sanitized 500 and no partial answer.
+
+Success returns exactly
+`{ examId, examQuestionId, selectedChoiceId, answeredAt, answeredCount, remainingCount }`.
+It never exposes correctness, the correct choice, score, pass state, explanations, other
+questions, or user data. Answer 50 returns counts 50 and 0 but leaves exam completion and
+result disclosure for the completion endpoint. Exam answers do not create or modify
+practice presentations, answer-attempt history, favorites, or practice progress.
+
 ### Practice category API
 
 `GET /practice/categories` uses the existing bearer session and accepts no query

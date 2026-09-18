@@ -14,6 +14,8 @@ import {
   EXAM_ELIGIBLE_LIMIT,
   EXAM_PASSING_SCORE,
   EXAM_QUESTION_COUNT,
+  examAnswerRequestSchema,
+  examAnswerResponseSchema,
   examStartRequestSchema,
   examStartResponseSchema,
   sampleExamQuestionIds,
@@ -30,7 +32,7 @@ const bodySchema = z.strictObject({ initData: z.string().min(1).max(16384).refin
 const bearerSchema = z.string().regex(/^Bearer [A-Za-z0-9_-]{43}$/u);
 const vehicleSchema = z.strictObject({ vehicleType: z.enum(['CAR', 'MOTORCYCLE']) });
 const emptyQuerySchema = z.strictObject({});
-const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available', 'Presentation not found', 'Answer already submitted', 'Not enough questions available', 'Exam already in progress']) });
+const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available', 'Presentation not found', 'Exam question not found', 'Answer already submitted', 'Not enough questions available', 'Exam already in progress', 'Exam already completed', 'Exam expired']) });
 const userSelect = { id: true, username: true, firstName: true, selectedVehicleType: true } as const;
 const digest = (token: string) => createHash('sha256').update(token).digest('hex');
 const lifetimeMs = 24 * 60 * 60 * 1000;
@@ -161,7 +163,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -551,6 +553,110 @@ export function createApi(options: {
       if (!result) throw new Error('Exam start retry did not resolve');
       if (result.kind === 'active') return reply.code(409).send(errorSchema.parse({ error: 'Exam already in progress' }));
       if (result.kind === 'insufficient') return reply.code(409).send(errorSchema.parse({ error: 'Not enough questions available' }));
+      return result.response;
+    });
+    examApp.post('/exam/answer', async (request, reply) => {
+      const authenticated = authenticatedRequests.get(request);
+      if (!authenticated) throw new Error('Authenticated exam user missing');
+      if (!emptyQuerySchema.safeParse(request.query).success) {
+        return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      }
+      const body = examAnswerRequestSchema.safeParse(request.body);
+      if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      const { user, startedAt: answeredAt } = authenticated;
+
+      const result = await options.database.$transaction(async (transaction) => {
+        const examQuestion = await transaction.examQuestion.findFirst({
+          where: { id: body.data.examQuestionId, examSession: { userId: user.id } },
+          select: {
+            id: true,
+            examSessionId: true,
+            questionId: true,
+            snapshot: true,
+            selectedChoiceId: true,
+            isCorrect: true,
+            answeredAt: true,
+            examSession: {
+              select: {
+                questionCount: true,
+                passingScore: true,
+                startedAt: true,
+                expiresAt: true,
+                completedAt: true,
+                _count: { select: { questions: true } },
+              },
+            },
+          },
+        });
+        if (!examQuestion) return { kind: 'not-found' } as const;
+        if (examQuestion.examSession.completedAt !== null) return { kind: 'completed' } as const;
+        if (examQuestion.examSession.expiresAt.getTime() <= answeredAt.getTime()) return { kind: 'expired' } as const;
+        if (
+          examQuestion.selectedChoiceId !== null
+          || examQuestion.isCorrect !== null
+          || examQuestion.answeredAt !== null
+        ) return { kind: 'duplicate' } as const;
+        if (
+          examQuestion.examSession.questionCount !== EXAM_QUESTION_COUNT
+          || examQuestion.examSession.passingScore !== EXAM_PASSING_SCORE
+          || examQuestion.examSession.expiresAt.getTime() - examQuestion.examSession.startedAt.getTime() !== EXAM_DURATION_MS
+          || examQuestion.examSession._count.questions !== EXAM_QUESTION_COUNT
+        ) throw new Error('Stored exam session configuration is inconsistent');
+
+        const snapshot = parsePresentationSnapshot(examQuestion.snapshot);
+        if (snapshot.question.id !== examQuestion.questionId) throw new Error('Stored exam snapshot is inconsistent');
+        if (!snapshot.question.choices.some(({ id }) => id === body.data.choiceId)) {
+          return { kind: 'invalid-choice' } as const;
+        }
+        const updated = await transaction.examQuestion.updateMany({
+          where: {
+            id: examQuestion.id,
+            selectedChoiceId: null,
+            isCorrect: null,
+            answeredAt: null,
+          },
+          data: {
+            selectedChoiceId: body.data.choiceId,
+            isCorrect: body.data.choiceId === snapshot.correctChoiceId,
+            answeredAt,
+          },
+        });
+        if (updated.count !== 1) {
+          const current = await transaction.examQuestion.findUnique({
+            where: { id: examQuestion.id },
+            select: { selectedChoiceId: true, isCorrect: true, answeredAt: true },
+          });
+          if (
+            current
+            && current.selectedChoiceId !== null
+            && current.isCorrect !== null
+            && current.answeredAt !== null
+          ) {
+            return { kind: 'duplicate' } as const;
+          }
+          throw new Error('Exam answer update cardinality is inconsistent');
+        }
+        const answeredCount = await transaction.examQuestion.count({
+          where: { examSessionId: examQuestion.examSessionId, answeredAt: { not: null } },
+        });
+        return {
+          kind: 'answered',
+          response: examAnswerResponseSchema.parse({
+            examId: examQuestion.examSessionId,
+            examQuestionId: examQuestion.id,
+            selectedChoiceId: body.data.choiceId,
+            answeredAt: answeredAt.toISOString(),
+            answeredCount,
+            remainingCount: EXAM_QUESTION_COUNT - answeredCount,
+          }),
+        } as const;
+      });
+
+      if (result.kind === 'not-found') return reply.code(404).send(errorSchema.parse({ error: 'Exam question not found' }));
+      if (result.kind === 'completed') return reply.code(409).send(errorSchema.parse({ error: 'Exam already completed' }));
+      if (result.kind === 'expired') return reply.code(409).send(errorSchema.parse({ error: 'Exam expired' }));
+      if (result.kind === 'duplicate') return reply.code(409).send(errorSchema.parse({ error: 'Answer already submitted' }));
+      if (result.kind === 'invalid-choice') return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
       return result.response;
     });
     done();
