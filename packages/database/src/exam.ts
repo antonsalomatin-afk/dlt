@@ -57,6 +57,10 @@ export const examAnswerRequestSchema = z.strictObject({
   choiceId: canonicalUuidSchema,
 });
 
+export const examCompleteRequestSchema = z.strictObject({
+  examId: canonicalUuidSchema,
+});
+
 export const examAnswerResponseSchema = z.strictObject({
   examId: canonicalUuidSchema,
   examQuestionId: canonicalUuidSchema,
@@ -68,6 +72,39 @@ export const examAnswerResponseSchema = z.strictObject({
   ({ answeredCount, remainingCount }) => answeredCount + remainingCount === EXAM_QUESTION_COUNT,
   { path: ['remainingCount'], message: 'Exam answer counts must total 50' },
 );
+
+export const examCompleteResponseSchema = z.strictObject({
+  examId: canonicalUuidSchema,
+  questionCount: z.literal(EXAM_QUESTION_COUNT),
+  answeredCount: z.number().int().min(0).max(EXAM_QUESTION_COUNT),
+  unansweredCount: z.number().int().min(0).max(EXAM_QUESTION_COUNT),
+  score: z.number().int().min(0).max(EXAM_QUESTION_COUNT),
+  passingScore: z.literal(EXAM_PASSING_SCORE),
+  passed: z.boolean(),
+  completedAt: canonicalTimestampSchema,
+}).superRefine((response, context) => {
+  if (response.answeredCount + response.unansweredCount !== EXAM_QUESTION_COUNT) {
+    context.addIssue({ code: 'custom', path: ['unansweredCount'], message: 'Exam completion counts must total 50' });
+  }
+  if (response.score > response.answeredCount) {
+    context.addIssue({ code: 'custom', path: ['score'], message: 'Exam score cannot exceed answered count' });
+  }
+  if (response.passed !== (response.score >= response.passingScore)) {
+    context.addIssue({ code: 'custom', path: ['passed'], message: 'Exam pass result is inconsistent' });
+  }
+});
+
+export function summarizeExamOutcomes(outcomes: readonly (boolean | null)[]) {
+  if (outcomes.length !== EXAM_QUESTION_COUNT) throw new Error('Exam outcome cardinality is invalid');
+  const answeredCount = outcomes.reduce((count, outcome) => count + (outcome === null ? 0 : 1), 0);
+  const score = outcomes.reduce((count, outcome) => count + (outcome === true ? 1 : 0), 0);
+  return {
+    answeredCount,
+    unansweredCount: EXAM_QUESTION_COUNT - answeredCount,
+    score,
+    passed: score >= EXAM_PASSING_SCORE,
+  };
+}
 
 export const examStartResponseSchema = z.strictObject({
   examId: z.uuid(),

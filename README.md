@@ -179,8 +179,8 @@ data, while a source question referenced by an exam cannot be deleted.
 
 Ordinary checks and foreign keys cannot require exactly 50 `ExamQuestion` rows
 per session or prove that an answer belongs to and matches the immutable snapshot.
-The exam-start API below enforces the 50-row invariant atomically. A future answer
-API must validate answers against the immutable snapshot before making them visible.
+The exam APIs below enforce cardinality and validate answers against the immutable
+snapshot before scoring or returning an authoritative result.
 
 ### Import development fixtures
 
@@ -314,6 +314,37 @@ It never exposes correctness, the correct choice, score, pass state, explanation
 questions, or user data. Answer 50 returns counts 50 and 0 but leaves exam completion and
 result disclosure for the completion endpoint. Exam answers do not create or modify
 practice presentations, answer-attempt history, favorites, or practice progress.
+
+### Mock exam completion API
+
+`POST /exam/complete` uses the same bearer-authenticated, no-store exam boundary.
+It accepts an empty query and exactly `{ "examId": "<uuid>" }`, with a canonical
+lowercase UUID. Authentication and one request timestamp are captured before strict
+query and JSON validation. Invalid credentials return the uniform 401, invalid input
+returns `400 { "error": "Bad Request" }`, and an absent or other-user exam returns
+`404 { "error": "Exam not found" }` without disclosing ownership.
+
+Completion validates the persisted 50-question, 45-pass, 60-minute policy, all 50
+unique consecutive exam-question rows, every immutable snapshot, and every all-null
+or all-present answer tuple. Selected choices and stored correctness must agree with
+the snapshot; current mutable question content is never read for scoring. Before the
+deadline, any unanswered question returns `409 { "error": "Exam incomplete" }` with
+no write. At the exact deadline or later, unanswered questions count as incorrect.
+The score is the number of validated correct answer tuples, and passing requires at
+least 45 correct answers.
+
+One conditional transaction update stores the complete
+`{ completedAt, score, passed }` tuple. Repeated and concurrent requests return the
+same persisted result without changing its timestamp or values. Corrupt snapshots,
+answers, policy, cardinality, or completion state fail closed with the sanitized 500
+and no partial update.
+
+Success returns exactly
+`{ examId, questionCount, answeredCount, unansweredCount, score, passingScore, passed, completedAt }`.
+It contains no question, choice, per-question correctness, explanation, source, or
+user data. Completion does not create or modify practice presentations, practice
+answer history, favorites, or practice progress. Per-question exam review, exam
+history, and Mini App exam screens remain separate work.
 
 ### Practice category API
 
