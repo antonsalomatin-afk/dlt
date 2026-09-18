@@ -1,0 +1,21 @@
+TASK-031 authoritative checks attempt 03
+Completed: 2026-09-18T04:51:38.7534941Z
+
+## pnpm check
+PASS
+- eslint: passed
+- TypeScript and workspace typechecks: passed
+- Test files: 19 passed
+- Tests: 147 passed
+
+## pnpm prisma validate
+PASS
+- packages/database/prisma/schema.prisma is valid
+
+## pnpm test:integration
+PASS
+- Test files: 16 passed
+- Tests: 84 passed
+- Duration: 78.45s
+
+The local PostgreSQL service was cleanly restarted before the final integration run after earlier failed parallel migrations had degraded it. A focused previously timing-out suite passed 6/6 before the complete serialized run. The runner emitted the existing pg client.query deprecation warning; it did not affect the result.
