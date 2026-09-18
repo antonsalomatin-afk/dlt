@@ -1,0 +1,33 @@
+id: TASK-033
+title: Review completed mock-exam mistakes
+status: READY
+epic: Epic 5 — Mock Exam
+objective: Return an owned completed exam's incorrect and unanswered questions from immutable snapshots for safe learner review.
+acceptance:
+  - A protected review endpoint returns only mistakes from one completed exam owned by the authenticated learner, ordered by original exam position.
+  - Review content, selected/correct choices and explanations come exclusively from validated immutable exam snapshots and answer tuples.
+  - Ownership, incomplete exams, zero-mistake exams, unanswered mistakes, corruption, privacy and stable response behavior are deterministic and covered against PostgreSQL.
+  - The endpoint is documented without changing exam state or practice history.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-032
+owner_decision_required: false
+supervisor_refinement:
+  - Add GET /exam/:examId/review with Cache-Control no-store inside the existing exam bearer-authentication boundary. Authenticate before validating the exact empty query and canonical lowercase UUID path parameter. Invalid credentials retain the uniform401 response; invalid query or examId returns400 Bad Request after valid authentication.
+  - Resolve one ExamSession by examId and authenticated user in one database read/transaction. Missing and other-user exams return404 Exam not found without disclosure. An owned session whose completion tuple is entirely null returns409 Exam not completed. Partial completion state fails sanitized500.
+  - Require the accepted50-question,45-pass,60-minute policy, exactly50 unique consecutive ExamQuestion rows, and a complete internally consistent completion tuple. Validate every versioned snapshot and answer tuple exactly as completion does: snapshot IDs, selected choices, correctness and answer timestamps must agree, and recomputed answered/unanswered/score/pass values must match the persisted completion result. Fail closed on corruption.
+  - Return exactly { examId, questionCount, score, passingScore, passed, completedAt, mistakes }. mistakes contains only rows whose validated outcome is false or unanswered, in ascending position. Correct answered rows are excluded. A perfect exam returns an empty mistakes array.
+  - Each mistake contains exactly { examQuestionId, position, selectedChoiceId, answeredAt, correctChoiceId, question, explanationThai, explanationEnglish, explanationRussian, trapExplanationThai, trapExplanationEnglish, trapExplanationRussian }. selectedChoiceId and answeredAt are both null only for an unanswered expiry mistake; answered incorrect mistakes expose the learner's selected choice and timestamp. question is the accepted safe presented snapshot. Validate exact fields, canonical IDs/timestamps, uniqueness and increasing positions at the response boundary.
+  - Never read current mutable Question or QuestionChoice content. Do not expose user IDs, source/image metadata, correct rows, database internals or mutable content. Review is read-only and must not create or mutate ExamSession, ExamQuestion, practice presentations, AnswerAttempt history, favorites or progress.
+  - Add unit coverage for strict response shape, zero/all mistake bounds, unanswered null pairing, ordered unique positions/IDs, canonical timestamps and safe fields. Add isolated PostgreSQL coverage for auth-before-query/path validation, ownership non-disclosure, incomplete and partial completion state, perfect/incorrect/unanswered review results, immutable content after source edits, persisted score/pass mismatch, malformed snapshot/answer/cardinality rollback, exact ordering/privacy and proof of no writes or practice side effects.
+  - Update README. No schema migration, exam start/answer/completion behavior change, exam history/pagination, Mini App UI, production content, dependency, credential or deployment change.
