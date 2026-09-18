@@ -1,0 +1,21 @@
+TASK-032 authoritative checks after review fix
+Completed: 2026-09-18T17:14:23.3350700Z
+
+## pnpm check
+PASS
+- eslint: passed
+- TypeScript and workspace typechecks: passed
+- Test files: 20 passed
+- Tests: 150 passed
+
+## pnpm prisma validate
+PASS
+- packages/database/prisma/schema.prisma is valid
+
+## pnpm test:integration
+PASS
+- Test files: 17 passed
+- Tests: 94 passed
+- Duration: 56.97s
+
+The new cross-endpoint overlap test passed. The runner emitted the existing pg client.query deprecation warning; it did not affect the result.
