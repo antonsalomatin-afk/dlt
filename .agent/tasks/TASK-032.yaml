@@ -1,6 +1,6 @@
 id: TASK-032
 title: Complete and score an owned mock exam
-status: READY
+status: BUILDING
 epic: Epic 5 — Mock Exam
 objective: Atomically finalize an eligible mock exam from its immutable server-scored answers and return the authoritative score and pass result.
 acceptance:
