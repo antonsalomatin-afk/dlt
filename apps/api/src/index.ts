@@ -563,8 +563,25 @@ export function createApi(options: {
       const { user, startedAt: answeredAt } = authenticated;
 
       const result = await options.database.$transaction(async (transaction) => {
+        const lockedSessions = await transaction.$queryRaw<Array<{ id: string }>>(Prisma.sql`
+          SELECT session.id
+          FROM "ExamSession" AS session
+          INNER JOIN "ExamQuestion" AS question ON question."examSessionId" = session.id
+          WHERE question.id = ${body.data.examQuestionId}::uuid
+            AND session."userId" = ${user.id}::uuid
+          FOR UPDATE OF session
+        `);
+        if (lockedSessions.length === 0) return { kind: 'not-found' } as const;
+        if (lockedSessions.length !== 1 || lockedSessions[0]?.id === undefined) {
+          throw new Error('Exam answer lock cardinality is inconsistent');
+        }
+        const lockedSessionId = lockedSessions[0].id;
         const examQuestion = await transaction.examQuestion.findFirst({
-          where: { id: body.data.examQuestionId, examSession: { userId: user.id } },
+          where: {
+            id: body.data.examQuestionId,
+            examSessionId: lockedSessionId,
+            examSession: { userId: user.id },
+          },
           select: {
             id: true,
             examSessionId: true,
@@ -667,6 +684,17 @@ export function createApi(options: {
       const { user, startedAt: completedAt } = authenticated;
 
       const result = await options.database.$transaction(async (transaction) => {
+        const lockedSessions = await transaction.$queryRaw<Array<{ id: string }>>(Prisma.sql`
+          SELECT session.id
+          FROM "ExamSession" AS session
+          WHERE session.id = ${body.data.examId}::uuid
+            AND session."userId" = ${user.id}::uuid
+          FOR UPDATE OF session
+        `);
+        if (lockedSessions.length === 0) return { kind: 'not-found' } as const;
+        if (lockedSessions.length !== 1 || lockedSessions[0]?.id !== body.data.examId) {
+          throw new Error('Exam completion lock cardinality is inconsistent');
+        }
         const exam = await transaction.examSession.findFirst({
           where: { id: body.data.examId, userId: user.id },
           select: {

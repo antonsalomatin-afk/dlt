@@ -339,6 +339,12 @@ same persisted result without changing its timestamp or values. Corrupt snapshot
 answers, policy, cardinality, or completion state fail closed with the sanitized 500
 and no partial update.
 
+Answer submission and completion both lock the owned `ExamSession` row before their
+authoritative reads and hold that database lock through their conditional writes. A
+pre-expiry answer already admitted at this boundary therefore commits before completion
+scores the session; if completion acquires the boundary first, the answer re-reads the
+completed state and cannot mutate an exam after finalization.
+
 Success returns exactly
 `{ examId, questionCount, answeredCount, unansweredCount, score, passingScore, passed, completedAt }`.
 It contains no question, choice, per-question correctness, explanation, source, or

@@ -4,7 +4,7 @@ import pg from 'pg';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createApi } from '../apps/api/src/index.ts';
 import { createDatabaseClient, type Prisma } from '../packages/database/src/index.ts';
-import { EXAM_DURATION_MS, examCompleteResponseSchema } from '../packages/database/src/exam.ts';
+import { EXAM_DURATION_MS, examAnswerResponseSchema, examCompleteResponseSchema } from '../packages/database/src/exam.ts';
 
 const databaseUrl = process.env.DATABASE_URL;
 if (!databaseUrl) throw new Error('DATABASE_URL is required for exam completion integration tests');
@@ -135,6 +135,23 @@ function complete(
 
 function validPayload(examId: string) {
   return { payload: JSON.stringify({ examId }), contentType: 'application/json' };
+}
+
+function answer(token: string, examQuestionId: string, choiceId: string) {
+  return app.inject({
+    method: 'POST',
+    url: '/exam/answer',
+    headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
+    payload: JSON.stringify({ examQuestionId, choiceId }),
+  });
+}
+
+async function waitUntil(probe: () => Promise<boolean>) {
+  for (let attempt = 0; attempt < 200; attempt++) {
+    if (await probe()) return;
+    await new Promise((resolve) => setTimeout(resolve, 10));
+  }
+  throw new Error('Timed out waiting for PostgreSQL overlap state');
 }
 
 async function expectError(responsePromise: ReturnType<typeof complete>, statusCode: number, error: string) {
@@ -350,6 +367,105 @@ describe('POST /exam/complete', () => {
     expect(await database.examSession.findUniqueOrThrow({ where: { id: exam.id } })).toMatchObject({
       completedAt: clock, score: 45, passed: true,
     });
+  });
+
+  it('serializes a final pre-expiry answer with exact-expiry completion', async () => {
+    const learner = await createLearner();
+    const exam = await createExam(learner.user.id, {
+      outcomes: [...Array.from({ length: 49 }, () => true), null],
+    });
+    const finalQuestion = exam.questions[49];
+    if (!finalQuestion) throw new Error('Missing final exam question');
+    const correctChoiceId = choiceIdAt(49, 0);
+    const lockKey1 = 32_032;
+    const lockKey2 = 1;
+    const blocker = new pg.Client({ connectionString: isolatedUrl.toString(), connectionTimeoutMillis: 5_000 });
+    await blocker.connect();
+    await database.$executeRawUnsafe(`
+      CREATE FUNCTION block_final_exam_answer() RETURNS trigger AS $$
+      BEGIN
+        PERFORM pg_advisory_xact_lock(${lockKey1}, ${lockKey2});
+        RETURN NEW;
+      END;
+      $$ LANGUAGE plpgsql
+    `);
+    await database.$executeRawUnsafe(`
+      CREATE TRIGGER block_final_exam_answer
+      BEFORE UPDATE ON "ExamQuestion"
+      FOR EACH ROW
+      WHEN (OLD."answeredAt" IS NULL AND NEW."answeredAt" IS NOT NULL)
+      EXECUTE FUNCTION block_final_exam_answer()
+    `);
+    await blocker.query('SELECT pg_advisory_lock($1, $2)', [lockKey1, lockKey2]);
+
+    let answerResponse: Awaited<ReturnType<typeof answer>> | undefined;
+    let completionResponse: Awaited<ReturnType<typeof complete>> | undefined;
+    try {
+      clock = new Date(exam.expiresAt.getTime() - 1);
+      const answerPromise = answer(learner.token, finalQuestion.id, correctChoiceId);
+      await waitUntil(async () => {
+        const waiting = await blocker.query<{ waiting: boolean }>(`
+          SELECT EXISTS (
+            SELECT 1 FROM pg_locks
+            WHERE locktype = 'advisory'
+              AND classid = $1::oid
+              AND objid = $2::oid
+              AND granted = false
+          ) AS waiting
+        `, [lockKey1, lockKey2]);
+        return waiting.rows[0]?.waiting === true;
+      });
+
+      clock = exam.expiresAt;
+      const completionPromise = complete(learner.token, validPayload(exam.id));
+      await waitUntil(async () => {
+        const waiting = await blocker.query<{ waiting: boolean }>(`
+          SELECT EXISTS (
+            SELECT 1 FROM pg_stat_activity
+            WHERE datname = current_database()
+              AND query LIKE '%FOR UPDATE OF session%'
+              AND wait_event_type = 'Lock'
+          ) AS waiting
+        `);
+        return waiting.rows[0]?.waiting === true;
+      });
+
+      await blocker.query('SELECT pg_advisory_unlock($1, $2)', [lockKey1, lockKey2]);
+      [answerResponse, completionResponse] = await Promise.all([answerPromise, completionPromise]);
+    } finally {
+      await blocker.query('SELECT pg_advisory_unlock($1, $2)', [lockKey1, lockKey2]).catch(() => undefined);
+      await database.$executeRawUnsafe('DROP TRIGGER IF EXISTS block_final_exam_answer ON "ExamQuestion"');
+      await database.$executeRawUnsafe('DROP FUNCTION IF EXISTS block_final_exam_answer()');
+      await blocker.end();
+    }
+
+    expect(answerResponse?.statusCode).toBe(200);
+    expect(examAnswerResponseSchema.parse(answerResponse?.json())).toMatchObject({
+      examId: exam.id,
+      examQuestionId: finalQuestion.id,
+      answeredCount: 50,
+      remainingCount: 0,
+    });
+    expect(completionResponse?.statusCode).toBe(200);
+    expect(examCompleteResponseSchema.parse(completionResponse?.json())).toMatchObject({
+      examId: exam.id,
+      answeredCount: 50,
+      unansweredCount: 0,
+      score: 50,
+      passed: true,
+      completedAt: exam.expiresAt.toISOString(),
+    });
+    const persisted = await database.examSession.findUniqueOrThrow({
+      where: { id: exam.id },
+      include: { questions: true },
+    });
+    expect(persisted).toMatchObject({ completedAt: exam.expiresAt, score: 50, passed: true });
+    expect(persisted.questions.filter(({ isCorrect }) => isCorrect === true)).toHaveLength(50);
+
+    const answeredAt = persisted.questions.find(({ id }) => id === finalQuestion.id)?.answeredAt;
+    await expectError(answer(learner.token, finalQuestion.id, correctChoiceId), 409, 'Exam already completed');
+    expect((await database.examQuestion.findUniqueOrThrow({ where: { id: finalQuestion.id } })).answeredAt).toEqual(answeredAt);
+    expect((await complete(learner.token, validPayload(exam.id))).json()).toEqual(completionResponse?.json());
   });
 
   it('returns only the safe summary and has no practice side effects', async () => {
