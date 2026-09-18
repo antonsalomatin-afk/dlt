@@ -5,8 +5,13 @@ export const EXAM_QUESTION_COUNT = 50;
 export const EXAM_PASSING_SCORE = 45;
 export const EXAM_DURATION_MS = 60 * 60 * 1_000;
 export const EXAM_ELIGIBLE_LIMIT = 10_000;
+export const EXAM_START_MAX_ATTEMPTS = 6;
+
+const EXAM_START_RETRY_BASE_DELAY_MS = 10;
+const EXAM_START_RETRY_MAX_DELAY_MS = 80;
 
 export type ExamRandomOffset = (remainingCount: number) => unknown;
+export type ExamRetryWait = (delayMs: number) => Promise<void>;
 
 const canonicalTimestampSchema = z.string().refine((value) => {
   const timestamp = new Date(value);
@@ -16,6 +21,36 @@ const canonicalTimestampSchema = z.string().refine((value) => {
 const canonicalUuidSchema = z.uuid().refine((value) => value === value.toLowerCase());
 
 export const examStartRequestSchema = z.strictObject({});
+
+export function examStartRetryDelayMs(failedAttempt: number) {
+  if (!Number.isSafeInteger(failedAttempt) || failedAttempt < 1 || failedAttempt >= EXAM_START_MAX_ATTEMPTS) {
+    throw new Error('Failed exam start attempt is outside the retry range');
+  }
+  return Math.min(
+    EXAM_START_RETRY_BASE_DELAY_MS * (2 ** (failedAttempt - 1)),
+    EXAM_START_RETRY_MAX_DELAY_MS,
+  );
+}
+
+const waitForExamRetry: ExamRetryWait = (delayMs) => new Promise((resolve) => {
+  setTimeout(resolve, delayMs);
+});
+
+export async function retryExamStart<T>(
+  operation: () => Promise<T>,
+  isRetryable: (error: unknown) => boolean,
+  wait: ExamRetryWait = waitForExamRetry,
+) {
+  for (let attempt = 1; attempt <= EXAM_START_MAX_ATTEMPTS; attempt++) {
+    try {
+      return await operation();
+    } catch (error) {
+      if (!isRetryable(error) || attempt === EXAM_START_MAX_ATTEMPTS) throw error;
+      await wait(examStartRetryDelayMs(attempt));
+    }
+  }
+  throw new Error('Exam start retry did not resolve');
+}
 
 export const examAnswerRequestSchema = z.strictObject({
   examQuestionId: canonicalUuidSchema,

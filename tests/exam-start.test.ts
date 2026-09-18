@@ -4,8 +4,11 @@ import {
   EXAM_DURATION_MS,
   EXAM_PASSING_SCORE,
   EXAM_QUESTION_COUNT,
+  EXAM_START_MAX_ATTEMPTS,
+  examStartRetryDelayMs,
   examStartRequestSchema,
   examStartResponseSchema,
+  retryExamStart,
   sampleExamQuestionIds,
 } from '../packages/database/src/exam.ts';
 
@@ -95,6 +98,56 @@ describe('exam sampling', () => {
     expect(() => sampleExamQuestionIds(Array.from({ length: 10_001 }, () => randomUUID()), () => 0)).toThrow();
     for (const invalid of [undefined, null, Number.NaN, Number.POSITIVE_INFINITY, -1, 1.5, ids.length]) {
       expect(() => sampleExamQuestionIds(ids, () => invalid)).toThrow();
+    }
+  });
+});
+
+describe('exam start serialization retries', () => {
+  it('uses finite capped exponential delays before a later success', async () => {
+    const retryable = new Error('serialization conflict');
+    const delays: number[] = [];
+    let attempts = 0;
+    const result = await retryExamStart(
+      async () => {
+        attempts++;
+        if (attempts < 4) throw retryable;
+        return 'created';
+      },
+      (error) => error === retryable,
+      async (delayMs) => { delays.push(delayMs); },
+    );
+    expect(result).toBe('created');
+    expect(attempts).toBe(4);
+    expect(delays).toEqual([10, 20, 40]);
+    expect(Array.from({ length: EXAM_START_MAX_ATTEMPTS - 1 }, (_, index) => examStartRetryDelayMs(index + 1)))
+      .toEqual([10, 20, 40, 80, 80]);
+  });
+
+  it('does not retry unrelated failures and rethrows the final retryable failure', async () => {
+    const unrelated = new Error('not retryable');
+    const unrelatedDelays: number[] = [];
+    await expect(retryExamStart(
+      async () => { throw unrelated; },
+      () => false,
+      async (delayMs) => { unrelatedDelays.push(delayMs); },
+    )).rejects.toBe(unrelated);
+    expect(unrelatedDelays).toEqual([]);
+
+    const retryable = new Error('serialization conflict');
+    const retryDelays: number[] = [];
+    let attempts = 0;
+    await expect(retryExamStart(
+      async () => { attempts++; throw retryable; },
+      (error) => error === retryable,
+      async (delayMs) => { retryDelays.push(delayMs); },
+    )).rejects.toBe(retryable);
+    expect(attempts).toBe(EXAM_START_MAX_ATTEMPTS);
+    expect(retryDelays).toEqual([10, 20, 40, 80, 80]);
+  });
+
+  it('rejects retry-delay requests outside the finite attempt range', () => {
+    for (const attempt of [0, EXAM_START_MAX_ATTEMPTS, -1, 1.5, Number.NaN]) {
+      expect(() => examStartRetryDelayMs(attempt)).toThrow();
     }
   });
 });

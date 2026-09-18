@@ -16,6 +16,7 @@ import {
   EXAM_QUESTION_COUNT,
   examAnswerRequestSchema,
   examAnswerResponseSchema,
+  retryExamStart,
   examStartRequestSchema,
   examStartResponseSchema,
   sampleExamQuestionIds,
@@ -540,17 +541,10 @@ export function createApi(options: {
         return { kind: 'created', response } as const;
       }, { isolationLevel: 'Serializable' });
 
-      let result: Awaited<ReturnType<typeof startTransaction>> | undefined;
-      for (let attempt = 0; attempt < 3; attempt++) {
-        try {
-          result = await startTransaction();
-          break;
-        } catch (error) {
-          const retryable = error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2034';
-          if (!retryable || attempt === 2) throw error;
-        }
-      }
-      if (!result) throw new Error('Exam start retry did not resolve');
+      const result = await retryExamStart(
+        startTransaction,
+        (error) => error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2034',
+      );
       if (result.kind === 'active') return reply.code(409).send(errorSchema.parse({ error: 'Exam already in progress' }));
       if (result.kind === 'insufficient') return reply.code(409).send(errorSchema.parse({ error: 'Not enough questions available' }));
       return result.response;
