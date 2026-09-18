@@ -73,9 +73,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-029 — ACCEPTED — mock exam session and question persistence foundation
 - TASK-030 — ACCEPTED — start an authenticated 50-question timed exam snapshot
 - TASK-031 — ACCEPTED — submit one server-scored answer per exam question
-- completion
-- score
-- pass/fail
+- TASK-032 — READY — complete an eligible exam and return score/pass result
 - mistake review
 - exam history
 

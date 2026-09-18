@@ -1,0 +1,34 @@
+id: TASK-032
+title: Complete and score an owned mock exam
+status: READY
+epic: Epic 5 — Mock Exam
+objective: Atomically finalize an eligible mock exam from its immutable server-scored answers and return the authoritative score and pass result.
+acceptance:
+  - A protected completion endpoint finalizes an owned exam when all50 answers exist or its deadline has been reached.
+  - The server validates immutable answer integrity, counts unanswered questions as incorrect after expiry, and atomically persists one consistent completion tuple.
+  - Early, expired, repeated and concurrent completion, ownership, corruption, privacy and rollback behavior are deterministic and tested against PostgreSQL.
+  - The response exposes the authoritative score/pass summary without disclosing per-question answers or explanations, and the contract is documented.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-031
+owner_decision_required: false
+supervisor_refinement:
+  - Add POST /exam/complete with Cache-Control no-store inside the existing exam bearer-authentication boundary. Authenticate and capture one request time before strict query/body validation. Accept only an empty query and exact JSON object { examId } with one canonical lowercase UUID. Malformed JSON, null, arrays, missing, duplicate or unknown members, unsupported content types and noncanonical inputs return the stable400 after valid authentication; invalid credentials retain the uniform401 response.
+  - Resolve the ExamSession by examId and authenticated user inside one database transaction. Missing and other-user sessions return404 Exam not found without disclosure. Require the accepted50-question,45-pass,60-minute policy snapshot and exactly50 unique positioned ExamQuestion rows; malformed configuration or cardinality fails sanitized500 without writes.
+  - Validate every persisted ExamQuestion snapshot and answer tuple before scoring. Each snapshot question ID must equal questionId. For answered rows, selectedChoiceId must exist in the snapshot and stored isCorrect must equal comparison with snapshot.correctChoiceId; unanswered rows must retain the all-null tuple. Current mutable Question/QuestionChoice content must never affect completion.
+  - Permit completion before expiresAt only when all50 rows are answered. Otherwise return409 Exam incomplete with no writes. At expiresAt or later, permit completion with unanswered rows counting as incorrect. Score equals the number of validated true isCorrect rows; passed equals score greater than or equal to the persisted passingScore. Capture completedAt from the one request time, including when it is after expiry.
+  - Atomically write exactly one complete ExamSession tuple { completedAt, score, passed } with a conditional update. Repeated or concurrent completion is idempotent: return the already persisted authoritative result without changing completedAt, score or passed. If a competing update leaves a partial or inconsistent tuple, fail sanitized500.
+  - Return exactly { examId, questionCount, answeredCount, unansweredCount, score, passingScore, passed, completedAt }. Validate canonical IDs/timestamp, fixed policy, count ranges and identities: answeredCount plus unansweredCount equals50, score cannot exceed answeredCount, and passed must agree with score and passingScore.
+  - Do not disclose selectedChoiceId, correctChoiceId, per-question correctness, questions, explanations, source metadata or user data. Do not create or mutate practice presentations, AnswerAttempt history, favorites or practice progress. Per-question result review, exam history and Mini App UI remain separate tasks.
+  - Add unit coverage for strict request/response contracts, score/pass and count invariants, and privacy. Add isolated PostgreSQL coverage for auth/query/body precedence, ownership non-disclosure, early incomplete rejection, all-answered early completion, exact-expiry and later-expiry completion with unanswered rows, immutable scoring after source edits, corrupt snapshot/answer/config/cardinality rollback, pass/fail boundaries44 and45, repeated idempotency, concurrent completion with one immutable tuple, exact response privacy and no practice-side effects.
+  - Update README. No schema migration, exam start/answer/resume/read changes, per-question result or explanation disclosure, mistake review, exam history, Mini App UI, production content, dependency, credential or deployment change.
