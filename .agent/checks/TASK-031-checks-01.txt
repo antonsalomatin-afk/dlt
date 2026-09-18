@@ -1,0 +1,19 @@
+TASK-031 authoritative checks attempt 01
+Date: 2026-09-18
+
+## pnpm check
+PASS
+- Test files: 19 passed
+- Tests: 144 passed
+
+## pnpm prisma validate
+PASS
+- packages/database/prisma/schema.prisma is valid
+
+## pnpm test:integration
+FAIL
+- First run: PostgreSQL resource contention caused isolated-database setup timeouts and accepted login-suite 500 responses.
+- Immediate full retry: 15 files and 83 tests passed; accepted exam-start concurrency coverage failed because different-user starts returned [500, 200] instead of [200, 200].
+- Failing assertion: tests/exam-start.integration.test.ts, different-user independence.
+
+Diagnosis: the existing serializable exam-start transaction retries Prisma P2034 conflicts immediately and can exhaust its bounded attempts under contention. This violates TASK-030's accepted different-user independence contract and must be stabilized before TASK-031 review.

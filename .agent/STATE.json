@@ -10,12 +10,12 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-031 is fully refined and assigned to Builder for immutable-snapshot exam answer scoring and safe progress acknowledgement.",
+  "notes": "TASK-031 authoritative standard checks and Prisma validation passed, but repeated full integration runs exposed TASK-030 exam-start serialization retry exhaustion under contention. Task returned to Builder for a narrow bounded-retry stabilization fix before review.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 59,
+    "latestObservedUsedPercent": 0,
     "windowMinutes": 300,
-    "checkedAt": "2026-09-17T14:02:00Z",
+    "checkedAt": "2026-09-18T08:00:00Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization."
   },
   "executionPaused": false,
