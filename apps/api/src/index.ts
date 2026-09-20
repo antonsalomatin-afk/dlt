@@ -28,6 +28,12 @@ import {
   validateExamSessionRows,
   type ExamRandomOffset,
 } from '../../../packages/database/src/exam.ts';
+import {
+  encodeExamHistoryCursor,
+  examHistoryResponseSchema,
+  examHistoryStatus,
+  parseExamHistoryQuery,
+} from '../../../packages/database/src/exam-history.ts';
 import { InvalidInitDataError, validateInitData } from '../../../packages/telegram/src/index.ts';
 
 export const userSchema = z.strictObject({
@@ -157,6 +163,29 @@ function checkedRandomOffset(randomOffset: RandomOffset, eligibleCount: number) 
 }
 
 /** Caller owns the database connection. Credentials are never logged. */
+function mapExamHistoryItem(
+  exam: {
+    id: string; vehicleType: 'CAR' | 'MOTORCYCLE'; questionCount: number; passingScore: number;
+    startedAt: Date; expiresAt: Date; completedAt: Date | null; _count: { questions: number };
+  },
+  persisted: { completedAt: Date; score: number; passed: boolean } | null,
+  referenceTime: Date,
+) {
+  return {
+    examId: exam.id,
+    vehicleType: exam.vehicleType,
+    status: examHistoryStatus(exam, referenceTime),
+    questionCount: exam.questionCount,
+    passingScore: exam.passingScore,
+    answeredCount: exam._count.questions,
+    startedAt: exam.startedAt.toISOString(),
+    expiresAt: exam.expiresAt.toISOString(),
+    completedAt: persisted === null ? null : persisted.completedAt.toISOString(),
+    score: persisted === null ? null : persisted.score,
+    passed: persisted === null ? null : persisted.passed,
+  };
+}
+
 export function createApi(options: {
   database: PrismaClient;
   botToken: string;
@@ -170,7 +199,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/:examId/result'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/:examId/result', '/exam/history'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -851,6 +880,54 @@ export function createApi(options: {
           trapExplanationEnglish: snapshot.trapExplanationEnglish,
           trapExplanationRussian: snapshot.trapExplanationRussian,
         })),
+      });
+    });
+    examApp.get('/exam/history', async (request, reply) => {
+      const authenticated = authenticatedRequests.get(request);
+      if (!authenticated) throw new Error('Authenticated exam user missing');
+      let query;
+      try { query = parseExamHistoryQuery(request.query); }
+      catch { return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' })); }
+      const after = query.cursor === null ? {} : {
+        OR: [
+          { startedAt: { lt: new Date(query.cursor.startedAt) } },
+          { startedAt: new Date(query.cursor.startedAt), id: { lt: query.cursor.examId } },
+        ],
+      };
+      const exams = await options.database.examSession.findMany({
+        where: { userId: authenticated.user.id, ...after },
+        orderBy: [{ startedAt: 'desc' }, { id: 'desc' }],
+        take: query.limit + 1,
+        select: {
+          id: true,
+          vehicleType: true,
+          questionCount: true,
+          passingScore: true,
+          startedAt: true,
+          expiresAt: true,
+          completedAt: true,
+          score: true,
+          passed: true,
+          _count: { select: { questions: { where: { answeredAt: { not: null } } } } },
+        },
+      });
+      const validated = exams.map((exam) => {
+        if (
+          exam.questionCount !== EXAM_QUESTION_COUNT
+          || exam.passingScore !== EXAM_PASSING_SCORE
+          || exam.expiresAt.getTime() - exam.startedAt.getTime() !== EXAM_DURATION_MS
+        ) throw new Error('Stored exam session configuration is inconsistent');
+        const persisted = readExamCompletionTuple(exam);
+        return {
+          cursor: { v: 1 as const, startedAt: exam.startedAt.toISOString(), examId: exam.id },
+          item: mapExamHistoryItem(exam, persisted, authenticated.startedAt),
+        };
+      });
+      const page = validated.slice(0, query.limit);
+      const last = page.at(-1);
+      return examHistoryResponseSchema.parse({
+        items: page.map(({ item }) => item),
+        nextCursor: validated.length > query.limit && last ? encodeExamHistoryCursor(last.cursor) : null,
       });
     });
     done();

@@ -376,8 +376,30 @@ Success returns exactly
 `{ examQuestionId, position, question, selectedChoiceId, correctChoiceId, isCorrect, answeredAt, explanationThai, explanationEnglish, explanationRussian, trapExplanationThai, trapExplanationEnglish, trapExplanationRussian }`.
 `question` is the presented snapshot wording and four choices. Unanswered rows carry
 null `selectedChoiceId`, `isCorrect` and `answeredAt`. No source metadata, image
-reference, user data or other exam is returned. Exam history listing and Mini App
-exam screens remain separate work.
+reference, user data or other exam is returned. Mini App exam screens remain
+separate work.
+
+### Mock exam history API
+
+`GET /exam/history` uses the same bearer-authenticated, no-store exam boundary and
+performs no writes. It accepts the strict query `{ limit?, cursor? }` with the same
+decimal `1`–`50` limit (default 20) and opaque base64url keyset cursor rules as
+`/me/history`; malformed input returns `400 { "error": "Bad Request" }` after valid
+authentication.
+
+Exams are the authenticated learner's own `ExamSession` rows ordered by `startedAt`
+then `id`, newest first. `nextCursor` is present only when more rows exist and
+encodes `{ v: 1, startedAt, examId }`. Each row must carry the accepted 50-question,
+45-pass, 60-minute policy and an all-null or complete completion tuple; otherwise
+the whole request fails with the sanitized 500.
+
+Success returns exactly `{ items, nextCursor }` where each item is exactly
+`{ examId, vehicleType, status, questionCount, passingScore, answeredCount, startedAt, expiresAt, completedAt, score, passed }`.
+`status` is `COMPLETED` when the completion tuple is persisted, `IN_PROGRESS` when
+the exam is open and its deadline is later than the request time, and `EXPIRED`
+otherwise. `answeredCount` is the number of exam questions with a persisted answer.
+Open exams carry null `completedAt`, `score` and `passed`. No question, snapshot,
+choice, explanation, source or user data is returned.
 
 ### Practice category API
 
