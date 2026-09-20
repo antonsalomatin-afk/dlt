@@ -349,8 +349,35 @@ Success returns exactly
 `{ examId, questionCount, answeredCount, unansweredCount, score, passingScore, passed, completedAt }`.
 It contains no question, choice, per-question correctness, explanation, source, or
 user data. Completion does not create or modify practice presentations, practice
-answer history, favorites, or practice progress. Per-question exam review, exam
-history, and Mini App exam screens remain separate work.
+answer history, favorites, or practice progress. Exam history and Mini App exam
+screens remain separate work.
+
+### Mock exam result review API
+
+`GET /exam/:examId/result` uses the same bearer-authenticated, no-store exam
+boundary and performs no writes. Authentication happens before strict validation.
+The path parameter must be one canonical lowercase UUID and the query must be empty;
+otherwise the endpoint returns `400 { "error": "Bad Request" }`. An absent or
+other-user exam returns `404 { "error": "Exam not found" }` without disclosing
+ownership. An owned exam whose completion tuple is not yet persisted returns
+`409 { "error": "Exam not completed" }` whether or not its deadline has passed, and
+discloses nothing about its questions; completion must be requested first.
+
+The review validates the persisted policy, cardinality, snapshots and answer tuples
+with the same rules as completion (shared in `packages/database/src/exam.ts`),
+recomputes the summary from the immutable rows, and fails closed with the sanitized
+500 when any row or the persisted score/pass result is inconsistent. Current mutable
+question and choice content is never read, so later source edits cannot change a
+review.
+
+Success returns exactly
+`{ examId, vehicleType, questionCount, answeredCount, unansweredCount, score, passingScore, passed, startedAt, expiresAt, completedAt, questions }`.
+`questions` holds exactly 50 rows ordered by position, each exactly
+`{ examQuestionId, position, question, selectedChoiceId, correctChoiceId, isCorrect, answeredAt, explanationThai, explanationEnglish, explanationRussian, trapExplanationThai, trapExplanationEnglish, trapExplanationRussian }`.
+`question` is the presented snapshot wording and four choices. Unanswered rows carry
+null `selectedChoiceId`, `isCorrect` and `answeredAt`. No source metadata, image
+reference, user data or other exam is returned. Exam history listing and Mini App
+exam screens remain separate work.
 
 ### Practice category API
 
