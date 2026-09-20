@@ -1,9 +1,7 @@
-# Supervisor handoff — TASK-021 ready
+# Supervisor handoff — TASK-035 next
 
-TASK-001 through TASK-016 are accepted or ready to accept into main. TASK-016 implementation 798725cc905ce3573cda2a81de257e81b3abc8f3 passed authoritative check 114, integration 18, and independent review 01 with no findings.
+TASK-001 through TASK-034 are accepted on branch `claude/nifty-fermi-9yrmoz` (TASK-032 and earlier are also in `main`). Epic 5 API surface is complete: `POST /exam/start`, `POST /exam/answer`, `POST /exam/complete`, `GET /exam/:examId/result`, `GET /exam/history`.
 
-TASK-017 implementation d70fa14 passed authoritative check114/build/e2e37/integration18, Supervisor mobile visual inspection, and independent review 01 with no findings. It is ready to merge into main.
+TASK-035 is the next task: Mini App mock exam screens using the accepted exam APIs (start, timed answering, completion, per-question review, history). It still needs Supervisor refinement before Builder assignment.
 
-TASK-001 through TASK-020 are accepted in main. TASK-021 is fully refined for optional categoryId-filtered question delivery with existing unfiltered compatibility, uniform404 privacy and unchanged snapshot/answer boundaries. It is ready for Builder assignment.
-
-Preserve the unrelated untracked thai-dlt-agent-starter.zip. Local PostgreSQL is running. No Product Owner blocker, active automation, or reset-credit authorization.
+Environment notes: the repo's `tools/database/local.ts` runner is Windows-only; on Linux start a PostgreSQL 16 cluster manually on 127.0.0.1:55432 with the `.env.example` credentials. `pnpm check` then fails only the three Windows-only reset-safety tests in `tests/database-lifecycle.test.ts` (see FOLLOW_UPS.md). No Product Owner blocker, active automation, or reset-credit authorization.

@@ -1,0 +1,30 @@
+id: TASK-034
+title: List the authenticated learner's mock exams
+status: ACCEPTED
+epic: Epic 5 — Mock Exam
+objective: Return a cursor-paginated, newest-first list of the authenticated learner's mock exams with status, progress and persisted results so the Mini App can show exam history.
+acceptance:
+  - A protected read endpoint lists only the authenticated learner's ExamSession rows, newest first by startedAt then id, with bounded keyset pagination.
+  - Each item carries the persisted policy, derived status (IN_PROGRESS, EXPIRED, COMPLETED by request time), answered-question count and the persisted completion tuple or nulls.
+  - Auth precedence, strict query validation, ownership, pagination without gaps or duplicates, inconsistent stored policy and read-only behavior are tested against PostgreSQL.
+  - The response contract is strict, safe and documented.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-033
+owner_decision_required: false
+supervisor_refinement:
+  - Add GET /exam/history with Cache-Control no-store inside the existing exam bearer-authentication boundary. Accept only the strict query { limit?, cursor? } with the same decimal1..50 limit (default20) and opaque base64url keyset cursor rules as /me/history; malformed input returns the stable400 after valid authentication.
+  - Order by startedAt desc, id desc using the existing ExamSession index. The cursor encodes { v:1, startedAt, examId } and must round-trip canonically. Fetch limit+1 rows and return nextCursor only when more rows exist.
+  - Validate the accepted policy per row (50 questions,45 pass,60 minutes) and the all-null or complete completion tuple, failing sanitized500 for the whole request otherwise. Status is COMPLETED when the tuple is persisted, IN_PROGRESS when expiresAt is later than the request time, else EXPIRED. answeredCount is the number of ExamQuestion rows with answeredAt set.
+  - Return exactly { items, nextCursor } where each item is exactly { examId, vehicleType, status, questionCount, passingScore, answeredCount, startedAt, expiresAt, completedAt, score, passed }. Do not disclose questions, snapshots, choices, explanations, source metadata or user data. Perform no writes.
+  - Add unit coverage for cursor/query/status/item invariants and isolated PostgreSQL coverage for auth precedence, malformed queries, empty envelope, owned-only ordering with all three statuses, tied-timestamp pagination and inconsistent policy failure. Update README. No schema, dependency, Mini App UI or other exam contract change.
+accepted_commit: cedbb5b3941adac0fb3184aa7d4a0161f2baf664
+review_file: .agent/reviews/TASK-034-review-01.md

@@ -1,0 +1,22 @@
+TASK-034 authoritative checks
+Completed: 2026-09-20T18:59:05Z
+Commit: cedbb5b3941adac0fb3184aa7d4a0161f2baf664
+Environment: Linux container, Node 24, pnpm 11.19, system PostgreSQL 16 on 127.0.0.1:55432
+
+## pnpm check
+PASS with the pre-existing environment exception recorded for TASK-033
+- eslint: passed
+- TypeScript and workspace typechecks: passed
+- Test files: 21 passed, 1 failed
+- Tests: 155 passed, 3 failed
+- The 3 failures are the Windows-only tests/database-lifecycle.test.ts reset-safety cases (see .agent/FOLLOW_UPS.md); unrelated to TASK-034.
+
+## pnpm prisma validate
+PASS
+- packages/database/prisma/schema.prisma is valid
+
+## pnpm test:integration
+PASS
+- Test files: 19 passed
+- Tests: 104 passed (99 accepted + 5 new in tests/exam-history.integration.test.ts)
+- Duration: 35.38s
