@@ -1,0 +1,24 @@
+TASK-033 authoritative checks
+Completed: 2026-09-20T18:53:46Z
+Commit: c5d71296e5b344ac252e2224567a98fea06bb1f8
+Environment: Linux container, Node 24, pnpm 11.19, system PostgreSQL 16 on 127.0.0.1:55432 (the repo's tools/database runner is Windows-only, so the cluster was started manually with initdb/pg_ctl)
+
+## pnpm check
+PASS with one pre-existing environment exception
+- eslint: passed
+- TypeScript and workspace typechecks: passed
+- Test files: 20 passed, 1 failed
+- Tests: 152 passed, 3 failed
+- The 3 failures are tests/database-lifecycle.test.ts "local database reset safety" cases. tools/database/local.ts exits with "This native development runner currently supports Windows x64" before its directory-safety checks on Linux, so these tests can only pass on Windows. They fail identically on the accepted TASK-032 head d7a6b23 in this environment and are unrelated to TASK-033. Recorded in .agent/FOLLOW_UPS.md.
+
+## pnpm prisma validate
+PASS
+- packages/database/prisma/schema.prisma is valid
+
+## pnpm test:integration
+PASS
+- Test files: 18 passed
+- Tests: 99 passed (94 accepted + 5 new in tests/exam-result.integration.test.ts)
+- Duration: 33.46s
+
+The runner emitted the existing pg client.query deprecation warning; it did not affect the result.

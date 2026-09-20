@@ -1,0 +1,33 @@
+id: TASK-033
+title: Review a completed mock exam per question
+status: ACCEPTED
+epic: Epic 5 — Mock Exam
+objective: Return the authoritative per-question review of an owned, completed mock exam from its immutable snapshots and persisted answers so learners can study their exam mistakes.
+acceptance:
+  - A protected read endpoint returns the per-question review of an owned exam only after the completion tuple is persisted.
+  - Every returned row is derived from the immutable ExamQuestion snapshot and persisted answer tuple; current mutable Question/QuestionChoice content never affects the review.
+  - Ownership, incomplete-exam, malformed-input, corruption and privacy behavior are deterministic and tested against PostgreSQL.
+  - The response exposes the persisted summary and for each position the presented question, selected choice, correct choice, correctness and explanations, and the contract is documented.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-032
+owner_decision_required: false
+supervisor_refinement:
+  - Add GET /exam/:examId/result with Cache-Control no-store inside the existing exam bearer-authentication boundary. Authenticate before strict validation. Accept only an empty query and one canonical lowercase UUID path parameter; noncanonical parameters or unknown query members return the stable400 after valid authentication; invalid credentials retain the uniform401 response.
+  - Resolve the ExamSession by examId and authenticated user. Missing and other-user sessions return404 Exam not found without disclosure. An owned exam whose completion tuple { completedAt, score, passed } is all null returns409 Exam not completed with no writes and no per-question disclosure, regardless of expiry. A partial completion tuple fails sanitized500.
+  - Require the accepted50-question,45-pass,60-minute policy snapshot and exactly50 unique positioned ExamQuestion rows, and validate every snapshot and answer tuple with the same rules as completion: snapshot question ID equals questionId, an answered row has selectedChoiceId in the snapshot and isCorrect equal to comparison with snapshot.correctChoiceId inside the exam window, and an unanswered row is all null. Recompute the summary from the validated rows and fail sanitized500 when it disagrees with the persisted score or pass result. Share these validation rules with POST /exam/complete instead of duplicating them.
+  - Perform no writes. Do not create or mutate practice presentations, AnswerAttempt history, favorites, practice progress or any exam row.
+  - Return exactly { examId, vehicleType, questionCount, answeredCount, unansweredCount, score, passingScore, passed, startedAt, expiresAt, completedAt, questions } where questions has exactly50 rows ordered by consecutive position, each exactly { examQuestionId, position, question, selectedChoiceId, correctChoiceId, isCorrect, answeredAt, explanationThai, explanationEnglish, explanationRussian, trapExplanationThai, trapExplanationEnglish, trapExplanationRussian }. Unanswered rows carry null selectedChoiceId, isCorrect and answeredAt. Validate canonical IDs/timestamps, choice membership, correctness identity, consecutive positions, unique IDs and that the aggregate counts and score equal the per-question rows.
+  - Do not disclose source metadata, image references, user data or other exams. Exam history listing and Mini App UI remain separate tasks.
+  - Add unit coverage for the strict response contract and its invariants. Add isolated PostgreSQL coverage for auth/parameter/query precedence, ownership non-disclosure, incomplete rejection without disclosure, a completed review with answered correct, answered incorrect and unanswered rows and explanations, immutability after source edits, corrupt snapshot/answer/config/cardinality/partial-tuple/inconsistent-score failure, and no side effects.
+  - Update README. No schema migration, exam start/answer/complete contract change, exam history, Mini App UI, production content, dependency, credential or deployment change.
+accepted_commit: c5d71296e5b344ac252e2224567a98fea06bb1f8
+review_file: .agent/reviews/TASK-033-review-01.md
