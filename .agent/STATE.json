@@ -10,7 +10,7 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-034 accepted after authoritative checks and fresh Reviewer PASS. Learners can now page through privacy-safe completed-exam summaries whose persisted results are revalidated from immutable snapshots and answer tuples.",
+  "notes": "TASK-033 and TASK-034 were accepted in this continuation. Completed-exam mistake review and paginated exam history are now on main. Work is checkpointed cleanly before selecting the next task because the five-hour window is at 84 percent and the weekly window is at 98 percent; the user's five-hour ceiling is 95 percent. The obsolete resume automation was deleted after firing.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
     "latestObservedUsedPercent": 84,
@@ -18,8 +18,8 @@
     "checkedAt": "2026-09-21T09:23:00.000+02:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization."
   },
-  "executionPaused": false,
-  "pauseReason": null,
+  "executionPaused": true,
+  "pauseReason": "Clean usage checkpoint at 84% of the five-hour window and 98% of the weekly window before starting another full Builder/checks/Reviewer cycle; no Product Owner decision is required.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
