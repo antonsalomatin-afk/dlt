@@ -1,6 +1,6 @@
 id: TASK-036
 title: Review finished mock exams in the Mini App
-status: READY
+status: ACCEPTED
 epic: Epic 5 — Mock Exam
 objective: Let an authenticated learner browse their mock exam history and open the per-question review of any completed exam in the Mini App.
 acceptance:
@@ -26,3 +26,5 @@ supervisor_refinement:
   - Review shows the summary (score, pass mark, answered, unanswered, result) and all50 rows in position order with Your answer and Correct answer labels, an Unanswered label for null rows, and localized explanations with English fallback. A409 Exam not completed shows guidance and returns to the list.
   - A401 anywhere expires and clears the session through the established path. Leaving is immediate and invalidates in-flight requests; nothing is persisted in browser storage.
   - Add Playwright coverage for exact requests, strict rejections with retry, paging, review rendering including unanswered rows, the409 path, 401, origins and departure. Update README. No backend change, no exam start/resume, no dependency or deployment change.
+accepted_commit: 7c69ebc9d9920ed037b0f3007dee035926b4dfbc
+review_file: .agent/reviews/TASK-036-review-01.md

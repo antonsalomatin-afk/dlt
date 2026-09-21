@@ -77,7 +77,9 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-033 — ACCEPTED — per-question review of a completed exam
 - TASK-034 — ACCEPTED — exam history listing API
 - TASK-035 — ACCEPTED — Mini App mock exam: start, timed answering, completion
-- TASK-036 — READY — Mini App exam history and per-question review
+- TASK-036 — ACCEPTED — Mini App exam history and per-question review
+
+Epic 5 is complete.
 
 ## Epic 6 — Concept Learning
 
