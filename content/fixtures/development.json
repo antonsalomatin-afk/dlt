@@ -34,10 +34,85 @@
       "nameRussian": "Распознавание опасностей"
     }
   ],
+  "concepts": [
+    {
+      "key": "regulatory-instructions",
+      "nameEnglish": "Regulatory instructions",
+      "nameThai": "คำสั่งบังคับบนป้ายและจากผู้ควบคุม",
+      "nameRussian": "Обязательные предписания"
+    },
+    {
+      "key": "hazard-warning-signs",
+      "nameEnglish": "Hazard warning signs",
+      "nameThai": "ป้ายเตือนอันตราย",
+      "nameRussian": "Предупреждающие знаки"
+    },
+    {
+      "key": "direction-guidance",
+      "nameEnglish": "Direction guidance",
+      "nameThai": "ป้ายบอกทิศทาง",
+      "nameRussian": "Указатели направления"
+    },
+    {
+      "key": "lane-and-zone-restrictions",
+      "nameEnglish": "Lane and zone restrictions",
+      "nameThai": "ข้อจำกัดช่องทางและเขตพื้นที่",
+      "nameRussian": "Ограничения полос и зон"
+    },
+    {
+      "key": "consulting-authoritative-information",
+      "nameEnglish": "Consulting authoritative information",
+      "nameThai": "การตรวจสอบข้อมูลจากแหล่งที่เชื่อถือได้",
+      "nameRussian": "Обращение к достоверным источникам"
+    },
+    {
+      "key": "driver-attention",
+      "nameEnglish": "Driver attention",
+      "nameThai": "ความตั้งใจของผู้ขับขี่",
+      "nameRussian": "Внимание водителя"
+    },
+    {
+      "key": "protective-equipment",
+      "nameEnglish": "Protective equipment",
+      "nameThai": "อุปกรณ์ป้องกัน",
+      "nameRussian": "Защитное снаряжение"
+    },
+    {
+      "key": "reduced-grip-conditions",
+      "nameEnglish": "Reduced grip conditions",
+      "nameThai": "สภาพถนนที่ยึดเกาะน้อยลง",
+      "nameRussian": "Условия сниженного сцепления"
+    },
+    {
+      "key": "following-distance",
+      "nameEnglish": "Following distance",
+      "nameThai": "ระยะห่างจากรถคันหน้า",
+      "nameRussian": "Дистанция до впереди идущего"
+    },
+    {
+      "key": "pre-trip-inspection",
+      "nameEnglish": "Pre-trip inspection",
+      "nameThai": "การตรวจสอบก่อนออกเดินทาง",
+      "nameRussian": "Осмотр перед поездкой"
+    },
+    {
+      "key": "anticipating-hidden-hazards",
+      "nameEnglish": "Anticipating hidden hazards",
+      "nameThai": "การคาดการณ์อันตรายที่มองไม่เห็น",
+      "nameRussian": "Предвидение скрытых опасностей"
+    },
+    {
+      "key": "limited-visibility",
+      "nameEnglish": "Limited visibility",
+      "nameThai": "ทัศนวิสัยจำกัด",
+      "nameRussian": "Ограниченная видимость"
+    }
+  ],
   "questions": [
     {
       "id": "signs-01",
       "category": "signs",
+      "concept": "regulatory-instructions",
       "vehicleType": "CAR",
       "textEnglish": "In this fictional practice scene, a sign says STOP. What action matches that instruction?",
       "explanationEnglish": "The written instruction asks for a complete stop. This is a synthetic reading exercise.",
@@ -80,6 +155,7 @@
     {
       "id": "signs-02",
       "category": "signs",
+      "concept": "hazard-warning-signs",
       "vehicleType": "MOTORCYCLE",
       "textEnglish": "A temporary sign warns of a slippery surface ahead. What response is prudent?",
       "explanationEnglish": "Smooth inputs help preserve traction on a slippery surface.",
@@ -109,6 +185,7 @@
     {
       "id": "signs-03",
       "category": "signs",
+      "concept": "direction-guidance",
       "vehicleType": "CAR",
       "textEnglish": "A practice route sign points left toward the parking area. Where does that arrow point?",
       "explanationEnglish": "This synthetic sign-reading exercise tests the direction of an arrow.",
@@ -138,6 +215,7 @@
     {
       "id": "signs-04",
       "category": "signs",
+      "concept": "hazard-warning-signs",
       "vehicleType": "MOTORCYCLE",
       "textEnglish": "A warning board shows road workers ahead. What should you anticipate?",
       "explanationEnglish": "Road work can alter the available space and place people near traffic.",
@@ -167,6 +245,7 @@
     {
       "id": "signs-05",
       "category": "signs",
+      "concept": "regulatory-instructions",
       "vehicleType": "CAR",
       "textEnglish": "A fictional training sign reads ROAD CLOSED. What is the sensible next step?",
       "explanationEnglish": "A closure means the planned route is unavailable; choose a safe alternative.",
@@ -196,6 +275,7 @@
     {
       "id": "traffic-law-01",
       "category": "traffic-law",
+      "concept": "lane-and-zone-restrictions",
       "vehicleType": "CAR",
       "textEnglish": "In this fictional exercise, a lane is marked for oncoming traffic. Should you use it for routine travel?",
       "explanationEnglish": "The exercise explicitly assigns that lane to opposing traffic.",
@@ -225,6 +305,7 @@
     {
       "id": "traffic-law-02",
       "category": "traffic-law",
+      "concept": "regulatory-instructions",
       "vehicleType": "MOTORCYCLE",
       "textEnglish": "An authorized traffic controller tells your fictional practice group to wait. What follows the instruction?",
       "explanationEnglish": "Waiting follows the instruction given in the scenario.",
@@ -254,6 +335,7 @@
     {
       "id": "traffic-law-03",
       "category": "traffic-law",
+      "concept": "lane-and-zone-restrictions",
       "vehicleType": "CAR",
       "textEnglish": "A practice parking area reserves a space for emergency access. What should you do?",
       "explanationEnglish": "Keeping emergency access clear avoids obstructing a response.",
@@ -283,6 +365,7 @@
     {
       "id": "traffic-law-04",
       "category": "traffic-law",
+      "concept": "consulting-authoritative-information",
       "vehicleType": "MOTORCYCLE",
       "textEnglish": "You do not understand a local traffic restriction before a trip. What is a responsible preparation step?",
       "explanationEnglish": "Uncertainty about actual rules should be resolved using current authoritative guidance.",
@@ -312,6 +395,7 @@
     {
       "id": "traffic-law-05",
       "category": "traffic-law",
+      "concept": "lane-and-zone-restrictions",
       "vehicleType": "CAR",
       "textEnglish": "In a fictional training area, an instructor designates a pedestrian-only zone. Where should the car remain?",
       "explanationEnglish": "The scenario designates the space for pedestrians rather than vehicles.",
@@ -341,6 +425,7 @@
     {
       "id": "safe-driving-01",
       "category": "safe-driving",
+      "concept": "driver-attention",
       "vehicleType": "CAR",
       "textEnglish": "Your phone receives a message while you are driving. What is the safer response?",
       "explanationEnglish": "Avoid dividing visual and mental attention while driving.",
@@ -370,6 +455,7 @@
     {
       "id": "safe-driving-02",
       "category": "safe-driving",
+      "concept": "protective-equipment",
       "vehicleType": "MOTORCYCLE",
       "textEnglish": "Before riding, how should a helmet fit?",
       "explanationEnglish": "Follow the helmet maker’s fitting instructions so it stays securely positioned.",
@@ -399,6 +485,7 @@
     {
       "id": "safe-driving-03",
       "category": "safe-driving",
+      "concept": "driver-attention",
       "vehicleType": "CAR",
       "textEnglish": "You feel sleepy during a journey. What is a sensible action?",
       "explanationEnglish": "Rest addresses fatigue; distractions do not remove it.",
@@ -428,6 +515,7 @@
     {
       "id": "safe-driving-04",
       "category": "safe-driving",
+      "concept": "reduced-grip-conditions",
       "vehicleType": "MOTORCYCLE",
       "textEnglish": "Rain begins after a dry spell. What should you allow for?",
       "explanationEnglish": "Wet and contaminated surfaces can reduce grip; leave room and use smooth inputs.",
@@ -457,6 +545,7 @@
     {
       "id": "safe-driving-05",
       "category": "safe-driving",
+      "concept": "following-distance",
       "vehicleType": "CAR",
       "textEnglish": "The vehicle ahead brakes unexpectedly. What helps give you time to respond?",
       "explanationEnglish": "Space ahead provides time and distance to respond to changes.",
@@ -486,6 +575,7 @@
     {
       "id": "vehicle-maintenance-01",
       "category": "vehicle-maintenance",
+      "concept": "pre-trip-inspection",
       "vehicleType": "CAR",
       "textEnglish": "A tire appears visibly damaged before departure. What should you do?",
       "explanationEnglish": "Visible damage deserves inspection before the vehicle is used.",
@@ -515,6 +605,7 @@
     {
       "id": "vehicle-maintenance-02",
       "category": "vehicle-maintenance",
+      "concept": "consulting-authoritative-information",
       "vehicleType": "MOTORCYCLE",
       "textEnglish": "How should you determine the correct tire pressure?",
       "explanationEnglish": "Use the applicable manufacturer guidance rather than guessing.",
@@ -544,6 +635,7 @@
     {
       "id": "vehicle-maintenance-03",
       "category": "vehicle-maintenance",
+      "concept": "pre-trip-inspection",
       "vehicleType": "CAR",
       "textEnglish": "A required light does not work during a pre-trip check. What is prudent?",
       "explanationEnglish": "Working lights support visibility and communication.",
@@ -573,6 +665,7 @@
     {
       "id": "vehicle-maintenance-04",
       "category": "vehicle-maintenance",
+      "concept": "pre-trip-inspection",
       "vehicleType": "MOTORCYCLE",
       "textEnglish": "The brake lever feels unexpectedly different during a stationary check. What should you do?",
       "explanationEnglish": "An unexpected brake change needs assessment before riding.",
@@ -602,6 +695,7 @@
     {
       "id": "vehicle-maintenance-05",
       "category": "vehicle-maintenance",
+      "concept": "consulting-authoritative-information",
       "vehicleType": "CAR",
       "textEnglish": "Where should you look for the vehicle’s maintenance schedule?",
       "explanationEnglish": "Manufacturer documentation provides the maintenance schedule for the vehicle.",
@@ -631,6 +725,7 @@
     {
       "id": "hazard-perception-01",
       "category": "hazard-perception",
+      "concept": "anticipating-hidden-hazards",
       "vehicleType": "CAR",
       "textEnglish": "A ball rolls into the road from between parked cars. What should you anticipate?",
       "explanationEnglish": "A ball can signal that a child or another person may enter the road.",
@@ -660,6 +755,7 @@
     {
       "id": "hazard-perception-02",
       "category": "hazard-perception",
+      "concept": "anticipating-hidden-hazards",
       "vehicleType": "MOTORCYCLE",
       "textEnglish": "A large vehicle blocks your view of a junction. What should you recognize?",
       "explanationEnglish": "An obstruction hides possible traffic or people; allow time to assess.",
@@ -689,6 +785,7 @@
     {
       "id": "hazard-perception-03",
       "category": "hazard-perception",
+      "concept": "reduced-grip-conditions",
       "vehicleType": "CAR",
       "textEnglish": "You see water across the road but cannot judge its depth. What is prudent?",
       "explanationEnglish": "Unknown depth and surface conditions make blind entry unsafe.",
@@ -718,6 +815,7 @@
     {
       "id": "hazard-perception-04",
       "category": "hazard-perception",
+      "concept": "anticipating-hidden-hazards",
       "vehicleType": "MOTORCYCLE",
       "textEnglish": "A parked vehicle has someone sitting at the wheel. What possible change should you watch for?",
       "explanationEnglish": "Occupants may open doors and parked vehicles may move.",
@@ -747,6 +845,7 @@
     {
       "id": "hazard-perception-05",
       "category": "hazard-perception",
+      "concept": "limited-visibility",
       "vehicleType": "CAR",
       "textEnglish": "Glare makes the road ahead difficult to see. What should guide your response?",
       "explanationEnglish": "Choose a response that keeps your movement within what you can see and assess.",

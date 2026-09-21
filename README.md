@@ -185,8 +185,8 @@ snapshot before scoring or returning an authoritative result.
 ### Import development fixtures
 
 After `pnpm db:start` and `pnpm db:migrate`, run `pnpm content:import`.
-The command imports 25 original synthetic questions as inactive drafts and can
-be repeated with stable IDs/counts. It only accepts the loopback `.env` database
+The command imports 25 original synthetic questions as inactive drafts, grouped
+under named learning concepts, and can be repeated with stable IDs/counts. It only accepts the loopback `.env` database
 configuration. See [content conventions](content/README.md) for validation,
 collision protection and provenance. These fixtures are not official DLT content.
 

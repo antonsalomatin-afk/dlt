@@ -13,6 +13,29 @@ describe('development fixture validation', () => {
     expect(data.questions).toHaveLength(25);
     expect(new Set(data.questions.map(({ category }) => category)).size).toBe(5);
     expect(new Set(data.questions.map(({ vehicleType }) => vehicleType)).size).toBe(2);
+    const conceptKeys = new Set(data.concepts.map(({ key }) => key));
+    expect(data.questions.every(({ concept }) => conceptKeys.has(concept))).toBe(true);
+    expect(new Set(data.questions.map(({ concept }) => concept)).size).toBe(conceptKeys.size);
+    expect(data.questions.filter(({ concept }) => concept === data.questions[0]?.concept).length).toBeGreaterThanOrEqual(2);
+  });
+  it('rejects undeclared, unreferenced, duplicate and ungrouped concepts', () => {
+    const original = loadFixtures();
+    const firstConcept = original.concepts[0];
+    if (!firstConcept) throw new Error('Missing concept fixture');
+    const invalid: unknown[] = [
+      { ...original, concepts: [] },
+      { ...original, concepts: [...original.concepts, { ...firstConcept, key: 'unreferenced-concept' }] },
+      { ...original, concepts: [...original.concepts, firstConcept] },
+      { ...original, concepts: original.concepts.map((concept) => ({ ...concept, nameEnglish: ' ' })) },
+      { ...original, questions: original.questions.map((question, index) => (index === 0 ? { ...question, concept: 'undeclared-concept' } : question)) },
+      { ...original, questions: original.questions.map((question) => Object.fromEntries(Object.entries(question).filter(([key]) => key !== 'concept'))) },
+      {
+        ...original,
+        concepts: original.questions.map(({ id }) => ({ ...firstConcept, key: `${id}-solo` })),
+        questions: original.questions.map((question) => ({ ...question, concept: `${question.id}-solo` })),
+      },
+    ];
+    for (const input of invalid) expect(() => validateFixtures(input)).toThrow('Invalid development fixtures');
   });
   it('rejects wrong counts, duplicate identities/choices, invalid answers and blank text', () => {
     const original = loadFixtures();

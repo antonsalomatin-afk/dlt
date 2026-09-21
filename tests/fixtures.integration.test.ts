@@ -44,6 +44,17 @@ it('imports atomically, repeats with stable IDs, and preserves unrelated data on
   expect(await database.category.count()).toBe(1);
   expect((await database.question.findUniqueOrThrow({ where: { id: collisionId } })).textEnglish).toBe('Preserve nonfixture');
   await database.question.delete({ where: { id: collisionId } });
+  const firstConcept = fixtures.concepts[0];
+  if (!firstConcept) throw new Error('Missing concept fixture');
+  const conceptCollision = await database.concept.create({ data: {
+    id: fixtureId(`concept:${firstConcept.key}`), slug: `fixture-${firstConcept.key}`,
+    nameThai: firstConcept.nameThai, nameEnglish: 'Renamed elsewhere', nameRussian: firstConcept.nameRussian,
+  } });
+  await expect(importFixtures(database, fixtures)).rejects.toThrow('Fixture concept collision');
+  expect(await database.question.count()).toBe(0);
+  expect(await database.concept.count()).toBe(1);
+  expect((await database.concept.findUniqueOrThrow({ where: { id: conceptCollision.id } })).nameEnglish).toBe('Renamed elsewhere');
+  await database.concept.delete({ where: { id: conceptCollision.id } });
   const unrelated = await database.question.create({ data: { categoryId: unrelatedCategory.id, vehicleType: 'CAR', textEnglish: 'Keep me', sourceType: 'ORIGINAL' } });
   await expect(importFixtures(database, { ...fixtures, questions: [] })).rejects.toThrow('Invalid development fixtures');
   expect(await database.question.count()).toBe(1);
@@ -54,5 +65,15 @@ it('imports atomically, repeats with stable IDs, and preserves unrelated data on
   expect(await database.questionChoice.count()).toBe(100);
   expect(await database.questionChoice.findMany({ select: { id: true }, orderBy: { id: 'asc' } })).toEqual(firstIds);
   expect(await database.question.count({ where: { sourceType: 'FIXTURE', active: false, verificationStatus: 'DRAFT' } })).toBe(25);
+  expect(await database.concept.count()).toBe(fixtures.concepts.length);
+  for (const concept of fixtures.concepts) {
+    const row = await database.concept.findUniqueOrThrow({ where: { id: fixtureId(`concept:${concept.key}`) }, include: { questions: { select: { id: true } } } });
+    expect(row.slug).toBe(`fixture-${concept.key}`);
+    expect(row.nameEnglish).toBe(concept.nameEnglish);
+    expect(row.questions.map(({ id }) => id).sort()).toEqual(
+      fixtures.questions.filter((question) => question.concept === concept.key).map((question) => fixtureId(`question:${question.id}`)).sort(),
+    );
+  }
+  expect(await database.question.count({ where: { sourceType: 'FIXTURE', conceptId: null } })).toBe(0);
   expect((await database.question.findUniqueOrThrow({ where: { id: unrelated.id } })).textEnglish).toBe('Keep me');
 }, 60000);
