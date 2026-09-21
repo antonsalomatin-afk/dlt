@@ -1,0 +1,21 @@
+TASK-034 authoritative checks
+Completed: 2026-09-21T07:17:28Z
+
+## pnpm check
+PASS
+- eslint: passed
+- TypeScript and workspace typechecks: passed
+- Test files: 22 passed
+- Tests: 159 passed
+
+## pnpm prisma validate
+PASS
+- packages/database/prisma/schema.prisma is valid
+
+## pnpm test:integration
+PASS on authoritative rerun
+- Test files: 19 passed
+- Tests: 106 passed
+- Duration: 68.22s
+
+The first full integration run had one transient failure in the pre-existing favorite concurrency test (105/106 passed). Its focused rerun passed (8/8), and the complete suite then passed (106/106) without code changes. The runner emitted the existing pg client.query deprecation warning; it did not affect the passing result.

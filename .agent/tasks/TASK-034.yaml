@@ -1,6 +1,6 @@
 id: TASK-034
 title: List authenticated mock-exam history
-status: BUILDING
+status: REVIEW
 epic: Epic 5 — Mock Exam
 objective: Let an authenticated learner page through authoritative summaries of their completed mock exams.
 acceptance:
