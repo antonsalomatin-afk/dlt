@@ -620,6 +620,23 @@ otherwise accuracy is `Math.round((correct / answered) * 100)`. The complete res
 is runtime validated, and invalid aggregate data or database failures return the
 sanitized `500 { "error": "Internal Server Error" }` without a partial summary.
 
+### Concept progress
+
+`GET /me/progress/concepts` uses the same bearer session, empty-query and no-store
+rules as `GET /me/progress`. One ownership-filtered grouped query joins the learner's
+submitted practice attempts through their presentations to each question's optional
+learning concept.
+
+The response is exactly `{ "concepts", "unassigned", "total" }`. Each concept item is
+exactly `{ conceptId, slug, nameThai, nameEnglish, nameRussian, answered, correct, incorrect, accuracyPercent }`
+with the same count and rounding rules as the lifetime summary; only concepts with at
+least one submitted answer appear, and concept IDs are unique. Items are ordered
+weakest first: lowest accuracy, then most answered, then slug. `unassigned` summarizes
+attempts on questions without a concept and `total` equals the lifetime summary, so
+concept counts plus unassigned always reconcile with `GET /me/progress`. The complete
+result is runtime validated and invalid aggregates fail with the sanitized 500. No
+mastery threshold, scheduling or readiness score is derived.
+
 
 ## Mini App (local development)
 

@@ -5,6 +5,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createApi } from '../apps/api/src/index.ts';
 import { createDatabaseClient } from '../packages/database/src/index.ts';
 import { progressResponseSchema } from '../packages/database/src/progress.ts';
+import { conceptProgressResponseSchema } from '../packages/database/src/concept-progress.ts';
 
 const url = process.env.DATABASE_URL;
 if (!url) throw new Error('DATABASE_URL required');
@@ -34,6 +35,10 @@ const authorization = (token: string) => ({ authorization: `Bearer ${token}` });
 const progress = (token: string, query = '') => app.inject({
   method: 'GET', url: `/me/progress${query}`, headers: authorization(token),
 });
+const conceptProgress = (token: string, query = '') => app.inject({
+  method: 'GET', url: `/me/progress/concepts${query}`, headers: authorization(token),
+});
+const conceptIds = { stopping: randomUUID(), visibility: randomUUID(), unused: randomUUID() };
 const session = (token: string, expiresAt = new Date(now.getTime() + 60_000)) => ({
   tokenHash: createHash('sha256').update(token).digest('hex'),
   createdAt: new Date(now.getTime() - 1_000),
@@ -74,13 +79,18 @@ beforeAll(async () => {
       slug: 'progress-signs', nameThai: 'ป้าย', nameEnglish: 'Signs', nameRussian: 'Знаки',
     } }),
   ]);
+  await database.concept.createMany({ data: [
+    { id: conceptIds.stopping, slug: 'progress-stopping', nameThai: 'การหยุด', nameEnglish: 'Stopping', nameRussian: 'Остановка' },
+    { id: conceptIds.visibility, slug: 'progress-visibility', nameThai: 'ทัศนวิสัย', nameEnglish: 'Visibility', nameRussian: 'Видимость' },
+    { id: conceptIds.unused, slug: 'progress-unused', nameThai: 'ไม่ได้ใช้', nameEnglish: 'Unused', nameRussian: 'Не используется' },
+  ] });
   const [repeatedQuestion, motorcycleQuestion, inactiveQuestion, draftQuestion] = await Promise.all([
     database.question.create({ data: {
-      categoryId: rules.id, vehicleType: 'CAR', textEnglish: 'Repeated', sourceType: 'ORIGINAL',
+      categoryId: rules.id, conceptId: conceptIds.stopping, vehicleType: 'CAR', textEnglish: 'Repeated', sourceType: 'ORIGINAL',
       active: true, verificationStatus: 'VERIFIED',
     } }),
     database.question.create({ data: {
-      categoryId: signs.id, vehicleType: 'MOTORCYCLE', textEnglish: 'Motorcycle', sourceType: 'ORIGINAL',
+      categoryId: signs.id, conceptId: conceptIds.visibility, vehicleType: 'MOTORCYCLE', textEnglish: 'Motorcycle', sourceType: 'ORIGINAL',
       active: true, verificationStatus: 'VERIFIED',
     } }),
     database.question.create({ data: {
@@ -165,5 +175,48 @@ describe('GET /me/progress', () => {
     expect(response.headers['cache-control']).toBe('no-store');
     expect(await database.answerAttempt.count()).toBe(8);
     expect(await database.questionPresentation.count({ where: { userId: userIds.owner } })).toBe(8);
+  });
+});
+
+describe('GET /me/progress/concepts', () => {
+  it('authenticates before strict empty-query validation with uniform no-store errors', async () => {
+    for (const headers of [{}, { authorization: 'Bearer invalid' }, authorization(tokens.expired), authorization(tokens.revoked)]) {
+      const response = await app.inject({ method: 'GET', url: '/me/progress/concepts?unknown=1', headers });
+      expect(response.statusCode).toBe(401);
+      expect(response.json()).toEqual({ error: 'Unauthorized' });
+      expect(response.headers['cache-control']).toBe('no-store');
+    }
+    const response = await conceptProgress(tokens.owner, '?unknown=1');
+    expect(response.statusCode).toBe(400);
+    expect(response.json()).toEqual({ error: 'Bad Request' });
+    expect(response.headers['cache-control']).toBe('no-store');
+  });
+
+  it('returns an empty strict breakdown for a learner without attempts', async () => {
+    const response = await conceptProgress(tokens.empty);
+    expect(response.statusCode).toBe(200);
+    expect(response.headers['cache-control']).toBe('no-store');
+    expect(conceptProgressResponseSchema.parse(response.json())).toEqual({
+      concepts: [],
+      unassigned: { answered: 0, correct: 0, incorrect: 0, accuracyPercent: null },
+      total: { answered: 0, correct: 0, incorrect: 0, accuracyPercent: null },
+    });
+  });
+
+  it('groups only owned submitted outcomes by concept, weakest first, and reconciles with the lifetime summary', async () => {
+    const response = await conceptProgress(tokens.owner);
+    expect(response.statusCode).toBe(200);
+    const body = conceptProgressResponseSchema.parse(response.json());
+    expect(body.concepts).toEqual([
+      { conceptId: conceptIds.stopping, slug: 'progress-stopping', nameThai: 'การหยุด', nameEnglish: 'Stopping', nameRussian: 'Остановка', answered: 3, correct: 1, incorrect: 2, accuracyPercent: 33 },
+      { conceptId: conceptIds.visibility, slug: 'progress-visibility', nameThai: 'ทัศนวิสัย', nameEnglish: 'Visibility', nameRussian: 'Видимость', answered: 2, correct: 1, incorrect: 1, accuracyPercent: 50 },
+    ]);
+    expect(body.unassigned).toEqual({ answered: 2, correct: 0, incorrect: 2, accuracyPercent: 0 });
+    const lifetime = progressResponseSchema.parse((await progress(tokens.owner)).json());
+    expect(body.total).toEqual(lifetime);
+    expect(JSON.stringify(body)).not.toContain('progress-unused');
+    const foreign = conceptProgressResponseSchema.parse((await conceptProgress(tokens.foreign)).json());
+    expect(foreign.concepts.map((item) => [item.slug, item.answered, item.correct])).toEqual([['progress-stopping', 1, 1]]);
+    expect(foreign.unassigned.answered).toBe(0);
   });
 });

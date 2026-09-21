@@ -9,6 +9,7 @@ import { practiceCategoriesResponseSchema } from '../../../packages/database/src
 import { favoriteRequestSchema, favoriteResponseSchema } from '../../../packages/database/src/favorite.ts';
 import { encodeFavoriteCursor, favoriteFeedResponseSchema, parseFavoriteFeedQuery } from '../../../packages/database/src/favorite-feed.ts';
 import { buildProgressSummary } from '../../../packages/database/src/progress.ts';
+import { buildConceptProgress } from '../../../packages/database/src/concept-progress.ts';
 import {
   EXAM_DURATION_MS,
   EXAM_ELIGIBLE_LIMIT,
@@ -199,7 +200,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/:examId/result', '/exam/history'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/progress/concepts', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/:examId/result', '/exam/history'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -351,6 +352,26 @@ export function createApi(options: {
       _count: { _all: true },
     });
     return buildProgressSummary(aggregates);
+  });
+  app.get('/me/progress/concepts', async (request, reply) => {
+    const user = await authenticatedUser(request.headers.authorization);
+    if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+    if (!emptyQuerySchema.safeParse(request.query).success) {
+      return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+    }
+    const rows = await options.database.$queryRaw<unknown[]>(Prisma.sql`
+      SELECT concept.id AS "conceptId", concept.slug AS "slug",
+        concept."nameThai" AS "nameThai", concept."nameEnglish" AS "nameEnglish", concept."nameRussian" AS "nameRussian",
+        (COUNT(*) FILTER (WHERE attempt."isCorrect"))::int AS "correct",
+        (COUNT(*) FILTER (WHERE NOT attempt."isCorrect"))::int AS "incorrect"
+      FROM "AnswerAttempt" AS attempt
+      INNER JOIN "QuestionPresentation" AS presentation ON presentation.id = attempt."presentationId"
+      INNER JOIN "Question" AS question ON question.id = presentation."questionId"
+      LEFT JOIN "Concept" AS concept ON concept.id = question."conceptId"
+      WHERE presentation."userId" = ${user.id}::uuid
+      GROUP BY concept.id, concept.slug, concept."nameThai", concept."nameEnglish", concept."nameRussian"
+    `);
+    return buildConceptProgress(rows);
   });
   app.get('/practice/categories', async (request, reply) => {
     const user = await authenticatedUser(request.headers.authorization);
