@@ -637,7 +637,8 @@ credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
 `/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
 `/practice/categories`, `/practice/next`, `/practice/answer`, `/practice/favorite`,
-`/exam/start`, `/exam/answer` and `/exam/complete` only.
+`/exam/start`, `/exam/answer`, `/exam/complete`, `/exam/history` and
+`/exam/:examId/result` only.
 Set the destination before building; rewrites are
 included in the production build. Never prefix secrets with `NEXT_PUBLIC_`.
 
@@ -730,7 +731,23 @@ Answered, Unanswered and Passed/Not passed from the strict summary; `Exam incomp
 reports the unanswered count. Question wording follows the English/Russian/Thai selector
 with English fallback. A protected 401 clears the session, leaving is immediate and ignores
 late responses, nothing is persisted in browser storage, and Back returns to the opening
-origin. Per-question exam review and exam history screens remain separate work.
+origin. A finished exam offers Review in exam history.
+
+Authenticated learners can open Exams from vehicle setup (even before choosing a
+vehicle), from practice, or from a finished exam. The list sends same-origin
+`GET /exam/history?limit=10` with the memory-only bearer session and `no-store`,
+validates the strict page (status/tuple consistency, unique exam IDs, a canonical
+opaque cursor) and renders every exam newest first with its status, start time,
+vehicle, answered count or score, and pass mark. Load more sends the exact server
+cursor; a failed page is retried with the same cursor while validated items stay
+visible. Completed exams offer Review exam; in-progress and expired exams do not.
+
+Review sends `GET /exam/<examId>/result`, validates the strict review (counts and score
+equal the rows, consecutive positions, choice membership, correctness identity) and
+renders the summary plus all 50 positions with Correct/Incorrect/Unanswered badges,
+Your answer and Correct answer labels, and localized explanations with English
+fallback. `Exam not completed` shows guidance with retry. A protected 401 clears the
+session, leaving is immediate and ignores late responses, and nothing is persisted.
 
 ### Real local full-stack browser gate
 

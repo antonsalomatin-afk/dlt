@@ -203,3 +203,71 @@ export const examCompleteSchema = z.strictObject({
 export type ExamStart = z.infer<typeof examStartSchema>;
 export type ExamAnswer = z.infer<typeof examAnswerSchema>;
 export type ExamComplete = z.infer<typeof examCompleteSchema>;
+
+const examHistoryCursorPayloadSchema = z.strictObject({ v: z.literal(1), startedAt: canonicalTimestampSchema, examId: z.uuid() });
+const examHistoryCursorSchema = z.string().min(1).max(512).regex(/^[A-Za-z0-9_-]+$/u).refine((value) => {
+  try {
+    const padding = '='.repeat((4 - (value.length % 4)) % 4);
+    const decoded = new TextDecoder('utf-8', { fatal: true }).decode(
+      Uint8Array.from(atob(value.replace(/-/gu, '+').replace(/_/gu, '/') + padding), (character) => character.charCodeAt(0)),
+    );
+    const cursor = examHistoryCursorPayloadSchema.parse(JSON.parse(decoded) as unknown);
+    return btoa(JSON.stringify(cursor)).replace(/\+/gu, '-').replace(/\//gu, '_').replace(/=+$/u, '') === value;
+  } catch { return false; }
+});
+const examHistoryItemSchema = z.strictObject({
+  examId: z.uuid(), vehicleType: vehicleSchema, status: z.enum(['IN_PROGRESS', 'EXPIRED', 'COMPLETED']),
+  questionCount: z.literal(EXAM_QUESTION_COUNT), passingScore: z.literal(EXAM_PASSING_SCORE), answeredCount: examCountSchema,
+  startedAt: canonicalTimestampSchema, expiresAt: canonicalTimestampSchema, completedAt: canonicalTimestampSchema.nullable(),
+  score: examCountSchema.nullable(), passed: z.boolean().nullable(),
+}).superRefine((item, context) => {
+  if (Date.parse(item.expiresAt) - Date.parse(item.startedAt) !== EXAM_DURATION_MS) context.addIssue({ code: 'custom', path: ['expiresAt'], message: 'Exam duration is invalid' });
+  const completed = item.status === 'COMPLETED';
+  if ((item.completedAt !== null) !== completed || (item.score !== null) !== completed || (item.passed !== null) !== completed) {
+    context.addIssue({ code: 'custom', path: ['status'], message: 'Exam completion tuple must match status' });
+  }
+  if (item.score !== null && item.score > item.answeredCount) context.addIssue({ code: 'custom', path: ['score'], message: 'Exam score cannot exceed answered count' });
+  if (item.score !== null && item.passed !== (item.score >= item.passingScore)) context.addIssue({ code: 'custom', path: ['passed'], message: 'Exam pass result is inconsistent' });
+});
+export const examHistoryResponseSchema = z.strictObject({
+  items: z.array(examHistoryItemSchema).max(50), nextCursor: examHistoryCursorSchema.nullable(),
+}).superRefine(({ items }, context) => {
+  const ids = new Set<string>();
+  items.forEach((item, index) => {
+    const id = item.examId.toLowerCase();
+    if (ids.has(id)) context.addIssue({ code: 'custom', path: ['items', index, 'examId'], message: 'Duplicate exam ID' });
+    ids.add(id);
+  });
+});
+export type ExamHistoryItem = z.infer<typeof examHistoryItemSchema>;
+
+const examResultQuestionSchema = z.strictObject({
+  examQuestionId: z.uuid(), position: z.number().int().min(1).max(EXAM_QUESTION_COUNT), question: presentedQuestionSchema,
+  selectedChoiceId: z.uuid().nullable(), correctChoiceId: z.uuid(), isCorrect: z.boolean().nullable(), answeredAt: canonicalTimestampSchema.nullable(),
+  explanationThai: translation, explanationEnglish: translation, explanationRussian: translation,
+  trapExplanationThai: translation, trapExplanationEnglish: translation, trapExplanationRussian: translation,
+}).superRefine((row, context) => {
+  if (!row.question.choices.some((choice) => choice.id === row.correctChoiceId)) context.addIssue({ code: 'custom', path: ['correctChoiceId'], message: 'Correct choice is absent from snapshot' });
+  const nullCount = [row.selectedChoiceId, row.isCorrect, row.answeredAt].filter((value) => value === null).length;
+  if (nullCount !== 0 && nullCount !== 3) context.addIssue({ code: 'custom', path: ['selectedChoiceId'], message: 'Exam answer tuple must be all null or all present' });
+  if (row.selectedChoiceId !== null) {
+    if (!row.question.choices.some((choice) => choice.id === row.selectedChoiceId)) context.addIssue({ code: 'custom', path: ['selectedChoiceId'], message: 'Selected choice is absent from snapshot' });
+    if (row.isCorrect !== (row.selectedChoiceId === row.correctChoiceId)) context.addIssue({ code: 'custom', path: ['isCorrect'], message: 'Exam correctness is inconsistent' });
+  }
+});
+export const examResultSchema = z.strictObject({
+  examId: z.uuid(), vehicleType: vehicleSchema, questionCount: z.literal(EXAM_QUESTION_COUNT), answeredCount: examCountSchema, unansweredCount: examCountSchema,
+  score: examCountSchema, passingScore: z.literal(EXAM_PASSING_SCORE), passed: z.boolean(),
+  startedAt: canonicalTimestampSchema, expiresAt: canonicalTimestampSchema, completedAt: canonicalTimestampSchema,
+  questions: z.array(examResultQuestionSchema).length(EXAM_QUESTION_COUNT),
+}).superRefine((result, context) => {
+  if (Date.parse(result.expiresAt) - Date.parse(result.startedAt) !== EXAM_DURATION_MS) context.addIssue({ code: 'custom', path: ['expiresAt'], message: 'Exam duration is invalid' });
+  if (result.questions.some((row, index) => row.position !== index + 1)) context.addIssue({ code: 'custom', path: ['questions'], message: 'Exam positions must be consecutive' });
+  if (new Set(result.questions.map((row) => row.examQuestionId.toLowerCase())).size !== EXAM_QUESTION_COUNT) context.addIssue({ code: 'custom', path: ['questions'], message: 'Exam question IDs must be unique' });
+  const answeredCount = result.questions.filter((row) => row.selectedChoiceId !== null).length;
+  const score = result.questions.filter((row) => row.isCorrect === true).length;
+  if (result.answeredCount !== answeredCount || result.unansweredCount !== EXAM_QUESTION_COUNT - answeredCount) context.addIssue({ code: 'custom', path: ['answeredCount'], message: 'Exam counts must match the reviewed rows' });
+  if (result.score !== score) context.addIssue({ code: 'custom', path: ['score'], message: 'Exam score must match the reviewed rows' });
+  if (result.passed !== (result.score >= result.passingScore)) context.addIssue({ code: 'custom', path: ['passed'], message: 'Exam pass result is inconsistent' });
+});
+export type ExamResult = z.infer<typeof examResultSchema>;

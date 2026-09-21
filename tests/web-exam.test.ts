@@ -54,3 +54,52 @@ describe('Mini App exam contracts', () => {
     ]) expect(examCompleteSchema.safeParse(invalid).success).toBe(false);
   });
 });
+
+import { examHistoryResponseSchema, examResultSchema } from '../apps/web/lib/contracts.ts';
+
+const encodeCursor = (value: unknown) => Buffer.from(JSON.stringify(value), 'utf8').toString('base64url');
+
+describe('Mini App exam history and review contracts', () => {
+  it('accepts only a strict consistent exam history page', () => {
+    const completed = { examId: randomUUID(), vehicleType: 'CAR', status: 'COMPLETED', questionCount: 50, passingScore: 45, answeredCount: 48, startedAt, expiresAt, completedAt: expiresAt, score: 45, passed: true };
+    const open = { ...completed, examId: randomUUID(), status: 'IN_PROGRESS', answeredCount: 3, completedAt: null, score: null, passed: null };
+    const cursor = encodeCursor({ v: 1, startedAt, examId: completed.examId });
+    expect(examHistoryResponseSchema.parse({ items: [completed, open], nextCursor: cursor })).toEqual({ items: [completed, open], nextCursor: cursor });
+    for (const invalid of [
+      { items: [completed, completed], nextCursor: null },
+      { items: [{ ...completed, status: 'IN_PROGRESS' }], nextCursor: null },
+      { items: [{ ...completed, score: 49 }], nextCursor: null },
+      { items: [{ ...completed, passed: false }], nextCursor: null },
+      { items: [{ ...open, score: 1 }], nextCursor: null },
+      { items: [{ ...completed, questions: [] }], nextCursor: null },
+      { items: [], nextCursor: `${cursor}=` },
+      { items: [], nextCursor: encodeCursor({ v: 2, startedAt, examId: completed.examId }) },
+      { items: [], nextCursor: encodeCursor({ examId: completed.examId, startedAt, v: 1 }) },
+    ]) expect(examHistoryResponseSchema.safeParse(invalid).success).toBe(false);
+  });
+
+  it('accepts only a strict consistent exam review', () => {
+    const rows = questions.map((item, index) => ({
+      examQuestionId: item.examQuestionId, position: item.position, question: item.question,
+      selectedChoiceId: index >= 48 ? null : item.question.choices[index < 45 ? 0 : 1]!.id,
+      correctChoiceId: item.question.choices[0]!.id,
+      isCorrect: index >= 48 ? null : index < 45,
+      answeredAt: index >= 48 ? null : startedAt,
+      explanationThai: null, explanationEnglish: 'Why', explanationRussian: null,
+      trapExplanationThai: null, trapExplanationEnglish: null, trapExplanationRussian: null,
+    }));
+    const review = { examId: start.examId, vehicleType: 'CAR', questionCount: 50, answeredCount: 48, unansweredCount: 2, score: 45, passingScore: 45, passed: true, startedAt, expiresAt, completedAt: expiresAt, questions: rows };
+    expect(examResultSchema.parse(review)).toEqual(review);
+    for (const invalid of [
+      { ...review, score: 46 },
+      { ...review, answeredCount: 50, unansweredCount: 0 },
+      { ...review, passed: false },
+      { ...review, questions: rows.slice(0, 49) },
+      { ...review, questions: rows.map((row, index) => (index === 0 ? { ...row, isCorrect: false } : row)) },
+      { ...review, questions: rows.map((row, index) => (index === 0 ? { ...row, selectedChoiceId: randomUUID() } : row)) },
+      { ...review, questions: rows.map((row, index) => (index === 49 ? { ...row, isCorrect: false } : row)) },
+      { ...review, questions: rows.map((row) => ({ ...row, position: 1 })) },
+      { ...review, questions: rows.map((row) => ({ ...row, sourceType: 'ORIGINAL' })) },
+    ]) expect(examResultSchema.safeParse(invalid).success).toBe(false);
+  });
+});

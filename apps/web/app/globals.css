@@ -103,3 +103,11 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 .exam-outcome.passed dd { color: #31563f; }
 .exam-outcome.failed dd { color: #8d3c24; }
 .setup-links .exam-entry { margin-top: 0; }
+.exam-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.exam-item { border: 1px solid #dce0d4; border-radius: 14px; padding: 15px; font-size: 14px; line-height: 1.4; }
+.exam-item-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.exam-item time { color: #697466; font-size: 11px; }
+.exam-item-copy { margin: 8px 0 0; color: #59675e; font-size: 13px; }
+.exam-item .secondary { margin: 10px 0 0; }
+.exam-item.failed .history-outcome, .history-entry.incorrect .history-outcome { background: #f5e5df; color: #8d3c24; }
+.exam-item.in_progress .history-outcome, .exam-item.expired .history-outcome, .history-entry.unanswered .history-outcome { background: #ecebe2; color: #59675e; }

@@ -22,7 +22,7 @@ function formatRemaining(milliseconds: number) {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
-export function Exam({ session, onBack, onExpired, onVehicle }: { session: Session; onBack: () => void; onExpired: () => void; onVehicle: () => void }) {
+export function Exam({ session, onBack, onExpired, onVehicle, onHistory }: { session: Session; onBack: () => void; onExpired: () => void; onVehicle: () => void; onHistory: () => void }) {
   const [language, setLanguage] = useState<Language>('English');
   const [exam, setExam] = useState<ExamStart | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -219,5 +219,6 @@ export function Exam({ session, onBack, onExpired, onVehicle }: { session: Sessi
       <button className="primary next" disabled={pending || !canFinish} onClick={() => void finish()}>{pending ? 'Please wait…' : 'Finish exam'}</button>
     </>}
     {result && <button className="primary next" disabled={pending} onClick={restart}>Start another exam</button>}
+    {result && <button className="secondary" disabled={pending} onClick={() => { active.current = false; onHistory(); }}>Review in exam history</button>}
   </section>;
 }
