@@ -1,6 +1,6 @@
 id: TASK-034
 title: List authenticated mock-exam history
-status: REVIEW
+status: ACCEPTED
 epic: Epic 5 — Mock Exam
 objective: Let an authenticated learner page through authoritative summaries of their completed mock exams.
 acceptance:
@@ -31,3 +31,5 @@ supervisor_refinement:
   - Never read or expose current mutable Question or QuestionChoice content. Do not expose per-question content, choices, correctness, explanations, source/image metadata, user/session identifiers or database internals. The endpoint is read-only and must not create or mutate ExamSession, ExamQuestion, practice presentations, AnswerAttempt history, favorites or progress.
   - Add focused unit coverage for strict query/cursor encoding and response invariants. Add isolated PostgreSQL coverage for auth-before-query behavior, malformed queries/cursors, empty history, completed-only ownership isolation, deterministic tie ordering and two-page traversal without duplicates on unchanged data, vehicle and pass/fail summaries, immutable revalidation after source edits, malformed policy/snapshot/answer/cardinality/completion failure, exact privacy and proof of no writes or practice side effects.
   - Update README. No schema migration, exam start/answer/completion/review contract change, in-progress exam resume, Mini App UI, generic pagination framework, production content, dependency, credential or deployment change.
+accepted_commit: 558fb314249a60a758f9d9124b078ef6ee8b028a
+review_file: .agent/reviews/TASK-034-review-01.md
