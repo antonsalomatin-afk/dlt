@@ -83,11 +83,12 @@ Epic 5 is complete.
 
 ## Epic 6 — Concept Learning
 
-- concept/variant groups
+- TASK-037 — ACCEPTED — concept/variant grouping of development fixtures
+- TASK-038 — concept-aware progress API
 - mastery
 - repeat mistakes intelligently
-- spaced repetition
-- readiness score
+- spaced repetition — pending Product Owner decision (PROJECT.md lists it as a later capability)
+- readiness score — pending Product Owner decision (PROJECT.md lists it as a later capability)
 
 ## Epic 7 — Content Operations
 

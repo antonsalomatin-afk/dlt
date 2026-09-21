@@ -1,0 +1,27 @@
+id: TASK-037
+title: Group development fixtures by learning concept
+status: ACCEPTED
+epic: Epic 6 — Concept Learning
+objective: Attach every development fixture question to a named learning concept so later concept-aware learning features have real grouped content to build on.
+acceptance:
+  - The fixture document declares named multilingual concepts and every question references exactly one declared concept; validation rejects unknown, unreferenced or duplicate concepts and requires at least one concept grouping two or more questions.
+  - The importer creates or reuses deterministic fixture Concept rows with the same collision protection as categories and links each imported question to its concept, atomically and idempotently.
+  - Unit and isolated PostgreSQL tests cover validation, linkage, reimport stability and collision preservation, and content documentation describes the convention.
+files_allowed:
+  - content/**
+  - tools/content/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+dependencies:
+  - TASK-036
+owner_decision_required: false
+supervisor_refinement:
+  - Extend the fixture schema with a required concepts array of { key, nameThai, nameEnglish, nameRussian } (key pattern as question IDs, unique, 1 to25 entries) and a required concept key on every question. Reject a question referencing an undeclared concept, a declared concept referenced by no question, and a document where no concept groups at least two questions (product principle: variants belong to one concept).
+  - Derive concept IDs with fixtureId('concept:<key>') and slug fixture-<key>. Reuse an existing Concept whose id, slug and names all match; any partial match aborts the whole import with a concept collision error before writes. Set conceptId on every upserted fixture question. Keep the serializable single-transaction import, stable IDs and existing category/question/choice rules unchanged.
+  - Assign the25 existing questions to concepts by the rule each one teaches, using synthetic wording. Do not add or remove questions, change IDs or claim official grouping.
+  - Extend tests/fixtures.test.ts for the new rejections and tests/fixtures.integration.test.ts for concept rows, question linkage, reimport stability and collision preservation. Update content/README.md and README.md. No schema migration, API, Mini App, mastery, spaced-repetition or readiness change.
+accepted_commit: a44a5e1375562ce8e6f1fbc433fc63874f5c5988
+review_file: .agent/reviews/TASK-037-review-01.md

@@ -1,0 +1,24 @@
+TASK-037 authoritative checks
+Completed: 2026-09-21T07:17:13Z
+Commit: a44a5e1375562ce8e6f1fbc433fc63874f5c5988
+Environment: Linux container, Node 24, pnpm 11.19, system PostgreSQL 16 on 127.0.0.1:55432 (restarted before this run)
+
+## pnpm check
+PASS with the pre-existing environment exception recorded for TASK-033
+- eslint: passed
+- TypeScript and web typechecks: passed
+- Test files: 22 passed, 1 failed
+- Tests: 161 passed, 3 failed
+- The 3 failures are the Windows-only tests/database-lifecycle.test.ts reset-safety cases (see .agent/FOLLOW_UPS.md); unrelated to TASK-037.
+
+## pnpm test:integration
+PASS on rerun
+- Run 1 (immediately after restarting PostgreSQL): 103 passed, 1 failed — tests/exam-start.integration.test.ts "serializes concurrent starts per learner". TASK-037 changes only content/ and tools/content/, which that suite does not exercise.
+- tests/exam-start.integration.test.ts alone: 6 passed, three consecutive runs.
+- Run 2, full suite: 19 files, 104 passed, 35.28s.
+- Recorded in .agent/FOLLOW_UPS.md as a possible serializable-retry exhaustion under a cold database; not a TASK-037 defect.
+
+## pnpm content:import (local development database)
+PASS
+- Run 1: Imported 25 inactive draft fixtures (100 choices, 12 concepts).
+- Run 2: identical output; stable IDs and counts.
