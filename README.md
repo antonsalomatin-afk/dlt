@@ -636,8 +636,8 @@ commands, not automatically loaded by Next. Only HTTP(S) origins without
 credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
 `/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
-`/practice/categories`, `/practice/next`, `/practice/answer` and
-`/practice/favorite` only.
+`/practice/categories`, `/practice/next`, `/practice/answer`, `/practice/favorite`,
+`/exam/start`, `/exam/answer` and `/exam/complete` only.
 Set the destination before building; rewrites are
 included in the production build. Never prefix secrets with `NEXT_PUBLIC_`.
 
@@ -704,6 +704,33 @@ failures show retry guidance without partial metrics, while a protected 401 clea
 session. Leaving during a request returns immediately and ignores every late outcome.
 Returning to setup preserves that origin, while returning to practice mounts a clean
 practice view.
+
+Authenticated learners with a saved vehicle can open Mock exam from vehicle setup, and
+from practice at any time. The view opens on an intro stating the accepted policy (50
+questions, 60 minutes, 45 correct to pass) and a Start exam action that sends exactly one
+same-origin `POST /exam/start` with `{}`, the memory-only bearer session, `no-store` and the
+15-second timeout. The strict start contract (50 consecutive positions, unique IDs, a
+60-minute window, the learner's vehicle) is validated before anything renders. A 409
+`Vehicle selection required` returns to setup; `Exam already in progress` and `Not enough
+questions available` show specific guidance with retry.
+
+During the exam one positioned question is shown at a time with Previous/Next navigation
+over all 50, a live countdown to `expiresAt`, and Answered/Remaining counts taken from the
+persisted answer responses. Submit sends exactly `POST /exam/answer`
+`{ examQuestionId, choiceId }`; the strict receipt carries no correctness, and a submitted
+question stays locked with Your answer marked. No correct answer or explanation is shown
+before completion. A selected choice stays selected after a failure so Retry answer resends
+the same IDs. `Answer already submitted` locks the question locally, `Exam expired` enters
+the time-up state, and `Exam already completed` loads the persisted result.
+
+When the countdown reaches zero or the server reports expiry, answering is disabled and
+Finish exam becomes available; otherwise Finish is enabled only once all 50 answers are
+saved. Finish sends `POST /exam/complete` `{ examId }` and renders Score, Pass mark,
+Answered, Unanswered and Passed/Not passed from the strict summary; `Exam incomplete`
+reports the unanswered count. Question wording follows the English/Russian/Thai selector
+with English fallback. A protected 401 clears the session, leaving is immediate and ignores
+late responses, nothing is persisted in browser storage, and Back returns to the opening
+origin. Per-question exam review and exam history screens remain separate work.
 
 ### Real local full-stack browser gate
 

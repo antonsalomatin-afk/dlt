@@ -157,3 +157,49 @@ export const progressResponseSchema = z.strictObject({
   }
 });
 export type ProgressSummary = z.infer<typeof progressResponseSchema>;
+
+export const EXAM_QUESTION_COUNT = 50;
+export const EXAM_PASSING_SCORE = 45;
+export const EXAM_DURATION_MS = 60 * 60 * 1000;
+const examCountSchema = z.number().int().min(0).max(EXAM_QUESTION_COUNT);
+export const examStartSchema = z.strictObject({
+  examId: z.uuid(),
+  vehicleType: vehicleSchema,
+  questionCount: z.literal(EXAM_QUESTION_COUNT),
+  passingScore: z.literal(EXAM_PASSING_SCORE),
+  startedAt: canonicalTimestampSchema,
+  expiresAt: canonicalTimestampSchema,
+  questions: z.array(z.strictObject({
+    examQuestionId: z.uuid(), position: z.number().int().min(1).max(EXAM_QUESTION_COUNT), question: presentedQuestionSchema,
+  })).length(EXAM_QUESTION_COUNT),
+}).superRefine((exam, context) => {
+  if (Date.parse(exam.expiresAt) - Date.parse(exam.startedAt) !== EXAM_DURATION_MS) {
+    context.addIssue({ code: 'custom', path: ['expiresAt'], message: 'Exam duration is invalid' });
+  }
+  if (exam.questions.some((item, index) => item.position !== index + 1)) {
+    context.addIssue({ code: 'custom', path: ['questions'], message: 'Exam positions must be consecutive' });
+  }
+  if (new Set(exam.questions.map((item) => item.examQuestionId.toLowerCase())).size !== EXAM_QUESTION_COUNT) {
+    context.addIssue({ code: 'custom', path: ['questions'], message: 'Exam question IDs must be unique' });
+  }
+  if (new Set(exam.questions.map((item) => item.question.id.toLowerCase())).size !== EXAM_QUESTION_COUNT) {
+    context.addIssue({ code: 'custom', path: ['questions'], message: 'Source question IDs must be unique' });
+  }
+});
+export const examAnswerSchema = z.strictObject({
+  examId: z.uuid(), examQuestionId: z.uuid(), selectedChoiceId: z.uuid(), answeredAt: canonicalTimestampSchema,
+  answeredCount: examCountSchema.min(1), remainingCount: examCountSchema.max(EXAM_QUESTION_COUNT - 1),
+}).refine((answer) => answer.answeredCount + answer.remainingCount === EXAM_QUESTION_COUNT, { path: ['remainingCount'], message: 'Exam answer counts must total 50' });
+export const examCompleteSchema = z.strictObject({
+  examId: z.uuid(), questionCount: z.literal(EXAM_QUESTION_COUNT), answeredCount: examCountSchema, unansweredCount: examCountSchema,
+  score: examCountSchema, passingScore: z.literal(EXAM_PASSING_SCORE), passed: z.boolean(), completedAt: canonicalTimestampSchema,
+}).superRefine((result, context) => {
+  if (result.answeredCount + result.unansweredCount !== EXAM_QUESTION_COUNT) {
+    context.addIssue({ code: 'custom', path: ['unansweredCount'], message: 'Exam completion counts must total 50' });
+  }
+  if (result.score > result.answeredCount) context.addIssue({ code: 'custom', path: ['score'], message: 'Exam score cannot exceed answered count' });
+  if (result.passed !== (result.score >= result.passingScore)) context.addIssue({ code: 'custom', path: ['passed'], message: 'Exam pass result is inconsistent' });
+});
+export type ExamStart = z.infer<typeof examStartSchema>;
+export type ExamAnswer = z.infer<typeof examAnswerSchema>;
+export type ExamComplete = z.infer<typeof examCompleteSchema>;

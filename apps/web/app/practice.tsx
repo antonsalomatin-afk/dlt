@@ -10,7 +10,7 @@ const localizedCategory = (language: Language, category: PracticeCategory) =>
   (language === 'Russian' ? category.nameRussian : language === 'Thai' ? category.nameThai : category.nameEnglish)
   || category.nameEnglish || category.nameThai || category.nameRussian;
 
-export function Practice({ session, onExpired, onVehicle, onProgress, onHistory, onMistakes, onFavorites }: { session: Session; onExpired: () => void; onVehicle: (missing?: boolean) => void; onProgress: () => void; onHistory: () => void; onMistakes: () => void; onFavorites: () => void }) {
+export function Practice({ session, onExpired, onVehicle, onProgress, onHistory, onMistakes, onFavorites, onExam }: { session: Session; onExpired: () => void; onVehicle: (missing?: boolean) => void; onProgress: () => void; onHistory: () => void; onMistakes: () => void; onFavorites: () => void; onExam: () => void }) {
   const [presentation, setPresentation] = useState<Presentation | null>(null);
   const [choice, setChoice] = useState<string | null>(null);
   const [answer, setAnswer] = useState<Answer | null>(null);
@@ -143,7 +143,7 @@ export function Practice({ session, onExpired, onVehicle, onProgress, onHistory,
   return <section className="panel practice" aria-labelledby="practice-title" aria-busy={categoriesPending || pending || favoritePending}>
     <p className="eyebrow accent">02 / ONE QUESTION AT A TIME</p>
     <h2 id="practice-title">Your next step</h2>
-    <div className="panel-nav"><button className="secondary" onClick={() => { active.current = false; onVehicle(); }}>Change vehicle</button><button className="secondary" onClick={() => { active.current = false; onProgress(); }}>Progress</button><button className="secondary" onClick={() => { active.current = false; onHistory(); }}>History</button><button className="secondary" onClick={() => { active.current = false; onMistakes(); }}>Mistakes</button><button className="secondary" onClick={() => { active.current = false; onFavorites(); }}>Favorites</button></div>
+    <div className="panel-nav"><button className="secondary" onClick={() => { active.current = false; onVehicle(); }}>Change vehicle</button><button className="secondary" onClick={() => { active.current = false; onProgress(); }}>Progress</button><button className="secondary" onClick={() => { active.current = false; onHistory(); }}>History</button><button className="secondary" onClick={() => { active.current = false; onMistakes(); }}>Mistakes</button><button className="secondary" onClick={() => { active.current = false; onFavorites(); }}>Favorites</button><button className="secondary" onClick={() => { active.current = false; onExam(); }}>Mock exam</button></div>
     <fieldset className="languages"><legend>Practice language</legend>{(['English', 'Russian', 'Thai'] as const).map((item) => <label key={item}><input type="radio" name="language" checked={language === item} onChange={() => setLanguage(item)} /> {item}</label>)}</fieldset>
     {categories && <fieldset className="practice-scope" disabled={scopeLocked}><legend>Practice scope</legend>
       <label className={selectedCategoryId === null ? 'selected' : ''}><input type="radio" name="practice-scope" value="all" checked={selectedCategoryId === null} onChange={() => setSelectedCategoryId(null)} /><span>All categories</span></label>

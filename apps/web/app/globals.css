@@ -94,3 +94,12 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 .progress-metric dt { color: #697466; font-size: 12px; line-height: 1.35; }
 .progress-metric dd { margin: 7px 0 0; color: #244c3d; font-size: 28px; font-weight: 700; }
 .empty-progress { color: #59675e; font-size: 14px; line-height: 1.6; }
+
+.exam-status { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; margin: 12px 0 4px; }
+.exam-timer { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; color: #244c3d; }
+.exam-counts { font-size: 13px; color: #697466; }
+.exam-position { font-size: 12px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: #61774c; margin-top: 16px; }
+.exam-nav { margin-top: 12px; }
+.exam-outcome.passed dd { color: #31563f; }
+.exam-outcome.failed dd { color: #8d3c24; }
+.setup-links .exam-entry { margin-top: 0; }
