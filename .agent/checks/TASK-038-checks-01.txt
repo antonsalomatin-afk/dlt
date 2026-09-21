@@ -1,0 +1,17 @@
+TASK-038 authoritative checks
+Completed: 2026-09-21T07:24:31Z
+Commit: 756d2c4ba205beac59baf74fb0621d3408100d07
+Environment: Linux container, Node 24, pnpm 11.19, system PostgreSQL 16 on 127.0.0.1:55432
+
+## pnpm check
+PASS with the pre-existing environment exception recorded for TASK-033
+- eslint: passed
+- TypeScript and web typechecks: passed
+- Test files: 23 passed, 1 failed
+- Tests: 165 passed, 3 failed
+- The 3 failures are the Windows-only tests/database-lifecycle.test.ts reset-safety cases (see .agent/FOLLOW_UPS.md); unrelated to TASK-038.
+
+## pnpm test:integration
+PASS
+- Gate run started immediately after pnpm check: 106 passed, 1 failed (tests/exam-start.integration.test.ts concurrent-start case, unrelated to TASK-038 and pre-existing; see FOLLOW_UPS.md).
+- Four subsequent full runs on the same code: 107 passed each (19 files), 34–35s.

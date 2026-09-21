@@ -1,0 +1,27 @@
+id: TASK-038
+title: Concept-aware progress summary API
+status: ACCEPTED
+epic: Epic 6 — Concept Learning
+objective: Let an authenticated learner see their lifetime practice accuracy per learning concept so weak rules, not answer positions, can be targeted.
+acceptance:
+  - A protected read endpoint returns per-concept answered/correct/incorrect/accuracy for the learner's own submitted practice attempts, plus an unassigned bucket for attempts on questions without a concept and a lifetime total that reconciles with GET /me/progress.
+  - Concepts are ordered weakest first (lowest accuracy, then most answered, then slug) and carry stable IDs and multilingual names; the contract is strict and documented.
+  - Auth precedence, strict empty-query validation, ownership, empty state, ordering, reconciliation and unassigned handling are tested against PostgreSQL.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+dependencies:
+  - TASK-037
+owner_decision_required: false
+supervisor_refinement:
+  - Add GET /me/progress/concepts with Cache-Control no-store using the existing bearer session and empty-query rules of GET /me/progress (401 before400).
+  - Aggregate in one ownership-filtered grouped query over AnswerAttempt joined through QuestionPresentation to Question and its optional Concept. Only the persisted server-owned isCorrect outcome is counted; unsubmitted presentations and other learners are excluded. Current vehicle selection, question activity and verification changes do not alter counts.
+  - Return exactly { concepts, unassigned, total }. Each concept item is exactly { conceptId, slug, nameThai, nameEnglish, nameRussian, answered, correct, incorrect, accuracyPercent } with the GET /me/progress count and accuracy rules; unassigned and total use the GET /me/progress shape. Concept IDs are unique, every concept item has at least one answer, and total equals the sum of concept items plus unassigned. Order concepts by accuracyPercent ascending, then answered descending, then slug ascending.
+  - Validate aggregate rows and the complete response at runtime; invalid data fails sanitized500. No mastery threshold, scheduling, readiness score, schema migration, Mini App or dependency change.
+accepted_commit: 756d2c4ba205beac59baf74fb0621d3408100d07
+review_file: .agent/reviews/TASK-038-review-01.md

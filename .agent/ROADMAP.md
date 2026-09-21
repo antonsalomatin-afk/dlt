@@ -84,9 +84,11 @@ Epic 5 is complete.
 ## Epic 6 — Concept Learning
 
 - TASK-037 — ACCEPTED — concept/variant grouping of development fixtures
-- TASK-038 — concept-aware progress API
+- TASK-038 — ACCEPTED — concept-aware progress API
+- TASK-039 — stabilize concurrent exam start under load (see FOLLOW_UPS.md)
+- Mini App concept progress view
+- repeat mistakes by weakest concept
 - mastery
-- repeat mistakes intelligently
 - spaced repetition — pending Product Owner decision (PROJECT.md lists it as a later capability)
 - readiness score — pending Product Owner decision (PROJECT.md lists it as a later capability)
 
