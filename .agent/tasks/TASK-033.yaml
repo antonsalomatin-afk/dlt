@@ -1,6 +1,6 @@
 id: TASK-033
 title: Review completed mock-exam mistakes
-status: REVIEW
+status: ACCEPTED
 epic: Epic 5 — Mock Exam
 objective: Return an owned completed exam's incorrect and unanswered questions from immutable snapshots for safe learner review.
 acceptance:
@@ -31,3 +31,5 @@ supervisor_refinement:
   - Never read current mutable Question or QuestionChoice content. Do not expose user IDs, source/image metadata, correct rows, database internals or mutable content. Review is read-only and must not create or mutate ExamSession, ExamQuestion, practice presentations, AnswerAttempt history, favorites or progress.
   - Add unit coverage for strict response shape, zero/all mistake bounds, unanswered null pairing, ordered unique positions/IDs, canonical timestamps and safe fields. Add isolated PostgreSQL coverage for auth-before-query/path validation, ownership non-disclosure, incomplete and partial completion state, perfect/incorrect/unanswered review results, immutable content after source edits, persisted score/pass mismatch, malformed snapshot/answer/cardinality rollback, exact ordering/privacy and proof of no writes or practice side effects.
   - Update README. No schema migration, exam start/answer/completion behavior change, exam history/pagination, Mini App UI, production content, dependency, credential or deployment change.
+accepted_commit: 35bece2394afda7c86ed8add8e7fe53699f90c7a
+review_file: .agent/reviews/TASK-033-review-01.md
