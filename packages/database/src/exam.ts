@@ -61,6 +61,10 @@ export const examCompleteRequestSchema = z.strictObject({
   examId: canonicalUuidSchema,
 });
 
+export const examReviewParamsSchema = z.strictObject({
+  examId: canonicalUuidSchema,
+});
+
 export const examAnswerResponseSchema = z.strictObject({
   examId: canonicalUuidSchema,
   examQuestionId: canonicalUuidSchema,
@@ -91,6 +95,72 @@ export const examCompleteResponseSchema = z.strictObject({
   }
   if (response.passed !== (response.score >= response.passingScore)) {
     context.addIssue({ code: 'custom', path: ['passed'], message: 'Exam pass result is inconsistent' });
+  }
+});
+
+const examReviewQuestionSchema = presentedQuestionSchema.superRefine((question, context) => {
+  if (question.id !== question.id.toLowerCase()) {
+    context.addIssue({ code: 'custom', path: ['id'], message: 'Question ID must be canonical' });
+  }
+  if (question.choices.some(({ id }) => id !== id.toLowerCase())) {
+    context.addIssue({ code: 'custom', path: ['choices'], message: 'Choice IDs must be canonical' });
+  }
+});
+
+const examReviewMistakeSchema = z.strictObject({
+  examQuestionId: canonicalUuidSchema,
+  position: z.number().int().min(1).max(EXAM_QUESTION_COUNT),
+  selectedChoiceId: canonicalUuidSchema.nullable(),
+  answeredAt: canonicalTimestampSchema.nullable(),
+  correctChoiceId: canonicalUuidSchema,
+  question: examReviewQuestionSchema,
+  explanationThai: z.string().nullable(),
+  explanationEnglish: z.string().nullable(),
+  explanationRussian: z.string().nullable(),
+  trapExplanationThai: z.string().nullable(),
+  trapExplanationEnglish: z.string().nullable(),
+  trapExplanationRussian: z.string().nullable(),
+}).superRefine((mistake, context) => {
+  if ((mistake.selectedChoiceId === null) !== (mistake.answeredAt === null)) {
+    context.addIssue({ code: 'custom', path: ['answeredAt'], message: 'Unanswered fields must both be null' });
+  }
+  if (!mistake.question.choices.some(({ id }) => id === mistake.correctChoiceId)) {
+    context.addIssue({ code: 'custom', path: ['correctChoiceId'], message: 'Correct choice is absent' });
+  }
+  if (
+    mistake.selectedChoiceId !== null
+    && (
+      mistake.selectedChoiceId === mistake.correctChoiceId
+      || !mistake.question.choices.some(({ id }) => id === mistake.selectedChoiceId)
+    )
+  ) {
+    context.addIssue({ code: 'custom', path: ['selectedChoiceId'], message: 'Selected choice is not an incorrect presented choice' });
+  }
+});
+
+export const examReviewResponseSchema = z.strictObject({
+  examId: canonicalUuidSchema,
+  questionCount: z.literal(EXAM_QUESTION_COUNT),
+  score: z.number().int().min(0).max(EXAM_QUESTION_COUNT),
+  passingScore: z.literal(EXAM_PASSING_SCORE),
+  passed: z.boolean(),
+  completedAt: canonicalTimestampSchema,
+  mistakes: z.array(examReviewMistakeSchema).max(EXAM_QUESTION_COUNT),
+}).superRefine((response, context) => {
+  if (response.passed !== (response.score >= response.passingScore)) {
+    context.addIssue({ code: 'custom', path: ['passed'], message: 'Exam pass result is inconsistent' });
+  }
+  if (response.mistakes.length !== response.questionCount - response.score) {
+    context.addIssue({ code: 'custom', path: ['mistakes'], message: 'Exam mistake count is inconsistent' });
+  }
+  if (response.mistakes.some((mistake, index, mistakes) => index > 0 && mistake.position <= mistakes[index - 1]!.position)) {
+    context.addIssue({ code: 'custom', path: ['mistakes'], message: 'Exam mistakes must have increasing positions' });
+  }
+  if (new Set(response.mistakes.map(({ examQuestionId }) => examQuestionId)).size !== response.mistakes.length) {
+    context.addIssue({ code: 'custom', path: ['mistakes'], message: 'Exam question IDs must be unique' });
+  }
+  if (new Set(response.mistakes.map(({ question }) => question.id)).size !== response.mistakes.length) {
+    context.addIssue({ code: 'custom', path: ['mistakes'], message: 'Source question IDs must be unique' });
   }
 });
 

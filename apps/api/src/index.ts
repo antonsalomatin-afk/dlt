@@ -18,6 +18,8 @@ import {
   examAnswerResponseSchema,
   examCompleteRequestSchema,
   examCompleteResponseSchema,
+  examReviewParamsSchema,
+  examReviewResponseSchema,
   retryExamStart,
   examStartRequestSchema,
   examStartResponseSchema,
@@ -36,7 +38,7 @@ const bodySchema = z.strictObject({ initData: z.string().min(1).max(16384).refin
 const bearerSchema = z.string().regex(/^Bearer [A-Za-z0-9_-]{43}$/u);
 const vehicleSchema = z.strictObject({ vehicleType: z.enum(['CAR', 'MOTORCYCLE']) });
 const emptyQuerySchema = z.strictObject({});
-const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available', 'Presentation not found', 'Exam question not found', 'Exam not found', 'Answer already submitted', 'Not enough questions available', 'Exam already in progress', 'Exam already completed', 'Exam incomplete', 'Exam expired']) });
+const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available', 'Presentation not found', 'Exam question not found', 'Exam not found', 'Answer already submitted', 'Not enough questions available', 'Exam already in progress', 'Exam already completed', 'Exam incomplete', 'Exam not completed', 'Exam expired']) });
 const userSelect = { id: true, username: true, firstName: true, selectedVehicleType: true } as const;
 const digest = (token: string) => createHash('sha256').update(token).digest('hex');
 const lifetimeMs = 24 * 60 * 60 * 1000;
@@ -167,7 +169,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -815,6 +817,113 @@ export function createApi(options: {
       if (result.kind === 'not-found') return reply.code(404).send(errorSchema.parse({ error: 'Exam not found' }));
       if (result.kind === 'incomplete') return reply.code(409).send(errorSchema.parse({ error: 'Exam incomplete' }));
       return result.response;
+    });
+    examApp.get('/exam/:examId/review', async (request, reply) => {
+      const authenticated = authenticatedRequests.get(request);
+      if (!authenticated) throw new Error('Authenticated exam user missing');
+      if (!emptyQuerySchema.safeParse(request.query).success) {
+        return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      }
+      const params = examReviewParamsSchema.safeParse(request.params);
+      if (!params.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+
+      const exam = await options.database.examSession.findFirst({
+        where: { id: params.data.examId, userId: authenticated.user.id },
+        select: {
+          id: true,
+          questionCount: true,
+          passingScore: true,
+          startedAt: true,
+          expiresAt: true,
+          completedAt: true,
+          score: true,
+          passed: true,
+          questions: {
+            orderBy: { position: 'asc' },
+            select: {
+              id: true,
+              position: true,
+              questionId: true,
+              snapshot: true,
+              selectedChoiceId: true,
+              isCorrect: true,
+              answeredAt: true,
+            },
+          },
+        },
+      });
+      if (!exam) return reply.code(404).send(errorSchema.parse({ error: 'Exam not found' }));
+
+      const completionTuple = [exam.completedAt, exam.score, exam.passed];
+      const completionNullCount = completionTuple.filter((value) => value === null).length;
+      if (completionNullCount === completionTuple.length) {
+        return reply.code(409).send(errorSchema.parse({ error: 'Exam not completed' }));
+      }
+      if (completionNullCount !== 0 || exam.completedAt === null || exam.score === null || exam.passed === null) {
+        throw new Error('Stored exam completion tuple is incomplete');
+      }
+      const persistedCompletedAt = exam.completedAt;
+      if (
+        exam.questionCount !== EXAM_QUESTION_COUNT
+        || exam.passingScore !== EXAM_PASSING_SCORE
+        || exam.expiresAt.getTime() - exam.startedAt.getTime() !== EXAM_DURATION_MS
+        || exam.questions.length !== EXAM_QUESTION_COUNT
+        || exam.questions.some((question, index) => question.position !== index + 1)
+        || new Set(exam.questions.map(({ id }) => id)).size !== EXAM_QUESTION_COUNT
+        || new Set(exam.questions.map(({ questionId }) => questionId)).size !== EXAM_QUESTION_COUNT
+      ) throw new Error('Stored exam session configuration is inconsistent');
+
+      const reviewed = exam.questions.map((question) => {
+        const snapshot = parsePresentationSnapshot(question.snapshot);
+        if (snapshot.question.id !== question.questionId) throw new Error('Stored exam snapshot is inconsistent');
+        const tuple = [question.selectedChoiceId, question.isCorrect, question.answeredAt];
+        const nullCount = tuple.filter((value) => value === null).length;
+        if (nullCount === tuple.length) return { outcome: null, question, snapshot } as const;
+        if (nullCount !== 0) throw new Error('Stored exam answer tuple is incomplete');
+        const selectedChoiceId = question.selectedChoiceId;
+        const isCorrect = question.isCorrect;
+        const answeredAt = question.answeredAt;
+        if (
+          selectedChoiceId === null
+          || isCorrect === null
+          || answeredAt === null
+          || !snapshot.question.choices.some(({ id }) => id === selectedChoiceId)
+          || isCorrect !== (selectedChoiceId === snapshot.correctChoiceId)
+          || answeredAt.getTime() < exam.startedAt.getTime()
+          || answeredAt.getTime() >= exam.expiresAt.getTime()
+          || answeredAt.getTime() > persistedCompletedAt.getTime()
+        ) throw new Error('Stored exam answer is inconsistent');
+        return { outcome: isCorrect, question, snapshot } as const;
+      });
+      const summary = summarizeExamOutcomes(reviewed.map(({ outcome }) => outcome));
+      if (
+        exam.score !== summary.score
+        || exam.passed !== summary.passed
+        || (summary.unansweredCount > 0 && persistedCompletedAt.getTime() < exam.expiresAt.getTime())
+      ) throw new Error('Stored exam completion result is inconsistent');
+
+      return examReviewResponseSchema.parse({
+        examId: exam.id,
+        questionCount: exam.questionCount,
+        score: exam.score,
+        passingScore: exam.passingScore,
+        passed: exam.passed,
+        completedAt: persistedCompletedAt.toISOString(),
+        mistakes: reviewed.filter(({ outcome }) => outcome !== true).map(({ question, snapshot }) => ({
+          examQuestionId: question.id,
+          position: question.position,
+          selectedChoiceId: question.selectedChoiceId,
+          answeredAt: question.answeredAt?.toISOString() ?? null,
+          correctChoiceId: snapshot.correctChoiceId,
+          question: snapshot.question,
+          explanationThai: snapshot.explanationThai,
+          explanationEnglish: snapshot.explanationEnglish,
+          explanationRussian: snapshot.explanationRussian,
+          trapExplanationThai: snapshot.trapExplanationThai,
+          trapExplanationEnglish: snapshot.trapExplanationEnglish,
+          trapExplanationRussian: snapshot.trapExplanationRussian,
+        })),
+      });
     });
     done();
   });

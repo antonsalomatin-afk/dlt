@@ -349,8 +349,32 @@ Success returns exactly
 `{ examId, questionCount, answeredCount, unansweredCount, score, passingScore, passed, completedAt }`.
 It contains no question, choice, per-question correctness, explanation, source, or
 user data. Completion does not create or modify practice presentations, practice
-answer history, favorites, or practice progress. Per-question exam review, exam
-history, and Mini App exam screens remain separate work.
+answer history, favorites, or practice progress. Exam history and Mini App exam
+screens remain separate work.
+
+### Completed mock-exam review API
+
+`GET /exam/:examId/review` uses the existing bearer-authenticated, no-store exam
+boundary. The path accepts one canonical lowercase UUID and the query must be empty.
+Authentication is evaluated first. A missing exam and an exam owned by another learner
+both return `404 { "error": "Exam not found" }`; an owned exam without a completion
+result returns `409 { "error": "Exam not completed" }`.
+
+The endpoint revalidates the fixed 50-question, 45-pass, 60-minute policy, all 50
+immutable question snapshots and answer tuples, and the persisted score and pass result.
+It fails closed if any stored data is inconsistent. Review never reads current mutable
+question or choice content, so later source edits cannot change a completed exam review.
+
+The exact response is
+`{ examId, questionCount, score, passingScore, passed, completedAt, mistakes }`.
+`mistakes` is ordered by original exam position and contains only incorrect or unanswered
+questions. Each item contains `examQuestionId`, `position`, nullable `selectedChoiceId`
+and `answeredAt`, `correctChoiceId`, the safe presented `question`, and the stored Thai,
+English and Russian explanation and trap-explanation fields. Unanswered expiry mistakes
+return both nullable fields as `null`; a perfect exam returns an empty list. The response
+does not expose the learner ID, current content, source/image metadata, correct answered
+rows or database internals. Reading a review does not mutate exam state or practice
+presentations, answer history, favorites or progress.
 
 ### Practice category API
 
