@@ -1,6 +1,6 @@
 id: TASK-033
 title: Review completed mock-exam mistakes
-status: READY
+status: BUILDING
 epic: Epic 5 — Mock Exam
 objective: Return an owned completed exam's incorrect and unanswered questions from immutable snapshots for safe learner review.
 acceptance:
