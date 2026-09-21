@@ -1,0 +1,23 @@
+TASK-035 authoritative checks
+Completed: 2026-09-21T07:04:00Z
+Commit: e8393be2452cabc88f65c194ac33f520c136ceba
+Environment: Linux container, Node 24, pnpm 11.19, Playwright 1.63 driving the preinstalled Chromium (the pinned headless-shell download is blocked by network policy, so the expected path was linked to the preinstalled binary)
+
+## pnpm check
+PASS with the pre-existing environment exception recorded for TASK-033
+- eslint: passed
+- TypeScript and web typechecks: passed
+- Test files: 22 passed, 1 failed
+- Tests: 158 passed, 3 failed
+- The 3 failures are the Windows-only tests/database-lifecycle.test.ts reset-safety cases (see .agent/FOLLOW_UPS.md); unrelated to TASK-035.
+
+## pnpm build
+PASS
+- Next.js production build compiled; routes / and /_not-found prerendered
+
+## pnpm test:e2e
+PASS
+- 121 passed (102 accepted + 19 new in tests/e2e/exam.spec.ts), 34.1s
+
+## pnpm test:integration
+Not required by the task (no API or database change); last run PASS 104 tests on the TASK-034 head, which this commit does not alter.

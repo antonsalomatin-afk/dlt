@@ -1,0 +1,28 @@
+id: TASK-036
+title: Review finished mock exams in the Mini App
+status: READY
+epic: Epic 5 — Mock Exam
+objective: Let an authenticated learner browse their mock exam history and open the per-question review of any completed exam in the Mini App.
+acceptance:
+  - Exam history is reachable from vehicle setup, practice and the exam result view, and Back returns to the opening origin.
+  - The list loads GET /exam/history?limit=10 with opaque-cursor paging and shows status, date, answered count and score/pass result per exam with strict validation.
+  - Opening a completed exam loads GET /exam/:examId/result and shows every position with the presented question, your answer, the correct answer, correctness and localized explanations; unanswered rows are marked as such.
+  - Loading, retry, expired-session, incomplete-exam (409), malformed-response, stale-response and departure behavior is accessible, safe and recoverable, and browser tests cover it while all existing suites stay green.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+dependencies:
+  - TASK-035
+owner_decision_required: false
+supervisor_refinement:
+  - Add explicit same-origin rewrites for GET /exam/history and GET /exam/:examId/result only. Use the in-memory bearer token, GET, no body, cache no-store and the15-second timeout.
+  - Add strict browser contracts mirroring the accepted API responses, including the exam history cursor canonical round-trip, the status/tuple consistency rules and the per-row review invariants (selected choice in snapshot, correctness identity, consecutive positions, counts equal to rows).
+  - History renders newest first with Load more using the exact server cursor and the accepted retry-with-same-cursor behavior. Completed rows offer Review; in-progress and expired rows do not (starting or resuming is not part of this task).
+  - Review shows the summary (score, pass mark, answered, unanswered, result) and all50 rows in position order with Your answer and Correct answer labels, an Unanswered label for null rows, and localized explanations with English fallback. A409 Exam not completed shows guidance and returns to the list.
+  - A401 anywhere expires and clears the session through the established path. Leaving is immediate and invalidates in-flight requests; nothing is persisted in browser storage.
+  - Add Playwright coverage for exact requests, strict rejections with retry, paging, review rendering including unanswered rows, the409 path, 401, origins and departure. Update README. No backend change, no exam start/resume, no dependency or deployment change.
