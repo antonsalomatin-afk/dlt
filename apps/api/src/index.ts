@@ -10,6 +10,11 @@ import { favoriteRequestSchema, favoriteResponseSchema } from '../../../packages
 import { encodeFavoriteCursor, favoriteFeedResponseSchema, parseFavoriteFeedQuery } from '../../../packages/database/src/favorite-feed.ts';
 import { buildProgressSummary } from '../../../packages/database/src/progress.ts';
 import {
+  encodeExamHistoryCursor,
+  examHistoryResponseSchema,
+  parseExamHistoryQuery,
+} from '../../../packages/database/src/exam-history.ts';
+import {
   EXAM_DURATION_MS,
   EXAM_ELIGIBLE_LIMIT,
   EXAM_PASSING_SCORE,
@@ -145,6 +150,87 @@ function mapFavorite(row: {
   };
 }
 
+function mapExamHistorySession(exam: {
+  id: string;
+  vehicleType: 'CAR' | 'MOTORCYCLE';
+  questionCount: number;
+  passingScore: number;
+  startedAt: Date;
+  expiresAt: Date;
+  completedAt: Date | null;
+  score: number | null;
+  passed: boolean | null;
+  questions: Array<{
+    id: string;
+    position: number;
+    questionId: string;
+    snapshot: unknown;
+    selectedChoiceId: string | null;
+    isCorrect: boolean | null;
+    answeredAt: Date | null;
+  }>;
+}) {
+  if (
+    exam.questionCount !== EXAM_QUESTION_COUNT
+    || exam.passingScore !== EXAM_PASSING_SCORE
+    || exam.expiresAt.getTime() - exam.startedAt.getTime() !== EXAM_DURATION_MS
+    || exam.questions.length !== EXAM_QUESTION_COUNT
+    || exam.questions.some((question, index) => question.position !== index + 1)
+    || new Set(exam.questions.map(({ id }) => id)).size !== EXAM_QUESTION_COUNT
+    || new Set(exam.questions.map(({ questionId }) => questionId)).size !== EXAM_QUESTION_COUNT
+  ) throw new Error('Stored exam session configuration is inconsistent');
+  if (exam.completedAt === null || exam.score === null || exam.passed === null) {
+    throw new Error('Stored exam completion tuple is incomplete');
+  }
+  const completedAt = exam.completedAt;
+
+  const outcomes = exam.questions.map((question) => {
+    const snapshot = parsePresentationSnapshot(question.snapshot);
+    if (snapshot.question.id !== question.questionId) throw new Error('Stored exam snapshot is inconsistent');
+    const tuple = [question.selectedChoiceId, question.isCorrect, question.answeredAt];
+    const nullCount = tuple.filter((value) => value === null).length;
+    if (nullCount === tuple.length) return null;
+    if (nullCount !== 0) throw new Error('Stored exam answer tuple is incomplete');
+    const selectedChoiceId = question.selectedChoiceId;
+    const isCorrect = question.isCorrect;
+    const answeredAt = question.answeredAt;
+    if (
+      selectedChoiceId === null
+      || isCorrect === null
+      || answeredAt === null
+      || !snapshot.question.choices.some(({ id }) => id === selectedChoiceId)
+      || isCorrect !== (selectedChoiceId === snapshot.correctChoiceId)
+      || answeredAt.getTime() < exam.startedAt.getTime()
+      || answeredAt.getTime() >= exam.expiresAt.getTime()
+      || answeredAt.getTime() > completedAt.getTime()
+    ) throw new Error('Stored exam answer is inconsistent');
+    return isCorrect;
+  });
+  const summary = summarizeExamOutcomes(outcomes);
+  if (
+    exam.score !== summary.score
+    || exam.passed !== summary.passed
+    || (summary.unansweredCount > 0 && completedAt.getTime() < exam.expiresAt.getTime())
+  ) throw new Error('Stored exam completion result is inconsistent');
+
+  const startedAt = exam.startedAt.toISOString();
+  return {
+    cursor: { v: 1 as const, startedAt, examId: exam.id },
+    item: {
+      examId: exam.id,
+      vehicleType: exam.vehicleType,
+      questionCount: exam.questionCount,
+      answeredCount: summary.answeredCount,
+      unansweredCount: summary.unansweredCount,
+      score: exam.score,
+      passingScore: exam.passingScore,
+      passed: exam.passed,
+      startedAt,
+      completedAt: completedAt.toISOString(),
+    },
+  };
+}
+
 type RandomOffset = (eligibleCount: number) => unknown;
 
 function checkedRandomOffset(randomOffset: RandomOffset, eligibleCount: number) {
@@ -169,7 +255,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/history', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -459,6 +545,54 @@ export function createApi(options: {
       const user = await authenticatedUser(request.headers.authorization, startedAt);
       if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
       authenticatedRequests.set(request, { user, startedAt });
+    });
+    examApp.get('/exam/history', async (request, reply) => {
+      const authenticated = authenticatedRequests.get(request);
+      if (!authenticated) throw new Error('Authenticated exam user missing');
+      let query;
+      try { query = parseExamHistoryQuery(request.query); }
+      catch { return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' })); }
+      const after = query.cursor === null ? {} : {
+        OR: [
+          { startedAt: { lt: new Date(query.cursor.startedAt) } },
+          { startedAt: new Date(query.cursor.startedAt), id: { lt: query.cursor.examId } },
+        ],
+      };
+      const exams = await options.database.examSession.findMany({
+        where: { userId: authenticated.user.id, completedAt: { not: null }, ...after },
+        orderBy: [{ startedAt: 'desc' }, { id: 'desc' }],
+        take: query.limit + 1,
+        select: {
+          id: true,
+          vehicleType: true,
+          questionCount: true,
+          passingScore: true,
+          startedAt: true,
+          expiresAt: true,
+          completedAt: true,
+          score: true,
+          passed: true,
+          questions: {
+            orderBy: { position: 'asc' },
+            select: {
+              id: true,
+              position: true,
+              questionId: true,
+              snapshot: true,
+              selectedChoiceId: true,
+              isCorrect: true,
+              answeredAt: true,
+            },
+          },
+        },
+      });
+      const hasMore = exams.length > query.limit;
+      const page = exams.slice(0, query.limit).map(mapExamHistorySession);
+      const last = page.at(-1);
+      return examHistoryResponseSchema.parse({
+        items: page.map(({ item }) => item),
+        nextCursor: hasMore && last ? encodeExamHistoryCursor(last.cursor) : null,
+      });
     });
     examApp.post('/exam/start', async (request, reply) => {
       const authenticated = authenticatedRequests.get(request);

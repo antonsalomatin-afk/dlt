@@ -376,6 +376,29 @@ does not expose the learner ID, current content, source/image metadata, correct 
 rows or database internals. Reading a review does not mutate exam state or practice
 presentations, answer history, favorites or progress.
 
+### Mock-exam history API
+
+`GET /exam/history` uses the existing bearer-authenticated, no-store exam boundary and
+returns only the authenticated learner's completed exams. It accepts optional `limit`
+and `cursor` query keys. `limit` defaults to 20 and accepts canonical decimal values from
+1 through 50. The opaque cursor is a bounded canonical base64url encoding of the last
+returned exam's start timestamp and ID. Invalid, duplicate, padded, signed, fractional,
+unknown or noncanonical query values return `400 { "error": "Bad Request" }` after
+authentication.
+
+History is ordered by `startedAt` descending and then exam ID descending. Pagination uses
+that stable tuple and returns exactly `{ items, nextCursor }`; a learner with no completed
+exams receives `{ items: [], nextCursor: null }`. Each summary contains exactly
+`{ examId, vehicleType, questionCount, answeredCount, unansweredCount, score, passingScore, passed, startedAt, completedAt }`.
+
+Before returning a page, the API revalidates each included exam's 50-question, 45-pass,
+60-minute policy, completion result, 50 immutable snapshots, and every answer tuple. It
+recomputes the answer counts, score and pass result without reading current mutable
+question or choice content. Any inconsistent included exam fails the whole request with
+the sanitized internal-error response. History exposes no per-question content,
+correctness, explanations, source/image metadata, user/session identifiers or database
+internals, and it does not mutate exam or practice state.
+
 ### Practice category API
 
 `GET /practice/categories` uses the existing bearer session and accepts no query
