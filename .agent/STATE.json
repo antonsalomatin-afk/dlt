@@ -10,12 +10,12 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-038 accepted after authoritative checks and Reviewer PASS: GET /me/progress/concepts returns weakest-first per-concept accuracy reconciling with the lifetime summary. Next candidates: TASK-039 stabilize exam start under load (FOLLOW_UPS.md), then Mini App concept progress view and concept-targeted mistake repetition. Spaced repetition and readiness score await the Product Owner decision in OWNER_DECISIONS.md. Unit gate carries three pre-existing Windows-only runner failures on Linux.",
+  "notes": "Product Owner decisions of 2026-09-22 are recorded in OWNER_DECISIONS.md: defer spaced repetition, readiness score and mastery labelling to FOLLOW_UPS.md; Epic 7 Content Operations is the next epic; production content is original in-house authored content citing public Thai law; no live Telegram bot token in development. Epic 6 remaining: TASK-039 exam-start stability, TASK-040 Mini App concept progress view, TASK-041 weakest-concept practice.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
     "latestObservedUsedPercent": 81,
     "windowMinutes": 300,
-    "checkedAt": "2026-09-21T07:24:31Z",
+    "checkedAt": "2026-09-22T06:41:58Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization."
   },
   "executionPaused": false,

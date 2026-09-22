@@ -86,20 +86,25 @@ Epic 5 is complete.
 - TASK-037 — ACCEPTED — concept/variant grouping of development fixtures
 - TASK-038 — ACCEPTED — concept-aware progress API
 - TASK-039 — stabilize concurrent exam start under load (see FOLLOW_UPS.md)
-- Mini App concept progress view
-- repeat mistakes by weakest concept
-- mastery
-- spaced repetition — pending Product Owner decision (PROJECT.md lists it as a later capability)
-- readiness score — pending Product Owner decision (PROJECT.md lists it as a later capability)
+- TASK-040 — Mini App concept progress view
+- TASK-041 — practice targeted at the weakest concept
+
+Epic 6 closes after TASK-041. By the accepted Product Owner decision of 2026-09-22,
+mastery labelling, spaced repetition and any readiness score are deferred to
+`.agent/FOLLOW_UPS.md` and must not be started without a new decision.
 
 ## Epic 7 — Content Operations
 
-- source metadata
-- bulk import
-- review status
-- content admin
-- user reports
-- auditability
+Next epic by the accepted Product Owner decision of 2026-09-22. Production content is
+original in-house authored content citing public Thai traffic law; no scraping, no
+third-party bank, no official DLT ingestion without a new decision.
+
+- authored-question provenance and legal citation requirements
+- review status and reviewer workflow
+- bulk import of authored content
+- content admin surface
+- learner-reported question problems
+- auditability of content changes
 
 ## Epic 8 — Telegram Engagement
 
