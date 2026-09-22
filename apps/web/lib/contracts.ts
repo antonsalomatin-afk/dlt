@@ -271,3 +271,47 @@ export const examResultSchema = z.strictObject({
   if (result.passed !== (result.score >= result.passingScore)) context.addIssue({ code: 'custom', path: ['passed'], message: 'Exam pass result is inconsistent' });
 });
 export type ExamResult = z.infer<typeof examResultSchema>;
+
+const conceptCountSchema = z.number().int().nonnegative().refine(Number.isSafeInteger);
+const conceptProgressItemSchema = z.strictObject({
+  conceptId: z.uuid(),
+  slug: trimmedNonblankString,
+  nameThai: trimmedNonblankString,
+  nameEnglish: trimmedNonblankString,
+  nameRussian: trimmedNonblankString,
+  answered: conceptCountSchema.refine((count) => count > 0),
+  correct: conceptCountSchema,
+  incorrect: conceptCountSchema,
+  accuracyPercent: z.number().int().min(0).max(100),
+}).superRefine((item, context) => {
+  if (item.correct + item.incorrect !== item.answered) {
+    context.addIssue({ code: 'custom', message: 'Concept counts are inconsistent' });
+  }
+  if (item.accuracyPercent !== Math.round((item.correct / item.answered) * 100)) {
+    context.addIssue({ code: 'custom', message: 'Concept accuracy is inconsistent' });
+  }
+});
+export const conceptProgressResponseSchema = z.strictObject({
+  concepts: z.array(conceptProgressItemSchema).max(500),
+  unassigned: progressResponseSchema,
+  total: progressResponseSchema,
+}).superRefine((response, context) => {
+  if (new Set(response.concepts.map((item) => item.conceptId.toLowerCase())).size !== response.concepts.length) {
+    context.addIssue({ code: 'custom', path: ['concepts'], message: 'Concept IDs must be unique' });
+  }
+  const correct = response.concepts.reduce((sum, item) => sum + item.correct, response.unassigned.correct);
+  const incorrect = response.concepts.reduce((sum, item) => sum + item.incorrect, response.unassigned.incorrect);
+  if (response.total.correct !== correct || response.total.incorrect !== incorrect) {
+    context.addIssue({ code: 'custom', path: ['total'], message: 'Total must equal the concepts plus the unassigned bucket' });
+  }
+  response.concepts.forEach((current, index) => {
+    const previous = index === 0 ? null : response.concepts[index - 1];
+    if (!previous) return;
+    const ordered = previous.accuracyPercent < current.accuracyPercent
+      || (previous.accuracyPercent === current.accuracyPercent && (previous.answered > current.answered
+        || (previous.answered === current.answered && previous.slug < current.slug)));
+    if (!ordered) context.addIssue({ code: 'custom', path: ['concepts', index], message: 'Concepts must be ordered weakest first' });
+  });
+});
+export type ConceptProgress = z.infer<typeof conceptProgressResponseSchema>;
+export type ConceptProgressItem = ConceptProgress['concepts'][number];

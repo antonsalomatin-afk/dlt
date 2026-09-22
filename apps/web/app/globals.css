@@ -111,3 +111,14 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 .exam-item .secondary { margin: 10px 0 0; }
 .exam-item.failed .history-outcome, .history-entry.incorrect .history-outcome { background: #f5e5df; color: #8d3c24; }
 .exam-item.in_progress .history-outcome, .exam-item.expired .history-outcome, .history-entry.unanswered .history-outcome { background: #ecebe2; color: #59675e; }
+.concept-list { display: grid; gap: 12px; margin: 20px 0 0; padding: 0; list-style: none; }
+.concept-row { border: 1px solid #dce0d4; border-radius: 14px; padding: 14px; }
+.concept-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.concept-name { font-size: 14px; line-height: 1.35; }
+.concept-accuracy { color: #244c3d; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.concept-bar { display: block; height: 6px; margin: 10px 0 8px; border-radius: 999px; background: #e7e9d8; overflow: hidden; }
+.concept-bar i { display: block; height: 100%; background: #3e674f; }
+.concept-counts { margin: 0; color: #697466; font-size: 12px; }
+.concept-unassigned { margin-top: 16px; border-top: 1px solid #e2e3d7; padding-top: 14px; font-size: 13px; line-height: 1.5; }
+.concept-unassigned p { margin: 0; }
+.concept-note { color: #697466; font-size: 12px; margin-top: 4px; }

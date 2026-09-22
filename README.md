@@ -658,7 +658,8 @@ commands, not automatically loaded by Next. Only HTTP(S) origins without
 credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
 `/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
-`/practice/categories`, `/practice/next`, `/practice/answer`, `/practice/favorite`,
+`/me/progress/concepts`, `/practice/categories`, `/practice/next`,
+`/practice/answer`, `/practice/favorite`,
 `/exam/start`, `/exam/answer`, `/exam/complete`, `/exam/history` and
 `/exam/:examId/result` only.
 Set the destination before building; rewrites are
@@ -770,6 +771,27 @@ renders the summary plus all 50 positions with Correct/Incorrect/Unanswered badg
 Your answer and Correct answer labels, and localized explanations with English
 fallback. `Exam not completed` shows guidance with retry. A protected 401 clears the
 session, leaving is immediate and ignores late responses, and nothing is persisted.
+
+Authenticated learners can open Concepts from vehicle setup, even before choosing a
+vehicle, or from practice. The view sends one same-origin `GET /me/progress/concepts` per
+mount with the memory-only bearer session, no request body, `no-store` and the standard
+15-second timeout. It validates the strict breakdown before rendering: every concept row
+must carry at least one answer with counts that sum and the exact rounded accuracy,
+concept IDs must be unique, the total must equal the concepts plus the ungrouped bucket,
+and the rows must arrive weakest first. Percentages come from the server and are never
+recomputed in the browser.
+
+The view shows the lifetime total with the same four metrics as Progress, then one row per
+answered concept with its localized name, accuracy and correct-of-answered count, weakest
+first. The ungrouped bucket appears only when questions without a concept have answers.
+With no answers at all it shows zero totals and start-practising guidance. Copy and
+concept names switch between English, Russian and Thai with English fallback, and neither
+the language nor the response is persisted. Transport, HTTP and invalid-response failures
+show retry guidance with no partial rows, a protected 401 clears the session, and leaving
+during a request returns immediately and ignores every late outcome.
+
+No mastery label, readiness figure or review schedule is shown: those are deferred by the
+Product Owner decision recorded in `.agent/OWNER_DECISIONS.md`.
 
 ### Real local full-stack browser gate
 
