@@ -1,0 +1,33 @@
+id: TASK-040
+title: Show concept progress in the Mini App
+status: ACCEPTED
+epic: Epic 6 — Concept Learning
+objective: Let an authenticated learner see which learning concepts they are weakest at, so practice can target the rule rather than a remembered answer.
+acceptance:
+  - Concepts is reachable from vehicle setup, even before a vehicle is chosen, and from practice, and Back returns to the opening origin.
+  - The view sends exactly one GET /me/progress/concepts per mount with the in-memory bearer session and validates the strict response before rendering.
+  - It presents the lifetime total, every answered concept weakest first with localized name, accuracy and counts, a bucket for questions with no concept, and a friendly no-answers state.
+  - Loading, retry, expired-session, malformed-response, stale-response and departure behavior is accessible, safe and recoverable, and browser tests cover it while all existing suites stay green.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+dependencies:
+  - TASK-039
+owner_decision_required: false
+supervisor_refinement:
+  - Add only the explicit same-origin rewrite for GET /me/progress/concepts. Use the in-memory bearer token, GET, no request body, cache no-store and the established 15-second timeout. Never persist or render the credential.
+  - Mirror the accepted API contract in the browser: exactly { concepts, unassigned, total } where each concept item is exactly { conceptId, slug, nameThai, nameEnglish, nameRussian, answered, correct, incorrect, accuracyPercent }. Reject unknown members, a concept with zero answers, counts that do not sum, accuracy that is not the exact rounded value, duplicate concept IDs, a total that does not equal the concepts plus the unassigned bucket, and any order other than accuracy ascending then answered descending then slug ascending.
+  - Add Concepts controls from authenticated setup and from practice, recording the origin exactly like the accepted Progress view: Back returns to setup when opened there and remounts a clean practice view when opened from practice.
+  - On mount issue exactly one request with a synchronous overlap guard. Show an accessible loading state. Transport, non-success and invalid responses show safe retry guidance with no partial rows. Retry repeats the same request. A 401 expires and clears the session through the established path. Leaving during a request is immediate and invalidates the request lifecycle so any late outcome is ignored.
+  - Render the lifetime total with the same four metrics as Progress, then the concept rows weakest first showing the localized concept name, accuracy and answered count with correct and incorrect. Show the unassigned bucket only when it has answers, labelled as questions not yet grouped. With no answers at all, show zero totals and start-practicing guidance and no rows. Percentages come from the server; do not recompute or round in the browser.
+  - Provide an English/Russian/Thai selector local to the view, defaulting to English. Localize titles, labels and copy. Concept names use the matching language and fall back to English. Do not persist the language or the response.
+  - Do not add a mastery label, a readiness figure, a due date, a trend or any scheduling: those are deferred by the accepted Product Owner decision of 2026-09-22.
+  - Add Playwright coverage for exact request behavior and a single initial call, weakest-first rendering with names and counts, the unassigned bucket shown and hidden, the empty state, all three languages, setup and practice origins with clean return, transport/HTTP/malformed retry, strict rejections including bad ordering and a mismatched total, 401 clearing, immediate departure with an ignored late response and an empty browser storage assertion. Keep all existing E2E suites green.
+  - Update README. No backend, schema, dependency, credential or deployment change.
+accepted_commit: 96fcd5c6fcf63a57b9b230a8ad7f32a2d8f971dc
+review_file: .agent/reviews/TASK-040-review-01.md

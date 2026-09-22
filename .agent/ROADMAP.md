@@ -86,7 +86,7 @@ Epic 5 is complete.
 - TASK-037 — ACCEPTED — concept/variant grouping of development fixtures
 - TASK-038 — ACCEPTED — concept-aware progress API
 - TASK-039 — ACCEPTED — retry exam start on real driver serialization conflicts
-- TASK-040 — Mini App concept progress view
+- TASK-040 — ACCEPTED — Mini App concept progress view
 - TASK-041 — practice targeted at the weakest concept
 
 Epic 6 closes after TASK-041. By the accepted Product Owner decision of 2026-09-22,

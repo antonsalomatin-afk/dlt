@@ -1,0 +1,22 @@
+TASK-040 authoritative checks
+Completed: 2026-09-22T06:55:32Z
+Commit: 96fcd5c6fcf63a57b9b230a8ad7f32a2d8f971dc
+Environment: Linux container, Node 24, pnpm 11.19, Playwright 1.63 driving the preinstalled Chromium (see TASK-035 checks)
+
+## pnpm check
+PASS with the pre-existing environment exception recorded in FOLLOW_UPS.md
+- eslint: passed
+- TypeScript and web typechecks: passed
+- Test files: 24 passed, 1 failed
+- Tests: 172 passed, 3 failed
+- The 3 failures are the Windows-only tests/database-lifecycle.test.ts reset-safety cases; unrelated to TASK-040.
+
+## pnpm build
+PASS (exit 0)
+
+## pnpm test:e2e
+PASS
+- 156 passed (137 accepted + 19 new in tests/e2e/concepts.spec.ts), 43.9s
+
+## pnpm test:integration
+Not required by the task (no API or database change); last run PASS 110 tests on the TASK-039 head, which this commit does not alter.
