@@ -87,9 +87,10 @@ Epic 5 is complete.
 - TASK-038 — ACCEPTED — concept-aware progress API
 - TASK-039 — ACCEPTED — retry exam start on real driver serialization conflicts
 - TASK-040 — ACCEPTED — Mini App concept progress view
-- TASK-041 — practice targeted at the weakest concept
+- TASK-041 — ACCEPTED — concept-filtered practice delivery
+- TASK-042 — Mini App weakest-concept practice scope
 
-Epic 6 closes after TASK-041. By the accepted Product Owner decision of 2026-09-22,
+Epic 6 closes after TASK-042. By the accepted Product Owner decision of 2026-09-22,
 mastery labelling, spaced repetition and any readiness score are deferred to
 `.agent/FOLLOW_UPS.md` and must not be started without a new decision.
 

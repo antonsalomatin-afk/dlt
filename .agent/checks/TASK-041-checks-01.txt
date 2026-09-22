@@ -1,0 +1,18 @@
+TASK-041 authoritative checks
+Completed: 2026-09-22T06:59:20Z
+Commit: 4473629e0befb415a9444610a13bc4124c92de06
+Environment: Linux container, Node 24, pnpm 11.19, system PostgreSQL 16 on 127.0.0.1:55432
+
+## pnpm check
+PASS with the pre-existing environment exception recorded in FOLLOW_UPS.md
+- eslint: passed
+- TypeScript and web typechecks: passed
+- Test files: 24 passed, 1 failed
+- Tests: 172 passed, 3 failed
+- The 3 failures are the Windows-only tests/database-lifecycle.test.ts reset-safety cases; unrelated to TASK-041.
+
+## pnpm test:integration
+PASS
+- Test files: 21 passed
+- Tests: 116 passed (110 accepted + 6 new in tests/practice-concept.integration.test.ts)
+- Duration: 38.33s

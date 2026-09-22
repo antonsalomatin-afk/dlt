@@ -1,0 +1,30 @@
+id: TASK-041
+title: Deliver practice questions for one learning concept
+status: ACCEPTED
+epic: Epic 6 — Concept Learning
+objective: Allow authenticated practice delivery to draw from exactly one learning concept, so a learner can drill the rule they are weakest at.
+acceptance:
+  - POST /practice/next accepts an optional validated conceptId selector, mutually exclusive with categoryId, while preserving unfiltered and category-filtered behaviour unchanged.
+  - Concept-filtered delivery enforces the saved vehicle and active verified eligibility and retains the accepted server-owned snapshot contract.
+  - Unknown concepts, concepts with no eligible questions and malformed or combined selectors have stable tested behaviour with no content-metadata disclosure.
+  - Integration tests verify concept and vehicle isolation, selector exclusivity, uniform private 404s and unfiltered regression.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+dependencies:
+  - TASK-040
+owner_decision_required: false
+supervisor_refinement:
+  - Extend practiceNextRequestSchema to a strict object with optional categoryId and optional conceptId UUIDs, still optional overall. An absent body and {} retain unfiltered behaviour. Supplying both selectors returns the established 400, as do null, non-UUID, duplicate members and any unknown key. Keep route precedence: authenticate, then validate the body, then require the saved vehicle.
+  - Apply conceptId directly in the same Question predicate as saved vehicle, active true and verificationStatus VERIFIED. Do not query concept existence separately and never reveal whether a UUID is unknown, belongs to another vehicle, or has no eligible questions: every valid filtered request with no eligible match returns the existing 404 { error "No questions available" } and creates no presentation.
+  - Preserve the repeatable-read transaction, deterministic ordering with the injected random offset, and the exact accepted QuestionPresentation snapshot and response contract. Before-answer responses must still omit correctness, explanations, source metadata and image references.
+  - The concept UUID is the conceptId already returned by GET /me/progress/concepts. Do not add a separate concept list endpoint, a weakest-concept server heuristic, mastery, scheduling or repeat-avoidance in this task.
+  - Extend the selector unit test for conceptId and exclusivity. Add isolated PostgreSQL coverage for a concept match, another concept, another vehicle, inactive and unverified questions, an unknown concept UUID, a concept with no eligible questions, both selectors together, malformed selectors, and unfiltered plus category-filtered regression.
+  - Update README with the selector semantics and the uniform 404 privacy rule. No schema migration, Mini App, dependency, credential or deployment change.
+accepted_commit: 4473629e0befb415a9444610a13bc4124c92de06
+review_file: .agent/reviews/TASK-041-review-01.md
