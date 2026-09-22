@@ -10,7 +10,7 @@
 - Commit(s): `4473629e0befb415a9444610a13bc4124c92de06`
 - Relevant ADR(s): ADR-002 core TypeScript monorepo stack; ADR-004 opaque bearer API sessions
 - Checks supplied: `.agent/checks/TASK-041-checks-01.txt`
-- Independent checks: `pnpm exec vitest run tests/presentation.test.ts` PASS (2 tests); isolated PostgreSQL `tests/practice-concept.integration.test.ts` PASS (6 tests); full `pnpm test:integration` PASS (116 tests)
+- Independent checks: `pnpm exec vitest run tests/presentation.test.ts` PASS (2 tests); isolated PostgreSQL `tests/practice-concept.integration.test.ts` PASS (6 tests); full `pnpm test:integration` PASS (115 tests)
 
 ## Acceptance criteria
 

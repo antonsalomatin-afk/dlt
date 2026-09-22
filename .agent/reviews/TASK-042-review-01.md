@@ -10,7 +10,7 @@
 - Commit(s): `2d20cbc3a9846d5c6fb22ceae15592bc9df5155e`
 - Relevant ADR(s): ADR-002 core TypeScript monorepo stack; ADR-004 opaque bearer API sessions; ADR-005 Mini App boundary
 - Checks supplied: `.agent/checks/TASK-042-checks-01.txt`
-- Independent checks: `pnpm exec playwright test tests/e2e/weakest-concept.spec.ts` PASS (10 tests); full `pnpm test:e2e` PASS (166 tests); full `pnpm test:integration` PASS (116 tests)
+- Independent checks: `pnpm exec playwright test tests/e2e/weakest-concept.spec.ts` PASS (10 tests); full `pnpm test:e2e` PASS (166 tests); full `pnpm test:integration` PASS (115 tests)
 
 ## Acceptance criteria
 

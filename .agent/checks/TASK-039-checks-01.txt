@@ -20,9 +20,15 @@ PASS with the pre-existing environment exception recorded in FOLLOW_UPS.md
 
 ## pnpm test:integration
 PASS, run immediately after pnpm check, which is the condition that previously failed
-- Test files: 20 passed
-- Tests: 110 passed
+- Test files: 19 passed
+- Tests: 109 passed
 - Duration: 37.46s
 
 ## Verification after the fix
 The same 40-round load loop passed with zero non-[200,409] outcomes.
+
+Correction recorded 2026-09-22: a scratch reproduction file, tests/zzrepro.integration.test.ts,
+was left on disk after the TASK-039 diagnosis because its cleanup command was killed by its own
+pkill. Vitest therefore counted it in this run. The figures above have been corrected to the
+committed test suite; the scratch file was never committed and has been deleted. Re-measured on
+the same code: 20 integration files, 115 tests.

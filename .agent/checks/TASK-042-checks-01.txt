@@ -20,7 +20,13 @@ PASS
 
 ## pnpm test:integration
 PASS
-- Test files: 21 passed
-- Tests: 116 passed
+- Test files: 20 passed
+- Tests: 115 passed
 - Duration: 39.91s
 - Run although the task changes no server code, to confirm the practice contract is untouched.
+
+Correction recorded 2026-09-22: a scratch reproduction file, tests/zzrepro.integration.test.ts,
+was left on disk after the TASK-039 diagnosis because its cleanup command was killed by its own
+pkill. Vitest therefore counted it in this run. The figures above have been corrected to the
+committed test suite; the scratch file was never committed and has been deleted. Re-measured on
+the same code: 20 integration files, 115 tests.
