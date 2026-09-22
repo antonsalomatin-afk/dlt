@@ -1,0 +1,28 @@
+TASK-039 authoritative checks
+Completed: 2026-09-22T06:49:56Z
+Commit: 562710770aab9bb4ad358c9a2c75ebd2cd76358b
+Environment: Linux container, 4 CPUs, Node 24, pnpm 11.19, system PostgreSQL 16 on 127.0.0.1:55432
+
+## Reproduction before the fix
+A 40-round concurrent-start loop under 8 CPU-saturating processes produced [200,500].
+Temporary error logging showed the cause: DriverAdapterError "TransactionWriteConflict"
+with cause { originalCode "40001", kind "TransactionWriteConflict" }, which the old
+P2034-only predicate did not classify as retryable. The temporary logging was reverted
+and the scratch reproduction file deleted before committing.
+
+## pnpm check
+PASS with the pre-existing environment exception recorded in FOLLOW_UPS.md
+- eslint: passed
+- TypeScript and web typechecks: passed
+- Test files: 24 passed, 1 failed
+- Tests: 172 passed, 3 failed
+- The 3 failures are the Windows-only tests/database-lifecycle.test.ts reset-safety cases; unrelated to TASK-039.
+
+## pnpm test:integration
+PASS, run immediately after pnpm check, which is the condition that previously failed
+- Test files: 20 passed
+- Tests: 110 passed
+- Duration: 37.46s
+
+## Verification after the fix
+The same 40-round load loop passed with zero non-[200,409] outcomes.

@@ -47,15 +47,6 @@ directory-safety checks, so the three reset-safety cases in
 checks platform-independent and guard only the native binary invocation, or skip those
 cases behind a documented platform guard. Pre-existing since TASK-003.
 
-### Concurrent exam start under load (raised in TASK-037/038 checks)
-
-`tests/exam-start.integration.test.ts` "serializes concurrent starts per learner" failed
-in 2 of 9 full integration runs, both times when the suite started immediately after the
-CPU-heavy `pnpm check` unit run. It passed 3/3 alone and in 6 other full runs. Suspect
-the six-attempt serializable retry budget in `EXAM_START_MAX_ATTEMPTS` (about 230ms of
-total backoff) is exhausted under load. Capture the failing response body in the test,
-widen or jitter the retry budget, and prove it with a load-injected test.
-
 ### grammY shutdown paths (raised in TASK-007 review 01)
 
 Add mocked cancellation during the `deleteWebhook` polling setup and await shutdown
@@ -67,7 +58,20 @@ cleanup when start rejects. No acceptance blocker. See
 Strengthen the duplicate-parser tests as described in
 `.agent/reviews/TASK-008-review-01.md`. Non-blocking.
 
+### Serialization retry for other transactional endpoints
+
+`isSerializationFailure` is used only by `POST /exam/start`, the one endpoint on
+serializable isolation. Exam answer and completion hold row locks under default
+isolation, where SQLSTATE 40001 is not expected, and the fixture importer fails closed
+with a message by design. If any of them moves to serializable isolation, reuse the
+shared predicate rather than matching Prisma codes directly.
+
 ## Resolved
 
+- Concurrent exam start under load (raised in TASK-037/038 checks): RESOLVED by accepted
+  TASK-039. The losing serializable transaction was reported by the pg driver adapter as
+  a `DriverAdapterError` carrying SQLSTATE 40001 rather than Prisma code P2034, so the
+  retry predicate never matched and the conflict escaped as a 500. A shared
+  `isSerializationFailure` predicate now classifies both forms.
 - TASK-012 review 01 minor: resolved by accepted TASK-013; the stale README
   answer-submission statement was removed.

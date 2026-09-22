@@ -1,0 +1,34 @@
+id: TASK-039
+title: Retry serializable exam start on real driver conflicts
+status: ACCEPTED
+epic: Epic 6 — Concept Learning
+objective: Make a concurrent mock-exam start converge on one session and a 409 instead of a sanitized 500, by classifying the serialization conflicts the PostgreSQL driver adapter actually raises as retryable.
+context:
+  - Diagnosed during TASK-037/TASK-038 checks and recorded in .agent/FOLLOW_UPS.md as a load-dependent failure of tests/exam-start.integration.test.ts.
+  - Reproduced deterministically under CPU load: the losing transaction throws DriverAdapterError with message TransactionWriteConflict and cause { originalCode "40001", kind "TransactionWriteConflict" }, not Prisma.PrismaClientKnownRequestError P2034.
+  - POST /exam/start retries only on P2034, so the real conflict reaches the error handler and the learner receives 500 Internal Server Error. README already promises bounded retry and one session per learner, so the documented contract was not met under concurrency.
+acceptance:
+  - A shared, unit-tested predicate classifies a transaction as retryable when it carries PostgreSQL SQLSTATE 40001 or 40P01 anywhere in its cause chain, or Prisma error code P2034.
+  - POST /exam/start uses that predicate, so two concurrent starts for one learner return exactly one 200 and one 409 Exam already in progress with exactly one persisted session, including under load.
+  - An isolated PostgreSQL test proves the predicate against a real serialization conflict raised by the driver, not against a hand-written error object.
+  - The concurrent-start integration failure message carries the response bodies so a future regression is diagnosable.
+files_allowed:
+  - apps/api/**
+  - packages/database/src/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm test:integration
+dependencies:
+  - TASK-038
+owner_decision_required: false
+supervisor_refinement:
+  - Add packages/database/src/transaction.ts exporting isSerializationFailure(error unknown) boolean. Treat Prisma.PrismaClientKnownRequestError with code P2034 as retryable, and walk the cause chain to a bounded depth looking for a string originalCode or code equal to 40001 (serialization_failure) or 40P01 (deadlock_detected). Read properties without unsafe type assertions and tolerate cyclic causes.
+  - Replace the P2034-only predicate passed to retryExamStart in POST /exam/start with isSerializationFailure. Do not change the retry budget: the defect was misclassification, not budget exhaustion, and one retry is enough once the loser re-reads the committed session.
+  - Do not change the exam start request, response, error contracts, selection, snapshot or cardinality rules. Do not widen retries to other endpoints in this task.
+  - Add tests/transaction.test.ts covering P2034, the real DriverAdapterError shape, a deadlock SQLSTATE, a pg-style code property, a nested cause, a cyclic cause, an unrelated Prisma code, an unrelated SQLSTATE and non-object inputs.
+  - Extend tests/exam-start.integration.test.ts with a deterministic induced serialization conflict between two concurrent serializable transactions on one learner, asserting exactly one rejection that isSerializationFailure accepts, and a bounded repeated concurrent-start loop that always yields one 200, one 409 and one session. Include response bodies in the concurrent assertion message.
+  - Update the README exam start paragraph to name the retried conditions precisely. No schema migration, Mini App, dependency, credential or deployment change.
+accepted_commit: 562710770aab9bb4ad358c9a2c75ebd2cd76358b
+review_file: .agent/reviews/TASK-039-review-01.md
