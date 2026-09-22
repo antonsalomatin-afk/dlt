@@ -684,7 +684,15 @@ control defaults to All categories; eligible categories stay in server order and
 question counts. Category labels follow the English, Russian or Thai practice language.
 
 All categories sends `POST /practice/next` with `{}`, while a selected category sends exactly
-`{ "categoryId": "<category UUID>" }`. Continue uses the currently selected scope. Scope is
+`{ "categoryId": "<category UUID>" }`. One learning concept is requested the same way with
+exactly `{ "conceptId": "<concept UUID>" }`, using a `conceptId` from
+`GET /me/progress/concepts`. The two selectors are mutually exclusive: sending both, a
+`null`, a non-UUID, a duplicate member or any unknown key returns
+`400 { "error": "Bad Request" }` after authentication and before the vehicle check. A
+concept selector is applied in the same eligibility predicate as the saved vehicle, active
+and `VERIFIED`, so an unknown concept, a concept whose questions belong to another vehicle
+and a concept with nothing eligible are indistinguishable: each returns the same
+`404 { "error": "No questions available" }` and creates no presentation. Continue uses the currently selected scope. Scope is
 locked while a presented question is unanswered and unlocks after a scored result, allowing
 the next request to use another scope without changing the completed result. A filtered 404
 keeps its category selected and offers another scope or retry; an unfiltered 404 keeps the

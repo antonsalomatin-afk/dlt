@@ -429,11 +429,13 @@ export function createApi(options: {
       if (!user.selectedVehicleType) return reply.code(409).send(errorSchema.parse({ error: 'Vehicle selection required' }));
       const vehicleType = user.selectedVehicleType;
       const categoryId = body.data?.categoryId;
+      const conceptId = body.data?.conceptId;
       const eligibleQuestion: Prisma.QuestionWhereInput = {
         vehicleType,
         active: true,
         verificationStatus: 'VERIFIED',
         ...(categoryId === undefined ? {} : { categoryId }),
+        ...(conceptId === undefined ? {} : { conceptId }),
       };
       const result = await options.database.$transaction(async (tx) => {
         const eligibleCount = await tx.question.count({ where: eligibleQuestion });

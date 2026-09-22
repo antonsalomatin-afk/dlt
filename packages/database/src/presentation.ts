@@ -15,7 +15,14 @@ export const presentedQuestionSchema = z.strictObject({
     .refine((choices) => new Set(choices.map((choice) => choice.key)).size === 4),
 });
 export const presentationResponseSchema = z.strictObject({ presentationId: z.uuid(), question: presentedQuestionSchema });
-export const practiceNextRequestSchema = z.strictObject({ categoryId: z.uuid().optional() }).optional();
+/** One practice scope at a time: all eligible questions, one category, or one concept. */
+export const practiceNextRequestSchema = z.strictObject({
+  categoryId: z.uuid().optional(),
+  conceptId: z.uuid().optional(),
+}).refine(
+  (body) => body.categoryId === undefined || body.conceptId === undefined,
+  { message: 'Choose either a category or a concept, not both' },
+).optional();
 export const presentationSnapshotSchema = z.strictObject({
   version: z.literal(1), question: presentedQuestionSchema, correctChoiceId: z.uuid(),
   explanationThai: translation, explanationEnglish: translation, explanationRussian: translation,

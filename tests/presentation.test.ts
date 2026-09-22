@@ -18,9 +18,10 @@ it('validates snapshot reads and rejects corrupt or unsupported snapshots', () =
   ]) expect(() => parsePresentationSnapshot({ ...valid, question })).toThrow();
 });
 
-it('accepts only an optional strict category UUID selector for the next question', () => {
+it('accepts one optional strict category or concept UUID selector for the next question', () => {
   const categoryId = randomUUID();
-  for (const value of [undefined, {}, { categoryId }]) {
+  const conceptId = randomUUID();
+  for (const value of [undefined, {}, { categoryId }, { conceptId }]) {
     expect(practiceNextRequestSchema.safeParse(value).success).toBe(true);
   }
   for (const value of [
@@ -31,5 +32,10 @@ it('accepts only an optional strict category UUID selector for the next question
     { categoryId: [categoryId, categoryId] },
     { unknown: true },
     { categoryId, unknown: true },
+    { conceptId: null },
+    { conceptId: 'not-a-uuid' },
+    { conceptId: [conceptId, conceptId] },
+    { conceptId, unknown: true },
+    { categoryId, conceptId },
   ]) expect(practiceNextRequestSchema.safeParse(value).success).toBe(false);
 });
