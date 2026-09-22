@@ -1,0 +1,32 @@
+id: TASK-042
+title: Practise the weakest concept from the Mini App
+status: ACCEPTED
+epic: Epic 6 — Concept Learning
+objective: Let a learner drill the rule they are weakest at from the practice view, using the accepted concept-filtered delivery.
+acceptance:
+  - A fresh practice view offers a weakest-rule scope alongside All categories and the category list, naming the concept and its accuracy, whenever the learner has concept progress.
+  - Choosing it sends exactly { conceptId } to POST /practice/next and continuing keeps that scope, with the accepted scope-locking behaviour unchanged.
+  - When concept progress is unavailable or empty the option is absent and practice keeps working exactly as before; a 401 from it still clears the session.
+  - A concept with nothing eligible shows guidance naming the rule and keeps the scope selected, and browser tests cover it while all existing suites stay green.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+dependencies:
+  - TASK-041
+owner_decision_required: false
+supervisor_refinement:
+  - On each fresh practice mount, after the accepted category request, issue one GET /me/progress/concepts with the in-memory bearer session, no-store and the standard timeout, guarded against overlap and invalidated on departure like every other practice request.
+  - Treat that request as auxiliary. Transport, non-success and invalid responses hide the weakest-rule option and leave practice fully usable with no error banner and no change to the category error state. A 401 expires and clears the session through the established path, consistent with every other request.
+  - The weakest rule is the first item of the validated weakest-first concepts array, taken as the server ordered it. Never reorder, recompute or round in the browser. An empty concepts array means no option.
+  - Render the option inside the existing Practice scope group, labelled with the localized concept name and its accuracy, following the practice language selector with English fallback. Selecting it clears any category selection; selecting a category or All categories clears it. Keep exactly one scope active and preserve the accepted scope-locking rule while a presented question is unanswered.
+  - Get a question and Continue send exactly { conceptId } while that scope is selected, and { categoryId } or {} otherwise. A filtered 404 keeps the scope selected and names the rule in the guidance. Do not change answer submission, favourites, or the presented-question contract.
+  - Do not add a mastery label, readiness figure, due date or scheduling; do not refresh the weakest rule mid-session; do not persist anything in browser storage.
+  - Add Playwright coverage for the option appearing with the name and accuracy, the exact { conceptId } body on first and continued requests, mutual exclusion with category scope, scope locking, the filtered 404 naming the rule, the option being absent for empty and failed concept progress with practice still usable, a 401 clearing the session, localization, and no browser storage writes. Keep all existing E2E suites green.
+  - Update README. No backend, schema, dependency, credential or deployment change.
+accepted_commit: 2d20cbc3a9846d5c6fb22ceae15592bc9df5155e
+review_file: .agent/reviews/TASK-042-review-01.md

@@ -1,0 +1,26 @@
+TASK-042 authoritative checks
+Completed: 2026-09-22T07:04:28Z
+Commit: 2d20cbc3a9846d5c6fb22ceae15592bc9df5155e
+Environment: Linux container, Node 24, pnpm 11.19, Playwright 1.63 driving the preinstalled Chromium, system PostgreSQL 16 on 127.0.0.1:55432
+
+## pnpm check
+PASS with the pre-existing environment exception recorded in FOLLOW_UPS.md
+- eslint: passed
+- TypeScript and web typechecks: passed
+- Test files: 24 passed, 1 failed
+- Tests: 172 passed, 3 failed
+- The 3 failures are the Windows-only tests/database-lifecycle.test.ts reset-safety cases; unrelated to TASK-042.
+
+## pnpm build
+PASS (exit 0)
+
+## pnpm test:e2e
+PASS
+- 166 passed (156 accepted + 10 new in tests/e2e/weakest-concept.spec.ts), 47.0s
+
+## pnpm test:integration
+PASS
+- Test files: 21 passed
+- Tests: 116 passed
+- Duration: 39.91s
+- Run although the task changes no server code, to confirm the practice contract is untouched.
