@@ -11,6 +11,7 @@ import {
   examStartResponseSchema,
 } from '../packages/database/src/exam.ts';
 import { parsePresentationSnapshot } from '../packages/database/src/presentation.ts';
+import { isSerializationFailure } from '../packages/database/src/transaction.ts';
 
 const databaseUrl = process.env.DATABASE_URL;
 if (!databaseUrl) throw new Error('DATABASE_URL is required for exam start integration tests');
@@ -321,7 +322,10 @@ describe('POST /exam/start boundaries', () => {
       start(sameLearner.token, { payload: '{}', contentType: 'application/json' }),
       start(sameLearner.token, { payload: '{}', contentType: 'application/json' }),
     ]);
-    expect(sameResponses.map(({ statusCode }) => statusCode).sort()).toEqual([200, 409]);
+    expect(
+      sameResponses.map(({ statusCode }) => statusCode).sort(),
+      `concurrent start bodies: ${sameResponses.map(({ statusCode, body }) => `${statusCode} ${body.slice(0, 200)}`).join(' | ')}`,
+    ).toEqual([200, 409]);
     expect(sameResponses.find(({ statusCode }) => statusCode === 409)?.json()).toEqual({ error: 'Exam already in progress' });
     expect(await database.examSession.count({ where: { userId: sameLearner.user.id } })).toBe(1);
     expect(await database.examQuestion.count({ where: { examSession: { userId: sameLearner.user.id } } })).toBe(50);
@@ -335,4 +339,62 @@ describe('POST /exam/start boundaries', () => {
     expect(independent.map(({ statusCode }) => statusCode)).toEqual([200, 200]);
     expect(await database.examSession.count({ where: { userId: { in: [first.user.id, second.user.id] } } })).toBe(2);
   });
+
+  it('classifies a real driver serialization conflict as retryable', async () => {
+    const learner = await createLearner('CAR');
+    let conflict: unknown;
+    let induced = false;
+
+    // Two serializable transactions read the learner's sessions, then both insert into that
+    // same predicate. PostgreSQL must abort one of them, which is the conflict the endpoint
+    // has to recognize. Asserting against the driver's own error, not a hand-written object,
+    // is the point of this test.
+    for (let attempt = 0; attempt < 3 && !induced; attempt++) {
+      let release: (() => void) | undefined;
+      const bothRead = new Promise<void>((resolve) => { release = resolve; });
+      let arrived = 0;
+      const insert = () => database.$transaction(async (transaction) => {
+        await transaction.examSession.findMany({ where: { userId: learner.user.id }, select: { id: true } });
+        arrived++;
+        if (arrived === 2) release?.();
+        await bothRead;
+        const startedAt = new Date(clock.getTime() - attempt * 1_000);
+        await transaction.examSession.create({ data: {
+          userId: learner.user.id, vehicleType: 'CAR', passingScore: EXAM_PASSING_SCORE,
+          startedAt, expiresAt: new Date(startedAt.getTime() + EXAM_DURATION_MS),
+        } });
+      }, { isolationLevel: 'Serializable' });
+
+      const settled = await Promise.allSettled([insert(), insert()]);
+      const rejected = settled.filter((outcome) => outcome.status === 'rejected');
+      if (rejected.length === 1 && rejected[0]?.status === 'rejected') {
+        conflict = rejected[0].reason;
+        induced = true;
+      }
+    }
+
+    expect(induced, 'PostgreSQL did not raise a serialization conflict to classify').toBe(true);
+    expect(conflict).toBeInstanceOf(Error);
+    expect(
+      isSerializationFailure(conflict),
+      `unrecognized conflict: ${conflict instanceof Error ? `${conflict.name}: ${conflict.message} cause ${JSON.stringify(conflict.cause)}` : String(conflict)}`,
+    ).toBe(true);
+    await database.examSession.deleteMany({ where: { userId: learner.user.id } });
+  });
+
+  it('keeps repeated concurrent starts converging on one session', async () => {
+    injectedOffset = 0;
+    for (let round = 0; round < 6; round++) {
+      const learner = await createLearner('CAR');
+      const responses = await Promise.all([
+        start(learner.token, { payload: '{}', contentType: 'application/json' }),
+        start(learner.token, { payload: '{}', contentType: 'application/json' }),
+      ]);
+      expect(
+        responses.map(({ statusCode }) => statusCode).sort(),
+        `round ${round} bodies: ${responses.map(({ statusCode, body }) => `${statusCode} ${body.slice(0, 200)}`).join(' | ')}`,
+      ).toEqual([200, 409]);
+      expect(await database.examSession.count({ where: { userId: learner.user.id } })).toBe(1);
+    }
+  }, 60_000);
 });

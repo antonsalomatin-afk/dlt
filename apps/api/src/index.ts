@@ -10,6 +10,7 @@ import { favoriteRequestSchema, favoriteResponseSchema } from '../../../packages
 import { encodeFavoriteCursor, favoriteFeedResponseSchema, parseFavoriteFeedQuery } from '../../../packages/database/src/favorite-feed.ts';
 import { buildProgressSummary } from '../../../packages/database/src/progress.ts';
 import { buildConceptProgress } from '../../../packages/database/src/concept-progress.ts';
+import { isSerializationFailure } from '../../../packages/database/src/transaction.ts';
 import {
   EXAM_DURATION_MS,
   EXAM_ELIGIBLE_LIMIT,
@@ -597,10 +598,7 @@ export function createApi(options: {
         return { kind: 'created', response } as const;
       }, { isolationLevel: 'Serializable' });
 
-      const result = await retryExamStart(
-        startTransaction,
-        (error) => error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2034',
-      );
+      const result = await retryExamStart(startTransaction, isSerializationFailure);
       if (result.kind === 'active') return reply.code(409).send(errorSchema.parse({ error: 'Exam already in progress' }));
       if (result.kind === 'insufficient') return reply.code(409).send(errorSchema.parse({ error: 'Not enough questions available' }));
       return result.response;

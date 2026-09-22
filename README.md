@@ -265,8 +265,13 @@ Fewer than 50 eligible rows returns
 invalid bounded server state and returns the sanitized
 `500 { "error": "Internal Server Error" }`. Selection, content validation, session
 creation, and all 50 question writes share a serializable transaction with bounded retry
-for serialization conflicts. Concurrent starts for one learner therefore create one
-session; starts by different learners are independent.
+for serialization conflicts. A conflict counts as retryable when it carries Prisma's
+write-conflict code or PostgreSQL SQLSTATE `40001` or `40P01` anywhere in its cause
+chain, because the pg driver adapter reports a lost serializable transaction as a driver
+error rather than a Prisma error code. The losing attempt re-reads the committed session,
+so concurrent starts for one learner produce exactly one session and one
+`409 { "error": "Exam already in progress" }`; starts by different learners are
+independent.
 
 Each selected question is rechecked for eligibility and validated with the same versioned
 immutable presentation-snapshot contract used by practice. Invalid, missing, duplicate,
