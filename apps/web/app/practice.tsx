@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { answerSchema, favoriteResponseSchema, practiceCategoriesSchema, presentationSchema, type Answer, type PracticeCategory, type Presentation, type Session } from '../lib/contracts';
+import { answerSchema, conceptProgressResponseSchema, favoriteResponseSchema, practiceCategoriesSchema, presentationSchema, type Answer, type ConceptProgressItem, type PracticeCategory, type Presentation, type Session } from '../lib/contracts';
 
 type Language = 'English' | 'Russian' | 'Thai';
 const localized = (language: Language, english: string | null, russian: string | null, thai: string | null) =>
@@ -9,6 +9,9 @@ const localized = (language: Language, english: string | null, russian: string |
 const localizedCategory = (language: Language, category: PracticeCategory) =>
   (language === 'Russian' ? category.nameRussian : language === 'Thai' ? category.nameThai : category.nameEnglish)
   || category.nameEnglish || category.nameThai || category.nameRussian;
+const localizedConcept = (language: Language, concept: ConceptProgressItem) =>
+  (language === 'Russian' ? concept.nameRussian : language === 'Thai' ? concept.nameThai : concept.nameEnglish)
+  || concept.nameEnglish;
 
 export function Practice({ session, onExpired, onVehicle, onProgress, onHistory, onMistakes, onFavorites, onExam, onExamHistory, onConcepts }: { session: Session; onExpired: () => void; onVehicle: (missing?: boolean) => void; onProgress: () => void; onHistory: () => void; onMistakes: () => void; onFavorites: () => void; onExam: () => void; onExamHistory: () => void; onConcepts: () => void }) {
   const [presentation, setPresentation] = useState<Presentation | null>(null);
@@ -17,6 +20,8 @@ export function Practice({ session, onExpired, onVehicle, onProgress, onHistory,
   const [language, setLanguage] = useState<Language>('English');
   const [categories, setCategories] = useState<PracticeCategory[] | null>(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [weakestConcept, setWeakestConcept] = useState<ConceptProgressItem | null>(null);
+  const [conceptScope, setConceptScope] = useState(false);
   const [categoriesPending, setCategoriesPending] = useState(true);
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState('Loading practice categories…');
@@ -29,6 +34,7 @@ export function Practice({ session, onExpired, onVehicle, onProgress, onHistory,
   const busy = useRef(false);
   const favoriteBusy = useRef(false);
   const categoriesBusy = useRef(false);
+  const conceptsBusy = useRef(false);
   const active = useRef(true);
 
   async function loadCategories() {
@@ -54,9 +60,31 @@ export function Practice({ session, onExpired, onVehicle, onProgress, onHistory,
     }
   }
 
+  // The weakest rule is an optional extra scope. Practice must stay usable when this
+  // request fails, so only an expired session is allowed to change anything the learner sees.
+  async function loadWeakestConcept() {
+    if (conceptsBusy.current || !active.current) return;
+    conceptsBusy.current = true;
+    try {
+      const response = await fetch('/me/progress/concepts', {
+        method: 'GET', headers: { Authorization: `Bearer ${session.token}` }, cache: 'no-store', signal: AbortSignal.timeout(15000),
+      });
+      if (!active.current) return;
+      if (response.status === 401) { active.current = false; onExpired(); return; }
+      if (!response.ok) throw new Error();
+      const payload: unknown = await response.json();
+      if (!active.current) return;
+      const progress = conceptProgressResponseSchema.parse(payload);
+      setWeakestConcept(progress.concepts[0] ?? null);
+    } catch {
+      if (active.current) setWeakestConcept(null);
+    } finally { conceptsBusy.current = false; }
+  }
+
   useEffect(() => {
     active.current = true;
     void loadCategories();
+    void loadWeakestConcept();
     return () => { active.current = false; };
   }, []);
 
@@ -66,20 +94,25 @@ export function Practice({ session, onExpired, onVehicle, onProgress, onHistory,
     const current = presentation;
     const selected = choice;
     const categoryId = selectedCategoryId;
+    const conceptId = conceptScope && weakestConcept ? weakestConcept.conceptId : null;
     if (!submit) { setPresentation(null); setChoice(null); setAnswer(null); setAttempted(false); setClosed(false); setFavoriteError(false); setSavedPresentationId(null); }
     else setAttempted(true);
     setMessage(submit ? 'Checking your answer…' : 'Finding your next question…');
     try {
       const response = await fetch(submit ? '/practice/answer' : '/practice/next', {
         method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.token}` },
-        body: JSON.stringify(submit ? { presentationId: current?.presentationId, choiceId: selected } : categoryId ? { categoryId } : {}),
+        body: JSON.stringify(submit
+          ? { presentationId: current?.presentationId, choiceId: selected }
+          : conceptId ? { conceptId } : categoryId ? { categoryId } : {}),
         cache: 'no-store', signal: AbortSignal.timeout(15000),
       });
       if (!active.current) return;
       if (response.status === 401) { active.current = false; onExpired(); return; }
       if (!submit && response.status === 409) { active.current = false; onVehicle(true); return; }
       if (!submit && response.status === 404) {
-        if (categoryId) {
+        if (conceptId) {
+          setMessage(`No questions are available for ${weakestConcept ? localizedConcept(language, weakestConcept) : 'this rule'} right now. Choose another scope or try again.`);
+        } else if (categoryId) {
           const category = categories?.find((item) => item.id === categoryId);
           setMessage(`No questions are available in ${category ? localizedCategory(language, category) : 'this category'} right now. Choose another category or try again.`);
         } else setMessage('No questions available for this vehicle yet. Try again later or change your vehicle.');
@@ -146,8 +179,9 @@ export function Practice({ session, onExpired, onVehicle, onProgress, onHistory,
     <div className="panel-nav"><button className="secondary" onClick={() => { active.current = false; onVehicle(); }}>Change vehicle</button><button className="secondary" onClick={() => { active.current = false; onProgress(); }}>Progress</button><button className="secondary" onClick={() => { active.current = false; onHistory(); }}>History</button><button className="secondary" onClick={() => { active.current = false; onMistakes(); }}>Mistakes</button><button className="secondary" onClick={() => { active.current = false; onFavorites(); }}>Favorites</button><button className="secondary" onClick={() => { active.current = false; onExam(); }}>Mock exam</button><button className="secondary" onClick={() => { active.current = false; onExamHistory(); }}>Exams</button><button className="secondary" onClick={() => { active.current = false; onConcepts(); }}>Concepts</button></div>
     <fieldset className="languages"><legend>Practice language</legend>{(['English', 'Russian', 'Thai'] as const).map((item) => <label key={item}><input type="radio" name="language" checked={language === item} onChange={() => setLanguage(item)} /> {item}</label>)}</fieldset>
     {categories && <fieldset className="practice-scope" disabled={scopeLocked}><legend>Practice scope</legend>
-      <label className={selectedCategoryId === null ? 'selected' : ''}><input type="radio" name="practice-scope" value="all" checked={selectedCategoryId === null} onChange={() => setSelectedCategoryId(null)} /><span>All categories</span></label>
-      {categories.map((category) => <label className={selectedCategoryId === category.id ? 'selected' : ''} key={category.id}><input type="radio" name="practice-scope" value={category.id} checked={selectedCategoryId === category.id} onChange={() => setSelectedCategoryId(category.id)} /><span>{localizedCategory(language, category)} <small>{category.questionCount} {category.questionCount === 1 ? 'question' : 'questions'}</small></span></label>)}
+      <label className={selectedCategoryId === null && !conceptScope ? 'selected' : ''}><input type="radio" name="practice-scope" value="all" checked={selectedCategoryId === null && !conceptScope} onChange={() => { setSelectedCategoryId(null); setConceptScope(false); }} /><span>All categories</span></label>
+      {weakestConcept && <label className={conceptScope ? 'selected' : ''}><input type="radio" name="practice-scope" value="weakest" checked={conceptScope} onChange={() => { setSelectedCategoryId(null); setConceptScope(true); }} /><span>Weakest rule: {localizedConcept(language, weakestConcept)} <small>{weakestConcept.accuracyPercent}% correct so far</small></span></label>}
+      {categories.map((category) => <label className={selectedCategoryId === category.id ? 'selected' : ''} key={category.id}><input type="radio" name="practice-scope" value={category.id} checked={selectedCategoryId === category.id} onChange={() => { setSelectedCategoryId(category.id); setConceptScope(false); }} /><span>{localizedCategory(language, category)} <small>{category.questionCount} {category.questionCount === 1 ? 'question' : 'questions'}</small></span></label>)}
     </fieldset>}
     {presentation && <>
       <h3 className="question">{localized(language, presentation.question.textEnglish, presentation.question.textRussian, presentation.question.textThai)}</h3>

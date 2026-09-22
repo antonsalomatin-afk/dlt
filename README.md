@@ -699,6 +699,21 @@ keeps its category selected and offers another scope or retry; an unfiltered 404
 vehicle-level guidance. Category loading has its own retry state, and an empty category list
 still permits All categories.
 
+A fresh practice view also asks for `GET /me/progress/concepts` and, when the learner has
+concept progress, offers one extra scope: the weakest rule, labelled with the localized
+concept name and its accuracy. Selecting it sends exactly `{ "conceptId": "<uuid>" }` for
+Get a question and for Continue. The weakest rule is the first item of the server's
+weakest-first list, taken as sent and never reordered or recomputed in the browser, and it
+is not refreshed mid-session; returning to practice recomputes it. Choosing a category or
+All categories clears it, so exactly one scope is ever active.
+
+That concept request is auxiliary: a transport, HTTP or invalid-response failure and an
+empty concept list simply leave the option out, with no error banner and practice fully
+usable. A protected 401 clears the memory-only session like every other request. A
+concept scope with nothing eligible keeps the scope selected and names the rule in the
+guidance. No mastery label, readiness figure or review schedule is shown, per the Product
+Owner decision recorded in `.agent/OWNER_DECISIONS.md`.
+
 Question delivery and answer submission use the same-origin `/practice/next` and
 `/practice/answer` rewrites. English is the default; Russian/Thai question wording and
 explanations fall back to English. Answers remain selected after a connection failure so
