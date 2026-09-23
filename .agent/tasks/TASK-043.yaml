@@ -1,0 +1,36 @@
+id: TASK-043
+title: Require authored provenance before a question can be verified
+status: ACCEPTED
+epic: Epic 7 — Content Operations
+objective: Make the accepted content decision enforceable in the database, so no question can reach the verified state that learners are served from without original authorship and a public legal citation.
+context:
+  - The Product Owner decision of 2026-09-22 fixes production content as original in-house authored work citing public Thai traffic law, with no scraping, no third-party bank and no official DLT ingestion.
+  - Every read path already requires active AND VERIFIED, so verification is the gate that decides what a learner can ever see.
+  - Nothing currently stops a FIXTURE, OFFICIAL or THIRD_PARTY question, or an uncited one, from being marked VERIFIED.
+acceptance:
+  - A database constraint makes it impossible to store a VERIFIED question whose sourceType is not ORIGINAL, or whose legalCitation is absent or blank.
+  - Draft and rejected questions are unaffected, so authoring and review can proceed before provenance is complete, and development fixtures remain storable as inactive drafts.
+  - A shared validator states the same rules for tooling with precise messages, and is unit tested.
+  - Isolated PostgreSQL tests prove each rejection and the accepted case, and every existing suite stays green.
+files_allowed:
+  - packages/database/**
+  - tests/**
+  - README.md
+  - content/README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-042
+owner_decision_required: false
+supervisor_refinement:
+  - Add one migration adding two CHECK constraints to Question. Question_verified_requires_original allows any row whose verificationStatus is not VERIFIED, and otherwise requires sourceType ORIGINAL. Question_verified_requires_legal_citation allows any row whose verificationStatus is not VERIFIED, and otherwise requires a legalCitation that is not null and not blank after trimming. Follow the existing raw CHECK convention used by the exam tables; Prisma does not model CHECK constraints.
+  - Do not constrain the active flag. Existing API tests deliberately store active unverified rows to prove that delivery filters on verification as well as activation, and that defence is worth keeping representable.
+  - Do not require reviewer or reviewedAt here. Reviewer identity and the review transition are the next task; this task is about authorship and citation only.
+  - Add packages/database/src/provenance.ts exporting a schema and an assert helper describing the same two rules over { verificationStatus, sourceType, legalCitation }, with distinct messages so future import and admin tooling can explain a rejection before it reaches the database.
+  - Update every test fixture that stores a VERIFIED question so it carries an original source type and a synthetic legal citation, keeping each test's original intent. Development fixtures stay FIXTURE, inactive and DRAFT, which the new constraints permit and which now makes fixture content unpublishable by construction.
+  - Add unit coverage for the validator and isolated PostgreSQL coverage for each constraint, including a whitespace-only citation, an OFFICIAL or THIRD_PARTY verified row, a FIXTURE verified row, an accepted verified row, and drafts that legitimately lack provenance.
+  - Update README and content/README to state the rule and its consequence. No API, Mini App, dependency, credential or deployment change.
+accepted_commit: 7e6e8d53a90a76e7384c72c6523155b2831abd8f
+review_file: .agent/reviews/TASK-043-review-01.md

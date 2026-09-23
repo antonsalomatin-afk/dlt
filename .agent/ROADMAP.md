@@ -100,7 +100,8 @@ Next epic by the accepted Product Owner decision of 2026-09-22. Production conte
 original in-house authored content citing public Thai traffic law; no scraping, no
 third-party bank, no official DLT ingestion without a new decision.
 
-- authored-question provenance and legal citation requirements
+- TASK-043 — ACCEPTED — authored provenance enforced before verification
+- TASK-044 — review status and reviewer workflow
 - review status and reviewer workflow
 - bulk import of authored content
 - content admin surface

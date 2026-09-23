@@ -1,0 +1,33 @@
+TASK-043 authoritative checks
+Completed: 2026-09-23T19:07:59Z
+Commit: 7e6e8d53a90a76e7384c72c6523155b2831abd8f
+Environment: Linux container, Node 24, pnpm 11.19, system PostgreSQL 16 on 127.0.0.1:55432
+
+## pnpm check
+PASS with the pre-existing environment exception recorded in FOLLOW_UPS.md
+- eslint: passed
+- TypeScript and web typechecks: passed
+- Test files: 25 passed, 1 failed
+- Tests: 177 passed, 3 failed
+- The 3 failures are the Windows-only tests/database-lifecycle.test.ts reset-safety cases; unrelated to TASK-043.
+
+## pnpm prisma validate
+PASS
+- packages/database/prisma/schema.prisma is valid
+
+## pnpm test:integration
+PASS
+- Test files: 20 passed
+- Tests: 116 passed (115 accepted + 1 new provenance case in tests/question.integration.test.ts)
+- Duration: 39.95s
+
+## Migration
+20260923090000_question_authored_provenance applied cleanly to the local development database
+and, through the per-file isolated databases, to 20 freshly migrated test databases.
+
+## Note on the fixture updates
+Before this task, 28 test fixtures stored VERIFIED questions with no legal citation, which
+the new constraint forbids. Each was given a synthetic citation and, in one case in
+tests/question.integration.test.ts, an original source type, keeping each test's original
+intent. The first integration run after the migration failed 17 files, which is how the
+complete list of affected fixtures was identified; the final run passes all 20.
