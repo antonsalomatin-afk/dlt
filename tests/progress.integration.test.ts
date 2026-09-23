@@ -86,19 +86,19 @@ beforeAll(async () => {
   ] });
   const [repeatedQuestion, motorcycleQuestion, inactiveQuestion, draftQuestion] = await Promise.all([
     database.question.create({ data: {
-      categoryId: rules.id, conceptId: conceptIds.stopping, vehicleType: 'CAR', textEnglish: 'Repeated', sourceType: 'ORIGINAL',
+      categoryId: rules.id, conceptId: conceptIds.stopping, vehicleType: 'CAR', textEnglish: 'Repeated', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
       active: true, verificationStatus: 'VERIFIED',
     } }),
     database.question.create({ data: {
-      categoryId: signs.id, conceptId: conceptIds.visibility, vehicleType: 'MOTORCYCLE', textEnglish: 'Motorcycle', sourceType: 'ORIGINAL',
+      categoryId: signs.id, conceptId: conceptIds.visibility, vehicleType: 'MOTORCYCLE', textEnglish: 'Motorcycle', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
       active: true, verificationStatus: 'VERIFIED',
     } }),
     database.question.create({ data: {
-      categoryId: signs.id, vehicleType: 'CAR', textEnglish: 'Inactive', sourceType: 'ORIGINAL',
+      categoryId: signs.id, vehicleType: 'CAR', textEnglish: 'Inactive', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
       active: false, verificationStatus: 'VERIFIED',
     } }),
     database.question.create({ data: {
-      categoryId: rules.id, vehicleType: 'MOTORCYCLE', textEnglish: 'Draft', sourceType: 'ORIGINAL',
+      categoryId: rules.id, vehicleType: 'MOTORCYCLE', textEnglish: 'Draft', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
       active: true, verificationStatus: 'DRAFT',
     } }),
   ]);

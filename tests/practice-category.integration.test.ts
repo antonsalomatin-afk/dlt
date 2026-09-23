@@ -76,7 +76,7 @@ async function createQuestion(input: {
       vehicleType: input.vehicleType,
       active: input.active ?? true,
       verificationStatus: input.verificationStatus ?? 'VERIFIED',
-      sourceType: 'ORIGINAL',
+      sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
       textEnglish: input.textEnglish,
       textExamEnglish: `${input.textEnglish} exam`,
       explanationEnglish: `${input.textEnglish} explanation`,

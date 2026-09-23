@@ -59,7 +59,7 @@ async function createQuestion(textEnglish: string) {
       vehicleType: 'CAR',
       active: true,
       verificationStatus: 'VERIFIED',
-      sourceType: 'ORIGINAL',
+      sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
       textEnglish,
       explanationEnglish: `${textEnglish} explanation`,
       choices: { create: (['A', 'B', 'C', 'D'] as const).map((key) => ({

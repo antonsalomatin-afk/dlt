@@ -59,7 +59,7 @@ beforeAll(async () => {
   } });
   const question = await db.question.create({
     data: {
-      categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL',
+      categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
       textThai: 'คำถามเดิม', textExamEnglish: 'Original exam wording', textEnglish: 'Original wording',
       textRussian: 'Исходный вопрос', explanationThai: 'คำอธิบาย', explanationEnglish: 'Original explanation',
       explanationRussian: 'Объяснение', trapExplanationThai: 'กับดัก', trapExplanationEnglish: 'Original trap',

@@ -88,7 +88,7 @@ beforeAll(async () => {
       categoryId,
       vehicleType: 'CAR',
       textEnglish: `Exam question ${index + 1}`,
-      sourceType: 'ORIGINAL',
+      sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
     },
   })));
   questionIds = questions.map(({ id }) => id);
@@ -119,6 +119,7 @@ describe('mock exam persistence foundation', () => {
       '20260910140000_answer_attempts',
       '20260916110000_favorites',
       '20260917120000_exam_sessions',
+      '20260923090000_question_authored_provenance',
     ]);
 
     const constraints = await database.$queryRaw<Array<{ conname: string }>>`
@@ -302,7 +303,7 @@ describe('mock exam persistence foundation', () => {
         categoryId,
         vehicleType: 'CAR',
         textEnglish: 'Restricted exam question',
-        sourceType: 'ORIGINAL',
+        sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
       },
     });
     await database.examQuestion.create({

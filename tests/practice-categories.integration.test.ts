@@ -69,7 +69,7 @@ async function createCategory(input: {
           active: question.active ?? true,
           verificationStatus: question.verificationStatus ?? 'VERIFIED',
           textEnglish: `Question ${input.slug} ${index}`,
-          sourceType: 'ORIGINAL',
+          sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
         })),
       },
     },
@@ -253,7 +253,7 @@ describe('GET /practice/categories', () => {
       active: true,
       verificationStatus: 'VERIFIED',
       textEnglish: `Boundary question ${index}`,
-      sourceType: 'ORIGINAL',
+      sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
     })) });
 
     const hundredResponse = await categories(tokens.car);
@@ -271,7 +271,7 @@ describe('GET /practice/categories', () => {
       active: true,
       verificationStatus: 'VERIFIED',
       textEnglish: 'Boundary question 100',
-      sourceType: 'ORIGINAL',
+      sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
     } });
     const overflow = await categories(tokens.car);
     expect(overflow.statusCode).toBe(500);

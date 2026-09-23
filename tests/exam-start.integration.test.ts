@@ -105,7 +105,7 @@ beforeAll(async () => {
         vehicleType: 'CAR' as const,
         active: true,
         verificationStatus: 'VERIFIED' as const,
-        sourceType: 'ORIGINAL' as const,
+        sourceType: 'ORIGINAL' as const, legalCitation: 'Synthetic development citation, not legal guidance',
         textEnglish: `Exam question ${index + 1}`,
         textExamEnglish: `Exam-style wording ${index + 1}`,
         explanationEnglish: `Private explanation ${index + 1}`,
@@ -113,10 +113,10 @@ beforeAll(async () => {
         sourceReference: `Private source ${index + 1}`,
         imageReference: `Private image ${index + 1}`,
       })),
-      { id: excludedQuestionIds.motorcycle, categoryId, vehicleType: 'MOTORCYCLE', active: true, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL', textEnglish: 'Motorcycle question' },
-      { id: excludedQuestionIds.inactive, categoryId, vehicleType: 'CAR', active: false, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL', textEnglish: 'Inactive question' },
-      { id: excludedQuestionIds.draft, categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'DRAFT', sourceType: 'ORIGINAL', textEnglish: 'Draft question' },
-      { id: excludedQuestionIds.rejected, categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'REJECTED', sourceType: 'ORIGINAL', textEnglish: 'Rejected question' },
+      { id: excludedQuestionIds.motorcycle, categoryId, vehicleType: 'MOTORCYCLE', active: true, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance', textEnglish: 'Motorcycle question' },
+      { id: excludedQuestionIds.inactive, categoryId, vehicleType: 'CAR', active: false, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance', textEnglish: 'Inactive question' },
+      { id: excludedQuestionIds.draft, categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'DRAFT', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance', textEnglish: 'Draft question' },
+      { id: excludedQuestionIds.rejected, categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'REJECTED', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance', textEnglish: 'Rejected question' },
     ],
   });
   await database.questionChoice.createMany({
@@ -276,7 +276,7 @@ describe('POST /exam/start boundaries', () => {
         vehicleType: 'MOTORCYCLE' as const,
         active: true,
         verificationStatus: 'VERIFIED' as const,
-        sourceType: 'ORIGINAL' as const,
+        sourceType: 'ORIGINAL' as const, legalCitation: 'Synthetic development citation, not legal guidance',
         textEnglish: `Oversized question ${index + 1}`,
       })),
     });
@@ -293,7 +293,7 @@ describe('POST /exam/start boundaries', () => {
       vehicleType: 'CAR',
       active: true,
       verificationStatus: 'VERIFIED',
-      sourceType: 'ORIGINAL',
+      sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
       textEnglish: 'Corrupt selected question without choices',
     } });
     const corruptLearner = await createLearner('CAR');

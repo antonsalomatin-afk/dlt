@@ -22,7 +22,11 @@ The importer validates the entire document before writing: exactly 25 unique
 questions, all five categories, both vehicles, nonempty text, strict allowed
 fields, A–D once each, one correct choice, and a complete multilingual example.
 Every imported question remains `FIXTURE`, inactive and `DRAFT`; no review or
-legal-verification claim is created.
+legal-verification claim is created. Since PostgreSQL refuses to verify anything whose
+source type is not `ORIGINAL`, fixture content cannot be promoted to the verified state
+that learner-facing delivery requires, no matter how it is edited. Production content is
+original in-house authored work citing public Thai traffic law, per the accepted decision
+in `.agent/OWNER_DECISIONS.md`.
 
 Run `pnpm content:import` after the documented database setup. This accepts no
 file or destination arguments and requires the loopback-only `.env` convention.

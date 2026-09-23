@@ -48,6 +48,54 @@ describe('question domain constraints', () => {
     await expect(database.category.delete({ where: { id: categoryId } })).rejects.toMatchObject({ code: 'P2003' });
   });
 
+  it('refuses to verify a question without original authorship and a legal citation', async () => {
+    const base = {
+      categoryId, vehicleType: 'CAR' as const, textEnglish: 'Provenance case',
+      verificationStatus: 'VERIFIED' as const,
+    };
+    const citation = 'Land Traffic Act section 21';
+    for (const data of [
+      { ...base, sourceType: 'FIXTURE' as const, legalCitation: citation },
+      { ...base, sourceType: 'OFFICIAL' as const, legalCitation: citation },
+      { ...base, sourceType: 'THIRD_PARTY' as const, legalCitation: citation },
+      { ...base, sourceType: 'ORIGINAL' as const },
+      { ...base, sourceType: 'ORIGINAL' as const, legalCitation: null },
+      { ...base, sourceType: 'ORIGINAL' as const, legalCitation: '' },
+      { ...base, sourceType: 'ORIGINAL' as const, legalCitation: '   ' },
+    ]) {
+      await expect(database.question.create({ data }), JSON.stringify(data)).rejects.toThrow(/Question_verified_requires_(original|legal_citation)/u);
+    }
+
+    const accepted = await database.question.create({ data: { ...base, sourceType: 'ORIGINAL', legalCitation: citation } });
+    ownedQuestions.push(accepted.id);
+    expect(accepted).toMatchObject({ verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL', legalCitation: citation });
+
+    // Drafts may be incomplete: authoring and review happen before provenance is settled.
+    // Each draft below violates exactly one rule, so the promotion failure is unambiguous.
+    const uncitedDraft = await database.question.create({ data: {
+      categoryId, vehicleType: 'CAR', textEnglish: 'Draft without a citation', sourceType: 'ORIGINAL',
+    } });
+    const borrowedDraft = await database.question.create({ data: {
+      categoryId, vehicleType: 'CAR', textEnglish: 'Draft from elsewhere', sourceType: 'THIRD_PARTY', legalCitation: citation,
+    } });
+    ownedQuestions.push(uncitedDraft.id, borrowedDraft.id);
+    expect(uncitedDraft).toMatchObject({ verificationStatus: 'DRAFT', legalCitation: null });
+    await expect(database.question.update({ where: { id: uncitedDraft.id }, data: { verificationStatus: 'VERIFIED' } }))
+      .rejects.toThrow(/Question_verified_requires_legal_citation/u);
+    await expect(database.question.update({ where: { id: borrowedDraft.id }, data: { verificationStatus: 'VERIFIED' } }))
+      .rejects.toThrow(/Question_verified_requires_original/u);
+    await expect(database.question.update({ where: { id: uncitedDraft.id }, data: { verificationStatus: 'VERIFIED', legalCitation: citation } }))
+      .resolves.toMatchObject({ verificationStatus: 'VERIFIED' });
+
+    const constraints = await database.$queryRaw<Array<{ conname: string }>>`
+      SELECT conname FROM pg_constraint WHERE conrelid = '"Question"'::regclass ORDER BY conname
+    `;
+    expect(constraints.map(({ conname }) => conname)).toEqual(expect.arrayContaining([
+      'Question_verified_requires_original',
+      'Question_verified_requires_legal_citation',
+    ]));
+  });
+
   it('selects only active verified questions for the requested vehicle and category', async () => {
     const cases = [
       { vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED' },
@@ -57,7 +105,7 @@ describe('question domain constraints', () => {
     ] satisfies Array<{ vehicleType: 'CAR' | 'MOTORCYCLE'; active: boolean; verificationStatus: 'VERIFIED' | 'DRAFT' }>;
     let selectedId: string | undefined;
     for (const [index, state] of cases.entries()) {
-      const question = await database.question.create({ data: { ...state, categoryId, textEnglish: 'Synthetic filter case', sourceType: 'FIXTURE' } });
+      const question = await database.question.create({ data: { ...state, categoryId, textEnglish: 'Synthetic filter case', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance' } });
       ownedQuestions.push(question.id);
       if (index === 0) selectedId = question.id;
     }

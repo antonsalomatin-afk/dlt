@@ -147,9 +147,24 @@ PostgreSQL enforces category/concept references, prevents deleting referenced
 categories/concepts, and enforces one choice per stable A–D key per question.
 This permits at most four choices. Deleting a question cascades to its choices.
 The next import boundary must enforce exactly four choices, exactly one correct
-choice, nonempty text, and required publication/review metadata before publishing.
-Direct database writes can represent incomplete drafts; the schema alone does
-not certify publishable content.
+choice, and nonempty text before publishing. Direct database writes can represent
+incomplete drafts.
+
+Authored provenance is enforced, not merely recorded. PostgreSQL refuses to store a
+`VERIFIED` question whose `sourceType` is not `ORIGINAL`, or whose `legalCitation` is
+absent or blank once trimmed, through the `Question_verified_requires_original` and
+`Question_verified_requires_legal_citation` constraints. Because every learner-facing
+query requires `active` and `VERIFIED` together, nothing can reach a learner without
+original in-house authorship and a citation of the public law it teaches, which is the
+accepted content decision recorded in `.agent/OWNER_DECISIONS.md`. Development fixtures
+are `FIXTURE`, so they are unpublishable by construction.
+
+`DRAFT` and `REJECTED` questions are deliberately left unconstrained so authoring and
+review can proceed before provenance is settled; promoting such a row to `VERIFIED`
+fails until it carries both. `packages/database/src/provenance.ts` states the same two
+rules for tooling, so an importer or admin surface can explain a rejection before
+writing. The `active` flag itself is not constrained, which keeps an active unverified
+row representable for tests that prove delivery filters on verification as well.
 
 Practice queries must filter `active: true`, `verificationStatus: 'VERIFIED'`,
 vehicle type and category; a composite index supports those predicates. Shared

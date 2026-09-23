@@ -51,7 +51,7 @@ try {
     categoryId: category.id, vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED',
     textEnglish: 'Synthetic test: which action preserves a safe following distance?',
     explanationEnglish: 'Leave enough space to stop safely.', trapExplanationEnglish: 'Speeding up reduces the time available to react.',
-    sourceType: 'ORIGINAL', sourceReference: 'Synthetic automated test only', reviewer: 'Test harness', reviewedAt: new Date(),
+    sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance', sourceReference: 'Synthetic automated test only', reviewer: 'Test harness', reviewedAt: new Date(),
     choices: { create: (['A', 'B', 'C', 'D'] as const).map((key) => ({ key, textEnglish: key === 'A' ? 'Leave space' : `Unsafe action ${key}`, isCorrect: key === 'A' })) },
   }, include: { choices: true } });
   phase = 'web build';

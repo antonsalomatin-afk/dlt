@@ -61,14 +61,14 @@ it('authenticates, filters, validates, and preserves exactly the presented snaps
     { vehicleType: 'CAR', active: false, verificationStatus: 'VERIFIED' },
     { vehicleType: 'CAR', active: true, verificationStatus: 'DRAFT' },
   ] as const) {
-    const question = await db.question.create({ data: { ...state, categoryId, textEnglish: 'Excluded', sourceType: 'ORIGINAL' } });
+    const question = await db.question.create({ data: { ...state, categoryId, textEnglish: 'Excluded', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance' } });
     questions.push(question.id);
   }
   expect((await next()).statusCode).toBe(404);
   expect((await next()).json()).toEqual({ error: 'No questions available' });
   expect(await db.questionPresentation.count({ where: { userId } })).toBe(0);
   const question = await db.question.create({ data: {
-    categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL',
+    categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
     textEnglish: 'Original wording', textExamEnglish: 'Exam wording', explanationEnglish: 'Secret explanation', trapExplanationEnglish: 'Secret trap', sourceReference: 'Secret source', imageReference: 'Secret image',
     choices: { create: (['A', 'B', 'C', 'D'] as const).map((key) => ({ key, textEnglish: `Choice ${key}`, isCorrect: key === 'A' })) },
   }, include: { choices: true } });

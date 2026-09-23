@@ -120,7 +120,7 @@ beforeAll(async () => {
   for (const [index, questionId] of questionIds.entries()) {
     await database.question.create({
       data: {
-        id: questionId, categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL',
+        id: questionId, categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
         textEnglish: `Source wording ${index + 1}`,
         choices: { create: (['A', 'B', 'C', 'D'] as const).map((key, choiceIndex) => ({
           id: choiceIndex === 0 ? fixture(index).choiceId : randomUUID(), key, textEnglish: `Source ${key}`, isCorrect: choiceIndex === 0,

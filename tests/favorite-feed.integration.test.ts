@@ -59,7 +59,7 @@ const session = (token: string, expiresAt = new Date(clock.getTime() + 86_400_00
 async function createQuestion(textEnglish: string) {
   return database.question.create({
     data: {
-      categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL',
+      categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL', legalCitation: 'Synthetic development citation, not legal guidance',
       textThai: `ไทย ${textEnglish}`, textExamEnglish: `Exam ${textEnglish}`,
       textEnglish, textRussian: `Русский ${textEnglish}`,
       explanationEnglish: `Hidden explanation ${textEnglish}`,

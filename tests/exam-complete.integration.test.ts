@@ -180,7 +180,7 @@ beforeAll(async () => {
       vehicleType: 'CAR' as const,
       active: true,
       verificationStatus: 'VERIFIED' as const,
-      sourceType: 'ORIGINAL' as const,
+      sourceType: 'ORIGINAL' as const, legalCitation: 'Synthetic development citation, not legal guidance',
       textEnglish: `Source wording ${index + 1}`,
     })),
   });
