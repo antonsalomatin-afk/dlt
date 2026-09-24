@@ -1,0 +1,33 @@
+id: TASK-037
+title: Add Mini App exam history and mistake review
+status: READY
+epic: Epic 5 — Mock Exam
+objective: Let an authenticated learner browse completed mock exams and study each exam's immutable incorrect and unanswered questions in the Mini App.
+acceptance:
+  - The Mini App exposes completed exam history from setup and practice and a direct review action after an exam result.
+  - History paginates deterministic privacy-safe summaries and opens an owned completed exam's ordered immutable mistakes without mixing pages or learners.
+  - Perfect, incorrect and unanswered reviews, localization, session expiry, empty/error/retry states and stale-response navigation are accessible and deterministic.
+  - Strict browser contracts, exact same-origin routes, responsive UI and main flows are documented and covered by browser tests.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-036
+owner_decision_required: false
+supervisor_refinement:
+  - Add an Exam history entry from authenticated setup and practice, and add Review exam mistakes on the accepted completion result. Use one dedicated component that can open at the paginated history list or directly at a supplied completed examId, while preserving the existing in-memory bearer-session and mounted/stale-response boundaries.
+  - Add only the exact same-origin rewrites for GET /exam/history and dynamic GET /exam/:examId/review. Extend browser-side strict Zod contracts for the accepted history cursor/envelope/items and review response/mistakes. Enforce canonical IDs/timestamps, fixed50/45 policy, count and pass arithmetic, descending history order/uniqueness, mistake count equals50-score, increasing unique positions/IDs, selected/answered null pairing, presented-choice membership and incorrect-choice semantics. Reject unknown/privacy-sensitive members.
+  - History sends authenticated no-store GET /exam/history?limit=10 and then the exact encoded next cursor for later pages. Render newest-first summaries with vehicle, completion time, score/pass, answered and unanswered counts. Prevent duplicate exam IDs across pages, append each successful page once, expose Load more only when nextCursor exists, and retry the exact failed initial/page cursor without discarding validated items.
+  - An empty history renders friendly guidance and returns to its origin.401 clears the in-memory session through the existing callback. Transport, non-OK or contract failures show safe retry states. Leaving during a pending request is immediate; all late success/error/401 outcomes are ignored after unmount.
+  - Selecting a history item or the direct result action sends one authenticated no-store GET /exam/:examId/review using encodeURIComponent on the validated canonical examId. Validate the returned examId matches the requested ID.404 shows that the exam is unavailable;409 Exam not completed shows a stable non-destructive message;401 expires the session; other transport/status/contract failures offer retry without rendering partial review content.
+  - Render the review summary and only the ordered mistakes. A perfect exam shows a clear no-mistakes state. Each incorrect or unanswered card shows position, localized immutable question/choices, the correct choice, the learner's selected choice or Unanswered, answered time when present, localized explanation and trap explanation with accepted fallback. Do not expose user/source/image/database metadata or current mutable content.
+  - Provide English/Russian/Thai selection for review content, semantic summaries/cards/lists, keyboard-operable actions, status/alert regions and responsive styles consistent with existing history/favorites screens. Back from a direct result review returns to a clean exam-history list or authenticated origin deterministically; back from a history-selected review preserves already validated list items without refetching them.
+  - Add focused unit tests for strict history cursor/envelope and review contracts, privacy fields, arithmetic, identity/order and answer-choice invariants. Add deterministic Playwright coverage with mocked same-origin APIs for: entry from setup/practice; empty history; two-page append and exact cursor retry; pass/fail summary rendering; perfect review; incorrect and unanswered localized review; direct review from result;401 on history/review;404/409 review errors; malformed response retry; duplicate cross-page rejection; immediate leave/stale response; and proof bearer tokens stay in headers and exam IDs are encoded only as route path data.
+  - Update README. No API/database change, exam taking behavior change beyond the new result navigation callback, practice answer-history UI change, production content, dependency, credential or deployment change.
