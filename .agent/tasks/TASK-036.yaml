@@ -1,0 +1,35 @@
+id: TASK-036
+title: Add the Mini App mock-exam taking flow
+status: READY
+epic: Epic 5 — Mock Exam
+objective: Let an authenticated learner start or resume a timed mock exam, submit answers without early result disclosure, and see the authoritative completion score in the Mini App.
+acceptance:
+  - The Mini App exposes an accessible mock-exam entry that restores an owned current exam before offering to start a new one.
+  - Learners can navigate the 50 immutable questions, submit one choice per unanswered question, see authoritative progress and a visible server-aligned countdown, and never see correctness before completion.
+  - All-answered and expired exams complete through the accepted API and render the strict authoritative score/pass summary with safe recovery from session, validation, network and conflict responses.
+  - Browser contracts, same-origin routes, responsive UI states and the main success/error/reload paths are documented and covered by deterministic tests.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-035
+owner_decision_required: false
+supervisor_refinement:
+  - Add a Mock exam entry from both the authenticated setup panel and practice navigation. Keep the bearer token only in existing React memory and pass the accepted Session into a dedicated exam component. Leaving the component preserves server state and returning must query GET /exam/current before offering POST /exam/start.
+  - Add only the exact same-origin Next.js rewrites needed for GET /exam/current and POST /exam/start, /exam/answer and /exam/complete. Extend browser-side strict Zod contracts for the accepted start, current, answer and completion responses, including canonical IDs/timestamps, fixed50/45/60 policy, safe question fields, positions/uniqueness, progress arithmetic, answer pairing, expiry and score/pass invariants. Reject unknown or privacy-sensitive response members.
+  - On entry, issue one no-store authenticated GET /exam/current. A valid200 restores questions, persisted selections, progress and server timing;404 shows a concise 50-question/60-minute/45-pass introduction and an explicit start action.401 clears the in-memory session through the existing expired-session callback. Other status, transport or contract failures show a safe retry state without starting an exam.
+  - Start with POST /exam/start using exact JSON {}. Validate and install the returned immutable questions, then render the first unanswered question. A409 Vehicle selection required returns to vehicle setup; a409 Exam already in progress triggers one current-exam reload instead of creating another session; a409 Not enough questions available shows a stable non-destructive message. Do not add a development auth bypass or persist tokens/exam payloads in browser storage.
+  - Render one question at a time with English/Russian/Thai selection using the accepted localization fallback. Show position, answered/remaining counts, a question navigator/status list, previous/next controls and a visible MM:SS countdown. Use serverTime from current responses to calculate a local clock offset; for a newly started response use the accepted startedAt/expiresAt duration and treat server API status as authoritative. Timer display must clamp at00:00 and mark the exam expired at the deadline.
+  - For an unanswered active question, require one presented choice and POST exact { examQuestionId, choiceId } to /exam/answer. Validate that the acknowledgement matches the installed exam/question/choice and authoritative counts; mark the persisted selection and answeredAt without displaying isCorrect, correctChoiceId, score, pass state or explanations. Prevent duplicate local submission while pending and keep answered questions read-only.
+  - After a successful answer, move to the next unanswered question. When remainingCount reaches0, call POST /exam/complete with exact { examId }. At displayed expiry, stop new selection/submission and invoke the same completion path so unanswered questions count as incorrect. A409 Exam incomplete restores taking state; Exam expired from answer transitions into completion; Answer already submitted reloads current state; Exam already completed completes/recovers the authoritative result. Unknown conflicts show a safe retry/reload action.
+  - Validate and render the exact completion summary { examId, questionCount, answeredCount, unansweredCount, score, passingScore, passed, completedAt }. Show clear pass/fail, score out of50 and answered/unanswered counts, plus actions to return to practice or the authenticated setup panel. Per-question correctness, explanations, mistake review and exam history UI remain later tasks.
+  - Use abort-safe mounted guards and single-flight refs so stale async work cannot update an exited component and timer/completion effects cannot create duplicate requests. Keep controls disabled only for the relevant pending action, use semantic fieldsets/labels/status or alert regions, keyboard-operable navigation and responsive styles consistent with the existing Mini App.
+  - Add focused unit tests for all strict browser contracts and privacy/invariant rejection. Add deterministic Playwright coverage with mocked same-origin APIs for: no-current then start; active resume with answered selections; answer progress with no early correctness; automatic all-answered completion and result; exact-expiry completion with unanswered count; localization/navigation;401 session expiry; vehicle/insufficient-content conflicts; malformed responses; retryable transport failure; and proof that tokens/payloads are not placed in URLs or browser storage.
+  - Update README. No API/database change, exam review/history UI, practice behavior change, production content, dependency, credential or deployment change.
