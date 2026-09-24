@@ -1,6 +1,6 @@
 id: TASK-036
 title: Add the Mini App mock-exam taking flow
-status: REVIEW
+status: ACCEPTED
 epic: Epic 5 — Mock Exam
 objective: Let an authenticated learner start or resume a timed mock exam, submit answers without early result disclosure, and see the authoritative completion score in the Mini App.
 acceptance:
@@ -35,3 +35,5 @@ supervisor_refinement:
   - Update README. No API/database change, exam review/history UI, practice behavior change, production content, dependency, credential or deployment change.
 review_fix_refinement:
   - Review attempt1 found that a valid restored current exam with answeredCount50 and remainingCount0 remains on a read-only question until timer expiry. After installing such a validated current response, invoke the existing mounted-safe single-flight completion path immediately. Preserve all accepted start, answer, expiry, retry and privacy behavior. Add deterministic Playwright coverage that restores currentPayload(50) before expiry, asserts exactly one POST /exam/complete with exact { examId }, and verifies the authoritative result.
+accepted_commit: 91c44ee6ad331b2e8c2b4cbb7fa1c15023808808
+review_file: .agent/reviews/TASK-036-review-02.md

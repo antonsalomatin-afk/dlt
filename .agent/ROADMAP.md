@@ -77,7 +77,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-033 — ACCEPTED — review completed mock-exam mistakes
 - TASK-034 — ACCEPTED — list authenticated completed-exam history
 - TASK-035 — ACCEPTED — read and resume the current mock exam
-- TASK-036 — READY — Mini App mock-exam taking and result flow
+- TASK-036 — ACCEPTED — Mini App mock-exam taking and result flow
 - Mini App exam history and mistake review
 - full-stack browser verification for the mock-exam flow
 
