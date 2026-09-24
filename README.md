@@ -399,6 +399,30 @@ the sanitized internal-error response. History exposes no per-question content,
 correctness, explanations, source/image metadata, user/session identifiers or database
 internals, and it does not mutate exam or practice state.
 
+### Current mock-exam API
+
+`GET /exam/current` uses the same bearer-authenticated, no-store exam boundary and
+accepts an exactly empty query. Authentication and one authoritative server timestamp
+are captured before query validation. It returns the learner's latest uncompleted exam,
+ordered by start time and exam ID, whether that exam is still active or has expired. If
+the learner has no uncompleted exam, the endpoint returns
+`404 { "error": "Exam not found" }`. More than one owned uncompleted exam whose expiry
+is strictly later than the captured server time fails closed as inconsistent state.
+
+The endpoint validates the fixed 50-question, 45-pass, 60-minute policy, the entirely
+null completion tuple, all 50 unique consecutive immutable snapshots, and every answer
+tuple. Persisted selected choices, correctness and answer timestamps must agree with the
+snapshot and exam window. Current mutable question and choice records are never read.
+
+Success returns exactly
+`{ examId, vehicleType, questionCount, passingScore, startedAt, expiresAt, serverTime, expired, answeredCount, remainingCount, questions }`.
+`expired` becomes true at the exact expiry timestamp. Each ordered question contains
+exactly `{ examQuestionId, position, selectedChoiceId, answeredAt, question }`; the two
+answer fields are both null or both present. The safe presented question comes from the
+immutable snapshot. Correctness, correct answers, score/pass results, explanations,
+source/image metadata and user/session identifiers remain hidden. Reading the current
+exam does not complete it or mutate exam or practice state.
+
 ### Practice category API
 
 `GET /practice/categories` uses the existing bearer session and accepts no query

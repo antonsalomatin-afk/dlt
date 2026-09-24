@@ -19,6 +19,7 @@ import {
   EXAM_ELIGIBLE_LIMIT,
   EXAM_PASSING_SCORE,
   EXAM_QUESTION_COUNT,
+  currentExamResponseSchema,
   examAnswerRequestSchema,
   examAnswerResponseSchema,
   examCompleteRequestSchema,
@@ -255,7 +256,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/history', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -592,6 +593,119 @@ export function createApi(options: {
       return examHistoryResponseSchema.parse({
         items: page.map(({ item }) => item),
         nextCursor: hasMore && last ? encodeExamHistoryCursor(last.cursor) : null,
+      });
+    });
+    examApp.get('/exam/current', async (request, reply) => {
+      const authenticated = authenticatedRequests.get(request);
+      if (!authenticated) throw new Error('Authenticated exam user missing');
+      if (!emptyQuerySchema.safeParse(request.query).success) {
+        return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      }
+      const { user, startedAt: serverTime } = authenticated;
+      const result = await options.database.$transaction(async (transaction) => {
+        const active = await transaction.examSession.findMany({
+          where: { userId: user.id, completedAt: null, expiresAt: { gt: serverTime } },
+          orderBy: [{ startedAt: 'desc' }, { id: 'desc' }],
+          take: 2,
+          select: { id: true },
+        });
+        if (active.length > 1) return { kind: 'ambiguous' } as const;
+        const exam = await transaction.examSession.findFirst({
+          where: { userId: user.id, completedAt: null },
+          orderBy: [{ startedAt: 'desc' }, { id: 'desc' }],
+          select: {
+            id: true,
+            vehicleType: true,
+            questionCount: true,
+            passingScore: true,
+            startedAt: true,
+            expiresAt: true,
+            completedAt: true,
+            score: true,
+            passed: true,
+            questions: {
+              orderBy: { position: 'asc' },
+              select: {
+                id: true,
+                position: true,
+                questionId: true,
+                snapshot: true,
+                selectedChoiceId: true,
+                isCorrect: true,
+                answeredAt: true,
+              },
+            },
+          },
+        });
+        return { kind: 'resolved', exam } as const;
+      }, { isolationLevel: 'RepeatableRead' });
+      if (result.kind === 'ambiguous') throw new Error('Multiple active exam sessions are inconsistent');
+      const exam = result.exam;
+      if (!exam) return reply.code(404).send(errorSchema.parse({ error: 'Exam not found' }));
+      if (
+        exam.completedAt !== null
+        || exam.score !== null
+        || exam.passed !== null
+      ) throw new Error('Stored uncompleted exam tuple is inconsistent');
+      if (
+        exam.questionCount !== EXAM_QUESTION_COUNT
+        || exam.passingScore !== EXAM_PASSING_SCORE
+        || exam.expiresAt.getTime() - exam.startedAt.getTime() !== EXAM_DURATION_MS
+        || exam.questions.length !== EXAM_QUESTION_COUNT
+        || exam.questions.some((question, index) => question.position !== index + 1)
+        || new Set(exam.questions.map(({ id }) => id)).size !== EXAM_QUESTION_COUNT
+        || new Set(exam.questions.map(({ questionId }) => questionId)).size !== EXAM_QUESTION_COUNT
+      ) throw new Error('Stored exam session configuration is inconsistent');
+
+      let answeredCount = 0;
+      const questions = exam.questions.map((question) => {
+        const snapshot = parsePresentationSnapshot(question.snapshot);
+        if (snapshot.question.id !== question.questionId) throw new Error('Stored exam snapshot is inconsistent');
+        const tuple = [question.selectedChoiceId, question.isCorrect, question.answeredAt];
+        const nullCount = tuple.filter((value) => value === null).length;
+        if (nullCount === tuple.length) {
+          return {
+            examQuestionId: question.id,
+            position: question.position,
+            selectedChoiceId: null,
+            answeredAt: null,
+            question: snapshot.question,
+          };
+        }
+        if (nullCount !== 0) throw new Error('Stored exam answer tuple is incomplete');
+        const selectedChoiceId = question.selectedChoiceId;
+        const isCorrect = question.isCorrect;
+        const answeredAt = question.answeredAt;
+        if (
+          selectedChoiceId === null
+          || isCorrect === null
+          || answeredAt === null
+          || !snapshot.question.choices.some(({ id }) => id === selectedChoiceId)
+          || isCorrect !== (selectedChoiceId === snapshot.correctChoiceId)
+          || answeredAt.getTime() < exam.startedAt.getTime()
+          || answeredAt.getTime() >= exam.expiresAt.getTime()
+        ) throw new Error('Stored exam answer is inconsistent');
+        answeredCount++;
+        return {
+          examQuestionId: question.id,
+          position: question.position,
+          selectedChoiceId,
+          answeredAt: answeredAt.toISOString(),
+          question: snapshot.question,
+        };
+      });
+      return currentExamResponseSchema.parse({
+        examId: exam.id,
+        vehicleType: exam.vehicleType,
+        questionCount: exam.questionCount,
+        passingScore: exam.passingScore,
+        startedAt: exam.startedAt.toISOString(),
+        expiresAt: exam.expiresAt.toISOString(),
+        serverTime: serverTime.toISOString(),
+        expired: serverTime.getTime() >= exam.expiresAt.getTime(),
+        answeredCount,
+        remainingCount: EXAM_QUESTION_COUNT - answeredCount,
+        questions,
       });
     });
     examApp.post('/exam/start', async (request, reply) => {
