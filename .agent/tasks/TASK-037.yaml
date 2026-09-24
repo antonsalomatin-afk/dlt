@@ -1,6 +1,6 @@
 id: TASK-037
 title: Add Mini App exam history and mistake review
-status: READY
+status: BUILDING
 epic: Epic 5 — Mock Exam
 objective: Let an authenticated learner browse completed mock exams and study each exam's immutable incorrect and unanswered questions in the Mini App.
 acceptance:
