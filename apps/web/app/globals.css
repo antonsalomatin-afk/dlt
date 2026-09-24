@@ -94,3 +94,24 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 .progress-metric dt { color: #697466; font-size: 12px; line-height: 1.35; }
 .progress-metric dd { margin: 7px 0 0; color: #244c3d; font-size: 28px; font-weight: 700; }
 .empty-progress { color: #59675e; font-size: 14px; line-height: 1.6; }
+.exam-intro { margin: 20px 0; color: #59675e; font-size: 14px; line-height: 1.55; }
+.exam-intro dl, .exam-result dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 16px; }
+.exam-intro dl > div, .exam-result dl > div { border: 1px solid #dce0d4; border-radius: 11px; padding: 10px; background: #fbfbf4; }
+.exam-intro dt, .exam-result dt { color: #697466; font-size: 10px; }
+.exam-intro dd, .exam-result dd { margin: 4px 0 0; color: #244c3d; font-size: 16px; font-weight: 700; }
+.exam-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.exam-timer { flex: 0 0 auto; border-radius: 10px; padding: 9px 11px; background: #244c3d; color: white; font-variant-numeric: tabular-nums; font-size: 18px; font-weight: 700; }
+.exam-progress { display: flex; justify-content: space-between; gap: 16px; border-block: 1px solid #e2e3d7; padding: 10px 0; color: #59675e; font-size: 12px; }
+.exam-navigator { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; max-height: 112px; overflow-y: auto; margin: 12px 0 20px; }
+.exam-navigator button { min-width: 0; aspect-ratio: 1; border: 1px solid #dce0d4; border-radius: 6px; background: #fbfbf4; color: #59675e; font-size: 10px; cursor: pointer; }
+.exam-navigator button.answered { background: #dce8d8; border-color: #76906e; color: #244c3d; font-weight: 700; }
+.exam-navigator button.current { border: 2px solid #ba580f; }
+.exam-saved { margin: 12px 0; color: #52674e; font-size: 12px; font-weight: 700; }
+.exam-actions { display: grid; gap: 6px; }
+.exam-controls { display: flex; justify-content: space-between; margin-top: 10px; }
+.exam-result { border-radius: 16px; padding: 20px; margin: 20px 0; background: #eef1e5; }
+.exam-result.failed { background: #f5e5df; }
+.exam-result h3 { margin: 0; font-size: 24px; }
+.exam-score { margin: 10px 0 18px; color: #244c3d; font-size: 42px; font-weight: 800; }
+.exam-result time { color: #697466; font-size: 11px; }
+@media (max-width: 430px) { .exam-navigator { grid-template-columns: repeat(8, 1fr); } .exam-intro dl, .exam-result dl { grid-template-columns: 1fr; } }

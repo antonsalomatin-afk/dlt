@@ -157,3 +157,100 @@ export const progressResponseSchema = z.strictObject({
   }
 });
 export type ProgressSummary = z.infer<typeof progressResponseSchema>;
+
+const canonicalUuidSchema = z.uuid().refine((value) => value === value.toLowerCase());
+const examCountSchema = z.number().int().min(0).max(50);
+const examQuestionSchema = presentedQuestionSchema.superRefine((question, context) => {
+  if (question.id !== question.id.toLowerCase()) context.addIssue({ code: 'custom', path: ['id'], message: 'Question ID must be canonical' });
+  if (question.choices.some(({ id }) => id !== id.toLowerCase())) context.addIssue({ code: 'custom', path: ['choices'], message: 'Choice IDs must be canonical' });
+});
+const examStartQuestionSchema = z.strictObject({
+  examQuestionId: canonicalUuidSchema,
+  position: z.number().int().min(1).max(50),
+  question: examQuestionSchema,
+});
+const currentExamQuestionSchema = examStartQuestionSchema.extend({
+  selectedChoiceId: canonicalUuidSchema.nullable(),
+  answeredAt: canonicalTimestampSchema.nullable(),
+}).superRefine((item, context) => {
+  if ((item.selectedChoiceId === null) !== (item.answeredAt === null)) context.addIssue({ code: 'custom', path: ['answeredAt'], message: 'Answer fields must be paired' });
+  if (item.selectedChoiceId !== null && !item.question.choices.some(({ id }) => id === item.selectedChoiceId)) context.addIssue({ code: 'custom', path: ['selectedChoiceId'], message: 'Selected choice is absent' });
+});
+
+function validateExamQuestions(
+  questions: readonly { examQuestionId: string; position: number; question: { id: string } }[],
+  context: z.RefinementCtx,
+) {
+  if (questions.some((question, index) => question.position !== index + 1)) context.addIssue({ code: 'custom', path: ['questions'], message: 'Positions must be consecutive' });
+  if (new Set(questions.map(({ examQuestionId }) => examQuestionId)).size !== 50) context.addIssue({ code: 'custom', path: ['questions'], message: 'Exam question IDs must be unique' });
+  if (new Set(questions.map(({ question }) => question.id)).size !== 50) context.addIssue({ code: 'custom', path: ['questions'], message: 'Source question IDs must be unique' });
+}
+
+export const examStartResponseSchema = z.strictObject({
+  examId: canonicalUuidSchema,
+  vehicleType: vehicleSchema,
+  questionCount: z.literal(50),
+  passingScore: z.literal(45),
+  startedAt: canonicalTimestampSchema,
+  expiresAt: canonicalTimestampSchema,
+  questions: z.array(examStartQuestionSchema).length(50),
+}).superRefine((exam, context) => {
+  if (Date.parse(exam.expiresAt) - Date.parse(exam.startedAt) !== 60 * 60 * 1000) context.addIssue({ code: 'custom', path: ['expiresAt'], message: 'Exam duration must be 60 minutes' });
+  validateExamQuestions(exam.questions, context);
+});
+
+export const currentExamResponseSchema = z.strictObject({
+  examId: canonicalUuidSchema,
+  vehicleType: vehicleSchema,
+  questionCount: z.literal(50),
+  passingScore: z.literal(45),
+  startedAt: canonicalTimestampSchema,
+  expiresAt: canonicalTimestampSchema,
+  serverTime: canonicalTimestampSchema,
+  expired: z.boolean(),
+  answeredCount: examCountSchema,
+  remainingCount: examCountSchema,
+  questions: z.array(currentExamQuestionSchema).length(50),
+}).superRefine((exam, context) => {
+  const startedAt = Date.parse(exam.startedAt);
+  const expiresAt = Date.parse(exam.expiresAt);
+  const serverTime = Date.parse(exam.serverTime);
+  if (expiresAt - startedAt !== 60 * 60 * 1000) context.addIssue({ code: 'custom', path: ['expiresAt'], message: 'Exam duration must be 60 minutes' });
+  if (serverTime < startedAt) context.addIssue({ code: 'custom', path: ['serverTime'], message: 'Server time precedes the exam' });
+  if (exam.expired !== (serverTime >= expiresAt)) context.addIssue({ code: 'custom', path: ['expired'], message: 'Expiry is inconsistent' });
+  if (exam.answeredCount + exam.remainingCount !== 50) context.addIssue({ code: 'custom', path: ['remainingCount'], message: 'Progress must total 50' });
+  if (exam.questions.filter(({ selectedChoiceId }) => selectedChoiceId !== null).length !== exam.answeredCount) context.addIssue({ code: 'custom', path: ['answeredCount'], message: 'Answered count is inconsistent' });
+  exam.questions.forEach((question, index) => {
+    if (question.answeredAt !== null && (Date.parse(question.answeredAt) < startedAt || Date.parse(question.answeredAt) >= expiresAt)) context.addIssue({ code: 'custom', path: ['questions', index, 'answeredAt'], message: 'Answer time is outside the exam' });
+  });
+  validateExamQuestions(exam.questions, context);
+});
+
+export const examAnswerResponseSchema = z.strictObject({
+  examId: canonicalUuidSchema,
+  examQuestionId: canonicalUuidSchema,
+  selectedChoiceId: canonicalUuidSchema,
+  answeredAt: canonicalTimestampSchema,
+  answeredCount: z.number().int().min(1).max(50),
+  remainingCount: z.number().int().min(0).max(49),
+}).refine(({ answeredCount, remainingCount }) => answeredCount + remainingCount === 50, { path: ['remainingCount'], message: 'Progress must total 50' });
+
+export const examCompletionResponseSchema = z.strictObject({
+  examId: canonicalUuidSchema,
+  questionCount: z.literal(50),
+  answeredCount: examCountSchema,
+  unansweredCount: examCountSchema,
+  score: examCountSchema,
+  passingScore: z.literal(45),
+  passed: z.boolean(),
+  completedAt: canonicalTimestampSchema,
+}).superRefine((result, context) => {
+  if (result.answeredCount + result.unansweredCount !== 50) context.addIssue({ code: 'custom', path: ['unansweredCount'], message: 'Completion counts must total 50' });
+  if (result.score > result.answeredCount) context.addIssue({ code: 'custom', path: ['score'], message: 'Score cannot exceed answered count' });
+  if (result.passed !== (result.score >= 45)) context.addIssue({ code: 'custom', path: ['passed'], message: 'Pass result is inconsistent' });
+});
+
+export type ExamStart = z.infer<typeof examStartResponseSchema>;
+export type CurrentExam = z.infer<typeof currentExamResponseSchema>;
+export type ExamAnswerAcknowledgement = z.infer<typeof examAnswerResponseSchema>;
+export type ExamCompletion = z.infer<typeof examCompletionResponseSchema>;

@@ -659,7 +659,8 @@ credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
 `/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
 `/practice/categories`, `/practice/next`, `/practice/answer` and
-`/practice/favorite` only.
+`/practice/favorite`, plus `/exam/current`, `/exam/start`, `/exam/answer` and
+`/exam/complete` only.
 Set the destination before building; rewrites are
 included in the production build. Never prefix secrets with `NEXT_PUBLIC_`.
 
@@ -726,6 +727,24 @@ failures show retry guidance without partial metrics, while a protected 401 clea
 session. Leaving during a request returns immediately and ignores every late outcome.
 Returning to setup preserves that origin, while returning to practice mounts a clean
 practice view.
+
+Authenticated learners can enter Mock exam from vehicle setup or practice. Each fresh
+entry first sends one no-store `GET /exam/current`; a 200 restores the immutable exam and
+its saved selections, while a 404 shows the explicit 50-question, 60-minute, 45-pass
+introduction. Start sends exact `{}` to `POST /exam/start`. An in-progress conflict reloads
+the current exam, a missing vehicle returns to setup, and insufficient verified content
+does not create local exam state. Tokens and exam payloads remain only in React memory and
+never enter URLs, browser storage, cookies or logs.
+
+The responsive taking screen shows one question, authoritative answered/remaining counts,
+a keyboard-operable 50-question navigator, English/Russian/Thai wording with the accepted
+fallback, previous/next controls and a visible `MM:SS` clock. Current-exam `serverTime`
+aligns the browser clock; a new exam uses its accepted start/expiry window. Submitted
+answers become read-only, move to the next unanswered question and expose no correctness,
+score or explanation. A final answer or displayed expiry invokes `POST /exam/complete`
+once. The strict result shows pass/fail, score out of 50, passing score and
+answered/unanswered counts. Transport, validation and known 409 responses provide safe
+retry or reload paths, and a protected 401 clears the memory-only session.
 
 ### Real local full-stack browser gate
 
