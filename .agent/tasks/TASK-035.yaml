@@ -1,6 +1,6 @@
 id: TASK-035
 title: Read and resume the current mock exam
-status: BUILDING
+status: REVIEW
 epic: Epic 5 — Mock Exam
 objective: Let an authenticated learner safely recover the latest uncompleted mock exam after a Mini App reload without exposing results before completion.
 acceptance:

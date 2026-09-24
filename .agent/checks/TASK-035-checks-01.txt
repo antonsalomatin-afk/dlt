@@ -1,0 +1,21 @@
+TASK-035 authoritative checks
+Completed: 2026-09-24T06:03:06.1909321Z
+
+## pnpm check
+PASS
+- eslint: passed
+- TypeScript and workspace typechecks: passed
+- Test files: 23 passed
+- Tests: 163 passed
+
+## pnpm prisma validate
+PASS
+- packages/database/prisma/schema.prisma is valid
+
+## pnpm test:integration
+PASS
+- Test files: 20 passed
+- Tests: 112 passed
+- Duration: 110.50s
+
+The runner emitted the existing pg client.query deprecation warning; it did not affect the result.
