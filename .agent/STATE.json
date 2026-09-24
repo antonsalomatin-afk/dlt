@@ -10,16 +10,16 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-036 remains BUILDING. Builder work is preserved uncommitted on codex/task-036 across the exam component, strict web contracts, rewrites, navigation/styles, README, unit contracts and Playwright scenarios. The Builder was interrupted at the clean 90 percent five-hour usage checkpoint before running or committing full gates. Resume builder_036 from the existing working tree, then require pnpm check, pnpm build and pnpm test:e2e before a Builder commit.",
+  "notes": "The five-hour window reset. TASK-036 Builder work remains preserved on codex/task-036 and is resumed from the existing working tree for completion and the required pnpm check, pnpm build and pnpm test:e2e gates.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 90,
+    "latestObservedUsedPercent": 0,
     "windowMinutes": 300,
-    "checkedAt": "2026-09-24T06:23:37.3732430Z",
+    "checkedAt": "2026-09-24T15:46:54.8027145Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization."
   },
-  "executionPaused": true,
-  "pauseReason": "User-directed usage checkpoint at 90% of the five-hour window before the 95% ceiling; TASK-036 Builder work is preserved in the working tree and no Product Owner decision is required.",
+  "executionPaused": false,
+  "pauseReason": null,
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
