@@ -1,6 +1,6 @@
 id: TASK-036
 title: Add the Mini App mock-exam taking flow
-status: BUILDING
+status: REVIEW
 epic: Epic 5 — Mock Exam
 objective: Let an authenticated learner start or resume a timed mock exam, submit answers without early result disclosure, and see the authoritative completion score in the Mini App.
 acceptance:
