@@ -1,0 +1,20 @@
+TASK-036 authoritative checks after review fix
+Completed: 2026-09-24T16:11:36.8244207Z
+
+## pnpm check
+PASS
+- eslint: passed
+- TypeScript and workspace typechecks: passed
+- Test files: 24 passed
+- Tests: 167 passed
+
+## pnpm build
+PASS
+- Next.js 16.3.5 production build compiled and prerendered successfully
+
+## pnpm test:e2e
+PASS
+- Playwright tests: 116 passed
+- Duration: 1.1m
+
+The restored-all-answered regression passed and issued one exact completion request. The web server emitted only the existing FORCE_COLOR/NO_COLOR warnings; they did not affect the result.
