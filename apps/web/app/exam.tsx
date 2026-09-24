@@ -161,6 +161,13 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup }: {
 
   useEffect(() => {
     if (!exam || result) return;
+    if (exam.remainingCount === 0) {
+      if (!completionRequested.current) {
+        completionRequested.current = true;
+        void complete(examRef.current ?? exam);
+      }
+      return;
+    }
     const tick = () => {
       const next = remainingSeconds(exam.expiresAt, clockOffset.current);
       setSeconds(next);

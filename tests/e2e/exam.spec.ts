@@ -83,6 +83,21 @@ test('restores persisted answers, authoritative progress and first unanswered qu
   await expect(page.getByText('Answer saved. This question is read-only.')).toBeVisible();
 });
 
+test('a fully answered restored exam completes exactly once and renders the result', async ({ page }) => {
+  let completions = 0;
+  await page.route('**/exam/complete', (route) => {
+    completions++;
+    expect(route.request().method()).toBe('POST');
+    expect(route.request().postDataJSON()).toEqual({ examId });
+    return route.fulfill({ json: resultPayload(50, 45) });
+  });
+  await openExam(page, currentPayload(50, '2098-01-01T00:49:30.000Z'));
+  await expect(page.locator('.exam-result')).toContainText('Passed');
+  await expect(page.locator('.exam-result')).toContainText('45 / 50');
+  await expect(page.locator('.exam-result')).toContainText('Answered50');
+  expect(completions).toBe(1);
+});
+
 test('saves authoritative progress without early correctness and moves to the next unanswered question', async ({ page }) => {
   await page.route('**/exam/answer', (route) => {
     expect(route.request().postDataJSON()).toEqual({ examQuestionId: uuid(2), choiceId: uuid(1004) });
