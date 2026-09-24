@@ -250,7 +250,106 @@ export const examCompletionResponseSchema = z.strictObject({
   if (result.passed !== (result.score >= 45)) context.addIssue({ code: 'custom', path: ['passed'], message: 'Pass result is inconsistent' });
 });
 
+const examHistoryCursorPayloadSchema = z.strictObject({
+  v: z.literal(1), startedAt: canonicalTimestampSchema, examId: canonicalUuidSchema,
+});
+export const examHistoryCursorSchema = z.string().min(1).max(512).regex(/^[A-Za-z0-9_-]+$/u).refine((value) => {
+  try {
+    const padding = '='.repeat((4 - (value.length % 4)) % 4);
+    const decoded = new TextDecoder('utf-8', { fatal: true }).decode(
+      Uint8Array.from(atob(value.replace(/-/gu, '+').replace(/_/gu, '/') + padding), (character) => character.charCodeAt(0)),
+    );
+    const cursor = examHistoryCursorPayloadSchema.parse(JSON.parse(decoded) as unknown);
+    return btoa(JSON.stringify(cursor)).replace(/\+/gu, '-').replace(/\//gu, '_').replace(/=+$/u, '') === value;
+  } catch { return false; }
+});
+
+function decodeExamHistoryCursor(value: string) {
+  const padding = '='.repeat((4 - (value.length % 4)) % 4);
+  const decoded = new TextDecoder('utf-8', { fatal: true }).decode(
+    Uint8Array.from(atob(value.replace(/-/gu, '+').replace(/_/gu, '/') + padding), (character) => character.charCodeAt(0)),
+  );
+  return examHistoryCursorPayloadSchema.parse(JSON.parse(decoded) as unknown);
+}
+
+const examHistoryItemSchema = z.strictObject({
+  examId: canonicalUuidSchema,
+  vehicleType: vehicleSchema,
+  questionCount: z.literal(50),
+  answeredCount: examCountSchema,
+  unansweredCount: examCountSchema,
+  score: examCountSchema,
+  passingScore: z.literal(45),
+  passed: z.boolean(),
+  startedAt: canonicalTimestampSchema,
+  completedAt: canonicalTimestampSchema,
+}).superRefine((item, context) => {
+  if (item.answeredCount + item.unansweredCount !== 50) context.addIssue({ code: 'custom', path: ['unansweredCount'], message: 'Answer counts must total 50' });
+  if (item.score > item.answeredCount) context.addIssue({ code: 'custom', path: ['score'], message: 'Score cannot exceed answered count' });
+  if (item.passed !== (item.score >= 45)) context.addIssue({ code: 'custom', path: ['passed'], message: 'Pass result is inconsistent' });
+  if (Date.parse(item.completedAt) < Date.parse(item.startedAt)) context.addIssue({ code: 'custom', path: ['completedAt'], message: 'Completion precedes start' });
+});
+
+export const examHistoryResponseSchema = z.strictObject({
+  items: z.array(examHistoryItemSchema).max(50),
+  nextCursor: examHistoryCursorSchema.nullable(),
+}).superRefine((page, context) => {
+  if (page.items.some((item, index, items) => index > 0 && (
+    item.startedAt > items[index - 1]!.startedAt
+    || (item.startedAt === items[index - 1]!.startedAt && item.examId >= items[index - 1]!.examId)
+  ))) context.addIssue({ code: 'custom', path: ['items'], message: 'History order is invalid' });
+  if (new Set(page.items.map(({ examId }) => examId)).size !== page.items.length) context.addIssue({ code: 'custom', path: ['items'], message: 'Exam IDs must be unique' });
+  if (page.nextCursor !== null) {
+    const last = page.items.at(-1);
+    if (!last) context.addIssue({ code: 'custom', path: ['nextCursor'], message: 'Empty history cannot continue' });
+    else {
+      const cursor = decodeExamHistoryCursor(page.nextCursor);
+      if (cursor.startedAt !== last.startedAt || cursor.examId !== last.examId) context.addIssue({ code: 'custom', path: ['nextCursor'], message: 'Cursor does not match the last item' });
+    }
+  }
+});
+
+const examReviewMistakeSchema = z.strictObject({
+  examQuestionId: canonicalUuidSchema,
+  position: z.number().int().min(1).max(50),
+  selectedChoiceId: canonicalUuidSchema.nullable(),
+  answeredAt: canonicalTimestampSchema.nullable(),
+  correctChoiceId: canonicalUuidSchema,
+  question: examQuestionSchema,
+  explanationThai: translation,
+  explanationEnglish: translation,
+  explanationRussian: translation,
+  trapExplanationThai: translation,
+  trapExplanationEnglish: translation,
+  trapExplanationRussian: translation,
+}).superRefine((mistake, context) => {
+  if ((mistake.selectedChoiceId === null) !== (mistake.answeredAt === null)) context.addIssue({ code: 'custom', path: ['answeredAt'], message: 'Answer fields must be paired' });
+  if (!mistake.question.choices.some(({ id }) => id === mistake.correctChoiceId)) context.addIssue({ code: 'custom', path: ['correctChoiceId'], message: 'Correct choice is absent' });
+  if (mistake.selectedChoiceId !== null && (
+    mistake.selectedChoiceId === mistake.correctChoiceId
+    || !mistake.question.choices.some(({ id }) => id === mistake.selectedChoiceId)
+  )) context.addIssue({ code: 'custom', path: ['selectedChoiceId'], message: 'Selected choice must be an incorrect presented choice' });
+});
+
+export const examReviewResponseSchema = z.strictObject({
+  examId: canonicalUuidSchema,
+  questionCount: z.literal(50),
+  score: examCountSchema,
+  passingScore: z.literal(45),
+  passed: z.boolean(),
+  completedAt: canonicalTimestampSchema,
+  mistakes: z.array(examReviewMistakeSchema).max(50),
+}).superRefine((review, context) => {
+  if (review.passed !== (review.score >= 45)) context.addIssue({ code: 'custom', path: ['passed'], message: 'Pass result is inconsistent' });
+  if (review.mistakes.length !== 50 - review.score) context.addIssue({ code: 'custom', path: ['mistakes'], message: 'Mistake count is inconsistent' });
+  if (review.mistakes.some((mistake, index, mistakes) => index > 0 && mistake.position <= mistakes[index - 1]!.position)) context.addIssue({ code: 'custom', path: ['mistakes'], message: 'Mistake positions must increase' });
+  if (new Set(review.mistakes.map(({ examQuestionId }) => examQuestionId)).size !== review.mistakes.length) context.addIssue({ code: 'custom', path: ['mistakes'], message: 'Exam question IDs must be unique' });
+  if (new Set(review.mistakes.map(({ question }) => question.id)).size !== review.mistakes.length) context.addIssue({ code: 'custom', path: ['mistakes'], message: 'Source question IDs must be unique' });
+});
+
 export type ExamStart = z.infer<typeof examStartResponseSchema>;
 export type CurrentExam = z.infer<typeof currentExamResponseSchema>;
 export type ExamAnswerAcknowledgement = z.infer<typeof examAnswerResponseSchema>;
 export type ExamCompletion = z.infer<typeof examCompletionResponseSchema>;
+export type ExamHistoryItem = z.infer<typeof examHistoryItemSchema>;
+export type ExamReview = z.infer<typeof examReviewResponseSchema>;

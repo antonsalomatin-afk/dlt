@@ -40,12 +40,13 @@ function clock(seconds: number) {
   return `${minutes}:${(seconds % 60).toString().padStart(2, '0')}`;
 }
 
-export function Exam({ session, onExpired, onVehicle, onPractice, onSetup }: {
+export function Exam({ session, onExpired, onVehicle, onPractice, onSetup, onReview }: {
   session: Session;
   onExpired: () => void;
   onVehicle: () => void;
   onPractice: () => void;
   onSetup: () => void;
+  onReview: (examId: string) => void;
 }) {
   const [exam, setExam] = useState<CurrentExam | null>(null);
   const [result, setResult] = useState<ExamCompletion | null>(null);
@@ -294,7 +295,7 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup }: {
     <p className="eyebrow accent">03 / MOCK EXAM</p><h2 id="exam-title">Mock exam result</h2>
     <div className={`exam-result ${result.passed ? 'passed' : 'failed'}`} role="region" aria-label="Mock exam result"><h3>{result.passed ? 'Passed' : 'Not passed yet'}</h3><p className="exam-score">{result.score} / {result.questionCount}</p><dl><div><dt>Passing score</dt><dd>{result.passingScore}</dd></div><div><dt>Answered</dt><dd>{result.answeredCount}</dd></div><div><dt>Unanswered</dt><dd>{result.unansweredCount}</dd></div></dl><time dateTime={result.completedAt}>Completed {new Date(result.completedAt).toLocaleString()}</time></div>
     <div className="message" role="status"><p>{message}</p></div>
-    <button className="primary" onClick={() => { active.current = false; onPractice(); }}>Return to practice</button><button className="secondary" onClick={() => { active.current = false; onSetup(); }}>Back to setup</button>
+    <button className="primary" onClick={() => { active.current = false; onReview(result.examId); }}>Review exam mistakes</button><button className="secondary" onClick={() => { active.current = false; onPractice(); }}>Return to practice</button><button className="secondary" onClick={() => { active.current = false; onSetup(); }}>Back to setup</button>
   </section>;
 
   const question = exam.questions[index]!;

@@ -660,7 +660,7 @@ require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
 `/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
 `/practice/categories`, `/practice/next`, `/practice/answer` and
 `/practice/favorite`, plus `/exam/current`, `/exam/start`, `/exam/answer` and
-`/exam/complete` only.
+`/exam/complete`, `/exam/history` and `/exam/:examId/review` only.
 Set the destination before building; rewrites are
 included in the production build. Never prefix secrets with `NEXT_PUBLIC_`.
 
@@ -745,6 +745,25 @@ score or explanation. A final answer or displayed expiry invokes `POST /exam/com
 once. The strict result shows pass/fail, score out of 50, passing score and
 answered/unanswered counts. Transport, validation and known 409 responses provide safe
 retry or reload paths, and a protected 401 clears the memory-only session.
+
+Exam history is available from authenticated setup and practice, and a completed exam
+result links directly to its mistake review. History requests
+`GET /exam/history?limit=10`, appends validated newest-first pages, and uses only the exact
+opaque cursor returned by the previous page. Summaries show vehicle, pass/fail, score,
+completion time and answered/unanswered counts. A failed later page retains earlier
+validated summaries and retries the same cursor; duplicate identities or invalid ordering
+across pages are rejected.
+
+Selecting an exam sends a no-store request to the explicit
+`GET /exam/:examId/review` rewrite with the validated exam ID encoded in the path. Reviews
+render the authoritative score and only immutable incorrect or unanswered question
+snapshots. English, Russian and Thai wording uses the established fallback; choice labels
+identify the learner’s answer and correct answer, while unanswered mistakes are explicit.
+Explanations and trap explanations remain tied to the snapshot. Perfect exams show a
+no-mistakes state. Back navigation preserves an already loaded history list, while direct
+result review opens a clean list on return. Credentials stay in the in-memory bearer header
+and never enter URLs or browser storage; 401, unavailable, incomplete, malformed and
+transport responses use safe expiry or retry states.
 
 ### Real local full-stack browser gate
 
