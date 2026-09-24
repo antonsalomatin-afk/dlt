@@ -1,6 +1,6 @@
 id: TASK-035
 title: Read and resume the current mock exam
-status: REVIEW
+status: ACCEPTED
 epic: Epic 5 — Mock Exam
 objective: Let an authenticated learner safely recover the latest uncompleted mock exam after a Mini App reload without exposing results before completion.
 acceptance:
@@ -33,3 +33,5 @@ supervisor_refinement:
   - Never expose isCorrect, correctChoiceId, score, passed, explanations, user/session identifiers, source/image metadata or current mutable content. Do not create or mutate ExamSession, ExamQuestion, practice presentations, AnswerAttempt history, favorites or progress.
   - Add unit coverage for the strict response, timing/expired/count invariants, ordered identities, nullable answer pairing and privacy. Add isolated PostgreSQL coverage for auth-before-query validation, no-current and ownership isolation, active and exact-expiry responses, deterministic latest expired selection, impossible multiple-active failure, partial completion and malformed policy/snapshot/answer/cardinality failure, immutable content after source edits, exact response privacy and proof of no writes or practice side effects.
   - Update README. No schema migration, exam start/answer/completion/review/history contract change, automatic completion, Mini App UI, production content, dependency, credential or deployment change.
+accepted_commit: 8cf61dc8d382dd03f2b4ba581da0ffa6b6fb7581
+review_file: .agent/reviews/TASK-035-review-01.md
