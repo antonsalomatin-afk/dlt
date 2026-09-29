@@ -1,0 +1,34 @@
+id: TASK-039
+title: Group development questions by learning concept
+status: READY
+epic: Epic 6 — Concept Learning
+objective: Make the synthetic development question bank concept-aware so later learning state can operate on stable groups of question variants.
+acceptance:
+  - The strict development fixture contract defines localized concepts with stable human-readable keys and assigns every fixture question to exactly one concept.
+  - Concept groups contain multiple synthetic question variants where appropriate, cover all existing categories and both vehicle types, and make no official or legal-content claim.
+  - Import derives deterministic concept identities and slugs, persists each question's concept relation atomically, and remains safe and idempotent across repeated imports.
+  - Namespace, identity and collision checks reject malformed or conflicting concept/question assignments without partial writes or changes to unrelated data.
+  - PostgreSQL integration proves concept records and question relations survive reimport with stable IDs while all fixtures remain inactive DRAFT content.
+  - Content/developer documentation describes the concept/variant grouping contract and its synthetic scope.
+files_allowed:
+  - content/**
+  - tools/content/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-038
+owner_decision_required: false
+supervisor_refinement:
+  - Use the accepted Concept model and optional Question.conceptId relation from TASK-005; in this task the development fixtures must make the relation mandatory at the validation/import boundary. Do not add a second VariantGroup model, schema migration, API, UI, learning-state table or selection behavior.
+  - Extend development.json with a top-level concepts array of exactly10 distinct stable keys. Each concept has nonblank trimmed Thai, English and Russian names. Add one concept key to every one of the existing25 questions. Require every declared concept to be referenced by at least two questions, every question to reference a declared concept, all five categories and both vehicle types to remain covered, and at least five concepts to contain multiple question variants. Preserve the existing exact fixture counts and multilingual-example rule.
+  - Validate the complete input strictly before opening the transaction. Reject duplicate concept keys, missing/unknown assignments, unused concepts, blank/untrimmed names or keys, unknown fields, count changes and all existing question/choice invariants with the existing sanitized public error style.
+  - Derive each concept UUID with fixtureId(`concept:${key}`) and slug fixture-${key}. During the serializable transaction, reuse only an exact identity/slug/localized-name match; any ID-or-slug namespace collision or name mismatch aborts the whole import. Never rename, delete or overwrite an unrelated concept.
+  - Persist conceptId on every fixture question create/update. Existing deterministic fixture questions may be upgraded from null to their expected deterministic conceptId, but retain the accepted protection for nonfixture, active, non-DRAFT, source-reference and choice-identity collisions. Reimport must preserve concept/question/choice IDs and counts.
+  - Return and document the imported concept count as well as categories/questions/choices. Add focused validation tests for accepted grouping plus duplicate, missing, unknown, unused, blank/untrimmed and count/coverage failures. Extend the isolated PostgreSQL fixture test for deterministic concept rows/relations, exact collision rollback, idempotent reimport, inactive DRAFT preservation and unrelated concept/data preservation.
+  - Update content/README.md and the relevant README fixture description. All names and groupings remain original synthetic development material, not verified DLT taxonomy or legal guidance. No production activation, fixture namespace change, dependency, credential or deployment change.

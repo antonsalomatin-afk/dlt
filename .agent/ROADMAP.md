@@ -83,7 +83,7 @@ At the end of this epic the core end-to-end flow must work.
 
 ## Epic 6 — Concept Learning
 
-- concept/variant groups
+- TASK-039 — READY — group development question variants by stable concepts
 - mastery
 - repeat mistakes intelligently
 - spaced repetition
