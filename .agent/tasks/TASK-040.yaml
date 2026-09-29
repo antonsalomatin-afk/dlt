@@ -1,6 +1,6 @@
 id: TASK-040
 title: Persist immutable concept attribution for learning attempts
-status: REVIEW
+status: ACCEPTED
 epic: Epic 6 — Concept Learning
 objective: Preserve the concept attached to each presented practice or exam question so later mastery calculations remain historically stable when source content is regrouped.
 acceptance:
@@ -31,3 +31,5 @@ supervisor_refinement:
   - Treat stored conceptId as server-only historical metadata. Do not add it to presentation, answer, current/start exam, completion, history, mistakes, favorites or review DTOs/snapshots, logs, browser code or URLs. Existing strict response tests must continue proving unknown privacy-sensitive fields are absent/rejected.
   - Extend focused database/unit coverage for schema relations and safe mapping. Extend isolated PostgreSQL practice and exam-start coverage to prove grouped and ungrouped creation, ownership, exact concept copy, stability after source reassignment/removal where allowed, no scoring/selection regression, and referenced-concept deletion rejection while attributed rows exist.
   - Document the internal attribution boundary and that it only prepares later concept progress/mastery work. No LearningState/mastery model, scoring formula, eligibility/selection change, content mutation, new endpoint, UI, dependency, production credential or deployment change.
+accepted_commit: 11c6f77e5d654088c7592763ad11d82ebb679bc7
+review_file: .agent/reviews/TASK-040-review-01.md
