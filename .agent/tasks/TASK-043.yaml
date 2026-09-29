@@ -1,19 +1,36 @@
 id: TASK-043
-title: Define and expose concept mastery
-status: BLOCKED
+title: Display concept mastery labels
+status: READY
 epic: Epic 6 — Concept Learning
-objective: Turn accepted concept outcome facts into a clear learner-facing mastery state without prematurely coupling it to question selection or spaced repetition.
+objective: Show learners a transparent display-only mastery label derived from accepted concept outcome facts.
 acceptance:
-  - Product Owner approves the mastery labels, minimum evidence and accuracy threshold.
-  - Product Owner decides whether mastery is display-only initially or immediately changes practice selection.
-  - After approval, the Supervisor refines exact API, UI, persistence and test boundaries before assigning a Builder.
-files_allowed: []
-required_checks: []
+  - The concept-progress contract derives exactly NOT_STARTED, LEARNING or MASTERED from combined lifetime facts using the approved policy.
+  - The existing Progress view shows localized concept identity, separate practice/exam facts, total accuracy and a clear localized mastery label.
+  - Initial load, empty/not-started, deterministic pagination, retry, malformed response, session expiry and stale-response behavior are safe and accessible.
+  - Mastery remains computed and display-only: it is not persisted and cannot affect question eligibility, ordering, repetition, exams or counters.
+  - Unit, PostgreSQL integration and browser coverage prove the exact threshold boundary, response integrity, pagination and UI behavior.
+files_allowed:
+  - packages/database/**
+  - apps/api/**
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+  - pnpm build
+  - pnpm test:e2e
 dependencies:
   - TASK-042
-owner_decision_required: true
-blocked_reason: The repository intentionally defines no mastery formula. Choosing labels, evidence thresholds and whether the result changes learner behavior is a user-visible product policy rather than a routine engineering detail.
-supervisor_recommendation:
-  - Start with display-only NOT_STARTED, LEARNING and MASTERED labels.
-  - Derive MASTERED from the accepted lifetime concept facts when combined answered is at least 5 and combined accuracy is at least 80 percent; otherwise a concept with evidence is LEARNING. Do not add time decay or different practice/exam weights yet.
-  - Keep practice selection, mistake repetition and spaced repetition unchanged until separate tasks define those policies.
+owner_decision_required: false
+owner_decision:
+  - Approved display-only NOT_STARTED, LEARNING and MASTERED labels. MASTERED requires at least 5 combined lifetime answers and at least 80 percent combined lifetime accuracy.
+supervisor_refinement:
+  - Add masteryStatus to each GET /me/concept-progress item. Derive NOT_STARTED when total answered is zero, MASTERED when total answered is at least 5 and total correct times 100 is at least total answered times 80, and LEARNING otherwise. Use exact integer cross-multiplication rather than the rounded display percentage. Validate the status against counts at the strict server response boundary and fail closed on inconsistency.
+  - Do not store mastery. Practice and exam attempts have equal weight through their combined counts. The derived status can move between LEARNING and MASTERED as later answers change lifetime accuracy. No recency window, decay, streak, confidence, readiness, scheduling or recommendation is introduced.
+  - Preserve the accepted state-row-only concept-progress feed, ordering and cursor contract. Persisted rows always contain at least one answer, so returned items currently resolve to LEARNING or MASTERED. In the UI, an empty first page represents the learner's NOT_STARTED concept state; do not enumerate untouched taxonomy concepts or infer vehicle eligibility.
+  - Extend the existing Progress view rather than adding a new route. After the lifetime practice summary, request GET /me/concept-progress?limit=10 with the bearer token and no-store semantics. Render current localized concept names with safe fallback, exact uppercase API status semantics expressed in localized visible copy, practice/exam/total facts, last activity and a Load more control.
+  - Parse every page through a strict browser runtime schema that validates canonical IDs/timestamps, counts, arithmetic, exact mastery derivation, descending order, unique concept IDs and a cursor anchored to the final item. Across pages reject repeated concepts or nondecreasing tuple order without discarding already validated items; retry must reuse the same cursor. Prevent overlapping requests and ignore responses after navigation or session expiry.
+  - Cover English/Russian/Thai rendering and fallback, threshold cases 0/4/5 answers and exact 80-percent boundaries, mixed practice/exam facts, empty NOT_STARTED state, two-page traversal including tied timestamps, transport/HTTP/malformed/duplicate-page retry, 401 expiry, same-turn load guard and late responses. Preserve existing lifetime progress behavior and tests.
+  - Update README. No schema/migration, state mutation, selection/repetition/exam behavior, new dependency, content, credential, deployment or full-stack harness change.
