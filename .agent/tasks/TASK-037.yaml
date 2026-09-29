@@ -1,6 +1,6 @@
 id: TASK-037
 title: Add Mini App exam history and mistake review
-status: REVIEW
+status: ACCEPTED
 epic: Epic 5 — Mock Exam
 objective: Let an authenticated learner browse completed mock exams and study each exam's immutable incorrect and unanswered questions in the Mini App.
 acceptance:
@@ -31,3 +31,5 @@ supervisor_refinement:
   - Provide English/Russian/Thai selection for review content, semantic summaries/cards/lists, keyboard-operable actions, status/alert regions and responsive styles consistent with existing history/favorites screens. Back from a direct result review returns to a clean exam-history list or authenticated origin deterministically; back from a history-selected review preserves already validated list items without refetching them.
   - Add focused unit tests for strict history cursor/envelope and review contracts, privacy fields, arithmetic, identity/order and answer-choice invariants. Add deterministic Playwright coverage with mocked same-origin APIs for: entry from setup/practice; empty history; two-page append and exact cursor retry; pass/fail summary rendering; perfect review; incorrect and unanswered localized review; direct review from result;401 on history/review;404/409 review errors; malformed response retry; duplicate cross-page rejection; immediate leave/stale response; and proof bearer tokens stay in headers and exam IDs are encoded only as route path data.
   - Update README. No API/database change, exam taking behavior change beyond the new result navigation callback, practice answer-history UI change, production content, dependency, credential or deployment change.
+accepted_commit: 43ee8407ede0b52398b5c256efa36cac3b6c55a4
+review_file: .agent/reviews/TASK-037-review-01.md
