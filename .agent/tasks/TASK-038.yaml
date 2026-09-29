@@ -1,0 +1,37 @@
+id: TASK-038
+title: Verify the mock-exam flow through the real local stack
+status: READY
+epic: Epic 5 — Mock Exam
+objective: Exercise the completed Mini App mock-exam journey through real Next rewrites, Fastify routes and isolated PostgreSQL without production credentials.
+acceptance:
+  - The existing isolated full-stack harness seeds exactly the synthetic verified content needed for a 50-question CAR exam and uses the production authentication, API and database paths.
+  - A mobile browser starts an exam, answers every immutable question once, completes with an authoritative score, opens mistake review directly from the result and returns to completed-exam history.
+  - Browser assertions prove correctness and explanations remain hidden before submission, the final pass/result is authoritative, and review/history show the completed exam through real same-origin rewrites.
+  - Database assertions prove ownership, the fixed 50-question snapshot, unique ordered positions/questions, exactly one answer per exam question, completion score/pass arithmetic and immutable mistake outcomes.
+  - The harness preserves its bounded owned-process and isolated-database cleanup on success and failure, never touches normal fixtures and never introduces a production bypass or credential path.
+  - Repeatable local execution, synthetic scope and generated mobile evidence are documented and covered by focused automated checks.
+files_allowed:
+  - tests/**
+  - package.json
+  - pnpm-lock.yaml
+  - README.md
+  - .gitignore
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+  - pnpm test:integration
+  - pnpm test:fullstack
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-037
+owner_decision_required: false
+supervisor_refinement:
+  - Extend the accepted TASK-015 full-stack runner rather than adding a second process/database harness. Keep fixed loopback ports 3100/3101, the cryptographically random fullstack_test database, full migration chain, synthetic signed initData and the Telegram bridge as the only intercepted request. All auth, exam, review and history traffic must traverse the real Next rewrites and Fastify API.
+  - Seed 50 distinct active VERIFIED CAR questions with four localized synthetic choices and deterministic correct key A only in the isolated database. Preserve the existing practice verification or equivalently retain its accepted coverage; do not activate or mutate repository fixtures or any normal database.
+  - Through the Pixel 7 browser, start one real mock exam and validate the 50-question policy, timer/progress and absence of correctness, score and explanation before answers. Submit every exam question exactly once, choosing A for45 and B for5, use the UI navigation, and require automatic authoritative completion with score45/50 and Passed. Do not call or intercept API routes from test code to shortcut the browser flow.
+  - From the authoritative result open Review exam mistakes, require exactly five ordered incorrect cards with the synthetic immutable text, selected B, correct A and explanations, then return to history and require the same completed exam summary with50 answered,0 unanswered and45/50 pass. Capture readable full-page mobile screenshots of the result, mistake review and history under test-results/fullstack.
+  - Query the isolated database to require exactly one owned completed ExamSession, fixed questionCount50/passingScore45/score45/passed true, non-null completion, exactly50 ExamQuestion rows with positions1..50 and unique question IDs, exactly50 paired selectedChoice/isCorrect/answeredAt outcomes,45 correct and5 incorrect, and snapshots matching their seeded question/choice identities. Assert the browser-visible exam ID belongs to that session where observable without exposing it in UI or storage.
+  - Keep secrets and raw connection/auth material out of diagnostics and artifacts. Retain exact-identifier database deletion and owned-child-only shutdown in finally paths. Extend focused unit coverage only where runner/lifecycle logic is factored into testable helpers; setup failures must remain visible failures rather than skips.
+  - Update README with the expanded synthetic mock-exam coverage and evidence paths, and retain the required normal-origin rebuild after pnpm test:fullstack. No production app/API/database schema, dependency, credential, fixture, deployment or live Telegram change.
