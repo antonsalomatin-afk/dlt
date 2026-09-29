@@ -1,0 +1,45 @@
+TASK-038 authoritative checks
+Implementation commit: c02e48bd444596aabb67f9f0e9ba759f6547cd41
+Completed: 2026-09-29T05:07:21.6256627Z
+
+## pnpm check
+PASS
+- eslint: passed
+- TypeScript and workspace typechecks: passed
+- Test files: 25 passed
+- Tests: 171 passed
+
+## pnpm build
+PASS
+- Next.js 16.3.5 production build compiled and prerendered successfully
+
+## pnpm test:e2e
+PASS
+- Playwright tests: 129 passed
+- Duration: 40.9s
+
+## pnpm test:integration
+PASS
+- Test files: 20 passed
+- Tests: 112 passed
+- Duration: 82.48s
+
+## pnpm test:fullstack
+PASS
+- Fresh isolated database migrated and seeded with 50 synthetic verified questions
+- Existing practice regression passed
+- Real 50-answer mock exam, authoritative 45/50 pass, five-mistake review and history passed through Next/Fastify/PostgreSQL
+- Ownership, snapshot, outcome and completion database invariants passed
+- Owned processes, clients and isolated database cleaned up
+
+## pnpm build (restore normal API origin)
+PASS
+- Normal-origin production build restored after the full-stack build
+
+## Visual artifact inspection
+PASS
+- mock-exam-result-mobile.png is complete and readable
+- mock-exam-review-mobile.png contains five ordered readable mistake cards
+- mock-exam-history-mobile.png shows the matching 45/50 completed exam summary
+
+The web server emitted the existing FORCE_COLOR/NO_COLOR warnings and PostgreSQL integration emitted the existing pg concurrent-query deprecation warning; neither affected the results.

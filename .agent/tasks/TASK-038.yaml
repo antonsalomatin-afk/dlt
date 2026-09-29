@@ -1,6 +1,6 @@
 id: TASK-038
 title: Verify the mock-exam flow through the real local stack
-status: CHECKING
+status: REVIEW
 epic: Epic 5 — Mock Exam
 objective: Exercise the completed Mini App mock-exam journey through real Next rewrites, Fastify routes and isolated PostgreSQL without production credentials.
 acceptance:
