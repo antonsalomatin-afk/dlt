@@ -18,6 +18,7 @@ const now = new Date('2026-09-10T12:00:00Z');
 const app = createApi({ database: db, botToken: 'synthetic', now: () => now, randomOffset: () => 0 });
 const categoryId = randomUUID();
 const conceptId = randomUUID();
+const overflowConceptId = randomUUID();
 const userId = randomUUID();
 const token = randomBytes(32).toString('base64url');
 const headers = { authorization: `Bearer ${token}` };
@@ -29,6 +30,7 @@ beforeAll(async () => {
   execFileSync(process.execPath, ['node_modules/prisma/build/index.js', '--config', 'packages/database/prisma.config.ts', 'migrate', 'deploy'], { env: { ...process.env, DATABASE_URL: isolatedUrl.toString() }, stdio: 'pipe', windowsHide: true });
   await db.category.create({ data: { id: categoryId, slug: categoryId, nameThai: 'test', nameEnglish: 'test', nameRussian: 'test' } });
   await db.concept.create({ data: { id: conceptId, slug: conceptId, nameThai: 'concept', nameEnglish: 'concept', nameRussian: 'concept' } });
+  await db.concept.create({ data: { id: overflowConceptId, slug: overflowConceptId, nameThai: 'overflow', nameEnglish: 'overflow', nameRussian: 'overflow' } });
   await db.user.create({ data: { id: userId, telegramUserId: BigInt(`0x${randomBytes(6).toString('hex')}`), sessions: { create: { tokenHash: createHash('sha256').update(token).digest('hex'), createdAt: new Date(now.getTime() - 1000), expiresAt: new Date(now.getTime() + 1000) } } } });
 });
 afterAll(async () => {
@@ -36,7 +38,7 @@ afterAll(async () => {
   try {
     await db.user.deleteMany({ where: { id: userId } });
     await db.question.deleteMany({ where: { id: { in: questions } } });
-    await db.concept.deleteMany({ where: { id: conceptId } });
+    await db.concept.deleteMany({ where: { id: { in: [conceptId, overflowConceptId] } } });
     await db.category.deleteMany({ where: { id: categoryId } });
   } finally {
     await db.$disconnect();
@@ -115,16 +117,27 @@ it('authenticates, filters, validates, and preserves exactly the presented snaps
     await assertError({ ...validAnswer, presentationId: presentation.id }, 404, 'Presentation not found');
     expect(await db.answerAttempt.count({ where: { presentationId: presentation.id } })).toBe(0);
   } finally { await db.user.delete({ where: { id: foreign.id } }); }
-  const corrupt = await db.questionPresentation.create({ data: { userId, questionId: question.id, snapshot: { version: 999 } } });
+  const corrupt = await db.questionPresentation.create({ data: { userId, questionId: question.id, conceptId, snapshot: { version: 999 } } });
   await assertError({ ...validAnswer, presentationId: corrupt.id }, 500, 'Internal Server Error');
   expect(await db.answerAttempt.count()).toBe(0);
+  expect(await db.conceptLearningState.count()).toBe(0);
   await db.questionPresentation.delete({ where: { id: corrupt.id } });
-  const incorrectPresentation = await db.questionPresentation.create({ data: { userId, questionId: question.id, snapshot } });
+  const incorrectPresentation = await db.questionPresentation.create({ data: { userId, questionId: question.id, conceptId, snapshot } });
   const wrongChoice = snapshot.question.choices.find((choice) => choice.id !== snapshot.correctChoiceId);
   if (!wrongChoice) throw new Error('Missing test choice');
   const wrongResponse = await submit({ presentationId: incorrectPresentation.id, choiceId: wrongChoice.id });
   expect(wrongResponse.statusCode).toBe(200);
   expect(answerResponseSchema.parse(wrongResponse.json())).toMatchObject({ isCorrect: false, correctChoiceId: snapshot.correctChoiceId });
+  expect(await db.conceptLearningState.findUniqueOrThrow({
+    where: { userId_conceptId: { userId, conceptId } },
+  })).toMatchObject({
+    practiceAnswered: 1,
+    practiceCorrect: 0,
+    examAnswered: 0,
+    examCorrect: 0,
+    lastPracticeAt: now,
+    lastExamAt: null,
+  });
   await db.question.update({ where: { id: question.id }, data: { textEnglish: 'Edited', explanationEnglish: 'Edited explanation', choices: { updateMany: { where: {}, data: { isCorrect: false } } } } });
   expect(parsePresentationSnapshot((await db.questionPresentation.findUniqueOrThrow({ where: { id: row.id } })).snapshot)).toEqual(snapshot);
   const concurrent = await Promise.all([submit(validAnswer), submit({ ...validAnswer, choiceId: wrongChoice.id })]);
@@ -143,16 +156,80 @@ it('authenticates, filters, validates, and preserves exactly the presented snaps
   const saved = await db.answerAttempt.findUniqueOrThrow({ where: { presentationId: row.id } });
   expect(saved).toMatchObject({ presentationId: row.id, selectedChoiceId: result.selectedChoiceId, isCorrect: result.isCorrect, submittedAt: now });
   expect(await db.answerAttempt.count({ where: { presentationId: row.id } })).toBe(1);
+  expect(await db.conceptLearningState.findUniqueOrThrow({
+    where: { userId_conceptId: { userId, conceptId } },
+  })).toMatchObject({
+    practiceAnswered: 2,
+    practiceCorrect: result.isCorrect ? 1 : 0,
+    lastPracticeAt: now,
+  });
   await assertError(validAnswer, 409, 'Answer already submitted');
   await assertError({ ...validAnswer, choiceId: randomUUID() }, 400, 'Bad Request');
   expect(await db.answerAttempt.findUniqueOrThrow({ where: { presentationId: row.id } })).toEqual(saved);
   // A separate correct answer ensures both score branches are covered regardless of the race winner.
-  const correctPresentation = await db.questionPresentation.create({ data: { userId, questionId: question.id, snapshot } });
+  const correctPresentation = await db.questionPresentation.create({ data: { userId, questionId: question.id, conceptId, snapshot } });
   expect(answerResponseSchema.parse((await submit({ ...validAnswer, presentationId: correctPresentation.id })).json()).isCorrect).toBe(true);
+  expect(await db.conceptLearningState.findUniqueOrThrow({
+    where: { userId_conceptId: { userId, conceptId } },
+  })).toMatchObject({
+    practiceAnswered: 3,
+    practiceCorrect: (result.isCorrect ? 1 : 0) + 1,
+    lastPracticeAt: now,
+  });
+
+  const laterPracticeAt = new Date(now.getTime() + 1_000);
+  await db.conceptLearningState.update({
+    where: { userId_conceptId: { userId, conceptId } },
+    data: { lastPracticeAt: laterPracticeAt },
+  });
+  const delayedPresentation = await db.questionPresentation.create({
+    data: { userId, questionId: question.id, conceptId, snapshot },
+  });
+  expect((await submit({ ...validAnswer, presentationId: delayedPresentation.id })).statusCode).toBe(200);
+  expect(await db.conceptLearningState.findUniqueOrThrow({
+    where: { userId_conceptId: { userId, conceptId } },
+  })).toMatchObject({
+    practiceAnswered: 4,
+    practiceCorrect: (result.isCorrect ? 1 : 0) + 2,
+    lastPracticeAt: laterPracticeAt,
+  });
+
+  const [firstConcurrentPresentation, secondConcurrentPresentation] = await Promise.all([
+    db.questionPresentation.create({ data: { userId, questionId: question.id, conceptId, snapshot } }),
+    db.questionPresentation.create({ data: { userId, questionId: question.id, conceptId, snapshot } }),
+  ]);
+  const concurrentSuccesses = await Promise.all([
+    submit({ ...validAnswer, presentationId: firstConcurrentPresentation.id }),
+    submit({ presentationId: secondConcurrentPresentation.id, choiceId: wrongChoice.id }),
+  ]);
+  expect(concurrentSuccesses.map(({ statusCode }) => statusCode)).toEqual([200, 200]);
+  expect(await db.conceptLearningState.findUniqueOrThrow({
+    where: { userId_conceptId: { userId, conceptId } },
+  })).toMatchObject({
+    practiceAnswered: 6,
+    practiceCorrect: (result.isCorrect ? 1 : 0) + 3,
+    lastPracticeAt: laterPracticeAt,
+  });
+
+  const overflowPresentation = await db.questionPresentation.create({
+    data: { userId, questionId: question.id, conceptId: overflowConceptId, snapshot },
+  });
+  await db.conceptLearningState.create({ data: {
+    userId,
+    conceptId: overflowConceptId,
+    practiceAnswered: 2_147_483_647,
+    practiceCorrect: 0,
+    lastPracticeAt: new Date(now.getTime() - 1),
+  } });
+  await assertError({ ...validAnswer, presentationId: overflowPresentation.id }, 500, 'Internal Server Error');
+  expect(await db.answerAttempt.count({ where: { presentationId: overflowPresentation.id } })).toBe(0);
+  expect((await db.conceptLearningState.findUniqueOrThrow({
+    where: { userId_conceptId: { userId, conceptId: overflowConceptId } },
+  })).practiceAnswered).toBe(2_147_483_647);
   const malformed = await next();
   expect(malformed.statusCode).toBe(500);
   expect(malformed.json()).toEqual({ error: 'Internal Server Error' });
-  expect(await db.questionPresentation.count({ where: { userId } })).toBe(3);
+  expect(await db.questionPresentation.count({ where: { userId } })).toBe(7);
   await db.question.update({ where: { id: question.id }, data: { active: false } });
 });
 
@@ -186,4 +263,15 @@ it('retains null concept attribution for an ungrouped practice question', async 
   expect((await db.questionPresentation.findUniqueOrThrow({
     where: { id: presentation.id },
   })).conceptId).toBeNull();
+
+  const choice = await db.questionChoice.findFirstOrThrow({ where: { questionId: question.id, isCorrect: true } });
+  const before = await db.conceptLearningState.count();
+  const answer = await app.inject({
+    method: 'POST',
+    url: '/practice/answer',
+    headers: { ...headers, 'content-type': 'application/json' },
+    payload: JSON.stringify({ presentationId: presentation.id, choiceId: choice.id }),
+  });
+  expect(answer.statusCode).toBe(200);
+  expect(await db.conceptLearningState.count()).toBe(before);
 });

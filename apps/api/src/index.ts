@@ -843,6 +843,7 @@ export function createApi(options: {
             id: true,
             examSessionId: true,
             questionId: true,
+            conceptId: true,
             snapshot: true,
             selectedChoiceId: true,
             isCorrect: true,
@@ -906,6 +907,24 @@ export function createApi(options: {
             return { kind: 'duplicate' } as const;
           }
           throw new Error('Exam answer update cardinality is inconsistent');
+        }
+        if (examQuestion.conceptId !== null) {
+          const learningStateUpdates = await transaction.$executeRaw(Prisma.sql`
+            INSERT INTO "ConceptLearningState" (
+              "userId", "conceptId", "examAnswered", "examCorrect", "lastExamAt"
+            ) VALUES (
+              ${user.id}::uuid,
+              ${examQuestion.conceptId}::uuid,
+              1,
+              ${body.data.choiceId === snapshot.correctChoiceId ? 1 : 0},
+              ${answeredAt}
+            )
+            ON CONFLICT ("userId", "conceptId") DO UPDATE SET
+              "examAnswered" = "ConceptLearningState"."examAnswered" + 1,
+              "examCorrect" = "ConceptLearningState"."examCorrect" + EXCLUDED."examCorrect",
+              "lastExamAt" = GREATEST("ConceptLearningState"."lastExamAt", EXCLUDED."lastExamAt")
+          `);
+          if (learningStateUpdates !== 1) throw new Error('Exam learning state update cardinality is inconsistent');
         }
         const answeredCount = await transaction.examQuestion.count({
           where: { examSessionId: examQuestion.examSessionId, answeredAt: { not: null } },
@@ -1193,10 +1212,29 @@ export function createApi(options: {
         if (!presentation) return { error: 'Presentation not found' } as const;
         const snapshot = parsePresentationSnapshot(presentation.snapshot);
         if (!snapshot.question.choices.some((choice) => choice.id === body.data.choiceId)) return { error: 'Bad Request' } as const;
+        const submittedAt = now();
         const answer = await tx.answerAttempt.create({ data: {
           presentationId: presentation.id, selectedChoiceId: body.data.choiceId,
-          isCorrect: body.data.choiceId === snapshot.correctChoiceId, submittedAt: now(),
+          isCorrect: body.data.choiceId === snapshot.correctChoiceId, submittedAt,
         } });
+        if (presentation.conceptId !== null) {
+          const learningStateUpdates = await tx.$executeRaw(Prisma.sql`
+            INSERT INTO "ConceptLearningState" (
+              "userId", "conceptId", "practiceAnswered", "practiceCorrect", "lastPracticeAt"
+            ) VALUES (
+              ${user.id}::uuid,
+              ${presentation.conceptId}::uuid,
+              1,
+              ${answer.isCorrect ? 1 : 0},
+              ${submittedAt}
+            )
+            ON CONFLICT ("userId", "conceptId") DO UPDATE SET
+              "practiceAnswered" = "ConceptLearningState"."practiceAnswered" + 1,
+              "practiceCorrect" = "ConceptLearningState"."practiceCorrect" + EXCLUDED."practiceCorrect",
+              "lastPracticeAt" = GREATEST("ConceptLearningState"."lastPracticeAt", EXCLUDED."lastPracticeAt")
+          `);
+          if (learningStateUpdates !== 1) throw new Error('Practice learning state update cardinality is inconsistent');
+        }
         return answerResponseSchema.parse({
           presentationId: presentation.id, selectedChoiceId: answer.selectedChoiceId, isCorrect: answer.isCorrect,
           correctChoiceId: snapshot.correctChoiceId,

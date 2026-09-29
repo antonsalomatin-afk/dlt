@@ -42,7 +42,7 @@ beforeAll(async () => {
   await upgrade.connect();
   try {
     const priorMigrations = readdirSync(migrationsRoot, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory() && entry.name !== migrationName)
+      .filter((entry) => entry.isDirectory() && entry.name < migrationName)
       .map((entry) => entry.name)
       .sort();
     for (const migration of priorMigrations) {

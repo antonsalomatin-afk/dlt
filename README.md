@@ -196,6 +196,22 @@ exam, completion, history, mistakes, favorites and review DTOs do not expose it.
 It prepares future concept progress/mastery work; it does not add learning state,
 mastery policy, scoring, selection, endpoints or UI behavior.
 
+### Concept learning outcome counters
+
+`ConceptLearningState` maintains one internal row per learner and historically
+attributed concept. It records separate factual answered/correct totals and latest
+answer timestamps for practice and mock exams. Existing attributed answers are
+backfilled from immutable presentation and exam-question attribution; ungrouped
+and unanswered records do not contribute. New counters update atomically with the
+accepted answer write, so duplicate or rolled-back submissions cannot increment
+them.
+
+Database checks keep counts nonnegative, correct totals at or below answered
+totals, and each latest timestamp present exactly when that channel has answers.
+Learner deletion cascades to these rows, while referenced concept deletion is
+restricted. These values remain server-only facts: no API or UI exposes them, and
+they define no accuracy, mastery, readiness, repetition or selection policy.
+
 ### Import development fixtures
 
 After `pnpm db:start` and `pnpm db:migrate`, run `pnpm content:import`.

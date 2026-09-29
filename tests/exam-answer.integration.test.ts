@@ -15,6 +15,8 @@ const isolatedUrl = new URL(databaseUrl);
 isolatedUrl.pathname = `/${databaseName}`;
 const database = createDatabaseClient(isolatedUrl.toString());
 const categoryId = randomUUID();
+const conceptId = randomUUID();
+const overflowConceptId = randomUUID();
 const questionIds = Array.from({ length: 50 }, () => randomUUID());
 const choiceIds = questionIds.map(() => Array.from({ length: 4 }, () => randomUUID()));
 const requestTime = new Date('2026-09-17T15:00:00.123Z');
@@ -88,6 +90,7 @@ async function createExam(
     answeredCount?: number;
     session?: Partial<Prisma.ExamSessionUncheckedCreateInput>;
     targetSnapshot?: Prisma.InputJsonValue;
+    targetConceptId?: string | null;
   } = {},
 ) {
   const questionTotal = options.questionTotal ?? 50;
@@ -108,6 +111,7 @@ async function createExam(
         return {
           position: index + 1,
           questionId: questionIdAt(index),
+          conceptId: index === 0 && options.targetConceptId !== undefined ? options.targetConceptId : conceptId,
           snapshot: index === 0 && options.targetSnapshot ? options.targetSnapshot : snapshot(index),
           ...(answered ? { selectedChoiceId, isCorrect: true, answeredAt: new Date(clock.getTime() - 1_000) } : {}),
         };
@@ -155,10 +159,15 @@ beforeAll(async () => {
   await database.category.create({
     data: { id: categoryId, slug: 'exam-answer', nameThai: 'exam', nameEnglish: 'exam', nameRussian: 'exam' },
   });
+  await database.concept.createMany({ data: [
+    { id: conceptId, slug: 'exam-answer-concept', nameThai: 'concept', nameEnglish: 'concept', nameRussian: 'concept' },
+    { id: overflowConceptId, slug: 'exam-answer-overflow', nameThai: 'overflow', nameEnglish: 'overflow', nameRussian: 'overflow' },
+  ] });
   await database.question.createMany({
     data: questionIds.map((id, index) => ({
       id,
       categoryId,
+      conceptId,
       vehicleType: 'CAR' as const,
       active: true,
       verificationStatus: 'VERIFIED' as const,
@@ -255,18 +264,43 @@ describe('POST /exam/answer', () => {
       remainingCount: 49,
     });
     expect(Object.keys(correctBody).sort()).toEqual(['answeredAt', 'answeredCount', 'examId', 'examQuestionId', 'remainingCount', 'selectedChoiceId']);
-    for (const privateValue of ['isCorrect', 'correctChoiceId', 'score', 'passed', 'explanation', correctLearner.user.id]) {
+    for (const privateValue of ['isCorrect', 'correctChoiceId', 'score', 'passed', 'explanation', 'conceptId', conceptId, correctLearner.user.id]) {
       expect(correctResponse.body).not.toContain(privateValue);
     }
     expect(await database.examQuestion.findUniqueOrThrow({ where: { id: correctTarget.id } })).toMatchObject({
       selectedChoiceId: firstIds[0], isCorrect: true, answeredAt: requestTime,
     });
+    expect(await database.conceptLearningState.findUniqueOrThrow({
+      where: { userId_conceptId: { userId: correctLearner.user.id, conceptId } },
+    })).toMatchObject({
+      practiceAnswered: 0,
+      practiceCorrect: 0,
+      examAnswered: 1,
+      examCorrect: 1,
+      lastPracticeAt: null,
+      lastExamAt: requestTime,
+    });
+    const laterExamAt = new Date(requestTime.getTime() + 1_000);
+    await database.conceptLearningState.update({
+      where: { userId_conceptId: { userId: correctLearner.user.id, conceptId } },
+      data: { lastExamAt: laterExamAt },
+    });
+    const delayedTarget = correctExam.questions[1];
+    const delayedChoiceId = choiceIds[1]?.[0];
+    if (!delayedTarget || !delayedChoiceId) throw new Error('Missing delayed target');
+    expect((await answer(correctLearner.token, validPayload(delayedTarget.id, delayedChoiceId))).statusCode).toBe(200);
+    expect(await database.conceptLearningState.findUniqueOrThrow({
+      where: { userId_conceptId: { userId: correctLearner.user.id, conceptId } },
+    })).toMatchObject({ examAnswered: 2, examCorrect: 2, lastExamAt: laterExamAt });
 
     const incorrectResponse = await answer(incorrectLearner.token, validPayload(incorrectTarget.id, firstIds[1] as string));
     expect(incorrectResponse.statusCode).toBe(200);
     expect(await database.examQuestion.findUniqueOrThrow({ where: { id: incorrectTarget.id } })).toMatchObject({
       selectedChoiceId: firstIds[1], isCorrect: false, answeredAt: requestTime,
     });
+    expect(await database.conceptLearningState.findUniqueOrThrow({
+      where: { userId_conceptId: { userId: incorrectLearner.user.id, conceptId } },
+    })).toMatchObject({ examAnswered: 1, examCorrect: 0, lastExamAt: requestTime });
   });
 
   it('rejects choices outside the snapshot and rolls back malformed or inconsistent snapshots', async () => {
@@ -290,6 +324,7 @@ describe('POST /exam/answer', () => {
       expect(await database.examQuestion.findUniqueOrThrow({ where: { id: target.id } })).toMatchObject({
         selectedChoiceId: null, isCorrect: null, answeredAt: null,
       });
+      expect(await database.conceptLearningState.count({ where: { userId: learner.user.id } })).toBe(0);
     }
   });
 
@@ -336,6 +371,9 @@ describe('POST /exam/answer', () => {
     expect(examAnswerResponseSchema.parse(first.json())).toMatchObject({ answeredCount: 5, remainingCount: 45 });
     await expectError(answer(learner.token, validPayload(target.id, choiceId)), 409, 'Answer already submitted');
     expect(await database.examQuestion.count({ where: { examSessionId: exam.id, answeredAt: { not: null } } })).toBe(5);
+    expect(await database.conceptLearningState.findUniqueOrThrow({
+      where: { userId_conceptId: { userId: learner.user.id, conceptId } },
+    })).toMatchObject({ examAnswered: 1, examCorrect: 1, lastExamAt: requestTime });
   });
 
   it('allows exactly one concurrent submission and stores one complete tuple', async () => {
@@ -354,6 +392,58 @@ describe('POST /exam/answer', () => {
       selectedChoiceId: choiceId, isCorrect: true, answeredAt: requestTime,
     });
     expect(await database.examQuestion.count({ where: { examSessionId: exam.id, answeredAt: { not: null } } })).toBe(1);
+    expect(await database.conceptLearningState.findUniqueOrThrow({
+      where: { userId_conceptId: { userId: learner.user.id, conceptId } },
+    })).toMatchObject({ examAnswered: 1, examCorrect: 1, lastExamAt: requestTime });
+  });
+
+  it('atomically accumulates distinct concurrent answers for one learner and concept', async () => {
+    const learner = await createLearner();
+    const exam = await createExam(learner.user.id);
+    const first = exam.questions[0];
+    const second = exam.questions[1];
+    const correctChoice = choiceIds[0]?.[0];
+    const incorrectChoice = choiceIds[1]?.[1];
+    if (!first || !second || !correctChoice || !incorrectChoice) throw new Error('Missing concurrent targets');
+    const responses = await Promise.all([
+      answer(learner.token, validPayload(first.id, correctChoice)),
+      answer(learner.token, validPayload(second.id, incorrectChoice)),
+    ]);
+    expect(responses.map(({ statusCode }) => statusCode)).toEqual([200, 200]);
+    expect(await database.conceptLearningState.findUniqueOrThrow({
+      where: { userId_conceptId: { userId: learner.user.id, conceptId } },
+    })).toMatchObject({ examAnswered: 2, examCorrect: 1, lastExamAt: requestTime });
+  });
+
+  it('does not count null attribution and rolls back an answer when its counter cannot increment', async () => {
+    const ungroupedLearner = await createLearner();
+    const ungroupedExam = await createExam(ungroupedLearner.user.id, { targetConceptId: null });
+    const ungroupedTarget = ungroupedExam.questions[0];
+    const choiceId = choiceIds[0]?.[0];
+    if (!ungroupedTarget || !choiceId) throw new Error('Missing target');
+    expect((await answer(ungroupedLearner.token, validPayload(ungroupedTarget.id, choiceId))).statusCode).toBe(200);
+    expect(await database.conceptLearningState.count({ where: { userId: ungroupedLearner.user.id } })).toBe(0);
+
+    const overflowLearner = await createLearner();
+    const overflowExam = await createExam(overflowLearner.user.id, { targetConceptId: overflowConceptId });
+    const overflowTarget = overflowExam.questions[0];
+    if (!overflowTarget) throw new Error('Missing overflow target');
+    await database.conceptLearningState.create({ data: {
+      userId: overflowLearner.user.id,
+      conceptId: overflowConceptId,
+      examAnswered: 2_147_483_647,
+      examCorrect: 0,
+      lastExamAt: new Date(requestTime.getTime() - 1),
+    } });
+    await expectError(answer(overflowLearner.token, validPayload(overflowTarget.id, choiceId)), 500, 'Internal Server Error');
+    expect(await database.examQuestion.findUniqueOrThrow({ where: { id: overflowTarget.id } })).toMatchObject({
+      selectedChoiceId: null,
+      isCorrect: null,
+      answeredAt: null,
+    });
+    expect((await database.conceptLearningState.findUniqueOrThrow({
+      where: { userId_conceptId: { userId: overflowLearner.user.id, conceptId: overflowConceptId } },
+    })).examAnswered).toBe(2_147_483_647);
   });
 
   it('acknowledges the 50th answer without completing the session or writing practice state', async () => {
