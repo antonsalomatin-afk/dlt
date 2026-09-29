@@ -1,6 +1,6 @@
 id: TASK-042
 title: Expose authenticated concept progress facts
-status: READY
+status: BUILDING
 epic: Epic 6 — Concept Learning
 objective: Let an authenticated learner retrieve privacy-safe per-concept practice and exam outcome facts without defining mastery.
 acceptance:
