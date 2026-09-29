@@ -777,11 +777,25 @@ ports3101/3100. Both ports must be free; existing listeners are never stopped.
 
 The mobile Chromium browser mocks only the official Telegram bridge script,
 which supplies freshly signed synthetic initData. Authentication, vehicle saving,
-question delivery and scoring use real HTTP through Next rewrites and PostgreSQL.
-Assertions cover correct/incorrect results, explanations, ownership, one answer per
-presentation and continuation. Screenshots are saved under
-`test-results/fullstack/`. This verifies synthetic local integration, not a live
-Telegram launch or production configuration; no real bot token is needed.
+practice, mock-exam, review and history requests use real HTTP through Next rewrites,
+Fastify and PostgreSQL. The isolated database contains exactly 50 active verified CAR
+questions with localized synthetic text and four choices; choice A is deterministically
+correct. The runner retains the accepted correct/incorrect practice and continuation
+coverage, then starts one 50-question exam and submits each immutable question once
+through the Pixel 7 UI. It selects A 45 times and B at positions 10, 20, 30, 40 and 50,
+proving that correctness and explanations stay hidden until the authoritative 45/50
+pass result.
+
+The same run opens mistake review directly from the result, verifies the five ordered
+snapshot-backed mistakes, and returns to the completed-exam history showing 50 answered,
+zero unanswered and the 45/50 pass. Database assertions cover session ownership, fixed
+question IDs and positions, one paired outcome per question, score/pass arithmetic, and
+the immutable question, choice and explanation snapshots. Readable full-page evidence is
+saved as `test-results/fullstack/mock-exam-result-mobile.png`,
+`test-results/fullstack/mock-exam-review-mobile.png` and
+`test-results/fullstack/mock-exam-history-mobile.png`. These ignored artifacts are
+regenerated on every successful run. This verifies synthetic local integration, not a
+live Telegram launch or production configuration; no real bot token is needed.
 
 Cleanup runs after success or failure, closes the browser, stops and awaits only
 owned Node children, disconnects clients and drops only the exact database created
