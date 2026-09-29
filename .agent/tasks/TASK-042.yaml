@@ -1,0 +1,34 @@
+id: TASK-042
+title: Expose authenticated concept progress facts
+status: READY
+epic: Epic 6 — Concept Learning
+objective: Let an authenticated learner retrieve privacy-safe per-concept practice and exam outcome facts without defining mastery.
+acceptance:
+  - An authenticated read-only endpoint returns only the learner's concept learning states joined to current localized concept identity.
+  - Practice, exam and combined answered/correct/incorrect counts, channel timestamps, total accuracy and latest activity are exact and internally consistent.
+  - Results paginate deterministically by latest activity and concept identity without duplicates or omissions.
+  - Authentication, strict query/cursor/response validation, privacy, no-store caching and safe failure behavior match accepted API boundaries.
+  - Empty, single-channel, mixed-channel, tied ordering, pagination, corrupt-state and user-isolation behavior are documented and covered against PostgreSQL.
+  - No mastery level, threshold, readiness score, scheduling recommendation, UI or learning-state mutation is introduced.
+files_allowed:
+  - packages/database/**
+  - apps/api/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-041
+owner_decision_required: false
+supervisor_refinement:
+  - Add authenticated GET /me/concept-progress with strict optional limit and cursor query. limit defaults20 and accepts whole integers1 through50 only. Authenticate before query parsing. Set Cache-Control no-store on every matched-route outcome, including401/400/500. Reject duplicate parameters, arrays, unknown members, coercion, blank values and noncanonical cursors with the accepted sanitized exact error envelopes.
+  - Return exactly { items, nextCursor }. Each item contains conceptId, slug, nameThai, nameEnglish, nameRussian, practice { answered, correct, incorrect, lastAnsweredAt }, exam with the same fields, total { answered, correct, incorrect, accuracyPercent }, and lastActivityAt. Do not return user IDs, raw state row metadata, question IDs, source/review fields, mastery labels, readiness or recommendations.
+  - All counts are nonnegative safe integers; channel incorrect equals answered minus correct; totals equal the two channels and remain safe; total accuracyPercent is null only when total answered is zero, otherwise Math.round(total correct / total answered *100). Channel lastAnsweredAt is null exactly when that channel answered count is zero. lastActivityAt is the later non-null channel timestamp and is always present for persisted state rows. Concept IDs/timestamps are canonical and localized names/slugs are nonblank trimmed strings.
+  - Order newest activity first, then conceptId descending for ties. Use an opaque canonical base64url cursor containing version1, lastActivityAt and conceptId; require the returned cursor to identify the final returned item. Fetch limit+1, emit a cursor only when more owned rows exist, and apply the exact lexicographic seek predicate so pages neither repeat nor skip tied rows.
+  - Derive the response only from ConceptLearningState rows owned by the authenticated user joined to Concept. Current concept slug/names are taxonomy labels; the stored counters/timestamps remain historical facts. Parse database results through a strict runtime response boundary before reply. Stored invariant or numeric-safety violations fail closed with the standard sanitized500 and no partial items.
+  - Add unit coverage for strict query, cursor canonicalization, response privacy/arithmetic/timestamp/latest-activity/order/cursor invariants and unsafe integer rejection. Add isolated PostgreSQL integration coverage for auth precedence, malformed query, empty state, practice-only, exam-only, mixed facts and rounding, current concept names, foreign-user exclusion, deterministic tied ordering, exact two-page traversal, malformed cursor, no mutation, no-store and fail-closed corrupt rows introduced only after temporarily dropping/reinstating the relevant check.
+  - Update README. No schema/migration, counter write behavior, mastery policy, browser UI, selection/repetition behavior, content, dependency, credential or deployment change.
