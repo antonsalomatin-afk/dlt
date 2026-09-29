@@ -191,10 +191,10 @@ null. Later question regrouping does not rewrite historical attribution. Both
 relations restrict deletion of a concept while an attributed practice or exam row
 still references it, and indexes support later learner/concept aggregation.
 
-This attribution is server-only persistence metadata. Practice, answer, current
-exam, completion, history, mistakes, favorites and review DTOs do not expose it.
-It prepares future concept progress/mastery work; it does not add learning state,
-mastery policy, scoring, selection, endpoints or UI behavior.
+Practice, answer, current exam, completion, history, mistakes, favorites and
+review DTOs do not expose this attribution. The concept-progress endpoint below
+uses it indirectly through factual learning-state counters. Attribution itself
+does not define mastery, scoring, selection or UI behavior.
 
 ### Concept learning outcome counters
 
@@ -209,8 +209,8 @@ them.
 Database checks keep counts nonnegative, correct totals at or below answered
 totals, and each latest timestamp present exactly when that channel has answers.
 Learner deletion cascades to these rows, while referenced concept deletion is
-restricted. These values remain server-only facts: no API or UI exposes them, and
-they define no accuracy, mastery, readiness, repetition or selection policy.
+restricted. The authenticated concept-progress API exposes these factual values;
+they define no mastery, readiness, repetition or selection policy.
 
 ### Import development fixtures
 
@@ -675,6 +675,29 @@ For no answers the response is
 otherwise accuracy is `Math.round((correct / answered) * 100)`. The complete result
 is runtime validated, and invalid aggregate data or database failures return the
 sanitized `500 { "error": "Internal Server Error" }` without a partial summary.
+
+### Concept progress facts
+
+`GET /me/concept-progress` uses the bearer session and accepts optional strict
+`limit` (1 through 50, default 20) and opaque `cursor` parameters. Authentication
+runs before query parsing, and every matched response uses
+`Cache-Control: no-store`. Results contain only the authenticated learner's
+persisted concept learning states joined to the concept's current slug and
+Thai, English and Russian names.
+
+Each item returns separate practice and exam answered, correct, incorrect and
+latest-answer facts, plus combined counts, whole-percent accuracy and latest
+activity. Empty channels use a null timestamp. Items are newest first, with
+concept ID descending as the deterministic tie-breaker; the cursor records that
+exact tuple for seek pagination. A learner without concept state receives
+`{ "items": [], "nextCursor": null }`.
+
+The response is runtime validated for canonical identities and timestamps,
+trimmed current labels, safe count arithmetic, timestamp/count pairing, exact
+totals, accuracy, order and cursor agreement. Invalid persisted state fails the
+whole request with the sanitized internal-error response. The endpoint exposes
+no user identity, question/source metadata, mastery level, readiness score,
+recommendation, scheduling policy or mutation behavior.
 
 
 ## Mini App (local development)

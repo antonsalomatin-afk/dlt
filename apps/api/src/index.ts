@@ -10,6 +10,12 @@ import { favoriteRequestSchema, favoriteResponseSchema } from '../../../packages
 import { encodeFavoriteCursor, favoriteFeedResponseSchema, parseFavoriteFeedQuery } from '../../../packages/database/src/favorite-feed.ts';
 import { buildProgressSummary } from '../../../packages/database/src/progress.ts';
 import {
+  buildConceptProgressItem,
+  conceptProgressResponseSchema,
+  encodeConceptProgressCursor,
+  parseConceptProgressQuery,
+} from '../../../packages/database/src/concept-progress.ts';
+import {
   encodeExamHistoryCursor,
   examHistoryResponseSchema,
   parseExamHistoryQuery,
@@ -256,7 +262,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -408,6 +414,53 @@ export function createApi(options: {
       _count: { _all: true },
     });
     return buildProgressSummary(aggregates);
+  });
+  app.get('/me/concept-progress', async (request, reply) => {
+    const user = await authenticatedUser(request.headers.authorization);
+    if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+    let query;
+    try { query = parseConceptProgressQuery(request.query); }
+    catch { return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' })); }
+    const cursorPredicate = query.cursor === null ? Prisma.empty : Prisma.sql`
+      AND (
+        GREATEST(state."lastPracticeAt", state."lastExamAt") < ${new Date(query.cursor.lastActivityAt)}
+        OR (
+          GREATEST(state."lastPracticeAt", state."lastExamAt") = ${new Date(query.cursor.lastActivityAt)}
+          AND state."conceptId" < ${query.cursor.conceptId}::uuid
+        )
+      )
+    `;
+    const rows: unknown = await options.database.$queryRaw(Prisma.sql`
+      SELECT
+        state."conceptId",
+        concept.slug,
+        concept."nameThai",
+        concept."nameEnglish",
+        concept."nameRussian",
+        state."practiceAnswered",
+        state."practiceCorrect",
+        state."examAnswered",
+        state."examCorrect",
+        state."lastPracticeAt",
+        state."lastExamAt",
+        GREATEST(state."lastPracticeAt", state."lastExamAt") AS "lastActivityAt"
+      FROM "ConceptLearningState" AS state
+      INNER JOIN "Concept" AS concept ON concept.id = state."conceptId"
+      WHERE state."userId" = ${user.id}::uuid
+      ${cursorPredicate}
+      ORDER BY "lastActivityAt" DESC, state."conceptId" DESC
+      LIMIT ${query.limit + 1}
+    `);
+    if (!Array.isArray(rows)) throw new Error('Concept progress query result is invalid');
+    const validated = rows.map(buildConceptProgressItem);
+    const page = validated.slice(0, query.limit);
+    const last = page.at(-1);
+    return conceptProgressResponseSchema.parse({
+      items: page,
+      nextCursor: validated.length > query.limit && last ? encodeConceptProgressCursor({
+        v: 1, lastActivityAt: last.lastActivityAt, conceptId: last.conceptId,
+      }) : null,
+    });
   });
   app.get('/practice/categories', async (request, reply) => {
     const user = await authenticatedUser(request.headers.authorization);
