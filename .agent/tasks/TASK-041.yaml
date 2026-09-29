@@ -1,6 +1,6 @@
 id: TASK-041
 title: Accumulate concept learning outcome counters
-status: READY
+status: BUILDING
 epic: Epic 6 — Concept Learning
 objective: Maintain exact server-side practice and exam outcome counters per learner and concept without choosing a mastery formula.
 acceptance:
