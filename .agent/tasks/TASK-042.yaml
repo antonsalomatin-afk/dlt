@@ -1,6 +1,6 @@
 id: TASK-042
 title: Expose authenticated concept progress facts
-status: REVIEW
+status: ACCEPTED
 epic: Epic 6 — Concept Learning
 objective: Let an authenticated learner retrieve privacy-safe per-concept practice and exam outcome facts without defining mastery.
 acceptance:
@@ -32,3 +32,5 @@ supervisor_refinement:
   - Derive the response only from ConceptLearningState rows owned by the authenticated user joined to Concept. Current concept slug/names are taxonomy labels; the stored counters/timestamps remain historical facts. Parse database results through a strict runtime response boundary before reply. Stored invariant or numeric-safety violations fail closed with the standard sanitized500 and no partial items.
   - Add unit coverage for strict query, cursor canonicalization, response privacy/arithmetic/timestamp/latest-activity/order/cursor invariants and unsafe integer rejection. Add isolated PostgreSQL integration coverage for auth precedence, malformed query, empty state, practice-only, exam-only, mixed facts and rounding, current concept names, foreign-user exclusion, deterministic tied ordering, exact two-page traversal, malformed cursor, no mutation, no-store and fail-closed corrupt rows introduced only after temporarily dropping/reinstating the relevant check.
   - Update README. No schema/migration, counter write behavior, mastery policy, browser UI, selection/repetition behavior, content, dependency, credential or deployment change.
+accepted_commit: 5295a112720ab5c26e416453b77cba0af0082a68
+review_file: .agent/reviews/TASK-042-review-01.md
