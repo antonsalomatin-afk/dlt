@@ -1,6 +1,6 @@
 id: TASK-043
 title: Display concept mastery labels
-status: BUILDING
+status: CHECKING
 epic: Epic 6 — Concept Learning
 objective: Show learners a transparent display-only mastery label derived from accepted concept outcome facts.
 acceptance:
