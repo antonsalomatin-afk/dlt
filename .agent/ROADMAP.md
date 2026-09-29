@@ -84,6 +84,7 @@ At the end of this epic the core end-to-end flow must work.
 ## Epic 6 — Concept Learning
 
 - TASK-039 — ACCEPTED — group development question variants by stable concepts
+- TASK-040 — READY — persist immutable concept attribution for practice and exam attempts
 - mastery
 - repeat mistakes intelligently
 - spaced repetition

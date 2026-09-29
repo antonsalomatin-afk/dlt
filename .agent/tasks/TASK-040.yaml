@@ -1,0 +1,33 @@
+id: TASK-040
+title: Persist immutable concept attribution for learning attempts
+status: READY
+epic: Epic 6 — Concept Learning
+objective: Preserve the concept attached to each presented practice or exam question so later mastery calculations remain historically stable when source content is regrouped.
+acceptance:
+  - Practice presentations and exam questions persist the source question's concept identity at creation time, with null retained for ungrouped questions.
+  - Existing persisted presentations and exam questions are safely backfilled from their referenced question when a concept exists.
+  - Attribution belongs to the owned immutable attempt/exam record and does not change when the source question's current concept changes later.
+  - Concept foreign keys, indexes and deletion behavior preserve referential integrity without changing existing ownership, snapshot or scoring constraints.
+  - Public practice, exam, history and review request/response shapes remain unchanged and never expose concept IDs or grouping metadata.
+  - Fresh-migration and isolated PostgreSQL tests prove backfill, new-row attribution, null behavior, historical stability, privacy and regression safety.
+files_allowed:
+  - packages/database/**
+  - apps/api/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-039
+owner_decision_required: false
+supervisor_refinement:
+  - Add nullable conceptId relations from QuestionPresentation and ExamQuestion to the accepted Concept model, with explicit PostgreSQL foreign keys using ON DELETE RESTRICT and indexes suitable for future user/concept aggregation. Keep existing primary, unique, ownership and question relations unchanged.
+  - The incremental migration must backfill each existing row's conceptId from its referenced Question.conceptId before normal use, leaving null only when the question is ungrouped. Verify the full migration chain from an empty database and an upgrade fixture containing grouped and ungrouped pre-migration presentation/exam rows. Do not infer a concept from category, wording or another question.
+  - When /practice/next creates a QuestionPresentation, copy the selected Question.conceptId into the new row in the same accepted operation that persists the immutable snapshot. When /exam/start creates its50 ExamQuestion rows, copy each selected question's conceptId alongside questionId/snapshot in the existing transaction. Later question concept edits must not rewrite either stored attribution.
+  - Treat stored conceptId as server-only historical metadata. Do not add it to presentation, answer, current/start exam, completion, history, mistakes, favorites or review DTOs/snapshots, logs, browser code or URLs. Existing strict response tests must continue proving unknown privacy-sensitive fields are absent/rejected.
+  - Extend focused database/unit coverage for schema relations and safe mapping. Extend isolated PostgreSQL practice and exam-start coverage to prove grouped and ungrouped creation, ownership, exact concept copy, stability after source reassignment/removal where allowed, no scoring/selection regression, and referenced-concept deletion rejection while attributed rows exist.
+  - Document the internal attribution boundary and that it only prepares later concept progress/mastery work. No LearningState/mastery model, scoring formula, eligibility/selection change, content mutation, new endpoint, UI, dependency, production credential or deployment change.
