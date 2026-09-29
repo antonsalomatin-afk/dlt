@@ -85,6 +85,7 @@ At the end of this epic the core end-to-end flow must work.
 
 - TASK-039 — ACCEPTED — group development question variants by stable concepts
 - TASK-040 — ACCEPTED — persist immutable concept attribution for practice and exam attempts
+- TASK-041 — READY — accumulate exact practice and exam concept outcome counters
 - mastery
 - repeat mistakes intelligently
 - spaced repetition

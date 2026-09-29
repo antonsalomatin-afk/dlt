@@ -1,0 +1,34 @@
+id: TASK-041
+title: Accumulate concept learning outcome counters
+status: READY
+epic: Epic 6 — Concept Learning
+objective: Maintain exact server-side practice and exam outcome counters per learner and concept without choosing a mastery formula.
+acceptance:
+  - One relational learning-state row per user/concept stores separate practice and exam answered/correct counts plus the latest timestamp for each channel.
+  - Existing concept-attributed practice and exam outcomes are backfilled deterministically; unattributed or unanswered records do not contribute.
+  - New practice and exam answers update the matching learning state atomically with the accepted answer write and exactly once under retries or concurrency.
+  - Database constraints enforce ownership, concept references, nonnegative arithmetic and timestamp/count pairing while user deletion cascades and concept deletion remains restricted.
+  - Public answer, progress, history, exam and review contracts remain unchanged and expose no internal concept counters or identifiers.
+  - Fresh/upgrade migration, rollback, duplicate/concurrency and isolated PostgreSQL tests prove exact counters without introducing a mastery score or policy.
+files_allowed:
+  - packages/database/**
+  - apps/api/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+supervisor_refinement_required:
+  - Resolved by supervisor_refinement below; no further approval needed within this scope.
+dependencies:
+  - TASK-040
+owner_decision_required: false
+supervisor_refinement:
+  - Add ConceptLearningState keyed uniquely by userId plus conceptId. Store practiceAnswered, practiceCorrect, examAnswered, examCorrect as nonnegative integer counters and lastPracticeAt/lastExamAt as nullable timestamptz values. Add User and Concept relations, ON DELETE CASCADE for the user, ON DELETE RESTRICT for the concept, and an index supporting concept-wide administration without weakening user isolation.
+  - Add explicit named PostgreSQL CHECK constraints requiring correct counts not to exceed answered counts and each latest timestamp to be null exactly when its channel answered count is zero. Keep the Prisma schema aligned with the migration; do not store accuracy, mastery level, readiness, streaks or scheduling values.
+  - In the incremental migration, backfill practice aggregates from AnswerAttempt joined to QuestionPresentation with non-null persisted conceptId, grouped by presentation owner/concept, using submittedAt maximum. Backfill exam aggregates from answered ExamQuestion rows with non-null persisted conceptId joined to ExamSession for ownership, using answeredAt maximum. Merge both channels into one row without double counting, and exclude null attribution, unanswered exam rows and presentation/exam source concepts changed after TASK-040 attribution.
+  - Update the authenticated practice-answer and exam-answer transactions so a newly accepted concept-attributed answer atomically upserts/increments exactly one ConceptLearningState row with the persisted presentation/exam-question conceptId and the authoritative submission timestamp. Unattributed answers remain valid and create no learning-state row. Duplicate, already-submitted, invalid, foreign, expired, completed, malformed-snapshot and rolled-back answers must not increment counters.
+  - Preserve existing concurrency guarantees: competing submissions for the same practice presentation or exam question result in one stored answer and one corresponding counter increment. Use database-atomic increment/update behavior inside the accepted transaction rather than read-modify-write application arithmetic.
+  - Verify a real pre-TASK-041 upgrade database containing mixed users/concepts, practice correct/incorrect attempts, exam correct/incorrect/unanswered rows and null attribution. Require exact separate counts/max timestamps after migration, deterministic merge, named checks, foreign keys/indexes and repeat-safe full migration deployment. Add isolated route coverage for sequential and concurrent success, null attribution, rollback/error paths, user cascade, concept restriction and strict unchanged response privacy.
+  - Document this internal factual counter boundary. No mastery algorithm, concept progress endpoint, browser UI, selection/repetition change, historical answer mutation, content change, dependency, credential or deployment change.
