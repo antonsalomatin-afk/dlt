@@ -186,9 +186,13 @@ snapshot before scoring or returning an authoritative result.
 
 After `pnpm db:start` and `pnpm db:migrate`, run `pnpm content:import`.
 The command imports 25 original synthetic questions as inactive drafts and can
-be repeated with stable IDs/counts. It only accepts the loopback `.env` database
-configuration. See [content conventions](content/README.md) for validation,
-collision protection and provenance. These fixtures are not official DLT content.
+be repeated with stable IDs/counts. Every question belongs to one of 10 stable,
+localized synthetic concepts; the importer reports and preserves concept,
+category, question and choice counts and identities (10, 5, 25 and 100
+respectively). It only accepts the loopback `.env` database configuration. See
+[content conventions](content/README.md) for validation, collision protection and
+provenance. These fixtures are not official DLT content or an official DLT
+taxonomy.
 
 ## Telegram bot
 

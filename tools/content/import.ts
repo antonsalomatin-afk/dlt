@@ -10,7 +10,7 @@ try {
   try {
     const input: unknown = JSON.parse(readFileSync(new URL('../../content/fixtures/development.json', import.meta.url), 'utf8'));
     const result = await importFixtures(database, input);
-    console.log(`Imported ${result.questions} inactive draft fixtures (${result.choices} choices).`);
+    console.log(`Imported ${result.concepts} concepts, ${result.categories} categories, ${result.questions} inactive draft questions and ${result.choices} choices.`);
   } finally { await database.$disconnect(); }
 } catch {
   console.error('Development import failed. Check local configuration, fixture validation and namespace collisions; no partial import is committed.');
