@@ -1,6 +1,6 @@
 id: TASK-039
 title: Group development questions by learning concept
-status: BUILDING
+status: CHECKING
 epic: Epic 6 — Concept Learning
 objective: Make the synthetic development question bank concept-aware so later learning state can operate on stable groups of question variants.
 acceptance:
