@@ -79,7 +79,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-035 — ACCEPTED — read and resume the current mock exam
 - TASK-036 — ACCEPTED — Mini App mock-exam taking and result flow
 - TASK-037 — ACCEPTED — Mini App exam history and mistake review
-- TASK-038 — READY — full-stack browser verification for the mock-exam flow
+- TASK-038 — ACCEPTED — full-stack browser verification for the mock-exam flow
 
 ## Epic 6 — Concept Learning
 

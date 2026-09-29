@@ -1,6 +1,6 @@
 id: TASK-038
 title: Verify the mock-exam flow through the real local stack
-status: REVIEW
+status: ACCEPTED
 epic: Epic 5 — Mock Exam
 objective: Exercise the completed Mini App mock-exam journey through real Next rewrites, Fastify routes and isolated PostgreSQL without production credentials.
 acceptance:
@@ -35,3 +35,5 @@ supervisor_refinement:
   - Query the isolated database to require exactly one owned completed ExamSession, fixed questionCount50/passingScore45/score45/passed true, non-null completion, exactly50 ExamQuestion rows with positions1..50 and unique question IDs, exactly50 paired selectedChoice/isCorrect/answeredAt outcomes,45 correct and5 incorrect, and snapshots matching their seeded question/choice identities. Assert the browser-visible exam ID belongs to that session where observable without exposing it in UI or storage.
   - Keep secrets and raw connection/auth material out of diagnostics and artifacts. Retain exact-identifier database deletion and owned-child-only shutdown in finally paths. Extend focused unit coverage only where runner/lifecycle logic is factored into testable helpers; setup failures must remain visible failures rather than skips.
   - Update README with the expanded synthetic mock-exam coverage and evidence paths, and retain the required normal-origin rebuild after pnpm test:fullstack. No production app/API/database schema, dependency, credential, fixture, deployment or live Telegram change.
+accepted_commit: c02e48bd444596aabb67f9f0e9ba759f6547cd41
+review_file: .agent/reviews/TASK-038-review-01.md
