@@ -1,6 +1,6 @@
 id: TASK-040
 title: Persist immutable concept attribution for learning attempts
-status: READY
+status: BUILDING
 epic: Epic 6 — Concept Learning
 objective: Preserve the concept attached to each presented practice or exam question so later mastery calculations remain historically stable when source content is regrouped.
 acceptance:
