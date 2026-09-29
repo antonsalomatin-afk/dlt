@@ -1,6 +1,6 @@
 id: TASK-041
 title: Accumulate concept learning outcome counters
-status: REVIEW
+status: ACCEPTED
 epic: Epic 6 — Concept Learning
 objective: Maintain exact server-side practice and exam outcome counters per learner and concept without choosing a mastery formula.
 acceptance:
@@ -32,3 +32,5 @@ supervisor_refinement:
   - Preserve existing concurrency guarantees: competing submissions for the same practice presentation or exam question result in one stored answer and one corresponding counter increment. Use database-atomic increment/update behavior inside the accepted transaction rather than read-modify-write application arithmetic.
   - Verify a real pre-TASK-041 upgrade database containing mixed users/concepts, practice correct/incorrect attempts, exam correct/incorrect/unanswered rows and null attribution. Require exact separate counts/max timestamps after migration, deterministic merge, named checks, foreign keys/indexes and repeat-safe full migration deployment. Add isolated route coverage for sequential and concurrent success, null attribution, rollback/error paths, user cascade, concept restriction and strict unchanged response privacy.
   - Document this internal factual counter boundary. No mastery algorithm, concept progress endpoint, browser UI, selection/repetition change, historical answer mutation, content change, dependency, credential or deployment change.
+accepted_commit: f2793bc25b894ea0bf05f89545d82620ecef65f1
+review_file: .agent/reviews/TASK-041-review-01.md
