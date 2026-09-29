@@ -87,7 +87,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-040 — ACCEPTED — persist immutable concept attribution for practice and exam attempts
 - TASK-041 — ACCEPTED — accumulate exact practice and exam concept outcome counters
 - TASK-042 — ACCEPTED — authenticated factual concept progress API
-- mastery
+- TASK-043 — BLOCKED — define and expose concept mastery (Product Owner policy decision required)
 - repeat mistakes intelligently
 - spaced repetition
 - readiness score

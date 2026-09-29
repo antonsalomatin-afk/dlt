@@ -1,0 +1,19 @@
+id: TASK-043
+title: Define and expose concept mastery
+status: BLOCKED
+epic: Epic 6 — Concept Learning
+objective: Turn accepted concept outcome facts into a clear learner-facing mastery state without prematurely coupling it to question selection or spaced repetition.
+acceptance:
+  - Product Owner approves the mastery labels, minimum evidence and accuracy threshold.
+  - Product Owner decides whether mastery is display-only initially or immediately changes practice selection.
+  - After approval, the Supervisor refines exact API, UI, persistence and test boundaries before assigning a Builder.
+files_allowed: []
+required_checks: []
+dependencies:
+  - TASK-042
+owner_decision_required: true
+blocked_reason: The repository intentionally defines no mastery formula. Choosing labels, evidence thresholds and whether the result changes learner behavior is a user-visible product policy rather than a routine engineering detail.
+supervisor_recommendation:
+  - Start with display-only NOT_STARTED, LEARNING and MASTERED labels.
+  - Derive MASTERED from the accepted lifetime concept facts when combined answered is at least 5 and combined accuracy is at least 80 percent; otherwise a concept with evidence is LEARNING. Do not add time decay or different practice/exam weights yet.
+  - Keep practice selection, mistake repetition and spaced repetition unchanged until separate tasks define those policies.
