@@ -1,6 +1,6 @@
 id: TASK-039
 title: Group development questions by learning concept
-status: REVIEW
+status: ACCEPTED
 epic: Epic 6 — Concept Learning
 objective: Make the synthetic development question bank concept-aware so later learning state can operate on stable groups of question variants.
 acceptance:
@@ -32,3 +32,5 @@ supervisor_refinement:
   - Persist conceptId on every fixture question create/update. Existing deterministic fixture questions may be upgraded from null to their expected deterministic conceptId, but retain the accepted protection for nonfixture, active, non-DRAFT, source-reference and choice-identity collisions. Reimport must preserve concept/question/choice IDs and counts.
   - Return and document the imported concept count as well as categories/questions/choices. Add focused validation tests for accepted grouping plus duplicate, missing, unknown, unused, blank/untrimmed and count/coverage failures. Extend the isolated PostgreSQL fixture test for deterministic concept rows/relations, exact collision rollback, idempotent reimport, inactive DRAFT preservation and unrelated concept/data preservation.
   - Update content/README.md and the relevant README fixture description. All names and groupings remain original synthetic development material, not verified DLT taxonomy or legal guidance. No production activation, fixture namespace change, dependency, credential or deployment change.
+accepted_commit: 357da45679fd82ad33c27c1ba5f73db48eb95329
+review_file: .agent/reviews/TASK-039-review-01.md
