@@ -73,8 +73,8 @@ beforeAll(async () => {
     nameRussian: `Концепция ${index + 1}`,
   })) });
   await db.conceptLearningState.createMany({ data: [
-    { userId: ownerId, conceptId: conceptIds[0], practiceAnswered: 1, practiceCorrect: 1, lastPracticeAt: activity.tied },
-    { userId: ownerId, conceptId: conceptIds[1], examAnswered: 2, examCorrect: 1, lastExamAt: activity.tied },
+    { userId: ownerId, conceptId: conceptIds[0], practiceAnswered: 5, practiceCorrect: 4, lastPracticeAt: activity.tied },
+    { userId: ownerId, conceptId: conceptIds[1], examAnswered: 5, examCorrect: 3, lastExamAt: activity.tied },
     { userId: ownerId, conceptId: conceptIds[2], examAnswered: 3, examCorrect: 2, lastExamAt: activity.exam },
     { userId: ownerId, conceptId: conceptIds[3], practiceAnswered: 3, practiceCorrect: 1, lastPracticeAt: activity.practice },
     {
@@ -141,23 +141,31 @@ describe('GET /me/concept-progress', () => {
       practice: { answered: 3, correct: 1, incorrect: 2, lastAnsweredAt: activity.practice.toISOString() },
       exam: { answered: 0, correct: 0, incorrect: 0, lastAnsweredAt: null },
       total: { answered: 3, correct: 1, incorrect: 2, accuracyPercent: 33 },
+      masteryStatus: 'LEARNING',
       lastActivityAt: activity.practice.toISOString(),
     });
     expect(body.items.find(({ conceptId }) => conceptId === conceptIds[2])).toMatchObject({
       practice: { answered: 0, correct: 0, incorrect: 0, lastAnsweredAt: null },
       exam: { answered: 3, correct: 2, incorrect: 1, lastAnsweredAt: activity.exam.toISOString() },
       total: { answered: 3, correct: 2, incorrect: 1, accuracyPercent: 67 },
+      masteryStatus: 'LEARNING',
     });
     expect(body.items[0]).toMatchObject({
       practice: { answered: 2, correct: 1, incorrect: 1, lastAnsweredAt: activity.mixedPractice.toISOString() },
       exam: { answered: 1, correct: 0, incorrect: 1, lastAnsweredAt: activity.mixedExam.toISOString() },
       total: { answered: 3, correct: 1, incorrect: 2, accuracyPercent: 33 },
+      masteryStatus: 'LEARNING',
       lastActivityAt: activity.mixedExam.toISOString(),
+    });
+    expect(body.items.find(({ conceptId }) => conceptId === conceptIds[0])).toMatchObject({
+      total: { answered: 5, correct: 4, incorrect: 1, accuracyPercent: 80 }, masteryStatus: 'MASTERED',
+    });
+    expect(body.items.find(({ conceptId }) => conceptId === conceptIds[1])).toMatchObject({
+      total: { answered: 5, correct: 3, incorrect: 2, accuracyPercent: 60 }, masteryStatus: 'LEARNING',
     });
     expect(response.body).not.toContain(ownerId);
     expect(response.body).not.toContain(foreignId);
     expect(response.body).not.toContain('userId');
-    expect(response.body).not.toContain('mastery');
     expect(await db.conceptLearningState.findMany({ where: { userId: ownerId }, orderBy: { conceptId: 'asc' } })).toEqual(before);
   });
 

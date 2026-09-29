@@ -47,6 +47,18 @@ const totalProgressSchema = z.strictObject({
   accuracyPercent: z.number().int().min(0).max(100).nullable(),
 });
 
+export const masteryStatusSchema = z.enum(['NOT_STARTED', 'LEARNING', 'MASTERED']);
+export type MasteryStatus = z.infer<typeof masteryStatusSchema>;
+
+export function deriveMasteryStatus(answered: number, correct: number): MasteryStatus {
+  const counts = z.strictObject({ answered: safeCountSchema, correct: safeCountSchema }).parse({ answered, correct });
+  if (counts.correct > counts.answered) throw new Error('Mastery counts are inconsistent');
+  if (counts.answered === 0) return 'NOT_STARTED';
+  return counts.answered >= 5 && BigInt(counts.correct) * 100n >= BigInt(counts.answered) * 80n
+    ? 'MASTERED'
+    : 'LEARNING';
+}
+
 export const conceptProgressItemSchema = z.strictObject({
   conceptId: canonicalUuidSchema,
   slug: trimmedNonblankSchema,
@@ -56,6 +68,7 @@ export const conceptProgressItemSchema = z.strictObject({
   practice: channelProgressSchema,
   exam: channelProgressSchema,
   total: totalProgressSchema,
+  masteryStatus: masteryStatusSchema,
   lastActivityAt: canonicalTimestampSchema,
 }).superRefine((item, context) => {
   const answered = item.practice.answered + item.exam.answered;
@@ -73,6 +86,9 @@ export const conceptProgressItemSchema = z.strictObject({
   const expectedAccuracy = answered === 0 ? null : Math.round((correct / answered) * 100);
   if (item.total.accuracyPercent !== expectedAccuracy) {
     context.addIssue({ code: 'custom', path: ['total', 'accuracyPercent'], message: 'Total accuracy is inconsistent' });
+  }
+  if (item.masteryStatus !== deriveMasteryStatus(answered, correct)) {
+    context.addIssue({ code: 'custom', path: ['masteryStatus'], message: 'Mastery status is inconsistent' });
   }
   const activity = [item.practice.lastAnsweredAt, item.exam.lastAnsweredAt]
     .filter((value): value is string => value !== null)
@@ -190,6 +206,7 @@ export function buildConceptProgressItem(value: unknown) {
       incorrect,
       accuracyPercent: answered === 0 ? null : Math.round((correct / answered) * 100),
     },
+    masteryStatus: deriveMasteryStatus(answered, correct),
     lastActivityAt: row.lastActivityAt.toISOString(),
   });
 }

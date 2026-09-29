@@ -9,6 +9,7 @@ const renderCheckpoint = (page: Page) => page.evaluate(() => new Promise<void>((
 }));
 
 async function authenticate(page: Page, vehicle: 'CAR' | null = null) {
+  await page.route('**/me/concept-progress?*', (route) => route.fulfill({ json: { items: [], nextCursor: null } }));
   await page.route('https://telegram.org/js/telegram-web-app.js', (route) => route.fulfill({
     contentType: 'application/javascript', body: 'window.Telegram={WebApp:{initData:"progress-test",ready(){}}};',
   }));

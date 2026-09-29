@@ -64,6 +64,7 @@ const canonicalTimestampSchema = z.iso.datetime().refine((value) => {
   try { return new Date(value).toISOString() === value; }
   catch { return false; }
 });
+const canonicalUuidSchema = z.uuid().refine((value) => value === value.toLowerCase());
 const historyCursorPayloadSchema = z.strictObject({
   v: z.literal(1), submittedAt: canonicalTimestampSchema, attemptId: z.uuid(),
 });
@@ -158,7 +159,110 @@ export const progressResponseSchema = z.strictObject({
 });
 export type ProgressSummary = z.infer<typeof progressResponseSchema>;
 
-const canonicalUuidSchema = z.uuid().refine((value) => value === value.toLowerCase());
+const conceptProgressCursorPayloadSchema = z.strictObject({
+  v: z.literal(1), lastActivityAt: canonicalTimestampSchema, conceptId: canonicalUuidSchema,
+});
+export const conceptProgressCursorSchema = z.string().min(1).max(512).regex(/^[A-Za-z0-9_-]+$/u).refine((value) => {
+  try {
+    const padding = '='.repeat((4 - (value.length % 4)) % 4);
+    const decoded = new TextDecoder('utf-8', { fatal: true }).decode(
+      Uint8Array.from(atob(value.replace(/-/gu, '+').replace(/_/gu, '/') + padding), (character) => character.charCodeAt(0)),
+    );
+    const cursor = conceptProgressCursorPayloadSchema.parse(JSON.parse(decoded) as unknown);
+    return btoa(JSON.stringify(cursor)).replace(/\+/gu, '-').replace(/\//gu, '_').replace(/=+$/u, '') === value;
+  } catch { return false; }
+});
+
+function decodeConceptProgressCursor(value: string) {
+  const padding = '='.repeat((4 - (value.length % 4)) % 4);
+  const decoded = new TextDecoder('utf-8', { fatal: true }).decode(
+    Uint8Array.from(atob(value.replace(/-/gu, '+').replace(/_/gu, '/') + padding), (character) => character.charCodeAt(0)),
+  );
+  return conceptProgressCursorPayloadSchema.parse(JSON.parse(decoded) as unknown);
+}
+
+const conceptProgressCountSchema = z.number().int().nonnegative().refine(Number.isSafeInteger);
+const conceptProgressChannelSchema = z.strictObject({
+  answered: conceptProgressCountSchema,
+  correct: conceptProgressCountSchema,
+  incorrect: conceptProgressCountSchema,
+  lastAnsweredAt: canonicalTimestampSchema.nullable(),
+}).superRefine((channel, context) => {
+  const answered = channel.correct + channel.incorrect;
+  if (!Number.isSafeInteger(answered) || answered !== channel.answered) context.addIssue({ code: 'custom', message: 'Channel counts are inconsistent' });
+  if ((channel.answered === 0) !== (channel.lastAnsweredAt === null)) context.addIssue({ code: 'custom', message: 'Channel timestamp is inconsistent' });
+});
+const masteryStatusSchema = z.enum(['NOT_STARTED', 'LEARNING', 'MASTERED']);
+const conceptLabelSchema = z.string().min(1).refine((value) => value === value.trim());
+const conceptProgressItemSchema = z.strictObject({
+  conceptId: canonicalUuidSchema,
+  slug: conceptLabelSchema,
+  nameThai: conceptLabelSchema,
+  nameEnglish: conceptLabelSchema,
+  nameRussian: conceptLabelSchema,
+  practice: conceptProgressChannelSchema,
+  exam: conceptProgressChannelSchema,
+  total: z.strictObject({
+    answered: conceptProgressCountSchema,
+    correct: conceptProgressCountSchema,
+    incorrect: conceptProgressCountSchema,
+    accuracyPercent: z.number().int().min(0).max(100).nullable(),
+  }),
+  masteryStatus: masteryStatusSchema,
+  lastActivityAt: canonicalTimestampSchema,
+}).superRefine((item, context) => {
+  const answered = item.practice.answered + item.exam.answered;
+  const correct = item.practice.correct + item.exam.correct;
+  const incorrect = item.practice.incorrect + item.exam.incorrect;
+  if (!Number.isSafeInteger(answered) || !Number.isSafeInteger(correct) || !Number.isSafeInteger(incorrect)
+    || item.total.answered !== answered || item.total.correct !== correct || item.total.incorrect !== incorrect) {
+    context.addIssue({ code: 'custom', path: ['total'], message: 'Total counts are inconsistent' });
+  }
+  const accuracy = answered === 0 ? null : Math.round((correct / answered) * 100);
+  if (item.total.accuracyPercent !== accuracy) context.addIssue({ code: 'custom', path: ['total', 'accuracyPercent'], message: 'Accuracy is inconsistent' });
+  const mastery = answered === 0 ? 'NOT_STARTED'
+    : answered >= 5 && BigInt(correct) * 100n >= BigInt(answered) * 80n ? 'MASTERED' : 'LEARNING';
+  if (item.masteryStatus !== mastery) context.addIssue({ code: 'custom', path: ['masteryStatus'], message: 'Mastery is inconsistent' });
+  const activity = [item.practice.lastAnsweredAt, item.exam.lastAnsweredAt].filter((value): value is string => value !== null).sort().at(-1);
+  if (activity === undefined || activity !== item.lastActivityAt) context.addIssue({ code: 'custom', path: ['lastActivityAt'], message: 'Latest activity is inconsistent' });
+});
+
+export const conceptProgressResponseSchema = z.strictObject({
+  items: z.array(conceptProgressItemSchema).max(50),
+  nextCursor: conceptProgressCursorSchema.nullable(),
+}).superRefine((page, context) => {
+  if (page.items.some((item, index, items) => index > 0 && (
+    item.lastActivityAt > items[index - 1]!.lastActivityAt
+    || (item.lastActivityAt === items[index - 1]!.lastActivityAt && item.conceptId >= items[index - 1]!.conceptId)
+  ))) context.addIssue({ code: 'custom', path: ['items'], message: 'Concept progress order is invalid' });
+  if (new Set(page.items.map(({ conceptId }) => conceptId)).size !== page.items.length) context.addIssue({ code: 'custom', path: ['items'], message: 'Concept IDs must be unique' });
+  if (page.nextCursor !== null) {
+    const last = page.items.at(-1);
+    if (!last) context.addIssue({ code: 'custom', path: ['nextCursor'], message: 'Empty concept progress cannot continue' });
+    else {
+      const cursor = decodeConceptProgressCursor(page.nextCursor);
+      if (cursor.lastActivityAt !== last.lastActivityAt || cursor.conceptId !== last.conceptId) context.addIssue({ code: 'custom', path: ['nextCursor'], message: 'Cursor does not match the last item' });
+    }
+  }
+});
+
+export type ConceptProgressItem = z.infer<typeof conceptProgressItemSchema>;
+export type ConceptProgressPage = z.infer<typeof conceptProgressResponseSchema>;
+
+export function appendConceptProgressPage(existing: readonly ConceptProgressItem[], page: ConceptProgressPage): ConceptProgressItem[] {
+  const parsedExisting = z.array(conceptProgressItemSchema).parse(existing);
+  const parsedPage = conceptProgressResponseSchema.parse(page);
+  const existingIds = new Set(parsedExisting.map(({ conceptId }) => conceptId));
+  if (parsedPage.items.some(({ conceptId }) => existingIds.has(conceptId))) throw new Error('Concept progress repeats an item');
+  const previous = parsedExisting.at(-1);
+  const first = parsedPage.items[0];
+  if (previous && first && (first.lastActivityAt > previous.lastActivityAt
+    || (first.lastActivityAt === previous.lastActivityAt && first.conceptId >= previous.conceptId))) {
+    throw new Error('Concept progress pages are out of order');
+  }
+  return [...parsedExisting, ...parsedPage.items];
+}
+
 const examCountSchema = z.number().int().min(0).max(50);
 const examQuestionSchema = presentedQuestionSchema.superRefine((question, context) => {
   if (question.id !== question.id.toLowerCase()) context.addIssue({ code: 'custom', path: ['id'], message: 'Question ID must be canonical' });

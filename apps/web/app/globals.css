@@ -94,6 +94,19 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 .progress-metric dt { color: #697466; font-size: 12px; line-height: 1.35; }
 .progress-metric dd { margin: 7px 0 0; color: #244c3d; font-size: 28px; font-weight: 700; }
 .empty-progress { color: #59675e; font-size: 14px; line-height: 1.6; }
+.concept-progress-list { display: grid; gap: 12px; margin: 16px 0; padding: 0; list-style: none; }
+.concept-progress-card { border: 1px solid #dce0d4; border-radius: 14px; padding: 16px; background: #fffef9; }
+.concept-progress-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.concept-progress-heading h4 { margin: 0; font-size: 18px; line-height: 1.35; }
+.concept-progress-heading strong { border-radius: 999px; padding: 5px 9px; background: #f2e7d5; color: #754313; font-size: 11px; white-space: nowrap; }
+.concept-progress-heading strong[data-mastery-status="MASTERED"] { background: #dce8d8; color: #244c3d; }
+.concept-progress-card dl { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0 8px; }
+.concept-progress-card dt { color: #697466; font-size: 10px; }
+.concept-progress-card dd { margin: 4px 0 0; color: #244c3d; font-size: 15px; font-weight: 700; }
+.concept-progress-card p, .concept-progress-card time { color: #697466; font-size: 11px; line-height: 1.5; }
+.concept-progress-card p { margin: 0 0 4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+@media (max-width: 430px) { .concept-progress-card dl { grid-template-columns: 1fr 1fr; } }
 .exam-intro { margin: 20px 0; color: #59675e; font-size: 14px; line-height: 1.55; }
 .exam-intro dl, .exam-result dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 16px; }
 .exam-intro dl > div, .exam-result dl > div { border: 1px solid #dce0d4; border-radius: 11px; padding: 10px; background: #fbfbf4; }

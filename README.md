@@ -209,8 +209,9 @@ them.
 Database checks keep counts nonnegative, correct totals at or below answered
 totals, and each latest timestamp present exactly when that channel has answers.
 Learner deletion cascades to these rows, while referenced concept deletion is
-restricted. The authenticated concept-progress API exposes these factual values;
-they define no mastery, readiness, repetition or selection policy.
+restricted. The authenticated concept-progress API exposes these factual values
+and derives the display-only mastery label documented below. The counters and
+label do not define readiness, repetition or selection policy.
 
 ### Import development fixtures
 
@@ -686,8 +687,13 @@ persisted concept learning states joined to the concept's current slug and
 Thai, English and Russian names.
 
 Each item returns separate practice and exam answered, correct, incorrect and
-latest-answer facts, plus combined counts, whole-percent accuracy and latest
-activity. Empty channels use a null timestamp. Items are newest first, with
+latest-answer facts, plus combined counts, whole-percent accuracy, latest
+activity and `masteryStatus`. `NOT_STARTED` means zero combined answers,
+`MASTERED` requires at least five combined lifetime answers and exact lifetime
+accuracy of at least 80 percent, and every other item is `LEARNING`. The
+threshold uses exact integer counts rather than rounded display accuracy. The
+label is derived for each response and is never persisted. Empty channels use a
+null timestamp. Items are newest first, with
 concept ID descending as the deterministic tie-breaker; the cursor records that
 exact tuple for seek pagination. A learner without concept state receives
 `{ "items": [], "nextCursor": null }`.
@@ -696,8 +702,9 @@ The response is runtime validated for canonical identities and timestamps,
 trimmed current labels, safe count arithmetic, timestamp/count pairing, exact
 totals, accuracy, order and cursor agreement. Invalid persisted state fails the
 whole request with the sanitized internal-error response. The endpoint exposes
-no user identity, question/source metadata, mastery level, readiness score,
-recommendation, scheduling policy or mutation behavior.
+no user identity, question/source metadata, readiness score, recommendation,
+scheduling policy or mutation behavior. Mastery does not affect question
+eligibility, ordering, repetition, exams or counters.
 
 
 ## Mini App (local development)
@@ -715,6 +722,7 @@ commands, not automatically loaded by Next. Only HTTP(S) origins without
 credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
 `/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
+`/me/concept-progress`,
 `/practice/categories`, `/practice/next`, `/practice/answer` and
 `/practice/favorite`, plus `/exam/current`, `/exam/start`, `/exam/answer` and
 `/exam/complete`, `/exam/history` and `/exam/:examId/review` only.
@@ -776,7 +784,16 @@ vehicle, or from practice. The view sends one same-origin `GET /me/progress` req
 each mount with the memory-only bearer session, no request body, `no-store`, and the
 standard 15-second timeout. It validates the exact lifetime summary before rendering
 answered, correct, incorrect, and whole-percent accuracy values. Zero answers show zero
-counts, an em dash for accuracy, and start-practicing guidance.
+counts, an em dash for accuracy, and a localized `NOT_STARTED` explanation.
+
+After the lifetime summary, Progress requests `/me/concept-progress?limit=10`
+and renders localized concept names, separate practice and exam facts, combined
+facts, latest activity and the localized display-only mastery label. More pages
+use the opaque cursor returned by the API. Every page is strictly validated for
+identity, timestamps, arithmetic, mastery, order, uniqueness and cursor
+agreement before it is appended. A failed later page leaves earlier validated
+items visible, and retry uses the same cursor. A repeated concept or invalid
+cross-page order is rejected.
 
 Progress copy and controls can be switched locally among English, Russian, and Thai;
 the language choice and response are not persisted. Transport, HTTP, and invalid-response

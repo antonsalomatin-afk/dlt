@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   buildConceptProgressItem,
   conceptProgressResponseSchema,
+  deriveMasteryStatus,
   encodeConceptProgressCursor,
   parseConceptProgressCursor,
   parseConceptProgressQuery,
@@ -27,6 +28,18 @@ const row = {
 };
 
 describe('concept progress contracts', () => {
+  it('derives mastery from exact combined lifetime counts without rounded-percentage drift', () => {
+    expect(deriveMasteryStatus(0, 0)).toBe('NOT_STARTED');
+    expect(deriveMasteryStatus(4, 4)).toBe('LEARNING');
+    expect(deriveMasteryStatus(5, 3)).toBe('LEARNING');
+    expect(deriveMasteryStatus(5, 4)).toBe('MASTERED');
+    expect(deriveMasteryStatus(6, 5)).toBe('MASTERED');
+    expect(deriveMasteryStatus(9, 7)).toBe('LEARNING');
+    expect(deriveMasteryStatus(49, 39)).toBe('LEARNING');
+    expect(deriveMasteryStatus(10, 8)).toBe('MASTERED');
+    expect(() => deriveMasteryStatus(1, 2)).toThrow();
+  });
+
   it('accepts only strict canonical queries and round-trips an opaque cursor', () => {
     const cursor = { v: 1 as const, lastActivityAt: lastExamAt.toISOString(), conceptId };
     const encoded = encodeConceptProgressCursor(cursor);
@@ -64,6 +77,7 @@ describe('concept progress contracts', () => {
       practice: { answered: 3, correct: 2, incorrect: 1, lastAnsweredAt: lastPracticeAt.toISOString() },
       exam: { answered: 2, correct: 1, incorrect: 1, lastAnsweredAt: lastExamAt.toISOString() },
       total: { answered: 5, correct: 3, incorrect: 2, accuracyPercent: 60 },
+      masteryStatus: 'LEARNING',
       lastActivityAt: lastExamAt.toISOString(),
     });
     expect(buildConceptProgressItem({
@@ -113,6 +127,7 @@ describe('concept progress contracts', () => {
     for (const invalid of [
       { items: [first], nextCursor: null, userId: randomUUID() },
       { items: [{ ...first, total: { ...first.total, answered: 6 } }], nextCursor: null },
+      { items: [{ ...first, masteryStatus: 'MASTERED' }], nextCursor: null },
       { items: [{ ...first, lastActivityAt: lastPracticeAt.toISOString() }], nextCursor: null },
       { items: [second, first], nextCursor: null },
       { items: [first, first], nextCursor: null },
