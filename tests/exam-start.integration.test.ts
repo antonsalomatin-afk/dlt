@@ -21,6 +21,8 @@ const isolatedUrl = new URL(databaseUrl);
 isolatedUrl.pathname = `/${databaseName}`;
 const database = createDatabaseClient(isolatedUrl.toString());
 const categoryId = randomUUID();
+const originalConceptId = randomUUID();
+const reassignedConceptId = randomUUID();
 const initialNow = new Date('2026-09-17T14:00:00.000Z');
 let clock = initialNow;
 let injectedOffset: unknown = 0;
@@ -96,6 +98,12 @@ beforeAll(async () => {
   await database.category.create({
     data: { id: categoryId, slug: 'exam-start', nameThai: 'exam', nameEnglish: 'exam', nameRussian: 'exam' },
   });
+  await database.concept.createMany({
+    data: [
+      { id: originalConceptId, slug: 'exam-original', nameThai: 'original', nameEnglish: 'original', nameRussian: 'original' },
+      { id: reassignedConceptId, slug: 'exam-reassigned', nameThai: 'reassigned', nameEnglish: 'reassigned', nameRussian: 'reassigned' },
+    ],
+  });
   await database.question.createMany({
     data: [
       ...eligibleQuestionIds.map((id, index) => ({
@@ -105,6 +113,7 @@ beforeAll(async () => {
         active: true,
         verificationStatus: 'VERIFIED' as const,
         sourceType: 'ORIGINAL' as const,
+        conceptId: index === 0 ? originalConceptId : null,
         textEnglish: `Exam question ${index + 1}`,
         textExamEnglish: `Exam-style wording ${index + 1}`,
         explanationEnglish: `Private explanation ${index + 1}`,
@@ -195,7 +204,7 @@ describe('POST /exam/start boundaries', () => {
         expect(Object.keys(choice).sort()).toEqual(['id', 'key', 'textEnglish', 'textRussian', 'textThai']);
       }
     }
-    for (const privateValue of ['correctChoiceId', 'isCorrect', 'selectedChoiceId', 'explanation', 'sourceReference', 'imageReference', learner.user.id]) {
+    for (const privateValue of ['correctChoiceId', 'isCorrect', 'selectedChoiceId', 'conceptId', 'explanation', 'sourceReference', 'imageReference', originalConceptId, learner.user.id]) {
       expect(response.body).not.toContain(privateValue);
     }
 
@@ -219,6 +228,7 @@ describe('POST /exam/start boundaries', () => {
       expect(examQuestion).toMatchObject({
         position: index + 1,
         questionId: eligibleQuestionIds[index],
+        conceptId: index === 0 ? originalConceptId : null,
         selectedChoiceId: null,
         isCorrect: null,
         answeredAt: null,
@@ -228,8 +238,21 @@ describe('POST /exam/start boundaries', () => {
     const originalSnapshot = stored.questions[0]?.snapshot;
     const firstQuestionId = eligibleQuestionIds[0];
     if (!originalSnapshot || !firstQuestionId) throw new Error('Missing stored snapshot');
-    await database.question.update({ where: { id: firstQuestionId }, data: { textEnglish: 'Later edited wording' } });
-    expect((await database.examQuestion.findFirstOrThrow({ where: { examSessionId: body.examId, position: 1 } })).snapshot).toEqual(originalSnapshot);
+    const secondQuestionId = eligibleQuestionIds[1];
+    if (!secondQuestionId) throw new Error('Missing second selected question');
+    await database.question.update({
+      where: { id: firstQuestionId },
+      data: { textEnglish: 'Later edited wording', conceptId: reassignedConceptId },
+    });
+    await database.question.update({ where: { id: secondQuestionId }, data: { conceptId: reassignedConceptId } });
+    const stableAttributions = await database.examQuestion.findMany({
+      where: { examSessionId: body.examId, position: { in: [1, 2] } },
+      orderBy: { position: 'asc' },
+      select: { conceptId: true, snapshot: true },
+    });
+    expect(stableAttributions[0]).toEqual({ conceptId: originalConceptId, snapshot: originalSnapshot });
+    expect(stableAttributions[1]?.conceptId).toBeNull();
+    await expect(database.concept.delete({ where: { id: originalConceptId } })).rejects.toMatchObject({ code: 'P2003' });
   });
 
   it('blocks an active exam, but permits starts after completion or strict expiry', async () => {

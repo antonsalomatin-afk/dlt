@@ -484,7 +484,13 @@ export function createApi(options: {
         });
         if (!question) throw new Error('Eligible question offset did not resolve');
         const snapshot = snapshotQuestion(question);
-        const presentation = await tx.questionPresentation.create({ data: { userId: user.id, questionId: question.id, createdAt: now(), snapshot } });
+        const presentation = await tx.questionPresentation.create({ data: {
+          userId: user.id,
+          questionId: question.id,
+          conceptId: question.conceptId,
+          createdAt: now(),
+          snapshot,
+        } });
         return presentationResponseSchema.parse({ presentationId: presentation.id, question: snapshot.question });
       }, { isolationLevel: 'RepeatableRead' });
       if (!result) return reply.code(404).send(errorSchema.parse({ error: 'No questions available' }));
@@ -755,7 +761,7 @@ export function createApi(options: {
           if (!question) throw new Error('Selected exam question is absent');
           const snapshot = snapshotQuestion(question);
           if (snapshot.question.id !== questionId) throw new Error('Selected exam snapshot is inconsistent');
-          return { questionId, snapshot };
+          return { questionId, conceptId: question.conceptId, snapshot };
         });
 
         const exam = await transaction.examSession.create({
@@ -766,9 +772,10 @@ export function createApi(options: {
             passingScore: EXAM_PASSING_SCORE,
             startedAt,
             expiresAt,
-            questions: { create: snapshots.map(({ questionId, snapshot }, index) => ({
+            questions: { create: snapshots.map(({ questionId, conceptId, snapshot }, index) => ({
               position: index + 1,
               questionId,
+              conceptId,
               snapshot,
             })) },
           },

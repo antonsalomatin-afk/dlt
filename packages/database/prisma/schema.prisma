@@ -59,12 +59,14 @@ model Category {
 }
 
 model Concept {
-  id          String     @id @default(uuid()) @db.Uuid
-  slug        String     @unique
-  nameThai    String
-  nameEnglish String
-  nameRussian String
-  questions   Question[]
+  id            String                 @id @default(uuid()) @db.Uuid
+  slug          String                 @unique
+  nameThai      String
+  nameEnglish   String
+  nameRussian   String
+  questions     Question[]
+  presentations QuestionPresentation[]
+  examQuestions ExamQuestion[]
 }
 
 model Question {
@@ -136,12 +138,15 @@ model QuestionPresentation {
   user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   questionId String         @db.Uuid
   question   Question       @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  conceptId  String?        @db.Uuid
+  concept    Concept?       @relation(fields: [conceptId], references: [id], onDelete: Restrict)
   createdAt  DateTime       @default(now()) @db.Timestamptz(3)
   snapshot   Json
 
   @@unique([id, userId, questionId])
   @@index([userId])
   @@index([questionId])
+  @@index([userId, conceptId])
 }
 
 model Favorite {
@@ -192,6 +197,8 @@ model ExamQuestion {
   position         Int
   questionId       String      @db.Uuid
   question         Question    @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  conceptId        String?     @db.Uuid
+  concept          Concept?    @relation(fields: [conceptId], references: [id], onDelete: Restrict)
   snapshot         Json
   selectedChoiceId String?     @db.Uuid
   isCorrect        Boolean?
@@ -200,4 +207,5 @@ model ExamQuestion {
   @@unique([examSessionId, position])
   @@unique([examSessionId, questionId])
   @@index([questionId])
+  @@index([conceptId])
 }

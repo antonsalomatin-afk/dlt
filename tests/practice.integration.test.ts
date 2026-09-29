@@ -17,6 +17,7 @@ const db = createDatabaseClient(isolatedUrl.toString());
 const now = new Date('2026-09-10T12:00:00Z');
 const app = createApi({ database: db, botToken: 'synthetic', now: () => now, randomOffset: () => 0 });
 const categoryId = randomUUID();
+const conceptId = randomUUID();
 const userId = randomUUID();
 const token = randomBytes(32).toString('base64url');
 const headers = { authorization: `Bearer ${token}` };
@@ -27,6 +28,7 @@ beforeAll(async () => {
   await admin.query(`CREATE DATABASE "${databaseName}"`);
   execFileSync(process.execPath, ['node_modules/prisma/build/index.js', '--config', 'packages/database/prisma.config.ts', 'migrate', 'deploy'], { env: { ...process.env, DATABASE_URL: isolatedUrl.toString() }, stdio: 'pipe', windowsHide: true });
   await db.category.create({ data: { id: categoryId, slug: categoryId, nameThai: 'test', nameEnglish: 'test', nameRussian: 'test' } });
+  await db.concept.create({ data: { id: conceptId, slug: conceptId, nameThai: 'concept', nameEnglish: 'concept', nameRussian: 'concept' } });
   await db.user.create({ data: { id: userId, telegramUserId: BigInt(`0x${randomBytes(6).toString('hex')}`), sessions: { create: { tokenHash: createHash('sha256').update(token).digest('hex'), createdAt: new Date(now.getTime() - 1000), expiresAt: new Date(now.getTime() + 1000) } } } });
 });
 afterAll(async () => {
@@ -34,6 +36,7 @@ afterAll(async () => {
   try {
     await db.user.deleteMany({ where: { id: userId } });
     await db.question.deleteMany({ where: { id: { in: questions } } });
+    await db.concept.deleteMany({ where: { id: conceptId } });
     await db.category.deleteMany({ where: { id: categoryId } });
   } finally {
     await db.$disconnect();
@@ -68,7 +71,7 @@ it('authenticates, filters, validates, and preserves exactly the presented snaps
   expect((await next()).json()).toEqual({ error: 'No questions available' });
   expect(await db.questionPresentation.count({ where: { userId } })).toBe(0);
   const question = await db.question.create({ data: {
-    categoryId, vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL',
+    categoryId, conceptId, vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED', sourceType: 'ORIGINAL',
     textEnglish: 'Original wording', textExamEnglish: 'Exam wording', explanationEnglish: 'Secret explanation', trapExplanationEnglish: 'Secret trap', sourceReference: 'Secret source', imageReference: 'Secret image',
     choices: { create: (['A', 'B', 'C', 'D'] as const).map((key) => ({ key, textEnglish: `Choice ${key}`, isCorrect: key === 'A' })) },
   }, include: { choices: true } });
@@ -81,12 +84,17 @@ it('authenticates, filters, validates, and preserves exactly the presented snaps
   expect(body.question.textThai).toBeNull();
   for (const choice of body.question.choices) expect(Object.keys(choice).sort()).toEqual(['id', 'key', 'textEnglish', 'textRussian', 'textThai']);
   expect(response.body).not.toContain('Secret');
+  expect(response.body).not.toContain('conceptId');
+  expect(response.body).not.toContain(conceptId);
   const row = await db.questionPresentation.findUniqueOrThrow({ where: { id: body.presentationId } });
-  expect(row).toMatchObject({ userId, questionId: question.id, createdAt: now });
+  expect(row).toMatchObject({ userId, questionId: question.id, conceptId, createdAt: now });
   const snapshot = parsePresentationSnapshot(row.snapshot);
   expect(snapshot.question).toEqual(body.question);
   expect(snapshot.correctChoiceId).toBe(question.choices.find((choice) => choice.isCorrect)?.id);
   expect(snapshot.explanationEnglish).toBe('Secret explanation');
+  await db.question.update({ where: { id: question.id }, data: { conceptId: null } });
+  expect((await db.questionPresentation.findUniqueOrThrow({ where: { id: row.id } })).conceptId).toBe(conceptId);
+  await expect(db.concept.delete({ where: { id: conceptId } })).rejects.toMatchObject({ code: 'P2003' });
   const submit = (payload: unknown, authorization = headers.authorization) => app.inject({ method: 'POST', url: '/practice/answer', headers: { authorization, 'content-type': 'application/json' }, payload: typeof payload === 'string' ? payload : JSON.stringify(payload) });
   const validAnswer = { presentationId: row.id, choiceId: snapshot.correctChoiceId };
   const assertError = async (payload: unknown, status: number, error: string, authorization = headers.authorization) => {
@@ -145,4 +153,37 @@ it('authenticates, filters, validates, and preserves exactly the presented snaps
   expect(malformed.statusCode).toBe(500);
   expect(malformed.json()).toEqual({ error: 'Internal Server Error' });
   expect(await db.questionPresentation.count({ where: { userId } })).toBe(3);
+  await db.question.update({ where: { id: question.id }, data: { active: false } });
+});
+
+it('retains null concept attribution for an ungrouped practice question', async () => {
+  const question = await db.question.create({ data: {
+    categoryId,
+    vehicleType: 'CAR',
+    active: true,
+    verificationStatus: 'VERIFIED',
+    sourceType: 'ORIGINAL',
+    textEnglish: 'Ungrouped question',
+    choices: { create: (['A', 'B', 'C', 'D'] as const).map((key) => ({
+      key,
+      textEnglish: `Ungrouped choice ${key}`,
+      isCorrect: key === 'A',
+    })) },
+  } });
+  questions.push(question.id);
+
+  const response = await next();
+  expect(response.statusCode).toBe(200);
+  const body = presentationResponseSchema.parse(response.json());
+  expect(Object.keys(body).sort()).toEqual(['presentationId', 'question']);
+  expect(response.body).not.toContain('conceptId');
+  const presentation = await db.questionPresentation.findUniqueOrThrow({
+    where: { id: body.presentationId },
+  });
+  expect(presentation).toMatchObject({ questionId: question.id, conceptId: null });
+
+  await db.question.update({ where: { id: question.id }, data: { conceptId } });
+  expect((await db.questionPresentation.findUniqueOrThrow({
+    where: { id: presentation.id },
+  })).conceptId).toBeNull();
 });

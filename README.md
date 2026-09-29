@@ -182,6 +182,20 @@ per session or prove that an answer belongs to and matches the immutable snapsho
 The exam APIs below enforce cardinality and validate answers against the immutable
 snapshot before scoring or returning an authoritative result.
 
+### Historical concept attribution
+
+`QuestionPresentation` and `ExamQuestion` copy the source question's nullable
+`conceptId` when the owned immutable record is created. The migration backfills
+existing rows from their referenced source question and leaves ungrouped questions
+null. Later question regrouping does not rewrite historical attribution. Both
+relations restrict deletion of a concept while an attributed practice or exam row
+still references it, and indexes support later learner/concept aggregation.
+
+This attribution is server-only persistence metadata. Practice, answer, current
+exam, completion, history, mistakes, favorites and review DTOs do not expose it.
+It prepares future concept progress/mastery work; it does not add learning state,
+mastery policy, scoring, selection, endpoints or UI behavior.
+
 ### Import development fixtures
 
 After `pnpm db:start` and `pnpm db:migrate`, run `pnpm content:import`.
