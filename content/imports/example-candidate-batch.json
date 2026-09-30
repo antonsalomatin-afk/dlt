@@ -1,0 +1,56 @@
+{
+  "batchId": "synthetic-sample-2026-01",
+  "version": 1,
+  "createdAt": "2026-09-30T00:00:00.000Z",
+  "questions": [
+    {
+      "externalId": "sample-space-check-01",
+      "vehicleType": "CAR",
+      "categorySlug": "sample-safe-driving",
+      "conceptSlug": "sample-space-management",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:synthetic-sample/space-check-01",
+        "sourceDate": null,
+        "legalCitation": null
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "In a fictional training yard, what should a driver check before moving away?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "The synthetic example expects the driver to check the surrounding space.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": "The other choices describe actions unrelated to checking the immediate space.",
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Check the surrounding space",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Change the radio station",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Open every window",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Turn off the dashboard clock",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    }
+  ]
+}

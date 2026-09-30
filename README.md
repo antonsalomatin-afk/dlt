@@ -225,6 +225,17 @@ respectively). It only accepts the loopback `.env` database configuration. See
 provenance. These fixtures are not official DLT content or an official DLT
 taxonomy.
 
+### Validate candidate content
+
+Run `pnpm content:validate -- <path>` to validate one local, versioned candidate
+JSON batch without a database or network connection. The command reads at most
+5 MiB, returns only safe counts on success, and exits nonzero with bounded
+path-based diagnostics on failure. Candidate validation does not import,
+approve, activate or make legal/accuracy claims about content. The separate
+future importer must resolve taxonomy and collisions and create inactive
+`DRAFT` rows for independent review. See [content conventions](content/README.md)
+for the complete field, provenance and size contract and a synthetic example.
+
 ## Telegram bot
 
 `apps/bot` uses grammY. Its factory registers `/start` without network access or

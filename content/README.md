@@ -38,3 +38,70 @@ deterministic fixture question with no concept is upgraded to its expected
 concept. Existing categories and concepts with exact matching identities and
 names are reused without modification. Unrelated records are never reset or
 deleted. Concurrent conflicts fail; retry after the other operation completes.
+
+## Candidate import batches
+
+`imports/example-candidate-batch.json` is a small, fully synthetic version 1
+candidate batch. It exists only to demonstrate the format. It makes no claim
+about DLT wording, legal rules, translation accuracy, permission to republish,
+or review status.
+
+Validate one explicitly supplied local JSON file offline:
+
+```sh
+pnpm content:validate -- content/imports/example-candidate-batch.json
+```
+
+The command accepts exactly one nonblank path, reads no more than 5 MiB as
+UTF-8, makes no database or network request, and performs no write. Success
+prints only the batch ID, version, question count and choice count. Failure
+prints `Candidate batch validation failed.` followed by at most 20 safe,
+path-based diagnostics and exits nonzero. Paths that cannot be read, malformed
+JSON, oversized files and invalid batches fail without printing source content.
+This validator is separate from `content:import`, which continues to accept only
+the fixed development fixture.
+
+A version 1 document is a strict object with these fields:
+
+- `batchId`: 1–64 characters, using lowercase letters, digits and single
+  hyphen-separated segments;
+- `version`: the number `1`;
+- `createdAt`: a canonical UTC timestamp such as
+  `2026-09-30T00:00:00.000Z`;
+- `questions`: 1–500 strict question objects.
+
+Every question has a unique `externalId` following the same key rule,
+`vehicleType` (`CAR` or `MOTORCYCLE`), and lowercase `categorySlug` and
+`conceptSlug` references of at most 64 characters. Slugs are candidate
+references only: offline validation checks their shape, while a later importer
+must resolve them against existing taxonomy and reject missing or conflicting
+records before writing.
+
+Question wording fields are `textThai`, `textExamEnglish`, `textEnglish` and
+`textRussian`. `textEnglish` is required; the others are strings or `null`.
+Explanation fields are `explanationThai`, `explanationEnglish`,
+`explanationRussian`, `trapExplanationThai`, `trapExplanationEnglish` and
+`trapExplanationRussian`, each a string or `null`. Every present string is
+trimmed, nonblank and at most 4,000 characters. Normalized wording may not
+duplicate another question in the same language field.
+
+`choices` contains exactly four strict objects. Each contains `key`,
+`textThai`, `textEnglish` and `textRussian`; keys A–D occur exactly once,
+English is required, and Thai/Russian are strings or `null`. Normalized choice
+wording may not repeat within the same language field. `correctChoiceKey` names
+one supplied choice. Choice correctness flags and database IDs are prohibited.
+
+`source` is exactly `{ type, reference, sourceDate, legalCitation }`.
+`reference` is a trimmed, nonblank string of at most 2,048 characters.
+`ORIGINAL` requires a traceable `internal:` reference and permits a null date
+and citation. `OFFICIAL` and `THIRD_PARTY` require a canonical `YYYY-MM-DD`
+date and a nonblank citation. `FIXTURE` is prohibited. These checks establish
+metadata presence and shape only; they do not establish permission, official
+accuracy, legal sufficiency or verification.
+
+Unknown fields are rejected at every level, including persistence and admin
+fields such as IDs, `active`, `verificationStatus`, reviewer data and database
+timestamps. URLs remain inert reference text and are never fetched or executed.
+Validation does not activate, approve or import anything. The follow-on
+database importer must revalidate the batch, resolve taxonomy and collisions,
+and insert only inactive `DRAFT` rows for independent content and legal review.
