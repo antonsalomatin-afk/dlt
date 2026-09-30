@@ -1,6 +1,6 @@
 id: TASK-048
 title: Import validated candidate batches as inactive drafts
-status: BUILDING
+status: CHECKING
 epic: Epic 7 — Content Operations
 objective: Atomically import the accepted candidate-batch format into existing taxonomy as immutable, inactive DRAFT questions without activation or review approval.
 acceptance:
@@ -22,6 +22,7 @@ required_checks:
 dependencies:
   - TASK-047
 owner_decision_required: false
+builder_commit: 078833df4fe31cb9e06586a4d3e09080aa13cf4c
 supervisor_refinement:
   - Add `pnpm content:import-candidates -- <path>`. It accepts exactly one nonblank local JSON path, uses the same 5 MiB fatal-UTF-8 bounded read and strict version-1 parser as TASK-047, and completes file and batch validation before database configuration, connection or writes. Keep `pnpm content:validate` and the fixed `pnpm content:import` development-fixture command behavior unchanged.
   - Require the existing loopback-only DATABASE_URL policy and existing Prisma client. Within one Serializable transaction, resolve every distinct categorySlug and conceptSlug against existing unique taxonomy rows. Missing references fail the entire import; never create, rename or update taxonomy.
