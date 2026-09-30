@@ -88,7 +88,8 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-041 — ACCEPTED — accumulate exact practice and exam concept outcome counters
 - TASK-042 — ACCEPTED — authenticated factual concept progress API
 - TASK-043 — ACCEPTED — display concept mastery labels
-- repeat mistakes intelligently
+- TASK-044 — READY — create concept-varied practice from an owned mistake
+- TASK-045 — PLANNED — add concept retry action to the mistakes UI
 - spaced repetition
 - readiness score
 

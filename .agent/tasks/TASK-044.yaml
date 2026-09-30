@@ -1,0 +1,33 @@
+id: TASK-044
+title: Create concept-varied practice from a mistake
+status: READY
+epic: Epic 6 — Concept Learning
+objective: Let an authenticated learner deliberately turn one owned practice mistake into a fresh, concept-matched practice presentation that favors a different current variant.
+acceptance:
+  - A protected endpoint accepts one owned incorrect practice presentation and returns the existing privacy-safe presentation DTO for a current eligible question in the same immutable concept.
+  - Selection excludes the mistaken source question when at least one different eligible concept variant exists, falls back to it only when it is the sole eligible variant, and remains uniformly random within the chosen candidate set.
+  - Ownership, incorrect-answer, immutable-concept, current vehicle/content eligibility, strict validation, no-store caching and sanitized failure behavior are enforced server-side.
+  - The operation creates exactly one ordinary QuestionPresentation and does not resolve history, submit an answer, change counters/mastery, or alter normal random practice.
+  - Unit and isolated PostgreSQL integration coverage prove privacy, exact selection/fallback, concurrency/error behavior, response safety and no unrelated mutation.
+files_allowed:
+  - packages/database/src/**
+  - apps/api/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-043
+owner_decision_required: false
+supervisor_refinement:
+  - Add authenticated POST /practice/retry-mistake accepting exactly { presentationId } with a canonical UUID. Reuse the accepted JSON/body/content-type boundary. Authenticate before parsing, parse before vehicle lookup, require the saved vehicle, and set Cache-Control no-store on every matched-route outcome.
+  - Treat a missing, foreign, unanswered or correctly answered source presentation uniformly as 404 { error: Mistake not found }. Resolve the concept only from the owned immutable QuestionPresentation.conceptId; an owned incorrect presentation with null attribution returns 409 { error: Mistake has no concept }. Do not infer from current Question.conceptId, category or wording.
+  - Current eligible retry questions must match the learner's saved vehicle and immutable mistake concept, be active and VERIFIED, and satisfy the accepted snapshot/choice invariants. Category selection does not constrain an explicit concept retry.
+  - If any eligible question has an ID different from the mistake presentation's source questionId, select uniformly from only those alternatives. Otherwise select uniformly from the sole/source-inclusive eligible set. Use the accepted cryptographically sound unbiased random offset and narrow deterministic test seam; invalid injected offsets fail with sanitized500 and no write.
+  - Perform owned-mistake validation, exact candidate count and selection, snapshot construction/validation and QuestionPresentation creation in one RepeatableRead transaction. Copy the selected question's conceptId to the new presentation. A disappearing candidate or inconsistent stored data fails closed without retrying under weaker isolation.
+  - Return exactly the accepted { presentationId, question } pre-answer DTO. Never expose correctness, explanations, concept/user/attempt IDs, source/review metadata, candidate counts or selection rationale. The new presentation remains unanswered and enters existing answer/counter behavior only if later submitted normally.
+  - Preserve POST /practice/next behavior exactly. Do not mark the mistake resolved, deduplicate the immutable feed, mutate any old presentation/attempt, change mastery, add scheduling/weighting, or include exam mistakes in this slice.
+  - Add focused unit coverage for strict request parsing and alternative/fallback offset bounds. Add isolated PostgreSQL integration coverage for auth/body/vehicle precedence, missing/foreign/unanswered/correct/null-concept handling, vehicle/concept/status filtering, multiple-alternative deterministic selection, same-question fallback, immutable attribution, safe response, exact single write, rollback on invalid random/stored data and no mutation of attempts/counters/normal delivery.
+  - Update README. No schema/migration, UI, dependency, content, credential, deployment or full-stack harness change.
