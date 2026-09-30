@@ -102,6 +102,45 @@ accuracy, legal sufficiency or verification.
 Unknown fields are rejected at every level, including persistence and admin
 fields such as IDs, `active`, `verificationStatus`, reviewer data and database
 timestamps. URLs remain inert reference text and are never fetched or executed.
-Validation does not activate, approve or import anything. The follow-on
-database importer must revalidate the batch, resolve taxonomy and collisions,
-and insert only inactive `DRAFT` rows for independent content and legal review.
+Validation does not activate, approve or import anything.
+
+### Import validated candidates
+
+After creating the referenced categories and concepts and starting the local
+database, import one validated batch with:
+
+```sh
+pnpm content:import-candidates -- path/to/candidate-batch.json
+```
+
+The command accepts exactly one nonblank local path and performs the same 5 MiB,
+fatal-UTF-8, JSON and strict version 1 validation before reading database
+configuration or creating a client. `DATABASE_URL` must pass the existing
+loopback-only policy. Importing never fetches a source URL and never changes or
+creates taxonomy.
+
+Every distinct `categorySlug` and `conceptSlug` must already exist. The entire
+batch runs in one serializable transaction. A missing taxonomy reference,
+identity collision or persistence failure rolls back every candidate in that
+batch and preserves unrelated and development-fixture data.
+
+Question IDs are deterministic within a candidate-only namespace containing
+the format version, `batchId` and `externalId`; choice IDs derive from that
+question identity and A–D key. A first import stores the candidate's exact
+wording, explanations, source metadata, four choices and answer key. It always
+sets `active` false, `verificationStatus` to `DRAFT`, and image, reviewer and
+review timestamps to null. Import does not verify, reject, approve or activate
+content.
+
+Batch identity is immutable. Reimporting the exact same validated content is
+a safe no-op and reports matched records. If any persisted candidate field,
+taxonomy relation, choice, answer, inactive/DRAFT state or review field differs,
+the complete import fails without updating or deleting anything. Changed
+content requires a new batch identity or external ID and a separate review.
+
+Success reports only the batch ID, new and matched question/choice counts, and
+the inactive-DRAFT boundary. Every failure prints the single generic message
+`Candidate import failed. No candidate content was imported.` and exits
+nonzero; credentials, SQL, source wording and local file contents are omitted.
+This is still a candidate intake step. Independent content and legal review is
+required before any later activation or verification transition.

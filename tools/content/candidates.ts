@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { closeSync, fstatSync, openSync, readSync } from 'node:fs';
+import { TextDecoder } from 'node:util';
 
 export const MAX_CANDIDATE_FILE_BYTES = 5 * 1024 * 1024;
 export const MAX_CANDIDATE_DIAGNOSTICS = 20;
@@ -169,6 +171,18 @@ export interface CandidateBatchSummary {
   choices: number;
 }
 
+export type CandidateFileFailure = 'unreadable' | 'oversized' | 'changed' | 'malformed';
+
+export class CandidateFileError extends Error {
+  readonly failure: CandidateFileFailure;
+
+  constructor(failure: CandidateFileFailure) {
+    super('Candidate file could not be read or parsed.');
+    this.name = 'CandidateFileError';
+    this.failure = failure;
+  }
+}
+
 export function parseCandidateBatch(input: unknown): CandidateBatch {
   return candidateBatchSchema.parse(input);
 }
@@ -180,6 +194,54 @@ export function summarizeCandidateBatch(batch: CandidateBatch): CandidateBatchSu
     questions: batch.questions.length,
     choices: batch.questions.reduce((count, question) => count + question.choices.length, 0),
   };
+}
+
+export function candidatePathArgument(rawArguments: string[]): string | undefined {
+  const argumentsAfterCommand = rawArguments[0] === '--' ? rawArguments.slice(1) : rawArguments;
+  const suppliedPath = argumentsAfterCommand[0];
+  return argumentsAfterCommand.length === 1 && suppliedPath !== undefined && suppliedPath.trim().length > 0
+    ? suppliedPath
+    : undefined;
+}
+
+export function readCandidateBatchFile(path: string): CandidateBatch {
+  let descriptor: number | undefined;
+  try {
+    descriptor = openSync(path, 'r');
+    const stats = fstatSync(descriptor);
+    if (!stats.isFile()) throw new CandidateFileError('unreadable');
+    if (!Number.isSafeInteger(stats.size) || stats.size > MAX_CANDIDATE_FILE_BYTES) {
+      throw new CandidateFileError('oversized');
+    }
+    const buffer = Buffer.alloc(stats.size);
+    let offset = 0;
+    while (offset < stats.size) {
+      const bytesRead = readSync(descriptor, buffer, offset, stats.size - offset, offset);
+      if (bytesRead === 0) break;
+      offset += bytesRead;
+    }
+    if (offset !== stats.size || fstatSync(descriptor).size !== stats.size) {
+      throw new CandidateFileError('changed');
+    }
+    let json: string;
+    try {
+      json = new TextDecoder('utf-8', { fatal: true }).decode(buffer);
+    } catch {
+      throw new CandidateFileError('unreadable');
+    }
+    let input: unknown;
+    try {
+      input = JSON.parse(json) as unknown;
+    } catch {
+      throw new CandidateFileError('malformed');
+    }
+    return parseCandidateBatch(input);
+  } catch (error) {
+    if (error instanceof CandidateFileError || error instanceof z.ZodError) throw error;
+    throw new CandidateFileError('unreadable');
+  } finally {
+    if (descriptor !== undefined) closeSync(descriptor);
+  }
 }
 
 export function formatCandidateDiagnostics(error: z.ZodError): string[] {

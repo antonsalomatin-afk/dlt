@@ -231,10 +231,16 @@ Run `pnpm content:validate -- <path>` to validate one local, versioned candidate
 JSON batch without a database or network connection. The command reads at most
 5 MiB, returns only safe counts on success, and exits nonzero with bounded
 path-based diagnostics on failure. Candidate validation does not import,
-approve, activate or make legal/accuracy claims about content. The separate
-future importer must resolve taxonomy and collisions and create inactive
-`DRAFT` rows for independent review. See [content conventions](content/README.md)
-for the complete field, provenance and size contract and a synthetic example.
+approve, activate or make legal/accuracy claims about content.
+
+After the referenced taxonomy exists in the loopback development database, run
+`pnpm content:import-candidates -- <path>`. The dedicated importer revalidates
+before database configuration, uses one serializable transaction, derives
+stable candidate-only IDs and creates exact inactive, unreviewed `DRAFT` rows.
+Exact reimport is a no-op; changed content, missing taxonomy and identity/state
+collisions roll back the whole batch without overwriting anything. See
+[content conventions](content/README.md) for the complete field, provenance,
+immutability, failure and review-boundary contract and a synthetic example.
 
 ## Telegram bot
 
