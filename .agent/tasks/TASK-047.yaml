@@ -1,6 +1,6 @@
 id: TASK-047
 title: Validate traceable content import batches
-status: BUILDING
+status: CHECKING
 epic: Epic 7 — Content Operations
 objective: Define and validate a bounded, traceable offline batch format for candidate questions before any database import or review action exists.
 acceptance:
