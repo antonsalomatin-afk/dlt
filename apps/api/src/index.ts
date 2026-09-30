@@ -2,7 +2,7 @@ import { createHash, randomBytes, randomInt } from 'node:crypto';
 import Fastify from 'fastify';
 import { z } from 'zod';
 import { Prisma, type PrismaClient } from '../../../packages/database/src/index.ts';
-import { parsePresentationSnapshot, practiceNextRequestSchema, presentationResponseSchema, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
+import { parsePresentationSnapshot, practiceNextRequestSchema, presentationResponseSchema, retryMistakeRequestSchema, selectRetryCandidateSet, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
 import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '../../../packages/database/src/answer.ts';
 import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
 import { practiceCategoriesResponseSchema } from '../../../packages/database/src/practice-categories.ts';
@@ -50,7 +50,7 @@ const bodySchema = z.strictObject({ initData: z.string().min(1).max(16384).refin
 const bearerSchema = z.string().regex(/^Bearer [A-Za-z0-9_-]{43}$/u);
 const vehicleSchema = z.strictObject({ vehicleType: z.enum(['CAR', 'MOTORCYCLE']) });
 const emptyQuerySchema = z.strictObject({});
-const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available', 'Presentation not found', 'Exam question not found', 'Exam not found', 'Answer already submitted', 'Not enough questions available', 'Exam already in progress', 'Exam already completed', 'Exam incomplete', 'Exam not completed', 'Exam expired']) });
+const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available', 'Presentation not found', 'Mistake not found', 'Mistake has no concept', 'Exam question not found', 'Exam not found', 'Answer already submitted', 'Not enough questions available', 'Exam already in progress', 'Exam already completed', 'Exam incomplete', 'Exam not completed', 'Exam expired']) });
 const userSelect = { id: true, username: true, firstName: true, selectedVehicleType: true } as const;
 const digest = (token: string) => createHash('sha256').update(token).digest('hex');
 const lifetimeMs = 24 * 60 * 60 * 1000;
@@ -262,7 +262,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -548,6 +548,74 @@ export function createApi(options: {
       }, { isolationLevel: 'RepeatableRead' });
       if (!result) return reply.code(404).send(errorSchema.parse({ error: 'No questions available' }));
       return result;
+    });
+    practiceApp.post('/practice/retry-mistake', async (request, reply) => {
+      const user = authenticatedUsers.get(request);
+      if (!user) throw new Error('Authenticated practice user missing');
+      const body = retryMistakeRequestSchema.safeParse(request.body);
+      if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      if (!user.selectedVehicleType) return reply.code(409).send(errorSchema.parse({ error: 'Vehicle selection required' }));
+      const vehicleType = user.selectedVehicleType;
+      const result = await options.database.$transaction(async (tx) => {
+        const mistake = await tx.questionPresentation.findFirst({
+          where: { id: body.data.presentationId, userId: user.id },
+          select: {
+            questionId: true,
+            conceptId: true,
+            snapshot: true,
+            answer: { select: { selectedChoiceId: true, isCorrect: true } },
+          },
+        });
+        const mistakeAnswer = mistake?.answer;
+        if (!mistake || mistakeAnswer?.isCorrect !== false) return { kind: 'not-found' } as const;
+        const mistakeSnapshot = parsePresentationSnapshot(mistake.snapshot);
+        if (
+          mistakeSnapshot.question.id !== mistake.questionId
+          || !mistakeSnapshot.question.choices.some(({ id }) => id === mistakeAnswer.selectedChoiceId)
+          || mistakeAnswer.isCorrect !== (mistakeAnswer.selectedChoiceId === mistakeSnapshot.correctChoiceId)
+        ) throw new Error('Stored mistake is inconsistent with its presentation snapshot');
+        if (mistake.conceptId === null) return { kind: 'no-concept' } as const;
+        const eligibleQuestion: Prisma.QuestionWhereInput = {
+          vehicleType,
+          conceptId: mistake.conceptId,
+          active: true,
+          verificationStatus: 'VERIFIED',
+        };
+        const alternativeCount = await tx.question.count({
+          where: { ...eligibleQuestion, id: { not: mistake.questionId } },
+        });
+        const inclusiveCount = alternativeCount > 0
+          ? alternativeCount
+          : await tx.question.count({ where: eligibleQuestion });
+        const selection = selectRetryCandidateSet(alternativeCount, inclusiveCount, randomOffset);
+        if (selection === null) return { kind: 'empty' } as const;
+        const question = await tx.question.findFirst({
+          where: {
+            ...eligibleQuestion,
+            ...(selection.excludeSource ? { id: { not: mistake.questionId } } : {}),
+          },
+          orderBy: { id: 'asc' },
+          skip: selection.offset,
+          include: { choices: { orderBy: { key: 'asc' } } },
+        });
+        if (!question) throw new Error('Retry candidate offset did not resolve');
+        const snapshot = snapshotQuestion(question);
+        const presentation = await tx.questionPresentation.create({ data: {
+          userId: user.id,
+          questionId: question.id,
+          conceptId: question.conceptId,
+          createdAt: now(),
+          snapshot,
+        } });
+        return {
+          kind: 'created',
+          response: presentationResponseSchema.parse({ presentationId: presentation.id, question: snapshot.question }),
+        } as const;
+      }, { isolationLevel: 'RepeatableRead' });
+      if (result.kind === 'not-found') return reply.code(404).send(errorSchema.parse({ error: 'Mistake not found' }));
+      if (result.kind === 'no-concept') return reply.code(409).send(errorSchema.parse({ error: 'Mistake has no concept' }));
+      if (result.kind === 'empty') return reply.code(404).send(errorSchema.parse({ error: 'No questions available' }));
+      return result.response;
     });
     practiceApp.post('/practice/favorite', async (request, reply) => {
       const user = authenticatedUsers.get(request);

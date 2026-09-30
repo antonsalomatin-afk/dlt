@@ -16,6 +16,7 @@ export const presentedQuestionSchema = z.strictObject({
 });
 export const presentationResponseSchema = z.strictObject({ presentationId: z.uuid(), question: presentedQuestionSchema });
 export const practiceNextRequestSchema = z.strictObject({ categoryId: z.uuid().optional() }).optional();
+export const retryMistakeRequestSchema = z.strictObject({ presentationId: z.uuid() });
 export const presentationSnapshotSchema = z.strictObject({
   version: z.literal(1), question: presentedQuestionSchema, correctChoiceId: z.uuid(),
   explanationThai: translation, explanationEnglish: translation, explanationRussian: translation,
@@ -39,4 +40,28 @@ export function snapshotQuestion(source: Prisma.QuestionGetPayload<{ include: { 
     explanationThai: source.explanationThai, explanationEnglish: source.explanationEnglish, explanationRussian: source.explanationRussian,
     trapExplanationThai: source.trapExplanationThai, trapExplanationEnglish: source.trapExplanationEnglish, trapExplanationRussian: source.trapExplanationRussian,
   });
+}
+
+export type RetryRandomOffset = (candidateCount: number) => unknown;
+
+/** Select alternatives whenever possible, while keeping the random seam bounded and testable. */
+export function selectRetryCandidateSet(
+  alternativeCount: number,
+  inclusiveCount: number,
+  randomOffset: RetryRandomOffset,
+) {
+  if (
+    !Number.isSafeInteger(alternativeCount)
+    || !Number.isSafeInteger(inclusiveCount)
+    || alternativeCount < 0
+    || inclusiveCount < alternativeCount
+  ) throw new Error('Retry candidate counts are invalid');
+  const excludeSource = alternativeCount > 0;
+  const candidateCount = excludeSource ? alternativeCount : inclusiveCount;
+  if (candidateCount === 0) return null;
+  const offset = randomOffset(candidateCount);
+  if (typeof offset !== 'number' || !Number.isSafeInteger(offset) || offset < 0 || offset >= candidateCount) {
+    throw new Error('Random offset is outside the retry candidate range');
+  }
+  return { candidateCount, excludeSource, offset };
 }

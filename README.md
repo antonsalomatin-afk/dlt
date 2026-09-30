@@ -506,6 +506,27 @@ reading persisted JSON. Answer submission is described below.
 
 The practice integration suite creates a temporary randomly named database, applies the full migration chain and drops only that database after testing. The local integration database role therefore needs permission to create databases. Imported development fixtures are never activated by this endpoint or its tests.
 
+### Retry a practice mistake by concept
+
+`POST /practice/retry-mistake` accepts exactly
+`{ "presentationId": "<UUID>" }` for an authenticated learner's incorrect practice
+presentation. The server uses the presentation's immutable concept attribution and the
+learner's saved vehicle to create one ordinary presentation from a current active
+`VERIFIED` question. When the concept has another eligible question, the source
+question is excluded and selection is a uniform random draw from the alternatives. The
+source is eligible as a fallback only when no alternative exists. Category filters,
+mastery, history and exam mistakes do not affect this explicit retry.
+
+Missing, foreign, unanswered and correctly answered presentations share
+`404 { "error": "Mistake not found" }`. An incorrect presentation without immutable
+concept attribution returns `409 { "error": "Mistake has no concept" }`; no eligible
+current content returns the normal `404 { "error": "No questions available" }`.
+Authentication, strict JSON validation, vehicle selection and sanitized failure shapes
+match normal practice, and every matched response uses `Cache-Control: no-store`.
+The successful response is exactly the existing privacy-safe
+`{ presentationId, question }` DTO. The operation does not submit or resolve the old
+mistake, change counters or mastery, or alter normal `/practice/next` selection.
+
 ### Submit a practice answer
 
 `POST /practice/answer` uses the existing bearer session and accepts only
