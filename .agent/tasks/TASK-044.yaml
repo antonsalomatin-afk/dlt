@@ -1,6 +1,6 @@
 id: TASK-044
 title: Create concept-varied practice from a mistake
-status: CHECKING
+status: REVIEW
 epic: Epic 6 — Concept Learning
 objective: Let an authenticated learner deliberately turn one owned practice mistake into a fresh, concept-matched practice presentation that favors a different current variant.
 acceptance:
