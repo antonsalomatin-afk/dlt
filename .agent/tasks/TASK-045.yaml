@@ -1,0 +1,32 @@
+id: TASK-045
+title: Start concept retry from the mistakes UI
+status: READY
+epic: Epic 6 — Concept Learning
+objective: Let a learner deliberately turn a reviewed practice mistake into a fresh concept-matched question in the existing Practice experience.
+acceptance:
+  - Every loaded mistake entry offers an accessible Practice this concept action; ordinary history entries never do.
+  - The action sends one exact authenticated POST /practice/retry-mistake request and validates the response strictly before leaving the mistakes view.
+  - Success opens the existing Practice view with the returned presentation already visible and answerable, without requesting or exposing another question first.
+  - Pending, retryable failure, unavailable mistake/content, missing concept, missing vehicle, session expiry and stale-response behavior are deterministic and safe.
+  - Starting or answering concept practice does not remove, resolve or rewrite the immutable mistake feed, and normal practice/category behavior remains unchanged.
+  - Browser and source-level tests cover request integrity, transition, answer flow, error handling, duplicate guards, navigation and regressions.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+dependencies:
+  - TASK-044
+owner_decision_required: false
+supervisor_refinement:
+  - Add a Practice this concept button inside each expanded mistakes entry only. Keep the immutable mistake copy and entry in place until a validated retry presentation is received. Do not add the action to ordinary answer history or exam review in this task.
+  - POST exactly { presentationId } to /practice/retry-mistake with JSON content type, bearer authorization, no-store caching and the accepted timeout. Parse a successful payload through presentationSchema before navigation. Keep credentials and payloads in React memory only and never place the source or new presentation ID in the URL or storage.
+  - Prevent overlapping concept-retry requests synchronously, including same-turn double clicks and retry/pagination overlap. Disable relevant mutation/navigation controls while the request is pending but allow a deliberate Back action; after Back, ignore all late success, error and401 outcomes.
+  - On success pass the validated Presentation through parent React state to a fresh Practice mount. Practice initializes from that presentation, consumes/clears the parent handoff without remounting, displays it immediately while categories load, and must not call /practice/next before the learner answers or explicitly continues. Existing answer, favorite, language, category-lock and continuation behavior then applies unchanged.
+  - Parse non-success bodies through a strict known error envelope.401 expires the session.409 Vehicle selection required returns to setup and clears the confirmed selection.409 Mistake has no concept and404 Mistake not found or No questions available show distinct non-destructive item guidance. Transport, other HTTP and malformed success/error payloads show a generic retryable item error; retry sends the exact same source presentationId.
+  - A failed request preserves loaded items, pagination cursor, expansion and language. A successful handoff does not mark the source entry resolved; reopening mistakes fetches the immutable feed normally. Normal entry to Practice uses no handoff and remains byte-for-behavior compatible.
+  - Extend the Next rewrite allowlist for /practice/retry-mistake. Add source-level coverage for the one-use handoff and route boundary. Add Playwright coverage for exact request and direct transition without /practice/next, normal answer submission, retry after transport/HTTP/malformed payload, each stable404/409 branch,401 expiry, same-turn double-click guard, retry-versus-pagination guard, late response after Back, and absence from ordinary history.
+  - Update README. No backend/schema/API contract change, mistake mutation/resolution, automatic retry, mastery/selection policy change, offline persistence, dependency, credential, deployment or full-stack harness change.
