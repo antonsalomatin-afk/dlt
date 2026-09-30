@@ -1,0 +1,34 @@
+id: TASK-048
+title: Import validated candidate batches as inactive drafts
+status: READY
+epic: Epic 7 — Content Operations
+objective: Atomically import the accepted candidate-batch format into existing taxonomy as immutable, inactive DRAFT questions without activation or review approval.
+acceptance:
+  - A dedicated CLI revalidates one bounded local candidate batch before connecting to the database and imports it only into an explicitly configured loopback PostgreSQL database.
+  - Every candidate resolves to existing category and concept slugs and is stored with exact candidate wording, choices, correctness and provenance as inactive, unreviewed DRAFT content.
+  - Stable candidate-specific question and choice IDs make an exact reimport a safe no-op while any identity collision or changed content under the same batch identity fails without overwriting data.
+  - The whole batch is transactional, so missing taxonomy, collisions or persistence failures leave no partial candidate import and preserve unrelated data.
+  - Documentation and automated tests cover command use, immutable batch identity, successful import, exact reimport, rollback, collision and safe failure behavior.
+files_allowed:
+  - content/**
+  - tools/content/**
+  - tests/**
+  - package.json
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-047
+owner_decision_required: false
+supervisor_refinement:
+  - Add `pnpm content:import-candidates -- <path>`. It accepts exactly one nonblank local JSON path, uses the same 5 MiB fatal-UTF-8 bounded read and strict version-1 parser as TASK-047, and completes file and batch validation before database configuration, connection or writes. Keep `pnpm content:validate` and the fixed `pnpm content:import` development-fixture command behavior unchanged.
+  - Require the existing loopback-only DATABASE_URL policy and existing Prisma client. Within one Serializable transaction, resolve every distinct categorySlug and conceptSlug against existing unique taxonomy rows. Missing references fail the entire import; never create, rename or update taxonomy.
+  - Derive UUID-shaped question IDs deterministically from a candidate-only SHA-256 namespace containing version, batchId and externalId. Derive each choice ID from that question identity and choice key. Export the deterministic ID helper for focused testing, and keep this namespace separate from development fixture IDs.
+  - Map vehicle type, all localized wording and explanation fields, category, concept, source type/reference/date/legal citation, exactly four A-D choices and correctChoiceKey without transformation or enrichment. Every imported Question must have active false, verificationStatus DRAFT, reviewer null, reviewedAt null and imageReference null; exactly one imported choice has isCorrect true.
+  - Treat a batch identity as immutable. If the deterministic question ID already exists, accept it only as an exact no-op when every persisted candidate-owned field, resolved relation, inactive/DRAFT/unreviewed state and the exact four deterministic choices match the validated input. Any mismatch, extra/missing choice, active/reviewed/VERIFIED/REJECTED state, deterministic question or choice collision, or changed content under the same identity aborts the full transaction. Do not update or delete existing rows.
+  - Return a safe success summary containing batch ID, new question/choice counts, matched-existing question/choice counts and the inactive-DRAFT boundary. Fail nonzero with one stable generic message that does not expose database credentials, SQL, source wording or local file contents. Always disconnect a created client.
+  - Unit tests cover deterministic IDs and candidate-to-persistence mapping. Integration tests use an isolated migrated database and cover a mixed-source multilingual batch, exact field/correctness persistence, stable exact reimport without duplicates, missing category/concept rollback, changed-content and unrelated-row ID collisions, question-state and choice collisions, multi-question all-or-nothing behavior, and preservation of unrelated and fixture data.
+  - CLI subprocess tests cover missing/extra paths, invalid/unreadable/oversized/malformed input before database access, invalid loopback database configuration, success and generic database/import failure. Tests must demonstrate no partial writes and no source content, SQL or credentials in failures.
+  - No schema/migration, taxonomy mutation, production content, activation, verification/rejection transition, reviewer assignment, admin/API/UI, legal approval, network fetch, new dependency, credential or deployment change.
