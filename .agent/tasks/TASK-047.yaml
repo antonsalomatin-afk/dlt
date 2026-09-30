@@ -1,6 +1,6 @@
 id: TASK-047
 title: Validate traceable content import batches
-status: REVIEW
+status: ACCEPTED
 epic: Epic 7 — Content Operations
 objective: Define and validate a bounded, traceable offline batch format for candidate questions before any database import or review action exists.
 acceptance:
@@ -31,3 +31,5 @@ supervisor_refinement:
   - Add a small fully synthetic example batch under content/imports that makes no DLT, legal or translation-accuracy claim. Document every field, bounds, source rules, invocation, exit behavior and candidate-only boundary in content/README.md and the root README.
   - Add focused schema tests for all cross-field and uniqueness invariants, limits and strictness. Add CLI subprocess tests for success, missing/extra path, missing/unreadable/oversized file, malformed JSON, invalid batch, bounded diagnostics and proof that validation makes no database/content changes.
   - No database write, schema/migration, production content, activation, review approval, admin API/UI, dependency, credential, network request or deployment change.
+accepted_commit: 4c4778c803ca621da3faa573450b7b6c0d16f00b
+review_file: .agent/reviews/TASK-047-review-01.md

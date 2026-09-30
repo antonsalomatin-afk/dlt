@@ -95,7 +95,7 @@ At the end of this epic the core end-to-end flow must work.
 
 ## Epic 7 — Content Operations
 
-- TASK-047 — READY — validate traceable content import batches
+- TASK-047 — ACCEPTED — validate traceable content import batches
 - TASK-048 — PLANNED — import validated candidate batches as inactive drafts
 - review status
 - content admin
