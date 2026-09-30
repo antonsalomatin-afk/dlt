@@ -1,6 +1,6 @@
 id: TASK-045
 title: Start concept retry from the mistakes UI
-status: BUILDING
+status: CHECKING
 epic: Epic 6 — Concept Learning
 objective: Let a learner deliberately turn a reviewed practice mistake into a fresh concept-matched question in the existing Practice experience.
 acceptance:
