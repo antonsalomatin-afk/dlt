@@ -1,6 +1,6 @@
 id: TASK-048
 title: Import validated candidate batches as inactive drafts
-status: READY
+status: BUILDING
 epic: Epic 7 — Content Operations
 objective: Atomically import the accepted candidate-batch format into existing taxonomy as immutable, inactive DRAFT questions without activation or review approval.
 acceptance:
