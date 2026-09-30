@@ -90,8 +90,8 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-043 — ACCEPTED — display concept mastery labels
 - TASK-044 — ACCEPTED — create concept-varied practice from an owned mistake
 - TASK-045 — ACCEPTED — start concept retry from the mistakes UI
-- spaced repetition
-- readiness score
+- TASK-046 — BLOCKED — choose whether to implement spaced repetition now or defer to launch-critical work
+- readiness score — later capability pending the same delivery-scope decision
 
 ## Epic 7 — Content Operations
 
