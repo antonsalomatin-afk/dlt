@@ -78,6 +78,7 @@ test('opens owned correct and incorrect history, expands localized snapshots, an
   await page.getByRole('button', { name: 'History', exact: true }).click();
 
   await expect(page.locator('.history-entry')).toHaveCount(2);
+  await expect(page.getByRole('button', { name: 'Practice this concept' })).toHaveCount(0);
   await expect(page.locator('.history-outcome')).toHaveText(['Correct', 'Incorrect']);
   const first = page.locator('.history-entry').first();
   await expect(first.locator('time')).toHaveAttribute('datetime', '2026-09-15T08:00:00.000Z');

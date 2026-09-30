@@ -1,7 +1,15 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { historyResponseSchema, mistakesResponseSchema, type HistoryItem, type Session } from '../lib/contracts';
+import {
+  historyResponseSchema,
+  mistakesResponseSchema,
+  presentationSchema,
+  retryMistakeErrorSchema,
+  type HistoryItem,
+  type Presentation,
+  type Session,
+} from '../lib/contracts';
 
 type Language = 'English' | 'Russian' | 'Thai';
 
@@ -31,7 +39,14 @@ const feedCopy = {
   endpoint: string; eyebrow: string; title: string; language: string; loading: string; empty: string; error: string; retry: string;
 }>;
 
-export function History({ session, onBack, onExpired, kind = 'history' }: { session: Session; onBack: () => void; onExpired: () => void; kind?: FeedKind }) {
+export function History({ session, onBack, onExpired, onPractice, onVehicle, kind = 'history' }: {
+  session: Session;
+  onBack: () => void;
+  onExpired: () => void;
+  onPractice?: ((presentation: Presentation) => void) | undefined;
+  onVehicle?: (() => void) | undefined;
+  kind?: FeedKind;
+}) {
   const copy = feedCopy[kind];
   const [items, setItems] = useState<HistoryItem[]>([]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
@@ -39,6 +54,8 @@ export function History({ session, onBack, onExpired, kind = 'history' }: { sess
   const [language, setLanguage] = useState<Language>('English');
   const [pending, setPending] = useState(true);
   const [error, setError] = useState(false);
+  const [retryingPresentationId, setRetryingPresentationId] = useState<string | null>(null);
+  const [retryErrors, setRetryErrors] = useState<Record<string, string>>({});
   const busy = useRef(false);
   const active = useRef(true);
 
@@ -74,6 +91,64 @@ export function History({ session, onBack, onExpired, kind = 'history' }: { sess
     }
   }
 
+  async function retryMistake(presentationId: string) {
+    if (kind !== 'mistakes' || busy.current || !active.current || !onPractice) return;
+    busy.current = true;
+    setRetryingPresentationId(presentationId);
+    setRetryErrors((current) => ({ ...current, [presentationId]: '' }));
+    try {
+      const response = await fetch('/practice/retry-mistake', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.token}` },
+        body: JSON.stringify({ presentationId }),
+        cache: 'no-store',
+        signal: AbortSignal.timeout(15000),
+      });
+      if (!active.current) return;
+      if (!response.ok) {
+        const parsed = retryMistakeErrorSchema.parse(await response.json());
+        if (!active.current) return;
+        if (response.status === 401 && parsed.error === 'Unauthorized') {
+          active.current = false;
+          onExpired();
+          return;
+        }
+        if (response.status === 409 && parsed.error === 'Vehicle selection required' && onVehicle) {
+          active.current = false;
+          onVehicle();
+          return;
+        }
+        if (response.status === 409 && parsed.error === 'Mistake has no concept') {
+          setRetryErrors((current) => ({ ...current, [presentationId]: 'This mistake is not linked to a practice concept.' }));
+          return;
+        }
+        if (response.status === 404 && parsed.error === 'Mistake not found') {
+          setRetryErrors((current) => ({ ...current, [presentationId]: 'This mistake is no longer available. Review another mistake.' }));
+          return;
+        }
+        if (response.status === 404 && parsed.error === 'No questions available') {
+          setRetryErrors((current) => ({ ...current, [presentationId]: 'No practice questions are available for this concept right now. Try again later.' }));
+          return;
+        }
+        throw new Error();
+      }
+      const payload: unknown = await response.json();
+      if (!active.current) return;
+      const presentation = presentationSchema.parse(payload);
+      active.current = false;
+      onPractice(presentation);
+    } catch {
+      if (active.current) {
+        setRetryErrors((current) => ({ ...current, [presentationId]: 'We could not start concept practice. Check your connection and retry.' }));
+      }
+    } finally {
+      if (active.current) {
+        busy.current = false;
+        setRetryingPresentationId(null);
+      }
+    }
+  }
+
   useEffect(() => {
     active.current = true;
     void request(null);
@@ -87,7 +162,7 @@ export function History({ session, onBack, onExpired, kind = 'history' }: { sess
     <h2 id={`${kind}-title`}>{copy.title}</h2>
     {kind === 'mistakes' && <p className="panel-copy">Review each incorrect submitted answer as its own attempt. Later answers do not change this list.</p>}
     <button className="secondary" onClick={leave}>Back</button>
-    <fieldset className="languages"><legend>{copy.language}</legend>{(['English', 'Russian', 'Thai'] as const).map((item) => <label key={item}><input type="radio" name={`${kind}-language`} checked={language === item} onChange={() => setLanguage(item)} /> {item}</label>)}</fieldset>
+    <fieldset className="languages" disabled={retryingPresentationId !== null}><legend>{copy.language}</legend>{(['English', 'Russian', 'Thai'] as const).map((item) => <label key={item}><input type="radio" name={`${kind}-language`} checked={language === item} onChange={() => setLanguage(item)} /> {item}</label>)}</fieldset>
     {pending && items.length === 0 && <div className="message" role="status"><span aria-hidden="true">◌</span><p>{copy.loading}</p></div>}
     {!pending && !error && items.length === 0 && <div className="empty-history"><p>{copy.empty}</p><button className="primary" onClick={leave}>Back</button></div>}
     {items.length > 0 && <div className="history-list">{items.map((item) => <details className={`history-entry ${item.isCorrect ? 'correct' : 'incorrect'}`} key={item.presentationId}>
@@ -111,10 +186,16 @@ export function History({ session, onBack, onExpired, kind = 'history' }: { sess
           <h4>Explanation</h4><p>{localized(language, item.explanationEnglish, item.explanationRussian, item.explanationThai) ?? 'Explanation unavailable.'}</p>
           <h4>Watch out for</h4><p>{localized(language, item.trapExplanationEnglish, item.trapExplanationRussian, item.trapExplanationThai) ?? 'Trap explanation unavailable.'}</p>
         </div>
+        {kind === 'mistakes' && <div className="mistake-retry">
+          <button className="primary" disabled={retryingPresentationId !== null || pending} onClick={() => void retryMistake(item.presentationId)}>
+            {retryingPresentationId === item.presentationId ? 'Starting concept practice…' : 'Practice this concept'}
+          </button>
+          {retryErrors[item.presentationId] && <p className="message error" role="alert">{retryErrors[item.presentationId]}</p>}
+        </div>}
       </div>
     </details>)}</div>}
     {error && <div className="message error" role="alert"><span aria-hidden="true">!</span><p>{copy.error}</p></div>}
-    {error && <button className="primary" disabled={pending} onClick={() => void request(retryCursor)}>{pending ? 'Please wait…' : copy.retry}</button>}
-    {!error && nextCursor !== null && <button className="primary next" disabled={pending} onClick={() => void request(nextCursor)}>{pending ? 'Loading more…' : 'Load more'}</button>}
+    {error && <button className="primary" disabled={pending || retryingPresentationId !== null} onClick={() => void request(retryCursor)}>{pending ? 'Please wait…' : copy.retry}</button>}
+    {!error && nextCursor !== null && <button className="primary next" disabled={pending || retryingPresentationId !== null} onClick={() => void request(nextCursor)}>{pending ? 'Loading more…' : 'Load more'}</button>}
   </section>;
 }

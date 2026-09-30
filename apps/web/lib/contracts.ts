@@ -23,6 +23,16 @@ export const presentedQuestionSchema = z.strictObject({
     .refine((choices) => new Set(choices.map((choice) => choice.id)).size === 4 && new Set(choices.map((choice) => choice.key)).size === 4),
 });
 export const presentationSchema = z.strictObject({ presentationId: z.uuid(), question: presentedQuestionSchema });
+export const retryMistakeErrorSchema = z.strictObject({
+  error: z.enum([
+    'Unauthorized',
+    'Vehicle selection required',
+    'Mistake not found',
+    'Mistake has no concept',
+    'No questions available',
+    'Internal Server Error',
+  ]),
+});
 export const answerSchema = z.strictObject({
   presentationId: z.uuid(), selectedChoiceId: z.uuid(), correctChoiceId: z.uuid(), isCorrect: z.boolean(),
   explanationThai: translation, explanationEnglish: translation, explanationRussian: translation,
@@ -31,6 +41,10 @@ export const answerSchema = z.strictObject({
 export type Presentation = z.infer<typeof presentationSchema>;
 export type Answer = z.infer<typeof answerSchema>;
 export type PresentedQuestion = z.infer<typeof presentedQuestionSchema>;
+
+export function consumePracticeHandoff(current: Presentation | null, consumedPresentationId: string) {
+  return current?.presentationId === consumedPresentationId ? null : current;
+}
 
 export const favoriteResponseSchema = z.strictObject({
   presentationId: z.uuid(), favorite: z.boolean(),

@@ -744,7 +744,7 @@ credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
 `/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
 `/me/concept-progress`,
-`/practice/categories`, `/practice/next`, `/practice/answer` and
+`/practice/categories`, `/practice/next`, `/practice/retry-mistake`, `/practice/answer` and
 `/practice/favorite`, plus `/exam/current`, `/exam/start`, `/exam/answer` and
 `/exam/complete`, `/exam/history` and `/exam/:examId/review` only.
 Set the destination before building; rewrites are
@@ -799,6 +799,16 @@ incorrect submitted attempt with stable Your answer and Correct answer labels; a
 correct attempt does not resolve, deduplicate or remove it. Returning preserves the opening
 origin, and returning to practice starts a clean practice view. Malformed responses and any
 item that claims a correct result are rejected before rendering.
+
+Each expanded mistake also offers **Practice this concept**. The Mini App sends exactly the
+source presentation ID to `POST /practice/retry-mistake`, validates the response, and then
+passes the returned presentation once through React memory into a fresh Practice view. The
+question is visible and answerable immediately while categories load; Practice does not
+request `/practice/next` before the learner answers or deliberately continues. Failures keep
+the mistake feed, expansion, paging cursor and language intact so the same source can be
+retried. Missing content, missing concept and missing vehicle receive distinct guidance, a
+401 clears the in-memory session, and Back safely ignores late responses. The action does
+not resolve or alter the immutable mistake entry and is absent from ordinary history.
 
 Authenticated learners can open Progress from vehicle setup, even before choosing a
 vehicle, or from practice. The view sends one same-origin `GET /me/progress` request on

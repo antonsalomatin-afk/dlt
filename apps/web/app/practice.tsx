@@ -10,8 +10,8 @@ const localizedCategory = (language: Language, category: PracticeCategory) =>
   (language === 'Russian' ? category.nameRussian : language === 'Thai' ? category.nameThai : category.nameEnglish)
   || category.nameEnglish || category.nameThai || category.nameRussian;
 
-export function Practice({ session, onExpired, onVehicle, onExam, onExamHistory, onProgress, onHistory, onMistakes, onFavorites }: { session: Session; onExpired: () => void; onVehicle: (missing?: boolean) => void; onExam: () => void; onExamHistory: () => void; onProgress: () => void; onHistory: () => void; onMistakes: () => void; onFavorites: () => void }) {
-  const [presentation, setPresentation] = useState<Presentation | null>(null);
+export function Practice({ session, initialPresentation = null, onHandoffConsumed, onExpired, onVehicle, onExam, onExamHistory, onProgress, onHistory, onMistakes, onFavorites }: { session: Session; initialPresentation?: Presentation | null; onHandoffConsumed?: (presentationId: string) => void; onExpired: () => void; onVehicle: (missing?: boolean) => void; onExam: () => void; onExamHistory: () => void; onProgress: () => void; onHistory: () => void; onMistakes: () => void; onFavorites: () => void }) {
+  const [presentation, setPresentation] = useState<Presentation | null>(() => initialPresentation);
   const [choice, setChoice] = useState<string | null>(null);
   const [answer, setAnswer] = useState<Answer | null>(null);
   const [language, setLanguage] = useState<Language>('English');
@@ -19,7 +19,7 @@ export function Practice({ session, onExpired, onVehicle, onExam, onExamHistory,
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [categoriesPending, setCategoriesPending] = useState(true);
   const [pending, setPending] = useState(false);
-  const [message, setMessage] = useState('Loading practice categories…');
+  const [message, setMessage] = useState(initialPresentation ? 'Choose one answer, then submit.' : 'Loading practice categories…');
   const [error, setError] = useState(false);
   const [attempted, setAttempted] = useState(false);
   const [closed, setClosed] = useState(false);
@@ -56,6 +56,7 @@ export function Practice({ session, onExpired, onVehicle, onExam, onExamHistory,
 
   useEffect(() => {
     active.current = true;
+    if (initialPresentation) onHandoffConsumed?.(initialPresentation.presentationId);
     void loadCategories();
     return () => { active.current = false; };
   }, []);
