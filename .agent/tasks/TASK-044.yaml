@@ -1,6 +1,6 @@
 id: TASK-044
 title: Create concept-varied practice from a mistake
-status: REVIEW
+status: ACCEPTED
 epic: Epic 6 — Concept Learning
 objective: Let an authenticated learner deliberately turn one owned practice mistake into a fresh, concept-matched practice presentation that favors a different current variant.
 acceptance:
@@ -31,3 +31,5 @@ supervisor_refinement:
   - Preserve POST /practice/next behavior exactly. Do not mark the mistake resolved, deduplicate the immutable feed, mutate any old presentation/attempt, change mastery, add scheduling/weighting, or include exam mistakes in this slice.
   - Add focused unit coverage for strict request parsing and alternative/fallback offset bounds. Add isolated PostgreSQL integration coverage for auth/body/vehicle precedence, missing/foreign/unanswered/correct/null-concept handling, vehicle/concept/status filtering, multiple-alternative deterministic selection, same-question fallback, immutable attribution, safe response, exact single write, rollback on invalid random/stored data and no mutation of attempts/counters/normal delivery.
   - Update README. No schema/migration, UI, dependency, content, credential, deployment or full-stack harness change.
+accepted_commit: dbf1605f237fe5af32e57e5236157890aa85ba30
+review_file: .agent/reviews/TASK-044-review-01.md
