@@ -1,6 +1,6 @@
 id: TASK-043
 title: Display concept mastery labels
-status: REVIEW
+status: ACCEPTED
 epic: Epic 6 — Concept Learning
 objective: Show learners a transparent display-only mastery label derived from accepted concept outcome facts.
 acceptance:
@@ -34,3 +34,5 @@ supervisor_refinement:
   - Parse every page through a strict browser runtime schema that validates canonical IDs/timestamps, counts, arithmetic, exact mastery derivation, descending order, unique concept IDs and a cursor anchored to the final item. Across pages reject repeated concepts or nondecreasing tuple order without discarding already validated items; retry must reuse the same cursor. Prevent overlapping requests and ignore responses after navigation or session expiry.
   - Cover English/Russian/Thai rendering and fallback, threshold cases 0/4/5 answers and exact 80-percent boundaries, mixed practice/exam facts, empty NOT_STARTED state, two-page traversal including tied timestamps, transport/HTTP/malformed/duplicate-page retry, 401 expiry, same-turn load guard and late responses. Preserve existing lifetime progress behavior and tests.
   - Update README. No schema/migration, state mutation, selection/repetition/exam behavior, new dependency, content, credential, deployment or full-stack harness change.
+accepted_commit: 2f348918d4fc1e303042435453063700c314aa9b
+review_file: .agent/reviews/TASK-043-review-01.md
