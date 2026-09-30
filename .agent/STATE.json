@@ -13,13 +13,13 @@
   "notes": "TASK-043 Builder commit 2f348918d4fc1e303042435453063700c314aa9b is complete. Builder gates passed: pnpm check (181 tests), Prisma validate, 129 integration tests, build and 138 Playwright tests. Supervisor authoritative checks and independent review remain.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 87,
+    "latestObservedUsedPercent": 0,
     "windowMinutes": 300,
-    "checkedAt": "2026-09-29T17:03:32.0196194Z",
+    "checkedAt": "2026-09-30T05:45:54.1335870Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization."
   },
-  "executionPaused": true,
-  "pauseReason": "Clean checkpoint at 87 percent usage: insufficient safe headroom to run all five authoritative gates and an independent review before the user's 95 percent five-hour ceiling.",
+  "executionPaused": false,
+  "pauseReason": null,
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
