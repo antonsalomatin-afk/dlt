@@ -1,6 +1,6 @@
 id: TASK-046
 title: Choose spaced-repetition delivery scope
-status: BLOCKED
+status: DEFERRED
 epic: Epic 6 — Concept Learning
 objective: Decide whether to implement a concept review schedule now or defer later learning optimization in favor of content operations and launch readiness.
 acceptance:
@@ -13,6 +13,8 @@ dependencies:
   - TASK-045
 owner_decision_required: true
 blocked_reason: Spaced repetition and sophisticated readiness scoring are explicitly later capabilities in PROJECT.md. Implementing them now requires a user-visible scheduling policy and changes launch sequencing relative to content operations.
+owner_decision:
+  - Deferred spaced repetition and readiness scoring. Move on to Epic 7 content operations and launch-critical work.
 supervisor_recommendation:
   - Defer spaced repetition and readiness scoring until after content operations and initial production hardening, then begin Epic 7 source metadata and import/review workflow. This is the shortest path toward a testable live application with traceable content.
 alternative_now:

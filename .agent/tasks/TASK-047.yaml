@@ -1,0 +1,33 @@
+id: TASK-047
+title: Validate traceable content import batches
+status: READY
+epic: Epic 7 — Content Operations
+objective: Define and validate a bounded, traceable offline batch format for candidate questions before any database import or review action exists.
+acceptance:
+  - A versioned strict JSON batch contract represents candidate questions, four choices, taxonomy references and complete source provenance without claiming verification or activation.
+  - A deterministic CLI validates one explicitly supplied local JSON file, returns a safe summary on success and actionable path-based diagnostics with a nonzero exit on failure.
+  - Source-type-specific rules reject untraceable OFFICIAL or THIRD_PARTY material and prohibit development FIXTURE content in candidate batches.
+  - Cross-record identity, taxonomy-reference, wording, answer-key, bounded-size and normalized-text invariants are validated before any side effect.
+  - Documentation and a synthetic example explain the format, legal/review boundary and follow-on import workflow.
+  - Unit and CLI tests cover valid multilingual/original and cited-source batches, malformed JSON, unknown fields, unsafe sizes, duplicate identities and provenance/content failures.
+files_allowed:
+  - content/**
+  - tools/content/**
+  - tests/**
+  - package.json
+  - README.md
+required_checks:
+  - pnpm check
+dependencies:
+  - TASK-045
+owner_decision_required: false
+supervisor_refinement:
+  - Add a pnpm content:validate -- <path> command that accepts exactly one nonblank file argument, reads at most5 MiB as UTF-8, parses JSON once and validates without database or network access. Missing/extra arguments, unreadable/oversized files, malformed JSON and invalid batches exit nonzero. Success prints only batch ID, version and record counts; failures print a stable generic heading plus bounded path-based validation messages, never the source content.
+  - Define version1 as a strict object with batchId, version1, createdAt and questions. batchId and each question externalId are lowercase human-readable keys matching ^[a-z0-9]+(?:-[a-z0-9]+)*$, unique after exact comparison, and bounded to64 characters. createdAt is canonical ISO UTC. Allow1 through500 questions.
+  - Each question strictly contains externalId, vehicleType CAR or MOTORCYCLE, existing categorySlug and conceptSlug references, source, textThai, textExamEnglish, textEnglish, textRussian, explanationThai/English/Russian, trapExplanationThai/English/Russian, choices and correctChoiceKey. Each choice is exactly { key, textThai, textEnglish, textRussian }; four choices use A through D once each and correctChoiceKey names one of them. Slugs/keys and every present string are trimmed and nonblank; English question and choice text are required, while Thai, exam-style English, Russian and explanation fields are nullable. Reject duplicate normalized question wording within a batch and duplicate choice wording within a question.
+  - Source is exactly { type, reference, sourceDate, legalCitation }. Prohibit FIXTURE. ORIGINAL requires a nonblank traceable internal reference and permits null date/citation. OFFICIAL and THIRD_PARTY require a nonblank reference, canonical YYYY-MM-DD sourceDate and nonblank legalCitation. Validation confirms metadata presence and shape only; it must not claim permission, official accuracy or legal sufficiency.
+  - Do not accept IDs, active, verificationStatus, reviewer, reviewedAt, database timestamps, correctness flags on choices, URLs as executable input, or other persistence/admin fields. Valid batches are candidates only; a later database-import task must insert inactive DRAFT rows and independently resolve taxonomy/collisions.
+  - Export the runtime schema/parser and a small safe summary helper for reuse by the later importer. Keep candidate validation separate from the fixed development-fixture contract and command. Do not modify development.json or pnpm content:import behavior.
+  - Add a small fully synthetic example batch under content/imports that makes no DLT, legal or translation-accuracy claim. Document every field, bounds, source rules, invocation, exit behavior and candidate-only boundary in content/README.md and the root README.
+  - Add focused schema tests for all cross-field and uniqueness invariants, limits and strictness. Add CLI subprocess tests for success, missing/extra path, missing/unreadable/oversized file, malformed JSON, invalid batch, bounded diagnostics and proof that validation makes no database/content changes.
+  - No database write, schema/migration, production content, activation, review approval, admin API/UI, dependency, credential, network request or deployment change.
