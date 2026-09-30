@@ -1,6 +1,6 @@
 id: TASK-045
 title: Start concept retry from the mistakes UI
-status: REVIEW
+status: ACCEPTED
 epic: Epic 6 — Concept Learning
 objective: Let a learner deliberately turn a reviewed practice mistake into a fresh concept-matched question in the existing Practice experience.
 acceptance:
@@ -30,3 +30,5 @@ supervisor_refinement:
   - A failed request preserves loaded items, pagination cursor, expansion and language. A successful handoff does not mark the source entry resolved; reopening mistakes fetches the immutable feed normally. Normal entry to Practice uses no handoff and remains byte-for-behavior compatible.
   - Extend the Next rewrite allowlist for /practice/retry-mistake. Add source-level coverage for the one-use handoff and route boundary. Add Playwright coverage for exact request and direct transition without /practice/next, normal answer submission, retry after transport/HTTP/malformed payload, each stable404/409 branch,401 expiry, same-turn double-click guard, retry-versus-pagination guard, late response after Back, and absence from ordinary history.
   - Update README. No backend/schema/API contract change, mistake mutation/resolution, automatic retry, mastery/selection policy change, offline persistence, dependency, credential, deployment or full-stack harness change.
+accepted_commit: 18bb6ff818e88fc0eb9eb3896c1ab19b6ed8076d
+review_file: .agent/reviews/TASK-045-review-01.md
