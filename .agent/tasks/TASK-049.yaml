@@ -1,6 +1,6 @@
 id: TASK-049
 title: Apply traceable candidate review decisions without activation
-status: READY
+status: BUILDING
 epic: Epic 7 — Content Operations
 objective: Record explicit human review decisions against exact imported candidate content while keeping every reviewed question inactive and preserving the legal/activation boundary.
 acceptance:
