@@ -1,6 +1,6 @@
 id: TASK-051
 title: Inspect candidate batch persistence and publication status
-status: READY
+status: BUILDING
 epic: Epic 7 — Content Operations
 objective: Provide a deterministic read-only local inventory of whether each candidate is missing, drifted or exact and, for exact candidates, its review and activation state.
 acceptance:
