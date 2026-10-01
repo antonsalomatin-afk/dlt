@@ -1,6 +1,6 @@
 id: TASK-050
 title: Activate exact verified candidates through a traceable manifest
-status: REVIEW
+status: ACCEPTED
 epic: Epic 7 — Content Operations
 objective: Provide a separate, explicit local activation gate that can expose only exact VERIFIED candidate questions while preserving their content and review provenance.
 acceptance:
@@ -25,6 +25,8 @@ owner_decision_required: false
 builder_commit: 5ced162c955020c5b6800a76a759c94efe368652
 authoritative_checks: .agent/checks/TASK-050-checks-01.txt
 review_attempt: 1
+accepted_commit: 5ced162c955020c5b6800a76a759c94efe368652
+review_file: .agent/reviews/TASK-050-review-01.md
 supervisor_refinement:
   - Add `pnpm content:activate-candidates -- <candidate-batch-path> <review-manifest-path> <activation-manifest-path>`. Accept exactly three nonblank local JSON paths. Read all three through the bounded fatal-UTF-8 loader, parse once and strictly validate the complete candidate/review/activation chain before parsing DATABASE_URL, creating a client or writing. Keep all existing content commands unchanged.
   - Define activation manifest version 1 as exactly `{ version: 1, batchId, activatedBy, activatedAt, externalIds }`. batchId and each external ID use the accepted candidate key rule. activatedBy follows the reviewer's trimmed, control-free 1-200 character rule. activatedAt is canonical ISO UTC, is not earlier than the supplied review manifest reviewedAt and is not later than the command clock. externalIds contains 1-500 unique IDs.
