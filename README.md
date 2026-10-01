@@ -267,6 +267,19 @@ manifest is a traceable operator assertion and source-control artifact, not
 legal approval, official validation or Product Owner approval to deploy live.
 See [content conventions](content/README.md) for the complete activation contract.
 
+Inspect an immutable candidate batch against the loopback database without
+changing it:
+
+```sh
+pnpm content:status-candidates -- <candidate-path>
+```
+
+The command returns deterministic JSON showing whether each candidate is
+`MISSING`, `DRIFTED` or `EXACT`. Exact rows expose only lifecycle status and
+review-metadata presence; the report never includes content, reviewer identity,
+timestamps, database IDs or credentials. It is informational and grants no
+review, legal or production approval.
+
 ## Telegram bot
 
 `apps/bot` uses grammY. Its factory registers `/start` without network access or

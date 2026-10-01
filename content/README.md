@@ -242,3 +242,48 @@ Success prints only the batch ID and applied/matched counts. Every failure print
 without paths, operator or reviewer identities, source wording, decisions, SQL
 or credentials. Production database access and production deployment remain
 separate Product Owner decisions.
+
+### Inspect candidate status
+
+Inspect one immutable candidate batch against a loopback database with:
+
+```sh
+pnpm content:status-candidates -- path/to/candidate-batch.json
+```
+
+The command accepts exactly one nonblank local path and completes the same
+bounded, fatal-UTF-8, strict batch validation before reading database
+configuration or creating a client. It then reads a repeatable, read-only
+snapshot. It never creates, updates, deletes, repairs, reviews, activates,
+deactivates or locks content for modification.
+
+Success emits one compact version 1 JSON object. Its `batchId` matches the input,
+and `questions` follows candidate input order. Each entry is only:
+
+- `{ externalId, state: "MISSING" }` when the deterministic row is absent;
+- `{ externalId, state: "DRIFTED" }` when a row exists but its candidate-owned
+  content, choice IDs and wording, answer, provenance or taxonomy is not exact;
+- `{ externalId, state: "EXACT", verificationStatus, active,
+  reviewerAssigned, reviewedAtPresent }` for exact persisted content.
+
+Missing referenced taxonomy is `DRIFTED` when the deterministic candidate row
+exists and `MISSING` when it does not. Lifecycle fields are withheld from
+drifted rows because they cannot be attributed to the supplied candidate chain.
+The output never includes question or choice wording, correctness, source
+metadata, taxonomy names, reviewer identity, review timestamps, database IDs,
+local paths, SQL or credentials.
+
+The summary counts `total`, `missing`, `drifted`, `exact`, `draftInactive`,
+`verifiedInactive`, `verifiedActive`, `rejectedInactive` and
+`invalidLifecycle`. The four valid exact lifecycle combinations are an inactive
+unreviewed DRAFT, an inactive VERIFIED row with both review fields, an active
+VERIFIED row with both review fields, and an inactive REJECTED row with both
+review fields. Every other exact-content combination is `invalidLifecycle`,
+including DRAFT review metadata, incomplete final review metadata, active
+REJECTED content and active DRAFT content.
+
+Every failure exits nonzero, writes no stdout and prints only the stable generic
+message `Candidate status failed. No status report was produced.` This inventory
+is informational. It does not review or approve content, establish legal
+permission or official accuracy, authorize production use, or replace the
+separate import, review and activation manifests.
