@@ -1,0 +1,71 @@
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 230ms
+
+$ tsc --noEmit
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 234ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+ ❯ tests/content-import-candidates-cli.test.ts (3 tests | 1 failed) 18816ms
+   ❯ candidate import CLI input boundary (3)
+     × rejects missing, blank and extra paths with one generic failure 11545ms
+ ❯ tests/content-status-candidates-cli.test.ts (3 tests | 1 failed) 18846ms
+   ❯ candidate status CLI boundary (3)
+     × rejects missing, blank and extra paths with one generic failure 13595ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/content-import-candidates-cli.test.ts > candidate import CLI input boundary > rejects missing, blank and extra paths with one generic failure
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/content-import-candidates-cli.test.ts:37:3
+     35|
+     36| describe('candidate import CLI input boundary', () => {
+     37|   it('rejects missing, blank and extra paths with one generic failure'…
+       |   ^
+     38|     const databaseUrl = 'postgresql://candidate:secret@not-loopback.in…
+     39|     for (const args of [[], ['--'], [' '], ['--', examplePath, example…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/content-status-candidates-cli.test.ts > candidate status CLI boundary > rejects missing, blank and extra paths with one generic failure
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/content-status-candidates-cli.test.ts:37:3
+     35|
+     36| describe('candidate status CLI boundary', () => {
+     37|   it('rejects missing, blank and extra paths with one generic failure'…
+       |   ^
+     38|     const url = 'postgresql://candidate:secret@remote.invalid:5432/can…
+     39|     for (const args of [[], ['--'], [' '], [batchPath, 'extra'], ['--'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 35 passed (37)
+      Tests  2 failed | 220 passed (222)
+   Start at  14:12:42
+   Duration  25.31s (tests 44%, transform 28%, import 27%, worker 1%)
+
+  Transform  transforming modules took 80.11s · 28% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+
+[ELIFECYCLE] Test failed. See above for more details.
+[ELIFECYCLE] Command failed with exit code 1.
