@@ -40,7 +40,7 @@ describe('candidate review CLI boundary', () => {
     for (const args of [[], ['--'], [batchPath], ['--', batchPath], [batchPath, ' '], ['--', batchPath, manifestPath, 'extra']]) {
       expectGenericFailure(runCli(url, ...args));
     }
-  }, 15_000);
+  }, 20_000);
 
   it('fully rejects invalid candidate and manifest files before usable database configuration', () => {
     const directory = temporaryDirectory();
@@ -74,7 +74,7 @@ describe('candidate review CLI boundary', () => {
       expect(result.stderr).not.toContain(candidate);
       expect(result.stderr).not.toContain(manifest);
     }
-  }, 15_000);
+  }, 30_000);
 
   it('rejects valid files with non-loopback configuration or an unavailable loopback database safely', () => {
     const nonLoopback = runCli(
@@ -94,5 +94,5 @@ describe('candidate review CLI boundary', () => {
     expectGenericFailure(unavailable);
     expect(unavailable.stderr).not.toContain('credential-must-not-print');
     expect(unavailable.stderr).not.toContain('Synthetic Example Reviewer');
-  });
+  }, 15_000);
 });

@@ -636,6 +636,33 @@ direct database writes. The response is exactly the requested
 `{ "presentationId", "favorite" }`; it exposes no favorite ID, owner/question ID,
 snapshot, correctness, timestamps or prior-existence state.
 
+### Report a presented practice question
+
+`POST /practice/report` uses the existing bearer session and accepts exactly
+`{ "presentationId": "<UUID>", "details": "..." }`. Authentication runs before
+JSON parsing. Details are stored exactly as supplied after validation: they must
+be trimmed, contain 3–1000 Unicode characters and at most 4000 UTF-8 bytes, and
+may contain line feeds but no other Unicode control characters. Duplicate JSON
+members, unknown keys and every other malformed body return the existing
+`400 { "error": "Bad Request" }` boundary.
+
+The server resolves an owned presentation, validates its immutable versioned
+snapshot, and requires the snapshot question ID to match the presentation's
+persisted question ID before inserting a report. Unknown and another learner's
+presentations both return `404 { "error": "Presentation not found" }`. Current
+question activation or verification state does not affect an owned presentation
+report, and submitting one never changes the question, snapshot, review or legal
+status.
+
+Each presentation permits one report. An exact retry returns the original 200
+response and timestamp; concurrent exact retries converge to the same row. A
+retry with different details returns `409 { "error": "Report already submitted" }`
+without replacing the allegation. The response contains exactly `reportId`,
+`presentationId` and `createdAt`, uses `Cache-Control: no-store`, and omits report
+text, owner/question IDs, content, answers and correctness. A report is a learner
+allegation requiring later human handling; this endpoint provides no listing,
+editing, resolution, notification or moderation workflow.
+
 ### Favorites feed
 
 `GET /me/favorites` uses the existing bearer session and returns only the

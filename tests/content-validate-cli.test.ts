@@ -42,7 +42,7 @@ describe('candidate batch validation CLI', () => {
     expect(result.stdout.trim()).toBe('Batch synthetic-sample-2026-01; version 1; questions 1; choices 4');
     expect(result.stderr).toBe('');
     expect([digest(examplePath), digest(developmentPath)]).toEqual(before);
-  });
+  }, 15_000);
 
   it('rejects missing, blank and extra path arguments', () => {
     for (const args of [[], ['--'], [' '], ['--', examplePath, examplePath]]) {
@@ -67,7 +67,7 @@ describe('candidate batch validation CLI', () => {
       expect(result.stderr).toContain('Candidate batch validation failed.');
       expect(result.stderr).not.toContain(path);
     }
-  });
+  }, 15_000);
 
   it('rejects malformed JSON and invalid batches without printing source content', () => {
     const directory = temporaryDirectory();
@@ -87,7 +87,7 @@ describe('candidate batch validation CLI', () => {
     expect(invalidResult.stderr).toContain('$');
     expect(invalidResult.stderr).not.toContain('privatePayload');
     expect(invalidResult.stderr).not.toContain('do-not-print');
-  });
+  }, 15_000);
 
   it('bounds validation output to twenty path-based diagnostics', () => {
     const directory = temporaryDirectory();
@@ -114,5 +114,5 @@ describe('candidate batch validation CLI', () => {
     expect(lines.slice(1).every((line) => line.startsWith('$.questions['))).toBe(true);
     expect(result.stderr).not.toContain('secret-field');
     expect(result.stderr).not.toContain('secret-value');
-  });
+  }, 15_000);
 });

@@ -7,6 +7,7 @@ import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '..
 import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
 import { practiceCategoriesResponseSchema } from '../../../packages/database/src/practice-categories.ts';
 import { favoriteRequestSchema, favoriteResponseSchema } from '../../../packages/database/src/favorite.ts';
+import { isDuplicateQuestionReport, questionReportRequestSchema, questionReportResponseSchema } from '../../../packages/database/src/report.ts';
 import { encodeFavoriteCursor, favoriteFeedResponseSchema, parseFavoriteFeedQuery } from '../../../packages/database/src/favorite-feed.ts';
 import { buildProgressSummary } from '../../../packages/database/src/progress.ts';
 import {
@@ -50,7 +51,7 @@ const bodySchema = z.strictObject({ initData: z.string().min(1).max(16384).refin
 const bearerSchema = z.string().regex(/^Bearer [A-Za-z0-9_-]{43}$/u);
 const vehicleSchema = z.strictObject({ vehicleType: z.enum(['CAR', 'MOTORCYCLE']) });
 const emptyQuerySchema = z.strictObject({});
-const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available', 'Presentation not found', 'Mistake not found', 'Mistake has no concept', 'Exam question not found', 'Exam not found', 'Answer already submitted', 'Not enough questions available', 'Exam already in progress', 'Exam already completed', 'Exam incomplete', 'Exam not completed', 'Exam expired']) });
+const errorSchema = z.strictObject({ error: z.enum(['Unauthorized', 'Bad Request', 'Internal Server Error', 'Vehicle selection required', 'No questions available', 'Presentation not found', 'Mistake not found', 'Mistake has no concept', 'Exam question not found', 'Exam not found', 'Answer already submitted', 'Report already submitted', 'Not enough questions available', 'Exam already in progress', 'Exam already completed', 'Exam incomplete', 'Exam not completed', 'Exam expired']) });
 const userSelect = { id: true, username: true, firstName: true, selectedVehicleType: true } as const;
 const digest = (token: string) => createHash('sha256').update(token).digest('hex');
 const lifetimeMs = 24 * 60 * 60 * 1000;
@@ -262,7 +263,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/exam/start', '/exam/answer', '/exam/complete', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/practice/report', '/exam/start', '/exam/answer', '/exam/complete', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -651,6 +652,83 @@ export function createApi(options: {
       });
       if (!result) return reply.code(404).send(errorSchema.parse({ error: 'Presentation not found' }));
       return result;
+    });
+    practiceApp.post('/practice/report', async (request, reply) => {
+      const user = authenticatedUsers.get(request);
+      if (!user) throw new Error('Authenticated practice user missing');
+      const body = questionReportRequestSchema.safeParse(request.body);
+      if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+
+      const response = (report: { id: string; presentationId: string; createdAt: Date }) => (
+        questionReportResponseSchema.parse({
+          reportId: report.id,
+          presentationId: report.presentationId,
+          createdAt: report.createdAt.toISOString(),
+        })
+      );
+      const classifyExisting = (report: {
+        id: string;
+        userId: string;
+        questionId: string;
+        presentationId: string;
+        details: string;
+        createdAt: Date;
+      }, questionId: string) => (
+        report.userId === user.id
+        && report.questionId === questionId
+        && report.presentationId === body.data.presentationId
+        && report.details === body.data.details
+          ? { kind: 'reported', response: response(report) } as const
+          : { kind: 'conflict' } as const
+      );
+
+      let validatedQuestionId: string | undefined;
+      try {
+        const result = await options.database.$transaction(async (transaction) => {
+          const presentation = await transaction.questionPresentation.findFirst({
+            where: { id: body.data.presentationId, userId: user.id },
+            select: { id: true, questionId: true, snapshot: true },
+          });
+          if (!presentation) return { kind: 'not-found' } as const;
+          const snapshot = parsePresentationSnapshot(presentation.snapshot);
+          if (snapshot.question.id !== presentation.questionId) {
+            throw new Error('Stored report presentation snapshot is inconsistent');
+          }
+          validatedQuestionId = presentation.questionId;
+          const existing = await transaction.questionReport.findUnique({
+            where: { presentationId: presentation.id },
+          });
+          if (existing) return classifyExisting(existing, presentation.questionId);
+          const report = await transaction.questionReport.create({
+            data: {
+              userId: user.id,
+              questionId: presentation.questionId,
+              presentationId: presentation.id,
+              details: body.data.details,
+              createdAt: now(),
+            },
+          });
+          return { kind: 'reported', response: response(report) } as const;
+        });
+        if (result.kind === 'not-found') {
+          return reply.code(404).send(errorSchema.parse({ error: 'Presentation not found' }));
+        }
+        if (result.kind === 'conflict') {
+          return reply.code(409).send(errorSchema.parse({ error: 'Report already submitted' }));
+        }
+        return result.response;
+      } catch (error) {
+        if (!isDuplicateQuestionReport(error)) throw error;
+        const existing = await options.database.questionReport.findUnique({
+          where: { presentationId: body.data.presentationId },
+        });
+        if (!existing || validatedQuestionId === undefined) throw error;
+        const result = classifyExisting(existing, validatedQuestionId);
+        if (result.kind === 'conflict') {
+          return reply.code(409).send(errorSchema.parse({ error: 'Report already submitted' }));
+        }
+        return result.response;
+      }
     });
     done();
   });

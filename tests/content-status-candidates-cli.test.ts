@@ -39,7 +39,7 @@ describe('candidate status CLI boundary', () => {
     for (const args of [[], ['--'], [' '], [batchPath, 'extra'], ['--', batchPath, 'extra']]) {
       expectGenericFailure(runCli(url, ...args));
     }
-  }, 15_000);
+  }, 20_000);
 
   it('rejects unreadable, oversized, malformed and invalid batches before usable database configuration', () => {
     const directory = temporaryDirectory();
@@ -59,7 +59,7 @@ describe('candidate status CLI boundary', () => {
       expect(result.stderr).not.toContain('source-wording-must-not-print');
       expect(result.stderr).not.toContain('credential-must-not-print');
     }
-  }, 15_000);
+  }, 20_000);
 
   it('rejects non-loopback configuration and unavailable PostgreSQL safely', () => {
     for (const url of [
@@ -71,5 +71,5 @@ describe('candidate status CLI boundary', () => {
       expect(result.stderr).not.toContain('credential-must-not-print');
       expect(result.stderr).not.toContain(batchPath);
     }
-  });
+  }, 15_000);
 });

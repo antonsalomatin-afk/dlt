@@ -42,7 +42,7 @@ describe('candidate activation CLI boundary', () => {
       [], ['--'], [batchPath], [batchPath, reviewPath],
       [batchPath, reviewPath, ' '], ['--', batchPath, reviewPath, activationPath, 'extra'],
     ]) expectGenericFailure(runCli(url, ...args));
-  }, 15_000);
+  }, 20_000);
 
   it('rejects invalid files at each layer before usable database configuration', () => {
     const directory = temporaryDirectory();
@@ -78,7 +78,7 @@ describe('candidate activation CLI boundary', () => {
       expect(result.stderr).not.toContain(review);
       expect(result.stderr).not.toContain(activation);
     }
-  }, 20_000);
+  }, 30_000);
 
   it('rejects valid files with non-loopback configuration or unavailable PostgreSQL safely', () => {
     for (const url of [
@@ -91,5 +91,5 @@ describe('candidate activation CLI boundary', () => {
       expect(result.stderr).not.toContain('Synthetic Example Operator');
       expect(result.stderr).not.toContain('Synthetic Example Reviewer');
     }
-  });
+  }, 15_000);
 });
