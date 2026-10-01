@@ -1,0 +1,33 @@
+id: TASK-051
+title: Inspect candidate batch persistence and publication status
+status: READY
+epic: Epic 7 — Content Operations
+objective: Provide a deterministic read-only local inventory of whether each candidate is missing, drifted or exact and, for exact candidates, its review and activation state.
+acceptance:
+  - A dedicated CLI validates one immutable candidate batch before database access and inspects it only in loopback PostgreSQL without writes.
+  - Deterministic JSON reports each external ID as MISSING, DRIFTED or EXACT; exact rows include verification status, active state and whether reviewer/time metadata is present, without exposing content or identity values.
+  - A bounded summary counts missing, drifted and each exact lifecycle state needed to operate import, review and activation safely.
+  - Taxonomy absence, identity/content/choice drift and malformed lifecycle combinations are visible in the report without mutating or repairing data.
+  - Documentation and automated tests cover stable output, all lifecycle states, drift, missing data, safe failures and proof of read-only behavior.
+files_allowed:
+  - tools/content/**
+  - tests/**
+  - package.json
+  - README.md
+  - content/README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-050
+owner_decision_required: false
+supervisor_refinement:
+  - Add `pnpm content:status-candidates -- <candidate-batch-path>`. Accept exactly one nonblank local JSON path and complete the existing bounded fatal-UTF-8 strict candidate validation before parsing DATABASE_URL or creating a client. Require the existing loopback-only database policy and always disconnect a created client.
+  - Inspect a consistent database snapshot using deterministic candidate IDs and exact candidate-owned content/choice/provenance/taxonomy comparison. Never create, update, delete, repair, activate, review or lock content for modification.
+  - Emit one compact JSON object to stdout with version 1, batchId, a summary and questions in candidate input order. Each question contains only externalId and state MISSING or DRIFTED, or externalId, state EXACT, verificationStatus, active, reviewerAssigned and reviewedAtPresent. Never emit wording, choices, correctness, provenance, taxonomy names, reviewer identity, timestamps, database IDs or credentials.
+  - The summary must count total, missing, drifted, exact, draftInactive, verifiedInactive, verifiedActive, rejectedInactive and invalidLifecycle. invalidLifecycle covers every exact-content state outside those four valid combinations, including DRAFT with review metadata, final status without both review fields, REJECTED active, or other inconsistent review/activation state.
+  - Missing referenced taxonomy makes the affected candidate DRIFTED when its deterministic row exists and MISSING when it does not. A row with any candidate-owned question, taxonomy, provenance, choice, answer or deterministic identity mismatch is DRIFTED; do not expose its stored lifecycle fields.
+  - Fail nonzero with one stable generic stderr message and no stdout when arguments, file/batch validation, database configuration, connection or inspection fails. Do not echo paths, source content, SQL, reviewer identity or credentials. Output is informational and grants no review, legal or production approval.
+  - Unit tests cover lifecycle classification, summary counts, ordering and safe projection. CLI tests cover argument/file/validation/configuration failures before usable database access and generic database failure. Isolated PostgreSQL tests cover absent, exact DRAFT/VERIFIED/REJECTED and active rows, every invalid lifecycle class, content/choice/taxonomy drift, unrelated/fixture preservation and unchanged row counts/updatedAt values after inspection.
+  - No schema/migration, write, repair, status transition, activation/deactivation, production data, admin API/UI, authentication change, network fetch, new dependency, credential or deployment change.
