@@ -10,16 +10,16 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-051 Builder commit 2d9cf62638132757837b58be74f99b2627074e00 is complete and Builder-reported checks are green. Execution checkpointed before authoritative Supervisor checks at 91 percent five-hour usage; independent review and acceptance remain pending.",
+  "notes": "The five-hour window reset without using credits. TASK-051 Builder commit 2d9cf62638132757837b58be74f99b2627074e00 is ready for authoritative Supervisor checks, independent review and acceptance.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 91,
+    "latestObservedUsedPercent": 1,
     "windowMinutes": 300,
-    "checkedAt": "2026-10-01T01:38:03.5568489Z",
+    "checkedAt": "2026-10-01T12:10:17.8896892Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization."
   },
-  "executionPaused": true,
-  "pauseReason": "Checkpointed at 91 percent five-hour usage after the TASK-051 Builder commit, before the user's 95 percent ceiling. Authoritative checks and independent review are pending.",
+  "executionPaused": false,
+  "pauseReason": null,
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
