@@ -1,6 +1,6 @@
 id: TASK-052
 title: Submit authenticated reports for presented practice questions
-status: CHECKING
+status: REVIEW
 epic: Epic 7 — Content Operations
 objective: Let an authenticated learner submit one bounded issue report against an immutable practice presentation they own, without exposing content administration or changing the question.
 acceptance:
@@ -22,6 +22,8 @@ dependencies:
   - TASK-051
 owner_decision_required: false
 builder_commit: 905e04865d96270daea7cc1a668b2c6cce0fac91
+authoritative_checks: .agent/checks/TASK-052-checks-01.txt
+review_attempt: 1
 supervisor_refinement:
   - Add a QuestionReport persistence model and migration with UUID id, userId, questionId, globally unique presentationId, details and createdAt. Add relations from User, Question and QuestionPresentation. Enforce a composite foreign key from presentationId/userId/questionId to the existing unique presentation tuple, cascade on user deletion, and restrict presentation/question deletion while a report exists. Add indexes for question and user chronological administration queries. Do not add report resolution/status fields yet.
   - Add strict shared request/response schemas under packages/database/src. The request is exactly `{ presentationId, details }`; presentationId is UUID. details is stored exactly after validation, must equal its trimmed form, contain 3-1000 characters and at most 4000 UTF-8 bytes, and may contain line feeds but no other Unicode control characters. The response is exactly `{ reportId, presentationId, createdAt }` with UUIDs and canonical ISO UTC time.
