@@ -195,3 +195,50 @@ Success reports only the batch ID, applied/matched VERIFIED and REJECTED counts,
 and the inactive boundary. Every failure prints
 `Candidate review failed. No review decisions were applied.` and exits nonzero
 without paths, reviewer identity, source wording, decisions, SQL or credentials.
+
+### Activate reviewed candidates
+
+`imports/example-candidate-activation.json` is a fully synthetic activation
+manifest for the synthetic candidate and review examples. It is a source-control
+format example only and is never executed against repository or production
+data. An activation manifest records an operator assertion; it does not itself
+establish legal permission, official accuracy or Product Owner approval for a
+production launch.
+
+Apply an activation manifest only after importing and reviewing its exact batch:
+
+```sh
+pnpm content:activate-candidates -- path/to/candidate-batch.json path/to/review-manifest.json path/to/activation-manifest.json
+```
+
+The command accepts exactly three nonblank local paths. All three JSON files are
+read through the 5 MiB fatal-UTF-8 boundary, parsed once, and strictly validated
+as a complete chain before database configuration or connection. The existing
+loopback-only `DATABASE_URL` policy remains mandatory.
+
+A version 1 activation manifest is exactly `{ version, batchId, activatedBy,
+activatedAt, externalIds }`:
+
+- `version` is `1`, and `batchId` matches both the candidate and review files;
+- `activatedBy` is a trimmed, control-free operator identity from 1–200
+  characters;
+- `activatedAt` is canonical UTC, no earlier than the supplied review time and
+  no later than the command clock;
+- `externalIds` contains 1–500 unique candidate keys, each present in the batch
+  with a `VERIFIED` decision in the supplied review manifest. Missing decisions
+  and `REJECTED` decisions are invalid before database access.
+
+In one serializable transaction, the activation gate resolves existing taxonomy
+and rechecks each deterministic question ID, all candidate content, four choices,
+correctness, provenance, taxonomy and exact review status, reviewer and time.
+Only an inactive exact `VERIFIED` row is eligible, and the first activation
+updates only `active` to true. Exact replay is a no-op and does not change
+`updatedAt`. DRAFT, REJECTED, missing, differently reviewed or drifted rows abort
+the entire set without partial activation. Deactivation and review replacement
+are not supported.
+
+Success prints only the batch ID and applied/matched counts. Every failure prints
+`Candidate activation failed. No candidates were activated.` and exits nonzero
+without paths, operator or reviewer identities, source wording, decisions, SQL
+or credentials. Production database access and production deployment remain
+separate Product Owner decisions.

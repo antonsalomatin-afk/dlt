@@ -11,7 +11,7 @@ import {
   type CandidateBatch,
 } from './candidates.ts';
 
-const reviewerSchema = z.string()
+export const reviewerIdentitySchema = z.string()
   .min(1, 'must not be blank.')
   .max(200, 'must contain at most 200 characters.')
   .refine((value) => value === value.trim(), 'must not have surrounding whitespace.')
@@ -25,7 +25,7 @@ const decisionSchema = z.strictObject({
 export const candidateReviewManifestSchema = z.strictObject({
   version: z.literal(1),
   batchId: candidateKeySchema,
-  reviewer: reviewerSchema,
+  reviewer: reviewerIdentitySchema,
   reviewedAt: canonicalUtcInstantSchema,
   decisions: z.array(decisionSchema)
     .min(1, 'must contain at least one decision.')

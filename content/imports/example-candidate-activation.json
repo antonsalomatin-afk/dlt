@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "batchId": "synthetic-sample-2026-01",
+  "activatedBy": "Synthetic Example Operator",
+  "activatedAt": "2026-09-30T00:02:00.000Z",
+  "externalIds": [
+    "sample-space-check-01"
+  ]
+}

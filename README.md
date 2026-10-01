@@ -253,6 +253,20 @@ establish legal permission, official accuracy or activation approval. The
 [content conventions](content/README.md) document the full manifest and failure
 contract.
 
+To activate only exact reviewed content in a loopback database, run:
+
+```sh
+pnpm content:activate-candidates -- <candidate-path> <review-path> <activation-path>
+```
+
+The strict three-document chain permits only IDs with
+VERIFIED decisions and rechecks immutable content, taxonomy, choices and review
+provenance in one transaction before changing only `active` to true. Exact
+replay is a no-op; any ineligible or drifted row rolls back the whole set. The
+manifest is a traceable operator assertion and source-control artifact, not
+legal approval, official validation or Product Owner approval to deploy live.
+See [content conventions](content/README.md) for the complete activation contract.
+
 ## Telegram bot
 
 `apps/bot` uses grammY. Its factory registers `/start` without network access or
