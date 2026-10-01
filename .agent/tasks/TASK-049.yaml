@@ -1,0 +1,34 @@
+id: TASK-049
+title: Apply traceable candidate review decisions without activation
+status: READY
+epic: Epic 7 — Content Operations
+objective: Record explicit human review decisions against exact imported candidate content while keeping every reviewed question inactive and preserving the legal/activation boundary.
+acceptance:
+  - A strict versioned review-decision manifest identifies an immutable candidate batch, reviewer, review time and unique VERIFIED or REJECTED decisions for candidate external IDs.
+  - A dedicated CLI validates both the original candidate batch and review manifest completely before database access, then targets only exact matching imported candidate rows in loopback PostgreSQL.
+  - Review decisions transition eligible inactive unreviewed DRAFT candidates to inactive VERIFIED or REJECTED rows with the manifest reviewer and timestamp, without altering content, choices, taxonomy or provenance.
+  - The whole decision set is transactional; exact reapplication is a safe no-op, while missing candidates, content drift, conflicting prior decisions or invalid state abort without partial changes.
+  - Documentation and automated tests cover the manifest, review/legal boundary, success, exact replay, rollback, collision and safe CLI failure behavior.
+files_allowed:
+  - content/**
+  - tools/content/**
+  - tests/**
+  - package.json
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-048
+owner_decision_required: false
+supervisor_refinement:
+  - Add `pnpm content:review-candidates -- <candidate-batch-path> <review-manifest-path>`. Accept exactly two nonblank local JSON paths. Read each with a bounded fatal-UTF-8 loader, parse once and strictly validate both before parsing DATABASE_URL, creating a client or writing. Keep validation, fixture import and candidate import commands unchanged.
+  - Define review manifest version 1 as exactly `{ version: 1, batchId, reviewer, reviewedAt, decisions }`. batchId and decision externalId use the accepted 1-64 character candidate key rule. reviewer is trimmed, nonblank, free of control characters and at most 200 characters. reviewedAt is canonical ISO UTC, is not earlier than the candidate batch createdAt and is not later than the command clock. decisions contains 1-500 unique external IDs, each with exactly status VERIFIED or REJECTED; every ID must exist in the supplied batch and the manifest batchId must match it.
+  - Require the existing loopback-only DATABASE_URL and Prisma client. In one Serializable transaction, resolve the taxonomy needed by decided questions and reconstruct each expected persisted candidate from the supplied batch. Require the exact deterministic question ID, all candidate-owned question fields, resolved category/concept, provenance, inactive state and exact four deterministic choices to match before changing review fields. Missing rows or any content, choice, identity, taxonomy or activation drift abort the full manifest.
+  - For a first decision, require verificationStatus DRAFT with null reviewer and reviewedAt, then update only verificationStatus, reviewer and reviewedAt. Keep active false. Never change wording, choices, correctness, source metadata, taxonomy, image reference, timestamps owned by Prisma, IDs or any other row.
+  - Treat an exact already-applied decision as an idempotent match only when status, reviewer and reviewedAt equal the manifest and the complete candidate content still matches. Any other VERIFIED/REJECTED state, reviewer/timestamp difference, attempt to replace a final decision, or active question fails the whole transaction. Do not support undo, activation or status reversal in this task.
+  - Return a safe success summary containing batch ID and applied/matched VERIFIED and REJECTED counts plus the inactive boundary. Every failure exits nonzero with one stable generic message and must not echo paths, reviewer identity, source wording, decisions, SQL or credentials. Always disconnect a created client.
+  - Export focused pure validation/mapping helpers where useful. Add a fully synthetic review-manifest example that targets the synthetic candidate example but do not apply it to repository or production data. Document that the manifest records an operator assertion, does not establish legal permission or official accuracy, and does not activate content.
+  - Unit and CLI tests cover manifest strictness, bounds, time/batch/external-ID relationships, pre-database validation, safe output and database configuration failures. Isolated PostgreSQL tests cover mixed VERIFIED/REJECTED decisions, exact persisted review fields, inactive state, exact replay, missing/unimported candidate, content/choice/taxonomy/active drift, conflicting final decisions, multi-record rollback and preservation of unrelated and fixture data.
+  - No schema/migration, production review decision, legal approval, activation, DRAFT restoration, decision replacement, content/taxonomy/provenance mutation, admin API/UI, authentication change, network fetch, new dependency, credential or deployment change.
