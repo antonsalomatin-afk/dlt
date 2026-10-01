@@ -1,6 +1,6 @@
 id: TASK-049
 title: Apply traceable candidate review decisions without activation
-status: BUILDING
+status: CHECKING
 epic: Epic 7 — Content Operations
 objective: Record explicit human review decisions against exact imported candidate content while keeping every reviewed question inactive and preserving the legal/activation boundary.
 acceptance:
@@ -22,6 +22,7 @@ required_checks:
 dependencies:
   - TASK-048
 owner_decision_required: false
+builder_commit: 1f38f2a924c8c1491ca4e56f78094833a8d89291
 supervisor_refinement:
   - Add `pnpm content:review-candidates -- <candidate-batch-path> <review-manifest-path>`. Accept exactly two nonblank local JSON paths. Read each with a bounded fatal-UTF-8 loader, parse once and strictly validate both before parsing DATABASE_URL, creating a client or writing. Keep validation, fixture import and candidate import commands unchanged.
   - Define review manifest version 1 as exactly `{ version: 1, batchId, reviewer, reviewedAt, decisions }`. batchId and decision externalId use the accepted 1-64 character candidate key rule. reviewer is trimmed, nonblank, free of control characters and at most 200 characters. reviewedAt is canonical ISO UTC, is not earlier than the candidate batch createdAt and is not later than the command clock. decisions contains 1-500 unique external IDs, each with exactly status VERIFIED or REJECTED; every ID must exist in the supplied batch and the manifest batchId must match it.
