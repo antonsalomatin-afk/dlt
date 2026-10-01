@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "batchId": "synthetic-sample-2026-01",
+  "reviewer": "Synthetic Example Reviewer",
+  "reviewedAt": "2026-09-30T00:01:00.000Z",
+  "decisions": [
+    {
+      "externalId": "sample-space-check-01",
+      "status": "VERIFIED"
+    }
+  ]
+}

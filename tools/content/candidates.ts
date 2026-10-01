@@ -17,12 +17,12 @@ function normalizedString(maximum: number) {
     .refine((value) => value === value.trim(), 'must not have surrounding whitespace.');
 }
 
-const key = normalizedString(64).regex(keyPattern, 'must be a lowercase human-readable key.');
+export const candidateKeySchema = normalizedString(64).regex(keyPattern, 'must be a lowercase human-readable key.');
 const taxonomySlug = normalizedString(64).regex(keyPattern, 'must be a lowercase taxonomy slug.');
 const text = normalizedString(4000);
 const nullableText = text.nullable();
 const reference = normalizedString(2048);
-const canonicalInstant = normalizedString(24).refine((value) => {
+export const canonicalUtcInstantSchema = normalizedString(24).refine((value) => {
   if (!canonicalInstantPattern.test(value)) return false;
   const parsed = new Date(value);
   return !Number.isNaN(parsed.valueOf()) && parsed.toISOString() === value;
@@ -73,7 +73,7 @@ const choiceSchema = z.strictObject({
 });
 
 const questionSchema = z.strictObject({
-  externalId: key,
+  externalId: candidateKeySchema,
   vehicleType: z.enum(['CAR', 'MOTORCYCLE']),
   categorySlug: taxonomySlug,
   conceptSlug: taxonomySlug,
@@ -125,9 +125,9 @@ const questionSchema = z.strictObject({
 });
 
 export const candidateBatchSchema = z.strictObject({
-  batchId: key,
+  batchId: candidateKeySchema,
   version: z.literal(1),
-  createdAt: canonicalInstant,
+  createdAt: canonicalUtcInstantSchema,
   questions: z.array(questionSchema)
     .min(1, 'must contain at least one question.')
     .max(500, 'must contain at most 500 questions.'),
@@ -205,6 +205,10 @@ export function candidatePathArgument(rawArguments: string[]): string | undefine
 }
 
 export function readCandidateBatchFile(path: string): CandidateBatch {
+  return parseCandidateBatch(readBoundedJsonFile(path));
+}
+
+export function readBoundedJsonFile(path: string): unknown {
   let descriptor: number | undefined;
   try {
     descriptor = openSync(path, 'r');
@@ -235,9 +239,9 @@ export function readCandidateBatchFile(path: string): CandidateBatch {
     } catch {
       throw new CandidateFileError('malformed');
     }
-    return parseCandidateBatch(input);
+    return input;
   } catch (error) {
-    if (error instanceof CandidateFileError || error instanceof z.ZodError) throw error;
+    if (error instanceof CandidateFileError) throw error;
     throw new CandidateFileError('unreadable');
   } finally {
     if (descriptor !== undefined) closeSync(descriptor);

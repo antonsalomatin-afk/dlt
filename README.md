@@ -242,6 +242,17 @@ collisions roll back the whole batch without overwriting anything. See
 [content conventions](content/README.md) for the complete field, provenance,
 immutability, failure and review-boundary contract and a synthetic example.
 
+To record human decisions against an exact imported batch, run
+`pnpm content:review-candidates -- <candidate-path> <review-path>`. The strict
+manifest identifies its batch, reviewer, canonical review time and unique
+VERIFIED/REJECTED decisions. Both files validate before loopback database
+access. The serializable operation verifies immutable candidate content and
+changes only the three review fields; exact replay is a no-op and every row
+remains inactive. A recorded decision is an operator assertion and does not
+establish legal permission, official accuracy or activation approval. The
+[content conventions](content/README.md) document the full manifest and failure
+contract.
+
 ## Telegram bot
 
 `apps/bot` uses grammY. Its factory registers `/start` without network access or

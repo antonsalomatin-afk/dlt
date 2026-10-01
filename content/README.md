@@ -144,3 +144,54 @@ the inactive-DRAFT boundary. Every failure prints the single generic message
 nonzero; credentials, SQL, source wording and local file contents are omitted.
 This is still a candidate intake step. Independent content and legal review is
 required before any later activation or verification transition.
+
+### Record candidate review decisions
+
+`imports/example-candidate-review.json` is a fully synthetic review-manifest
+example for the synthetic candidate batch. It is documentation only and is not
+applied to repository or production data. A review manifest records an
+operator assertion; it does not establish legal permission, official accuracy,
+translation accuracy or approval to activate content.
+
+After importing the exact candidate batch, apply a review manifest with:
+
+```sh
+pnpm content:review-candidates -- path/to/candidate-batch.json path/to/review-manifest.json
+```
+
+The command accepts exactly two nonblank local JSON paths. It reads both files
+through the same 5 MiB, fatal-UTF-8 boundary and strictly validates the complete
+candidate batch, manifest and their relationship before reading
+`DATABASE_URL`, creating a client or writing. The database must satisfy the
+existing loopback-only policy.
+
+A version 1 manifest is exactly `{ version, batchId, reviewer, reviewedAt,
+decisions }`:
+
+- `version` is the number `1` and `batchId` must exactly match the candidate
+  batch ID;
+- `reviewer` is a trimmed, nonblank identity of at most 200 characters with no
+  control characters;
+- `reviewedAt` is a canonical UTC timestamp at or after batch creation and no
+  later than the command clock;
+- `decisions` contains 1–500 strict `{ externalId, status }` objects with unique
+  IDs, where every ID exists in the supplied candidate batch and `status` is
+  `VERIFIED` or `REJECTED`.
+
+In one serializable transaction, each decision resolves the supplied candidate's
+existing taxonomy and deterministic database identity, then verifies every
+candidate-owned question field, source value, choice and answer key. The row
+must remain inactive. A first decision changes only `verificationStatus`,
+`reviewer` and `reviewedAt` from an unreviewed `DRAFT`; it never changes content,
+taxonomy, provenance, image data, IDs or choices and never activates the row.
+
+Reapplying the exact same status, reviewer and timestamp to exact unchanged
+content is a safe no-op. Missing candidates, content or taxonomy drift, changed
+choices, active rows, malformed DRAFT review fields, and any different final
+status, reviewer or timestamp abort the whole manifest without partial changes.
+There is no undo, DRAFT restoration, status replacement or activation command.
+
+Success reports only the batch ID, applied/matched VERIFIED and REJECTED counts,
+and the inactive boundary. Every failure prints
+`Candidate review failed. No review decisions were applied.` and exits nonzero
+without paths, reviewer identity, source wording, decisions, SQL or credentials.

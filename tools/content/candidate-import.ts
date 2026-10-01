@@ -93,9 +93,11 @@ export async function importCandidateBatch(database: PrismaClient, batch: Candid
       const mapped = mapCandidateQuestion(batch, candidate, categoryId, conceptId);
       const existing = await transaction.question.findUnique({ where: { id: mapped.question.id }, include: { choices: true } });
       if (existing !== null) {
-        if (!questionMatches(existing, mapped.question)
-          || existing.choices.length !== mapped.choices.length
-          || mapped.choices.some((choice) => !existing.choices.some((stored) => choiceMatches(stored, choice)))) {
+        if (!candidateContentMatches(existing, mapped)
+          || existing.verificationStatus !== 'DRAFT'
+          || existing.reviewer !== null
+          || existing.reviewedAt !== null
+          || existing.active) {
           throw new Error('Candidate identity collision.');
         }
         matchedQuestions += 1;
@@ -140,7 +142,16 @@ function candidateUuid(value: string): string {
   return `${hash.slice(0, 8)}-${hash.slice(8, 12)}-5${hash.slice(13, 16)}-8${hash.slice(17, 20)}-${hash.slice(20, 32)}`;
 }
 
-function questionMatches(
+export function candidateContentMatches(
+  existing: Prisma.QuestionGetPayload<{ include: { choices: true } }>,
+  expected: ReturnType<typeof mapCandidateQuestion>,
+): boolean {
+  return questionContentMatches(existing, expected.question)
+    && existing.choices.length === expected.choices.length
+    && expected.choices.every((choice) => existing.choices.some((stored) => choiceMatches(stored, choice)));
+}
+
+function questionContentMatches(
   existing: Prisma.QuestionGetPayload<{ include: { choices: true } }>,
   expected: ReturnType<typeof mapCandidateQuestion>['question'],
 ): boolean {
@@ -162,11 +173,7 @@ function questionMatches(
     && existing.sourceType === expected.sourceType
     && existing.sourceReference === expected.sourceReference
     && datesEqual(existing.sourceDate, expected.sourceDate)
-    && existing.legalCitation === expected.legalCitation
-    && existing.verificationStatus === 'DRAFT'
-    && existing.reviewer === null
-    && existing.reviewedAt === null
-    && !existing.active;
+    && existing.legalCitation === expected.legalCitation;
 }
 
 function choiceMatches(
