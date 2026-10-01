@@ -1,6 +1,6 @@
 id: TASK-050
 title: Activate exact verified candidates through a traceable manifest
-status: READY
+status: BUILDING
 epic: Epic 7 — Content Operations
 objective: Provide a separate, explicit local activation gate that can expose only exact VERIFIED candidate questions while preserving their content and review provenance.
 acceptance:
