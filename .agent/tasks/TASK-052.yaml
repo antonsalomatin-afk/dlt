@@ -1,0 +1,32 @@
+id: TASK-052
+title: Submit authenticated reports for presented practice questions
+status: READY
+epic: Epic 7 — Content Operations
+objective: Let an authenticated learner submit one bounded issue report against an immutable practice presentation they own, without exposing content administration or changing the question.
+acceptance:
+  - A persisted report is bound by database constraints to its user, question and owned immutable QuestionPresentation snapshot.
+  - POST /practice/report authenticates before body parsing, strictly validates a presentation ID and bounded issue details, and accepts only an owned consistent presentation.
+  - An exact retry is idempotent and concurrent exact retries create one row; a different report for the same presentation is rejected without overwriting the original.
+  - Unknown and foreign presentations have the same private response, malformed/corrupt data creates no report, and the response exposes no report text, question content or hidden answer data.
+  - Migration, request/response contracts, API behavior and integrity/concurrency/error paths have automated coverage and concise documentation.
+files_allowed:
+  - apps/api/src/index.ts
+  - packages/database/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-051
+owner_decision_required: false
+supervisor_refinement:
+  - Add a QuestionReport persistence model and migration with UUID id, userId, questionId, globally unique presentationId, details and createdAt. Add relations from User, Question and QuestionPresentation. Enforce a composite foreign key from presentationId/userId/questionId to the existing unique presentation tuple, cascade on user deletion, and restrict presentation/question deletion while a report exists. Add indexes for question and user chronological administration queries. Do not add report resolution/status fields yet.
+  - Add strict shared request/response schemas under packages/database/src. The request is exactly `{ presentationId, details }`; presentationId is UUID. details is stored exactly after validation, must equal its trimmed form, contain 3-1000 characters and at most 4000 UTF-8 bytes, and may contain line feeds but no other Unicode control characters. The response is exactly `{ reportId, presentationId, createdAt }` with UUIDs and canonical ISO UTC time.
+  - Add authenticated `POST /practice/report` inside the existing practice plugin so authentication occurs before its duplicate-key JSON parser and body validation. Add the route to no-store handling. Invalid authenticated input returns the existing 400 Bad Request boundary. Unknown and another user's presentation both return 404 `Presentation not found` without echoing identifiers.
+  - In one transaction, load the presentation by id and authenticated user, validate its stored snapshot, require the snapshot question ID to equal the persisted questionId, then create the report with server-owned now() time. Never require the current Question row to remain active/verified and never copy mutable question text into the report; the presentation snapshot is the immutable evidence anchor.
+  - Permit exactly one report per presentation. An exact retry with identical user/question/details returns the original response without timestamp churn. A retry with different details returns 409 `Report already submitted` and never changes the row. Concurrent exact retries must converge to one row; handle only the precise unique-report conflict and never mask unrelated persistence failures.
+  - The success response is 200 for both first creation and exact replay, contains no details, userId, questionId, snapshot, answer/correctness, content or database timestamps other than createdAt, and has Cache-Control no-store. No report listing, editing, deletion, resolution, admin API/UI, notification or moderation workflow belongs in this task.
+  - Integration tests use an isolated migrated database and cover authentication before parsing, duplicate JSON members, strict detail bounds/control/byte rules, owned success, exact replay timestamp stability, concurrent exact retries, conflicting duplicate, unknown/foreign privacy, corrupt or mismatched snapshot rollback, response boundary, schema defaults, uniqueness/composite references, deletion behavior and unrelated preservation. Unit tests cover duplicate-conflict classification if a helper is introduced.
+  - Document the endpoint as a learner allegation requiring later human handling; submitting a report does not change verification, activation, review or legal status. No production data, admin identity model, question mutation, external notification, paid service, credential, deployment or unrelated API change.

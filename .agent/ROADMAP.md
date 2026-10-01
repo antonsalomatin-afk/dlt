@@ -101,7 +101,8 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-050 — ACCEPTED — activate exact verified candidates through a traceable manifest
 - TASK-051 — ACCEPTED — inspect candidate batch persistence and publication status
 - content administration — initial offline import/review/activation/status workflow complete
-- user reports
+- TASK-052 — READY — submit authenticated reports for presented practice questions
+- report UI, exam-question reports and admin handling
 - auditability
 
 ## Epic 8 — Telegram Engagement
