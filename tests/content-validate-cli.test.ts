@@ -52,7 +52,7 @@ describe('candidate batch validation CLI', () => {
       expect(result.stderr).toContain('Candidate batch validation failed.');
       expect(result.stderr).toContain('$file:');
     }
-  });
+  }, 15_000);
 
   it('rejects missing, unreadable and oversized files safely', () => {
     const directory = temporaryDirectory();

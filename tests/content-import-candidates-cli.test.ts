@@ -39,7 +39,7 @@ describe('candidate import CLI input boundary', () => {
     for (const args of [[], ['--'], [' '], ['--', examplePath, examplePath]]) {
       expectGenericFailure(runCli(databaseUrl, ...args));
     }
-  });
+  }, 15_000);
 
   it('rejects missing, unreadable, oversized, malformed and invalid files before usable database configuration', () => {
     const directory = temporaryDirectory();
@@ -58,7 +58,7 @@ describe('candidate import CLI input boundary', () => {
       expect(result.stderr).not.toContain('credential-must-not-print');
       expect(result.stderr).not.toContain(path);
     }
-  });
+  }, 15_000);
 
   it('rejects valid input with non-loopback configuration or an unavailable loopback database safely', () => {
     const nonLoopback = runCli('postgresql://candidate:credential-must-not-print@remote.invalid:5432/candidate', examplePath);

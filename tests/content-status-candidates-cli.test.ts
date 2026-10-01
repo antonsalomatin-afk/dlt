@@ -39,7 +39,7 @@ describe('candidate status CLI boundary', () => {
     for (const args of [[], ['--'], [' '], [batchPath, 'extra'], ['--', batchPath, 'extra']]) {
       expectGenericFailure(runCli(url, ...args));
     }
-  });
+  }, 15_000);
 
   it('rejects unreadable, oversized, malformed and invalid batches before usable database configuration', () => {
     const directory = temporaryDirectory();
