@@ -98,7 +98,8 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-047 — ACCEPTED — validate traceable content import batches
 - TASK-048 — ACCEPTED — import validated candidate batches as inactive drafts
 - TASK-049 — ACCEPTED — apply traceable candidate review decisions without activation
-- content activation and administration
+- TASK-050 — READY — activate exact verified candidates through a traceable manifest
+- content inventory and administration
 - user reports
 - auditability
 
