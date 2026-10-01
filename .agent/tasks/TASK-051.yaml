@@ -1,6 +1,6 @@
 id: TASK-051
 title: Inspect candidate batch persistence and publication status
-status: BUILDING
+status: CHECKING
 epic: Epic 7 — Content Operations
 objective: Provide a deterministic read-only local inventory of whether each candidate is missing, drifted or exact and, for exact candidates, its review and activation state.
 acceptance:
@@ -24,6 +24,7 @@ dependencies:
 owner_decision_required: false
 builder_commit: 2d9cf62638132757837b58be74f99b2627074e00
 failed_check: .agent/checks/TASK-051-checks-01.txt
+fix_commit: 5594b16695ab4c6f4480771d5ffcaaeae7e6f6f6
 supervisor_refinement:
   - Add `pnpm content:status-candidates -- <candidate-batch-path>`. Accept exactly one nonblank local JSON path and complete the existing bounded fatal-UTF-8 strict candidate validation before parsing DATABASE_URL or creating a client. Require the existing loopback-only database policy and always disconnect a created client.
   - Inspect a consistent database snapshot using deterministic candidate IDs and exact candidate-owned content/choice/provenance/taxonomy comparison. Never create, update, delete, repair, activate, review or lock content for modification.
