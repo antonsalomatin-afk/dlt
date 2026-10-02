@@ -1,6 +1,6 @@
 id: TASK-056
 title: Inspect learner question reports offline
-status: BUILDING
+status: CHECKING
 epic: Epic 7 — Content Operations
 objective: Give a trusted local operator one deterministic read-only inventory of practice and exam allegations with their immutable question evidence, without exposing learner identity or mutating reports/content.
 acceptance:
@@ -23,6 +23,7 @@ dependencies:
   - TASK-055
 owner_decision_required: false
 builder_commit: 631f3b1f61ef5c72aa411e01e001bd88f8de0c62
+fix_commit: 61e4556c1b6714191fe0fa03fa0b671473c38282
 authoritative_checks: .agent/checks/TASK-056-checks-01.txt
 review_attempt: 1
 review_files:
