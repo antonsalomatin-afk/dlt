@@ -336,3 +336,61 @@ mark a report reviewed, triaged, dismissed, resolved or actionable and does not
 change verification, activation, legal status, current content or exam results.
 It is not an admin API/UI, moderation action, triage manifest or production-data
 access mechanism.
+
+### Record report triage decisions
+
+After a trusted local operator reviews an exact `content:inspect-reports`
+inventory, record selected final internal routing judgments with:
+
+```sh
+pnpm content:triage-reports -- path/to/report-triage.json
+```
+
+The command accepts exactly one nonblank local file path. It reads no more than
+5 MiB through the existing race-resistant fatal-UTF-8 JSON boundary and strictly
+validates the complete confidential manifest before reading `DATABASE_URL` or
+creating a client. The database must satisfy the loopback-only PostgreSQL policy,
+and a created client is always disconnected before buffered success JSON is
+written.
+
+A version 1 manifest is exactly `{ version, triagedBy, triagedAt, decisions }`.
+`triagedBy` is a trimmed, control-free valid-Unicode operator identity of 1–200
+characters. `triagedAt` is a canonical millisecond UTC instant no later than the
+command clock and no earlier than any selected report. `decisions` contains
+1–500 unique kind/report pairs. Every entry is one exact confidential inspection
+item plus `decision`:
+
+```text
+{ reportId, kind, createdAt, details, questionId, anchorId, snapshot, decision }
+```
+
+All keys are strict. IDs and times are canonical, allegation details use the
+submission contract, and the complete versioned immutable snapshot is validated,
+including its question/choice identities and answer/explanation evidence. Kind
+is `PRACTICE` or `EXAM`. Decision is `ACTION_REQUIRED` or
+`NO_ACTION_REQUIRED`; unpaired Unicode surrogates, duplicate kind/report pairs,
+unknown fields, stale or normalized evidence and malformed snapshots are rejected.
+
+The complete manifest runs in one serializable transaction. Each entry is
+resolved by its explicit kind and report ID, all stored ownership tuples and
+snapshots are revalidated, and every evidence field must still exactly equal the
+operator's manifest before any row is changed. Pending reports receive the same
+complete `{ triageDecision, triagedBy, triagedAt }` tuple. Exact replay is an
+idempotent match; a partial or different persisted tuple, stale/missing/wrong-kind
+evidence, unexpected write count or exhausted serialization retry aborts the
+whole manifest. Concurrent identical invocations converge, while competing
+decisions cannot overwrite one another.
+
+Success emits only compact JSON exactly
+`{ version: 1, summary: { total, actionRequired, noActionRequired, applied, matched } }`.
+It contains no report/evidence IDs, allegation or snapshot content, learner,
+session, question or anchor identity, operator identity, path, configuration or
+SQL. Every failure exits nonzero with no stdout and only
+`Report triage failed. No triage decisions were applied.` on stderr.
+
+`ACTION_REQUIRED` means a later content workflow should investigate or change
+the material. `NO_ACTION_REQUIRED` means this allegation causes no content
+change. Both are internal routing judgments only: neither establishes factual
+or legal correctness, contacts the learner, resolves an exam result, edits
+content, or changes verification or activation. This command is not a report UI,
+notification, production-data workflow or deployment mechanism.

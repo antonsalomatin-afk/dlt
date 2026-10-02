@@ -1,51 +1,66 @@
 import { z } from 'zod';
 import type { PrismaClient } from '../../packages/database/src/index.ts';
-import { parsePresentationSnapshot } from '../../packages/database/src/presentation.ts';
+import {
+  parsePresentationSnapshot,
+  presentationSnapshotSchema,
+} from '../../packages/database/src/presentation.ts';
 import { reportDetailsSchema } from '../../packages/database/src/report.ts';
 
 export const maximumReportInventorySize = 500;
 
-const canonicalUuidSchema = z.uuid().refine((value) => value === value.toLowerCase());
-const canonicalUtcInstantSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/u)
+export const canonicalReportUuidSchema = z.uuid().refine((value) => value === value.toLowerCase());
+export const canonicalReportInstantSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/u)
   .refine((value) => {
     const parsed = new Date(value);
     return !Number.isNaN(parsed.valueOf()) && parsed.toISOString() === value;
   });
 const storedDateSchema = z.date()
-  .refine((value) => canonicalUtcInstantSchema.safeParse(value.toISOString()).success);
+  .refine((value) => canonicalReportInstantSchema.safeParse(value.toISOString()).success);
+
+export const reportEvidenceSnapshotSchema = presentationSnapshotSchema.superRefine((snapshot, context) => {
+  for (const [path, id] of [
+    [['question', 'id'], snapshot.question.id],
+    [['correctChoiceId'], snapshot.correctChoiceId],
+    ...snapshot.question.choices.map(({ id }, index) => [['question', 'choices', index, 'id'], id] as const),
+  ] as const) {
+    if (!canonicalReportUuidSchema.safeParse(id).success) {
+      context.addIssue({ code: 'custom', path: [...path], message: 'must be a canonical UUID.' });
+    }
+  }
+});
 
 const practiceReportSchema = z.strictObject({
-  id: canonicalUuidSchema,
-  userId: canonicalUuidSchema,
-  questionId: canonicalUuidSchema,
-  presentationId: canonicalUuidSchema,
+  id: canonicalReportUuidSchema,
+  userId: canonicalReportUuidSchema,
+  questionId: canonicalReportUuidSchema,
+  presentationId: canonicalReportUuidSchema,
   details: reportDetailsSchema,
   createdAt: storedDateSchema,
   presentation: z.strictObject({
-    id: canonicalUuidSchema,
-    userId: canonicalUuidSchema,
-    questionId: canonicalUuidSchema,
+    id: canonicalReportUuidSchema,
+    userId: canonicalReportUuidSchema,
+    questionId: canonicalReportUuidSchema,
     snapshot: z.unknown(),
   }),
 });
 
 const examReportSchema = z.strictObject({
-  id: canonicalUuidSchema,
-  userId: canonicalUuidSchema,
-  questionId: canonicalUuidSchema,
-  examSessionId: canonicalUuidSchema,
-  examQuestionId: canonicalUuidSchema,
+  id: canonicalReportUuidSchema,
+  userId: canonicalReportUuidSchema,
+  questionId: canonicalReportUuidSchema,
+  examSessionId: canonicalReportUuidSchema,
+  examQuestionId: canonicalReportUuidSchema,
   details: reportDetailsSchema,
   createdAt: storedDateSchema,
   examQuestion: z.strictObject({
-    id: canonicalUuidSchema,
-    examSessionId: canonicalUuidSchema,
-    questionId: canonicalUuidSchema,
+    id: canonicalReportUuidSchema,
+    examSessionId: canonicalReportUuidSchema,
+    questionId: canonicalReportUuidSchema,
     snapshot: z.unknown(),
   }),
   examSession: z.strictObject({
-    id: canonicalUuidSchema,
-    userId: canonicalUuidSchema,
+    id: canonicalReportUuidSchema,
+    userId: canonicalReportUuidSchema,
   }),
 });
 
@@ -177,12 +192,7 @@ export async function inspectQuestionReports(database: PrismaClient): Promise<Re
 }
 
 function parseStoredSnapshot(input: unknown, questionId: string) {
-  const snapshot = parsePresentationSnapshot(input);
-  for (const id of [
-    snapshot.question.id,
-    snapshot.correctChoiceId,
-    ...snapshot.question.choices.map(({ id }) => id),
-  ]) canonicalUuidSchema.parse(id);
+  const snapshot = reportEvidenceSnapshotSchema.parse(input);
   if (snapshot.question.id !== questionId) throw new Error('Snapshot question identity mismatch.');
   return snapshot;
 }

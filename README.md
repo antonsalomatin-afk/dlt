@@ -296,6 +296,22 @@ triaged, dismissed, resolved or actionable, and it does not change content
 verification, activation, legal status or exam results. See
 [content conventions](content/README.md) for the exact output and failure contract.
 
+After reviewing that exact inventory, record final internal routing decisions
+from one confidential manifest with:
+
+```sh
+pnpm content:triage-reports -- <report-triage-path>
+```
+
+The loopback-only command binds every decision to the complete immutable
+inspection evidence and applies the manifest atomically. `ACTION_REQUIRED`
+routes material to a later content workflow; `NO_ACTION_REQUIRED` records that
+the allegation causes no content change. Neither decision establishes factual
+or legal correctness, contacts a learner, changes an exam result, or changes
+question verification or activation. The manifest contract, replay behavior,
+and confidential failure boundary are documented in
+[content conventions](content/README.md).
+
 ## Telegram bot
 
 `apps/bot` uses grammY. Its factory registers `/start` without network access or

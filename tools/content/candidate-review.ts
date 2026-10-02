@@ -15,6 +15,7 @@ export const reviewerIdentitySchema = z.string()
   .min(1, 'must not be blank.')
   .max(200, 'must contain at most 200 characters.')
   .refine((value) => value === value.trim(), 'must not have surrounding whitespace.')
+  .refine((value) => !/[\uD800-\uDFFF]/u.test(value), 'must contain valid Unicode scalar values.')
   .refine((value) => !/\p{Cc}/u.test(value), 'must not contain control characters.');
 
 const decisionSchema = z.strictObject({

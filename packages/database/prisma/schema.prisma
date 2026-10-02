@@ -51,6 +51,11 @@ enum SourceType {
   THIRD_PARTY
 }
 
+enum ReportTriageDecision {
+  ACTION_REQUIRED
+  NO_ACTION_REQUIRED
+}
+
 model Category {
   id          String     @id @default(uuid()) @db.Uuid
   slug        String     @unique
@@ -166,10 +171,14 @@ model QuestionReport {
   presentation   QuestionPresentation @relation(fields: [presentationId, userId, questionId], references: [id, userId, questionId], onDelete: Restrict)
   details        String
   createdAt      DateTime             @default(now()) @db.Timestamptz(3)
+  triageDecision ReportTriageDecision?
+  triagedBy      String?
+  triagedAt      DateTime?            @db.Timestamptz(3)
 
   @@unique([presentationId, userId, questionId])
   @@index([questionId, createdAt(sort: Desc), id(sort: Desc)])
   @@index([userId, createdAt(sort: Desc), id(sort: Desc)])
+  @@index([triageDecision, triagedAt(sort: Desc), id(sort: Desc)])
 }
 
 model Favorite {
@@ -265,8 +274,12 @@ model ExamQuestionReport {
   examQuestion   ExamQuestion @relation(fields: [examQuestionId, examSessionId, questionId], references: [id, examSessionId, questionId], onDelete: Restrict)
   details        String
   createdAt      DateTime     @default(now()) @db.Timestamptz(3)
+  triageDecision ReportTriageDecision?
+  triagedBy      String?
+  triagedAt      DateTime?    @db.Timestamptz(3)
 
   @@unique([examQuestionId, examSessionId, questionId])
   @@index([questionId, createdAt(sort: Desc), id(sort: Desc)])
   @@index([userId, createdAt(sort: Desc), id(sort: Desc)])
+  @@index([triageDecision, triagedAt(sort: Desc), id(sort: Desc)])
 }
