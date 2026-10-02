@@ -1,6 +1,6 @@
 id: TASK-055
 title: Submit exam-question reports in the Mini App
-status: READY
+status: BUILDING
 epic: Epic 7 — Content Operations
 objective: Let a learner report a suspected issue with the exact immutable exam question currently visible during an exam or completed-mistake review.
 acceptance:
