@@ -1,6 +1,6 @@
 id: TASK-053
 title: Submit practice-question reports in the Mini App
-status: READY
+status: BUILDING
 epic: Epic 7 — Content Operations
 objective: Let a learner report a problem with the exact practice presentation they are viewing through a bounded, recoverable Mini App form.
 acceptance:
