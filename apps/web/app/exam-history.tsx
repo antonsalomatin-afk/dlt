@@ -8,6 +8,7 @@ import {
   type ExamReview,
   type Session,
 } from '../lib/contracts';
+import { ExamReportForm, useExamReportController } from './exam-report';
 
 type Language = 'English' | 'Russian' | 'Thai';
 type ReviewError = 'unavailable' | 'incomplete' | 'generic' | null;
@@ -51,6 +52,12 @@ export function ExamHistory({ session, initialExamId, onBack, onExpired }: {
   const reviewGeneration = useRef(0);
   const itemsRef = useRef<ExamHistoryItem[]>([]);
   const observedExamIds = useRef(new Set<string>());
+  const reports = useExamReportController({
+    session,
+    isActive: () => active.current,
+    isBlocked: () => historyBusy.current || reviewBusy.current,
+    onExpired,
+  });
 
   async function requestHistory(cursor: string | null) {
     if (!active.current || historyBusy.current) return;
@@ -84,7 +91,8 @@ export function ExamHistory({ session, initialExamId, onBack, onExpired }: {
   }
 
   async function requestReview(examId: string) {
-    if (!active.current || reviewBusy.current) return;
+    if (!active.current || reviewBusy.current || reports.isBusy()) return;
+    reports.invalidateAll();
     const generation = ++reviewGeneration.current;
     reviewBusy.current = true; setReviewId(examId); setReview(null); setReviewPending(true); setReviewError(null);
     try {
@@ -123,15 +131,16 @@ export function ExamHistory({ session, initialExamId, onBack, onExpired }: {
     return () => { active.current = false; reviewGeneration.current++; };
   }, []);
 
-  function leave() { active.current = false; onBack(); }
+  function leave() { active.current = false; reports.invalidateAll(); onBack(); }
   function backToHistory() {
+    reports.invalidateAll();
     reviewGeneration.current++;
     reviewBusy.current = false;
     setReviewId(null); setReview(null); setReviewPending(false); setReviewError(null);
     if (!historyLoaded && !historyBusy.current) void requestHistory(null);
   }
 
-  if (reviewId !== null) return <section className="panel exam-history" aria-labelledby="exam-review-title" aria-busy={reviewPending}>
+  if (reviewId !== null) return <section className="panel exam-history" aria-labelledby="exam-review-title" aria-busy={reviewPending || reports.pending}>
     <p className="eyebrow accent">04 / EXAM REVIEW</p><h2 id="exam-review-title">Exam mistakes</h2>
     <button className="secondary" onClick={backToHistory}>Back to exam history</button>
     {reviewPending && <div className="message" role="status"><span aria-hidden="true">◌</span><p>Loading your exam review…</p></div>}
@@ -143,6 +152,7 @@ export function ExamHistory({ session, initialExamId, onBack, onExpired }: {
         <div className="exam-mistake-heading"><span>Question {mistake.position}</span><strong>{mistake.selectedChoiceId === null ? 'Unanswered' : 'Incorrect'}</strong></div>
         <h3>{localized(language, mistake.question.textEnglish, mistake.question.textRussian, mistake.question.textThai)}</h3>
         {mistake.question.textExamEnglish && <details><summary>Exam English wording</summary><p>{mistake.question.textExamEnglish}</p></details>}
+        <ExamReportForm controller={reports} examQuestionId={mistake.examQuestionId} />
         <ul className="history-choices" aria-label={`Question ${mistake.position} choices`}>{mistake.question.choices.map((choice) => {
           const selected = choice.id === mistake.selectedChoiceId;
           const correct = choice.id === mistake.correctChoiceId;

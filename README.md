@@ -843,8 +843,8 @@ require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
 `/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
 `/me/concept-progress`,
 `/practice/categories`, `/practice/next`, `/practice/retry-mistake`, `/practice/answer`,
-`/practice/favorite` and `/practice/report`, plus `/exam/current`, `/exam/start`, `/exam/answer` and
-`/exam/complete`, `/exam/history` and `/exam/:examId/review` only.
+`/practice/favorite` and `/practice/report`, plus `/exam/current`, `/exam/start`, `/exam/answer`,
+`/exam/complete`, `/exam/report`, `/exam/history` and `/exam/:examId/review` only.
 Set the destination before building; rewrites are
 included in the production build. Never prefix secrets with `NEXT_PUBLIC_`.
 
@@ -956,6 +956,16 @@ score or explanation. A final answer or displayed expiry invokes `POST /exam/com
 once. The strict result shows pass/fail, score out of 50, passing score and
 answered/unanswered counts. Transport, validation and known 409 responses provide safe
 retry or reload paths, and a protected 401 clears the memory-only session.
+
+Every currently rendered mock-exam question offers **Report question** before or after its
+answer, and each rendered completed-review mistake offers the same bounded allegation form.
+The Mini App sends the exact immutable `examQuestionId` and unmodified details through the
+explicit same-origin `/exam/report` rewrite with the in-memory bearer session. One report
+request can be active per mounted exam or review. Pending active-exam reports lock answer
+and question-changing controls while the countdown continues; expiry and completion remain
+authoritative and invalidate late report outcomes. Success and already-submitted status are
+kept only for that question and mount. Cancel, question switching, navigation and unmounting
+clear applicable drafts, and no report details enter URLs or persistent browser storage.
 
 Exam history is available from authenticated setup and practice, and a completed exam
 result links directly to its mistake review. History requests

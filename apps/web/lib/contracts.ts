@@ -96,6 +96,15 @@ export const practiceReportResponseSchema = z.strictObject({
   presentationId: canonicalUuidSchema,
   createdAt: canonicalTimestampSchema,
 });
+export const examQuestionReportRequestSchema = z.strictObject({
+  examQuestionId: canonicalUuidSchema,
+  details: reportDetailsSchema,
+});
+export const examQuestionReportResponseSchema = z.strictObject({
+  reportId: canonicalUuidSchema,
+  examQuestionId: canonicalUuidSchema,
+  createdAt: canonicalTimestampSchema,
+});
 const historyCursorPayloadSchema = z.strictObject({
   v: z.literal(1), submittedAt: canonicalTimestampSchema, attemptId: z.uuid(),
 });

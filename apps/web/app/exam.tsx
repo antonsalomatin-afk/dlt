@@ -10,6 +10,7 @@ import {
   type ExamCompletion,
   type Session,
 } from '../lib/contracts';
+import { ExamReportForm, useExamReportController } from './exam-report';
 
 type Language = 'English' | 'Russian' | 'Thai';
 type ErrorAction = 'load' | 'start' | 'answer' | 'complete';
@@ -66,8 +67,16 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup, onRev
   const completionRequested = useRef(false);
   const clockOffset = useRef(0);
   const examRef = useRef<CurrentExam | null>(null);
+  const reports = useExamReportController({
+    session,
+    isActive: () => active.current,
+    isBlocked: () => requestBusy.current || completionBusy.current,
+    onExpired,
+  });
+  const invalidateReports = reports.invalidateAll;
 
   const installExam = useCallback((next: CurrentExam) => {
+    if (examRef.current && examRef.current.examId !== next.examId) invalidateReports();
     completionRequested.current = false;
     examRef.current = next;
     setExam(next);
@@ -80,7 +89,7 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup, onRev
     setSelectedChoiceId(next.questions[nextIndex]?.selectedChoiceId ?? null);
     setSeconds(remainingSeconds(next.expiresAt, clockOffset.current));
     setMessage(next.expired ? 'Time is up. Completing your exam…' : 'Your exam is ready. Answers are final once submitted.');
-  }, []);
+  }, [invalidateReports]);
 
   const loadCurrent = useCallback(async (fromConflict = false) => {
     if (requestBusy.current || !active.current) return;
@@ -94,6 +103,7 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup, onRev
       if (!active.current) return;
       if (response.status === 401) { active.current = false; onExpired(); return; }
       if (response.status === 404) {
+        invalidateReports();
         setExam(null); examRef.current = null; setMissing(true);
         setMessage(fromConflict ? 'We could not restore the exam reported by the server. Retry before starting another.' : 'No exam is in progress. Start when you have 60 minutes available.');
         setError(fromConflict); setErrorAction('load');
@@ -116,7 +126,7 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup, onRev
       requestBusy.current = false;
       if (active.current) setLoading(false);
     }
-  }, [installExam, onExpired, onVehicle, session.token, session.user.selectedVehicleType]);
+  }, [installExam, invalidateReports, onExpired, onVehicle, session.token, session.user.selectedVehicleType]);
 
   useEffect(() => {
     active.current = true;
@@ -126,6 +136,7 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup, onRev
 
   const complete = useCallback(async (target: CurrentExam) => {
     if (completionBusy.current || !active.current) return;
+    invalidateReports();
     completionRequested.current = true;
     completionBusy.current = true;
     setPending(true); setError(false); setMessage('Completing your exam…');
@@ -158,7 +169,7 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup, onRev
       completionBusy.current = false;
       if (active.current) setPending(false);
     }
-  }, [loadCurrent, onExpired, session.token]);
+  }, [invalidateReports, loadCurrent, onExpired, session.token]);
 
   useEffect(() => {
     if (!exam || result) return;
@@ -221,7 +232,7 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup, onRev
   async function answer() {
     const target = examRef.current;
     const question = target?.questions[index];
-    if (requestBusy.current || completionBusy.current || !active.current || !target || !question || question.selectedChoiceId || !selectedChoiceId || seconds === 0) return;
+    if (requestBusy.current || completionBusy.current || reports.isBusy() || !active.current || !target || !question || question.selectedChoiceId || !selectedChoiceId || seconds === 0) return;
     requestBusy.current = true; setPending(true); setError(false); setMessage('Saving your answer…');
     try {
       const response = await fetch('/exam/answer', {
@@ -233,7 +244,7 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup, onRev
       if (response.status === 409) {
         const conflict = await responseError(response);
         if (conflict === 'Exam expired' || conflict === 'Exam already completed') { requestBusy.current = false; await complete(target); return; }
-        if (conflict === 'Answer already submitted') { requestBusy.current = false; await loadCurrent(true); return; }
+        if (conflict === 'Answer already submitted') { reports.clearDraft(question.examQuestionId); requestBusy.current = false; await loadCurrent(true); return; }
         setError(true); setErrorAction('answer'); setMessage('The server could not accept this answer. Reload the current exam before trying again.');
         return;
       }
@@ -257,6 +268,7 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup, onRev
       const next = { ...target, answeredCount: saved.answeredCount, remainingCount: saved.remainingCount, questions };
       examRef.current = next; setExam(next); setSelectedChoiceId(saved.selectedChoiceId);
       setMessage('Answer saved. Correctness stays hidden until the exam is complete.');
+      reports.clearDraft(question.examQuestionId);
       if (saved.remainingCount === 0) {
         requestBusy.current = false;
         completionRequested.current = true;
@@ -276,9 +288,18 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup, onRev
   }
 
   function move(nextIndex: number) {
+    if (reports.isBusy()) return;
     const target = examRef.current?.questions[nextIndex];
     if (!target) return;
+    const current = examRef.current?.questions[index];
+    if (current && current.examQuestionId !== target.examQuestionId) reports.clearDraft(current.examQuestionId);
     setIndex(nextIndex); setSelectedChoiceId(target.selectedChoiceId);
+  }
+
+  function leave(action: () => void) {
+    active.current = false;
+    invalidateReports();
+    action();
   }
 
   if (loading) return <section className="panel exam" aria-labelledby="exam-title" aria-busy="true"><p className="eyebrow accent">03 / MOCK EXAM</p><h2 id="exam-title">Mock exam</h2><div className="message" role="status"><p>{message}</p></div></section>;
@@ -288,30 +309,31 @@ export function Exam({ session, onExpired, onVehicle, onPractice, onSetup, onRev
     {missing && <div className="exam-intro"><dl><div><dt>Questions</dt><dd>50</dd></div><div><dt>Time</dt><dd>60 minutes</dd></div><div><dt>Pass</dt><dd>45 / 50</dd></div></dl><p>Answers are final. Results and correctness appear only after completion.</p></div>}
     <div className={`message ${error ? 'error' : ''}`} role={error ? 'alert' : 'status'}><p>{message}</p></div>
     {error && errorAction === 'load' ? <button className="primary" onClick={() => void loadCurrent()}>Retry exam</button> : missing ? <button className="primary" disabled={pending} onClick={() => void start()}>{pending ? 'Starting…' : errorAction === 'start' && error ? 'Try starting again' : 'Start mock exam'}</button> : null}
-    <button className="secondary" onClick={() => { active.current = false; onSetup(); }}>Back to setup</button>
+    <button className="secondary" onClick={() => leave(onSetup)}>Back to setup</button>
   </section>;
 
   if (result) return <section className="panel exam" aria-labelledby="exam-title">
     <p className="eyebrow accent">03 / MOCK EXAM</p><h2 id="exam-title">Mock exam result</h2>
     <div className={`exam-result ${result.passed ? 'passed' : 'failed'}`} role="region" aria-label="Mock exam result"><h3>{result.passed ? 'Passed' : 'Not passed yet'}</h3><p className="exam-score">{result.score} / {result.questionCount}</p><dl><div><dt>Passing score</dt><dd>{result.passingScore}</dd></div><div><dt>Answered</dt><dd>{result.answeredCount}</dd></div><div><dt>Unanswered</dt><dd>{result.unansweredCount}</dd></div></dl><time dateTime={result.completedAt}>Completed {new Date(result.completedAt).toLocaleString()}</time></div>
     <div className="message" role="status"><p>{message}</p></div>
-    <button className="primary" onClick={() => { active.current = false; onReview(result.examId); }}>Review exam mistakes</button><button className="secondary" onClick={() => { active.current = false; onPractice(); }}>Return to practice</button><button className="secondary" onClick={() => { active.current = false; onSetup(); }}>Back to setup</button>
+    <button className="primary" onClick={() => leave(() => onReview(result.examId))}>Review exam mistakes</button><button className="secondary" onClick={() => leave(onPractice)}>Return to practice</button><button className="secondary" onClick={() => leave(onSetup)}>Back to setup</button>
   </section>;
 
   const question = exam.questions[index]!;
   const answered = question.selectedChoiceId !== null;
-  return <section className="panel exam" aria-labelledby="exam-title" aria-busy={pending}>
+  return <section className="panel exam" aria-labelledby="exam-title" aria-busy={pending || reports.pending}>
     <div className="exam-heading"><div><p className="eyebrow accent">03 / MOCK EXAM</p><h2 id="exam-title">Question {question.position} of 50</h2></div><div className="exam-timer" role="timer" aria-label="Time remaining">{clock(seconds)}</div></div>
     <div className="exam-progress" aria-label="Exam progress"><span>{exam.answeredCount} answered</span><span>{exam.remainingCount} remaining</span></div>
     <fieldset className="languages"><legend>Exam language</legend>{(['English', 'Russian', 'Thai'] as const).map((item) => <label key={item}><input type="radio" name="exam-language" checked={language === item} onChange={() => setLanguage(item)} /> {item}</label>)}</fieldset>
-    <nav className="exam-navigator" aria-label="Question navigator">{exam.questions.map((item, questionIndex) => <button key={item.examQuestionId} className={`${questionIndex === index ? 'current' : ''} ${item.selectedChoiceId ? 'answered' : ''}`} aria-current={questionIndex === index ? 'step' : undefined} aria-label={`Question ${item.position}, ${item.selectedChoiceId ? 'answered' : 'unanswered'}`} onClick={() => move(questionIndex)}>{item.position}</button>)}</nav>
+    <nav className="exam-navigator" aria-label="Question navigator">{exam.questions.map((item, questionIndex) => <button key={item.examQuestionId} disabled={pending || reports.pending} className={`${questionIndex === index ? 'current' : ''} ${item.selectedChoiceId ? 'answered' : ''}`} aria-current={questionIndex === index ? 'step' : undefined} aria-label={`Question ${item.position}, ${item.selectedChoiceId ? 'answered' : 'unanswered'}`} onClick={() => move(questionIndex)}>{item.position}</button>)}</nav>
     <h3 className="question">{localized(language, question.question.textEnglish, question.question.textRussian, question.question.textThai)}</h3>
     {question.question.textExamEnglish && <details><summary>Exam English wording</summary><p>{question.question.textExamEnglish}</p></details>}
-    <fieldset className="answers" disabled={pending || answered || seconds === 0}><legend className="sr-only">Answer choices</legend>{question.question.choices.map((choice) => <label className={`answer-choice ${selectedChoiceId === choice.id ? 'selected' : ''}`} key={choice.id}><input type="radio" name={`exam-answer-${question.examQuestionId}`} checked={selectedChoiceId === choice.id} onChange={() => setSelectedChoiceId(choice.id)} /><span>{choice.key}. {localized(language, choice.textEnglish, choice.textRussian, choice.textThai)}</span></label>)}</fieldset>
+    <ExamReportForm controller={reports} examQuestionId={question.examQuestionId} disabled={pending} />
+    <fieldset className="answers" disabled={pending || reports.pending || answered || seconds === 0}><legend className="sr-only">Answer choices</legend>{question.question.choices.map((choice) => <label className={`answer-choice ${selectedChoiceId === choice.id ? 'selected' : ''}`} key={choice.id}><input type="radio" name={`exam-answer-${question.examQuestionId}`} checked={selectedChoiceId === choice.id} onChange={() => { if (!reports.isBusy()) setSelectedChoiceId(choice.id); }} /><span>{choice.key}. {localized(language, choice.textEnglish, choice.textRussian, choice.textThai)}</span></label>)}</fieldset>
     {answered && <p className="exam-saved" role="status">Answer saved. This question is read-only.</p>}
     <div className={`message ${error ? 'error' : ''}`} role={error ? 'alert' : 'status'}><p>{message}</p></div>
-    {error && errorAction === 'complete' ? <button className="primary" disabled={pending} onClick={() => void complete(exam)}>{pending ? 'Completing…' : 'Retry completion'}</button> : error && errorAction === 'answer' ? <div className="exam-actions"><button className="primary" disabled={pending || !selectedChoiceId} onClick={() => void answer()}>Retry answer</button><button className="secondary" disabled={pending} onClick={() => void loadCurrent(true)}>Reload exam</button></div> : !answered && seconds > 0 ? <button className="primary" disabled={pending || !selectedChoiceId} onClick={() => void answer()}>{pending ? 'Saving…' : 'Submit answer'}</button> : null}
-    <div className="exam-controls"><button className="secondary" disabled={index === 0 || pending} onClick={() => move(index - 1)}>Previous</button><button className="secondary" disabled={index === 49 || pending} onClick={() => move(index + 1)}>Next</button></div>
-    <button className="secondary" onClick={() => { active.current = false; onPractice(); }}>Leave exam</button>
+    {error && errorAction === 'complete' ? <button className="primary" disabled={pending} onClick={() => void complete(exam)}>{pending ? 'Completing…' : 'Retry completion'}</button> : error && errorAction === 'answer' ? <div className="exam-actions"><button className="primary" disabled={pending || reports.pending || !selectedChoiceId} onClick={() => void answer()}>Retry answer</button><button className="secondary" disabled={pending || reports.pending} onClick={() => { reports.clearDraft(question.examQuestionId); void loadCurrent(true); }}>Reload exam</button></div> : !answered && seconds > 0 ? <button className="primary" disabled={pending || reports.pending || !selectedChoiceId} onClick={() => void answer()}>{pending ? 'Saving…' : 'Submit answer'}</button> : null}
+    <div className="exam-controls"><button className="secondary" disabled={index === 0 || pending || reports.pending} onClick={() => move(index - 1)}>Previous</button><button className="secondary" disabled={index === 49 || pending || reports.pending} onClick={() => move(index + 1)}>Next</button></div>
+    <button className="secondary" onClick={() => leave(onPractice)}>Leave exam</button>
   </section>;
 }
