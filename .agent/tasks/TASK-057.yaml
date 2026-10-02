@@ -1,6 +1,6 @@
 id: TASK-057
 title: Apply explicit report triage decisions offline
-status: READY
+status: BUILDING
 epic: Epic 7 — Content Operations
 objective: Let a trusted local operator atomically record one final explicit triage decision against the exact immutable evidence of each selected practice or exam report, without changing learner, exam or question content state.
 acceptance:
