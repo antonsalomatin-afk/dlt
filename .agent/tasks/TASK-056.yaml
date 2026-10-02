@@ -1,0 +1,34 @@
+id: TASK-056
+title: Inspect learner question reports offline
+status: READY
+epic: Epic 7 — Content Operations
+objective: Give a trusted local operator one deterministic read-only inventory of practice and exam allegations with their immutable question evidence, without exposing learner identity or mutating reports/content.
+acceptance:
+  - A dedicated no-argument CLI reads only a loopback PostgreSQL database and emits one bounded deterministic JSON inventory of both practice and exam reports.
+  - Every item contains the report identity, kind, creation time, exact allegation, source question identity, exact immutable anchor identity and strictly validated saved question snapshot needed for later human triage.
+  - The inventory omits learner/session identity, credentials, answer attempts, favorites, progress, exam scores/results and current mutable question content or lifecycle state.
+  - Corrupt or inconsistent report/anchor/snapshot data, excessive inventory size, invalid arguments/configuration and database failures fail closed with no partial stdout or writes.
+  - Documentation and automated tests cover deterministic combined ordering, projection, bounds, privacy, strict snapshot validation, safe failures and proof of read-only behavior.
+files_allowed:
+  - tools/content/**
+  - tests/**
+  - package.json
+  - README.md
+  - content/README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-055
+owner_decision_required: false
+supervisor_refinement:
+  - Add `pnpm content:inspect-reports` and accept exactly zero arguments. Validate arguments before reading DATABASE_URL or creating a client. Require the existing loopback-only PostgreSQL policy, create no network client other than that database, always disconnect a created client and never read or write production configuration.
+  - Execute the complete inspection in one repeatable-read, explicitly read-only transaction. Read QuestionReport with its exact QuestionPresentation anchor and ExamQuestionReport with its exact ExamQuestion anchor. Revalidate each stored versioned snapshot with the accepted strict snapshot parser and require all duplicated report/anchor/source-question/session ownership tuple fields to agree before producing any output.
+  - Bound the complete combined inventory to at most 500 reports. Detect a larger total inside the same snapshot and fail rather than silently truncate or paginate. Sort all practice and exam items together by createdAt descending, then reportId descending, then kind ascending as the final deterministic tie breaker. Counts and items must come from the same database snapshot.
+  - Emit one compact strict version 1 JSON object with summary exactly `{ total, practice, exam }` and `items`. Each item is exactly `{ reportId, kind, createdAt, details, questionId, anchorId, snapshot }`, where kind is PRACTICE or EXAM, anchorId is the QuestionPresentation ID or ExamQuestion ID respectively, timestamps/UUIDs are canonical, details are revalidated through the shared exact report-details contract, and snapshot is the accepted immutable presentation snapshot including question choices, saved correct choice, explanations and trap explanations.
+  - The output intentionally contains confidential allegation text and immutable question evidence for a trusted local human reviewer. It must never include userId, Telegram data, username/name, auth/session token/hash, practice AnswerAttempt, selected learner choice, correctness outcome, favorite/progress/learning state, ExamSession ID/timing/score/pass result, current Question wording/choices/active/verification/reviewer/source metadata, database URL, local path or SQL.
+  - Any malformed argument, missing/non-loopback configuration, connection/query failure, count/item mismatch, more than 500 reports, duplicate report identity within a kind, invalid details/timestamp/UUID/snapshot, broken report-to-anchor tuple or inconsistent snapshot question ID exits nonzero, writes no stdout and prints only `Report inspection failed. No report inventory was produced.` to stderr. Do not emit partial items or raw validation/database errors.
+  - Unit tests cover strict projection, cross-kind deterministic ordering/ties, exact summary, 0/500/501 bounds, duplicate and every integrity/privacy rejection. CLI tests cover extra arguments, missing and non-loopback configuration, unavailable database and the stable no-stdout failure boundary before usable access.
+  - Isolated migrated-PostgreSQL tests create practice and exam reports with multilingual/emoji/newline allegations and full snapshots, prove exact combined output/order and absence of prohibited fields, cover corrupt snapshots/tuple inconsistency where constraints permit test corruption, enforce the 501 bound, and compare all relevant row counts and timestamp/content fields before and after success/failure to prove no writes or locks for modification.
+  - Document the command as confidential local inspection only. It does not mark a report reviewed, triaged, dismissed, resolved or actionable and does not change content verification, activation, legal status or exam results. No schema/migration, report status, triage manifest, admin API/UI, identity model, notification, moderation action, dependency, credential, production data or deployment change belongs in this task.
