@@ -1,6 +1,6 @@
 id: TASK-053
 title: Submit practice-question reports in the Mini App
-status: CHECKING
+status: REVIEW
 epic: Epic 7 — Content Operations
 objective: Let a learner report a problem with the exact practice presentation they are viewing through a bounded, recoverable Mini App form.
 acceptance:
@@ -22,6 +22,8 @@ dependencies:
   - TASK-052
 owner_decision_required: false
 builder_commit: 3e23b2fcbaaef316c592efe24d57c17f50f4bf70
+authoritative_checks: .agent/checks/TASK-053-checks-01.txt
+review_attempt: 1
 supervisor_refinement:
   - Add an accessible Report question action for the currently visible practice presentation. Expanding it shows an associated multiline details field, concise allegation-only guidance, Cancel and Submit report controls. Reporting is available before or after answering and does not reveal correctness, source metadata or mutable current-question data.
   - Mirror the accepted API details boundary in a browser-safe strict schema: exact `{ presentationId, details }`, lowercase UUID presentation ID, trimmed 3-1000 Unicode scalar values, at most 4000 UTF-8 bytes, line feeds allowed, other Unicode controls and lone surrogates rejected. Do not silently trim or normalize learner text. Show local validation guidance and do not send invalid content.
