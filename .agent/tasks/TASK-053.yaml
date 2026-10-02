@@ -1,0 +1,33 @@
+id: TASK-053
+title: Submit practice-question reports in the Mini App
+status: READY
+epic: Epic 7 — Content Operations
+objective: Let a learner report a problem with the exact practice presentation they are viewing through a bounded, recoverable Mini App form.
+acceptance:
+  - Every visible practice presentation offers an accessible report action and bounded details form without revealing or changing hidden question state.
+  - Submission sends one exact authenticated POST /practice/report request and strictly validates the accepted response before showing success.
+  - Success and already-reported states are presentation-specific, preserve the question, answer and favorite state, and prevent a second report from the same UI presentation.
+  - Local validation, pending state, retryable failures, unavailable presentations, conflicts, session expiry and stale responses are deterministic and safe.
+  - Loading a new presentation clears report-only state while all accepted practice, category, answer, favorite and navigation behavior remains unchanged.
+  - Browser and source-level tests cover the request boundary, validation, success/retry/error behavior, race guards, navigation and regressions.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+dependencies:
+  - TASK-052
+owner_decision_required: false
+supervisor_refinement:
+  - Add an accessible Report question action for the currently visible practice presentation. Expanding it shows an associated multiline details field, concise allegation-only guidance, Cancel and Submit report controls. Reporting is available before or after answering and does not reveal correctness, source metadata or mutable current-question data.
+  - Mirror the accepted API details boundary in a browser-safe strict schema: exact `{ presentationId, details }`, lowercase UUID presentation ID, trimmed 3-1000 Unicode scalar values, at most 4000 UTF-8 bytes, line feeds allowed, other Unicode controls and lone surrogates rejected. Do not silently trim or normalize learner text. Show local validation guidance and do not send invalid content.
+  - Add a strict response schema for exact `{ reportId, presentationId, createdAt }` with lowercase UUIDs and canonical UTC timestamp. Add only the explicit same-origin `/practice/report` rewrite. Send JSON with the in-memory bearer token, no-store caching and the accepted 15-second timeout; require the response presentation ID to equal the visible presentation.
+  - Guard report submission synchronously so same-turn clicks create one request. While it is pending, disable report mutation and question-changing answer/favorite/continue/get-question actions so report state cannot attach to another presentation. Existing navigation remains immediate; leaving practice invalidates all late report success, error and 401 outcomes.
+  - A validated 200 response closes the form and marks only that presentation as Report submitted. Preserve its visible question, selected choice, answer result, language, scope and favorite state. Keep the exact entered details in memory only until success or presentation replacement; never render them after success, log them, place them in URLs or store them persistently.
+  - On transport, timeout, other HTTP, 400 or malformed/mismatched success, preserve the form, exact details and presentation and provide retryable safe guidance. 401 expires the session. 404 shows that the presentation is no longer available to report without removing it. 409 means a report already exists: close the form and mark the current presentation Report already submitted without claiming that the current text was saved.
+  - Cancel clears the unsent details and local report error for that presentation. Loading or receiving a different presentation clears all report form, details, pending/error and completion state. Because there is no report-status read API, any newly received presentation starts with an unreported UI state even if an earlier session submitted it.
+  - Playwright coverage must prove accessible open/cancel behavior; no request for invalid bounds, whitespace, byte/control/surrogate cases; exact emoji/newline request and bearer header; strict success parsing; success before and after answer; same-turn duplicate guard; transport/HTTP/400/404/409/401 handling; malformed and mismatched response retry; pending interaction guards; late response after navigation; state reset on continuation; and unchanged answer/favorite/category flows. Add focused source coverage for the rewrite and browser schema when useful.
+  - Update concise Mini App documentation. No backend, database, API contract, report listing/edit/delete/resolution, exam reporting, admin handling, notification, moderation workflow, dependency, credential, production content or deployment change belongs in this task.

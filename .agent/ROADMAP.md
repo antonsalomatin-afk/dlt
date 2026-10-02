@@ -102,7 +102,9 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-051 — ACCEPTED — inspect candidate batch persistence and publication status
 - content administration — initial offline import/review/activation/status workflow complete
 - TASK-052 — ACCEPTED — submit authenticated reports for presented practice questions
-- report UI, exam-question reports and admin handling
+- TASK-053 — READY — submit practice-question reports in the Mini App
+- TASK-054 — PLANNED — report immutable exam questions
+- TASK-055 — PLANNED — inspect and triage reports offline
 - auditability
 
 ## Epic 8 — Telegram Engagement
