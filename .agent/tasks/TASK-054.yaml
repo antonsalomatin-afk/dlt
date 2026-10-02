@@ -1,0 +1,34 @@
+id: TASK-054
+title: Submit authenticated reports for owned exam questions
+status: READY
+epic: Epic 7 — Content Operations
+objective: Let an authenticated learner submit one bounded issue report against an immutable exam-question snapshot they own, without changing exam or content state.
+acceptance:
+  - A persisted exam report is bound by database constraints to its learner, source question, exam session and immutable ExamQuestion snapshot.
+  - POST /exam/report authenticates before body parsing, strictly validates an exam-question ID and bounded issue details, and accepts only an owned consistent snapshot.
+  - An exact retry is idempotent and concurrent exact retries create one row; different details for the same exam question are rejected without overwrite.
+  - Unknown and foreign exam questions have the same private response, malformed or corrupt data creates no report, and reporting is independent of answer, expiry and completion state.
+  - The response exposes no report text, ownership, question content, answer/correctness, exam result or mutable content state.
+  - Migration, request/response contracts, API behavior and integrity/concurrency/error paths have automated coverage and concise documentation.
+files_allowed:
+  - apps/api/src/index.ts
+  - packages/database/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-053
+owner_decision_required: false
+supervisor_refinement:
+  - Add a separate ExamQuestionReport model and additive migration; do not rename, rewrite or merge accepted QuestionReport rows. Store UUID id, userId, questionId, examSessionId, globally unique examQuestionId, exact details and createdAt. Add relations and composite uniqueness needed for database-enforced ownership: the report tuple must reference the same ExamSession/user and ExamQuestion/session/question. Cascade report deletion with its learner/session and restrict source question or exam-question deletion while independently retained. Add question- and learner-chronological indexes for later administration.
+  - Extend ExamSession with a unique `(id, userId)` tuple and ExamQuestion with a unique `(id, examSessionId, questionId)` tuple solely to support those composite foreign keys. Preserve all existing IDs, rows, exam selection, answer, completion, history and deletion semantics; no backfill or mutable exam-report status belongs here.
+  - Reuse the accepted report-details validator so practice and exam reports have identical exact text rules: already trimmed, 3-1000 Unicode scalar values, at most 4000 UTF-8 bytes, line feeds allowed, all other Unicode controls and lone surrogates rejected. Add strict exam schemas for request exactly `{ examQuestionId, details }` and response exactly `{ reportId, examQuestionId, createdAt }`, with canonical UUIDs and UTC timestamp.
+  - Add authenticated `POST /exam/report` inside the existing exam plugin so authentication occurs before its duplicate-key JSON parser and body validation. Add the route to no-store handling. Invalid authenticated input returns the existing 400 Bad Request boundary. Unknown and another learner's exam question both return 404 `Exam question not found` without echoing identifiers.
+  - In one transaction, load the ExamQuestion by id through an ExamSession owned by the authenticated learner, validate its immutable versioned snapshot, require the snapshot question ID to equal persisted questionId, then create the report with server-owned now() time. Reporting does not require the question to remain active/verified, the exam question to be answered, or the session to be active, unexpired or completed.
+  - Permit exactly one report per ExamQuestion. An exact retry with identical learner/session/question/details returns the original response without timestamp churn. A retry with different details returns 409 `Report already submitted` and never changes the row. Concurrent exact retries converge to one row; recover only the precise ExamQuestionReport examQuestionId unique conflict and never mask unrelated persistence failures.
+  - The success response is 200 for both first creation and exact replay and contains no details, userId, questionId, examSessionId, snapshot, position, selected answer, correctness, exam timing/score/result or database timestamp other than createdAt. No Mini App UI, report list/edit/delete/resolution, practice-report change, admin identity, notification or moderation workflow belongs in this task.
+  - Integration tests use an isolated migrated database and cover authentication before parsing, duplicate JSON members, strict text bounds/control/surrogate rules, owned unanswered/answered/expired/completed success, exact replay timestamp stability, concurrent exact retries, conflicting duplicate, unknown/foreign privacy, corrupt or mismatched snapshot rollback, response boundary, schema defaults, uniqueness/composite references, deletion behavior and preservation of practice reports and unrelated exam data. Unit tests cover contract and precise duplicate-conflict classification.
+  - Document an exam report as a learner allegation anchored to the saved snapshot; it never changes the exam answer, timer, completion, score/pass result, content verification/activation/review or legal status. No production data, paid service, credential, deployment, destructive migration or unrelated API change.
