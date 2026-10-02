@@ -1,6 +1,6 @@
 id: TASK-054
 title: Submit authenticated reports for owned exam questions
-status: READY
+status: BUILDING
 epic: Epic 7 — Content Operations
 objective: Let an authenticated learner submit one bounded issue report against an immutable exam-question snapshot they own, without changing exam or content state.
 acceptance:
