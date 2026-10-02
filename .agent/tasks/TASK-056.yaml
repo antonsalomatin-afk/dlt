@@ -1,6 +1,6 @@
 id: TASK-056
 title: Inspect learner question reports offline
-status: CHECKING
+status: REVIEW
 epic: Epic 7 — Content Operations
 objective: Give a trusted local operator one deterministic read-only inventory of practice and exam allegations with their immutable question evidence, without exposing learner identity or mutating reports/content.
 acceptance:
@@ -23,6 +23,8 @@ dependencies:
   - TASK-055
 owner_decision_required: false
 builder_commit: 631f3b1f61ef5c72aa411e01e001bd88f8de0c62
+authoritative_checks: .agent/checks/TASK-056-checks-01.txt
+review_attempt: 1
 supervisor_refinement:
   - Add `pnpm content:inspect-reports` and accept exactly zero arguments. Validate arguments before reading DATABASE_URL or creating a client. Require the existing loopback-only PostgreSQL policy, create no network client other than that database, always disconnect a created client and never read or write production configuration.
   - Execute the complete inspection in one repeatable-read, explicitly read-only transaction. Read QuestionReport with its exact QuestionPresentation anchor and ExamQuestionReport with its exact ExamQuestion anchor. Revalidate each stored versioned snapshot with the accepted strict snapshot parser and require all duplicated report/anchor/source-question/session ownership tuple fields to agree before producing any output.
