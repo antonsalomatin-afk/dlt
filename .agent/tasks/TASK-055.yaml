@@ -1,6 +1,6 @@
 id: TASK-055
 title: Submit exam-question reports in the Mini App
-status: BUILDING
+status: CHECKING
 epic: Epic 7 — Content Operations
 objective: Let a learner report a suspected issue with the exact immutable exam question currently visible during an exam or completed-mistake review.
 acceptance:
@@ -21,6 +21,7 @@ required_checks:
 dependencies:
   - TASK-054
 owner_decision_required: false
+builder_commit: 8287b90c548fe3b1f447ea2dbb19c830b61e6533
 supervisor_refinement:
   - Add an accessible Report question action beside the exact current ExamQuestion during an active/resumed exam and inside each immutable mistake card in completed exam review. Do not add report actions to exam-history summaries, perfect-review empty states, practice screens or content that is not currently rendered.
   - Use a small shared exam-report form/controller when it reduces duplicated security and race logic. The form collects multiline allegation details with the same visible guidance and exact validation policy as accepted practice reports. It may be opened before or after an exam answer and for answered or unanswered review mistakes; reporting never submits an answer or changes exam/review data.
