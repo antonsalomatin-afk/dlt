@@ -14,6 +14,7 @@ const reportDetails = z.string()
   })
   .refine((value) => value === value.trim())
   .refine((value) => Buffer.byteLength(value, 'utf8') <= 4000)
+  .refine((value) => !/[\uD800-\uDFFF]/u.test(value))
   .refine((value) => [...value].every((character) => character === '\n' || !/\p{Cc}/u.test(character)));
 
 export const questionReportRequestSchema = z.strictObject({

@@ -20,6 +20,7 @@ describe('question report contracts', () => {
     const invalidDetails = [
       '', 'ab', ' abc', 'abc ', '\nabc', 'abc\n', 'a'.repeat(1001), '😀'.repeat(1000) + 'a',
       'ab\tcd', 'ab\rcd', 'ab\0cd', `ab${String.fromCodePoint(0x7f)}cd`,
+      `ab${String.fromCharCode(0xd800)}cd`, `ab${String.fromCharCode(0xdc00)}cd`,
     ];
     for (const details of invalidDetails) {
       expect(() => questionReportRequestSchema.parse({ presentationId, details })).toThrow();

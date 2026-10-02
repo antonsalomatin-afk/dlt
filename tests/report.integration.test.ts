@@ -145,6 +145,17 @@ describe('POST /practice/report', () => {
       expect(response.json()).toEqual({ error: 'Bad Request' });
       expect(response.headers['cache-control']).toBe('no-store');
     }
+    for (const payload of [
+      `{"presentationId":"${presentation.id}","details":"ab\\ud800cd"}`,
+      `{"presentationId":"${presentation.id}","details":"ab\\udc00cd"}`,
+    ]) {
+      for (let attempt = 0; attempt < 2; attempt++) {
+        const response = await submitRaw(payload, `Bearer ${tokens.alice}`);
+        expect(response.statusCode).toBe(400);
+        expect(response.json()).toEqual({ error: 'Bad Request' });
+        expect(response.headers['cache-control']).toBe('no-store');
+      }
+    }
     expect(await database.questionReport.count()).toBe(0);
   });
 
@@ -154,7 +165,7 @@ describe('POST /practice/report', () => {
       where: { id: question.id },
       data: { active: false, verificationStatus: 'REJECTED' },
     });
-    const details = 'The displayed wording may be ambiguous.\nPlease review it.';
+    const details = 'The displayed wording may be ambiguous 😀.\nPlease review it.';
     const first = await submitReport(presentation.id, details);
     expect(first.statusCode).toBe(200);
     const firstBody = reportBoundary(first);
