@@ -1,0 +1,37 @@
+id: TASK-057
+title: Apply explicit report triage decisions offline
+status: READY
+epic: Epic 7 — Content Operations
+objective: Let a trusted local operator atomically record one final explicit triage decision against the exact immutable evidence of each selected practice or exam report, without changing learner, exam or question content state.
+acceptance:
+  - An additive migration gives practice and exam reports the same database-constrained optional triage tuple and leaves every existing report pending.
+  - A dedicated one-manifest CLI validates a bounded strict confidential manifest before database access and connects only to loopback PostgreSQL.
+  - Every decision is bound to the exact report kind, identity, allegation, immutable anchor and saved question snapshot inspected by the operator.
+  - One serializable transaction either applies the complete manifest or writes nothing; an exact replay is idempotent while conflicting or stale decisions fail closed.
+  - Success emits only a deterministic aggregate summary, and every failure emits one stable generic message with no partial stdout, evidence, identity, configuration or database detail.
+  - Documentation and automated tests cover schema integrity, exact-evidence binding, decision semantics, idempotency, concurrency, rollback, privacy and safe CLI lifecycle behavior.
+files_allowed:
+  - packages/database/**
+  - tools/content/**
+  - tests/**
+  - package.json
+  - README.md
+  - content/README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-056
+owner_decision_required: false
+supervisor_refinement:
+  - Add one shared `ReportTriageDecision` enum with exactly `ACTION_REQUIRED` and `NO_ACTION_REQUIRED`. Add nullable `triageDecision`, `triagedBy` and millisecond-timestamptz `triagedAt` fields to both QuestionReport and ExamQuestionReport. A database CHECK on each table must permit either all three null or all three non-null; add a useful decision/time/id index. The additive migration leaves all accepted rows pending and preserves report keys, foreign keys, creation data and deletion behavior.
+  - Add `pnpm content:triage-reports -- path/to/report-triage.json`. Accept exactly one nonblank file path, validate arguments and the complete bounded file before reading DATABASE_URL or creating a client, enforce the existing loopback-only PostgreSQL policy, create no other network client, and always disconnect a created client.
+  - A version 1 manifest is exactly `{ version, triagedBy, triagedAt, decisions }`. `triagedBy` follows the accepted bounded reviewer-identity rules and `triagedAt` is a canonical millisecond UTC instant no later than the command clock. `decisions` contains 1 through 500 unique entries and each entry is exactly one TASK-056 inspection item plus `decision`: `{ reportId, kind, createdAt, details, questionId, anchorId, snapshot, decision }`. Kind is `PRACTICE` or `EXAM`; decision is `ACTION_REQUIRED` or `NO_ACTION_REQUIRED`.
+  - Treat the manifest as confidential operator evidence. Reuse the bounded race-resistant UTF-8 JSON-file reader, strict canonical UUID/timestamp and report-details contracts, and accepted strict immutable snapshot parser. Reject duplicate kind/report identities, unknown keys, invalid Unicode, malformed snapshots, inconsistent snapshot question IDs, a triage time before any selected report creation, or a future triage time. Do not normalize or silently discard any evidence.
+  - In one Serializable transaction, resolve each item by its explicit kind and report ID with its immutable QuestionPresentation or ExamQuestion anchor and the minimum ownership tuple needed for integrity validation. Revalidate the stored report/anchor/source-question/session tuple and snapshot exactly as in inspection, then require every manifest evidence field to equal the current stored inspection projection before any write. A missing, wrong-kind, corrupt or stale item aborts the entire manifest without revealing which report failed.
+  - A pending report may transition once to the manifest's complete `{ triageDecision, triagedBy, triagedAt }` tuple. A report already containing that exact tuple and exact evidence is an idempotent match. Any partial persisted tuple or different decision, operator or time is a conflict and aborts the entire manifest. Use conditional writes plus bounded Serializable-conflict retry so concurrent exact invocations converge to one application and one match; competing different manifests must not overwrite one another and at most one may commit.
+  - Buffer the success response until the transaction and database disconnect both succeed. Emit one compact strict JSON object exactly `{ version: 1, summary: { total, actionRequired, noActionRequired, applied, matched } }`; counts cover the complete manifest, remain deterministic across replay and expose no report IDs, allegation/snapshot content, learner/session/question/anchor identity, operator identity, database configuration, paths or SQL.
+  - Any malformed argument/file/manifest/configuration, non-loopback URL, connection/query/disconnect failure, missing or inconsistent report, evidence mismatch, partial/conflicting prior triage, serialization exhaustion or unexpected write cardinality exits nonzero, writes no stdout and prints only `Report triage failed. No triage decisions were applied.` to stderr. Do not print raw validation, file, Prisma or database errors.
+  - Unit and CLI tests cover strict manifest shape and bounds, Unicode/operator/time rules, duplicate entries, argument/config precedence, unreadable/oversized/changing files, unavailable database, buffered disconnect failure, stable output and the generic no-stdout failure boundary. Isolated migrated-PostgreSQL tests cover both report kinds and decisions, exact stored tuples, legacy-null defaults and CHECK constraints, exact replay, mixed apply/match, stale evidence, wrong kind, missing/corrupt/inconsistent data, partial/conflicting state, all-or-nothing rollback, concurrent identical and competing manifests, and preservation of all report evidence plus learner, practice, exam and Question content state.
+  - Document both decisions as internal routing judgments only: `ACTION_REQUIRED` means a later content workflow should investigate or change the material, while `NO_ACTION_REQUIRED` means this allegation causes no content change. Neither value establishes factual/legal correctness, contacts the learner, resolves an exam result or changes verification/activation. No report-inspection contract change, report API/UI, content edit, notification, admin identity model, production data, credential, dependency or deployment belongs in this task.
