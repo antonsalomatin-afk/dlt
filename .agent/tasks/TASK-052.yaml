@@ -1,6 +1,6 @@
 id: TASK-052
 title: Submit authenticated reports for presented practice questions
-status: CHECKING
+status: REVIEW
 epic: Epic 7 — Content Operations
 objective: Let an authenticated learner submit one bounded issue report against an immutable practice presentation they own, without exposing content administration or changing the question.
 acceptance:
@@ -23,8 +23,8 @@ dependencies:
 owner_decision_required: false
 builder_commit: 905e04865d96270daea7cc1a668b2c6cce0fac91
 fix_commit: 0233bd4807ebcbf4d080c90783701aca8f4dc6d4
-authoritative_checks: .agent/checks/TASK-052-checks-01.txt
-review_attempt: 1
+authoritative_checks: .agent/checks/TASK-052-checks-02.txt
+review_attempt: 2
 review_files:
   - .agent/reviews/TASK-052-review-01.md
 supervisor_refinement:
