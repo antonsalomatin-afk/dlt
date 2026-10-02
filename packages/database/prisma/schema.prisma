@@ -16,6 +16,7 @@ enum VehicleType {
 model User {
   conceptLearningStates ConceptLearningState[]
   examSessions          ExamSession[]
+  examReports           ExamQuestionReport[]
   favorites             Favorite[]
   presentations         QuestionPresentation[]
   reports               QuestionReport[]
@@ -74,6 +75,7 @@ model Concept {
 
 model Question {
   examQuestions          ExamQuestion[]
+  examReports            ExamQuestionReport[]
   favorites              Favorite[]
   presentations          QuestionPresentation[]
   reports                QuestionReport[]
@@ -223,7 +225,9 @@ model ExamSession {
   score         Int?
   passed        Boolean?
   questions     ExamQuestion[]
+  reports       ExamQuestionReport[]
 
+  @@unique([id, userId])
   @@index([userId, startedAt(sort: Desc), id(sort: Desc)])
 }
 
@@ -240,9 +244,29 @@ model ExamQuestion {
   selectedChoiceId String?     @db.Uuid
   isCorrect        Boolean?
   answeredAt       DateTime?   @db.Timestamptz(3)
+  report            ExamQuestionReport?
 
   @@unique([examSessionId, position])
   @@unique([examSessionId, questionId])
+  @@unique([id, examSessionId, questionId])
   @@index([questionId])
   @@index([conceptId])
+}
+
+model ExamQuestionReport {
+  id             String       @id @default(uuid()) @db.Uuid
+  userId         String       @db.Uuid
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questionId     String       @db.Uuid
+  question       Question     @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  examSessionId  String       @db.Uuid
+  examSession    ExamSession  @relation(fields: [examSessionId, userId], references: [id, userId], onDelete: Cascade)
+  examQuestionId String       @unique @db.Uuid
+  examQuestion   ExamQuestion @relation(fields: [examQuestionId, examSessionId, questionId], references: [id, examSessionId, questionId], onDelete: Restrict)
+  details        String
+  createdAt      DateTime     @default(now()) @db.Timestamptz(3)
+
+  @@unique([examQuestionId, examSessionId, questionId])
+  @@index([questionId, createdAt(sort: Desc), id(sort: Desc)])
+  @@index([userId, createdAt(sort: Desc), id(sort: Desc)])
 }

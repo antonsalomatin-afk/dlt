@@ -7,7 +7,14 @@ import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '..
 import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
 import { practiceCategoriesResponseSchema } from '../../../packages/database/src/practice-categories.ts';
 import { favoriteRequestSchema, favoriteResponseSchema } from '../../../packages/database/src/favorite.ts';
-import { isDuplicateQuestionReport, questionReportRequestSchema, questionReportResponseSchema } from '../../../packages/database/src/report.ts';
+import {
+  examQuestionReportRequestSchema,
+  examQuestionReportResponseSchema,
+  isDuplicateExamQuestionReport,
+  isDuplicateQuestionReport,
+  questionReportRequestSchema,
+  questionReportResponseSchema,
+} from '../../../packages/database/src/report.ts';
 import { encodeFavoriteCursor, favoriteFeedResponseSchema, parseFavoriteFeedQuery } from '../../../packages/database/src/favorite-feed.ts';
 import { buildProgressSummary } from '../../../packages/database/src/progress.ts';
 import {
@@ -263,7 +270,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/practice/report', '/exam/start', '/exam/answer', '/exam/complete', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/practice/report', '/exam/start', '/exam/answer', '/exam/complete', '/exam/report', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -751,6 +758,89 @@ export function createApi(options: {
       const user = await authenticatedUser(request.headers.authorization, startedAt);
       if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
       authenticatedRequests.set(request, { user, startedAt });
+    });
+    examApp.post('/exam/report', async (request, reply) => {
+      const authenticated = authenticatedRequests.get(request);
+      if (!authenticated) throw new Error('Authenticated exam user missing');
+      if (!emptyQuerySchema.safeParse(request.query).success) {
+        return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      }
+      const body = examQuestionReportRequestSchema.safeParse(request.body);
+      if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      const { user } = authenticated;
+      const response = (report: { id: string; examQuestionId: string; createdAt: Date }) => (
+        examQuestionReportResponseSchema.parse({
+          reportId: report.id,
+          examQuestionId: report.examQuestionId,
+          createdAt: report.createdAt.toISOString(),
+        })
+      );
+      const classifyExisting = (report: {
+        id: string;
+        userId: string;
+        questionId: string;
+        examSessionId: string;
+        examQuestionId: string;
+        details: string;
+        createdAt: Date;
+      }, source: { questionId: string; examSessionId: string }) => (
+        report.userId === user.id
+        && report.questionId === source.questionId
+        && report.examSessionId === source.examSessionId
+        && report.examQuestionId === body.data.examQuestionId
+        && report.details === body.data.details
+          ? { kind: 'reported', response: response(report) } as const
+          : { kind: 'conflict' } as const
+      );
+
+      let validatedSource: { questionId: string; examSessionId: string } | undefined;
+      try {
+        const result = await options.database.$transaction(async (transaction) => {
+          const examQuestion = await transaction.examQuestion.findFirst({
+            where: { id: body.data.examQuestionId, examSession: { userId: user.id } },
+            select: { id: true, questionId: true, examSessionId: true, snapshot: true },
+          });
+          if (!examQuestion) return { kind: 'not-found' } as const;
+          const snapshot = parsePresentationSnapshot(examQuestion.snapshot);
+          if (snapshot.question.id !== examQuestion.questionId) {
+            throw new Error('Stored exam report snapshot is inconsistent');
+          }
+          validatedSource = { questionId: examQuestion.questionId, examSessionId: examQuestion.examSessionId };
+          const existing = await transaction.examQuestionReport.findUnique({
+            where: { examQuestionId: examQuestion.id },
+          });
+          if (existing) return classifyExisting(existing, validatedSource);
+          const report = await transaction.examQuestionReport.create({
+            data: {
+              userId: user.id,
+              questionId: examQuestion.questionId,
+              examSessionId: examQuestion.examSessionId,
+              examQuestionId: examQuestion.id,
+              details: body.data.details,
+              createdAt: now(),
+            },
+          });
+          return { kind: 'reported', response: response(report) } as const;
+        });
+        if (result.kind === 'not-found') {
+          return reply.code(404).send(errorSchema.parse({ error: 'Exam question not found' }));
+        }
+        if (result.kind === 'conflict') {
+          return reply.code(409).send(errorSchema.parse({ error: 'Report already submitted' }));
+        }
+        return result.response;
+      } catch (error) {
+        if (!isDuplicateExamQuestionReport(error)) throw error;
+        const existing = await options.database.examQuestionReport.findUnique({
+          where: { examQuestionId: body.data.examQuestionId },
+        });
+        if (!existing || validatedSource === undefined) throw error;
+        const result = classifyExisting(existing, validatedSource);
+        if (result.kind === 'conflict') {
+          return reply.code(409).send(errorSchema.parse({ error: 'Report already submitted' }));
+        }
+        return result.response;
+      }
     });
     examApp.get('/exam/history', async (request, reply) => {
       const authenticated = authenticatedRequests.get(request);

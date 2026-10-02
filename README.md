@@ -663,6 +663,22 @@ text, owner/question IDs, content, answers and correctness. A report is a learne
 allegation requiring later human handling; this endpoint provides no listing,
 editing, resolution, notification or moderation workflow.
 
+### Report a saved exam question
+
+`POST /exam/report` uses the existing bearer session and accepts exactly
+`{ "examQuestionId": "<UUID>", "details": "..." }`. It applies the same exact
+text boundary as practice reports and anchors the allegation to the learner's
+owned immutable `ExamQuestion` snapshot. Unknown and another learner's exam
+questions both return `404 { "error": "Exam question not found" }`.
+
+Each exam question permits one report. An exact retry returns the original
+minimal `{ "reportId", "examQuestionId", "createdAt" }` response and timestamp;
+different details return `409 { "error": "Report already submitted" }` without
+overwriting the saved allegation. Reporting is independent of answer state,
+expiry and completion. It never changes the answer, timer, completion, score,
+pass result, content verification, activation, review or legal status, and it
+does not create a listing, edit, resolution, notification or moderation flow.
+
 ### Favorites feed
 
 `GET /me/favorites` uses the existing bearer session and returns only the

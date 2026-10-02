@@ -7,7 +7,7 @@ const canonicalUtcInstant = z.string().length(24).refine((value) => {
   return !Number.isNaN(parsed.valueOf()) && parsed.toISOString() === value;
 });
 
-const reportDetails = z.string()
+export const reportDetailsSchema = z.string()
   .refine((value) => {
     const characterCount = [...value].length;
     return characterCount >= 3 && characterCount <= 1000;
@@ -19,12 +19,23 @@ const reportDetails = z.string()
 
 export const questionReportRequestSchema = z.strictObject({
   presentationId: z.uuid(),
-  details: reportDetails,
+  details: reportDetailsSchema,
 });
 
 export const questionReportResponseSchema = z.strictObject({
   reportId: z.uuid(),
   presentationId: z.uuid(),
+  createdAt: canonicalUtcInstant,
+});
+
+export const examQuestionReportRequestSchema = z.strictObject({
+  examQuestionId: z.uuid(),
+  details: reportDetailsSchema,
+});
+
+export const examQuestionReportResponseSchema = z.strictObject({
+  reportId: z.uuid(),
+  examQuestionId: z.uuid(),
   createdAt: canonicalUtcInstant,
 });
 
@@ -41,4 +52,19 @@ const duplicateMetadata = z.object({
 export function isDuplicateQuestionReport(error: unknown): boolean {
   return error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002'
     && duplicateMetadata.safeParse(error.meta).success;
+}
+
+const duplicateExamQuestionReportMetadata = z.object({
+  modelName: z.literal('ExamQuestionReport'),
+  driverAdapterError: z.object({ cause: z.object({
+    originalCode: z.literal('23505'),
+    kind: z.literal('UniqueConstraintViolation'),
+    table: z.literal('ExamQuestionReport'),
+    constraint: z.object({ index: z.literal('ExamQuestionReport_examQuestionId_key') }),
+  }) }),
+});
+
+export function isDuplicateExamQuestionReport(error: unknown): boolean {
+  return error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002'
+    && duplicateExamQuestionReportMetadata.safeParse(error.meta).success;
 }
