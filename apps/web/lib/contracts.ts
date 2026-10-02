@@ -79,6 +79,23 @@ const canonicalTimestampSchema = z.iso.datetime().refine((value) => {
   catch { return false; }
 });
 const canonicalUuidSchema = z.uuid().refine((value) => value === value.toLowerCase());
+const reportDetailsSchema = z.string().superRefine((value, context) => {
+  const scalarLength = [...value].length;
+  if (scalarLength < 3 || scalarLength > 1000) context.addIssue({ code: 'custom', message: 'Details must contain 3–1000 Unicode characters' });
+  if (value !== value.trim()) context.addIssue({ code: 'custom', message: 'Details must already be trimmed' });
+  if (new TextEncoder().encode(value).byteLength > 4000) context.addIssue({ code: 'custom', message: 'Details exceed the UTF-8 byte limit' });
+  if (/[\uD800-\uDFFF]/u.test(value)) context.addIssue({ code: 'custom', message: 'Details contain an unpaired surrogate' });
+  if ([...value].some((character) => character !== '\n' && /\p{Cc}/u.test(character))) context.addIssue({ code: 'custom', message: 'Details contain a disallowed control character' });
+});
+export const practiceReportRequestSchema = z.strictObject({
+  presentationId: canonicalUuidSchema,
+  details: reportDetailsSchema,
+});
+export const practiceReportResponseSchema = z.strictObject({
+  reportId: canonicalUuidSchema,
+  presentationId: canonicalUuidSchema,
+  createdAt: canonicalTimestampSchema,
+});
 const historyCursorPayloadSchema = z.strictObject({
   v: z.literal(1), submittedAt: canonicalTimestampSchema, attemptId: z.uuid(),
 });

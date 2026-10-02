@@ -826,8 +826,8 @@ credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
 `/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
 `/me/concept-progress`,
-`/practice/categories`, `/practice/next`, `/practice/retry-mistake`, `/practice/answer` and
-`/practice/favorite`, plus `/exam/current`, `/exam/start`, `/exam/answer` and
+`/practice/categories`, `/practice/next`, `/practice/retry-mistake`, `/practice/answer`,
+`/practice/favorite` and `/practice/report`, plus `/exam/current`, `/exam/start`, `/exam/answer` and
 `/exam/complete`, `/exam/history` and `/exam/:examId/review` only.
 Set the destination before building; rewrites are
 included in the production build. Never prefix secrets with `NEXT_PUBLIC_`.
@@ -864,6 +864,14 @@ explanations fall back to English. Answers remain selected after a connection fa
 Retry sends the same IDs. An already-submitted response offers a new question without
 reconstructing a score. Sessions stay in memory; expired sessions require reopening from
 Telegram.
+
+Every visible practice presentation can be reported before or after answering. The accessible
+form sends the exact, validated presentation ID and allegation text through the explicit
+same-origin `/practice/report` rewrite with the in-memory bearer session. Details remain only
+in the form while a submission can be retried; cancel, success, an already-submitted response
+or a different presentation clears them. A report does not change the question, answer,
+language, scope or favorite state. Navigation remains immediate, and late report responses
+cannot update a screen the learner has left.
 
 Authenticated learners can open answer history from vehicle setup or practice. History
 loads ten newest submissions at a time, keeps validated entries visible if loading a later

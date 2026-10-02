@@ -79,6 +79,15 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 .empty-history { color: #59675e; font-size: 14px; line-height: 1.6; }
 .empty-history .primary { margin-top: 18px; }
 .favorite-action { display: block; margin: 12px 0 4px; }
+.report-action { display: block; margin: 4px 0 12px; }
+.report-form { display: grid; gap: 9px; margin: 14px 0 18px; border: 1px solid #dce0d4; border-radius: 14px; padding: 16px; background: #fbfbf4; }
+.report-form label { color: #244c3d; font-size: 14px; font-weight: 700; }
+.report-form > p { margin: 0; color: #59675e; font-size: 12px; line-height: 1.5; }
+.report-form textarea { box-sizing: border-box; width: 100%; resize: vertical; border: 1px solid #bfc8ba; border-radius: 10px; padding: 11px; background: #fffef9; color: #233b32; font: inherit; line-height: 1.45; }
+.report-controls { display: flex; align-items: center; gap: 14px; }
+.report-controls .secondary { flex: 0 0 auto; margin: 0; }
+.report-controls .primary { flex: 1 1 auto; width: auto; }
+.report-state { width: fit-content; margin: 10px 0 16px; border-radius: 999px; padding: 6px 10px; background: #dce8d8; color: #244c3d; font-size: 12px; font-weight: 700; }
 .favorites-list { display: grid; gap: 12px; }
 .favorite-entry { border: 1px solid #dce0d4; border-radius: 14px; padding: 16px; }
 .favorite-entry time { color: #697466; font-size: 11px; }

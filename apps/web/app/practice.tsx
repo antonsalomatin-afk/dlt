@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { answerSchema, favoriteResponseSchema, practiceCategoriesSchema, presentationSchema, type Answer, type PracticeCategory, type Presentation, type Session } from '../lib/contracts';
+import { answerSchema, favoriteResponseSchema, practiceCategoriesSchema, practiceReportRequestSchema, practiceReportResponseSchema, presentationSchema, type Answer, type PracticeCategory, type Presentation, type Session } from '../lib/contracts';
 
 type Language = 'English' | 'Russian' | 'Thai';
 const localized = (language: Language, english: string | null, russian: string | null, thai: string | null) =>
@@ -26,8 +26,16 @@ export function Practice({ session, initialPresentation = null, onHandoffConsume
   const [favoritePending, setFavoritePending] = useState(false);
   const [favoriteError, setFavoriteError] = useState(false);
   const [savedPresentationId, setSavedPresentationId] = useState<string | null>(null);
+  const [reportOpen, setReportOpen] = useState(false);
+  const [reportDetails, setReportDetails] = useState('');
+  const [reportPending, setReportPending] = useState(false);
+  const [reportError, setReportError] = useState<string | null>(null);
+  const [reportedPresentation, setReportedPresentation] = useState<{ id: string; duplicate: boolean } | null>(null);
   const busy = useRef(false);
   const favoriteBusy = useRef(false);
+  const reportBusy = useRef(false);
+  const reportRequestId = useRef(0);
+  const visiblePresentationId = useRef(initialPresentation?.presentationId ?? null);
   const categoriesBusy = useRef(false);
   const active = useRef(true);
 
@@ -58,16 +66,29 @@ export function Practice({ session, initialPresentation = null, onHandoffConsume
     active.current = true;
     if (initialPresentation) onHandoffConsumed?.(initialPresentation.presentationId);
     void loadCategories();
-    return () => { active.current = false; };
+    return () => { active.current = false; reportRequestId.current++; };
   }, []);
 
+  function resetReport(nextPresentationId: string | null) {
+    reportRequestId.current++;
+    reportBusy.current = false;
+    visiblePresentationId.current = nextPresentationId;
+    setReportOpen(false); setReportDetails(''); setReportPending(false); setReportError(null); setReportedPresentation(null);
+  }
+
+  function leave(action: () => void) {
+    active.current = false;
+    reportRequestId.current++;
+    action();
+  }
+
   async function request(submit: boolean) {
-    if (busy.current || favoriteBusy.current || !active.current || (!submit && !categories) || (submit && (!presentation || !choice || answer || closed))) return;
+    if (busy.current || favoriteBusy.current || reportBusy.current || !active.current || (!submit && !categories) || (submit && (!presentation || !choice || answer || closed))) return;
     busy.current = true; setPending(true); setError(false);
     const current = presentation;
     const selected = choice;
     const categoryId = selectedCategoryId;
-    if (!submit) { setPresentation(null); setChoice(null); setAnswer(null); setAttempted(false); setClosed(false); setFavoriteError(false); setSavedPresentationId(null); }
+    if (!submit) { resetReport(null); setPresentation(null); setChoice(null); setAnswer(null); setAttempted(false); setClosed(false); setFavoriteError(false); setSavedPresentationId(null); }
     else setAttempted(true);
     setMessage(submit ? 'Checking your answer…' : 'Finding your next question…');
     try {
@@ -96,14 +117,17 @@ export function Practice({ session, initialPresentation = null, onHandoffConsume
           !current.question.choices.some((item) => item.id === result.correctChoiceId) ||
           result.isCorrect !== (result.selectedChoiceId === result.correctChoiceId)) throw new Error();
         setAnswer(result); setMessage('Answer saved. Take a moment to understand the rule.');
-      } else { setPresentation(presentationSchema.parse(payload)); setMessage('Choose one answer, then submit.'); }
+      } else {
+        const result = presentationSchema.parse(payload);
+        resetReport(result.presentationId); setPresentation(result); setMessage('Choose one answer, then submit.');
+      }
     } catch {
       if (active.current) { setError(true); setMessage(submit ? 'We could not confirm your answer. Check your connection and retry the same answer, or continue with a new question.' : 'We could not load a question. Check your connection and try again.'); }
     } finally { if (active.current) { busy.current = false; setPending(false); } }
   }
 
   async function saveFavorite() {
-    if (busy.current || favoriteBusy.current || !active.current || !presentation) return;
+    if (busy.current || favoriteBusy.current || reportBusy.current || !active.current || !presentation) return;
     const presentationId = presentation.presentationId;
     favoriteBusy.current = true;
     setFavoritePending(true);
@@ -139,12 +163,56 @@ export function Practice({ session, initialPresentation = null, onHandoffConsume
     }
   }
 
-  const scopeLocked = categoriesPending || pending || (!!presentation && !answer);
+  async function submitReport() {
+    if (busy.current || favoriteBusy.current || reportBusy.current || !active.current || !presentation || reportedPresentation?.id === presentation.presentationId) return;
+    const input = practiceReportRequestSchema.safeParse({ presentationId: presentation.presentationId, details: reportDetails });
+    if (!input.success) {
+      setReportError('Enter 3–1000 characters with no surrounding spaces or unsupported control characters.');
+      return;
+    }
+    const presentationId = presentation.presentationId;
+    const requestId = ++reportRequestId.current;
+    reportBusy.current = true; setReportPending(true); setReportError(null);
+    try {
+      const response = await fetch('/practice/report', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.token}` },
+        body: JSON.stringify(input.data), cache: 'no-store', signal: AbortSignal.timeout(15000),
+      });
+      if (!active.current || requestId !== reportRequestId.current || visiblePresentationId.current !== presentationId) return;
+      if (response.status === 401) { active.current = false; reportRequestId.current++; onExpired(); return; }
+      if (response.status === 404) { setReportError('This presentation is no longer available to report. Your details are still here.'); return; }
+      if (response.status === 409) {
+        setReportOpen(false); setReportDetails(''); setReportedPresentation({ id: presentationId, duplicate: true }); return;
+      }
+      if (!response.ok) throw new Error();
+      const payload: unknown = await response.json();
+      if (!active.current || requestId !== reportRequestId.current || visiblePresentationId.current !== presentationId) return;
+      const result = practiceReportResponseSchema.parse(payload);
+      if (result.presentationId !== presentationId) throw new Error();
+      setReportOpen(false); setReportDetails(''); setReportedPresentation({ id: presentationId, duplicate: false });
+    } catch {
+      if (active.current && requestId === reportRequestId.current && visiblePresentationId.current === presentationId) {
+        setReportError('We could not submit this report. Your details are still here. Please retry.');
+      }
+    } finally {
+      if (requestId === reportRequestId.current) {
+        reportBusy.current = false;
+        if (active.current) setReportPending(false);
+      }
+    }
+  }
 
-  return <section className="panel practice" aria-labelledby="practice-title" aria-busy={categoriesPending || pending || favoritePending}>
+  function cancelReport() {
+    if (reportBusy.current) return;
+    setReportOpen(false); setReportDetails(''); setReportError(null);
+  }
+
+  const scopeLocked = categoriesPending || pending || reportPending || (!!presentation && !answer);
+
+  return <section className="panel practice" aria-labelledby="practice-title" aria-busy={categoriesPending || pending || favoritePending || reportPending}>
     <p className="eyebrow accent">02 / ONE QUESTION AT A TIME</p>
     <h2 id="practice-title">Your next step</h2>
-    <div className="panel-nav"><button className="secondary" onClick={() => { active.current = false; onVehicle(); }}>Change vehicle</button><button className="secondary" onClick={() => { active.current = false; onExam(); }}>Mock exam</button><button className="secondary" onClick={() => { active.current = false; onExamHistory(); }}>Exam history</button><button className="secondary" onClick={() => { active.current = false; onProgress(); }}>Progress</button><button className="secondary" onClick={() => { active.current = false; onHistory(); }}>History</button><button className="secondary" onClick={() => { active.current = false; onMistakes(); }}>Mistakes</button><button className="secondary" onClick={() => { active.current = false; onFavorites(); }}>Favorites</button></div>
+    <div className="panel-nav"><button className="secondary" onClick={() => leave(() => onVehicle())}>Change vehicle</button><button className="secondary" onClick={() => leave(onExam)}>Mock exam</button><button className="secondary" onClick={() => leave(onExamHistory)}>Exam history</button><button className="secondary" onClick={() => leave(onProgress)}>Progress</button><button className="secondary" onClick={() => leave(onHistory)}>History</button><button className="secondary" onClick={() => leave(onMistakes)}>Mistakes</button><button className="secondary" onClick={() => leave(onFavorites)}>Favorites</button></div>
     <fieldset className="languages"><legend>Practice language</legend>{(['English', 'Russian', 'Thai'] as const).map((item) => <label key={item}><input type="radio" name="language" checked={language === item} onChange={() => setLanguage(item)} /> {item}</label>)}</fieldset>
     {categories && <fieldset className="practice-scope" disabled={scopeLocked}><legend>Practice scope</legend>
       <label className={selectedCategoryId === null ? 'selected' : ''}><input type="radio" name="practice-scope" value="all" checked={selectedCategoryId === null} onChange={() => setSelectedCategoryId(null)} /><span>All categories</span></label>
@@ -153,8 +221,19 @@ export function Practice({ session, initialPresentation = null, onHandoffConsume
     {presentation && <>
       <h3 className="question">{localized(language, presentation.question.textEnglish, presentation.question.textRussian, presentation.question.textThai)}</h3>
       {presentation.question.textExamEnglish && <details><summary>Exam English wording</summary><p>{presentation.question.textExamEnglish}</p></details>}
-      <button className="secondary favorite-action" disabled={pending || favoritePending || savedPresentationId === presentation.presentationId} onClick={() => void saveFavorite()}>{favoritePending ? 'Saving favorite…' : savedPresentationId === presentation.presentationId ? 'Saved to favorites' : favoriteError ? 'Retry favorite' : 'Save to favorites'}</button>
-      <fieldset className="answers" disabled={pending || attempted || !!answer || closed}><legend className="sr-only">Answer choices</legend>{presentation.question.choices.map((item) => <label className={`answer-choice ${choice === item.id ? 'selected' : ''}`} key={item.id}>
+      <button className="secondary favorite-action" disabled={pending || favoritePending || reportPending || savedPresentationId === presentation.presentationId} onClick={() => void saveFavorite()}>{favoritePending ? 'Saving favorite…' : savedPresentationId === presentation.presentationId ? 'Saved to favorites' : favoriteError ? 'Retry favorite' : 'Save to favorites'}</button>
+      {reportedPresentation?.id === presentation.presentationId
+        ? <p className="report-state" role="status">{reportedPresentation.duplicate ? 'Report already submitted' : 'Report submitted'}</p>
+        : reportOpen
+          ? <form className="report-form" onSubmit={(event) => { event.preventDefault(); void submitReport(); }}>
+            <label htmlFor="report-details">What may be wrong with this question?</label>
+            <p id="report-guidance">Describe the suspected issue only. A report is an allegation for human review and does not confirm an error.</p>
+            <textarea id="report-details" name="report-details" rows={5} value={reportDetails} disabled={reportPending} aria-describedby={`report-guidance${reportError ? ' report-error' : ''}`} onChange={(event) => { setReportDetails(event.target.value); setReportError(null); }} />
+            {reportError && <p id="report-error" className="inline-error" role="alert">{reportError}</p>}
+            <div className="report-controls"><button className="secondary" type="button" disabled={reportPending} onClick={cancelReport}>Cancel</button><button className="primary" type="submit" disabled={reportPending}>{reportPending ? 'Submitting report…' : 'Submit report'}</button></div>
+          </form>
+          : <button className="secondary report-action" disabled={pending || favoritePending} onClick={() => { setReportOpen(true); setReportError(null); }}>Report question</button>}
+      <fieldset className="answers" disabled={pending || reportPending || attempted || !!answer || closed}><legend className="sr-only">Answer choices</legend>{presentation.question.choices.map((item) => <label className={`answer-choice ${choice === item.id ? 'selected' : ''}`} key={item.id}>
         <input type="radio" name="answer" checked={choice === item.id} onChange={() => setChoice(item.id)} />
         <span>{item.key}. {localized(language, item.textEnglish, item.textRussian, item.textThai)}{answer?.correctChoiceId === item.id && <strong> — Correct answer</strong>}{answer?.selectedChoiceId === item.id && <strong> — Your answer</strong>}</span>
       </label>)}</fieldset>
@@ -162,8 +241,8 @@ export function Practice({ session, initialPresentation = null, onHandoffConsume
     </>}
     <div className={`message ${error ? 'error' : ''}`} role={error ? 'alert' : 'status'}><p>{message}</p></div>
     {!categories && !categoriesPending && <button className="primary" onClick={() => void loadCategories()}>Retry categories</button>}
-    {presentation && !answer && !closed && <button className="primary" disabled={pending || favoritePending || !choice} onClick={() => void request(true)}>{pending || favoritePending ? 'Please wait…' : attempted ? 'Retry answer' : 'Submit answer'}</button>}
-    {categories && (!presentation || answer || attempted || closed) && <button className="primary next" disabled={pending || favoritePending} onClick={() => void request(false)}>{pending || favoritePending ? 'Please wait…' : presentation ? 'Continue' : 'Get a question'}</button>}
+    {presentation && !answer && !closed && <button className="primary" disabled={pending || favoritePending || reportPending || !choice} onClick={() => void request(true)}>{pending || favoritePending ? 'Please wait…' : attempted ? 'Retry answer' : 'Submit answer'}</button>}
+    {categories && (!presentation || answer || attempted || closed) && <button className="primary next" disabled={pending || favoritePending || reportPending} onClick={() => void request(false)}>{pending || favoritePending ? 'Please wait…' : presentation ? 'Continue' : 'Get a question'}</button>}
   </section>;
 }
 
