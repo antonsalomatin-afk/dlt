@@ -287,3 +287,52 @@ message `Candidate status failed. No status report was produced.` This inventory
 is informational. It does not review or approve content, establish legal
 permission or official accuracy, authorize production use, or replace the
 separate import, review and activation manifests.
+
+### Inspect learner reports
+
+A trusted local operator can inspect the complete bounded set of saved practice
+and exam allegations with:
+
+```sh
+pnpm content:inspect-reports
+```
+
+The command accepts exactly zero arguments. It validates `DATABASE_URL` with the
+existing loopback-only PostgreSQL policy before creating a client, creates no
+other network client, and always disconnects a created client. Inspection runs
+inside one repeatable-read, explicitly read-only transaction. Counts and items
+therefore describe one database snapshot, and the command never creates,
+updates, deletes, repairs or locks rows for modification.
+
+Success writes one compact strict version 1 JSON object with exactly
+`{ version, summary, items }`. `summary` is exactly `{ total, practice, exam }`.
+At most 500 combined reports are permitted; a larger inventory fails rather
+than truncating or paginating. Items are sorted across both kinds by creation
+time descending, report ID descending, then kind ascending. Every item is
+exactly `{ reportId, kind, createdAt, details, questionId, anchorId, snapshot }`,
+where `kind` is `PRACTICE` or `EXAM`, `anchorId` identifies the immutable
+`QuestionPresentation` or `ExamQuestion`, and `snapshot` is the strictly
+validated saved version 1 question evidence including four choices, the saved
+correct choice and explanations. IDs and timestamps are canonical. Stored
+details are revalidated through the same exact contract used when reports are
+submitted.
+
+The output is confidential because it includes learner-written allegation text
+and complete immutable question evidence. It never includes learner or Telegram
+identity, names, credentials, auth/session data, answer attempts, the learner's
+selected choice or correctness outcome, favorites, progress, learning state,
+exam-session identity/timing/score/result, current mutable question content or
+lifecycle/source/reviewer metadata, database URLs, local paths or SQL.
+
+Malformed arguments or configuration, unavailable PostgreSQL, query failures,
+more than 500 reports, count mismatches, duplicate identities, malformed details,
+IDs, timestamps or snapshots, and inconsistent report/anchor/session/question
+tuples all exit nonzero with no stdout. Stderr contains only
+`Report inspection failed. No report inventory was produced.` No partial
+inventory is emitted.
+
+This inventory is for confidential local human inspection only. It does not
+mark a report reviewed, triaged, dismissed, resolved or actionable and does not
+change verification, activation, legal status, current content or exam results.
+It is not an admin API/UI, moderation action, triage manifest or production-data
+access mechanism.

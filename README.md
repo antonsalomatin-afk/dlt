@@ -280,6 +280,22 @@ review-metadata presence; the report never includes content, reviewer identity,
 timestamps, database IDs or credentials. It is informational and grants no
 review, legal or production approval.
 
+Inspect all saved learner allegations and their immutable practice/exam question
+evidence in a local development database with:
+
+```sh
+pnpm content:inspect-reports
+```
+
+This confidential operator command accepts no arguments, requires the strict
+loopback PostgreSQL configuration, and emits one bounded deterministic JSON
+inventory. It runs in one repeatable-read, explicitly read-only transaction and
+never includes learner/session identity, answer outcomes, exam results, current
+mutable content, SQL or credentials. It does not mark allegations reviewed,
+triaged, dismissed, resolved or actionable, and it does not change content
+verification, activation, legal status or exam results. See
+[content conventions](content/README.md) for the exact output and failure contract.
+
 ## Telegram bot
 
 `apps/bot` uses grammY. Its factory registers `/start` without network access or
