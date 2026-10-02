@@ -104,7 +104,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-052 — ACCEPTED — submit authenticated reports for presented practice questions
 - TASK-053 — ACCEPTED — submit practice-question reports in the Mini App
 - TASK-054 — ACCEPTED — submit authenticated reports for owned exam questions
-- TASK-055 — PLANNED — submit exam-question reports in the Mini App
+- TASK-055 — READY — submit exam-question reports in the Mini App
 - TASK-056 — PLANNED — inspect and triage reports offline
 - auditability
 

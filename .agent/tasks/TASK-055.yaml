@@ -1,0 +1,34 @@
+id: TASK-055
+title: Submit exam-question reports in the Mini App
+status: READY
+epic: Epic 7 — Content Operations
+objective: Let a learner report a suspected issue with the exact immutable exam question currently visible during an exam or completed-mistake review.
+acceptance:
+  - Every visible current-exam question and completed exam-mistake snapshot offers an accessible bounded report form tied to its examQuestionId.
+  - Submission sends one exact authenticated POST /exam/report request and strictly validates the accepted response before showing presentation-specific success.
+  - Report state preserves exam answers, navigation, timer, completion/result and review content and never reveals or changes hidden correctness.
+  - Local validation, pending state, retryable failures, unavailable questions, conflicts, session expiry and stale responses are deterministic and safe.
+  - One UI request may be active at a time in each mounted exam/review; duplicate submission and cross-question state races are prevented without pausing the exam clock.
+  - Browser and source-level tests cover active-exam and completed-review entry, request integrity, validation, success/retry/error behavior, timer/race guards, navigation and regressions.
+files_allowed:
+  - apps/web/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+dependencies:
+  - TASK-054
+owner_decision_required: false
+supervisor_refinement:
+  - Add an accessible Report question action beside the exact current ExamQuestion during an active/resumed exam and inside each immutable mistake card in completed exam review. Do not add report actions to exam-history summaries, perfect-review empty states, practice screens or content that is not currently rendered.
+  - Use a small shared exam-report form/controller when it reduces duplicated security and race logic. The form collects multiline allegation details with the same visible guidance and exact validation policy as accepted practice reports. It may be opened before or after an exam answer and for answered or unanswered review mistakes; reporting never submits an answer or changes exam/review data.
+  - Add strict browser schemas for request exactly `{ examQuestionId, details }` and response exactly `{ reportId, examQuestionId, createdAt }`, with lowercase UUIDs, canonical UTC time and the accepted trimmed 3-1000 Unicode-scalar/LF-only-control/lone-surrogate/4000-byte text rules. Do not trim or normalize text. Add only the explicit same-origin `/exam/report` rewrite.
+  - Send JSON with the in-memory bearer token, no-store caching and the accepted 15-second timeout. Require the successful response examQuestionId to equal the captured visible question. Keep details only in mounted React memory until cancel, success/conflict or unmount; never log, URL-encode, persist or render them after completion.
+  - Use synchronous guards so one report request can be active at a time in the mounted Exam and one in the mounted ExamHistory review, including same-turn clicks across different questions. While reporting in an active exam, disable answer submission, answer choices, question navigator and previous/next controls so state cannot cross questions. In review, disable all report mutations while one is pending. Ordinary leave/back navigation remains immediate and invalidates late report callbacks.
+  - The exam countdown must continue while a report form is open or pending. Reporting must not extend expiry, suppress automatic completion or change the completion request. If expiry/completion replaces the question view, unmount/invalidate the form and ignore its late success/error/401 without altering the authoritative exam result.
+  - A validated 200 closes and clears that form and records Report submitted only for its examQuestionId during the current mounted exam/review. 409 closes it and records Report already submitted without claiming the current text was saved. Reopening a previously marked question in the same mount retains its presentation-specific status and offers no second action; a freshly loaded exam/review starts with no inferred report status because no read endpoint exists.
+  - Transport, timeout, 400, other HTTP and malformed/mismatched 200 preserve the exact text and form with retryable safe guidance. 404 preserves the visible question/card and says it is unavailable to report. 401 expires the active in-memory session. Cancel clears unsent text and its local error. Switching questions with no pending request closes and clears an unsent active-exam form; review cards keep unsent form state only while that exact review remains mounted.
+  - Playwright coverage must prove active-exam and completed-mistake-review placement; no action on history/perfect review; local invalid-input no-request cases; exact emoji/newline body and bearer header; strict success identity; before/after-answer success; cross-question and same-turn guards; timer continuation and expiry/completion staleness; transport/HTTP/400/404/409/401; malformed/mismatched success; cancel, question switching, back/leave staleness; per-question success retention; and unchanged exam answer/completion/history/review behavior. Add focused source tests for schemas and rewrite.
+  - Update concise Mini App documentation. No backend, schema, API contract, report listing/edit/delete/resolution, content mutation, timer/scoring policy, practice-report change, notification, moderation, dependency, credential, production content or deployment change belongs in this task.
