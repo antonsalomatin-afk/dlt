@@ -1,6 +1,6 @@
 id: TASK-057
 title: Apply explicit report triage decisions offline
-status: REVIEW
+status: ACCEPTED
 epic: Epic 7 — Content Operations
 objective: Let a trusted local operator atomically record one final explicit triage decision against the exact immutable evidence of each selected practice or exam report, without changing learner, exam or question content state.
 acceptance:
@@ -27,6 +27,8 @@ owner_decision_required: false
 builder_commit: e6faafd7a871c79c2bfcec70eb562458e7582721
 authoritative_checks: .agent/checks/TASK-057-checks-01.txt
 review_attempt: 1
+accepted_commit: e6faafd7a871c79c2bfcec70eb562458e7582721
+review_file: .agent/reviews/TASK-057-review-01.md
 supervisor_refinement:
   - Add one shared `ReportTriageDecision` enum with exactly `ACTION_REQUIRED` and `NO_ACTION_REQUIRED`. Add nullable `triageDecision`, `triagedBy` and millisecond-timestamptz `triagedAt` fields to both QuestionReport and ExamQuestionReport. A database CHECK on each table must permit either all three null or all three non-null; add a useful decision/time/id index. The additive migration leaves all accepted rows pending and preserves report keys, foreign keys, creation data and deletion behavior.
   - Add `pnpm content:triage-reports -- path/to/report-triage.json`. Accept exactly one nonblank file path, validate arguments and the complete bounded file before reading DATABASE_URL or creating a client, enforce the existing loopback-only PostgreSQL policy, create no other network client, and always disconnect a created client.
