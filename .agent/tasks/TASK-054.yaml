@@ -1,6 +1,6 @@
 id: TASK-054
 title: Submit authenticated reports for owned exam questions
-status: REVIEW
+status: ACCEPTED
 epic: Epic 7 — Content Operations
 objective: Let an authenticated learner submit one bounded issue report against an immutable exam-question snapshot they own, without changing exam or content state.
 acceptance:
@@ -25,6 +25,8 @@ owner_decision_required: false
 builder_commit: 8f4338a3e84e59d9e387a26ca96f54cfd71d0367
 authoritative_checks: .agent/checks/TASK-054-checks-01.txt
 review_attempt: 1
+accepted_commit: 8f4338a3e84e59d9e387a26ca96f54cfd71d0367
+review_file: .agent/reviews/TASK-054-review-01.md
 supervisor_refinement:
   - Add a separate ExamQuestionReport model and additive migration; do not rename, rewrite or merge accepted QuestionReport rows. Store UUID id, userId, questionId, examSessionId, globally unique examQuestionId, exact details and createdAt. Add relations and composite uniqueness needed for database-enforced ownership: the report tuple must reference the same ExamSession/user and ExamQuestion/session/question. Cascade report deletion with its learner/session and restrict source question or exam-question deletion while independently retained. Add question- and learner-chronological indexes for later administration.
   - Extend ExamSession with a unique `(id, userId)` tuple and ExamQuestion with a unique `(id, examSessionId, questionId)` tuple solely to support those composite foreign keys. Preserve all existing IDs, rows, exam selection, answer, completion, history and deletion semantics; no backfill or mutable exam-report status belongs here.
