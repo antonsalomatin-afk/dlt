@@ -1,6 +1,6 @@
 id: TASK-059
 title: Present one stable daily practice question
-status: BUILDING
+status: CHECKING
 epic: Epic 8 — Telegram Engagement
 objective: Give each authenticated learner one immutable answer-safe practice question for each Thailand calendar date, stable across repeated and concurrent requests.
 acceptance:
@@ -21,10 +21,12 @@ required_checks:
 dependencies:
   - TASK-058
 owner_decision_required: false
+builder_commit: 1a51fa8eb053792660663c86b9446941f53e3c51
+review_attempt: 0
 checkpoint:
   - Builder implementation is present but uncommitted on codex/task-059. Focused unit tests (5) and isolated daily API/migration tests (7) passed; `pnpm check` passed with 268 tests and `pnpm prisma validate` passed.
   - A full integration run exposed a load-sensitive same-user concurrency failure after focused concurrency coverage passed. The Builder was diagnosing and hardening bounded convergence when the Supervisor stopped work at the user-authorized usage checkpoint.
-  - Resume with the existing working tree, inspect the concurrency response/conflict metadata and tests/concept-attribution.integration.test.ts changes, finish the fix, rerun every required gate, then commit atomically. Do not discard the working tree or start another task.
+  - Resumed after natural reset. Builder confirmed exact P2002 metadata, expanded the still-bounded retry window, made historical migration tests schema-stage-aware, passed every gate and committed atomically.
 supervisor_refinement:
   - Add nullable `dailyDate DateTime? @db.Date` to QuestionPresentation and a unique `(userId, dailyDate)` constraint. Existing and ordinary future presentations keep null. The additive migration must preserve all rows, report/favorite/answer relations and deletion behavior; PostgreSQL null uniqueness must allow unlimited ordinary presentations.
   - Add strict shared request/response contracts for authenticated `POST /practice/daily`. Accept only no body or the exact empty JSON object and an empty query. Return exactly `{ day, presentationId, answered, question }`, where day is canonical `YYYY-MM-DD`, answered is boolean, and question is the accepted pre-answer presentation shape with exactly four choices. Add the route to no-store handling.
