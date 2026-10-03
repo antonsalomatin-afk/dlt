@@ -13,12 +13,12 @@
   "notes": "TASK-060 Builder cycle started on codex/task-060 from readiness commit 61ee169.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 36,
-    "latestObservedWeeklyUsedPercent": 67,
+    "latestObservedUsedPercent": 45,
+    "latestObservedWeeklyUsedPercent": 68,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-08T16:13:50.000Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-03T15:24:38.523Z",
+    "checkedAt": "2026-10-03T15:26:48.549Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization."
   },
   "executionPaused": false,
