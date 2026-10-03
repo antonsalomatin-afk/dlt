@@ -23,6 +23,19 @@ export const presentedQuestionSchema = z.strictObject({
     .refine((choices) => new Set(choices.map((choice) => choice.id)).size === 4 && new Set(choices.map((choice) => choice.key)).size === 4),
 });
 export const presentationSchema = z.strictObject({ presentationId: z.uuid(), question: presentedQuestionSchema });
+const dailyPracticeDaySchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/u).refine((value) => {
+  const instant = new Date(`${value}T00:00:00.000Z`);
+  return !Number.isNaN(instant.getTime()) && instant.toISOString() === `${value}T00:00:00.000Z`;
+});
+export const dailyPracticeResponseSchema = z.strictObject({
+  day: dailyPracticeDaySchema,
+  presentationId: z.uuid().refine((value) => value === value.toLowerCase()),
+  answered: z.boolean(),
+  question: presentedQuestionSchema,
+}).superRefine(({ question }, context) => {
+  if (question.id !== question.id.toLowerCase()) context.addIssue({ code: 'custom', path: ['question', 'id'], message: 'Question ID must be canonical' });
+  if (question.choices.some(({ id }) => id !== id.toLowerCase())) context.addIssue({ code: 'custom', path: ['question', 'choices'], message: 'Choice IDs must be canonical' });
+});
 export const retryMistakeErrorSchema = z.strictObject({
   error: z.enum([
     'Unauthorized',
@@ -39,6 +52,7 @@ export const answerSchema = z.strictObject({
   trapExplanationThai: translation, trapExplanationEnglish: translation, trapExplanationRussian: translation,
 });
 export type Presentation = z.infer<typeof presentationSchema>;
+export type DailyPractice = z.infer<typeof dailyPracticeResponseSchema>;
 export type Answer = z.infer<typeof answerSchema>;
 export type PresentedQuestion = z.infer<typeof presentedQuestionSchema>;
 

@@ -638,7 +638,7 @@ true; assignment itself creates no answer or learning-state update.
 
 This endpoint is an on-demand assignment. It is not a notification campaign,
 reminder, scheduler, queue, bot message, or promise that different learners see
-the same question. There is no Mini App surface for it in this task.
+the same question. The authenticated Mini App surface is documented below.
 
 ### Retry a practice mistake by concept
 
@@ -921,7 +921,7 @@ credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
 `/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
 `/me/concept-progress`,
-`/practice/categories`, `/practice/next`, `/practice/retry-mistake`, `/practice/answer`,
+`/practice/categories`, `/practice/next`, `/practice/daily`, `/practice/retry-mistake`, `/practice/answer`,
 `/practice/favorite` and `/practice/report`, plus `/exam/current`, `/exam/start`, `/exam/answer`,
 `/exam/complete`, `/exam/report`, `/exam/history` and `/exam/:examId/review` only.
 Set the destination before building; rewrites are
@@ -959,6 +959,16 @@ explanations fall back to English. Answers remain selected after a connection fa
 Retry sends the same IDs. An already-submitted response offers a new question without
 reconstructing a score. Sessions stay in memory; expired sessions require reopening from
 Telegram.
+
+With a saved vehicle, **Today’s question** is available from setup and ordinary practice.
+Opening it makes one authenticated `POST /practice/daily` request with exact `{}` and keeps
+the validated assignment only in React memory. An unanswered assignment uses the normal
+`/practice/answer` boundary and retains its validated result without loading another daily
+question. Reopening an already answered assignment shows the immutable question and a
+completion state without reconstructing or exposing an answer. History and ordinary
+practice remain explicit destinations. English is the default; Russian and Thai wording
+fall back to English. Empty content can be retried, a missing vehicle returns to setup for
+selection, and expired sessions require reopening from Telegram.
 
 Every visible practice presentation can be reported before or after answering. The accessible
 form sends the exact, validated presentation ID and allegation text through the explicit

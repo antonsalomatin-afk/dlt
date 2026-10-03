@@ -54,6 +54,10 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 .answer-choice { display: flex; align-items: baseline; gap: 10px; border: 1px solid #dce0d4; border-radius: 12px; padding: 14px; font-size: 14px; line-height: 1.5; cursor: pointer; }
 .answer-choice.selected { border-color: #3e674f; background: #eef1e5; }
 .answers:disabled .answer-choice { cursor: default; }
+.daily-complete-choices { display: grid; gap: 10px; margin: 20px 0 0; padding: 0; list-style: none; }
+.daily-complete-choices li { border: 1px solid #dce0d4; border-radius: 12px; padding: 14px; color: #59675e; font-size: 14px; line-height: 1.5; }
+.daily-complete-actions { display: grid; gap: 4px; margin-top: 12px; }
+.daily-complete-actions .secondary { justify-self: center; }
 .practice input { accent-color: #31563f; }
 .practice details { font-size: 13px; line-height: 1.5; }
 .practice summary { cursor: pointer; }
