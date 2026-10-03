@@ -1,6 +1,6 @@
 id: TASK-058
 title: Inspect report triage audit state offline
-status: READY
+status: BUILDING
 epic: Epic 7 — Content Operations
 objective: Give a trusted local operator one deterministic read-only audit view of every practice and exam report's pending or final triage state, including who decided it and when, without exposing learner identity or report evidence.
 acceptance:
