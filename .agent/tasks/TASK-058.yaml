@@ -1,6 +1,6 @@
 id: TASK-058
 title: Inspect report triage audit state offline
-status: BUILDING
+status: CHECKING
 epic: Epic 7 — Content Operations
 objective: Give a trusted local operator one deterministic read-only audit view of every practice and exam report's pending or final triage state, including who decided it and when, without exposing learner identity or report evidence.
 acceptance:
@@ -22,6 +22,8 @@ required_checks:
 dependencies:
   - TASK-057
 owner_decision_required: false
+builder_commit: 048c1523c59c73c5fdf054622fd28af3cb0548f6
+review_attempt: 0
 supervisor_refinement:
   - Add `pnpm content:inspect-report-triage` and accept exactly zero arguments. Validate arguments before reading DATABASE_URL or creating a client. Require the accepted loopback-only PostgreSQL policy, create no network client other than that database, always disconnect a created client and never read or write production configuration.
   - Execute the complete audit in one repeatable-read, explicitly read-only transaction. Read both report tables with the exact immutable QuestionPresentation or ExamQuestion evidence and ownership tuple used by TASK-056, plus the three TASK-057 triage fields. Reuse the accepted inspection projector to revalidate every hidden allegation, snapshot, canonical ID/timestamp and duplicated report/anchor/source-question/session relationship before emitting audit metadata.
