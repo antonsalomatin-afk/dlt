@@ -107,7 +107,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-055 — ACCEPTED — submit exam-question reports in the Mini App
 - TASK-056 — ACCEPTED — inspect learner question reports offline
 - TASK-057 — ACCEPTED — apply explicit report triage decisions offline
-- auditability
+- TASK-058 — READY — inspect report triage audit state offline
 
 ## Epic 8 — Telegram Engagement
 

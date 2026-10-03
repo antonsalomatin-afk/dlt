@@ -1,0 +1,35 @@
+id: TASK-058
+title: Inspect report triage audit state offline
+status: READY
+epic: Epic 7 — Content Operations
+objective: Give a trusted local operator one deterministic read-only audit view of every practice and exam report's pending or final triage state, including who decided it and when, without exposing learner identity or report evidence.
+acceptance:
+  - A dedicated no-argument CLI reads only loopback PostgreSQL and emits one bounded deterministic JSON audit inventory of practice and exam report triage state.
+  - Every item identifies the report kind and immutable report/question/anchor references and exposes either a pending state or the complete validated final decision tuple.
+  - The audit inventory omits learner/session identity, allegation text, question snapshots/content, credentials, learning/exam outcomes and mutable Question state.
+  - Corrupt report evidence, ownership relationships or triage tuples, excessive inventory size, invalid configuration and database failures fail closed with no partial stdout or writes.
+  - Documentation and automated tests cover deterministic combined ordering, exact summaries and projection, pending/decided integrity, privacy, bounds, safe lifecycle failures and proof of read-only behavior.
+files_allowed:
+  - tools/content/**
+  - tests/**
+  - package.json
+  - README.md
+  - content/README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-057
+owner_decision_required: false
+supervisor_refinement:
+  - Add `pnpm content:inspect-report-triage` and accept exactly zero arguments. Validate arguments before reading DATABASE_URL or creating a client. Require the accepted loopback-only PostgreSQL policy, create no network client other than that database, always disconnect a created client and never read or write production configuration.
+  - Execute the complete audit in one repeatable-read, explicitly read-only transaction. Read both report tables with the exact immutable QuestionPresentation or ExamQuestion evidence and ownership tuple used by TASK-056, plus the three TASK-057 triage fields. Reuse the accepted inspection projector to revalidate every hidden allegation, snapshot, canonical ID/timestamp and duplicated report/anchor/source-question/session relationship before emitting audit metadata.
+  - Bound the complete combined inventory to at most 500 reports. Detect a larger total inside the same database snapshot and fail rather than truncate or paginate. Sort practice and exam items together by report createdAt descending, then reportId descending, then kind ascending. Counts and items must come from the same snapshot.
+  - Capture one command clock before database access. A pending report must have all three triage fields null. A decided report must have a recognized decision, a triagedBy value satisfying the accepted strict reviewer-identity contract, and a canonical triagedAt no earlier than report creation and no later than the command clock. Any partial tuple or invalid temporal/identity value makes the complete audit fail.
+  - Emit one compact strict version 1 JSON object with summary exactly `{ total, practice, exam, pending, actionRequired, noActionRequired }` and `items`. Each item is exactly `{ reportId, kind, createdAt, questionId, anchorId, triage }`; `triage` is exactly `null` for pending or `{ decision, triagedBy, triagedAt }` for a final decision. Use canonical UUIDs/timestamps and the same deterministic kind values as TASK-056.
+  - This is a confidential local operator audit because it includes triagedBy. Output must never contain report details/allegations, snapshots or choice/correctness/explanation text; userId, Telegram/profile data, auth/session tokens or hashes; practice attempts, selected choices, correctness, favorites, progress or learning state; ExamSession identity/timing/score/result; current Question wording/choices/active/verification/reviewer/source metadata; database URLs, paths or SQL.
+  - Any malformed argument, missing/non-loopback configuration, connection/query/disconnect failure, more than 500 reports, count/item mismatch, duplicate identity within a kind, invalid stored report evidence or relationships, malformed/partial triage tuple, invalid decision/operator/timestamp or future/pre-report triage time exits nonzero, writes no stdout and prints only `Report triage inspection failed. No audit inventory was produced.` to stderr. Buffer JSON until inspection and disconnect both succeed.
+  - Unit tests cover strict projection, combined ordering/ties, exact summary for mixed pending and both decisions, 0/500/501 bounds, duplicate reports, every triage tuple/time/operator rejection, and prohibited-field absence. CLI tests cover extra arguments, clock capture before database access, missing/non-loopback configuration, unavailable database, disconnect failure and the stable no-stdout failure boundary.
+  - Isolated migrated-PostgreSQL tests create practice and exam reports in all valid triage states, prove exact combined output/order and absence of prohibited evidence/identity fields, cover corrupt evidence/tuple/triage data where constraints permit test corruption, enforce the 501 bound, and compare all relevant report, learner, practice, exam and Question rows before and after success/failure to prove no writes or locks for modification.
+  - Document this command as an audit of the current immutable one-time triage state. It neither supplies the allegation evidence used to make a decision nor creates a historical event log, changes/undoes a decision, edits content, contacts a learner, changes an exam result or establishes factual/legal correctness. Preserve the TASK-056 report-inspection contract. No schema/migration, report API/UI, content mutation, notification, admin identity model, dependency, credential, production data or deployment change belongs in this task.
