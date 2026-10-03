@@ -1,0 +1,252 @@
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 150ms
+
+$ tsc --noEmit
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 164ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  49 passed (49)
+      Tests  272 passed (272)
+   Start at  17:36:43
+   Duration  20.56s (tests 73%, import 19%, transform 8%, worker 1%)
+
+    Isolate  49 workers spawned · ~888ms startup each (spawn + environment, per file)
+             at least ~1.18s faster with isolate: false — reuses workers across files instead of one per file
+
+$ pnpm --filter @thai-dlt/web build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 48ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1110ms
+  Running TypeScript ...
+  Finished TypeScript in 1393ms ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/3) ...
+✓ Generating static pages using 4 workers (3/3) in 907ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+$ playwright test
+[WebServer] (node:15052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ pnpm --filter @thai-dlt/web start
+[WebServer] (node:26152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ next start --hostname 127.0.0.1
+[WebServer] (node:49196) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 180 tests using 2 workers
+
+(node:8780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok   1 tests\e2e\concept-progress.spec.ts:83:1 › shows the localized NOT_STARTED state for an empty first page (968ms)
+  ok   2 tests\e2e\concept-progress.spec.ts:43:1 › renders exact mastery and facts in English, Russian and Thai, then traverses tied pages (1.3s)
+  ok   3 tests\e2e\concept-progress.spec.ts:94:3 › retries the same cursor after a transport next-page failure without discarding validated items (894ms)
+  ok   4 tests\e2e\concept-progress.spec.ts:94:3 › retries the same cursor after a http next-page failure without discarding validated items (789ms)
+  ok   5 tests\e2e\concept-progress.spec.ts:94:3 › retries the same cursor after a malformed next-page failure without discarding validated items (509ms)
+  ok   6 tests\e2e\concept-progress.spec.ts:94:3 › retries the same cursor after a duplicate next-page failure without discarding validated items (463ms)
+  ok   7 tests\e2e\concept-progress.spec.ts:118:1 › a concept-progress 401 expires the session (382ms)
+  ok   8 tests\e2e\concept-progress.spec.ts:125:1 › ignores a late concept response after navigation (458ms)
+  ok   9 tests\e2e\concept-progress.spec.ts:144:1 › the synchronous guard prevents overlapping load-more requests (479ms)
+  ok  10 tests\e2e\daily.spec.ts:47:1 › setup entry sends one exact guarded daily request and exposes loading before the safe question (505ms)
+  ok  11 tests\e2e\daily.spec.ts:72:1 › ordinary practice entry opens daily without requesting an ordinary question (545ms)
+  ok  12 tests\e2e\daily.spec.ts:85:1 › submits captured daily IDs once and preserves the validated result without another assignment (589ms)
+  ok  13 tests\e2e\daily.spec.ts:114:1 › answered replay is explicitly complete and discloses no reconstructed result (430ms)
+  ok  14 tests\e2e\daily.spec.ts:126:1 › language selection uses the accepted English fallback policy (532ms)
+  ok  15 tests\e2e\daily.spec.ts:140:3 › handles daily HTTP 401 without rendering unsafe state (431ms)
+  ok  16 tests\e2e\daily.spec.ts:140:3 › handles daily HTTP 404 without rendering unsafe state (439ms)
+  ok  17 tests\e2e\daily.spec.ts:140:3 › handles daily HTTP 409 without rendering unsafe state (445ms)
+  ok  18 tests\e2e\daily.spec.ts:140:3 › handles daily HTTP 500 without rendering unsafe state (465ms)
+  ok  19 tests\e2e\daily.spec.ts:159:3 › retries a transport daily failure exactly once (474ms)
+  ok  20 tests\e2e\daily.spec.ts:159:3 › retries a malformed daily failure exactly once (567ms)
+  ok  21 tests\e2e\daily.spec.ts:176:1 › rejects a malformed answer without replacing the daily snapshot (680ms)
+  ok  22 tests\e2e\daily.spec.ts:189:3 › handles daily answer HTTP 401 without inventing a result (775ms)
+  ok  23 tests\e2e\daily.spec.ts:189:3 › handles daily answer HTTP 409 without inventing a result (728ms)
+  ok  24 tests\e2e\daily.spec.ts:206:1 › leaving while daily loads is immediate and ignores a late expiry (853ms)
+  ok  25 tests\e2e\daily.spec.ts:219:1 › leaving during answer submission ignores the late result (1.2s)
+  ok  26 tests\e2e\exam-history.spec.ts:63:1 › enters from setup and practice and renders pass/fail privacy-safe summaries (1.4s)
+  ok  27 tests\e2e\exam-history.spec.ts:86:1 › shows friendly empty history and returns to setup (980ms)
+  ok  29 tests\e2e\exam-history.spec.ts:113:1 › rejects a duplicate across pages and preserves validated history for retry (573ms)
+  ok  28 tests\e2e\exam-history.spec.ts:94:1 › appends two pages once and retries the exact failed cursor (715ms)
+  ok  30 tests\e2e\exam-history.spec.ts:130:1 › renders a perfect review and preserves history when returning (615ms)
+  ok  31 tests\e2e\exam-history.spec.ts:142:1 › renders incorrect and unanswered immutable mistakes with localization (633ms)
+  ok  32 tests\e2e\exam-history.spec.ts:166:1 › opens a direct perfect review from an authoritative exam result then loads clean history (509ms)
+  ok  33 tests\e2e\exam-history.spec.ts:185:1 › history and review 401 responses clear the in-memory session (534ms)
+  ok  34 tests\e2e\exam-history.spec.ts:199:1 › review 404 and not-completed 409 show stable non-destructive states (523ms)
+  ok  35 tests\e2e\exam-history.spec.ts:212:3 › retries a malformed history response without partial content (462ms)
+  ok  36 tests\e2e\exam-history.spec.ts:212:3 › retries a malformed review response without partial content (538ms)
+  ok  37 tests\e2e\exam-history.spec.ts:229:1 › leaving pending history is immediate and ignores a late 401 (618ms)
+  ok  38 tests\e2e\exam-history.spec.ts:242:1 › back from a pending review preserves history and ignores its late 401 (653ms)
+  ok  39 tests\e2e\exam-report.spec.ts:78:1 › active exam report opens, cancels, validates locally and clears its draft on question switch (1.1s)
+  ok  41 tests\e2e\exam-report.spec.ts:150:1 › reports an answered exam question without changing answer secrecy or navigation (659ms)
+  ok  40 tests\e2e\exam-report.spec.ts:109:1 › active exam sends one exact request, blocks cross-question actions and keeps countdown and per-question success (1.5s)
+  ok  42 tests\e2e\exam-report.spec.ts:168:1 › active exam keeps exact report details through retryable failures (931ms)
+  ok  43 tests\e2e\exam-report.spec.ts:193:1 › active exam distinguishes unavailable, conflict and session expiry (801ms)
+  ok  44 tests\e2e\exam-report.spec.ts:219:1 › leaving an active exam ignores a late report 401 (684ms)
+  ok  46 tests\e2e\exam-report.spec.ts:253:1 › report actions appear only inside completed mistake cards, not summaries or perfect reviews (550ms)
+  ok  47 tests\e2e\exam-report.spec.ts:268:1 › review allows one report request across cards and retains per-question outcomes and drafts (709ms)
+  ok  48 tests\e2e\exam-report.spec.ts:305:1 › back from review is immediate and ignores a late report error (643ms)
+  ok  45 tests\e2e\exam-report.spec.ts:234:1 › expiry completes normally and invalidates a pending report response (2.5s)
+  ok  49 tests\e2e\exam.spec.ts:53:1 › no-current entry starts with exact requests and keeps credentials out of URLs and storage (491ms)
+  ok  50 tests\e2e\exam.spec.ts:75:1 › restores persisted answers, authoritative progress and first unanswered question (520ms)
+  ok  51 tests\e2e\exam.spec.ts:86:1 › a fully answered restored exam completes exactly once and renders the result (719ms)
+  ok  52 tests\e2e\exam.spec.ts:101:1 › saves authoritative progress without early correctness and moves to the next unanswered question (832ms)
+  ok  53 tests\e2e\exam.spec.ts:114:1 › the final answer completes once and renders the authoritative result (890ms)
+  ok  54 tests\e2e\exam.spec.ts:129:1 › exact server expiry clamps the timer and completes with unanswered questions (849ms)
+  ok  56 tests\e2e\exam.spec.ts:155:1 › a 401 clears the in-memory session (582ms)
+  ok  55 tests\e2e\exam.spec.ts:141:1 › localizes with fallback and supports navigator and previous/next controls (949ms)
+  ok  57 tests\e2e\exam.spec.ts:163:1 › vehicle and insufficient-content conflicts recover without inventing an exam (841ms)
+  ok  58 tests\e2e\exam.spec.ts:179:1 › an in-progress start conflict performs one current-exam reload (658ms)
+  ok  59 tests\e2e\exam.spec.ts:197:3 › a transport current-exam failure has a deterministic retry (430ms)
+  ok  60 tests\e2e\exam.spec.ts:197:3 › a malformed current-exam failure has a deterministic retry (494ms)
+  ok  61 tests\e2e\exam.spec.ts:213:1 › opens from practice and reloads current after an answer conflict (559ms)
+  ok  62 tests\e2e\exam.spec.ts:227:1 › leaving during answer submission ignores the stale response (674ms)
+  ok  63 tests\e2e\favorites.spec.ts:71:1 › saves the visible presentation exactly once and blocks answer submission while pending (538ms)
+  ok  64 tests\e2e\favorites.spec.ts:98:3 › preserves the question and retries a transport favorite save failure (640ms)
+  ok  65 tests\e2e\favorites.spec.ts:98:3 › preserves the question and retries a http favorite save failure (627ms)
+  ok  66 tests\e2e\favorites.spec.ts:98:3 › preserves the question and retries a malformed favorite save failure (670ms)
+  ok  67 tests\e2e\favorites.spec.ts:120:1 › handles unavailable and expired favorite saves safely (606ms)
+  ok  68 tests\e2e\favorites.spec.ts:134:1 › favorites navigation is immediate during save and ignores its late response (655ms)
+  ok  69 tests\e2e\favorites.spec.ts:149:1 › a newly loaded presentation starts unsaved after saving the previous one (694ms)
+  ok  70 tests\e2e\favorites.spec.ts:173:1 › renders immutable favorites in server order with localization and returns to clean practice (628ms)
+  ok  71 tests\e2e\favorites.spec.ts:200:1 › appends a second page once and retries the exact failed cursor (576ms)
+  ok  72 tests\e2e\favorites.spec.ts:227:1 › retries initial transport failure and shows the friendly empty state (484ms)
+  ok  73 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with unknown field and allows retry (496ms)
+  ok  74 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with timestamp and allows retry (487ms)
+  ok  75 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with cursor and allows retry (421ms)
+  ok  76 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with duplicate presentation and allows retry (458ms)
+  ok  77 tests\e2e\favorites.spec.ts:242:3 › rejects a favorites page with duplicate question and allows retry (485ms)
+  ok  78 tests\e2e\favorites.spec.ts:267:3 › rejects a duplicate presentation across favorites pages and preserves the first page (659ms)
+  ok  79 tests\e2e\favorites.spec.ts:267:3 › rejects a duplicate question across favorites pages and preserves the first page (553ms)
+  ok  80 tests\e2e\favorites.spec.ts:289:3 › rejects a repeated presentation after the first-page favorite is removed (683ms)
+  ok  81 tests\e2e\favorites.spec.ts:289:3 › rejects a repeated question after the first-page favorite is removed (770ms)
+  ok  83 tests\e2e\favorites.spec.ts:337:1 › a favorites 401 clears the in-memory session (524ms)
+  ok  82 tests\e2e\favorites.spec.ts:315:1 › does not resurrect a removed favorite when pending page validation finishes later (742ms)
+  ok  84 tests\e2e\favorites.spec.ts:344:1 › a removal 401 clears the in-memory session (581ms)
+  ok  85 tests\e2e\favorites.spec.ts:353:1 › leaving favorites ignores a delayed feed response (658ms)
+  ok  86 tests\e2e\favorites.spec.ts:366:1 › removes only after exact confirmation, prevents duplicates, retries failure, and reaches empty state (503ms)
+  ok  87 tests\e2e\favorites.spec.ts:397:1 › leaving during removal is immediate and ignores its late 401 (602ms)
+  ok  89 tests\e2e\history.spec.ts:114:1 › loads two pages once, appends valid items, and preserves the cursor for pagination retry (534ms)
+  ok  88 tests\e2e\history.spec.ts:64:1 › opens owned correct and incorrect history, expands localized snapshots, and returns to clean practice (1.1s)
+  ok  90 tests\e2e\history.spec.ts:143:1 › shows initial loading, retries a transport failure, and returns from empty history to setup (484ms)
+  ok  91 tests\e2e\history.spec.ts:165:3 › rejects malformed history responses and allows retry (618ms)
+  ok  92 tests\e2e\history.spec.ts:165:3 › rejects cross-field history responses and allows retry (758ms)
+  ok  94 tests\e2e\history.spec.ts:201:1 › a history 401 clears the in-memory session (538ms)
+  ok  93 tests\e2e\history.spec.ts:183:1 › rejects duplicate presentation IDs across pages while preserving the valid first page (843ms)
+  ok  95 tests\e2e\history.spec.ts:209:1 › leaving history is immediate and ignores a delayed response (1.0s)
+  ok  96 tests\e2e\mistakes.spec.ts:74:1 › opens mistakes from practice, expands an incorrect localized snapshot, and returns to clean practice (1.4s)
+  ok  97 tests\e2e\mistakes.spec.ts:115:1 › loads two mistake pages once and retries the exact failed pagination cursor (492ms)
+  ok  98 tests\e2e\mistakes.spec.ts:144:1 › shows initial loading, retries a transport failure, and returns from empty mistakes to setup (692ms)
+  ok  99 tests\e2e\mistakes.spec.ts:166:3 › rejects a malformed mistakes response and allows retry (694ms)
+  ok 100 tests\e2e\mistakes.spec.ts:166:3 › rejects a logically-correct mistakes response and allows retry (452ms)
+  ok 101 tests\e2e\mistakes.spec.ts:184:1 › rejects a duplicate presentation on a later mistakes page and preserves validated items (577ms)
+  ok 102 tests\e2e\mistakes.spec.ts:202:1 › a mistakes 401 clears the in-memory session (448ms)
+  ok 103 tests\e2e\mistakes.spec.ts:210:1 › leaving mistakes is immediate and ignores a delayed response (747ms)
+  ok 104 tests\e2e\mistakes.spec.ts:224:1 › starts one exact concept retry, shows it before categories load, answers normally, and consumes the handoff (881ms)
+  ok 105 tests\e2e\mistakes.spec.ts:290:1 › retries the same mistake after transport, HTTP, and malformed success or error failures (778ms)
+  ok 106 tests\e2e\mistakes.spec.ts:319:3 › shows stable non-destructive guidance for Mistake not found (528ms)
+  ok 107 tests\e2e\mistakes.spec.ts:319:3 › shows stable non-destructive guidance for No questions available (509ms)
+  ok 108 tests\e2e\mistakes.spec.ts:319:3 › shows stable non-destructive guidance for Mistake has no concept (439ms)
+  ok 109 tests\e2e\mistakes.spec.ts:331:1 › expires on a validated retry 401 and clears the in-memory session (419ms)
+  ok 110 tests\e2e\mistakes.spec.ts:341:1 › returns a missing-vehicle retry conflict to setup and clears the confirmed choice (480ms)
+  ok 111 tests\e2e\mistakes.spec.ts:351:1 › guards same-turn duplicate retry and retry-versus-pagination overlap (734ms)
+  ok 113 tests\e2e\onboarding.spec.ts:18:1 › missing Telegram data provides launch guidance without login request (361ms)
+  ok 112 tests\e2e\mistakes.spec.ts:383:1 › Back stays available during retry and ignores a late 401 (996ms)
+  ok 114 tests\e2e\onboarding.spec.ts:27:1 › script failure can be retried (504ms)
+  ok 115 tests\e2e\onboarding.spec.ts:36:1 › login, save and change vehicle with in-memory credentials (928ms)
+  ok 116 tests\e2e\onboarding.spec.ts:58:1 › preserves existing preference and prevents pending duplicate saves (501ms)
+  ok 117 tests\e2e\onboarding.spec.ts:74:3 › rejects malformed login response (339ms)
+  ok 118 tests\e2e\onboarding.spec.ts:80:3 › malformed save retains confirmed preference and permits retry (472ms)
+  ok 119 tests\e2e\onboarding.spec.ts:74:3 › rejects transport login response (447ms)
+  ok 120 tests\e2e\onboarding.spec.ts:80:3 › transport save retains confirmed preference and permits retry (750ms)
+  ok 121 tests\e2e\onboarding.spec.ts:74:3 › rejects http login response (434ms)
+  ok 123 tests\e2e\onboarding.spec.ts:90:1 › protected 401 clears session and offers reopening guidance (491ms)
+  ok 122 tests\e2e\onboarding.spec.ts:80:3 › http save retains confirmed preference and permits retry (511ms)
+  ok 124 tests\e2e\practice.spec.ts:46:1 › an empty category list keeps All categories available and sends the exact empty selector (472ms)
+  ok 125 tests\e2e\practice.spec.ts:27:1 › loads categories with bearer auth, preserves server order and localizes labels (484ms)
+  ok 127 tests\e2e\practice.spec.ts:96:3 › retries a category transport failure before enabling questions (771ms)
+  ok 126 tests\e2e\practice.spec.ts:59:1 › selected scope continues, can change after a result and never changes that result (1.2s)
+  ok 128 tests\e2e\practice.spec.ts:96:3 › retries a category http failure before enabling questions (565ms)
+  ok 129 tests\e2e\practice.spec.ts:113:3 › rejects a malformed category payload and allows retry (561ms)
+  ok 130 tests\e2e\practice.spec.ts:113:3 › rejects a duplicate ID category payload and allows retry (453ms)
+  ok 131 tests\e2e\practice.spec.ts:113:3 › rejects a duplicate slug category payload and allows retry (384ms)
+  ok 132 tests\e2e\practice.spec.ts:134:3 › category loading handles HTTP 401 (342ms)
+  ok 133 tests\e2e\practice.spec.ts:134:3 › category loading handles HTTP 409 (446ms)
+  ok 134 tests\e2e\practice.spec.ts:147:1 › shows distinct filtered and unfiltered no-question guidance without changing selection (728ms)
+  ok 135 tests\e2e\practice.spec.ts:166:1 › shows category loading and ignores a late category response after departure (728ms)
+  ok 136 tests\e2e\practice.spec.ts:181:3 › choice 1, server result, language fallback and continuation (982ms)
+  ok 137 tests\e2e\practice.spec.ts:181:3 › choice 2, server result, language fallback and continuation (972ms)
+  ok 138 tests\e2e\practice.spec.ts:181:3 › choice 3, server result, language fallback and continuation (1.1s)
+  ok 139 tests\e2e\practice.spec.ts:181:3 › choice 4, server result, language fallback and continuation (767ms)
+  ok 141 tests\e2e\practice.spec.ts:217:3 › next handles HTTP 401 (480ms)
+  ok 140 tests\e2e\practice.spec.ts:205:1 › one pending submission, transport retry and already-submitted guidance (638ms)
+  ok 142 tests\e2e\practice.spec.ts:217:3 › next handles HTTP 404 (411ms)
+  ok 143 tests\e2e\practice.spec.ts:217:3 › next handles HTTP 409 (420ms)
+  ok 144 tests\e2e\practice.spec.ts:217:3 › next handles HTTP 500 (443ms)
+  ok 145 tests\e2e\practice.spec.ts:226:3 › rejects hidden presentation DTO (475ms)
+  ok 146 tests\e2e\practice.spec.ts:226:3 › rejects duplicate presentation DTO (449ms)
+  ok 147 tests\e2e\practice.spec.ts:226:3 › rejects missing presentation DTO (523ms)
+  ok 148 tests\e2e\practice.spec.ts:233:3 › rejects inconsistent answer presentationId (576ms)
+  ok 149 tests\e2e\practice.spec.ts:233:3 › rejects inconsistent answer selectedChoiceId (598ms)
+  ok 150 tests\e2e\practice.spec.ts:233:3 › rejects inconsistent answer correctChoiceId (592ms)
+  ok 151 tests\e2e\practice.spec.ts:233:3 › rejects inconsistent answer isCorrect (613ms)
+  ok 152 tests\e2e\practice.spec.ts:240:1 › ignores a late response after leaving practice (461ms)
+  ok 153 tests\e2e\practice.spec.ts:246:1 › missing vehicle allows resaving the previously confirmed vehicle (568ms)
+  ok 154 tests\e2e\progress.spec.ts:29:1 › sends one exact no-store progress request and renders a nonempty accessible summary (651ms)
+  ok 155 tests\e2e\progress.spec.ts:68:1 › shows the zero state and localizes the complete view in English, Russian, and Thai (967ms)
+  ok 156 tests\e2e\progress.spec.ts:89:1 › opens without a selected vehicle and returns to setup (780ms)
+  ok 157 tests\e2e\progress.spec.ts:97:1 › returns from progress opened in practice to a clean fresh practice view (765ms)
+  ok 158 tests\e2e\progress.spec.ts:129:3 › shows safe guidance without partial metrics and retries a transport failure (701ms)
+  ok 160 tests\e2e\progress.spec.ts:129:3 › shows safe guidance without partial metrics and retries a malformed failure (559ms)
+  ok 159 tests\e2e\progress.spec.ts:129:3 › shows safe guidance without partial metrics and retries a http failure (673ms)
+  ok 162 tests\e2e\progress.spec.ts:159:3 › rejects the strict fractional progress response and permits retry (426ms)
+  ok 161 tests\e2e\progress.spec.ts:159:3 › rejects the strict missing progress response and permits retry (491ms)
+  ok 163 tests\e2e\progress.spec.ts:159:3 › rejects the strict unsafe progress response and permits retry (523ms)
+  ok 164 tests\e2e\progress.spec.ts:159:3 › rejects the strict negative progress response and permits retry (589ms)
+  ok 165 tests\e2e\progress.spec.ts:159:3 › rejects the strict counts progress response and permits retry (731ms)
+  ok 166 tests\e2e\progress.spec.ts:159:3 › rejects the strict rounding progress response and permits retry (690ms)
+  ok 167 tests\e2e\progress.spec.ts:159:3 › rejects the strict zeroAccuracy progress response and permits retry (554ms)
+  ok 168 tests\e2e\progress.spec.ts:159:3 › rejects the strict nullAccuracy progress response and permits retry (575ms)
+  ok 169 tests\e2e\progress.spec.ts:173:1 › a progress 401 clears the in-memory session (368ms)
+  ok 170 tests\e2e\progress.spec.ts:182:3 › a replacement mount stays authoritative after a stale success (551ms)
+  ok 171 tests\e2e\progress.spec.ts:182:3 › a replacement mount stays authoritative after a stale error (503ms)
+  ok 172 tests\e2e\progress.spec.ts:182:3 › a replacement mount stays authoritative after a stale 401 (551ms)
+  ok 173 tests\e2e\progress.spec.ts:235:1 › the synchronous guard prevents overlapping retries (427ms)
+  ok 175 tests\e2e\report.spec.ts:55:1 › submits exact emoji and newline details once and preserves the unanswered question (930ms)
+  ok 174 tests\e2e\report.spec.ts:29:1 › opens and cancels a report and rejects invalid details without a request (1.5s)
+  ok 176 tests\e2e\report.spec.ts:85:1 › keeps report details retryable across transport, HTTP and invalid success failures (1.0s)
+  ok 177 tests\e2e\report.spec.ts:110:1 › distinguishes unavailable and already-submitted reports (760ms)
+  ok 178 tests\e2e\report.spec.ts:130:1 › expires on report 401 and ignores a late 401 after immediate navigation (819ms)
+  ok 179 tests\e2e\report.spec.ts:145:1 › expires the active in-memory session on a report 401 (670ms)
+  ok 180 tests\e2e\report.spec.ts:155:1 › reports after answering without changing result, favorite, language or the next presentation (1.1s)
+
+  180 passed (1.1m)
