@@ -10,7 +10,7 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-061 refined and ready: persist an explicit default-off daily-question reminder preference without scheduling or delivery scope.",
+  "notes": "TASK-061 refined and ready: persist an explicit default-off daily-question reminder preference without scheduling or delivery scope. Implementation is checkpointed before the Builder cycle at 74 percent five-hour usage to respect the user's 95 percent ceiling.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
     "latestObservedUsedPercent": 74,
@@ -21,8 +21,8 @@
     "checkedAt": "2026-10-03T15:41:55.079Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization."
   },
-  "executionPaused": false,
-  "pauseReason": null,
+  "executionPaused": true,
+  "pauseReason": "Usage checkpoint before TASK-061 Builder cycle at 74 percent; the preceding full task cycle used enough capacity that another could cross the user-authorized 95 percent five-hour ceiling.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
