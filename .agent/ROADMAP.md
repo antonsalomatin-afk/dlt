@@ -113,7 +113,8 @@ At the end of this epic the core end-to-end flow must work.
 
 - TASK-059 — ACCEPTED — present one stable daily practice question
 - TASK-060 — ACCEPTED — use the daily question in the Mini App
-- reminders
+- TASK-061 — READY — persist a daily-question reminder preference
+- reminder preference Mini App controls and Telegram delivery
 - daily/weekly summaries
 - deep links
 

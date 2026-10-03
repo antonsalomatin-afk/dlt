@@ -1,0 +1,38 @@
+id: TASK-061
+title: Persist a daily-question reminder preference
+status: READY
+epic: Epic 8 — Telegram Engagement
+objective: Give each authenticated learner an explicit, default-off persisted preference for future daily-question reminders.
+acceptance:
+  - An additive database migration stores one non-null default-off daily-question reminder boolean per user without changing existing identity, session or learning data.
+  - GET /me/reminders authenticates the session and returns exactly the caller's current reminder preference.
+  - PATCH /me/reminders authenticates before strict input parsing, accepts exactly one boolean preference and atomically returns the persisted value.
+  - Invalid, unauthenticated and error paths do not mutate preferences or expose learner, Telegram, session or learning data.
+  - Existing authentication, user, practice, exam and progress behavior remains unchanged.
+  - Documentation and automated tests cover migration integrity, default state, enable/disable/idempotent updates, ownership, strict boundaries and failure safety.
+files_allowed:
+  - apps/api/**
+  - packages/database/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-060
+owner_decision_required: false
+builder_commit: null
+authoritative_checks: null
+review_attempt: 0
+accepted_commit: null
+review_file: null
+supervisor_refinement:
+  - Add one non-null `dailyQuestionReminderEnabled Boolean @default(false)` field to User through an additive migration. Existing users must receive false, new users default to false and all identity, session, answer, exam, favorite, report, learning and daily-presentation rows and relations must remain unchanged.
+  - Add shared strict request/response contracts for reminders. PATCH accepts exactly `{ dailyQuestionReminderEnabled: boolean }`; GET and PATCH return exactly the same one-key object. Reject extra keys, missing/non-boolean values, any query keys and unsupported content types according to established API policy.
+  - Add authenticated `GET /me/reminders` and `PATCH /me/reminders`. Authenticate before the duplicate-key JSON parser and body/query validation. GET accepts no body. PATCH requires one normal JSON object. Use only the authenticated internal user ID; never accept or infer a target user from request data.
+  - A valid PATCH atomically sets and returns the requested boolean. Repeating the same value is a successful idempotent operation. Independent users remain isolated. Concurrent enable/disable requests may use ordinary database last-committed-write behavior, and each successful response must reflect the value written by that request.
+  - Return the established sanitized 401, 400/415 and 500 behavior. Malformed, duplicate-key, invalid, unauthenticated, expired-session and injected database-failure paths write nothing. Responses must never contain user IDs, Telegram IDs/profile fields, token/session data, timestamps, vehicle state, question/activity data or future delivery metadata.
+  - Do not add reminder state to login, `/me`, progress or other accepted response shapes. Do not change authentication freshness, session behavior, user upsert semantics or last-seen behavior beyond any already-established authenticated-route behavior.
+  - Unit tests cover exact contracts and route no-store classification when relevant. Isolated migrated-PostgreSQL tests cover legacy/new-user defaults, exact GET/PATCH behavior, authentication and validation precedence, enable/disable/idempotence, user isolation, invalid/error rollback, response privacy, and preservation of existing user relations and accepted endpoints.
+  - Update concise API and data-model documentation. No Mini App setting, bot command/message, send time, timezone choice, scheduler/queue, Redis/BullMQ, notification delivery, summary, deep link, external dependency, credential, production data or deployment change belongs in this task.
