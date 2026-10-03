@@ -21,6 +21,10 @@ required_checks:
 dependencies:
   - TASK-058
 owner_decision_required: false
+checkpoint:
+  - Builder implementation is present but uncommitted on codex/task-059. Focused unit tests (5) and isolated daily API/migration tests (7) passed; `pnpm check` passed with 268 tests and `pnpm prisma validate` passed.
+  - A full integration run exposed a load-sensitive same-user concurrency failure after focused concurrency coverage passed. The Builder was diagnosing and hardening bounded convergence when the Supervisor stopped work at the user-authorized usage checkpoint.
+  - Resume with the existing working tree, inspect the concurrency response/conflict metadata and tests/concept-attribution.integration.test.ts changes, finish the fix, rerun every required gate, then commit atomically. Do not discard the working tree or start another task.
 supervisor_refinement:
   - Add nullable `dailyDate DateTime? @db.Date` to QuestionPresentation and a unique `(userId, dailyDate)` constraint. Existing and ordinary future presentations keep null. The additive migration must preserve all rows, report/favorite/answer relations and deletion behavior; PostgreSQL null uniqueness must allow unlimited ordinary presentations.
   - Add strict shared request/response contracts for authenticated `POST /practice/daily`. Accept only no body or the exact empty JSON object and an empty query. Return exactly `{ day, presentationId, answered, question }`, where day is canonical `YYYY-MM-DD`, answered is boolean, and question is the accepted pre-answer presentation shape with exactly four choices. Add the route to no-store handling.
