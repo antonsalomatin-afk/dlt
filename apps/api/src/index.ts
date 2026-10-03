@@ -3,6 +3,15 @@ import Fastify from 'fastify';
 import { z } from 'zod';
 import { Prisma, type PrismaClient } from '../../../packages/database/src/index.ts';
 import { parsePresentationSnapshot, practiceNextRequestSchema, presentationResponseSchema, retryMistakeRequestSchema, selectRetryCandidateSet, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
+import {
+  buildDailyPracticeResponse,
+  dailyPracticeDate,
+  dailyPracticeQuerySchema,
+  dailyPracticeRequestSchema,
+  isRetryableDailyPracticeConflict,
+  retryDailyPractice,
+  thailandCalendarDay,
+} from '../../../packages/database/src/daily-practice.ts';
 import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '../../../packages/database/src/answer.ts';
 import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
 import { practiceCategoriesResponseSchema } from '../../../packages/database/src/practice-categories.ts';
@@ -270,7 +279,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/practice/report', '/exam/start', '/exam/answer', '/exam/complete', '/exam/report', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/daily', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/practice/report', '/exam/start', '/exam/answer', '/exam/complete', '/exam/report', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -503,6 +512,7 @@ export function createApi(options: {
   });
   app.register((practiceApp, _pluginOptions, done) => {
     const authenticatedUsers = new WeakMap<object, z.infer<typeof userSchema>>();
+    const requestInstants = new WeakMap<object, Date>();
     practiceApp.removeContentTypeParser('application/json');
     practiceApp.addContentTypeParser('application/json', { parseAs: 'string' }, (_request, body, parseDone) => {
       if (typeof body !== 'string') {
@@ -513,9 +523,11 @@ export function createApi(options: {
       catch (error) { parseDone(error instanceof BadRequestJsonError ? error : new BadRequestJsonError(), undefined); }
     });
     practiceApp.addHook('onRequest', async (request, reply) => {
-      const user = await authenticatedUser(request.headers.authorization);
+      const requestInstant = now();
+      const user = await authenticatedUser(request.headers.authorization, requestInstant);
       if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
       authenticatedUsers.set(request, user);
+      requestInstants.set(request, requestInstant);
     });
     practiceApp.post('/practice/next', async (request, reply) => {
       const user = authenticatedUsers.get(request);
@@ -556,6 +568,85 @@ export function createApi(options: {
       }, { isolationLevel: 'RepeatableRead' });
       if (!result) return reply.code(404).send(errorSchema.parse({ error: 'No questions available' }));
       return result;
+    });
+    practiceApp.post('/practice/daily', async (request, reply) => {
+      const user = authenticatedUsers.get(request);
+      const requestInstant = requestInstants.get(request);
+      if (!user || !requestInstant) throw new Error('Authenticated daily practice request missing');
+      if (
+        !dailyPracticeQuerySchema.safeParse(request.query).success
+        || !dailyPracticeRequestSchema.safeParse(request.body).success
+      ) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      const day = thailandCalendarDay(requestInstant);
+      const dailyDate = dailyPracticeDate(day);
+
+      const assignDailyPresentation = () => options.database.$transaction(async (transaction) => {
+        const existing = await transaction.questionPresentation.findUnique({
+          where: { userId_dailyDate: { userId: user.id, dailyDate } },
+          select: {
+            id: true,
+            userId: true,
+            questionId: true,
+            dailyDate: true,
+            snapshot: true,
+            answer: { select: { id: true } },
+            question: { select: { id: true } },
+          },
+        });
+        if (existing) {
+          return { kind: 'presentation', response: buildDailyPracticeResponse(existing, user.id, day) } as const;
+        }
+        if (!user.selectedVehicleType) return { kind: 'vehicle-required' } as const;
+        const eligibleQuestion = {
+          vehicleType: user.selectedVehicleType,
+          active: true,
+          verificationStatus: 'VERIFIED',
+        } as const;
+        const eligibleCount = await transaction.question.count({ where: eligibleQuestion });
+        if (eligibleCount === 0) return { kind: 'empty' } as const;
+        const offset = checkedRandomOffset(randomOffset, eligibleCount);
+        const question = await transaction.question.findFirst({
+          where: eligibleQuestion,
+          orderBy: { id: 'asc' },
+          skip: offset,
+          include: { choices: { orderBy: { key: 'asc' } } },
+        });
+        if (!question) throw new Error('Eligible daily question offset did not resolve');
+        const snapshot = snapshotQuestion(question);
+        if (snapshot.question.id !== question.id) throw new Error('Daily question snapshot is inconsistent');
+        const presentation = await transaction.questionPresentation.create({
+          data: {
+            userId: user.id,
+            questionId: question.id,
+            conceptId: question.conceptId,
+            createdAt: requestInstant,
+            dailyDate,
+            snapshot,
+          },
+          select: {
+            id: true,
+            userId: true,
+            questionId: true,
+            dailyDate: true,
+            snapshot: true,
+            answer: { select: { id: true } },
+            question: { select: { id: true } },
+          },
+        });
+        return {
+          kind: 'presentation',
+          response: buildDailyPracticeResponse(presentation, user.id, day),
+        } as const;
+      }, { isolationLevel: 'Serializable', maxWait: 5_000, timeout: 30_000 });
+
+      const result = await retryDailyPractice(assignDailyPresentation, isRetryableDailyPracticeConflict);
+      if (result.kind === 'vehicle-required') {
+        return reply.code(409).send(errorSchema.parse({ error: 'Vehicle selection required' }));
+      }
+      if (result.kind === 'empty') {
+        return reply.code(404).send(errorSchema.parse({ error: 'No questions available' }));
+      }
+      return result.response;
     });
     practiceApp.post('/practice/retry-mistake', async (request, reply) => {
       const user = authenticatedUsers.get(request);

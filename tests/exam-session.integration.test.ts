@@ -124,6 +124,7 @@ describe('mock exam persistence foundation', () => {
       '20261001150000_question_reports',
       '20261002070000_exam_question_reports',
       '20261002160000_report_triage',
+      '20261003060000_daily_practice',
     ]);
 
     const constraints = await database.$queryRaw<Array<{ conname: string }>>`

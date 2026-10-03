@@ -153,9 +153,11 @@ model QuestionPresentation {
   conceptId  String?        @db.Uuid
   concept    Concept?       @relation(fields: [conceptId], references: [id], onDelete: Restrict)
   createdAt  DateTime       @default(now()) @db.Timestamptz(3)
+  dailyDate  DateTime?      @db.Date
   snapshot   Json
 
   @@unique([id, userId, questionId])
+  @@unique([userId, dailyDate])
   @@index([userId])
   @@index([questionId])
   @@index([userId, conceptId])

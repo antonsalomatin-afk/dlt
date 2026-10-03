@@ -123,7 +123,7 @@ describe('historical concept attribution migration', () => {
   it('backfills grouped rows, retains null, and exposes typed optional relations', async () => {
     const presentations = await database.questionPresentation.findMany({
       orderBy: { id: 'asc' },
-      include: { concept: true },
+      select: { id: true, conceptId: true, concept: true },
     });
     const exams = await database.examQuestion.findMany({
       orderBy: { position: 'asc' },
@@ -157,9 +157,11 @@ describe('historical concept attribution migration', () => {
 
     expect((await database.questionPresentation.findUniqueOrThrow({
       where: { id: fixture.groupedPresentationId },
+      select: { conceptId: true },
     })).conceptId).toBe(fixture.originalConceptId);
     expect((await database.questionPresentation.findUniqueOrThrow({
       where: { id: fixture.ungroupedPresentationId },
+      select: { conceptId: true },
     })).conceptId).toBeNull();
     expect((await database.examQuestion.findUniqueOrThrow({
       where: { id: fixture.groupedExamQuestionId },

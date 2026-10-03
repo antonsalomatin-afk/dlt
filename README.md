@@ -608,6 +608,38 @@ reading persisted JSON. Answer submission is described below.
 
 The practice integration suite creates a temporary randomly named database, applies the full migration chain and drops only that database after testing. The local integration database role therefore needs permission to create databases. Imported development fixtures are never activated by this endpoint or its tests.
 
+### Daily practice assignment API
+
+`POST /practice/daily` gives an authenticated learner one stable assignment for
+the current Thailand calendar date. It accepts either no body or exactly `{}`
+and no query keys. Authentication runs before JSON and query validation. The
+request uses one captured server instant for both session expiry and the date,
+with Thailand midnight fixed at UTC+07:00. Every response uses
+`Cache-Control: no-store`.
+
+The first valid request for a day requires a saved vehicle and selects uniformly
+from current active `VERIFIED` questions for that vehicle. No eligible question
+returns `404 { "error": "No questions available" }` without creating a row.
+Success returns exactly `{ day, presentationId, answered, question }`. `day` is
+`YYYY-MM-DD`; `question` is the same four-choice pre-answer shape as ordinary
+practice; and `answered` only indicates whether an answer has been saved. The
+response omits correct choices, correctness, explanations, provenance, category
+and concept data, content lifecycle fields, and learner/session identity.
+
+`QuestionPresentation.dailyDate` is nullable, so ordinary practice presentations
+remain unlimited and unchanged. A unique learner/date constraint makes the daily
+assignment singular. Creation and replay use bounded serializable retries so
+sequential and concurrent same-day requests converge on the committed row.
+Later requests return its validated immutable snapshot even if the source question
+or saved vehicle changes. An existing owned assignment is therefore available
+without a current vehicle selection. After the normal `/practice/answer` route
+accepts an answer, the same daily response changes only `answered` from false to
+true; assignment itself creates no answer or learning-state update.
+
+This endpoint is an on-demand assignment. It is not a notification campaign,
+reminder, scheduler, queue, bot message, or promise that different learners see
+the same question. There is no Mini App surface for it in this task.
+
 ### Retry a practice mistake by concept
 
 `POST /practice/retry-mistake` accepts exactly
