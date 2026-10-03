@@ -1,6 +1,6 @@
 id: TASK-059
 title: Present one stable daily practice question
-status: REVIEW
+status: ACCEPTED
 epic: Epic 8 — Telegram Engagement
 objective: Give each authenticated learner one immutable answer-safe practice question for each Thailand calendar date, stable across repeated and concurrent requests.
 acceptance:
@@ -24,6 +24,8 @@ owner_decision_required: false
 builder_commit: 1a51fa8eb053792660663c86b9446941f53e3c51
 authoritative_checks: .agent/checks/TASK-059-checks-01.txt
 review_attempt: 1
+accepted_commit: 1a51fa8eb053792660663c86b9446941f53e3c51
+review_file: .agent/reviews/TASK-059-review-01.md
 checkpoint:
   - Builder implementation is present but uncommitted on codex/task-059. Focused unit tests (5) and isolated daily API/migration tests (7) passed; `pnpm check` passed with 268 tests and `pnpm prisma validate` passed.
   - A full integration run exposed a load-sensitive same-user concurrency failure after focused concurrency coverage passed. The Builder was diagnosing and hardening bounded convergence when the Supervisor stopped work at the user-authorized usage checkpoint.
