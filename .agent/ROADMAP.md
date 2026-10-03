@@ -112,7 +112,7 @@ At the end of this epic the core end-to-end flow must work.
 ## Epic 8 — Telegram Engagement
 
 - TASK-059 — ACCEPTED — present one stable daily practice question
-- question-of-the-day Mini App experience
+- TASK-060 — READY — use the daily question in the Mini App
 - reminders
 - daily/weekly summaries
 - deep links
