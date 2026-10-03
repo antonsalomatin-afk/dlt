@@ -1,0 +1,35 @@
+id: TASK-059
+title: Present one stable daily practice question
+status: READY
+epic: Epic 8 — Telegram Engagement
+objective: Give each authenticated learner one immutable answer-safe practice question for each Thailand calendar date, stable across repeated and concurrent requests.
+acceptance:
+  - An additive database constraint identifies at most one daily QuestionPresentation per learner and Thailand calendar date while leaving ordinary presentations unchanged.
+  - POST /practice/daily authenticates before strict input parsing, requires a saved vehicle for first assignment and returns one safe immutable daily presentation without answer metadata.
+  - The first request selects from the current active VERIFIED questions for the saved vehicle; later same-day requests return the exact persisted assignment even after source or vehicle changes.
+  - Sequential and concurrent same-day requests converge to one row, day rollover creates a new assignment, and empty/corrupt/error paths write nothing unintended.
+  - Documentation and automated tests cover the Thailand date boundary, eligibility, snapshot/privacy rules, replay, concurrency, migration integrity and interaction with existing practice answering.
+files_allowed:
+  - apps/api/**
+  - packages/database/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-058
+owner_decision_required: false
+supervisor_refinement:
+  - Add nullable `dailyDate DateTime? @db.Date` to QuestionPresentation and a unique `(userId, dailyDate)` constraint. Existing and ordinary future presentations keep null. The additive migration must preserve all rows, report/favorite/answer relations and deletion behavior; PostgreSQL null uniqueness must allow unlimited ordinary presentations.
+  - Add strict shared request/response contracts for authenticated `POST /practice/daily`. Accept only no body or the exact empty JSON object and an empty query. Return exactly `{ day, presentationId, answered, question }`, where day is canonical `YYYY-MM-DD`, answered is boolean, and question is the accepted pre-answer presentation shape with exactly four choices. Add the route to no-store handling.
+  - Authenticate before the practice plugin's duplicate-key JSON parser and capture one request instant for both session-expiry evaluation and daily-date calculation. Define a Thailand calendar date as the Gregorian date at fixed ICT UTC+07:00, with rollover exactly at Thailand midnight. Runtime-validate the captured instant and derived canonical date.
+  - After valid input, require a saved vehicle unless an owned assignment for the derived day already exists. A first assignment selects only active VERIFIED questions matching the currently saved vehicle. Count and uniformly select with the accepted cryptographically secure random-offset default and runtime-checked injected seam; zero eligible rows returns the established 404 `No questions available` without writes.
+  - In a Serializable transaction with bounded conflict retry, first load an owned presentation by `(userId, dailyDate)`. Revalidate its canonical IDs, exact source-question relation and accepted immutable versioned snapshot, including snapshot question ID equality; return that saved question and whether its AnswerAttempt exists without consulting current mutable Question fields or the learner's current vehicle.
+  - If none exists, count/select one eligible question and ordered choices in the same transaction, validate and create the usual complete server-owned immutable snapshot, and create exactly one QuestionPresentation with userId, questionId, conceptId, the captured request time and derived dailyDate. Return answered false. Never expose or persist client-supplied question/snapshot/date data.
+  - Recover only the precise `(userId, dailyDate)` unique conflict or a Prisma serializable-write conflict. Re-run the complete transaction so concurrent same-user requests for the same day all return the committed assignment. Different users and different dates remain independent. Bound retries; exhaustion is sanitized 500 with no extra presentation.
+  - A repeated request returns the same presentationId, saved question wording/choices and day after current source edits, deactivation/rejection, saved-vehicle changes or answer submission; only answered changes from false to true when the existing presentation has an AnswerAttempt. It never returns selectedChoiceId, isCorrect, correctChoiceId, explanations, source/provenance, concept/category, learner identity, or current content lifecycle fields.
+  - Existing `/practice/next`, retry, answer, report, favorite, history, mistakes and progress behavior must remain unchanged. The accepted `/practice/answer` endpoint scores the daily presentation from its snapshot and enforces the same one-answer rule; daily assignment itself does not create an AnswerAttempt or alter learning state.
+  - Unit tests cover strict contracts, canonical Thailand-date derivation around UTC+07:00 midnight, safe response privacy and precise daily unique-conflict classification. Isolated migrated-PostgreSQL tests cover authentication/query/body/vehicle precedence, exact eligibility and random boundaries, no-content/invalid-random/corrupt-source rollback, snapshot stability, answered transition through the real answer route, day rollover, legacy/ordinary null rows, sequential replay, same-user concurrency, different-user isolation, precise response keys and absence of unrelated state changes.
+  - Document this as an on-demand daily assignment, not a notification campaign. There is no promise that different learners receive the same question. No Mini App UI, bot command/message, reminder preference, scheduler/queue, push, summary, deep link, production content, dependency, credential or deployment change belongs in this task.
