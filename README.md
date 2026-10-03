@@ -312,6 +312,21 @@ question verification or activation. The manifest contract, replay behavior,
 and confidential failure boundary are documented in
 [content conventions](content/README.md).
 
+Audit the current pending/final routing state without emitting allegation or
+question evidence with:
+
+```sh
+pnpm content:inspect-report-triage
+```
+
+This no-argument loopback-only command emits a bounded deterministic inventory
+of report references and their current triage tuple. It is read-only and
+confidential because final entries include the operator identity. It is not an
+evidence export or historical event log and does not create, change or undo a
+decision, edit content, contact a learner, affect an exam result, or establish
+factual or legal correctness. The original `content:inspect-reports` evidence
+contract remains unchanged.
+
 ## Telegram bot
 
 `apps/bot` uses grammY. Its factory registers `/start` without network access or

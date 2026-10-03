@@ -394,3 +394,50 @@ change. Both are internal routing judgments only: neither establishes factual
 or legal correctness, contacts the learner, resolves an exam result, edits
 content, or changes verification or activation. This command is not a report UI,
 notification, production-data workflow or deployment mechanism.
+
+### Audit report triage state
+
+Inspect the current one-time routing state of every saved practice and exam
+report with:
+
+```sh
+pnpm content:inspect-report-triage
+```
+
+The command accepts exactly zero arguments, captures one command clock, then
+requires the existing loopback-only PostgreSQL configuration. It creates no
+other network client and disconnects the database before releasing buffered
+output. The complete audit runs in one repeatable-read, explicitly read-only
+transaction and never creates, updates, deletes or locks rows for modification.
+
+Success emits one compact strict version 1 object with exactly
+`{ version, summary, items }`. The summary is exactly
+`{ total, practice, exam, pending, actionRequired, noActionRequired }`. At most
+500 combined reports are allowed; a larger current snapshot fails instead of
+being truncated or paginated. Items are ordered across both kinds by report
+creation time descending, report ID descending, then kind ascending. Every item
+is exactly `{ reportId, kind, createdAt, questionId, anchorId, triage }`.
+`triage` is `null` for pending reports or exactly
+`{ decision, triagedBy, triagedAt }` for a final decision.
+
+Before projecting that metadata, the command revalidates each hidden allegation,
+immutable snapshot, canonical identity and complete practice/exam ownership tuple
+through the accepted report-inspection boundary. Pending rows must have all three
+triage fields null. Final rows must have a recognized decision, an operator that
+satisfies the strict reviewer-identity contract, and a canonical triage time no
+earlier than report creation and no later than the captured command clock. A
+partial or malformed tuple invalidates the complete audit.
+
+This output is confidential because it includes `triagedBy`. It never contains
+allegation details, snapshots, question/choice/correctness/explanation text,
+learner/profile/auth/session identity, practice answers, favorites, progress,
+learning state, exam session identity/timing/score/result, current mutable
+Question content/lifecycle/source/reviewer fields, database configuration, paths
+or SQL. Every failure exits nonzero with no stdout and only
+`Report triage inspection failed. No audit inventory was produced.` on stderr.
+
+The audit shows current immutable one-time triage state. It does not supply the
+evidence used for a decision or create a historical event log. It cannot create,
+change or undo decisions, edit content, contact learners, alter exam results or
+establish factual/legal correctness. The separate `content:inspect-reports`
+contract remains unchanged.

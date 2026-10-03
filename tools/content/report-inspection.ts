@@ -29,7 +29,7 @@ export const reportEvidenceSnapshotSchema = presentationSnapshotSchema.superRefi
   }
 });
 
-const practiceReportSchema = z.strictObject({
+export const storedPracticeReportEvidenceSchema = z.strictObject({
   id: canonicalReportUuidSchema,
   userId: canonicalReportUuidSchema,
   questionId: canonicalReportUuidSchema,
@@ -44,7 +44,7 @@ const practiceReportSchema = z.strictObject({
   }),
 });
 
-const examReportSchema = z.strictObject({
+export const storedExamReportEvidenceSchema = z.strictObject({
   id: canonicalReportUuidSchema,
   userId: canonicalReportUuidSchema,
   questionId: canonicalReportUuidSchema,
@@ -101,8 +101,8 @@ export function createReportInspectionInventory(input: StoredReportSet): ReportI
     throw new Error('Report inventory count mismatch.');
   }
 
-  const practiceReports = practiceReportSchema.array().parse(input.practiceReports);
-  const examReports = examReportSchema.array().parse(input.examReports);
+  const practiceReports = storedPracticeReportEvidenceSchema.array().parse(input.practiceReports);
+  const examReports = storedExamReportEvidenceSchema.array().parse(input.examReports);
   rejectDuplicateIds(practiceReports);
   rejectDuplicateIds(examReports);
 
