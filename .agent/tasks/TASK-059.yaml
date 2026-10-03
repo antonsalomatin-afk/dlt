@@ -1,6 +1,6 @@
 id: TASK-059
 title: Present one stable daily practice question
-status: READY
+status: BUILDING
 epic: Epic 8 — Telegram Engagement
 objective: Give each authenticated learner one immutable answer-safe practice question for each Thailand calendar date, stable across repeated and concurrent requests.
 acceptance:
