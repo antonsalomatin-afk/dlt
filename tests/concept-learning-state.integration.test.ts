@@ -57,10 +57,11 @@ beforeAll(async () => {
   databasesCreated = true;
 
   await direct.connect();
-  const priorMigrations = readdirSync(migrationsRoot, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && entry.name < migrationName)
+  const migrationDirectories = readdirSync(migrationsRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
     .sort();
+  const priorMigrations = migrationDirectories.filter((name) => name < migrationName);
   for (const migration of priorMigrations) {
     await direct.query(readFileSync(join(migrationsRoot, migration, 'migration.sql'), 'utf8'));
   }
@@ -146,6 +147,11 @@ beforeAll(async () => {
   }
 
   await direct.query(readFileSync(join(migrationsRoot, migrationName, 'migration.sql'), 'utf8'));
+  // The generated Prisma client models the current complete schema. Apply later additive
+  // migrations after the targeted legacy backfill so typed follow-up checks remain valid.
+  for (const migration of migrationDirectories.filter((name) => name > migrationName)) {
+    await direct.query(readFileSync(join(migrationsRoot, migration, 'migration.sql'), 'utf8'));
+  }
   migrate(freshUrl.toString());
   migrate(freshUrl.toString());
 }, 150_000);

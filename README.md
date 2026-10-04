@@ -374,6 +374,16 @@ vehicle preference. Repeated signed data within the 300-second validation window
 Responses disable caching, and this API disables request logging to keep credentials out of logs.
 Keep future Mini App tokens in memory; use HTTPS for any nonlocal transport.
 
+Each `User` also has a non-null `dailyQuestionReminderEnabled` preference that defaults
+to `false` for existing and new learners. `GET /me/reminders` returns exactly
+`{ "dailyQuestionReminderEnabled": <boolean> }`. `PATCH /me/reminders` accepts and returns
+that same exact one-key object. Both routes use only the authenticated internal user ID,
+require an empty query, disable caching, and keep reminder state out of login, `/me`,
+progress and learning DTOs. PATCH authenticates before strict JSON parsing, rejects
+duplicate or extra keys and unsupported media types, and supports idempotent enable or
+disable updates. This preference stores consent state only; there is no Mini App setting,
+bot message, send time, timezone, scheduler, queue or delivery behavior in this slice.
+
 `pnpm test:integration` includes synthetic signed authentication requests through Fastify
 injection and real PostgreSQL transactions. No live Telegram token is needed for tests.
 

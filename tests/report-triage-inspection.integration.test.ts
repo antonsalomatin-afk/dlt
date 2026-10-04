@@ -300,7 +300,7 @@ describe('report triage audit against isolated PostgreSQL', () => {
     for (const invalid of [
       { triagedBy: ' padded operator ', triagedAt },
       { triagedBy: 'Trusted Reviewer', triagedAt: new Date('2026-09-30T00:00:00.000Z') },
-      { triagedBy: 'Trusted Reviewer', triagedAt: new Date('2026-10-04T00:00:00.000Z') },
+      { triagedBy: 'Trusted Reviewer', triagedAt: new Date('2099-01-01T00:00:00.000Z') },
     ]) {
       await database.questionReport.update({ where: { id: practice.report.id }, data: {
         triageDecision: 'ACTION_REQUIRED', triagedBy: invalid.triagedBy, triagedAt: invalid.triagedAt,

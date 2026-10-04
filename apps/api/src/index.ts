@@ -57,6 +57,7 @@ import {
   type ExamRandomOffset,
 } from '../../../packages/database/src/exam.ts';
 import { InvalidInitDataError, validateInitData } from '../../../packages/telegram/src/index.ts';
+import { reminderPreferenceRequestSchema, reminderPreferenceResponseSchema } from '../../../packages/database/src/reminder.ts';
 
 export const userSchema = z.strictObject({
   id: z.uuid(), username: z.string().nullable(), firstName: z.string().nullable(),
@@ -279,7 +280,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/daily', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/practice/report', '/exam/start', '/exam/answer', '/exam/complete', '/exam/report', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/reminders', '/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/daily', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/practice/report', '/exam/start', '/exam/answer', '/exam/complete', '/exam/report', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -331,6 +332,63 @@ export function createApi(options: {
       const updated = await tx.user.update({ where: { id: user.id }, data: { selectedVehicleType: body.data.vehicleType }, select: userSelect });
       return userSchema.parse(updated);
     });
+  });
+  app.register((remindersApp, _pluginOptions, done) => {
+    const authenticatedUsers = new WeakMap<object, z.infer<typeof userSchema>>();
+    remindersApp.removeContentTypeParser('application/json');
+    remindersApp.addContentTypeParser('application/json', { parseAs: 'string' }, (_request, body, parseDone) => {
+      if (typeof body !== 'string') {
+        parseDone(new BadRequestJsonError(), undefined);
+        return;
+      }
+      try { parseDone(null, parseJsonWithUniqueTopLevelMembers(body)); }
+      catch (error) { parseDone(error instanceof BadRequestJsonError ? error : new BadRequestJsonError(), undefined); }
+    });
+    remindersApp.addHook('onRequest', async (request, reply) => {
+      const user = await authenticatedUser(request.headers.authorization);
+      if (!user) return reply.code(401).send(errorSchema.parse({ error: 'Unauthorized' }));
+      authenticatedUsers.set(request, user);
+      if (request.method === 'PATCH') {
+        const contentType = request.headers['content-type'];
+        if (contentType !== undefined && contentType.split(';', 1)[0]?.trim().toLowerCase() !== 'application/json') {
+          return reply.code(415).send(errorSchema.parse({ error: 'Bad Request' }));
+        }
+      }
+    });
+    remindersApp.get('/me/reminders', async (request, reply) => {
+      const user = authenticatedUsers.get(request);
+      if (!user) throw new Error('Authenticated reminder user missing');
+      const contentLength = request.headers['content-length'];
+      if (
+        request.body !== undefined
+        || (contentLength !== undefined && contentLength !== '0')
+        || request.headers['transfer-encoding'] !== undefined
+        || !emptyQuerySchema.safeParse(request.query).success
+      ) {
+        return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      }
+      const preference = await options.database.user.findUniqueOrThrow({
+        where: { id: user.id },
+        select: { dailyQuestionReminderEnabled: true },
+      });
+      return reminderPreferenceResponseSchema.parse(preference);
+    });
+    remindersApp.patch('/me/reminders', async (request, reply) => {
+      const user = authenticatedUsers.get(request);
+      if (!user) throw new Error('Authenticated reminder user missing');
+      if (!emptyQuerySchema.safeParse(request.query).success) {
+        return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      }
+      const body = reminderPreferenceRequestSchema.safeParse(request.body);
+      if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      const preference = await options.database.user.update({
+        where: { id: user.id },
+        data: { dailyQuestionReminderEnabled: body.data.dailyQuestionReminderEnabled },
+        select: { dailyQuestionReminderEnabled: true },
+      });
+      return reminderPreferenceResponseSchema.parse(preference);
+    });
+    done();
   });
   app.get('/me/history', async (request, reply) => {
     const user = await authenticatedUser(request.headers.authorization);
