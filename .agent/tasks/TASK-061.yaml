@@ -1,6 +1,6 @@
 id: TASK-061
 title: Persist a daily-question reminder preference
-status: REVIEWING
+status: ACCEPTED
 epic: Epic 8 — Telegram Engagement
 objective: Give each authenticated learner an explicit, default-off persisted preference for future daily-question reminders.
 acceptance:
@@ -25,8 +25,8 @@ owner_decision_required: false
 builder_commit: 57ac8ff40f2c05e30376c74a4cf94cae31c80d6d
 authoritative_checks: .agent/checks/TASK-061-checks-01.txt
 review_attempt: 1
-accepted_commit: null
-review_file: null
+accepted_commit: 57ac8ff40f2c05e30376c74a4cf94cae31c80d6d
+review_file: .agent/reviews/TASK-061-review-01.md
 supervisor_refinement:
   - Add one non-null `dailyQuestionReminderEnabled Boolean @default(false)` field to User through an additive migration. Existing users must receive false, new users default to false and all identity, session, answer, exam, favorite, report, learning and daily-presentation rows and relations must remain unchanged.
   - Add shared strict request/response contracts for reminders. PATCH accepts exactly `{ dailyQuestionReminderEnabled: boolean }`; GET and PATCH return exactly the same one-key object. Reject extra keys, missing/non-boolean values, any query keys and unsupported content types according to established API policy.
