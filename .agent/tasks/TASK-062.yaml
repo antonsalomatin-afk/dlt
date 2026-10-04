@@ -1,6 +1,6 @@
 id: TASK-062
 title: Manage daily reminders in the Mini App
-status: REVIEWING
+status: ACCEPTED
 epic: Epic 8 — Telegram Engagement
 objective: Let an authenticated learner view and change the persisted daily-question reminder preference in the Mini App without implying that delivery is already active.
 acceptance:
@@ -24,8 +24,8 @@ owner_decision_required: false
 builder_commit: c92603f601ec7c6c1733fb141ba8a82027acf191
 authoritative_checks: .agent/checks/TASK-062-checks-01.txt
 review_attempt: 1
-accepted_commit: null
-review_file: null
+accepted_commit: c92603f601ec7c6c1733fb141ba8a82027acf191
+review_file: .agent/reviews/TASK-062-review-01.md
 supervisor_refinement:
   - Add a dedicated authenticated reminder-settings view and accessible Reminder settings actions from setup and ordinary practice. Do not fetch or update reminder state during authentication, vehicle selection or ordinary practice. Returning from the view must preserve the correct setup/practice destination and must not mutate learning state.
   - Add a strict browser schema for exactly `{ dailyQuestionReminderEnabled: boolean }` and only the explicit same-origin `/me/reminders` rewrite. Reuse the same strict schema for GET and PATCH responses; reject missing, non-boolean and extra members.
