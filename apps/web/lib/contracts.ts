@@ -15,6 +15,11 @@ export const loginSchema = z.strictObject({
 });
 export type Session = z.infer<typeof loginSchema>;
 
+export const reminderPreferenceSchema = z.strictObject({
+  dailyQuestionReminderEnabled: z.boolean(),
+});
+export type ReminderPreference = z.infer<typeof reminderPreferenceSchema>;
+
 const text = z.string().refine((value) => value.trim().length > 0);
 const translation = z.string().nullable();
 export const presentedQuestionSchema = z.strictObject({

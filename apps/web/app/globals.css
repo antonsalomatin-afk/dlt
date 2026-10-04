@@ -41,6 +41,12 @@ footer { border-top: 1px solid #dce0d1; padding-top: 20px; font-size: 10px; colo
 .secondary:disabled { cursor: default; opacity: .6; }
 .panel-nav { display: flex; flex-wrap: wrap; gap: 8px 18px; }
 .setup-links { justify-content: center; margin-top: 8px; }
+.reminder-notice { margin: 8px 0 20px; border-radius: 14px; padding: 16px; background: #eef1e5; font-size: 13px; line-height: 1.55; }
+.reminder-notice strong { display: block; margin-bottom: 5px; }
+.reminder-notice p { margin: 0; }
+.reminder-control { display: flex; align-items: center; gap: 12px; border: 1px solid #dce0d4; border-radius: 12px; padding: 15px; font-size: 14px; font-weight: 700; cursor: pointer; }
+.reminder-control:has(input:disabled) { cursor: wait; opacity: .7; }
+.reminder-control input { width: 18px; height: 18px; accent-color: #31563f; }
 .languages { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; margin: 12px 0 20px; }
 .languages legend { margin-bottom: 10px; font-weight: bold; }
 .practice-scope { display: grid; gap: 8px; margin: 0 0 20px; }

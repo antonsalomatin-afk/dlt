@@ -381,8 +381,8 @@ that same exact one-key object. Both routes use only the authenticated internal 
 require an empty query, disable caching, and keep reminder state out of login, `/me`,
 progress and learning DTOs. PATCH authenticates before strict JSON parsing, rejects
 duplicate or extra keys and unsupported media types, and supports idempotent enable or
-disable updates. This preference stores consent state only; there is no Mini App setting,
-bot message, send time, timezone, scheduler, queue or delivery behavior in this slice.
+disable updates. This preference stores consent state only; it does not schedule or deliver
+a bot message and has no send time, timezone, scheduler or queue behavior.
 
 `pnpm test:integration` includes synthetic signed authentication requests through Fastify
 injection and real PostgreSQL transactions. No live Telegram token is needed for tests.
@@ -930,7 +930,7 @@ commands, not automatically loaded by Next. Only HTTP(S) origins without
 credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
 `/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
-`/me/concept-progress`,
+`/me/concept-progress`, `/me/reminders`,
 `/practice/categories`, `/practice/next`, `/practice/daily`, `/practice/retry-mistake`, `/practice/answer`,
 `/practice/favorite` and `/practice/report`, plus `/exam/current`, `/exam/start`, `/exam/answer`,
 `/exam/complete`, `/exam/report`, `/exam/history` and `/exam/:examId/review` only.
@@ -1037,6 +1037,16 @@ failures show retry guidance without partial metrics, while a protected 401 clea
 session. Leaving during a request returns immediately and ignores every late outcome.
 Returning to setup preserves that origin, while returning to practice mounts a clean
 practice view.
+
+Authenticated learners can open **Reminder settings** from setup or ordinary practice.
+Each fresh entry loads the exact persisted preference from `GET /me/reminders`; explicit
+enable and disable actions send the opposite boolean to `PATCH /me/reminders` and change
+the visible choice only after the API confirms that exact value. Transport, HTTP and strict
+response-validation failures retain the last confirmed choice and offer a deterministic
+retry, while a protected 401 clears the memory-only session. The preference and pending
+value are never written to browser storage, cookies or URLs. The view states that saving
+records a preference only: Telegram reminder delivery is not active in this implementation.
+No send time, frequency, timezone or delivery metadata is requested or displayed.
 
 Authenticated learners can enter Mock exam from vehicle setup or practice. Each fresh
 entry first sends one no-store `GET /exam/current`; a 200 restores the immutable exam and
