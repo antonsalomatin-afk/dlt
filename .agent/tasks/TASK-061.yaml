@@ -1,6 +1,6 @@
 id: TASK-061
 title: Persist a daily-question reminder preference
-status: READY
+status: BUILDING
 epic: Epic 8 — Telegram Engagement
 objective: Give each authenticated learner an explicit, default-off persisted preference for future daily-question reminders.
 acceptance:
