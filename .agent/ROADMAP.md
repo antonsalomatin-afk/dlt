@@ -115,7 +115,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-060 — ACCEPTED — use the daily question in the Mini App
 - TASK-061 — ACCEPTED — persist a daily-question reminder preference
 - TASK-062 — ACCEPTED — manage daily reminders in the Mini App
-- deliver daily Telegram reminders
+- TASK-063 — BLOCKED — deliver daily Telegram reminders (Product Owner delivery policy required)
 - daily/weekly summaries
 - deep links
 

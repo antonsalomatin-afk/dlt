@@ -1,0 +1,37 @@
+id: TASK-063
+title: Deliver daily Telegram reminders
+status: BLOCKED
+epic: Epic 8 — Telegram Engagement
+objective: Send opted-in learners one bounded Telegram reminder for the daily-question experience according to an approved delivery policy.
+acceptance:
+  - Reminder eligibility uses only explicit persisted opt-in state and an approved Thailand-calendar delivery policy.
+  - Delivery is bounded and idempotent enough to prevent duplicate daily reminder spam across retries and concurrent workers.
+  - Telegram messages use approved learner-facing wording and the existing validated Mini App launch boundary without exposing private data.
+  - Disabled learners and any learner excluded by the approved completion policy receive no reminder.
+  - Failures are sanitized, observable without secrets, and recoverable according to an explicit retry policy.
+  - Documentation and automated tests cover eligibility, concurrency, duplicate prevention, Telegram request boundaries, failure handling and regressions.
+files_allowed:
+  - apps/bot/**
+  - packages/database/**
+  - tests/**
+  - package.json
+  - pnpm-lock.yaml
+  - .env.example
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-062
+owner_decision_required: true
+owner_questions:
+  - What Thailand-local time should the daily reminder target?
+  - Should learners who have already answered that Thailand date's daily question be excluded?
+  - Should the first reminder message be English-only, bilingual, or require a persisted language preference first?
+blocked_reason: The repository authorizes reminders but does not define send time, completion suppression or learner-facing language; each changes visible product behavior and delivery/data scope.
+builder_commit: null
+authoritative_checks: null
+review_attempt: 0
+accepted_commit: null
+review_file: null
