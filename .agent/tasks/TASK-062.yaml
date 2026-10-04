@@ -1,6 +1,6 @@
 id: TASK-062
 title: Manage daily reminders in the Mini App
-status: CHECKING
+status: REVIEWING
 epic: Epic 8 — Telegram Engagement
 objective: Let an authenticated learner view and change the persisted daily-question reminder preference in the Mini App without implying that delivery is already active.
 acceptance:
@@ -22,8 +22,8 @@ dependencies:
   - TASK-061
 owner_decision_required: false
 builder_commit: c92603f601ec7c6c1733fb141ba8a82027acf191
-authoritative_checks: null
-review_attempt: 0
+authoritative_checks: .agent/checks/TASK-062-checks-01.txt
+review_attempt: 1
 accepted_commit: null
 review_file: null
 supervisor_refinement:
