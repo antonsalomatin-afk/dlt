@@ -58,6 +58,7 @@ import {
 } from '../../../packages/database/src/exam.ts';
 import { InvalidInitDataError, validateInitData } from '../../../packages/telegram/src/index.ts';
 import { reminderPreferenceRequestSchema, reminderPreferenceResponseSchema } from '../../../packages/database/src/reminder.ts';
+import { languagePreferenceRequestSchema, languagePreferenceResponseSchema } from '../../../packages/database/src/language.ts';
 
 export const userSchema = z.strictObject({
   id: z.uuid(), username: z.string().nullable(), firstName: z.string().nullable(),
@@ -280,7 +281,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/reminders', '/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/daily', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/practice/report', '/exam/start', '/exam/answer', '/exam/complete', '/exam/report', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/reminders', '/me/language', '/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/daily', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/practice/report', '/exam/start', '/exam/answer', '/exam/complete', '/exam/report', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -387,6 +388,39 @@ export function createApi(options: {
         select: { dailyQuestionReminderEnabled: true },
       });
       return reminderPreferenceResponseSchema.parse(preference);
+    });
+    remindersApp.get('/me/language', async (request, reply) => {
+      const user = authenticatedUsers.get(request);
+      if (!user) throw new Error('Authenticated language user missing');
+      const contentLength = request.headers['content-length'];
+      if (
+        request.body !== undefined
+        || (contentLength !== undefined && contentLength !== '0')
+        || request.headers['transfer-encoding'] !== undefined
+        || !emptyQuerySchema.safeParse(request.query).success
+      ) {
+        return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      }
+      const preference = await options.database.user.findUniqueOrThrow({
+        where: { id: user.id },
+        select: { preferredLanguage: true },
+      });
+      return languagePreferenceResponseSchema.parse(preference);
+    });
+    remindersApp.patch('/me/language', async (request, reply) => {
+      const user = authenticatedUsers.get(request);
+      if (!user) throw new Error('Authenticated language user missing');
+      if (!emptyQuerySchema.safeParse(request.query).success) {
+        return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      }
+      const body = languagePreferenceRequestSchema.safeParse(request.body);
+      if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      const preference = await options.database.user.update({
+        where: { id: user.id },
+        data: { preferredLanguage: body.data.preferredLanguage },
+        select: { preferredLanguage: true },
+      });
+      return languagePreferenceResponseSchema.parse(preference);
     });
     done();
   });

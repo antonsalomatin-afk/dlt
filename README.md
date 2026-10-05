@@ -384,6 +384,15 @@ duplicate or extra keys and unsupported media types, and supports idempotent ena
 disable updates. This preference stores consent state only; it does not schedule or deliver
 a bot message and has no send time, timezone, scheduler or queue behavior.
 
+Each `User` also has a non-null `preferredLanguage` with exactly `ENGLISH`, `RUSSIAN`
+or `THAI`; existing and new learners default to `ENGLISH`. Authenticated
+`GET /me/language` returns exactly `{ "preferredLanguage": "<value>" }`.
+`PATCH /me/language` accepts and returns the same exact one-key object, authenticates
+before strict JSON parsing, and supports idempotent updates. Both routes derive ownership
+only from the server session, require an empty query and disable caching. The preference
+is absent from login, `/me`, reminder, progress and learning DTOs. This API stores a future
+message preference only; it does not change Mini App language selectors or send messages.
+
 `pnpm test:integration` includes synthetic signed authentication requests through Fastify
 injection and real PostgreSQL transactions. No live Telegram token is needed for tests.
 

@@ -13,6 +13,12 @@ enum VehicleType {
   MOTORCYCLE
 }
 
+enum PreferredLanguage {
+  ENGLISH
+  RUSSIAN
+  THAI
+}
+
 model User {
   conceptLearningStates ConceptLearningState[]
   examSessions          ExamSession[]
@@ -27,6 +33,7 @@ model User {
   firstName             String?
   selectedVehicleType   VehicleType?
   dailyQuestionReminderEnabled Boolean @default(false)
+  preferredLanguage     PreferredLanguage @default(ENGLISH)
   createdAt             DateTime               @default(now()) @db.Timestamptz(3)
   updatedAt             DateTime               @updatedAt @db.Timestamptz(3)
   lastSeenAt            DateTime?              @db.Timestamptz(3)

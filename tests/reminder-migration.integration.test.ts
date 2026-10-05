@@ -6,6 +6,7 @@ import pg from 'pg';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 const migrationName = '20261004060000_daily_question_reminder';
+const languageMigrationName = '20261005060000_preferred_language';
 const repositoryRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 const migrationsRoot = join(repositoryRoot, 'packages/database/prisma/migrations');
 const sourceUrl = process.env.DATABASE_URL;
@@ -18,6 +19,7 @@ const database = new pg.Client({ connectionString: isolatedUrl.toString() });
 const ids = {
   user: randomUUID(),
   newUser: randomUUID(),
+  languageNewUser: randomUUID(),
   session: randomUUID(),
   category: randomUUID(),
   concept: randomUUID(),
@@ -178,6 +180,7 @@ beforeAll(async () => {
   );
   legacyStateBefore = await legacyState();
   await database.query(readFileSync(join(migrationsRoot, migrationName, 'migration.sql'), 'utf8'));
+  await database.query(readFileSync(join(migrationsRoot, languageMigrationName, 'migration.sql'), 'utf8'));
 }, 120_000);
 
 afterAll(async () => {
@@ -222,5 +225,59 @@ describe('daily-question reminder additive migration', () => {
       `UPDATE "User" SET "dailyQuestionReminderEnabled" = FALSE WHERE id = $1`, [ids.user],
     );
     expect(await legacyState()).toEqual(legacyStateBefore);
+  });
+});
+
+describe('preferred-language additive migration', () => {
+  it('adds the exact enum and a non-null English default for legacy and new users', async () => {
+    const enumValues = await database.query<{ enumlabel: string }>(`
+      SELECT value.enumlabel
+      FROM pg_type type
+      INNER JOIN pg_enum value ON value.enumtypid = type.oid
+      WHERE type.typname = 'PreferredLanguage'
+      ORDER BY value.enumsortorder
+    `);
+    expect(enumValues.rows.map(({ enumlabel }) => enumlabel)).toEqual(['ENGLISH', 'RUSSIAN', 'THAI']);
+
+    const columns = await database.query<{ column_default: string; is_nullable: string; udt_name: string }>(`
+      SELECT column_default, is_nullable, udt_name
+      FROM information_schema.columns
+      WHERE table_schema = 'public'
+        AND table_name = 'User'
+        AND column_name = 'preferredLanguage'
+    `);
+    expect(columns.rows).toEqual([{
+      column_default: `'ENGLISH'::"PreferredLanguage"`, is_nullable: 'NO', udt_name: 'PreferredLanguage',
+    }]);
+    expect((await database.query(
+      `SELECT "preferredLanguage"::text AS "preferredLanguage" FROM "User" WHERE id = $1`, [ids.user],
+    )).rows).toEqual([{ preferredLanguage: 'ENGLISH' }]);
+
+    await database.query(
+      `INSERT INTO "User" (id, "telegramUserId", "updatedAt") VALUES ($1, 761003, NOW())`,
+      [ids.languageNewUser],
+    );
+    expect((await database.query(
+      `SELECT "preferredLanguage"::text AS "preferredLanguage" FROM "User" WHERE id = $1`, [ids.languageNewUser],
+    )).rows).toEqual([{ preferredLanguage: 'ENGLISH' }]);
+    await expect(database.query(
+      `UPDATE "User" SET "preferredLanguage" = NULL WHERE id = $1`, [ids.languageNewUser],
+    )).rejects.toMatchObject({ code: '23502' });
+    await expect(database.query(
+      `UPDATE "User" SET "preferredLanguage" = 'FRENCH' WHERE id = $1`, [ids.languageNewUser],
+    )).rejects.toMatchObject({ code: '22P02' });
+  });
+
+  it('preserves every established relation and reminder value across all language values', async () => {
+    expect(await legacyState()).toEqual(legacyStateBefore);
+    for (const language of ['RUSSIAN', 'THAI', 'ENGLISH']) {
+      await database.query(
+        `UPDATE "User" SET "preferredLanguage" = $2 WHERE id = $1`, [ids.user, language],
+      );
+      expect(await legacyState()).toEqual(legacyStateBefore);
+      expect((await database.query(
+        `SELECT "dailyQuestionReminderEnabled" FROM "User" WHERE id = $1`, [ids.user],
+      )).rows).toEqual([{ dailyQuestionReminderEnabled: false }]);
+    }
   });
 });
