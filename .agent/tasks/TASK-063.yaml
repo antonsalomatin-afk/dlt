@@ -1,22 +1,19 @@
 id: TASK-063
-title: Deliver daily Telegram reminders
-status: BLOCKED
+title: Persist the learner's preferred language
+status: READY
 epic: Epic 8 — Telegram Engagement
-objective: Send opted-in learners one bounded Telegram reminder for the daily-question experience according to an approved delivery policy.
+objective: Persist one authenticated learner language preference for future settings and Telegram messages, with English as the default.
 acceptance:
-  - Reminder eligibility uses only explicit persisted opt-in state and an approved Thailand-calendar delivery policy.
-  - Delivery is bounded and idempotent enough to prevent duplicate daily reminder spam across retries and concurrent workers.
-  - Telegram messages use approved learner-facing wording and the existing validated Mini App launch boundary without exposing private data.
-  - Disabled learners and any learner excluded by the approved completion policy receive no reminder.
-  - Failures are sanitized, observable without secrets, and recoverable according to an explicit retry policy.
-  - Documentation and automated tests cover eligibility, concurrency, duplicate prevention, Telegram request boundaries, failure handling and regressions.
+  - An additive database migration stores one non-null preferred language per user with exactly ENGLISH, RUSSIAN or THAI and defaults existing and new users to ENGLISH.
+  - GET /me/language authenticates the session and returns exactly the caller's persisted preferred language.
+  - PATCH /me/language authenticates before strict input parsing, accepts exactly one supported preferred language and atomically returns the persisted value.
+  - Invalid, unauthenticated and error paths do not mutate preferences or expose learner, Telegram, session or learning data.
+  - Existing authentication, reminder, user, practice, exam and progress contracts remain unchanged.
+  - Documentation and automated tests cover migration integrity, English defaults, all supported updates, idempotence, ownership, strict boundaries and failure safety.
 files_allowed:
-  - apps/bot/**
+  - apps/api/**
   - packages/database/**
   - tests/**
-  - package.json
-  - pnpm-lock.yaml
-  - .env.example
   - README.md
 required_checks:
   - pnpm check
@@ -24,14 +21,20 @@ required_checks:
   - pnpm test:integration
 dependencies:
   - TASK-062
-owner_decision_required: true
-owner_questions:
-  - What Thailand-local time should the daily reminder target?
-  - Should learners who have already answered that Thailand date's daily question be excluded?
-  - Should the first reminder message be English-only, bilingual, or require a persisted language preference first?
-blocked_reason: The repository authorizes reminders but does not define send time, completion suppression or learner-facing language; each changes visible product behavior and delivery/data scope.
+owner_decision_required: false
+owner_decision:
+  - Use the learner's persisted preferred language for messages, with English as the default.
 builder_commit: null
 authoritative_checks: null
 review_attempt: 0
 accepted_commit: null
 review_file: null
+supervisor_refinement:
+  - Add a database enum with exactly `ENGLISH`, `RUSSIAN` and `THAI`, plus non-null `preferredLanguage` on User with database and Prisma default `ENGLISH`. The additive migration must preserve every existing user, session, learning, reminder, presentation, answer, exam, favorite and report row and relation.
+  - Add strict shared request/response contracts for exactly `{ preferredLanguage: 'ENGLISH' | 'RUSSIAN' | 'THAI' }`. Do not infer preference from Telegram profile data or current per-screen React language state.
+  - Add authenticated `GET /me/language` and `PATCH /me/language`. Authenticate before duplicate-key JSON parsing, media-type, query and body validation. GET accepts no body or query. PATCH requires one ordinary JSON object and an empty query. Ownership derives only from the authenticated internal user ID.
+  - A valid PATCH atomically sets and returns the requested language. Repeating the same language is successful and idempotent. Independent users remain isolated, and concurrent writes use ordinary last-committed-write behavior while each response reflects its own database write.
+  - Return established sanitized 401, 400/415 and 500 behavior. Malformed, duplicate-key, invalid-enum, unauthenticated, expired-session and injected database-failure paths write nothing. Responses expose only the preferred-language enum and no identity, Telegram, token/session, reminder, time, vehicle or activity data.
+  - Keep login, `/me`, `/me/reminders`, progress and every accepted learning DTO unchanged. Do not automatically change or persist existing Mini App screen selectors in this task.
+  - Unit tests cover exact contracts and no-store classification. Isolated migrated-PostgreSQL tests cover legacy/new-user English defaults, all three values, idempotence, authentication and validation precedence, ownership, concurrency, invalid/error rollback, response privacy and preservation of existing relations and endpoints.
+  - Update concise API and data-model documentation. No Mini App language setting, Telegram message, reminder timing, scheduler/queue, delivery ledger, deep link, dependency, credential, production data or deployment change belongs in this task.
