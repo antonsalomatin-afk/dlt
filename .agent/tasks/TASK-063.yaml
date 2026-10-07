@@ -1,6 +1,6 @@
 id: TASK-063
 title: Persist the learner's preferred language
-status: REVIEWING
+status: ACCEPTED
 epic: Epic 8 — Telegram Engagement
 objective: Persist one authenticated learner language preference for future settings and Telegram messages, with English as the default.
 acceptance:
@@ -27,8 +27,8 @@ owner_decision:
 builder_commit: 064a8a83001b6455128d08361a1ecbd997e005ef
 authoritative_checks: .agent/checks/TASK-063-checks-01.txt
 review_attempt: 1
-accepted_commit: null
-review_file: null
+accepted_commit: 064a8a83001b6455128d08361a1ecbd997e005ef
+review_file: .agent/reviews/TASK-063-review-01.md
 supervisor_refinement:
   - Add a database enum with exactly `ENGLISH`, `RUSSIAN` and `THAI`, plus non-null `preferredLanguage` on User with database and Prisma default `ENGLISH`. The additive migration must preserve every existing user, session, learning, reminder, presentation, answer, exam, favorite and report row and relation.
   - Add strict shared request/response contracts for exactly `{ preferredLanguage: 'ENGLISH' | 'RUSSIAN' | 'THAI' }`. Do not infer preference from Telegram profile data or current per-screen React language state.
