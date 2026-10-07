@@ -1,6 +1,6 @@
 id: TASK-063
 title: Persist the learner's preferred language
-status: CHECKING
+status: REVIEWING
 epic: Epic 8 — Telegram Engagement
 objective: Persist one authenticated learner language preference for future settings and Telegram messages, with English as the default.
 acceptance:
@@ -25,8 +25,8 @@ owner_decision_required: false
 owner_decision:
   - Use the learner's persisted preferred language for messages, with English as the default.
 builder_commit: 064a8a83001b6455128d08361a1ecbd997e005ef
-authoritative_checks: null
-review_attempt: 0
+authoritative_checks: .agent/checks/TASK-063-checks-01.txt
+review_attempt: 1
 accepted_commit: null
 review_file: null
 supervisor_refinement:

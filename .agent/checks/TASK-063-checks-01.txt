@@ -1,0 +1,751 @@
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 262ms
+
+$ tsc --noEmit
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+┌─────────────────────────────────────────────────────────┐
+│  Update available 7.10.0 -> 8.0.0-rc.21                 │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 261ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  52 passed (52)
+      Tests  279 passed (279)
+   Start at  16:08:42
+   Duration  27.32s (tests 62%, import 30%, transform 7%, worker 1%)
+
+    Isolate  52 workers spawned · ~1.23s startup each (spawn + environment, per file)
+             at least ~1.81s faster with isolate: false — reuses workers across files instead of one per file
+
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "validate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+The schema at packages\database\prisma\schema.prisma is valid 🚀
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 159ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+ ❯ tests/report-triage-inspection.integration.test.ts (3 tests | 3 skipped) 7ms
+ ❯ tests/report-triage.integration.test.ts (3 tests | 3 skipped) 6ms
+ ❯ tests/exam-start.integration.test.ts (6 tests | 6 skipped) 31ms
+ ❯ tests/concept-learning-state.integration.test.ts (5 tests | 5 skipped) 11ms
+ ❯ tests/report-inspection.integration.test.ts (3 tests | 3 skipped) 13ms
+ ❯ tests/exam-session.integration.test.ts (9 tests | 9 skipped) 9ms
+ ❯ tests/candidate-activation.integration.test.ts (1 test | 1 skipped) 10ms
+ ❯ tests/candidate-review.integration.test.ts (1 test | 1 skipped) 10ms
+ ❯ tests/practice-categories.integration.test.ts (6 tests | 6 skipped) 20ms
+ ❯ tests/favorite.integration.test.ts (8 tests | 8 skipped) 20ms
+ ❯ tests/fixtures.integration.test.ts (1 test | 1 skipped) 6ms
+ ❯ tests/favorite-feed.integration.test.ts (7 tests | 7 skipped) 16ms
+ ❯ tests/exam-report.integration.test.ts (6 tests | 6 skipped) 15ms
+ ❯ tests/practice.integration.test.ts (2 tests | 2 skipped) 30012ms
+ ❯ tests/candidate-import.integration.test.ts (1 test | 1 skipped) 6ms
+ ❯ tests/exam-complete.integration.test.ts (10 tests | 10 skipped) 14ms
+ ❯ tests/daily-practice.integration.test.ts (7 tests | 7 skipped) 24ms
+ ❯ tests/exam-history.integration.test.ts (6 tests | 6 skipped) 14ms
+ ❯ tests/exam-answer.integration.test.ts (11 tests | 11 skipped) 14ms
+ ❯ tests/exam-current.integration.test.ts (6 tests | 6 skipped) 16ms
+ ❯ tests/practice-random.integration.test.ts (5 tests | 5 skipped) 18ms
+ ❯ tests/candidate-status.integration.test.ts (1 test | 1 skipped) 9ms
+ ❯ tests/concept-progress.integration.test.ts (6 tests | 6 skipped) 16ms
+ ❯ tests/mistakes.integration.test.ts (6 tests | 6 skipped) 20ms
+ ❯ tests/exam-review.integration.test.ts (6 tests | 6 skipped) 15ms
+ ❯ tests/language.integration.test.ts (7 tests | 7 skipped) 19ms
+ ❯ tests/reminder.integration.test.ts (7 tests | 7 skipped) 21ms
+ ❯ tests/report.integration.test.ts (6 tests | 6 skipped) 19ms
+ ❯ tests/history.integration.test.ts (6 tests | 6 skipped) 21ms
+ ❯ tests/retry-mistake.integration.test.ts (13 tests | 13 skipped) 18ms
+ ❯ tests/progress.integration.test.ts (3 tests | 3 skipped) 19ms
+ ❯ tests/practice-category.integration.test.ts (7 tests | 7 skipped) 18ms
+ ❯ tests/reminder-migration.integration.test.ts (4 tests | 4 skipped) 9ms
+ ❯ tests/concept-attribution.integration.test.ts (3 tests | 3 skipped) 9ms
+ ❯ tests/daily-practice-migration.integration.test.ts (1 test | 1 skipped) 9ms
+ ❯ tests/api.integration.test.ts (7 tests | 7 failed) 626ms
+   × persists both vehicle selections, returns the user DTO and isolates users 430ms
+   × rejects invalid vehicle bodies without changing user or session records 5ms
+   × rejects unauthorized vehicle writes including revoked and exactly expired sessions 4ms
+   × creates one user across concurrent first logins, stores only digests, preserves preference and refreshes profile 14ms
+   × rejects invalid bodies and signatures without writes or credential leakage 36ms
+   × uses one unauthorized shape for missing, malformed, unknown, revoked and expired sessions 42ms
+   × rolls back user creation and profile changes when the session database write fails 4ms
+ ❯ tests/question.integration.test.ts (2 tests | 2 skipped) 300ms
+ ❯ tests/user.integration.test.ts (1 test | 1 failed) 185ms
+   ❯ User persistence in PostgreSQL (1)
+     × persists bigint identity, nullable onboarding fields, profile and timestamps; enforces uniqueness 82ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 37 ⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/api.integration.test.ts [ tests/api.integration.test.ts ]
+PrismaClientKnownRequestError: 
+Invalid `database.user.deleteMany()` invocation in
+C:/Users/anton/Documents/ChatGPT/DLT/tests/api.integration.test.ts:27:29
+
+  24 beforeAll(async () => { await database.$connect(); });
+  25 afterAll(async () => {
+  26   await app.close();
+→ 27   try { await database.user.deleteMany(
+Can't reach database server at 127.0.0.1:55432
+ ❯ vn.handleRequestError node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:238:13
+ ❯ vn.handleAndLogRequestError node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:184:12
+ ❯ vn.request node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:153:12
+ ❯ a node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:1014:24
+ ❯ tests/api.integration.test.ts:27:9
+     25| afterAll(async () => {
+     26|   await app.close();
+     27|   try { await database.user.deleteMany({ where: { telegramUserId: { in…
+       |         ^
+     28|   finally { await database.$disconnect(); }
+     29| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/64]⎯
+
+ FAIL  tests/candidate-activation.integration.test.ts [ tests/candidate-activation.integration.test.ts ]
+ FAIL  tests/candidate-import.integration.test.ts [ tests/candidate-import.integration.test.ts ]
+ FAIL  tests/candidate-review.integration.test.ts [ tests/candidate-review.integration.test.ts ]
+ FAIL  tests/candidate-status.integration.test.ts [ tests/candidate-status.integration.test.ts ]
+ FAIL  tests/concept-attribution.integration.test.ts [ tests/concept-attribution.integration.test.ts ]
+ FAIL  tests/concept-learning-state.integration.test.ts [ tests/concept-learning-state.integration.test.ts ]
+ FAIL  tests/concept-progress.integration.test.ts [ tests/concept-progress.integration.test.ts ]
+ FAIL  tests/daily-practice-migration.integration.test.ts [ tests/daily-practice-migration.integration.test.ts ]
+ FAIL  tests/daily-practice.integration.test.ts [ tests/daily-practice.integration.test.ts ]
+ FAIL  tests/exam-answer.integration.test.ts [ tests/exam-answer.integration.test.ts ]
+ FAIL  tests/exam-complete.integration.test.ts [ tests/exam-complete.integration.test.ts ]
+ FAIL  tests/exam-current.integration.test.ts [ tests/exam-current.integration.test.ts ]
+ FAIL  tests/exam-history.integration.test.ts [ tests/exam-history.integration.test.ts ]
+ FAIL  tests/exam-report.integration.test.ts [ tests/exam-report.integration.test.ts ]
+ FAIL  tests/exam-review.integration.test.ts [ tests/exam-review.integration.test.ts ]
+ FAIL  tests/exam-session.integration.test.ts [ tests/exam-session.integration.test.ts ]
+ FAIL  tests/exam-start.integration.test.ts [ tests/exam-start.integration.test.ts ]
+ FAIL  tests/favorite-feed.integration.test.ts [ tests/favorite-feed.integration.test.ts ]
+ FAIL  tests/favorite.integration.test.ts [ tests/favorite.integration.test.ts ]
+ FAIL  tests/fixtures.integration.test.ts [ tests/fixtures.integration.test.ts ]
+ FAIL  tests/history.integration.test.ts [ tests/history.integration.test.ts ]
+ FAIL  tests/language.integration.test.ts [ tests/language.integration.test.ts ]
+ FAIL  tests/mistakes.integration.test.ts [ tests/mistakes.integration.test.ts ]
+ FAIL  tests/practice-categories.integration.test.ts [ tests/practice-categories.integration.test.ts ]
+ FAIL  tests/practice-category.integration.test.ts [ tests/practice-category.integration.test.ts ]
+ FAIL  tests/practice-random.integration.test.ts [ tests/practice-random.integration.test.ts ]
+ FAIL  tests/practice.integration.test.ts [ tests/practice.integration.test.ts ]
+ FAIL  tests/progress.integration.test.ts [ tests/progress.integration.test.ts ]
+ FAIL  tests/reminder-migration.integration.test.ts [ tests/reminder-migration.integration.test.ts ]
+ FAIL  tests/reminder.integration.test.ts [ tests/reminder.integration.test.ts ]
+ FAIL  tests/report-inspection.integration.test.ts [ tests/report-inspection.integration.test.ts ]
+ FAIL  tests/report-triage-inspection.integration.test.ts [ tests/report-triage-inspection.integration.test.ts ]
+ FAIL  tests/report-triage.integration.test.ts [ tests/report-triage.integration.test.ts ]
+ FAIL  tests/report.integration.test.ts [ tests/report.integration.test.ts ]
+ FAIL  tests/retry-mistake.integration.test.ts [ tests/retry-mistake.integration.test.ts ]
+Error: connect ECONNREFUSED 127.0.0.1:55432
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/64]⎯
+
+ FAIL  tests/concept-progress.integration.test.ts [ tests/concept-progress.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/concept-progress.integration.test.ts:94:3
+     92|   await app.close();
+     93|   await db.$disconnect();
+     94|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+     95|   await admin.end();
+     96| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/64]⎯
+
+ FAIL  tests/daily-practice-migration.integration.test.ts [ tests/daily-practice-migration.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/daily-practice-migration.integration.test.ts:89:3
+     87| afterAll(async () => {
+     88|   await database.end();
+     89|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+     90|   await admin.end();
+     91| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/64]⎯
+
+ FAIL  tests/daily-practice.integration.test.ts [ tests/daily-practice.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/daily-practice.integration.test.ts:184:3
+    182|   await app.close();
+    183|   await database.$disconnect();
+    184|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    185|   await admin.end();
+    186| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/64]⎯
+
+ FAIL  tests/exam-report.integration.test.ts [ tests/exam-report.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/exam-report.integration.test.ts:111:3
+    109|   await app.close();
+    110|   await database.$disconnect();
+    111|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    112|   await admin.end();
+    113| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/64]⎯
+
+ FAIL  tests/favorite-feed.integration.test.ts [ tests/favorite-feed.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/favorite-feed.integration.test.ts:140:3
+    138|   await app.close();
+    139|   await database.$disconnect();
+    140|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    141|   await admin.end();
+    142| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/64]⎯
+
+ FAIL  tests/favorite.integration.test.ts [ tests/favorite.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/favorite.integration.test.ts:119:3
+    117|   await app.close();
+    118|   await database.$disconnect();
+    119|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    120|   await admin.end();
+    121| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/64]⎯
+
+ FAIL  tests/history.integration.test.ts [ tests/history.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/history.integration.test.ts:127:3
+    125|   await app.close();
+    126|   await db.$disconnect();
+    127|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    128|   await admin.end();
+    129| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/64]⎯
+
+ FAIL  tests/language.integration.test.ts [ tests/language.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/language.integration.test.ts:73:3
+     71|   await app.close();
+     72|   await database.$disconnect();
+     73|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+     74|   await admin.end();
+     75| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/64]⎯
+
+ FAIL  tests/mistakes.integration.test.ts [ tests/mistakes.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/mistakes.integration.test.ts:128:3
+    126|   await app.close();
+    127|   await db.$disconnect();
+    128|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    129|   await admin.end();
+    130| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/64]⎯
+
+ FAIL  tests/practice-categories.integration.test.ts [ tests/practice-categories.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/practice-categories.integration.test.ts:111:3
+    109|   await app.close();
+    110|   await database.$disconnect();
+    111|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    112|   await admin.end();
+    113| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/64]⎯
+
+ FAIL  tests/practice-category.integration.test.ts [ tests/practice-category.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/practice-category.integration.test.ts:159:3
+    157|   await app.close();
+    158|   await database.$disconnect();
+    159|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    160|   await admin.end();
+    161| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/64]⎯
+
+ FAIL  tests/practice-random.integration.test.ts [ tests/practice-random.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/practice-random.integration.test.ts:119:3
+    117|   await app.close();
+    118|   await database.$disconnect();
+    119|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    120|   await admin.end();
+    121| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/64]⎯
+
+ FAIL  tests/practice.integration.test.ts [ tests/practice.integration.test.ts ]
+Error: Hook timed out in 30000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".
+ ❯ tests/practice.integration.test.ts:36:1
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/64]⎯
+
+ FAIL  tests/progress.integration.test.ts [ tests/progress.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/progress.integration.test.ts:120:3
+    118|   await app.close();
+    119|   await database.$disconnect();
+    120|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    121|   await admin.end();
+    122| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/64]⎯
+
+ FAIL  tests/question.integration.test.ts [ tests/question.integration.test.ts ]
+PrismaClientKnownRequestError: 
+Invalid `database.category.create()` invocation in
+C:/Users/anton/Documents/ChatGPT/DLT/tests/question.integration.test.ts:15:27
+
+  12 let conceptCreated = false;
+  13 
+  14 beforeAll(async () => {
+→ 15   await database.category.create(
+Can't reach database server at 127.0.0.1:55432
+ ❯ vn.handleRequestError node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:238:13
+ ❯ vn.handleAndLogRequestError node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:184:12
+ ❯ vn.request node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:153:12
+ ❯ a node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:1014:24
+ ❯ tests/question.integration.test.ts:15:3
+     13|
+     14| beforeAll(async () => {
+     15|   await database.category.create({ data: { id: categoryId, slug: categ…
+       |   ^
+     16|   categoryCreated = true;
+     17|   await database.concept.create({ data: { id: conceptId, slug: concept…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/64]⎯
+
+ FAIL  tests/question.integration.test.ts [ tests/question.integration.test.ts ]
+PrismaClientKnownRequestError: 
+Invalid `database.question.deleteMany()` invocation in
+C:/Users/anton/Documents/ChatGPT/DLT/tests/question.integration.test.ts:22:29
+
+  19 });
+  20 afterAll(async () => {
+  21   try {
+→ 22     await database.question.deleteMany(
+Can't reach database server at 127.0.0.1:55432
+ ❯ vn.handleRequestError node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:238:13
+ ❯ vn.handleAndLogRequestError node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:184:12
+ ❯ vn.request node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:153:12
+ ❯ a node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:1014:24
+ ❯ tests/question.integration.test.ts:22:5
+     20| afterAll(async () => {
+     21|   try {
+     22|     await database.question.deleteMany({ where: { id: { in: ownedQuest…
+       |     ^
+     23|     if (conceptCreated) await database.concept.delete({ where: { id: c…
+     24|     if (categoryCreated) await database.category.delete({ where: { id:…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/64]⎯
+
+ FAIL  tests/reminder-migration.integration.test.ts [ tests/reminder-migration.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/reminder-migration.integration.test.ts:188:3
+    186| afterAll(async () => {
+    187|   await database.end();
+    188|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    189|   await admin.end();
+    190| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/64]⎯
+
+ FAIL  tests/reminder.integration.test.ts [ tests/reminder.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/reminder.integration.test.ts:76:3
+     74|   await app.close();
+     75|   await database.$disconnect();
+     76|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+     77|   await admin.end();
+     78| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/64]⎯
+
+ FAIL  tests/report.integration.test.ts [ tests/report.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/report.integration.test.ts:111:3
+    109|   await app.close();
+    110|   await database.$disconnect();
+    111|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    112|   await admin.end();
+    113| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/64]⎯
+
+ FAIL  tests/retry-mistake.integration.test.ts [ tests/retry-mistake.integration.test.ts ]
+Error: Connection terminated unexpectedly
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ tests/retry-mistake.integration.test.ts:193:3
+    191|   await app.close();
+    192|   await database.$disconnect();
+    193|   await admin.query(`DROP DATABASE "${databaseName}"`);
+       |   ^
+    194|   await admin.end();
+    195| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/64]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/api.integration.test.ts > persists both vehicle selections, returns the user DTO and isolates users
+ZodError: [
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "token"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "expiresAt"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "expected": "object",
+    "code": "invalid_type",
+    "path": [
+      "user"
+    ],
+    "message": "Invalid input: expected object, received undefined"
+  },
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "error"
+    ],
+    "path": [],
+    "message": "Unrecognized key: \"error\""
+  }
+]
+ ❯ tests/api.integration.test.ts:32:29
+     30|
+     31| it('persists both vehicle selections, returns the user DTO and isolate…
+     32|   const first = loginSchema.parse((await login(signed(nextId()))).json…
+       |                             ^
+     33|   const second = loginSchema.parse((await login(signed(nextId()))).jso…
+     34|   const otherBefore = await database.user.findUniqueOrThrow({ where: {…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/64]⎯
+
+ FAIL  tests/api.integration.test.ts > rejects invalid vehicle bodies without changing user or session records
+ZodError: [
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "token"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "expiresAt"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "expected": "object",
+    "code": "invalid_type",
+    "path": [
+      "user"
+    ],
+    "message": "Invalid input: expected object, received undefined"
+  },
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "error"
+    ],
+    "path": [],
+    "message": "Unrecognized key: \"error\""
+  }
+]
+ ❯ tests/api.integration.test.ts:51:28
+     49|
+     50| it('rejects invalid vehicle bodies without changing user or session re…
+     51|   const body = loginSchema.parse((await login(signed(nextId()))).json(…
+       |                            ^
+     52|   await vehicle(body.token, { vehicleType: 'CAR' });
+     53|   const userBefore = await database.user.findUniqueOrThrow({ where: { …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/64]⎯
+
+ FAIL  tests/api.integration.test.ts > rejects unauthorized vehicle writes including revoked and exactly expired sessions
+ZodError: [
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "token"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "expiresAt"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "expected": "object",
+    "code": "invalid_type",
+    "path": [
+      "user"
+    ],
+    "message": "Invalid input: expected object, received undefined"
+  },
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "error"
+    ],
+    "path": [],
+    "message": "Unrecognized key: \"error\""
+  }
+]
+ ❯ tests/api.integration.test.ts:71:28
+     69|
+     70| it('rejects unauthorized vehicle writes including revoked and exactly …
+     71|   const body = loginSchema.parse((await login(signed(nextId()))).json(…
+       |                            ^
+     72|   const revoked = loginSchema.parse((await login(signed(nextId()))).js…
+     73|   await database.session.deleteMany({ where: { userId: revoked.user.id…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/64]⎯
+
+ FAIL  tests/api.integration.test.ts > creates one user across concurrent first logins, stores only digests, preserves preference and refreshes profile
+AssertionError: expected 500 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 500
+
+ ❯ tests/api.integration.test.ts:92:76
+     90|   const id = nextId();
+     91|   const responses = await Promise.all(Array.from({ length: 4 }, () => …
+     92|   const bodies = responses.map((response) => { expect(response.statusC…
+       |                                                                            ^
+     93|   const first = bodies[0];
+     94|   if (!first) throw new Error('No login response');
+ ❯ tests/api.integration.test.ts:92:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/64]⎯
+
+ FAIL  tests/api.integration.test.ts > rejects invalid bodies and signatures without writes or credential leakage
+PrismaClientKnownRequestError: 
+Invalid `database.session.count()` invocation in
+C:/Users/anton/Documents/ChatGPT/DLT/tests/api.integration.test.ts:123:41
+
+  120 it('rejects invalid bodies and signatures without writes or credential leakage', async () => {
+  121   const id = nextId();
+  122   const data = signed(id);
+→ 123   const before = await database.session.count(
+Can't reach database server at 127.0.0.1:55432
+ ❯ vn.handleRequestError node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:238:13
+ ❯ vn.handleAndLogRequestError node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:184:12
+ ❯ vn.request node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:153:12
+ ❯ a node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:1014:24
+ ❯ tests/api.integration.test.ts:123:18
+    121|   const id = nextId();
+    122|   const data = signed(id);
+    123|   const before = await database.session.count();
+       |                  ^
+    124|   for (const payload of [{}, { initData: data, extra: true }, { initDa…
+    125|     const response = await app.inject({ method: 'POST', url: '/auth/te…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/64]⎯
+
+ FAIL  tests/api.integration.test.ts > uses one unauthorized shape for missing, malformed, unknown, revoked and expired sessions
+AssertionError: expected 500 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 500
+
+ ❯ tests/api.integration.test.ts:140:33
+    138|   for (const authorization of [undefined, '', 'Basic abc', 'Bearer sho…
+    139|     const response = await app.inject({ method: 'GET', url: '/me', hea…
+    140|     expect(response.statusCode).toBe(401);
+       |                                 ^
+    141|     expect(response.json()).toEqual({ error: 'Unauthorized' });
+    142|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/64]⎯
+
+ FAIL  tests/api.integration.test.ts > rolls back user creation and profile changes when the session database write fails
+ZodError: [
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "token"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "expiresAt"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "expected": "object",
+    "code": "invalid_type",
+    "path": [
+      "user"
+    ],
+    "message": "Invalid input: expected object, received undefined"
+  },
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "error"
+    ],
+    "path": [],
+    "message": "Unrecognized key: \"error\""
+  }
+]
+ ❯ tests/api.integration.test.ts:150:37
+    148| it('rolls back user creation and profile changes when the session data…
+    149|   const existingId = nextId();
+    150|   const existingLogin = loginSchema.parse((await login(signed(existing…
+       |                                     ^
+    151|   const existingUser = await database.user.findUniqueOrThrow({ where: …
+    152|   const existingSessions = await database.session.findMany({ where: { …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/64]⎯
+
+ FAIL  tests/user.integration.test.ts > User persistence in PostgreSQL > persists bigint identity, nullable onboarding fields, profile and timestamps; enforces uniqueness
+PrismaClientKnownRequestError: 
+Invalid `database.user.create()` invocation in
+C:/Users/anton/Documents/ChatGPT/DLT/tests/user.integration.test.ts:21:38
+
+  18 
+  19 describe('User persistence in PostgreSQL', () => {
+  20   it('persists bigint identity, nullable onboarding fields, profile and timestamps; enforces uniqueness', async () => {
+→ 21     const user = await database.user.create(
+Can't reach database server at 127.0.0.1:55432
+ ❯ vn.handleRequestError node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:238:13
+ ❯ vn.handleAndLogRequestError node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:184:12
+ ❯ vn.request node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/RequestHandler.ts:153:12
+ ❯ a node_modules/.pnpm/@prisma+client@7.10.0_prism_e0d87001459d522af733506fb6516a66/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:1014:24
+ ❯ tests/user.integration.test.ts:21:18
+     19| describe('User persistence in PostgreSQL', () => {
+     20|   it('persists bigint identity, nullable onboarding fields, profile an…
+     21|     const user = await database.user.create({ data: { telegramUserId }…
+       |                  ^
+     22|     ownedId = user.id;
+     23|     expect(user.id).toMatch(/^[0-9a-f-]{36}$/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/64]⎯
+
+
+ Test Files  38 failed (38)
+      Tests  8 failed | 185 skipped (193)
+   Start at  16:09:27
+   Duration  63.30s (tests 59%, import 37%, transform 3%)
+
+    Isolate  38 workers spawned · ~192ms startup each (spawn + environment, per file)
+             at least ~7.12s faster with isolate: false — reuses workers across files instead of one per file
+
+[ELIFECYCLE] Command failed with exit code 1.
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 144ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:58140) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:50764) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  38 passed (38)
+      Tests  193 passed (193)
+   Start at  16:11:10
+   Duration  188.90s (tests 90%, import 9%, transform 1%)
+
