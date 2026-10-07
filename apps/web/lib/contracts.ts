@@ -15,6 +15,12 @@ export const loginSchema = z.strictObject({
 });
 export type Session = z.infer<typeof loginSchema>;
 
+export const preferredLanguageSchema = z.enum(['ENGLISH', 'RUSSIAN', 'THAI']);
+export type PreferredLanguage = z.infer<typeof preferredLanguageSchema>;
+export const languagePreferenceSchema = z.strictObject({
+  preferredLanguage: preferredLanguageSchema,
+});
+
 export const reminderPreferenceSchema = z.strictObject({
   dailyQuestionReminderEnabled: z.boolean(),
 });

@@ -939,7 +939,7 @@ commands, not automatically loaded by Next. Only HTTP(S) origins without
 credentials, paths, query strings or fragments are accepted; nonlocal origins
 require HTTPS. Explicit same-origin rewrites cover `/auth/telegram`, `/me`,
 `/me/vehicle`, `/me/history`, `/me/mistakes`, `/me/favorites`, `/me/progress`,
-`/me/concept-progress`, `/me/reminders`,
+`/me/concept-progress`, `/me/reminders`, `/me/language`,
 `/practice/categories`, `/practice/next`, `/practice/daily`, `/practice/retry-mistake`, `/practice/answer`,
 `/practice/favorite` and `/practice/report`, plus `/exam/current`, `/exam/start`, `/exam/answer`,
 `/exam/complete`, `/exam/report`, `/exam/history` and `/exam/:examId/review` only.
@@ -1056,6 +1056,17 @@ retry, while a protected 401 clears the memory-only session. The preference and 
 value are never written to browser storage, cookies or URLs. The view states that saving
 records a preference only: Telegram reminder delivery is not active in this implementation.
 No send time, frequency, timezone or delivery metadata is requested or displayed.
+
+Authenticated learners can open **Language settings** from setup or ordinary practice.
+Each fresh entry loads the exact persisted preference from `GET /me/language`. English,
+Russian and Thai are the only choices; saving sends the selected enum to
+`PATCH /me/language` and updates the confirmed state only when the API returns that exact
+value. An unchanged selection makes no mutation request. Transport, HTTP and strict
+response-validation failures retain the last confirmed language and can be retried, while
+a protected 401 clears the memory-only session. The view explains that this preference is
+used for future messages and does not change the existing language selectors in practice,
+history, progress or mock exams. No language preference, token or pending request state is
+written to browser storage, cookies, URLs or logs.
 
 Authenticated learners can enter Mock exam from vehicle setup or practice. Each fresh
 entry first sends one no-store `GET /exam/current`; a 200 restores the immutable exam and
