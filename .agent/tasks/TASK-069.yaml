@@ -1,18 +1,19 @@
 id: TASK-069
-title: Approve commercial product scope
-status: BLOCKED
+title: Defer paywall and grant free initial access
+status: ACCEPTED
 epic: Epic 9 — Commercial
-objective: Obtain Product Owner approval for the first commercial capability before implementing pricing or entitlement behavior.
+objective: Record the free-first launch policy before any commercial implementation.
 acceptance:
-  - Product Owner selects the first commercial capability and defines its user-visible scope.
-  - Product Owner approves any paid provider, pricing, access entitlement, refund, referral or affiliate behavior required by that capability.
-  - Credentials, production data and deployment requirements are explicitly identified before implementation.
-owner_decision_required: true
+  - All initial learners receive access to the current MVP capabilities without payment or a paywall.
+  - No Telegram Stars, paid provider, pricing, entitlement enforcement, refund, referral or affiliate behavior is introduced in this task.
+  - Any future paywall, quantitative free limits or paid access requires a new Product Owner-approved task.
+owner_decision_required: false
 owner_decision:
-  - Choose whether to begin with free limits, Telegram Stars, access entitlement, refunds, referrals, affiliates, or defer commercial work.
-  - Approve pricing and provider choices where applicable.
-blocked_reason: The roadmap explicitly requires Product Owner approval before Epic 9 commercial implementation; no commercial capability or pricing/provider decision is approved yet.
+  - All first clients are free.
+  - Paywall and paid limits are deferred until a later Product Owner decision.
+blocked_reason: null
 files_allowed: []
 required_checks: []
 dependencies:
   - TASK-068
+accepted_commit: pending-supervisor-governance-commit

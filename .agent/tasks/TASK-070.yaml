@@ -1,0 +1,18 @@
+id: TASK-070
+title: Approve production launch boundary
+status: BLOCKED
+epic: Epic 10 — Production Hardening
+objective: Obtain Product Owner approval for the production deployment boundary before selecting vendors, credentials or launch changes.
+acceptance:
+  - Product Owner approves whether to proceed toward a live launch now or continue local/staging hardening.
+  - Product Owner identifies the intended production web, API, bot and PostgreSQL hosting boundary and domain ownership.
+  - Production credentials, data migration policy, backup/observability expectations and launch rollback owner are identified before implementation.
+owner_decision_required: true
+owner_decision:
+  - Decide whether to prepare a live launch now or defer deployment while continuing hardening.
+  - If launching, identify hosting/domain choices and provide the required production credentials through the approved channel.
+blocked_reason: Architecture explicitly leaves deployment undecided and forbids production deployment without Product Owner approval.
+files_allowed: []
+required_checks: []
+dependencies:
+  - TASK-069

@@ -126,7 +126,7 @@ At the end of this epic the core end-to-end flow must work.
 
 Requires Product Owner approval before implementation.
 
-- TASK-069 — BLOCKED — approve the first commercial capability and pricing/provider scope
+- TASK-069 — ACCEPTED — free-first launch; defer paywall and paid limits
 
 Potential scope:
 
@@ -138,6 +138,8 @@ Potential scope:
 - affiliates
 
 ## Epic 10 — Production Hardening
+
+- TASK-070 — BLOCKED — approve the production launch boundary
 
 - deployment ADR
 - observability
