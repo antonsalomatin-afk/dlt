@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 import { languagePreferenceSchema, preferredLanguageSchema } from '../apps/web/lib/contracts.ts';
+import { deferEffectCleanup } from '../apps/web/lib/effect-lifecycle.ts';
 
 describe('Mini App preferred-language contract', () => {
   it('accepts only the exact supported enum response', () => {
@@ -33,5 +34,21 @@ describe('Mini App preferred-language contract', () => {
     expect(source).toContain('id !== requestId.current');
     expect(source).toContain('requested === confirmed');
     expect(source).not.toMatch(/localStorage|sessionStorage|document\.cookie|console\./u);
+  });
+
+  it('does not invalidate an in-flight request during development effect replay', async () => {
+    let generation = 0;
+    let cleanups = 0;
+    const invalidate = () => { cleanups += 1; };
+
+    const firstSetup = ++generation;
+    deferEffectCleanup(firstSetup, () => generation, invalidate);
+    ++generation;
+    await Promise.resolve();
+    expect(cleanups).toBe(0);
+
+    deferEffectCleanup(generation, () => generation, invalidate);
+    await Promise.resolve();
+    expect(cleanups).toBe(1);
   });
 });

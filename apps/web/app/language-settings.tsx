@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { languagePreferenceSchema, type PreferredLanguage, type Session } from '../lib/contracts';
+import { deferEffectCleanup } from '../lib/effect-lifecycle';
 
 type Failure = 'load' | 'save' | null;
 
@@ -26,6 +27,7 @@ export function LanguageSettings({ session, onBack, onExpired }: {
   const active = useRef(true);
   const busy = useRef(false);
   const requestId = useRef(0);
+  const effectGeneration = useRef(0);
 
   async function loadPreference() {
     if (busy.current || !active.current) return;
@@ -114,11 +116,14 @@ export function LanguageSettings({ session, onBack, onExpired }: {
   }
 
   useEffect(() => {
+    const generation = ++effectGeneration.current;
     active.current = true;
     void loadPreference();
     return () => {
-      active.current = false;
-      requestId.current++;
+      deferEffectCleanup(generation, () => effectGeneration.current, () => {
+        active.current = false;
+        requestId.current++;
+      });
     };
   }, []);
 
