@@ -1,17 +1,23 @@
 id: TASK-067
-title: Define daily and weekly learner summaries
-status: BLOCKED
+title: Deliver daily and weekly learner summaries
+status: READY
 epic: Epic 8 — Telegram Engagement
-objective: Define the product policy for learner-facing daily and weekly summaries before implementation.
+objective: Send enabled learners localized daily and weekly Telegram summaries at 11:00 Thailand time.
 acceptance:
-  - Product policy specifies which daily and weekly summary messages exist, their exact trigger or send schedule, and the Thailand-local timezone behavior.
-  - Product policy specifies the included metrics/content, the preferred-language behavior, and whether summaries use the existing reminder preference or a separate preference.
-  - Product policy specifies completion/no-activity behavior and whether a learner can receive more than one summary in the same local period.
-owner_decision_required: true
+  - At 11:00 ICT each local day, the server-only bot sends each eligible learner one daily summary containing the number of answers submitted and rounded percentage correct for that ICT calendar date.
+  - At 11:00 ICT each Monday, the server-only bot sends each eligible learner one weekly summary covering the preceding Monday through Sunday ICT dates, with the same two metrics.
+  - Daily and weekly summaries are always eligible for enabled learners, including zero-activity learners and learners who completed the daily question; the existing dailyQuestionReminderEnabled preference is the sole opt-in and no new preference is added.
+  - Messages use persisted preferredLanguage with English as the default and strict deterministic English, Russian and Thai text. Each includes the configured HTTPS Mini App button.
+  - PostgreSQL-backed delivery records make each summary idempotent per learner and ICT period, permit safe retry after failed Telegram sends, and prevent duplicate sends across repeated or concurrent scheduler ticks.
+  - Summary metrics are computed from authoritative persisted answer outcomes in the server/database boundary, are isolated per learner, and do not mutate learning state or expose private data in logs.
+  - Scheduler startup, shutdown, failure isolation, safe logging and injected clock/interval seams remain compatible with TASK-066 behavior.
+owner_decision_required: false
 owner_decision:
-  - Decide the daily and weekly summary contents and user-visible purpose.
-  - Decide the send cadence/time in Thailand-local time and whether daily/weekly summaries have separate opt-in controls from the existing daily-question reminder.
-blocked_reason: The roadmap names daily/weekly summaries but does not define their user-visible content, schedule, or preference semantics; implementation would otherwise invent product requirements.
+  - Daily summary at 11:00 ICT every day.
+  - Weekly summary at 11:00 ICT every Monday for the preceding Monday–Sunday period.
+  - Use the existing daily-question reminder preference; send regardless of activity or daily-question completion.
+  - Use the learner's preferred language, with English as the default.
+blocked_reason: null
 files_allowed:
   - apps/bot/**
   - apps/api/**
@@ -26,3 +32,7 @@ required_checks:
   - pnpm test:integration
 dependencies:
   - TASK-066
+supervisor_refinement:
+  - Keep summaries in the server-only bot boundary and extend the existing delivery-ledger/scheduler design without adding Redis, BullMQ, a new paid provider, an API proxy or browser delivery logic.
+  - Treat weekly Monday as the start of the ICT reporting week and compute periods from server-owned ICT dates, never client input or host-local time.
+  - Preserve the existing daily training invitation; summaries are additional deterministic messages and must not suppress or alter it.
