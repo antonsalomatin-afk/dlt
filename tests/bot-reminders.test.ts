@@ -48,6 +48,12 @@ function fakeDatabase(recipients: Recipient[], options: { failSentConfirmation?:
   };
 }
 
+function deferred<T>() {
+  let resolve!: (value: T) => void;
+  const promise = new Promise<T>((complete) => { resolve = complete; });
+  return { promise, resolve };
+}
+
 describe('daily reminder clock policy', () => {
   it('uses fixed UTC+07:00 boundaries and local dates', () => {
     expect(isReminderTick(new Date('2026-10-11T03:59:59.000Z'))).toBe(false);
@@ -161,5 +167,43 @@ describe('daily reminder scheduler', () => {
     expect(sendMessage).toHaveBeenCalledTimes(1);
     expect(error).toHaveBeenCalledWith('Daily reminder confirmation failed.');
     error.mockRestore();
+  });
+
+  it('skips overlapping interval ticks and waits for the active delivery during shutdown', async () => {
+    const database = fakeDatabase([
+      { id: '550e8400-e29b-41d4-a716-446655440014', telegramUserId: 761006n, preferredLanguage: 'ENGLISH', dailyQuestionReminderEnabled: true, completedDailyQuestion: false },
+    ]);
+    const sent = deferred<void>();
+    const sendMessage = vi.fn(async (chatId: string, message: string, options: unknown) => {
+      void chatId; void message; void options;
+      await sent.promise;
+    });
+    let intervalHandler: (() => void) | undefined;
+    const intervalHandle = setInterval(() => undefined, 1_000_000);
+    const scheduler = createReminderScheduler({
+      database: database as unknown as Parameters<typeof createReminderScheduler>[0]['database'],
+      api: { sendMessage } as unknown as Parameters<typeof createReminderScheduler>[0]['api'],
+      miniAppUrl: 'https://example.com/app',
+      now: () => new Date('2026-10-11T04:00:00.000Z'),
+      setInterval: vi.fn((handler) => {
+        intervalHandler = handler;
+        return intervalHandle;
+      }),
+      clearInterval: vi.fn(),
+    });
+
+    scheduler.start();
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    expect(sendMessage).toHaveBeenCalledTimes(1);
+    intervalHandler?.();
+    let stopped = false;
+    const stopping = scheduler.stop().then(() => { stopped = true; });
+    await Promise.resolve();
+    expect(stopped).toBe(false);
+    expect(sendMessage).toHaveBeenCalledTimes(1);
+    sent.resolve();
+    await stopping;
+    expect(stopped).toBe(true);
+    clearInterval(intervalHandle);
   });
 });

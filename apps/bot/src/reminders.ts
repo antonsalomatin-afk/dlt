@@ -40,7 +40,7 @@ export function createReminderScheduler(options: SchedulerOptions): ReminderSche
   let interval: ReturnType<typeof setInterval> | undefined;
   let activeTick: Promise<void> | undefined;
 
-  const tick = async () => {
+  const runTick = async () => {
     if (!running || !isReminderTick(now())) return;
     const instant = now();
     let recipients;
@@ -80,9 +80,19 @@ export function createReminderScheduler(options: SchedulerOptions): ReminderSche
     }
   };
 
+  const tick = async () => {
+    if (!running || activeTick) return;
+    const current = runTick().catch(() => { console.error('Daily reminder tick failed.'); });
+    activeTick = current;
+    try { await current; }
+    finally {
+      if (activeTick === current) activeTick = undefined;
+    }
+  };
+
   const scheduleTick = () => {
-    if (!running) return;
-    activeTick = tick().catch(() => { console.error('Daily reminder tick failed.'); });
+    if (!running || activeTick) return;
+    void tick();
   };
 
   return {
