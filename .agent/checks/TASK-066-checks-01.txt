@@ -1,0 +1,129 @@
+TASK-066 authoritative checks
+Started: 2026-10-12T09:32:04.7347528Z
+Commit: 6a5a6501c570a9a14d934733d53c4daa7d8a430c
+
+$ pnpm check
+$ pnpm lint && pnpm typecheck && pnpm test
+$ eslint .
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 159ms
+
+$ tsc --noEmit
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 144ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+ ❯ tests/database-lifecycle.test.ts (4 tests | 1 failed) 8531ms
+   ❯ local database reset safety (4)
+     × refuses a directory junction instead of deleting its target 6556ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/database-lifecycle.test.ts > local database reset safety > refuses a directory junction instead of deleting its target
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/database-lifecycle.test.ts:38:3
+     36|     expect(readFileSync(join(data, 'keep'), 'utf8')).toBe('untouched');
+     37|   });
+     38|   it('refuses a directory junction instead of deleting its target', ()…
+       |   ^
+     39|     const target = join(sandbox, 'outside');
+     40|     mkdirSync(target);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 53 passed (54)
+      Tests  1 failed | 285 passed (286)
+   Start at  11:33:22
+   Duration  29.38s (tests 53%, import 28%, transform 19%)
+
+    Isolate  54 workers spawned · ~1.40s startup each (spawn + environment, per file)
+             at least ~2.19s faster with isolate: false — reuses workers across files instead of one per file
+
+[ELIFECYCLE] Test failed. See above for more details.
+[ELIFECYCLE] Command failed with exit code 1.
+
+[exit 1] pnpm check
+
+$ pnpm prisma validate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "validate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+The schema at packages\database\prisma\schema.prisma is valid 🚀
+
+[exit 0] pnpm prisma validate
+
+$ pnpm test:integration
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 176ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:46780) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:15136) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ❯ tests/exam-session.integration.test.ts (9 tests | 1 failed) 7149ms
+   ❯ mock exam persistence foundation (9)
+     × applies the complete migration chain to an empty PostgreSQL database with named checks 19ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/exam-session.integration.test.ts > mock exam persistence foundation > applies the complete migration chain to an empty PostgreSQL database with named checks
+AssertionError: expected [ Array(16) ] to deeply equal [ Array(15) ]
+
+- Expected
++ Received
+
+@@ -12,6 +12,7 @@
+    "20261002070000_exam_question_reports",
+    "20261002160000_report_triage",
+    "20261003060000_daily_practice",
+    "20261004060000_daily_question_reminder",
+    "20261005060000_preferred_language",
++   "20261012080000_daily_reminder_delivery",
+  ]
+
+ ❯ tests/exam-session.integration.test.ts:114:68
+    112|       ORDER BY migration_name
+    113|     `;
+    114|     expect(migrations.map(({ migration_name }) => migration_name)).toE…
+       |                                                                    ^
+    115|       '20260907183951_initial_user',
+    116|       '20260908055549_question_domain',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 39 passed (40)
+      Tests  1 failed | 195 passed (196)
+   Start at  11:34:52
+   Duration  177.56s (tests 86%, import 12%, transform 2%)
+
+[ELIFECYCLE] Command failed with exit code 1.
+
+[exit 1] pnpm test:integration
+Completed: 2026-10-12T09:37:50.4364145Z
