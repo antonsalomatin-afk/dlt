@@ -7,6 +7,7 @@ import {
   reminderMessages,
   thailandReminderLocalDate,
 } from '../packages/database/src/reminder-delivery.ts';
+import { summaryMessages } from '../packages/database/src/summary.ts';
 
 type Recipient = {
   id: string;
@@ -14,11 +15,39 @@ type Recipient = {
   preferredLanguage: 'ENGLISH' | 'RUSSIAN' | 'THAI';
   dailyQuestionReminderEnabled: boolean;
   completedDailyQuestion: boolean;
+  answerOutcomes?: Array<{ submittedAt: string; isCorrect: boolean }>;
 };
 
-function fakeDatabase(recipients: Recipient[], options: { failSentConfirmation?: boolean } = {}) {
+function fakeDatabase(recipients: Recipient[], options: { dailyAlreadySent?: boolean; failSentConfirmation?: boolean; summaries?: boolean } = {}) {
   const rows = new Map<string, { id: string; status: 'CLAIMED' | 'SENT' | 'FAILED'; attempts: number }>();
+  const summaryRows = new Map<string, { id: string; status: 'CLAIMED' | 'SENT' | 'FAILED'; attempts: number }>();
   let nextId = 1;
+  if (options.dailyAlreadySent) rows.set('550e8400-e29b-41d4-a716-446655440015:2026-10-12T00:00:00.000Z', { id: 'daily-existing', status: 'SENT', attempts: 1 });
+  const summaryDelivery = options.summaries ? {
+    findUnique: vi.fn(async ({ where }: { where: { userId_summaryType_periodStart: { userId: string; summaryType: string; periodStart: Date } } }) => {
+      const value = where.userId_summaryType_periodStart;
+      const row = summaryRows.get(`${value.userId}:${value.summaryType}:${value.periodStart.toISOString()}`);
+      return row ? { id: row.id, status: row.status } : null;
+    }),
+    create: vi.fn(async ({ data }: { data: { userId: string; summaryType: string; periodStart: Date; status: 'CLAIMED'; attempts: number } }) => {
+      const key = `${data.userId}:${data.summaryType}:${data.periodStart.toISOString()}`;
+      if (summaryRows.has(key)) throw new Error('P2002');
+      const row = { id: `summary-${nextId++}`, status: data.status, attempts: data.attempts };
+      summaryRows.set(key, row);
+      return { id: row.id };
+    }),
+    updateMany: vi.fn(async ({ where, data }: { where: { id: string; status: 'CLAIMED' | 'FAILED' }; data: { status: 'CLAIMED' | 'SENT' | 'FAILED'; attempts?: { increment: number } } }) => {
+      const row = [...summaryRows.values()].find((candidate) => candidate.id === where.id && candidate.status === where.status);
+      if (!row || (data.status === 'SENT' && options.failSentConfirmation)) return { count: 0 };
+      row.status = data.status;
+      if (data.attempts) row.attempts += data.attempts.increment;
+      return { count: 1 };
+    }),
+  } : {
+    findUnique: vi.fn(async () => { throw new Error('summary disabled'); }),
+    create: vi.fn(async () => { throw new Error('summary disabled'); }),
+    updateMany: vi.fn(async () => ({ count: 0 })),
+  };
   return {
     user: {
       findMany: vi.fn(async ({ where }: { where: { dailyQuestionReminderEnabled: boolean } }) =>
@@ -44,7 +73,21 @@ function fakeDatabase(recipients: Recipient[], options: { failSentConfirmation?:
         return { count: 1 };
       }),
     },
+    reminderSummaryDelivery: summaryDelivery,
+    answerAttempt: {
+      findMany: vi.fn(async ({ where }: { where: { presentation: { userId: string }; submittedAt: { gte: Date; lt: Date } } }) => {
+        if (!options.summaries) throw new Error('summary disabled');
+        const recipient = recipients.find(({ id }) => id === where.presentation.userId);
+        return (recipient?.answerOutcomes ?? [])
+          .filter(({ submittedAt }) => {
+            const instant = new Date(submittedAt).getTime();
+            return instant >= where.submittedAt.gte.getTime() && instant < where.submittedAt.lt.getTime();
+          })
+          .map(({ isCorrect }) => ({ isCorrect }));
+      }),
+    },
     rows,
+    summaryRows,
   };
 }
 
@@ -205,5 +248,68 @@ describe('daily reminder scheduler', () => {
     await stopping;
     expect(stopped).toBe(true);
     clearInterval(intervalHandle);
+  });
+
+  it('sends authoritative daily and Monday weekly metrics with zero-safe eligibility', async () => {
+    const database = fakeDatabase([{
+      id: '550e8400-e29b-41d4-a716-446655440015',
+      telegramUserId: 761007n,
+      preferredLanguage: 'ENGLISH',
+      dailyQuestionReminderEnabled: true,
+      completedDailyQuestion: true,
+      answerOutcomes: [
+        { submittedAt: '2026-10-12T03:00:00.000Z', isCorrect: true },
+        { submittedAt: '2026-10-12T03:30:00.000Z', isCorrect: false },
+        { submittedAt: '2026-10-06T04:00:00.000Z', isCorrect: true },
+      ],
+    }], { summaries: true });
+    const sendMessage = vi.fn(async (chatId: string, message: string, options: unknown) => {
+      void chatId; void message; void options;
+      return undefined;
+    });
+    const scheduler = createReminderScheduler({
+      database: database as unknown as Parameters<typeof createReminderScheduler>[0]['database'],
+      api: { sendMessage } as unknown as Parameters<typeof createReminderScheduler>[0]['api'],
+      miniAppUrl: 'https://example.com/app',
+      now: () => new Date('2026-10-12T04:00:00.000Z'),
+    });
+
+    scheduler.start();
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    await scheduler.stop();
+    expect(sendMessage).toHaveBeenCalledTimes(3);
+    expect(sendMessage.mock.calls.map(([,, options]) => options)).toHaveLength(3);
+    expect(sendMessage.mock.calls[1]?.[1]).toBe(summaryMessages('ENGLISH', 'DAILY', { answered: 2, correct: 1, accuracyPercent: 50 }));
+    expect(sendMessage.mock.calls[2]?.[1]).toBe(summaryMessages('ENGLISH', 'WEEKLY', { answered: 1, correct: 1, accuracyPercent: 100 }));
+    expect(database.summaryRows.get('550e8400-e29b-41d4-a716-446655440015:DAILY:2026-10-12T00:00:00.000Z')?.status).toBe('SENT');
+    expect(database.summaryRows.get('550e8400-e29b-41d4-a716-446655440015:WEEKLY:2026-10-05T00:00:00.000Z')?.status).toBe('SENT');
+  });
+
+  it('delivers summaries when the daily invitation was already sent', async () => {
+    const database = fakeDatabase([{
+      id: '550e8400-e29b-41d4-a716-446655440015',
+      telegramUserId: 761007n,
+      preferredLanguage: 'ENGLISH',
+      dailyQuestionReminderEnabled: true,
+      completedDailyQuestion: true,
+      answerOutcomes: [],
+    }], { dailyAlreadySent: true, summaries: true });
+    const sendMessage = vi.fn(async (chatId: string, message: string, options: unknown) => {
+      void chatId; void message; void options;
+      return undefined;
+    });
+    const scheduler = createReminderScheduler({
+      database: database as unknown as Parameters<typeof createReminderScheduler>[0]['database'],
+      api: { sendMessage } as unknown as Parameters<typeof createReminderScheduler>[0]['api'],
+      miniAppUrl: 'https://example.com/app',
+      now: () => new Date('2026-10-12T04:00:00.000Z'),
+    });
+
+    scheduler.start();
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    await scheduler.stop();
+    expect(sendMessage).toHaveBeenCalledTimes(2);
+    expect(sendMessage.mock.calls[0]?.[1]).toBe(summaryMessages('ENGLISH', 'DAILY', { answered: 0, correct: 0, accuracyPercent: 0 }));
+    expect(sendMessage.mock.calls[1]?.[1]).toBe(summaryMessages('ENGLISH', 'WEEKLY', { answered: 0, correct: 0, accuracyPercent: 0 }));
   });
 });

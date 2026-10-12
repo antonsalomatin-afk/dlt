@@ -1060,6 +1060,12 @@ question. The message uses the persisted English, Russian or Thai preference and
 the configured Mini App button. No send time, frequency, timezone or delivery metadata is
 requested or displayed in the Mini App.
 
+At the same 11:00 ICT tick, the server-owned bot sends an additional daily summary
+with the learner's answer count and rounded correct percentage for that ICT calendar day.
+On Mondays it also sends a weekly summary for the preceding Monday through Sunday.
+Both summaries use the existing reminder opt-in, are sent for zero activity and after
+daily-question completion, and use the persisted language preference.
+
 Authenticated learners can open **Language settings** from setup or ordinary practice.
 Each fresh entry loads the exact persisted preference from `GET /me/language`. English,
 Russian and Thai are the only choices; saving sends the selected enum to

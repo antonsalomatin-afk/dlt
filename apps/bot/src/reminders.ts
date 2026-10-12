@@ -11,8 +11,17 @@ import {
   REMINDER_INTERVAL_MS,
 } from '../../../packages/database/src/reminder-delivery.ts';
 import type { PrismaClient } from '../../../packages/database/src/index.ts';
+import {
+  claimSummaryDelivery,
+  getSummaryMetrics,
+  markSummaryDeliveryFailed,
+  markSummaryDeliverySent,
+  summaryMessages,
+  summaryPeriodForTick,
+  type SummaryPeriod,
+} from '../../../packages/database/src/summary.ts';
 
-type ReminderDatabase = Pick<PrismaClient, 'dailyReminderDelivery' | 'user'>;
+type ReminderDatabase = Pick<PrismaClient, 'answerAttempt' | 'dailyReminderDelivery' | 'reminderSummaryDelivery' | 'user'>;
 type ReminderApi = Pick<Api, 'sendMessage'>;
 
 export type ReminderScheduler = {
@@ -40,6 +49,46 @@ export function createReminderScheduler(options: SchedulerOptions): ReminderSche
   let interval: ReturnType<typeof setInterval> | undefined;
   let activeTick: Promise<void> | undefined;
 
+  const deliverSummary = async (
+    recipient: { id: string; telegramUserId: bigint; preferredLanguage: 'ENGLISH' | 'RUSSIAN' | 'THAI' },
+    period: SummaryPeriod,
+    instant: Date,
+  ) => {
+    let claim;
+    try {
+      claim = await claimSummaryDelivery(options.database, recipient.id, period, instant);
+    } catch {
+      console.error('Summary delivery claim failed.');
+      return;
+    }
+    if (!claim.claimed) return;
+    let metrics;
+    try {
+      metrics = await getSummaryMetrics(options.database, recipient.id, period);
+    } catch {
+      try { await markSummaryDeliveryFailed(options.database, claim.deliveryId, now()); }
+      catch { console.error('Summary failure recording failed.'); }
+      console.error('Summary metrics failed.');
+      return;
+    }
+    try {
+      await options.api.sendMessage(recipient.telegramUserId.toString(), summaryMessages(recipient.preferredLanguage, period.summaryType, metrics), {
+        reply_markup: new InlineKeyboard().webApp('Open ThaiDLT', options.miniAppUrl),
+      });
+    } catch {
+      try { await markSummaryDeliveryFailed(options.database, claim.deliveryId, now()); }
+      catch { console.error('Summary failure recording failed.'); }
+      console.error('Summary delivery failed.');
+      return;
+    }
+    try {
+      const confirmed = await markSummaryDeliverySent(options.database, claim.deliveryId, now());
+      if (!confirmed) console.error('Summary confirmation failed.');
+    } catch {
+      console.error('Summary confirmation failed.');
+    }
+  };
+
   const runTick = async () => {
     if (!running || !isReminderTick(now())) return;
     const instant = now();
@@ -51,6 +100,7 @@ export function createReminderScheduler(options: SchedulerOptions): ReminderSche
       return;
     }
     const localDate = thailandReminderLocalDate(instant);
+    const periods = summaryPeriodForTick(instant);
     for (const recipient of recipients) {
       if (!running) return;
       let claim;
@@ -58,25 +108,31 @@ export function createReminderScheduler(options: SchedulerOptions): ReminderSche
         claim = await claimReminderDelivery(options.database, recipient.id, localDate, instant);
       } catch {
         console.error('Daily reminder claim failed.');
-        continue;
+        claim = { claimed: false, deliveryId: '' };
       }
-      if (!claim.claimed) continue;
-      try {
-        await options.api.sendMessage(recipient.telegramUserId.toString(), reminderMessages[recipient.preferredLanguage], {
-          reply_markup: new InlineKeyboard().webApp('Open ThaiDLT', options.miniAppUrl),
-        });
-      } catch {
-        try { await markReminderDeliveryFailed(options.database, claim.deliveryId, now()); }
-        catch { console.error('Daily reminder failure recording failed.'); }
-        console.error('Daily reminder delivery failed.');
-        continue;
+      if (claim.claimed) {
+        let delivered = false;
+        try {
+          await options.api.sendMessage(recipient.telegramUserId.toString(), reminderMessages[recipient.preferredLanguage], {
+            reply_markup: new InlineKeyboard().webApp('Open ThaiDLT', options.miniAppUrl),
+          });
+          delivered = true;
+        } catch {
+          try { await markReminderDeliveryFailed(options.database, claim.deliveryId, now()); }
+          catch { console.error('Daily reminder failure recording failed.'); }
+          console.error('Daily reminder delivery failed.');
+        }
+        if (delivered) {
+          try {
+            const confirmed = await markReminderDeliverySent(options.database, claim.deliveryId, now());
+            if (!confirmed) console.error('Daily reminder confirmation failed.');
+          } catch {
+            console.error('Daily reminder confirmation failed.');
+          }
+        }
       }
-      try {
-        const confirmed = await markReminderDeliverySent(options.database, claim.deliveryId, now());
-        if (!confirmed) console.error('Daily reminder confirmation failed.');
-      } catch {
-        console.error('Daily reminder confirmation failed.');
-      }
+      await deliverSummary(recipient, periods.daily, instant);
+      if (periods.weekly) await deliverSummary(recipient, periods.weekly, instant);
     }
   };
 
