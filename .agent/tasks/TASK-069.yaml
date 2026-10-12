@@ -16,4 +16,4 @@ files_allowed: []
 required_checks: []
 dependencies:
   - TASK-068
-accepted_commit: pending-supervisor-governance-commit
+accepted_commit: 0a69aaf4e4d8cfe3d02990f8bf2ffbd56aa6b35c
