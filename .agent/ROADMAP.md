@@ -118,7 +118,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-063 — ACCEPTED — persist the learner's preferred language (English default)
 - TASK-064 — ACCEPTED — manage preferred language in the Mini App
 - TASK-065 — ACCEPTED — define daily Telegram reminder delivery policy (11:00 ICT; no completion suppression)
-- TASK-066 — READY — deliver daily Telegram reminders
+- TASK-066 — ACCEPTED — deliver daily Telegram reminders at 11:00 ICT
 - daily/weekly summaries
 - deep links
 
