@@ -35,6 +35,31 @@ describe('bot entry', () => {
       expect(requests[0]).not.toHaveProperty('reply_markup');
     }
   });
+  it('adds only the validated daily startapp link while preserving the normal launch button', async () => {
+    const requests: unknown[] = [];
+    const transport = Object.assign(vi.fn(async (...[, options]: Parameters<typeof fetch>) => {
+      if (typeof options?.body !== 'string') throw new Error('Expected JSON payload');
+      requests.push(JSON.parse(options.body));
+      return new Response(JSON.stringify({ ok: true, result: { message_id: 2, date: 0, chat: { id: 42, type: 'private' }, text: 'Mock reply' } }), { headers: { 'content-type': 'application/json' } });
+    }), fetch);
+    const bot = createBot(environment, { botInfo, client: { fetch: transport } });
+    await bot.handleUpdate({ update_id: 1, message: { message_id: 1, date: 0, chat: { id: 42, type: 'private', first_name: 'Test' }, from: { id: 42, is_bot: false, first_name: 'Test' }, text: '/start daily', entities: [{ type: 'bot_command', offset: 0, length: 6 }] } });
+    expect(requests[0]).toMatchObject({ reply_markup: { inline_keyboard: [[
+      { text: 'Open ThaiDLT', web_app: { url: environment.MINI_APP_URL } },
+      { text: 'Open daily question', url: 'https://t.me/thaidlt_test_bot?startapp=daily' },
+    ]] } });
+  });
+  it.each(['/start unknown', `/start ${'x'.repeat(65)}`, '/start daily\u0000'])('falls back to the normal launch for invalid start payload %s', async (text) => {
+    const requests: unknown[] = [];
+    const transport = Object.assign(vi.fn(async (...[, options]: Parameters<typeof fetch>) => {
+      if (typeof options?.body !== 'string') throw new Error('Expected JSON payload');
+      requests.push(JSON.parse(options.body));
+      return new Response(JSON.stringify({ ok: true, result: { message_id: 2, date: 0, chat: { id: 42, type: 'private' }, text: 'Mock reply' } }), { headers: { 'content-type': 'application/json' } });
+    }), fetch);
+    const bot = createBot(environment, { botInfo, client: { fetch: transport } });
+    await bot.handleUpdate({ update_id: 1, message: { message_id: 1, date: 0, chat: { id: 42, type: 'private', first_name: 'Test' }, from: { id: 42, is_bot: false, first_name: 'Test' }, text, entities: [{ type: 'bot_command', offset: 0, length: 6 }] } });
+    expect(requests[0]).toMatchObject({ reply_markup: { inline_keyboard: [[{ text: 'Open ThaiDLT', web_app: { url: environment.MINI_APP_URL } }]] } });
+  });
   it.each([
     {}, { ...environment, BOT_TOKEN: 'secret-invalid' }, { ...environment, MINI_APP_URL: '' },
     { ...environment, MINI_APP_URL: 'http://example.com' }, { ...environment, MINI_APP_URL: 'https://user:secret@example.com' },

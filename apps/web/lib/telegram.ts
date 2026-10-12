@@ -1,4 +1,18 @@
-type Bridge = { initData: string; ready: () => void };
+export const DAILY_START_PARAMETER = 'daily';
+export type TelegramStartParameter = typeof DAILY_START_PARAMETER;
+
+export function readTelegramStartParameter(initData: string): TelegramStartParameter | null {
+  if (initData.length > 16 * 1024) return null;
+  let params: URLSearchParams;
+  try { params = new URLSearchParams(initData); }
+  catch { return null; }
+  const values = params.getAll('start_param');
+  return values.length === 1 && values[0] === DAILY_START_PARAMETER && values[0].length <= 64
+    ? DAILY_START_PARAMETER
+    : null;
+}
+
+type Bridge = { initData: string; startParameter: TelegramStartParameter | null; ready: () => void };
 
 function bridge(): Bridge | null {
   if (!('Telegram' in window)) return null;
@@ -8,7 +22,7 @@ function bridge(): Bridge | null {
   if (typeof app !== 'object' || app === null || !('initData' in app) || typeof app.initData !== 'string' ||
       !('ready' in app) || typeof app.ready !== 'function') return null;
   const ready = app.ready;
-  return { initData: app.initData, ready: () => ready.call(app) };
+  return { initData: app.initData, startParameter: readTelegramStartParameter(app.initData), ready: () => ready.call(app) };
 }
 
 let loading: Promise<Bridge> | undefined;

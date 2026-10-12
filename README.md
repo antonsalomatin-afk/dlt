@@ -334,6 +334,13 @@ polling. Private chats receive an HTTPS Mini App launch button; groups receive
 instructions to open a private chat. Automated tests inject an in-memory
 transport and never send Telegram messages.
 
+The bot also accepts the bounded `/start daily` destination. It keeps the normal
+launch button and adds a Telegram `startapp=daily` link for the daily-question
+entry. The Mini App accepts that destination only from Telegram's raw `initData`
+boundary after ordinary server authentication; unknown values, browser query
+parameters, missing authentication or a missing vehicle selection return to the
+normal setup flow.
+
 To run a bot manually when a token and hosted Mini App URL are available, set
 server-only `BOT_TOKEN` and `MINI_APP_URL` in ignored `.env`, then run
 `pnpm bot:start`. Configuration is checked before polling; missing/invalid values

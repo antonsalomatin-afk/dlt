@@ -71,6 +71,7 @@ export default function Home() {
       const authenticated = loginSchema.parse(await response.json());
       if (Date.parse(authenticated.expiresAt) <= Date.now()) throw new Error();
       setSession(authenticated); setChoice(authenticated.user.selectedVehicleType);
+      if (telegram.startParameter === 'daily' && authenticated.user.selectedVehicleType) setView('daily');
       setMessage(authenticated.user.selectedVehicleType ? `Saved selection: ${labels[authenticated.user.selectedVehicleType]}.` : 'Choose the vehicle you are preparing to drive.');
     } catch {
       setError(true); setMessage('We could not connect. Check your connection and try again, or reopen ThaiDLT from Telegram.');
