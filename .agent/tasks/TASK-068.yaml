@@ -1,7 +1,9 @@
 id: TASK-068
 title: Open the daily question from Telegram deep links
-status: CHECKING
+status: REVIEW
 builder_commit: 8e909084eefe81d1208f2ea703b3166a64836149
+authoritative_checks: .agent/checks/TASK-068-checks-01.txt
+review_attempt: 1
 epic: Epic 8 — Telegram Engagement
 objective: Let a Telegram user open ThaiDLT directly into the daily-question experience through bot-generated and Telegram startapp deep links.
 acceptance:
