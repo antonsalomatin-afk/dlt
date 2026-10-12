@@ -65,11 +65,17 @@ export function createReminderScheduler(options: SchedulerOptions): ReminderSche
         await options.api.sendMessage(recipient.telegramUserId.toString(), reminderMessages[recipient.preferredLanguage], {
           reply_markup: new InlineKeyboard().webApp('Open ThaiDLT', options.miniAppUrl),
         });
-        await markReminderDeliverySent(options.database, claim.deliveryId, now());
       } catch {
         try { await markReminderDeliveryFailed(options.database, claim.deliveryId, now()); }
         catch { console.error('Daily reminder failure recording failed.'); }
         console.error('Daily reminder delivery failed.');
+        continue;
+      }
+      try {
+        const confirmed = await markReminderDeliverySent(options.database, claim.deliveryId, now());
+        if (!confirmed) console.error('Daily reminder confirmation failed.');
+      } catch {
+        console.error('Daily reminder confirmation failed.');
       }
     }
   };
