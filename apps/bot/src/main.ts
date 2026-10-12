@@ -5,10 +5,10 @@ import { createDatabaseClient } from '../../../packages/database/src/index.ts';
 
 let database: ReturnType<typeof createDatabaseClient> | undefined;
 try {
+  const bot = createBot(process.env);
   const databaseUrl = process.env.DATABASE_URL;
   if (!databaseUrl) throw new Error('DATABASE_URL is required.');
   database = createDatabaseClient(databaseUrl);
-  const bot = createBot(process.env);
   const miniAppUrl = new URL(process.env.MINI_APP_URL ?? '').toString();
   const scheduler = createReminderScheduler({ database, api: bot.api, miniAppUrl });
   // Telegram errors can include sensitive request context. Emit fixed text only.
