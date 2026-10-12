@@ -1,6 +1,7 @@
 id: TASK-066
 title: Deliver daily Telegram reminders
-status: BUILDING
+status: CHECKING
+builder_commit: e4815a77692d928d45f736511e74d6414f2c1c74
 epic: Epic 8 — Telegram Engagement
 objective: Send one server-owned daily Telegram training invitation at 11:00 ICT to learners who enabled reminders, in their persisted preferred language.
 acceptance:
