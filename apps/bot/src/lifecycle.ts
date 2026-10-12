@@ -6,17 +6,20 @@ type Signals = {
   off(signal: 'SIGINT' | 'SIGTERM', handler: () => void): unknown;
 };
 type PollingBot = Pick<Bot, 'init' | 'start' | 'stop' | 'isRunning'>;
+type Scheduler = { start(): void; stop(): Promise<void> };
 
 /** Waits for polling and pending middleware to finish, and removes signal handlers. */
-export async function runBot(bot: PollingBot, signals: Signals = process) {
+export async function runBot(bot: PollingBot, signals: Signals = process, scheduler?: Scheduler) {
   let stopping = false;
   let stopPromise: Promise<void> | undefined;
   let stopFailed = false;
+  let schedulerStop: Promise<void> | undefined;
   const initialization = new AbortController();
   const stop = () => {
     if (stopping) return;
     stopping = true;
     initialization.abort();
+    if (scheduler) schedulerStop = scheduler.stop().catch(() => { stopFailed = true; });
     if (bot.isRunning()) stopPromise = bot.stop().catch(() => { stopFailed = true; });
   };
   signals.on('SIGINT', stop);
@@ -26,10 +29,15 @@ export async function runBot(bot: PollingBot, signals: Signals = process) {
       if (stopping) return;
       throw error;
     }
-    if (!stopping) await bot.start();
+    if (!stopping) {
+      scheduler?.start();
+      await bot.start();
+    }
     await stopPromise;
+    await schedulerStop;
     if (stopFailed) throw new Error('Bot shutdown failed.');
   } finally {
+    if (scheduler && !stopping) await scheduler.stop();
     signals.off('SIGINT', stop);
     signals.off('SIGTERM', stop);
   }

@@ -1053,9 +1053,12 @@ enable and disable actions send the opposite boolean to `PATCH /me/reminders` an
 the visible choice only after the API confirms that exact value. Transport, HTTP and strict
 response-validation failures retain the last confirmed choice and offer a deterministic
 retry, while a protected 401 clears the memory-only session. The preference and pending
-value are never written to browser storage, cookies or URLs. The view states that saving
-records a preference only: Telegram reminder delivery is not active in this implementation.
-No send time, frequency, timezone or delivery metadata is requested or displayed.
+value are never written to browser storage, cookies or URLs. Saving records the preference
+used by the server-only bot scheduler. Enabled learners receive a further-training
+invitation at 11:00 ICT (UTC+07:00), including learners who already completed that day's
+question. The message uses the persisted English, Russian or Thai preference and includes
+the configured Mini App button. No send time, frequency, timezone or delivery metadata is
+requested or displayed in the Mini App.
 
 Authenticated learners can open **Language settings** from setup or ordinary practice.
 Each fresh entry loads the exact persisted preference from `GET /me/language`. English,
