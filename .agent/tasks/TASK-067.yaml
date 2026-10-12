@@ -1,6 +1,7 @@
 id: TASK-067
 title: Deliver daily and weekly learner summaries
-status: BUILDING
+status: CHECKING
+builder_commit: 34d5792baf9ca23ed706fa8476de324ddb0cd152
 epic: Epic 8 — Telegram Engagement
 objective: Send enabled learners localized daily and weekly Telegram summaries at 11:00 Thailand time.
 acceptance:
