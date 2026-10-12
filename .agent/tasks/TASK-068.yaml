@@ -1,17 +1,22 @@
 id: TASK-068
-title: Define Telegram Mini App deep-link destinations
-status: BLOCKED
+title: Open the daily question from Telegram deep links
+status: BUILDING
 epic: Epic 8 — Telegram Engagement
-objective: Define which learner destinations Telegram deep links should open before implementation.
+objective: Let a Telegram user open ThaiDLT directly into the daily-question experience through bot-generated and Telegram startapp deep links.
 acceptance:
-  - Product policy names the supported deep-link destinations and their exact Mini App behavior.
-  - Product policy specifies whether links may be used from bot messages, Telegram startapp links, or both.
-  - Unknown, malformed or unauthenticated deep-link parameters have a safe deterministic fallback.
-owner_decision_required: true
+  - The bot's private /start response preserves the existing Mini App launch and supports a validated daily destination parameter for the direct daily-question entry.
+  - The Mini App reads only the Telegram-provided start parameter through the existing client boundary, validates an allowlisted daily destination, and routes an authenticated learner with a saved vehicle to the daily-question view.
+  - A valid daily deep link never bypasses Telegram initData authentication, vehicle selection, or server-side daily-question authorization; missing authentication or vehicle state falls back to the existing safe setup flow.
+  - Unknown, malformed, oversized or unsupported parameters deterministically fall back to setup without changing API authorization, persisted state or browser storage.
+  - Bot-generated deep-link URLs and Telegram startapp links use the configured HTTPS Mini App URL/bot configuration without exposing credentials or trusting unsigned client identity.
+  - Existing /start behavior, reminder buttons, ordinary practice, daily practice, exam flows and authentication contracts remain unchanged when no valid deep-link parameter is present.
+  - Unit, browser and bot tests cover valid daily routing, malformed/unknown fallback, auth/vehicle gating, exact link construction, security boundaries and regressions.
+owner_decision_required: false
 owner_decision:
-  - Decide which destinations are required first, such as daily question, ordinary practice, mistakes, progress, exam or settings.
-  - Decide whether the first slice needs bot-generated links, Telegram startapp links, or both.
-blocked_reason: The roadmap names deep links without defining target destinations or link surfaces; implementation would invent user-visible navigation behavior.
+  - First deep-link slice targets the daily question because it is the launch-critical engagement flow.
+  - Support both bot-generated links and Telegram startapp parameters.
+  - Unknown or invalid deep links fall back to the normal setup screen.
+blocked_reason: null
 files_allowed:
   - apps/bot/**
   - apps/web/**
@@ -25,3 +30,6 @@ required_checks:
   - pnpm test:e2e
 dependencies:
   - TASK-067
+supervisor_refinement:
+  - Keep deep-link data as navigation intent only; never treat it as authentication or authorization evidence.
+  - Use a small explicit allowlist and bounded parsing at the Mini App boundary. Do not add a new persistence system, dependency, credential or deployment integration.

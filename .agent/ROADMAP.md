@@ -120,7 +120,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-065 — ACCEPTED — define daily Telegram reminder delivery policy (11:00 ICT; no completion suppression)
 - TASK-066 — ACCEPTED — deliver daily Telegram reminders at 11:00 ICT
 - TASK-067 — ACCEPTED — deliver daily and weekly learner summaries at 11:00 ICT
-- TASK-068 — BLOCKED — define Telegram Mini App deep-link destinations (Product Owner decision required)
+- TASK-068 — READY — open the daily question from Telegram deep links
 
 ## Epic 9 — Commercial
 
