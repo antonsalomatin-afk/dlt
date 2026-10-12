@@ -126,6 +126,8 @@ At the end of this epic the core end-to-end flow must work.
 
 Requires Product Owner approval before implementation.
 
+- TASK-069 — BLOCKED — approve the first commercial capability and pricing/provider scope
+
 Potential scope:
 
 - free limits
