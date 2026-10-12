@@ -1,0 +1,28 @@
+id: TASK-067
+title: Define daily and weekly learner summaries
+status: BLOCKED
+epic: Epic 8 — Telegram Engagement
+objective: Define the product policy for learner-facing daily and weekly summaries before implementation.
+acceptance:
+  - Product policy specifies which daily and weekly summary messages exist, their exact trigger or send schedule, and the Thailand-local timezone behavior.
+  - Product policy specifies the included metrics/content, the preferred-language behavior, and whether summaries use the existing reminder preference or a separate preference.
+  - Product policy specifies completion/no-activity behavior and whether a learner can receive more than one summary in the same local period.
+owner_decision_required: true
+owner_decision:
+  - Decide the daily and weekly summary contents and user-visible purpose.
+  - Decide the send cadence/time in Thailand-local time and whether daily/weekly summaries have separate opt-in controls from the existing daily-question reminder.
+blocked_reason: The roadmap names daily/weekly summaries but does not define their user-visible content, schedule, or preference semantics; implementation would otherwise invent product requirements.
+files_allowed:
+  - apps/bot/**
+  - apps/api/**
+  - apps/web/**
+  - packages/database/**
+  - packages/shared/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-066
