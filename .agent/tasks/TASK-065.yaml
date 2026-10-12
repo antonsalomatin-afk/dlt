@@ -19,3 +19,4 @@ blocked_reason: null
 owner_decision:
   - Send enabled daily reminders at 11:00 ICT (UTC+07:00).
   - Do not suppress an enabled reminder after same-day completion; it remains an invitation to do more training.
+accepted_commit: e48b6e1021c5a8ffc3864a51abdb5fb89192d05a
