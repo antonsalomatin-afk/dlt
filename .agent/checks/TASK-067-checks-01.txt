@@ -1,0 +1,19 @@
+TASK-067 authoritative checks (Supervisor run)
+Date: 2026-10-12
+Builder commit: 34d5792baf9ca23ed706fa8476de324ddb0cd152
+
+1. pnpm check
+PASS
+- lint PASS
+- typecheck PASS
+- unit tests: 55 files, 294 tests passed
+
+2. pnpm prisma validate
+PASS
+- Prisma schema is valid.
+
+3. pnpm test:integration
+PASS
+- 41 files, 198 tests passed
+- Duration: 284.65s
+- Existing pg deprecation warning about overlapping client.query calls; no assertion failures.
