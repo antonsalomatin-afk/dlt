@@ -1,6 +1,6 @@
 id: TASK-064
 title: Manage preferred language in the Mini App
-status: REVIEW
+status: ACCEPTED
 epic: Epic 8 — Telegram Engagement
 objective: Let an authenticated learner view and change the persisted English, Russian or Thai preference used for future messages.
 acceptance:
@@ -26,8 +26,8 @@ owner_decision:
 builder_commit: 4a34104
 authoritative_checks: .agent/checks/TASK-064-checks-02.txt
 review_attempt: 2
-accepted_commit: null
-review_file: .agent/reviews/TASK-064-review-01.md
+review_file: .agent/reviews/TASK-064-review-02.md
+accepted_commit: 4a34104efa22d8012b29fbf5d23fa3d1a5851bb2
 supervisor_refinement:
   - Add a dedicated authenticated language-settings view and accessible Language settings actions from setup and ordinary practice. Do not fetch or update language during authentication, vehicle selection or ordinary practice. Returning preserves the setup/practice destination and does not mutate learning state.
   - Add a strict browser schema for exactly `{ preferredLanguage: 'ENGLISH' | 'RUSSIAN' | 'THAI' }` and only the explicit same-origin `/me/language` rewrite. Reject missing, unsupported, wrong-case, non-string and extra members.
