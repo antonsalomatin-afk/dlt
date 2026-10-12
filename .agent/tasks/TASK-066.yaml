@@ -1,7 +1,7 @@
 id: TASK-066
 title: Deliver daily Telegram reminders
-status: BUILDING
-builder_commit: e4815a77692d928d45f736511e74d6414f2c1c74
+status: CHECKING
+builder_commit: b0c16df
 authoritative_checks: .agent/checks/TASK-066-checks-02.txt
 review_attempt: 1
 review_file: .agent/reviews/TASK-066-review-01.md
