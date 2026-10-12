@@ -1,0 +1,36 @@
+id: TASK-066
+title: Deliver daily Telegram reminders
+status: READY
+epic: Epic 8 — Telegram Engagement
+objective: Send one server-owned daily Telegram training invitation at 11:00 ICT to learners who enabled reminders, in their persisted preferred language.
+acceptance:
+  - The server-only bot scheduler evaluates the fixed Thailand-local time zone (ICT, UTC+07:00) and sends at the exact 11:00 local-date boundary without daylight-saving assumptions.
+  - Only users with dailyQuestionReminderEnabled true are eligible. The scheduler uses each user's telegramUserId and preferredLanguage; English, Russian and Thai messages are strict, deterministic and invite more training.
+  - An enabled reminder is sent even when the learner has already completed that day's daily question. The message does not claim that the question is unfinished and includes the configured HTTPS Mini App button.
+  - A PostgreSQL-backed delivery ledger claims at most one delivery per user and ICT calendar date. Repeated ticks, concurrent scheduler instances and process retries cannot send duplicates; failed Telegram sends remain retryable and do not corrupt preferences or learning state.
+  - Scheduler startup and shutdown are explicit, testable with injected clock/interval seams, and safe when the bot is stopping. Importing bot modules does not start polling, scheduling or network access.
+  - Telegram/API failures use fixed safe logs, do not expose bot tokens, database URLs, learner identity or message content, and one user's failure does not prevent other eligible users from being processed.
+  - Automated tests cover time-zone and boundary behavior, eligibility, all languages, completion-non-suppression, exact Mini App button, ledger idempotence/concurrency/retry, failure isolation, shutdown and preservation of existing contracts.
+  - Documentation records the 11:00 ICT policy and the fact that completed learners still receive a further-training invitation.
+files_allowed:
+  - apps/bot/**
+  - packages/database/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm prisma validate
+  - pnpm test:integration
+dependencies:
+  - TASK-061
+  - TASK-062
+  - TASK-063
+  - TASK-064
+  - TASK-065
+owner_decision_required: false
+owner_decision: []
+supervisor_refinement:
+  - Keep notification selection and delivery in the server-only bot boundary described by ADR-006. Do not add Redis/BullMQ, an API proxy, browser persistence, or production credentials.
+  - Add only the minimal additive delivery-ledger migration and shared contracts needed for uniqueness, retryability and strict test assertions. Preserve all existing user, reminder, language, daily-question, practice, exam and session behavior.
+  - Treat the 11:00 ICT tick and derived local date as injected, validated scheduler inputs in tests. Do not use host local time or client-provided dates.
+  - Keep the message content concise, localized to the persisted preference, truthful after completion, and free of answer/progress claims. Use the configured HTTPS Mini App URL through grammY's web-app button.

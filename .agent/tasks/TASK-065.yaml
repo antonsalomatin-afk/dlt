@@ -1,6 +1,6 @@
 id: TASK-065
 title: Define daily Telegram reminder delivery policy
-status: BLOCKED
+status: ACCEPTED
 epic: Epic 8 — Telegram Engagement
 objective: Define the learner-visible policy required before implementing daily Telegram reminder delivery.
 acceptance:
@@ -14,10 +14,8 @@ dependencies:
   - TASK-062
   - TASK-063
   - TASK-064
-owner_decision_required: true
-blocked_reason: Daily Telegram reminder delivery requires a product-defined Thailand-local send time and a completion-suppression policy. Existing tasks intentionally leave both decisions open and prohibit inventing delivery behavior.
+owner_decision_required: false
+blocked_reason: null
 owner_decision:
-  - What Thailand-local time should an enabled daily reminder be sent?
-  - If the learner has already completed that day's daily question, should the reminder be skipped?
-supervisor_recommendation:
-  - Choose a single fixed ICT time and suppress reminders after same-day completion to avoid sending a stale prompt. These are recommendations only and require Product Owner confirmation.
+  - Send enabled daily reminders at 11:00 ICT (UTC+07:00).
+  - Do not suppress an enabled reminder after same-day completion; it remains an invitation to do more training.
