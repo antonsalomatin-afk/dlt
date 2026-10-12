@@ -1,0 +1,27 @@
+id: TASK-068
+title: Define Telegram Mini App deep-link destinations
+status: BLOCKED
+epic: Epic 8 — Telegram Engagement
+objective: Define which learner destinations Telegram deep links should open before implementation.
+acceptance:
+  - Product policy names the supported deep-link destinations and their exact Mini App behavior.
+  - Product policy specifies whether links may be used from bot messages, Telegram startapp links, or both.
+  - Unknown, malformed or unauthenticated deep-link parameters have a safe deterministic fallback.
+owner_decision_required: true
+owner_decision:
+  - Decide which destinations are required first, such as daily question, ordinary practice, mistakes, progress, exam or settings.
+  - Decide whether the first slice needs bot-generated links, Telegram startapp links, or both.
+blocked_reason: The roadmap names deep links without defining target destinations or link surfaces; implementation would invent user-visible navigation behavior.
+files_allowed:
+  - apps/bot/**
+  - apps/web/**
+  - apps/api/**
+  - packages/shared/**
+  - tests/**
+  - README.md
+required_checks:
+  - pnpm check
+  - pnpm build
+  - pnpm test:e2e
+dependencies:
+  - TASK-067
