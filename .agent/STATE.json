@@ -10,9 +10,9 @@
   "reviewAttempt": 0,
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": "TASK-070 requires Product Owner approval for live-launch timing, hosting/domain boundary, production credentials and migration/rollback expectations.",
+  "blockedReason": "TASK-070 live launch is approved for thauto.app, but hosting providers, DNS control and server-side production credentials are still missing.",
   "updatedBy": "Supervisor",
-  "notes": "TASK-069 accepted as free-first launch policy: all initial clients use the MVP without payment or paywall; paid limits and providers are deferred. TASK-070 is blocked by the production deployment approval gate.",
+  "notes": "TASK-069 accepted as free-first launch policy: all initial clients use the MVP without payment or paywall; paid limits and providers are deferred. TASK-070 live launch is approved for thauto.app; web/API/bot/PostgreSQL hosts, DNS control and credentials remain outstanding.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
     "latestObservedUsedPercent": 14,

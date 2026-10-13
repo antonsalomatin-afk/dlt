@@ -1,17 +1,18 @@
 id: TASK-070
-title: Approve production launch boundary
+title: Prepare production launch boundary
 status: BLOCKED
 epic: Epic 10 — Production Hardening
-objective: Obtain Product Owner approval for the production deployment boundary before selecting vendors, credentials or launch changes.
+objective: Prepare a live ThaiDLT launch on thauto.app after the remaining hosting and credential inputs are supplied.
 acceptance:
-  - Product Owner approves whether to proceed toward a live launch now or continue local/staging hardening.
-  - Product Owner identifies the intended production web, API, bot and PostgreSQL hosting boundary and domain ownership.
-  - Production credentials, data migration policy, backup/observability expectations and launch rollback owner are identified before implementation.
+  - Product Owner approval for a live launch on thauto.app is recorded.
+  - Production web, API, bot and managed PostgreSQL hosting providers are identified.
+  - DNS ownership/control for thauto.app and the production server-side credentials are available through the approved channel.
+  - Production migration, backup, observability and rollback owners are identified before any live deployment.
 owner_decision_required: true
 owner_decision:
-  - Decide whether to prepare a live launch now or defer deployment while continuing hardening.
-  - If launching, identify hosting/domain choices and provide the required production credentials through the approved channel.
-blocked_reason: Architecture explicitly leaves deployment undecided and forbids production deployment without Product Owner approval.
+  - Live launch approved for the thauto.app domain.
+  - Web, API/bot and PostgreSQL hosting providers plus production credentials remain to be supplied through the approved channel.
+blocked_reason: The live-launch decision and web domain are approved, but hosting providers, DNS control and server-side production credentials are still missing.
 files_allowed: []
 required_checks: []
 dependencies:
