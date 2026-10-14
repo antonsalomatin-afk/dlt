@@ -6,11 +6,11 @@
   "lastAcceptedTask": "TASK-070",
   "lastAcceptedCommit": "2e8d0a2155d35b471663e543d8ff1ac9e6208ce5",
   "status": "READY",
-  "reviewAttempt": 0,
+  "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-070 accepted: live launch approved for web dlt.thauto.app and API/bot tele.thauto.app. TASK-071 is READY for Admin to provision DNS/TLS, PostgreSQL, secrets, services, backups and health checks without committing credentials.",
+  "notes": "TASK-070 accepted: live launch approved for web dlt.thauto.app and API/bot tele.thauto.app. TASK-071 repository deployment fixes are reviewed PASS in fcab61d; production BOT_TOKEN smoke tests, the Admin report, and verified question content remain pending.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
     "latestObservedUsedPercent": 14,

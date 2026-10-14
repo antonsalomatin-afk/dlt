@@ -1,0 +1,15 @@
+TASK-071 authoritative checks 01
+Commit under test: fcab61d fix(deploy): support Linux install and Prisma generation
+
+PASS pnpm install --frozen-lockfile
+PASS pnpm db:generate
+PASS pnpm lint
+PASS pnpm typecheck
+PASS pnpm test (56 files, 299 tests)
+PASS pnpm build
+PASS pnpm prisma validate
+
+Notes:
+- Prisma client generation completed successfully from the committed schema.
+- Generated client output is ignored and was not committed.
+- No production credentials or learner data were used.
