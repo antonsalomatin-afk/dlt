@@ -23,6 +23,7 @@ security:
 files_allowed:
   - .agent/admin/**
   - README.md
+  - pnpm-workspace.yaml
 required_checks:
   - production DNS/TLS verification
   - pnpm prisma migrate deploy

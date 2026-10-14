@@ -403,6 +403,25 @@ message preference only; it does not change Mini App language selectors or send 
 `pnpm test:integration` includes synthetic signed authentication requests through Fastify
 injection and real PostgreSQL transactions. No live Telegram token is needed for tests.
 
+## Production deployment
+
+From the release checkout, install dependencies, generate the Prisma client, apply
+committed migrations, and build the web service before starting the supervised services:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm db:generate
+pnpm prisma migrate deploy
+pnpm build
+API_PORT=3061 pnpm api:start
+pnpm bot:start
+pnpm web:start -- --port 3060
+```
+
+Set `DATABASE_URL`, `BOT_TOKEN`, `MINI_APP_URL`, `API_ORIGIN` and the service-specific
+runtime variables through the host secret manager. The API and Next.js server bind to
+loopback; the reverse proxy provides the public HTTPS boundary.
+
 ### Mock exam start API
 
 `POST /exam/start` uses the existing opaque bearer session and accepts only an empty
