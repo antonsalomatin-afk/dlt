@@ -1,0 +1,33 @@
+id: TASK-071
+title: Prepare ThaiDLT production servers
+status: READY
+owner_role: Admin
+epic: Epic 10 — Production Hardening
+objective: Provision and configure the production web, API/bot and database services for the approved ThaiDLT launch.
+inputs:
+  webHost: dlt.thauto.app
+  apiBotHost: tele.thauto.app
+  webUrl: https://dlt.thauto.app
+  apiOrigin: https://tele.thauto.app
+acceptance:
+  - DNS for dlt.thauto.app and tele.thauto.app resolves to the intended production hosts and both hosts serve valid HTTPS certificates.
+  - The web service is deployed at https://dlt.thauto.app with API_ORIGIN=https://tele.thauto.app and MINI_APP_URL=https://dlt.thauto.app.
+  - The API service is reachable only through the intended HTTPS boundary on tele.thauto.app, binds safely on the server, and has BOT_TOKEN and DATABASE_URL supplied through the host secret manager.
+  - The Telegram bot worker runs on tele.thauto.app with the same production BOT_TOKEN and DATABASE_URL, with polling/scheduler lifecycle supervised by the host.
+  - PostgreSQL is provisioned with private network access, backups and the production DATABASE_URL; migrations apply successfully without committing or printing credentials.
+  - Production logs, restart behavior, health checks, backup/restore evidence and rollback steps are documented without secrets, tokens, database URLs or learner data.
+  - The Admin report records host/provider names, DNS/TLS results, migration result, health checks, backup status, rollback procedure and any remaining launch blocker.
+security:
+  - Never commit or paste production secrets into the repository.
+  - Keep BOT_TOKEN, DATABASE_URL and provider credentials server-side; redact them from logs and reports.
+files_allowed:
+  - .agent/admin/**
+  - README.md
+required_checks:
+  - production DNS/TLS verification
+  - pnpm prisma migrate deploy
+  - API health check
+  - bot startup/scheduler health check
+  - backup/restore verification
+dependencies:
+  - TASK-070
