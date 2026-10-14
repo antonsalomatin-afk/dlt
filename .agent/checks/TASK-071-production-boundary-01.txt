@@ -1,0 +1,13 @@
+TASK-071 production boundary verification 01
+Observed after deployment of release 1d7eaa0671889ec82edc1b5cf149b4e7c495ffe3.
+
+PASS https://dlt.thauto.app/ returned HTTP 200.
+PASS https://tele.thauto.app/unknown returned HTTP 404.
+BLOCKED POST https://tele.thauto.app/auth/telegram with {} returned HTTP 502 because the API unit is waiting for the owner-supplied BOT_TOKEN.
+
+Remaining evidence required:
+- owner supplies BOT_TOKEN;
+- API 401 smoke test after API startup;
+- bot /start and scheduler verification;
+- final redacted Admin report;
+- production question content with at least 50 active VERIFIED questions per vehicle type.
