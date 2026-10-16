@@ -5,7 +5,7 @@
   "currentTask": "TASK-071",
   "lastAcceptedTask": "TASK-070",
   "lastAcceptedCommit": "2e8d0a2155d35b471663e543d8ff1ac9e6208ce5",
-  "status": "REVIEW",
+  "status": "BUILDING",
   "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -13,7 +13,7 @@
   "notes": "TASK-071 original English launch candidates are in independent content review at commit 671f201f8e3af241f08198ec6ac51280a2fe1a1c: 50 CAR and 50 MOTORCYCLE questions, per-question DLT handbook citations, and additive taxonomy. Authoritative final batch validation and isolated PostgreSQL rehearsal passed, including immutable import replay and real 50-question exams per vehicle after TEST-ONLY simulated review/activation. No production import, VERIFIED content claim, or activation has occurred. Reference intake independently passed. API smoke and owner-reported login passed; final Admin report and bot/scheduler evidence remain outstanding.",
   "launchCandidates": {
     "builderCommit": "671f201f8e3af241f08198ec6ac51280a2fe1a1c",
-    "status": "REVIEW",
+    "status": "EDITORIAL_FIX",
     "car": 50,
     "motorcycle": 50,
     "language": "ENGLISH",
