@@ -1,0 +1,12 @@
+PASS additive taxonomy/replay; 100 inactive DRAFT questions and 400 choices; unrelated taxonomy preserved.
+PASS isolated CAR exam: 50 distinct questions; correctness hidden before submission.
+PASS isolated MOTORCYCLE exam: 50 distinct questions; correctness hidden before submission.
+PASS conflicting taxonomy refused with all existing rows preserved.
+All lifecycle transitions occurred in one disposable local database. No real review/activation manifests were written.
+PASS owned isolated database removed.
+Files exercised by the isolated rehearsal (SHA256):
+FD0EC681D7FE0CF389CD22555584E58A5E5491EA9C73218EFB3E8C7CDB5287DB content/imports/launch-20261016-car-candidates.json
+E8B2F808478E89616D9BD6A6100DFA7E1D44DDABC6F32F29813A7C8F383B589B content/imports/launch-20261016-motorcycle-candidates.json
+C6865999E0CE56807B949C09F8004E9D93F67E82DC7FF93E725D269A5E21E5A5 content/sources/launch-20261016-taxonomy.json
+302E3D8C0AEFFCF7A9AA3540555EE266F626644E7533849E0B03C5456AC67FEF content/sources/launch-20261016-taxonomy.sql
+1FA90A4CC08C0D279B8329BFF73E3095E00043DBC5F3B11B2E092C6C3334B08D content/sources/launch-20261016-provenance.json
