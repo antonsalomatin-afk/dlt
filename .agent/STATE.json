@@ -5,15 +5,15 @@
   "currentTask": "TASK-071",
   "lastAcceptedTask": "TASK-070",
   "lastAcceptedCommit": "2e8d0a2155d35b471663e543d8ff1ac9e6208ce5",
-  "status": "REVIEW",
+  "status": "BLOCKED",
   "reviewAttempt": 2,
   "maxReviewAttempts": 3,
-  "blockedReason": null,
+  "blockedReason": "Product Owner content release decision required for the reviewed 100-question English starter bank; final Admin report and explicit bot/scheduler evidence also outstanding. Source-use and live host boundary are already approved.",
   "updatedBy": "Supervisor",
-  "notes": "Final schema validations and isolated PostgreSQL taxonomy/import/replay/conflict/exam checks passed at 65d1c1ade2c48fc4e82388db85da93faf7eee9d8. Independent content Reviewer is checking the three editorial corrections, inheriting the all-100 supported factual decisions. No production import or activation.",
+  "notes": "Supervisor accepts the bounded source-intake and original-candidate preparation components after authoritative checks and independent PASS. Exact final candidate revision 65d1c1ade2c48fc4e82388db85da93faf7eee9d8 contains 50 CAR and 50 MOTORCYCLE original English questions. All 100 answers have primary-source support; final editorial review PASS. Review pack and deployment handoff are committed. No real review/activation manifests, production writes, whole-task acceptance, or main merge. Continue only after concrete content release decision or new Admin evidence; do not request source-use authorization again.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
-    "status": "REVIEW",
+    "status": "AWAITING_OWNER_CONTENT_RELEASE",
     "car": 50,
     "motorcycle": 50,
     "language": "ENGLISH",
@@ -22,7 +22,12 @@
     "checks": ".agent/checks/TASK-071-launch-checks-02.txt",
     "productionImported": false,
     "reviewManifestsIssued": false,
-    "activationManifestsIssued": false
+    "activationManifestsIssued": false,
+    "review": ".agent/reviews/TASK-071-content-review-02.md",
+    "reviewVerdict": "PASS",
+    "factualDecisions": ".agent/reviews/TASK-071-content-decisions-01.json",
+    "reviewPack": ".agent/admin/TASK-071-content-review-pack.md",
+    "handoff": ".agent/admin/TASK-071-launch-handoff.md"
   },
   "referenceIntake": {
     "builderCommit": "d14033bb61c44ef75b0d7297ff1030a73ff0e935",
@@ -38,13 +43,14 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 66,
-    "latestObservedWeeklyUsedPercent": 11,
+    "latestObservedUsedPercent": 7,
+    "latestObservedWeeklyUsedPercent": 15,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-22T08:02:21Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-16T08:16:00Z",
-    "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization."
+    "checkedAt": "2026-10-16T09:53:00Z",
+    "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
+    "sessionResetsAt": "2026-10-16T14:50:31Z"
   },
   "executionPaused": false,
   "pauseReason": null,

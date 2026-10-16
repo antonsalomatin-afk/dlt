@@ -21,3 +21,7 @@ Use Supervisor → Builder → Reviewer workflow with repository-persisted state
 Decision:
 
 TypeScript pnpm monorepo with Next.js, Fastify, grammY, PostgreSQL and Prisma.
+
+### 2026-10-16 — Reference bank use
+
+The Product Owner approved use of `artslob/thailand-driving-exam-questions` ("yes, use it"). The recovered planning strategy uses it for topic discovery and authors original wording corroborated against SafeDriveDLT, rather than republishing unlicensed source text/images or trusting its answer keys. The pinned intake and original candidates are prepared; this source-use decision is resolved.

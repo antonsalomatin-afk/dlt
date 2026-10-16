@@ -1,6 +1,6 @@
 id: TASK-071
 title: Prepare ThaiDLT production servers
-status: REVIEW
+status: BLOCKED
 owner_role: Admin
 epic: Epic 10 — Production Hardening
 objective: Provision and configure the production web, API/bot and database services for the approved ThaiDLT launch.
@@ -69,3 +69,8 @@ dependencies:
   - TASK-070
 
 
+
+blocked_reason: Reviewed original English starter bank awaits Product Owner content release decision; final Admin report and explicit bot polling/scheduler evidence also remain outstanding.
+content_preparation_commit: 65d1c1ade2c48fc4e82388db85da93faf7eee9d8
+content_preparation_review: .agent/reviews/TASK-071-content-review-02.md
+content_preparation_verdict: PASS

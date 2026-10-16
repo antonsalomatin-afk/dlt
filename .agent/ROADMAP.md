@@ -140,7 +140,7 @@ Potential scope:
 ## Epic 10 — Production Hardening
 
 - TASK-070 — ACCEPTED — approve the production launch boundary (dlt.thauto.app / tele.thauto.app)
-- TASK-071 — READY — Admin: prepare ThaiDLT production servers
+- TASK-071 — BLOCKED — reviewed 100-question English starter bank awaits content release decision; final Admin bot/scheduler report outstanding
 
 - deployment ADR
 - observability
@@ -150,5 +150,3 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
-
-
