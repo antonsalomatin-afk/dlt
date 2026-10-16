@@ -1,0 +1,40 @@
+TASK-071 final launch data checks
+Builder commit: 65d1c1ade2c48fc4e82388db85da93faf7eee9d8
+Three editorial strings only; implementation checks reused from reference checks 01; Builder reran lint/typecheck/323 tests PASS.
+$ node tools/content/validate.ts "--" "content/imports/launch-20261016-car-candidates.json"
+Batch launch-20261016-car; version 1; questions 50; choices 200
+$ node tools/content/validate.ts "--" "content/imports/launch-20261016-motorcycle-candidates.json"
+Batch launch-20261016-motorcycle; version 1; questions 50; choices 200
+PASS additive taxonomy/replay; 100 inactive DRAFT questions and 400 choices; unrelated taxonomy preserved.
+PASS isolated CAR exam: 50 distinct questions; correctness hidden before submission.
+PASS isolated MOTORCYCLE exam: 50 distinct questions; correctness hidden before submission.
+PASS conflicting taxonomy refused with all existing rows preserved.
+All lifecycle transitions occurred in one disposable local database. No real review/activation manifests were written.
+PASS owned isolated database removed.
+
+Algorithm : SHA256
+Hash      : 1F28A7752163954BB35C1D1CDD5D081FCB7C60E59360A057600B84067E7267FA
+Path      : C:\Users\anton\Documents\ChatGPT\DLT\content\imports\launch-20261016-car-candidates.json
+
+Algorithm : SHA256
+Hash      : 49FE7A12B5B18FA0665E12D605759725ABF875D82D938D2E01BB2165AB4FD5D7
+Path      : C:\Users\anton\Documents\ChatGPT\DLT\content\imports\launch-20261016-motorcycle-candidates.json
+
+Algorithm : SHA256
+Hash      : CD707232905FA26CAF92347DCB6C4ACBD243B992C45FC9A8AAAC58B733E856AD
+Path      : C:\Users\anton\Documents\ChatGPT\DLT\content\sources\launch-20261016-provenance.json
+
+Algorithm : SHA256
+Hash      : C6865999E0CE56807B949C09F8004E9D93F67E82DC7FF93E725D269A5E21E5A5
+Path      : C:\Users\anton\Documents\ChatGPT\DLT\content\sources\launch-20261016-taxonomy.json
+
+Algorithm : SHA256
+Hash      : 302E3D8C0AEFFCF7A9AA3540555EE266F626644E7533849E0B03C5456AC67FEF
+Path      : C:\Users\anton\Documents\ChatGPT\DLT\content\sources\launch-20261016-taxonomy.sql
+
+Algorithm : SHA256
+Hash      : 49E0639E2D81D0F455AC4F936FF63FE52369F8EBDB4EC626C2170509183DBE2B
+Path      : C:\Users\anton\Documents\ChatGPT\DLT\content\sources\launch-20261016.md
+
+
+FINAL CHECKS PASS
