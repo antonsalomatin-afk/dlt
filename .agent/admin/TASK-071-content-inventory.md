@@ -24,7 +24,30 @@ No existing verified production bank was found in the inspected repository
 artifacts. No content was imported, relabelled or activated. Production database
 contents were not inspected; no production database access is configured here.
 
-The owner must identify any separate question bank or content source intended
-for reuse. Actual content review and source provenance remain necessary before
-production verification. Exams require 50 eligible active VERIFIED questions
-per vehicle type; the existing fixture counts cannot meet that threshold.
+Exams require 50 eligible active VERIFIED questions per vehicle type; the
+existing fixture counts cannot meet that threshold.
+
+## Planning source recovered
+
+The owner correctly recalled an external GitHub question bank. The planning
+chat titled "Лучшее приложение для прав" (conversation
+`6a9e35fe-23a0-83eb-9048-d666af043bd2`, turn
+`32c077c5-476c-4b20-bcd5-4a1d5df07a93`) identified:
+
+- https://github.com/artslob/thailand-driving-exam-questions
+- SafeDriveDLT as a reference for checking rules and writing original questions.
+
+The original plan classified the GitHub bank as reference material rather than
+a production source, citing uncertain reuse licensing and the author's warning
+about incorrect answers. The GitHub README was rechecked on 2026-10-16 and
+still states that questions were parsed from Move2Thailand and that some
+answers may be incorrect. Finding this source does not establish completed
+content review or mean an import batch already exists.
+
+A second candidate located during this follow-up is
+https://github.com/lostintime101/driving_theory_test. Its README describes 150
+questions adapted from a DLT manual, and the repository displays an MIT
+license. This second repository was found during the present search, not
+confirmed as the original planning source. Its content provenance, answers,
+image support and suitability still need assessment before a production batch
+can be prepared.
