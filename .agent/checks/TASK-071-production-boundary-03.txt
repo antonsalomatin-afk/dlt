@@ -1,0 +1,14 @@
+TASK-071 production API verification 03
+Observed: 2026-10-16 04:57:35 UTC
+
+PASS POST https://tele.thauto.app/auth/telegram
+Request: Content-Type: application/json; body: {}
+Response: HTTP 401 Unauthorized
+Response body: {"error":"Unauthorized"}
+Cache-Control: no-store
+
+This supersedes the HTTP 502 recorded in boundary verification 02.
+This unauthenticated smoke test establishes API reachability and rejection of
+invalid authentication. It does not verify database connectivity, signed
+Telegram login, bot polling, or scheduler delivery.
+No secrets were read or included in the request.

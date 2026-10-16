@@ -10,7 +10,7 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-071 remains open. On 2026-10-16 the owner reported adding the Telegram bot token to an environment file; file location and service loading are unconfirmed. Public web returned HTTP 200; POST /auth/telegram with an empty JSON object returned nginx HTTP 502 at 04:49 UTC. Admin must verify the production EnvironmentFile is loaded and API/bot services are running, then supply the redacted report and bot/scheduler evidence. Production content is still pending. Repository fixes in fcab61d passed local checks; final independent task review and acceptance remain outstanding.",
+  "notes": "TASK-071 remains open. Production API smoke test passed on 2026-10-16 at 04:57:35 UTC: POST /auth/telegram with {} returned HTTP 401 and the expected Unauthorized JSON with Cache-Control: no-store. This supersedes the earlier 502 observation; authenticated database access and bot/scheduler operation remain unverified. Final redacted Admin report and independent task review are pending. Production verified question content remains a launch blocker.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
     "latestObservedUsedPercent": 14,
