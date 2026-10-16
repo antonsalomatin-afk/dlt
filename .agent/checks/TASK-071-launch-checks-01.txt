@@ -1,0 +1,19 @@
+TASK-071 original launch candidate checks; commit 671f201f8e3af241f08198ec6ac51280a2fe1a1c
+Application/tool TypeScript unchanged since authoritative source checks at d14033b (lint/typecheck/323 tests PASS); this data-only contribution is validated and exercised below.
+$ node tools/content/validate.ts "--" "content/imports/launch-20261016-car-candidates.json"
+Batch launch-20261016-car; version 1; questions 50; choices 200
+$ node tools/content/validate.ts "--" "content/imports/launch-20261016-motorcycle-candidates.json"
+Batch launch-20261016-motorcycle; version 1; questions 50; choices 200
+PASS additive taxonomy/replay; 100 inactive DRAFT questions and 400 choices; unrelated taxonomy preserved.
+PASS isolated CAR exam: 50 distinct questions; correctness hidden before submission.
+PASS isolated MOTORCYCLE exam: 50 distinct questions; correctness hidden before submission.
+PASS conflicting taxonomy refused with all existing rows preserved.
+All lifecycle transitions occurred in one disposable local database. No real review/activation manifests were written.
+PASS owned isolated database removed.
+Final checked file hashes (SHA256):
+AC8B0981C20C4EF6DDDCC7B63936E2C5557138C71BD140202216499A3AA5ABDD content/imports/launch-20261016-car-candidates.json
+10065B26B47D9B998EED6D21B9EE83A2009F8A96959EA749A174F0698D329E31 content/imports/launch-20261016-motorcycle-candidates.json
+C6865999E0CE56807B949C09F8004E9D93F67E82DC7FF93E725D269A5E21E5A5 content/sources/launch-20261016-taxonomy.json
+302E3D8C0AEFFCF7A9AA3540555EE266F626644E7533849E0B03C5456AC67FEF content/sources/launch-20261016-taxonomy.sql
+CD707232905FA26CAF92347DCB6C4ACBD243B992C45FC9A8AAAC58B733E856AD content/sources/launch-20261016-provenance.json
+49E0639E2D81D0F455AC4F936FF63FE52369F8EBDB4EC626C2170509183DBE2B content/sources/launch-20261016.md
