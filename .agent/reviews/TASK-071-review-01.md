@@ -1,5 +1,10 @@
 # TASK-071 Review 01
 
+> Provenance correction, 2026-10-16: this file was authored by the same Supervisor
+> that made the deployment fixes. It was a self-assessment, not an independent
+> review, and must not satisfy the independent-review or task-acceptance gate.
+> The historical scoped verdict below is retained for audit context only.
+
 ## Verdict
 
 `VERDICT: PASS`
