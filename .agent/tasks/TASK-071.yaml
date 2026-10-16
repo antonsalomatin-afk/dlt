@@ -1,6 +1,6 @@
 id: TASK-071
 title: Prepare ThaiDLT production servers
-status: BUILDING
+status: CHECKING
 owner_role: Admin
 epic: Epic 10 — Production Hardening
 objective: Provision and configure the production web, API/bot and database services for the approved ThaiDLT launch.
@@ -67,3 +67,4 @@ required_checks:
   - pinned source reference intake and summary verification
 dependencies:
   - TASK-070
+
