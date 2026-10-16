@@ -10,7 +10,7 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-071 remains open. Production API smoke test passed on 2026-10-16 at 04:57:35 UTC: POST /auth/telegram with {} returned HTTP 401 and the expected Unauthorized JSON with Cache-Control: no-store. This supersedes the earlier 502 observation; authenticated database access and bot/scheduler operation remain unverified. Final redacted Admin report and independent task review are pending. Production verified question content remains a launch blocker.",
+  "notes": "TASK-071 remains open. Production API smoke test passed on 2026-10-16 at 04:57:35 UTC. The owner subsequently confirmed successful live Mini App login; recorded as owner-reported evidence, without independent reproduction. Bot /start and scheduler operation still need explicit evidence. Final redacted Admin report and independent task review are pending. Production verified question content remains a launch blocker.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
     "latestObservedUsedPercent": 14,
