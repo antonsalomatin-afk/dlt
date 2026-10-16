@@ -1,6 +1,6 @@
 id: TASK-071
 title: Prepare ThaiDLT production servers
-status: BUILDING
+status: CHECKING
 owner_role: Admin
 epic: Epic 10 — Production Hardening
 objective: Provision and configure the production web, API/bot and database services for the approved ThaiDLT launch.
@@ -8,6 +8,7 @@ scope_amendment:
   - On 2026-10-16 the Product Owner approved using artslob/thailand-driving-exam-questions as the reference bank for launch content preparation.
   - Prepare reproducible offline source intake and review material; do not silently turn upstream answers into VERIFIED content or assume vehicle applicability.
   - Pin upstream revision 67440927542ae7af7cebe4181c93a2dec07b1259. Keep bulk upstream data and generated reference text in ignored local staging until reuse rights and content review are established. Source code, synthetic tests, metadata, and instructions may be committed.
+  - After intake, prepare an original English candidate launch set with at least 50 distinct questions for each vehicle, using the bank only for topic discovery and checking every answer against an independently cited DLT primary reference. Do not copy unlicensed upstream wording or illustrations. Preserve these as DRAFT candidates until independent content review; no automatic VERIFIED or activation manifests.
 reference_intake_acceptance:
   - An offline TypeScript command reads a local checkout at the pinned revision without executing HTML or JavaScript, fetching URLs, accessing a database, or loading environment secrets.
   - It extracts source IDs, English question and choice text, upstream answer markers, source page references, image requirements, and record hashes into a bounded local review inventory with no VERIFIED or activation claims.
@@ -15,6 +16,12 @@ reference_intake_acceptance:
   - Write bulk generated inventory only beneath ignored .local-content/. Do not commit upstream images, scripts, or question text.
   - Preserve existing destination output on failure or attempted overwrite and reject unsafe paths or oversized source files. Emit stable safe errors.
   - Add meaningful synthetic automated coverage and document the pinned command, review prerequisites, output summary, and remaining launch requirements.
+original_candidate_acceptance:
+  - Separate CAR and MOTORCYCLE candidate batches satisfy the existing strict schema and contain at least 50 original text-only questions each, with four distinct choices, one supported answer, and a concise explanation.
+  - Vehicle applicability is justified per question; use shared safety rules only where the source supports both, and group variants of the same underlying rule under a meaningful common concept.
+  - A provenance manifest records each candidate ID, matching reference-bank topic IDs where applicable, exact primary-source title, URL, printed and PDF page numbers, a concise supporting paraphrase, and any uncertain claims. Do not invent legal citations or verified translations.
+  - English is required; other language fields remain null unless separately checked. No claims of an official or complete examination bank.
+  - Document required category/concept taxonomy and a safe additive deployment plan; no production database writes in this work cycle.
 inputs:
   webHost: dlt.thauto.app
   apiBotHost: tele.thauto.app
@@ -42,6 +49,11 @@ files_allowed:
   - tests/artslob-reference.test.ts
   - content/sources/artslob-reference.md
   - content/README.md
+  - content/imports/launch-20261016-car-candidates.json
+  - content/imports/launch-20261016-motorcycle-candidates.json
+  - content/sources/launch-20261016-provenance.json
+  - content/sources/launch-20261016-taxonomy.json
+  - content/sources/launch-20261016.md
 required_checks:
   - production DNS/TLS verification
   - pnpm prisma migrate deploy
