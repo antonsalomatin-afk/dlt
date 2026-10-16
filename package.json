@@ -23,6 +23,7 @@
     "db:migrate": "pnpm prisma migrate deploy",
     "content:import": "pnpm db:generate && node --env-file=.env tools/content/import.ts",
     "content:validate": "node tools/content/validate.ts",
+    "content:prepare-artslob-reference": "node tools/content/prepare-artslob-reference.ts",
     "content:import-candidates": "node --env-file=.env tools/content/import-candidates.ts",
     "content:review-candidates": "node --env-file=.env tools/content/review-candidates.ts",
     "content:activate-candidates": "node --env-file=.env tools/content/activate-candidates.ts",

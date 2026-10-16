@@ -1,5 +1,14 @@
 # Development content
 
+## External reference preparation
+
+The approved artslob reference is pinned and prepared offline with
+`pnpm content:prepare-artslob-reference -- <local-checkout> .local-content/<new-name>`.
+See [source notes and review prerequisites](sources/artslob-reference.md).
+This creates an ignored local review inventory only; upstream answer markers
+remain unreviewed, vehicle applicability is unassigned, and nothing is imported,
+verified or activated automatically.
+
 `fixtures/development.json` contains exactly 25 original synthetic questions in
 five categories and exactly 10 original synthetic learning concepts. These are
 software development examples, not an official DLT bank or taxonomy, licensed

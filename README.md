@@ -415,7 +415,7 @@ pnpm prisma migrate deploy
 pnpm build
 API_PORT=3061 pnpm api:start
 pnpm bot:start
-pnpm web:start -- --port 3060
+pnpm --filter @thai-dlt/web exec next start --hostname 127.0.0.1 --port 3060
 ```
 
 Set `DATABASE_URL`, `BOT_TOKEN`, `MINI_APP_URL`, `API_ORIGIN` and the service-specific
