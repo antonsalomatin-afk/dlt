@@ -1,0 +1,2457 @@
+{
+  "batchId": "launch-20261016-car",
+  "version": 1,
+  "createdAt": "2026-10-16T00:00:00.000Z",
+  "questions": [
+    {
+      "externalId": "launch-car-01-keep-left",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-keep-left",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-01-keep-left",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 8 (PDF p. 14): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "On an ordinary two-way Thai road with no contrary directions, which side should your car use?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Normal traffic in Thailand travels on the left side of the road.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "The left side",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "The right side",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Whichever side has fewer vehicles",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "The center line",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-02-signal-lane-change",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-signal-lane-change",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-02-signal-lane-change",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You plan to move your car into the next lane. What should accompany the safety checks before you move?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Drivers should signal before changing lanes so other road users can anticipate the movement.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Signal only after crossing the lane line",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Give the appropriate turn signal",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Use hazard lights instead of a turn signal",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Move first so following traffic understands",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-car-03-safe-following-gap",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-following-distance",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-03-safe-following-gap",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 17 (PDF p. 23): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Traffic ahead of your car begins braking. What is the main purpose of keeping a sufficient following gap?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "A following gap must allow a safe stop if the vehicle ahead slows or stops.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "To prevent anyone from changing lanes",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "To remove the need to watch brake lights",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "To have room to stop safely",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "To make the vehicle ahead travel faster",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-car-04-school-area-caution",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-vulnerable-road-users",
+      "conceptSlug": "launch-school-area-caution",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-04-school-area-caution",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 17 (PDF p. 23): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Your car approaches a school entrance where children may step into the road. What is the safest approach?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Community areas may contain children and pedestrians who cross unexpectedly; low speed and readiness to stop are needed.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Keep your speed unless a child is already in your lane",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Sound the horn continuously and maintain speed",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Follow the vehicle ahead closely through the area",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Slow down and be ready to stop",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-car-05-conditions-appropriate-speed",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-speed-and-weather",
+      "conceptSlug": "launch-condition-appropriate-speed",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-05-conditions-appropriate-speed",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 18 (PDF p. 24): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are within the posted speed limit but visibility is poor and traffic is dense. How should you choose your car speed?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Speed must be adjusted for road surface, weather and traffic rather than treating a legal limit as a target.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Reduce speed to suit the conditions",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Maintain the maximum posted speed regardless of conditions",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Match the fastest nearby vehicle",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Increase speed to leave the difficult area quickly",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-06-blind-spot-check",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-blind-spot-check",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-06-blind-spot-check",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 19 (PDF p. 25): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Your car mirrors show no vehicle in the adjacent lane. What should you still check before moving across?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Mirrors do not show all surrounding areas; blind spots require careful checks, particularly before lane changes.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Clear mirrors guarantee that the lane is empty",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "A vehicle may still be in a blind spot",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "A turn signal removes all blind spots",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Blind spots matter only when reversing",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-car-07-truck-rear-space",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-truck-blind-spots",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-07-truck-rear-space",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Your car is close behind a large truck and your view ahead is blocked. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Both car and motorcycle drivers should avoid following trucks closely, including their rear blind spots.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Move closer to shelter behind the truck",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Use the truck as a guide and ignore the road ahead",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Increase the following distance",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Stay close and flash your headlights repeatedly",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-car-08-truck-left-blind-spot",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-truck-blind-spots",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-08-truck-left-blind-spot",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are choosing where to position your car beside a large truck. Which position should you avoid lingering in?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "The area close to a truck on its left has particularly limited visibility for the truck driver.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Well behind it with a clear stopping gap",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Away from its immediate side with a clear view",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "At a safe distance where its movement can be observed",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Close beside the truck on its left",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-car-09-truck-turning-clearance",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-truck-turning-clearance",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-09-truck-turning-clearance",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A truck ahead begins a turn. What should you do with your car rather than enter the space beside it?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Entering the turning or reversing area of a truck risks being squeezed by its movement.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Stay clear of the truck turning area",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Squeeze between the truck and the curb",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Pull alongside the inside of its turn",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Enter the gap before the truck finishes turning",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-10-truck-front-clearance",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-truck-front-clearance",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-10-truck-front-clearance",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "After passing a truck, why should you avoid moving your car back immediately in front of it?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Trucks may need a longer stopping distance, so cutting closely in front of one is unsafe.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "The truck will always stop faster than a smaller vehicle",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "The truck may need more distance to stop",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Its driver must brake whenever another vehicle passes",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "A small vehicle needs no clearance ahead of a truck",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-car-11-night-headlights",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-visibility",
+      "conceptSlug": "launch-night-headlights",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-11-night-headlights",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 24 (PDF p. 30): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You enter an unlit road after sunset. What should you do about your car headlights?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Headlights should remain on when driving at night to see the road and increase visibility.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Use lights only when another vehicle approaches",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Replace headlights with hazard lights",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Keep the headlights on while travelling",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Turn the lights off wherever the road appears empty",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-car-12-avoid-high-beam-glare",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-visibility",
+      "conceptSlug": "launch-avoid-high-beam-glare",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-12-avoid-high-beam-glare",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 13 (PDF p. 19): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "An oncoming driver is approaching while your car has high beams on. Which action avoids dazzling that driver?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Unnecessary high beams can impair the vision of drivers ahead or coming in the opposite direction.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Keep high beam on to claim priority",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Flash high beam continuously until the other vehicle moves",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Aim high beam into the other driver's mirrors",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Change to low beam when high beam would dazzle others",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-car-13-night-following-gap",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-following-distance",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-13-night-following-gap",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 24 (PDF p. 30): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Why should you leave more space than usual behind another car at night?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "At night a greater following gap provides more time to react and stop.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "To allow more time to react and stop",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Because brake lights stop working after dark",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Because the vehicle ahead has priority over all traffic",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "To avoid having to use your own headlights",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-14-rain-reduce-speed",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-speed-and-weather",
+      "conceptSlug": "launch-condition-appropriate-speed",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-14-rain-reduce-speed",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Rain begins while you are driving. What should you do with your car speed?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Rain calls for reduced speed, as loss of control becomes more likely.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Accelerate to reach dry road sooner",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Reduce speed for the wet conditions",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Keep dry-road speed if the engine runs normally",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Increase speed whenever traffic behind is close",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-car-15-rain-following-gap",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-following-distance",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-15-rain-following-gap",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "How should your car following distance change when the road becomes wet?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Rain requires more following distance than usual.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Make the gap smaller to follow its tracks closely",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Keep the gap unchanged because both vehicles are wet",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Make the gap larger than in dry conditions",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Close the gap until you can see through its rear window",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-car-16-rain-smooth-braking",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-speed-and-weather",
+      "conceptSlug": "launch-rain-smooth-braking",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-16-rain-smooth-braking",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "On a wet road you need to slow your car for traffic ahead. Which braking approach is safer?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Abrupt braking in rain can cause skidding, so braking should be controlled.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Brake sharply at the last moment",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Alternate hard braking with rapid acceleration",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Wait until directly behind the next vehicle before braking",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Brake smoothly and avoid abrupt inputs",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-car-17-rain-light-signals",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-visibility",
+      "conceptSlug": "launch-rain-light-signals",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-17-rain-light-signals",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are driving normally through rain and are not stopped or broken down. Which lighting choice is appropriate?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "In rain, keep headlights on; unnecessary hazard lights can obscure intended direction and confuse other traffic.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Use headlights and normal turn signals as needed",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Keep hazard lights on for the entire journey",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Switch headlights off and use hazard lights instead",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Flash both turn signals to request priority",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-18-curve-control",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-curve-control",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-18-curve-control",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 26 (PDF p. 32): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A sharp bend is ahead of your car. What is the safest plan?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Curves require lower speed, remaining in the lane and avoiding overtaking or abrupt stops.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Overtake just before the bend to gain a clear view",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Slow before the bend and stay within your lane",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Cut across the center line to straighten the bend",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Maintain speed and brake abruptly halfway through",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-car-19-phone-safe-stop",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-driver-fitness",
+      "conceptSlug": "launch-phone-safe-stop",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-19-phone-safe-stop",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 14 (PDF p. 20): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A call requiring a long conversation comes in while you drive. What is the safest response?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Phone use distracts the driver; an extended conversation should wait until safely parked.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Hold the phone low so other drivers cannot see it",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Reply while moving slowly",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Find a safe place to park before using the phone",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Use a straight section of road to read the message",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-car-20-avoid-alcohol-driving",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-driver-fitness",
+      "conceptSlug": "launch-avoid-alcohol-driving",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-20-avoid-alcohol-driving",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 9 (PDF p. 15): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You have been drinking alcohol and need to get home. Which plan is safest?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Driving under the influence of alcohol creates collision risk and must be avoided.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Drive more slowly to cancel the effects of alcohol",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Take a familiar route and drive yourself",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Open the windows and drive yourself",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Arrange transport without driving yourself",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-car-21-drowsy-medication",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-driver-fitness",
+      "conceptSlug": "launch-drowsy-medication",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-21-drowsy-medication",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 67 (PDF p. 73): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Cold medicine has made you drowsy before a planned car journey. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Medication that causes drowsiness can impair consciousness and makes driving unsafe.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Do not drive while your alertness is impaired",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Drive normally because prescribed medicine cannot affect driving",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Rely on loud music to make driving safe",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Drive faster to finish before becoming more tired",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-22-sidewalk-pedestrians",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-sidewalk-pedestrians",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-22-sidewalk-pedestrians",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 16 (PDF p. 22): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Traffic is queuing beside an empty sidewalk. May you drive your car along it to pass the queue?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Sidewalks are for pedestrians, not driving or parking vehicles.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Use the sidewalk if no pedestrian is immediately visible",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Remain on the roadway and keep the sidewalk clear",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Ride or drive along the sidewalk with the horn sounding",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Use the sidewalk whenever traffic is stationary",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-car-23-shoulder-no-shortcut",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-shoulder-no-shortcut",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-23-shoulder-no-shortcut",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 16 (PDF p. 22): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Cars ahead begin passing a traffic queue along the shoulder. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "The road shoulder serves emergency access and temporary emergency stops; it is not a normal bypass lane.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Follow them because a queue makes the shoulder an extra lane",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Use the shoulder if you keep your hazard lights on",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Stay in the traffic lane and preserve the shoulder for emergencies",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Drive on the shoulder until an emergency vehicle appears",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-car-24-lane-discipline",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-lane-discipline",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-24-lane-discipline",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 16 (PDF p. 22): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Your car is on a road with two marked lanes in your direction. How should you position it during normal travel?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Repeatedly straddling lane dividers creates collision risk.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Travel along the divider to reserve both lanes",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Switch across the line repeatedly to discourage overtaking",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Straddle the divider whenever traffic is light",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Stay within a lane instead of weaving across the divider",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-car-25-horn-warning",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-etiquette",
+      "conceptSlug": "launch-horn-warning",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-25-horn-warning",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 15 (PDF p. 21): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Which use of your car horn is appropriate?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "The horn is for necessary warnings or emergencies, not repeated noise or intimidation.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "To warn another road user of an immediate danger",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "To punish a driver who delayed you",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "To hurry pedestrians who are crossing safely",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "To express frustration throughout a traffic queue",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-26-narrow-road-oncoming",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-narrow-road-oncoming",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-26-narrow-road-oncoming",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 15 (PDF p. 21): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "An oncoming car appears on a narrow two-way road. How should you respond?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "On narrow roads with oncoming traffic, reduce speed and keep as far left as possible.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Speed up and claim the middle of the road",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Slow down and keep safely to the left",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Move right to make the other driver yield",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Continue at the same speed along the center",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-car-27-red-signal-stop",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-traffic-controls",
+      "conceptSlug": "launch-red-signal-stop",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-27-red-signal-stop",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 37 (PDF p. 43): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "The traffic light controlling your car lane turns red. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "A red vehicle signal requires vehicles to stop so pedestrians can cross safely.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Continue if the junction seems empty",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Follow a larger vehicle through the red light",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Stop and wait for a signal permitting movement",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Sound the horn and continue cautiously",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-car-28-yellow-signal-prepare-stop",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-traffic-controls",
+      "conceptSlug": "launch-yellow-signal-prepare-stop",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-28-yellow-signal-prepare-stop",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 26 (PDF p. 32): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are far enough from the stop line to stop safely when the light turns yellow. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "A yellow traffic signal warns drivers to slow and prepare to stop before the designated line.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Accelerate to beat the red light",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Keep speed because yellow gives priority",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Overtake the vehicle ahead to reach the junction first",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Slow down and stop before the line",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-car-29-roundabout-yield",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-traffic-controls",
+      "conceptSlug": "launch-roundabout-yield",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-29-roundabout-yield",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You approach a roundabout and a car is already circulating toward your entry. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "When entering a roundabout, slow down and yield to vehicles already circulating.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Vehicles already in the roundabout",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Only vehicles entering behind you",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "No one because entering traffic has priority",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Only vehicles larger than yours",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-30-roundabout-path",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-roundabout-path",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-30-roundabout-path",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Once in a roundabout, how should you steer your car through it?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Drivers should follow the designated path in a roundabout without cutting across it.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Cut straight across the central area when empty",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Follow the marked or designated circulating path",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Weave across circulating lanes to shorten the trip",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Travel against the circulating direction if your exit is nearby",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-car-31-pedestrian-crossing-yield",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-vulnerable-road-users",
+      "conceptSlug": "launch-pedestrian-yield",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-31-pedestrian-crossing-yield",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 38 (PDF p. 44): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A pedestrian begins crossing at the marked crossing ahead of your car. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "At a pedestrian crossing drivers should slow and stop to let pedestrians cross safely.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Sound the horn and pass in front of the pedestrian",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Accelerate through the remaining gap",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Stop and let the pedestrian cross safely",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Pass the stopped vehicle ahead without checking the crossing",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-car-32-crossing-no-parking",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-parking",
+      "conceptSlug": "launch-crossing-no-parking",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-32-crossing-no-parking",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 38 (PDF p. 44): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "The only apparent space near a shop is on a pedestrian crossing. Where should you park your car?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Parking on a pedestrian crossing is prohibited.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Park on the crossing if you stay nearby",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Leave the vehicle on the crossing with hazard lights on",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Use the crossing if pedestrians can walk around the vehicle",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Find a permitted parking space away from the crossing",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-car-33-entrance-no-blocking",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-parking",
+      "conceptSlug": "launch-entrance-no-blocking",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-33-entrance-no-blocking",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 14 (PDF p. 20): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You find a curbside space directly across a residential driveway. What should you do with your car?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Parked vehicles must not block entrances or exits of other premises.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Choose another place that keeps the entrance clear",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Park there if you will return quickly",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Block it and leave a phone number as permission",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Park there whenever the gate is closed",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-34-emergency-vehicle-yield",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-etiquette",
+      "conceptSlug": "launch-emergency-vehicle-yield",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-34-emergency-vehicle-yield",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 71 (PDF p. 77): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "An emergency vehicle using its warning signals approaches behind your car. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Drivers should give way to emergency vehicles by stopping or pulling toward the left edge safely.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Stay in its path to keep traffic predictable",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Give way by safely moving left or stopping as needed",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Accelerate ahead and use it to pass other traffic",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Follow closely behind it through the gap it creates",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-car-35-railway-train-stop",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-traffic-controls",
+      "conceptSlug": "launch-railway-train-stop",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-35-railway-train-stop",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 71 (PDF p. 77): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You approach a railway crossing as a train is coming. What should you do with your car?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "An approaching train requires a stop before the tracks; do not stop on the tracks themselves.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Cross quickly before the train arrives",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Wait with the front wheel on the nearest rail",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Stop clear of the tracks and wait",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Go around the barrier if there seems enough space",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-car-36-railway-uncontrolled-check",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-traffic-controls",
+      "conceptSlug": "launch-railway-uncontrolled-check",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-36-railway-uncontrolled-check",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 71 (PDF p. 77): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Your car approaches a railway crossing that has no warning signals. What is the safe approach?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "A railway crossing without warning signals requires extra caution and careful checks in both directions.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Assume no signal means no trains use the line",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Maintain speed so you spend less time on the tracks",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Follow the vehicle ahead without making your own checks",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Slow down, check both directions and cross only when safe",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-car-37-overtake-safe-gap",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-overtake-safe-gap",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-37-overtake-safe-gap",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Before overtaking another vehicle with your car, what must you establish?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "An overtake needs advance signalling and adequate clearance without obstructing traffic.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "You can signal and complete the pass with safe clearance",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "The vehicle ahead is travelling below your preferred speed",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "The driver ahead has seen you in a mirror so no signal is needed",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "A brief use of the horn gives an automatic right to pass",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-38-allow-overtaking",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-etiquette",
+      "conceptSlug": "launch-allow-overtaking",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-38-allow-overtaking",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 13 (PDF p. 19): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A driver behind signals an intention to overtake your car. Which response is safest?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "When another vehicle overtakes, cooperate by allowing space rather than competing in speed.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Accelerate to prevent it passing",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Allow room and do not race the overtaking vehicle",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Move toward it to discourage the pass",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Match its speed so it remains beside you",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-car-39-red-white-curb",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-parking",
+      "conceptSlug": "launch-red-white-curb",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-39-red-white-curb",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 36 (PDF p. 42): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You see red-and-white curb markings beside a possible pickup spot. What do they mean for your car?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Red-and-white curb markings identify a place where stopping and parking are prohibited.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Parking is allowed for motorcycles only",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Parking is allowed if the engine remains running",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Stopping and parking are prohibited there",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "The area is reserved for long-term parking",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-car-40-posted-speed-limit",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-traffic-controls",
+      "conceptSlug": "launch-posted-speed-limit",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-40-posted-speed-limit",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 31 (PDF p. 37): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A speed-limit sign ahead sets a lower limit than on the road you just left. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Where a speed-limit sign is posted, drivers must adhere to that indicated limit.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "The higher limit from the previous road",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "The speed of the fastest vehicle nearby",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Whichever limit suits your vehicle engine size",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "The limit shown on the sign for the road you are using",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-car-41-seatbelt-every-trip",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-vehicle-readiness",
+      "conceptSlug": "launch-seatbelt-every-trip",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-41-seatbelt-every-trip",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 17 (PDF p. 23): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are about to drive a short distance through a quiet neighborhood. What should you do with your seatbelt?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Fastening a seatbelt before driving reduces injury severity in a collision.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Fasten it before setting off",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Leave it off because the journey is short",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Fasten it only after reaching a busy road",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Rely on the airbag instead of the belt",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-42-roadworthy-equipment",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-vehicle-readiness",
+      "conceptSlug": "launch-roadworthy-equipment",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-42-roadworthy-equipment",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 29 (PDF p. 35): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A pre-trip inspection finds that a required item of your car equipment is defective. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Vehicles used on the road must have complete and sound equipment meeting the required criteria.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Use the car until the next annual tax payment",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Have the defect corrected before using the car on the road",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Drive only in daylight so equipment defects never matter",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Carry a warning triangle instead of correcting the defect",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-car-43-rental-inspection",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-vehicle-readiness",
+      "conceptSlug": "launch-rental-inspection",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-43-rental-inspection",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 12 (PDF p. 18): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You collect a rental car that has a visible dent. What should you do before driving away?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "When collecting a rental car, inspect it and record existing damage to avoid later disputes.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Ignore it because all rental damage is automatically covered",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Wait until returning the car to mention it",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Photograph and note the existing dent before leaving",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Try to conceal the damage with luggage",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-car-44-brake-light-check",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-vehicle-readiness",
+      "conceptSlug": "launch-brake-light-check",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-44-brake-light-check",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 14 (PDF p. 20): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Why should you regularly check that your car brake lights work?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Brake lights should be checked regularly so following drivers receive a clear warning.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "They replace the need to keep a following gap",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "They give your car priority at intersections",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "They remove the need to signal a turn",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "They warn following drivers when you brake",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-car-45-night-breakdown-warning",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-visibility",
+      "conceptSlug": "launch-breakdown-warning",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-45-night-breakdown-warning",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 24 (PDF p. 30): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Your car develops a fault at night and you can safely leave the traffic lane. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "After a night breakdown, park in a safe place off the traffic path and use hazard lights to warn others.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Stop in a safe area at the side and turn on hazard lights",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Stop in the middle of the lane with all lights off",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Keep driving with a serious fault until sunrise",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Leave the car unlit behind a bend",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-46-expressway-breakdown",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-emergencies",
+      "conceptSlug": "launch-breakdown-warning",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-46-expressway-breakdown",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 70 (PDF p. 76): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Your car starts malfunctioning on an expressway but can still be moved safely. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "If a broken-down car is still driveable on an expressway, move it off the traffic path and activate hazard lights.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Stop immediately in the overtaking lane",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Move out of traffic to a safe left-side position and turn on hazard lights",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Reverse along the expressway to the last exit",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Keep driving in the traffic lane until the engine stops",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-car-47-planned-stop-mirrors",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-etiquette",
+      "conceptSlug": "launch-planned-stop-mirrors",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-47-planned-stop-mirrors",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 14 (PDF p. 20): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You want to pull your car over to the left and stop. What sequence is considerate to following traffic?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Before pulling over to stop, check following traffic, signal in advance and brake gently.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Brake hard and signal after stopping",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Stop first and then check the rearview mirror",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Check mirrors, signal left in advance and slow gently",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Move left without a signal if your brake lights work",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-car-48-cyclist-at-entrance",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-vulnerable-road-users",
+      "conceptSlug": "launch-cyclist-at-entrance",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-48-cyclist-at-entrance",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 18 (PDF p. 24): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are driving out of a park entrance beside a bicycle route. What should you check carefully before joining the road?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "When entering or leaving roads near communities or parks, check blind spots for cyclists.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Only the car lane directly ahead",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Only whether a following driver is sounding the horn",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Whether cyclists have enough room to swerve around you",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "The path and blind spots for approaching cyclists",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-car-49-elderly-pedestrian-patience",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-vulnerable-road-users",
+      "conceptSlug": "launch-pedestrian-yield",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-49-elderly-pedestrian-patience",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 27 (PDF p. 33): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "An elderly pedestrian is crossing slowly in front of your car. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Elderly pedestrians may need longer to cross, so drivers should slow and stop to allow safe passage.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Wait and allow enough time for the person to finish crossing",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Honk repeatedly so the person moves faster",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Creep close to make the person hurry",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Drive around the person through the crossing",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-car-50-right-lane-cooperation",
+      "vehicleType": "CAR",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-right-lane-cooperation",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-car-50-right-lane-cooperation",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 13 (PDF p. 19): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You have finished overtaking in the right lane and another car approaches from behind. What should you do when safe?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "A driver should not remain slowly in the overtaking lane and should allow faster traffic to pass by moving left safely.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Remain in the right lane to control its speed",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Move back to the left and allow it to pass",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Accelerate to block it from overtaking",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Brake sharply to make it increase its gap",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    }
+  ]
+}

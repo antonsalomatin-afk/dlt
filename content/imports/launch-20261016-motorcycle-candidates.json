@@ -1,0 +1,2457 @@
+{
+  "batchId": "launch-20261016-motorcycle",
+  "version": 1,
+  "createdAt": "2026-10-16T00:00:00.000Z",
+  "questions": [
+    {
+      "externalId": "launch-motorcycle-01-keep-left",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-keep-left",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-01-keep-left",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 8 (PDF p. 14): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You join an ordinary two-way road on your motorcycle in Thailand. Which side should you normally ride on?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Normal traffic in Thailand travels on the left side of the road.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "The left side",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "The right side",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Whichever side has fewer vehicles",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "The center line",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-02-signal-lane-change",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-signal-lane-change",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-02-signal-lane-change",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You have checked that the adjacent lane is safe for your motorcycle. What should you do before moving into it?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Drivers should signal before changing lanes so other road users can anticipate the movement.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Signal only after crossing the lane line",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Give the appropriate turn signal",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Use hazard lights instead of a turn signal",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Move first so following traffic understands",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-motorcycle-03-safe-following-gap",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-following-distance",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-03-safe-following-gap",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 17 (PDF p. 23): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A van ahead of your motorcycle may stop suddenly. Why should you leave a sufficient gap?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "A following gap must allow a safe stop if the vehicle ahead slows or stops.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "To prevent anyone from changing lanes",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "To remove the need to watch brake lights",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "To have room to stop safely",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "To make the vehicle ahead travel faster",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-motorcycle-04-school-area-caution",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-vulnerable-road-users",
+      "conceptSlug": "launch-school-area-caution",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-04-school-area-caution",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 17 (PDF p. 23): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are riding past a busy school gate. How should you respond to the possibility of children entering the road?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Community areas may contain children and pedestrians who cross unexpectedly; low speed and readiness to stop are needed.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Keep your speed unless a child is already in your lane",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Sound the horn continuously and maintain speed",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Follow the vehicle ahead closely through the area",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Slow down and be ready to stop",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-motorcycle-05-conditions-appropriate-speed",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-speed-and-weather",
+      "conceptSlug": "launch-condition-appropriate-speed",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-05-conditions-appropriate-speed",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 18 (PDF p. 24): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "The posted limit is higher than feels safe on a wet, crowded road. How should you choose your motorcycle speed?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Speed must be adjusted for road surface, weather and traffic rather than treating a legal limit as a target.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Reduce speed to suit the conditions",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Maintain the maximum posted speed regardless of conditions",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Match the fastest nearby vehicle",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Increase speed to leave the difficult area quickly",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-06-blind-spot-check",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-blind-spot-check",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-06-blind-spot-check",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 19 (PDF p. 25): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Before moving your motorcycle sideways into a lane, what should you remember about your mirrors?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Mirrors do not show all surrounding areas; blind spots require careful checks, particularly before lane changes.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Clear mirrors guarantee that the lane is empty",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "A vehicle may still be in a blind spot",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "A turn signal removes all blind spots",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Blind spots matter only when reversing",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-motorcycle-07-truck-rear-space",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-truck-blind-spots",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-07-truck-rear-space",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are riding just behind a truck where its driver may not see you. What should you change?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Both car and motorcycle drivers should avoid following trucks closely, including their rear blind spots.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Move closer to shelter behind the truck",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Use the truck as a guide and ignore the road ahead",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Increase the following distance",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Stay close and flash your headlights repeatedly",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-motorcycle-08-truck-left-blind-spot",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-truck-blind-spots",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-08-truck-left-blind-spot",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A lorry is moving slowly ahead. Which nearby position is especially hazardous for a motorcycle to remain in?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "The area close to a truck on its left has particularly limited visibility for the truck driver.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Well behind it with a clear stopping gap",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Away from its immediate side with a clear view",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "At a safe distance where its movement can be observed",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Close beside the truck on its left",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-motorcycle-09-truck-turning-clearance",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-truck-turning-clearance",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-09-truck-turning-clearance",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A large truck is turning at a junction. What should you do on your motorcycle?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Entering the turning or reversing area of a truck risks being squeezed by its movement.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Stay clear of the truck turning area",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Squeeze between the truck and the curb",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Pull alongside the inside of its turn",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Enter the gap before the truck finishes turning",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-10-truck-front-clearance",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-truck-front-clearance",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-10-truck-front-clearance",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You have passed a truck on your motorcycle. Why should you leave a substantial gap before moving back ahead of it?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Trucks may need a longer stopping distance, so cutting closely in front of one is unsafe.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "The truck will always stop faster than a smaller vehicle",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "The truck may need more distance to stop",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Its driver must brake whenever another vehicle passes",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "A small vehicle needs no clearance ahead of a truck",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-motorcycle-11-night-headlights",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-visibility",
+      "conceptSlug": "launch-night-headlights",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-11-night-headlights",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 24 (PDF p. 30): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You continue riding after dark on a road with street lighting. What should you do with your motorcycle headlight?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Headlights should remain on when driving at night to see the road and increase visibility.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Use lights only when another vehicle approaches",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Replace headlights with hazard lights",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Keep the headlights on while travelling",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Turn the lights off wherever the road appears empty",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-motorcycle-12-avoid-high-beam-glare",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-visibility",
+      "conceptSlug": "launch-avoid-high-beam-glare",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-12-avoid-high-beam-glare",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 13 (PDF p. 19): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are following a vehicle at night on your motorcycle with high beam selected. What should you do to avoid glare for its driver?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Unnecessary high beams can impair the vision of drivers ahead or coming in the opposite direction.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Keep high beam on to claim priority",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Flash high beam continuously until the other vehicle moves",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Aim high beam into the other driver's mirrors",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Change to low beam when high beam would dazzle others",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-motorcycle-13-night-following-gap",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-following-distance",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-13-night-following-gap",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 24 (PDF p. 30): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "At night you find yourself following a taxi closely on your motorcycle. Why should you open the gap?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "At night a greater following gap provides more time to react and stop.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "To allow more time to react and stop",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Because brake lights stop working after dark",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Because the vehicle ahead has priority over all traffic",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "To avoid having to use your own headlights",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-14-rain-reduce-speed",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-speed-and-weather",
+      "conceptSlug": "launch-condition-appropriate-speed",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-14-rain-reduce-speed",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Fresh rain starts during your motorcycle journey. What is the appropriate change in speed?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Rain calls for reduced speed, as loss of control becomes more likely.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Accelerate to reach dry road sooner",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Reduce speed for the wet conditions",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Keep dry-road speed if the engine runs normally",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Increase speed whenever traffic behind is close",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-motorcycle-15-rain-following-gap",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-following-distance",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-15-rain-following-gap",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are riding behind a delivery van when steady rain begins. How should your following gap change?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Rain requires more following distance than usual.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Make the gap smaller to follow its tracks closely",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Keep the gap unchanged because both vehicles are wet",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Make the gap larger than in dry conditions",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Close the gap until you can see through its rear window",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-motorcycle-16-rain-smooth-braking",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-speed-and-weather",
+      "conceptSlug": "launch-rain-smooth-braking",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-16-rain-smooth-braking",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You see slower traffic ahead while riding in rain. How should you plan to reduce speed?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Abrupt braking in rain can cause skidding, so braking should be controlled.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Brake sharply at the last moment",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Alternate hard braking with rapid acceleration",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Wait until directly behind the next vehicle before braking",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Brake smoothly and avoid abrupt inputs",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-motorcycle-17-rain-light-signals",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-visibility",
+      "conceptSlug": "launch-rain-light-signals",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-17-rain-light-signals",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "While your motorcycle is moving normally in rain, which lighting choice best communicates with other traffic?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "In rain, keep headlights on; unnecessary hazard lights can obscure intended direction and confuse other traffic.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Use headlights and normal turn signals as needed",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Keep hazard lights on for the entire journey",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Switch headlights off and use hazard lights instead",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Flash both turn signals to request priority",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-18-curve-control",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-curve-control",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-18-curve-control",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 26 (PDF p. 32): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You approach a road curve on your motorcycle. Which plan reduces the risk of losing control?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Curves require lower speed, remaining in the lane and avoiding overtaking or abrupt stops.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Overtake just before the bend to gain a clear view",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Slow before the bend and stay within your lane",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Cut across the center line to straighten the bend",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Maintain speed and brake abruptly halfway through",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-motorcycle-19-phone-safe-stop",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-driver-fitness",
+      "conceptSlug": "launch-phone-safe-stop",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-19-phone-safe-stop",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 14 (PDF p. 20): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Your phone receives a message that needs a detailed reply while you are riding. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Phone use distracts the driver; an extended conversation should wait until safely parked.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Hold the phone low so other drivers cannot see it",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Reply while moving slowly",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Find a safe place to park before using the phone",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Use a straight section of road to read the message",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-motorcycle-20-avoid-alcohol-driving",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-driver-fitness",
+      "conceptSlug": "launch-avoid-alcohol-driving",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-20-avoid-alcohol-driving",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 9 (PDF p. 15): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "After drinking alcohol at dinner, you are considering riding your motorcycle home. What is the safest plan?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Driving under the influence of alcohol creates collision risk and must be avoided.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Drive more slowly to cancel the effects of alcohol",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Take a familiar route and drive yourself",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Open the windows and drive yourself",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Arrange transport without driving yourself",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-motorcycle-21-drowsy-medication",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-driver-fitness",
+      "conceptSlug": "launch-drowsy-medication",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-21-drowsy-medication",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 67 (PDF p. 73): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "After taking medicine you feel sleepy before your motorcycle trip. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Medication that causes drowsiness can impair consciousness and makes driving unsafe.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Do not drive while your alertness is impaired",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Drive normally because prescribed medicine cannot affect driving",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Rely on loud music to make driving safe",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Drive faster to finish before becoming more tired",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-22-sidewalk-pedestrians",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-sidewalk-pedestrians",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-22-sidewalk-pedestrians",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 16 (PDF p. 22): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A traffic queue blocks your route but the sidewalk looks clear. What should you do on your motorcycle?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Sidewalks are for pedestrians, not driving or parking vehicles.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Use the sidewalk if no pedestrian is immediately visible",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Remain on the roadway and keep the sidewalk clear",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Ride or drive along the sidewalk with the horn sounding",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Use the sidewalk whenever traffic is stationary",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-motorcycle-23-shoulder-no-shortcut",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-shoulder-no-shortcut",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-23-shoulder-no-shortcut",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 16 (PDF p. 22): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Other riders use the shoulder to bypass congestion. What should guide your decision?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "The road shoulder serves emergency access and temporary emergency stops; it is not a normal bypass lane.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Follow them because a queue makes the shoulder an extra lane",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Use the shoulder if you keep your hazard lights on",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Stay in the traffic lane and preserve the shoulder for emergencies",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Drive on the shoulder until an emergency vehicle appears",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-motorcycle-24-lane-discipline",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-lane-discipline",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-24-lane-discipline",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 16 (PDF p. 22): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "While riding along a marked road, how should you use the lane markings during normal travel?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Repeatedly straddling lane dividers creates collision risk.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Travel along the divider to reserve both lanes",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Switch across the line repeatedly to discourage overtaking",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Straddle the divider whenever traffic is light",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Stay within a lane instead of weaving across the divider",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-motorcycle-25-horn-warning",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-etiquette",
+      "conceptSlug": "launch-horn-warning",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-25-horn-warning",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 15 (PDF p. 21): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "When is it appropriate to use your motorcycle horn?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "The horn is for necessary warnings or emergencies, not repeated noise or intimidation.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "To warn another road user of an immediate danger",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "To punish a driver who delayed you",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "To hurry pedestrians who are crossing safely",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "To express frustration throughout a traffic queue",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-26-narrow-road-oncoming",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-narrow-road-oncoming",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-26-narrow-road-oncoming",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 15 (PDF p. 21): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A car approaches from the opposite direction on a narrow road while you are riding. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "On narrow roads with oncoming traffic, reduce speed and keep as far left as possible.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Speed up and claim the middle of the road",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Slow down and keep safely to the left",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Move right to make the other driver yield",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Continue at the same speed along the center",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-motorcycle-27-red-signal-stop",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-traffic-controls",
+      "conceptSlug": "launch-red-signal-stop",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-27-red-signal-stop",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 37 (PDF p. 43): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You arrive on your motorcycle at a red traffic signal controlling your lane. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "A red vehicle signal requires vehicles to stop so pedestrians can cross safely.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Continue if the junction seems empty",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Follow a larger vehicle through the red light",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Stop and wait for a signal permitting movement",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Sound the horn and continue cautiously",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-motorcycle-28-yellow-signal-prepare-stop",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-traffic-controls",
+      "conceptSlug": "launch-yellow-signal-prepare-stop",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-28-yellow-signal-prepare-stop",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 26 (PDF p. 32): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You can stop safely before the line when the signal turns yellow. How should you respond on your motorcycle?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "A yellow traffic signal warns drivers to slow and prepare to stop before the designated line.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Accelerate to beat the red light",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Keep speed because yellow gives priority",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Overtake the vehicle ahead to reach the junction first",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Slow down and stop before the line",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-motorcycle-29-roundabout-yield",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-traffic-controls",
+      "conceptSlug": "launch-roundabout-yield",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-29-roundabout-yield",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are about to enter a roundabout on your motorcycle while traffic is circulating. Who should you yield to?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "When entering a roundabout, slow down and yield to vehicles already circulating.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Vehicles already in the roundabout",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Only vehicles entering behind you",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "No one because entering traffic has priority",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Only vehicles larger than yours",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-30-roundabout-path",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-roundabout-path",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-30-roundabout-path",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "What route should you follow while riding through a roundabout?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Drivers should follow the designated path in a roundabout without cutting across it.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Cut straight across the central area when empty",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Follow the marked or designated circulating path",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Weave across circulating lanes to shorten the trip",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Travel against the circulating direction if your exit is nearby",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-motorcycle-31-pedestrian-crossing-yield",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-vulnerable-road-users",
+      "conceptSlug": "launch-pedestrian-yield",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-31-pedestrian-crossing-yield",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 38 (PDF p. 44): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A person is crossing the marked crossing in front of your motorcycle. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "At a pedestrian crossing drivers should slow and stop to let pedestrians cross safely.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Sound the horn and pass in front of the pedestrian",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Accelerate through the remaining gap",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Stop and let the pedestrian cross safely",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Pass the stopped vehicle ahead without checking the crossing",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-motorcycle-32-crossing-no-parking",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-parking",
+      "conceptSlug": "launch-crossing-no-parking",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-32-crossing-no-parking",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 38 (PDF p. 44): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You want to leave your motorcycle while visiting a shop, but the nearby space is a marked pedestrian crossing. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Parking on a pedestrian crossing is prohibited.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Park on the crossing if you stay nearby",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Leave the vehicle on the crossing with hazard lights on",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Use the crossing if pedestrians can walk around the vehicle",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Find a permitted parking space away from the crossing",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-motorcycle-33-entrance-no-blocking",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-parking",
+      "conceptSlug": "launch-entrance-no-blocking",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-33-entrance-no-blocking",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 14 (PDF p. 20): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are about to park your motorcycle across a building entrance. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Parked vehicles must not block entrances or exits of other premises.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Choose another place that keeps the entrance clear",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Park there if you will return quickly",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Block it and leave a phone number as permission",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Park there whenever the gate is closed",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-34-emergency-vehicle-yield",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-etiquette",
+      "conceptSlug": "launch-emergency-vehicle-yield",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-34-emergency-vehicle-yield",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 71 (PDF p. 77): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "An ambulance responding to an emergency approaches your motorcycle from behind. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Drivers should give way to emergency vehicles by stopping or pulling toward the left edge safely.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Stay in its path to keep traffic predictable",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Give way by safely moving left or stopping as needed",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Accelerate ahead and use it to pass other traffic",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Follow closely behind it through the gap it creates",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-motorcycle-35-railway-train-stop",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-traffic-controls",
+      "conceptSlug": "launch-railway-train-stop",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-35-railway-train-stop",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 71 (PDF p. 77): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You hear and see an approaching train at a crossing. What should you do on your motorcycle?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "An approaching train requires a stop before the tracks; do not stop on the tracks themselves.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Cross quickly before the train arrives",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Wait with the front wheel on the nearest rail",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Stop clear of the tracks and wait",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Go around the barrier if there seems enough space",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-motorcycle-36-railway-uncontrolled-check",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-traffic-controls",
+      "conceptSlug": "launch-railway-uncontrolled-check",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-36-railway-uncontrolled-check",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 71 (PDF p. 77): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "There are no warning signals at a railway crossing on your motorcycle route. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "A railway crossing without warning signals requires extra caution and careful checks in both directions.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Assume no signal means no trains use the line",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Maintain speed so you spend less time on the tracks",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Follow the vehicle ahead without making your own checks",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Slow down, check both directions and cross only when safe",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-motorcycle-37-overtake-safe-gap",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-space-management",
+      "conceptSlug": "launch-overtake-safe-gap",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-37-overtake-safe-gap",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You want to pass a slower vehicle on your motorcycle. What should you confirm before starting?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "An overtake needs advance signalling and adequate clearance without obstructing traffic.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "You can signal and complete the pass with safe clearance",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "The vehicle ahead is travelling below your preferred speed",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "The driver ahead has seen you in a mirror so no signal is needed",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "A brief use of the horn gives an automatic right to pass",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-38-allow-overtaking",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-etiquette",
+      "conceptSlug": "launch-allow-overtaking",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-38-allow-overtaking",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 13 (PDF p. 19): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A vehicle behind your motorcycle begins a safe overtake. How should you respond?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "When another vehicle overtakes, cooperate by allowing space rather than competing in speed.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Accelerate to prevent it passing",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Allow room and do not race the overtaking vehicle",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Move toward it to discourage the pass",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Match its speed so it remains beside you",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-motorcycle-39-red-white-curb",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-parking",
+      "conceptSlug": "launch-red-white-curb",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-39-red-white-curb",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 36 (PDF p. 42): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A red-and-white curb is outside the cafe where you want to park your motorcycle. What does it indicate?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Red-and-white curb markings identify a place where stopping and parking are prohibited.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Parking is allowed for motorcycles only",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Parking is allowed if the engine remains running",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Stopping and parking are prohibited there",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "The area is reserved for long-term parking",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-motorcycle-40-posted-speed-limit",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-traffic-controls",
+      "conceptSlug": "launch-posted-speed-limit",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-40-posted-speed-limit",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 31 (PDF p. 37): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You ride from a faster road into an area with a lower posted speed limit. Which limit applies?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Where a speed-limit sign is posted, drivers must adhere to that indicated limit.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "The higher limit from the previous road",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "The speed of the fastest vehicle nearby",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Whichever limit suits your vehicle engine size",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "The limit shown on the sign for the road you are using",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-motorcycle-41-helmet-secure-all",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-vehicle-readiness",
+      "conceptSlug": "launch-helmet-secure-all",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-41-helmet-secure-all",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 20 (PDF p. 26): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You are taking a passenger on a short motorcycle trip. Which helmet preparation is appropriate?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Both motorcycle rider and passenger should wear helmets with the chin straps securely adjusted.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Both of you wear helmets with securely fastened chin straps",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Only the rider needs a helmet",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "The passenger can carry a helmet instead of wearing it",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Both may leave the straps loose for a short trip",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-42-roadworthy-equipment",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-vehicle-readiness",
+      "conceptSlug": "launch-roadworthy-equipment",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-42-roadworthy-equipment",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 20 (PDF p. 26): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Before leaving, you find your motorcycle brakes are unreliable. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Before riding, check brakes, headlights, tires and other equipment; unreliable parts need replacement.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Use the horn as a substitute for reliable brakes",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Have the fault repaired before riding",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Ride more slowly and postpone the repair indefinitely",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Carry a passenger to help stop the motorcycle",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-motorcycle-43-motorcycle-metal-plates",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-motorcycle-surfaces",
+      "conceptSlug": "launch-motorcycle-metal-plates",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-43-motorcycle-metal-plates",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 23 (PDF p. 29): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A metal plate covers an excavation across your motorcycle route. What is the safest response?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Metal plates over roadworks can be slippery; reduce speed and keep a firm grip on the handlebars.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Accelerate hard over the plate",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Release one hand so the motorcycle can move freely",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Reduce speed and maintain a firm grip on the handlebars",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Brake sharply while leaning on the plate",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-motorcycle-44-motorcycle-potholes",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-motorcycle-surfaces",
+      "conceptSlug": "launch-motorcycle-potholes",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-44-motorcycle-potholes",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 23 (PDF p. 29): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You reach a damaged section with potholes and puddles while riding. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Potholes and puddles threaten stability; low speed and avoiding sudden braking help maintain control.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Increase speed so the wheels skip over the holes",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Brake suddenly in each puddle",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Relax your grip and look only at the front wheel",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Slow down, hold the handlebars firmly and avoid sudden braking",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-motorcycle-45-motorcycle-oil-spill",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-motorcycle-surfaces",
+      "conceptSlug": "launch-motorcycle-oil-spill",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-45-motorcycle-oil-spill",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 23 (PDF p. 29): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You see an oil spill ahead and can safely choose a clear route on your motorcycle. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Oil spills create skid risk and should be avoided rather than ridden through unnecessarily.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Avoid the spill using the safe clear route",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Ride directly over it to test the grip",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Accelerate through the oil",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Brake hard on the oily surface to clean the tires",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-46-motorcycle-loose-surface",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-motorcycle-surfaces",
+      "conceptSlug": "launch-motorcycle-loose-surface",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-46-motorcycle-loose-surface",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 23 (PDF p. 29): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Loose sand is spread across part of a roadworks area. How should you ride through the area?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Gravel and sand, especially near roadworks, increase the risk of losing motorcycle control.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Treat it exactly like clean dry asphalt",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Use extra caution because the surface can reduce control",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Accelerate and weave to clear sand from the tires",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Lean more sharply to improve tire contact",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    },
+    {
+      "externalId": "launch-motorcycle-47-motorcycle-speed-bumps",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-motorcycle-surfaces",
+      "conceptSlug": "launch-motorcycle-speed-bumps",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-47-motorcycle-speed-bumps",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 23 (PDF p. 29): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A signed speed bump is ahead while you are riding. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "At speed bumps, reduce speed according to signs and maintain stable posture.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Accelerate so the motorcycle jumps over it",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Stand on one footrest and turn sharply",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Reduce speed and keep a stable riding posture",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Wait until on the bump to brake abruptly",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "C"
+    },
+    {
+      "externalId": "launch-motorcycle-48-motorcycle-no-cutting",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-position",
+      "conceptSlug": "launch-motorcycle-no-cutting",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-48-motorcycle-no-cutting",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 20 (PDF p. 26): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "A narrow gap opens between moving cars ahead of your motorcycle. Which action matches safe riding guidance?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Safe riding excludes cutting between cars or making abrupt lane changes.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Squeeze through immediately before the gap closes",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Weave between the cars with the horn held down",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Assume your small size makes every gap safe",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Keep a predictable path instead of cutting between the cars",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "D"
+    },
+    {
+      "externalId": "launch-motorcycle-49-motorcycle-heavy-rain",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-speed-and-weather",
+      "conceptSlug": "launch-motorcycle-heavy-rain",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-49-motorcycle-heavy-rain",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 20 (PDF p. 26): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "Before you set out on your motorcycle, heavy rain makes visibility very poor. What is the safest plan if travel can wait?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Heavy rain reduces motorcycle visibility and control; avoiding riding where possible is advised.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Delay the ride until conditions improve",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Start immediately and ride faster through the rain",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Rely on hazard lights to make normal speed safe",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Ride close behind a truck for shelter",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "A"
+    },
+    {
+      "externalId": "launch-motorcycle-50-keep-traffic-clear",
+      "vehicleType": "MOTORCYCLE",
+      "categorySlug": "launch-road-etiquette",
+      "conceptSlug": "launch-keep-traffic-clear",
+      "source": {
+        "type": "ORIGINAL",
+        "reference": "internal:launch-20261016/launch-motorcycle-50-keep-traffic-clear",
+        "sourceDate": "2026-10-16",
+        "legalCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 67 (PDF p. 73): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf"
+      },
+      "textThai": null,
+      "textExamEnglish": null,
+      "textEnglish": "You want to stop your motorcycle to chat and would block the traffic lane. What should you do?",
+      "textRussian": null,
+      "explanationThai": null,
+      "explanationEnglish": "Drivers must not obstruct traffic.",
+      "explanationRussian": null,
+      "trapExplanationThai": null,
+      "trapExplanationEnglish": null,
+      "trapExplanationRussian": null,
+      "choices": [
+        {
+          "key": "A",
+          "textThai": null,
+          "textEnglish": "Stop in the lane if the conversation is brief",
+          "textRussian": null
+        },
+        {
+          "key": "B",
+          "textThai": null,
+          "textEnglish": "Choose a permitted place that keeps the traffic route clear",
+          "textRussian": null
+        },
+        {
+          "key": "C",
+          "textThai": null,
+          "textEnglish": "Block the lane and leave the engine running",
+          "textRussian": null
+        },
+        {
+          "key": "D",
+          "textThai": null,
+          "textEnglish": "Ask following drivers to use the opposite lane",
+          "textRussian": null
+        }
+      ],
+      "correctChoiceKey": "B"
+    }
+  ]
+}

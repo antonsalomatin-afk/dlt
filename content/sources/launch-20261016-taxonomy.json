@@ -1,0 +1,548 @@
+{
+  "version": 1,
+  "namespace": "launch-20261016",
+  "boundary": "PROPOSED_ADDITIVE_TAXONOMY_ONLY",
+  "idPolicy": {
+    "algorithm": "UUIDv5",
+    "namespace": "6d548e25-0596-51e8-a11c-5e45f5b471a1",
+    "input": "launch-20261016:<category-or-concept>:<slug>"
+  },
+  "categories": [
+    {
+      "id": "5816ed40-1491-5d19-b4c5-f32f54c06834",
+      "slug": "launch-road-position",
+      "nameThai": "Road position and maneuvers",
+      "nameEnglish": "Road position and maneuvers",
+      "nameRussian": "Road position and maneuvers",
+      "sortOrder": 1000,
+      "labelPolicy": "English fallback; no verified Thai or Russian translation is claimed."
+    },
+    {
+      "id": "6008dfe0-860c-57fd-ab48-23d8578f10e7",
+      "slug": "launch-space-management",
+      "nameThai": "Space and hazard awareness",
+      "nameEnglish": "Space and hazard awareness",
+      "nameRussian": "Space and hazard awareness",
+      "sortOrder": 1001,
+      "labelPolicy": "English fallback; no verified Thai or Russian translation is claimed."
+    },
+    {
+      "id": "fcd17626-f610-570e-b018-9b03ac157489",
+      "slug": "launch-vulnerable-road-users",
+      "nameThai": "Sharing with vulnerable road users",
+      "nameEnglish": "Sharing with vulnerable road users",
+      "nameRussian": "Sharing with vulnerable road users",
+      "sortOrder": 1002,
+      "labelPolicy": "English fallback; no verified Thai or Russian translation is claimed."
+    },
+    {
+      "id": "cb3e4932-e775-520d-a2d3-44d6634296bb",
+      "slug": "launch-speed-and-weather",
+      "nameThai": "Speed and weather",
+      "nameEnglish": "Speed and weather",
+      "nameRussian": "Speed and weather",
+      "sortOrder": 1003,
+      "labelPolicy": "English fallback; no verified Thai or Russian translation is claimed."
+    },
+    {
+      "id": "6ac48c73-dfac-5145-a3cc-472c2ae502eb",
+      "slug": "launch-visibility",
+      "nameThai": "Visibility and lighting",
+      "nameEnglish": "Visibility and lighting",
+      "nameRussian": "Visibility and lighting",
+      "sortOrder": 1004,
+      "labelPolicy": "English fallback; no verified Thai or Russian translation is claimed."
+    },
+    {
+      "id": "9ed885fa-4820-54cf-8fde-29829417b853",
+      "slug": "launch-driver-fitness",
+      "nameThai": "Driver fitness and attention",
+      "nameEnglish": "Driver fitness and attention",
+      "nameRussian": "Driver fitness and attention",
+      "sortOrder": 1005,
+      "labelPolicy": "English fallback; no verified Thai or Russian translation is claimed."
+    },
+    {
+      "id": "3119d555-458c-50ec-8c08-437db4c7caf1",
+      "slug": "launch-road-etiquette",
+      "nameThai": "Road etiquette",
+      "nameEnglish": "Road etiquette",
+      "nameRussian": "Road etiquette",
+      "sortOrder": 1006,
+      "labelPolicy": "English fallback; no verified Thai or Russian translation is claimed."
+    },
+    {
+      "id": "567a5cdc-ac93-5b7c-8e30-ededd7f99365",
+      "slug": "launch-traffic-controls",
+      "nameThai": "Traffic controls",
+      "nameEnglish": "Traffic controls",
+      "nameRussian": "Traffic controls",
+      "sortOrder": 1007,
+      "labelPolicy": "English fallback; no verified Thai or Russian translation is claimed."
+    },
+    {
+      "id": "5b8d696f-6bf7-584c-962d-6e6128589593",
+      "slug": "launch-parking",
+      "nameThai": "Stopping and parking",
+      "nameEnglish": "Stopping and parking",
+      "nameRussian": "Stopping and parking",
+      "sortOrder": 1008,
+      "labelPolicy": "English fallback; no verified Thai or Russian translation is claimed."
+    },
+    {
+      "id": "91c4b2e7-3ca9-5962-85ef-a02db939a97d",
+      "slug": "launch-vehicle-readiness",
+      "nameThai": "Vehicle readiness",
+      "nameEnglish": "Vehicle readiness",
+      "nameRussian": "Vehicle readiness",
+      "sortOrder": 1009,
+      "labelPolicy": "English fallback; no verified Thai or Russian translation is claimed."
+    },
+    {
+      "id": "3920602a-8b8d-591b-bd40-02b708cef8a8",
+      "slug": "launch-emergencies",
+      "nameThai": "Breakdowns and emergencies",
+      "nameEnglish": "Breakdowns and emergencies",
+      "nameRussian": "Breakdowns and emergencies",
+      "sortOrder": 1010,
+      "labelPolicy": "English fallback; no verified Thai or Russian translation is claimed."
+    },
+    {
+      "id": "b9b0427a-47a3-5cea-bb1b-01c885982bbc",
+      "slug": "launch-motorcycle-surfaces",
+      "nameThai": "Motorcycle road surfaces",
+      "nameEnglish": "Motorcycle road surfaces",
+      "nameRussian": "Motorcycle road surfaces",
+      "sortOrder": 1011,
+      "labelPolicy": "English fallback; no verified Thai or Russian translation is claimed."
+    }
+  ],
+  "concepts": [
+    {
+      "id": "17a8ea6b-f289-5442-bb70-c931f58c08c5",
+      "slug": "launch-keep-left",
+      "nameThai": "Keep left",
+      "nameEnglish": "Keep left",
+      "nameRussian": "Keep left",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "1852555f-4997-5e43-a6f4-68247bccf2e3",
+      "slug": "launch-signal-lane-change",
+      "nameThai": "Signal lane change",
+      "nameEnglish": "Signal lane change",
+      "nameRussian": "Signal lane change",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "492de757-6a30-507c-9109-522393a9d2fa",
+      "slug": "launch-following-distance",
+      "nameThai": "Following distance",
+      "nameEnglish": "Following distance",
+      "nameRussian": "Following distance",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "9c2aebbc-cf5b-5c20-b6c3-617ef102fee8",
+      "slug": "launch-school-area-caution",
+      "nameThai": "School area caution",
+      "nameEnglish": "School area caution",
+      "nameRussian": "School area caution",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "89d2a254-1f25-59ae-984b-aeec7787ace0",
+      "slug": "launch-condition-appropriate-speed",
+      "nameThai": "Condition appropriate speed",
+      "nameEnglish": "Condition appropriate speed",
+      "nameRussian": "Condition appropriate speed",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "a0bc1de5-df8b-5b74-abf4-0fd6f4133ff2",
+      "slug": "launch-blind-spot-check",
+      "nameThai": "Blind spot check",
+      "nameEnglish": "Blind spot check",
+      "nameRussian": "Blind spot check",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "8def9623-74f5-5cca-9481-a52fcd6afa08",
+      "slug": "launch-truck-blind-spots",
+      "nameThai": "Truck blind spots",
+      "nameEnglish": "Truck blind spots",
+      "nameRussian": "Truck blind spots",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "064c4f3a-cc25-5885-baf4-342cc5309da0",
+      "slug": "launch-truck-turning-clearance",
+      "nameThai": "Truck turning clearance",
+      "nameEnglish": "Truck turning clearance",
+      "nameRussian": "Truck turning clearance",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "2dbaddfc-9068-5463-887c-0a261fbe3093",
+      "slug": "launch-truck-front-clearance",
+      "nameThai": "Truck front clearance",
+      "nameEnglish": "Truck front clearance",
+      "nameRussian": "Truck front clearance",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "f090e116-619e-5518-aba0-e76f1a46ea42",
+      "slug": "launch-night-headlights",
+      "nameThai": "Night headlights",
+      "nameEnglish": "Night headlights",
+      "nameRussian": "Night headlights",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "cf565350-542c-5620-9aa9-ab9f4d8ce836",
+      "slug": "launch-avoid-high-beam-glare",
+      "nameThai": "Avoid high beam glare",
+      "nameEnglish": "Avoid high beam glare",
+      "nameRussian": "Avoid high beam glare",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "342196ad-1c3d-5670-86d3-d703b62b4538",
+      "slug": "launch-rain-smooth-braking",
+      "nameThai": "Rain smooth braking",
+      "nameEnglish": "Rain smooth braking",
+      "nameRussian": "Rain smooth braking",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "1b06ca92-bef3-5078-accb-2930e5c68e2e",
+      "slug": "launch-rain-light-signals",
+      "nameThai": "Rain light signals",
+      "nameEnglish": "Rain light signals",
+      "nameRussian": "Rain light signals",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "fd42057a-5d25-5b0f-98b6-9f584bebcc8c",
+      "slug": "launch-curve-control",
+      "nameThai": "Curve control",
+      "nameEnglish": "Curve control",
+      "nameRussian": "Curve control",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "79e65e1e-40dd-59f3-8619-f7619e98fce0",
+      "slug": "launch-phone-safe-stop",
+      "nameThai": "Phone safe stop",
+      "nameEnglish": "Phone safe stop",
+      "nameRussian": "Phone safe stop",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "1680245e-2a49-563e-8d18-5bc8e7874c08",
+      "slug": "launch-avoid-alcohol-driving",
+      "nameThai": "Avoid alcohol driving",
+      "nameEnglish": "Avoid alcohol driving",
+      "nameRussian": "Avoid alcohol driving",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "7720e98e-ec62-5421-bc61-442f168f2411",
+      "slug": "launch-drowsy-medication",
+      "nameThai": "Drowsy medication",
+      "nameEnglish": "Drowsy medication",
+      "nameRussian": "Drowsy medication",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "5ab6d839-41ed-536d-975e-1812c020bdf6",
+      "slug": "launch-sidewalk-pedestrians",
+      "nameThai": "Sidewalk pedestrians",
+      "nameEnglish": "Sidewalk pedestrians",
+      "nameRussian": "Sidewalk pedestrians",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "9fc5c7c1-1834-57d3-9d77-da226da7a198",
+      "slug": "launch-shoulder-no-shortcut",
+      "nameThai": "Shoulder no shortcut",
+      "nameEnglish": "Shoulder no shortcut",
+      "nameRussian": "Shoulder no shortcut",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "90f2d0dd-3a16-5e83-a4c8-53e916e5c448",
+      "slug": "launch-lane-discipline",
+      "nameThai": "Lane discipline",
+      "nameEnglish": "Lane discipline",
+      "nameRussian": "Lane discipline",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "e912c43d-b380-5627-8f8f-997fa8be3b61",
+      "slug": "launch-horn-warning",
+      "nameThai": "Horn warning",
+      "nameEnglish": "Horn warning",
+      "nameRussian": "Horn warning",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "28be29ae-1246-51cb-8b39-cf87def20806",
+      "slug": "launch-narrow-road-oncoming",
+      "nameThai": "Narrow road oncoming",
+      "nameEnglish": "Narrow road oncoming",
+      "nameRussian": "Narrow road oncoming",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "5a9b3210-ebfd-5cf3-988e-b1cc38b2793b",
+      "slug": "launch-red-signal-stop",
+      "nameThai": "Red signal stop",
+      "nameEnglish": "Red signal stop",
+      "nameRussian": "Red signal stop",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "23e6185d-5095-5d0b-9123-dda924159d19",
+      "slug": "launch-yellow-signal-prepare-stop",
+      "nameThai": "Yellow signal prepare stop",
+      "nameEnglish": "Yellow signal prepare stop",
+      "nameRussian": "Yellow signal prepare stop",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "b5a24f53-aa19-5232-a6b9-eb8437227ec9",
+      "slug": "launch-roundabout-yield",
+      "nameThai": "Roundabout yield",
+      "nameEnglish": "Roundabout yield",
+      "nameRussian": "Roundabout yield",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "6b91e0c0-d694-5ebe-a127-984dfa643537",
+      "slug": "launch-roundabout-path",
+      "nameThai": "Roundabout path",
+      "nameEnglish": "Roundabout path",
+      "nameRussian": "Roundabout path",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "fa2f1a9a-b697-5c90-a59f-5eae909fc5c9",
+      "slug": "launch-pedestrian-yield",
+      "nameThai": "Pedestrian yield",
+      "nameEnglish": "Pedestrian yield",
+      "nameRussian": "Pedestrian yield",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "af79fa25-f911-5cf5-b9ea-ea1ea1b0c0b2",
+      "slug": "launch-crossing-no-parking",
+      "nameThai": "Crossing no parking",
+      "nameEnglish": "Crossing no parking",
+      "nameRussian": "Crossing no parking",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "0fb700d1-4741-505e-918a-491d9f60bdcf",
+      "slug": "launch-entrance-no-blocking",
+      "nameThai": "Entrance no blocking",
+      "nameEnglish": "Entrance no blocking",
+      "nameRussian": "Entrance no blocking",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "85d925a1-b48e-5ffc-852c-9550726ad026",
+      "slug": "launch-emergency-vehicle-yield",
+      "nameThai": "Emergency vehicle yield",
+      "nameEnglish": "Emergency vehicle yield",
+      "nameRussian": "Emergency vehicle yield",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "3527c86d-c9a6-5594-aea1-0a92c2adbe62",
+      "slug": "launch-railway-train-stop",
+      "nameThai": "Railway train stop",
+      "nameEnglish": "Railway train stop",
+      "nameRussian": "Railway train stop",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "68b74fc9-0c4e-57ab-b4a2-583f190ddb6f",
+      "slug": "launch-railway-uncontrolled-check",
+      "nameThai": "Railway uncontrolled check",
+      "nameEnglish": "Railway uncontrolled check",
+      "nameRussian": "Railway uncontrolled check",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "ebacd9ae-99d4-5e0a-8136-695f4da34ee9",
+      "slug": "launch-overtake-safe-gap",
+      "nameThai": "Overtake safe gap",
+      "nameEnglish": "Overtake safe gap",
+      "nameRussian": "Overtake safe gap",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "06998e77-aa4a-58c8-9196-49e98b208c75",
+      "slug": "launch-allow-overtaking",
+      "nameThai": "Allow overtaking",
+      "nameEnglish": "Allow overtaking",
+      "nameRussian": "Allow overtaking",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "15c2de77-ac65-5f5b-a86a-d1f3e544f394",
+      "slug": "launch-red-white-curb",
+      "nameThai": "Red white curb",
+      "nameEnglish": "Red white curb",
+      "nameRussian": "Red white curb",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "311fa21c-22d7-523e-8aa3-98c203079182",
+      "slug": "launch-posted-speed-limit",
+      "nameThai": "Posted speed limit",
+      "nameEnglish": "Posted speed limit",
+      "nameRussian": "Posted speed limit",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "65944d29-6295-51fe-afc2-747014e5431e",
+      "slug": "launch-seatbelt-every-trip",
+      "nameThai": "Seatbelt every trip",
+      "nameEnglish": "Seatbelt every trip",
+      "nameRussian": "Seatbelt every trip",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "29c6d05a-7bbb-5107-86df-e5b2bd500745",
+      "slug": "launch-roadworthy-equipment",
+      "nameThai": "Roadworthy equipment",
+      "nameEnglish": "Roadworthy equipment",
+      "nameRussian": "Roadworthy equipment",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "29cf7e41-0e55-53d4-89fc-3711164d7913",
+      "slug": "launch-rental-inspection",
+      "nameThai": "Rental inspection",
+      "nameEnglish": "Rental inspection",
+      "nameRussian": "Rental inspection",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "f7aaf769-0de5-57d9-b33c-488ef6216e5b",
+      "slug": "launch-brake-light-check",
+      "nameThai": "Brake light check",
+      "nameEnglish": "Brake light check",
+      "nameRussian": "Brake light check",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "816c7edb-4e12-577e-84a4-a50bc55ddc63",
+      "slug": "launch-breakdown-warning",
+      "nameThai": "Breakdown warning",
+      "nameEnglish": "Breakdown warning",
+      "nameRussian": "Breakdown warning",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "6fdecab8-35af-527b-8301-0abe21ad361f",
+      "slug": "launch-planned-stop-mirrors",
+      "nameThai": "Planned stop mirrors",
+      "nameEnglish": "Planned stop mirrors",
+      "nameRussian": "Planned stop mirrors",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "ea6b91f8-2077-5d6f-8d92-249282585151",
+      "slug": "launch-cyclist-at-entrance",
+      "nameThai": "Cyclist at entrance",
+      "nameEnglish": "Cyclist at entrance",
+      "nameRussian": "Cyclist at entrance",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "c77ffb6a-b8d0-5840-a6e7-c143a6e75210",
+      "slug": "launch-right-lane-cooperation",
+      "nameThai": "Right lane cooperation",
+      "nameEnglish": "Right lane cooperation",
+      "nameRussian": "Right lane cooperation",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "d3893e32-7971-5b99-8afe-34f89232dea0",
+      "slug": "launch-helmet-secure-all",
+      "nameThai": "Helmet secure all",
+      "nameEnglish": "Helmet secure all",
+      "nameRussian": "Helmet secure all",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "f87dcd99-3ee3-581c-9053-db2f42c50339",
+      "slug": "launch-motorcycle-metal-plates",
+      "nameThai": "Motorcycle metal plates",
+      "nameEnglish": "Motorcycle metal plates",
+      "nameRussian": "Motorcycle metal plates",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "8d42307b-e9f4-5bb4-b560-0a7d6fe574d4",
+      "slug": "launch-motorcycle-potholes",
+      "nameThai": "Motorcycle potholes",
+      "nameEnglish": "Motorcycle potholes",
+      "nameRussian": "Motorcycle potholes",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "a8e7cbcb-68b6-5c71-bd86-f97528587ced",
+      "slug": "launch-motorcycle-oil-spill",
+      "nameThai": "Motorcycle oil spill",
+      "nameEnglish": "Motorcycle oil spill",
+      "nameRussian": "Motorcycle oil spill",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "52f296a1-6f62-5e70-b5fe-d2500d470d62",
+      "slug": "launch-motorcycle-loose-surface",
+      "nameThai": "Motorcycle loose surface",
+      "nameEnglish": "Motorcycle loose surface",
+      "nameRussian": "Motorcycle loose surface",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "3d88c882-445e-5507-969f-876aa6cbe724",
+      "slug": "launch-motorcycle-speed-bumps",
+      "nameThai": "Motorcycle speed bumps",
+      "nameEnglish": "Motorcycle speed bumps",
+      "nameRussian": "Motorcycle speed bumps",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "70e31f6c-63da-5994-ade2-1563380af755",
+      "slug": "launch-motorcycle-no-cutting",
+      "nameThai": "Motorcycle no cutting",
+      "nameEnglish": "Motorcycle no cutting",
+      "nameRussian": "Motorcycle no cutting",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "3187b66d-03dc-511b-a1a1-28c4af10c6c2",
+      "slug": "launch-motorcycle-heavy-rain",
+      "nameThai": "Motorcycle heavy rain",
+      "nameEnglish": "Motorcycle heavy rain",
+      "nameRussian": "Motorcycle heavy rain",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    },
+    {
+      "id": "662b8cac-b85f-5dc6-bdc4-e34c4e310933",
+      "slug": "launch-keep-traffic-clear",
+      "nameThai": "Keep traffic clear",
+      "nameEnglish": "Keep traffic clear",
+      "nameRussian": "Keep traffic clear",
+      "labelPolicy": "English fallback in all required taxonomy name columns; Thai and Russian translations are not asserted."
+    }
+  ],
+  "requiredNamesPolicy": "The current schema requires non-null Thai/English/Russian taxonomy names. Identical English fallback labels intentionally satisfy storage while honest question translations stay null. No translated-label verification is claimed.",
+  "deploymentPolicy": "Admin must inspect production slugs/IDs first. The companion SQL creates only absent exact records in a transaction, reuses exact matching records, aborts on any conflicting names, identity or category sortOrder, and never updates/deletes existing taxonomy or learner state."
+}

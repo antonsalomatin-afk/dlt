@@ -1,0 +1,2009 @@
+{
+  "version": 1,
+  "preparedAt": "2026-10-16T00:00:00.000Z",
+  "boundary": "ORIGINAL_ENGLISH_DRAFT_CANDIDATES_ONLY",
+  "referenceBank": {
+    "repository": "https://github.com/artslob/thailand-driving-exam-questions",
+    "revision": "67440927542ae7af7cebe4181c93a2dec07b1259",
+    "use": "Topic discovery only. No source wording, illustrations or upstream answers were reused."
+  },
+  "primaryHandbook": {
+    "title": "Driving in Thailand: Thailand Driving Guide",
+    "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+    "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+    "pdfSha256": "d290bc9eda45a724b9ac046818fc332377820a0d8fdaf2fd30fd46acd4623c46",
+    "pagination": "PDF page is 1-based physical page. In the cited range PDF page = printed page + 6. Verified visually against printed page labels.",
+    "reviewMethod": "Read rendered full pages for every cited claim; paraphrase the safety guidance and write a new scenario with one answer supported by it. Numeric legal limits, fines, permit equivalence and clinical treatment are excluded.",
+    "limitations": [
+      "This handbook supports safety training content; these drafts do not claim to be an official examination bank or a complete examination syllabus.",
+      "Independent content review is still required. No production import, verification, activation or taxonomy write has been performed.",
+      "Thai, Russian and exam-English question/choice fields are null."
+    ]
+  },
+  "questions": [
+    {
+      "externalId": "launch-car-01-keep-left",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        102
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 8,
+        "pdfPage": 14,
+        "supportingParaphrase": "Normal traffic in Thailand travels on the left side of the road."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-02-signal-lane-change",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        115,
+        285
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 34,
+        "pdfPage": 40,
+        "supportingParaphrase": "Drivers should signal before changing lanes so other road users can anticipate the movement."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-03-safe-following-gap",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        104,
+        122,
+        359
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 17,
+        "pdfPage": 23,
+        "supportingParaphrase": "A following gap must allow a safe stop if the vehicle ahead slows or stops."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-04-school-area-caution",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        264
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 17,
+        "pdfPage": 23,
+        "supportingParaphrase": "Community areas may contain children and pedestrians who cross unexpectedly; low speed and readiness to stop are needed."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-05-conditions-appropriate-speed",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        273,
+        357
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 18,
+        "pdfPage": 24,
+        "supportingParaphrase": "Speed must be adjusted for road surface, weather and traffic rather than treating a legal limit as a target."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-06-blind-spot-check",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        331
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 19,
+        "pdfPage": 25,
+        "supportingParaphrase": "Mirrors do not show all surrounding areas; blind spots require careful checks, particularly before lane changes."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-07-truck-rear-space",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        104
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 22,
+        "pdfPage": 28,
+        "supportingParaphrase": "Both car and motorcycle drivers should avoid following trucks closely, including their rear blind spots."
+      },
+      "vehicleApplicability": "The cited page explicitly addresses both car and motorcycle drivers near trucks.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-08-truck-left-blind-spot",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 22,
+        "pdfPage": 28,
+        "supportingParaphrase": "The area close to a truck on its left has particularly limited visibility for the truck driver."
+      },
+      "vehicleApplicability": "The cited page explicitly addresses both car and motorcycle drivers near trucks.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-09-truck-turning-clearance",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 22,
+        "pdfPage": 28,
+        "supportingParaphrase": "Entering the turning or reversing area of a truck risks being squeezed by its movement."
+      },
+      "vehicleApplicability": "The cited page explicitly addresses both car and motorcycle drivers near trucks.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-10-truck-front-clearance",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 22,
+        "pdfPage": 28,
+        "supportingParaphrase": "Trucks may need a longer stopping distance, so cutting closely in front of one is unsafe."
+      },
+      "vehicleApplicability": "The cited page explicitly addresses both car and motorcycle drivers near trucks.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-11-night-headlights",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        262,
+        344,
+        349
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 24,
+        "pdfPage": 30,
+        "supportingParaphrase": "Headlights should remain on when driving at night to see the road and increase visibility."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-12-avoid-high-beam-glare",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        256,
+        300
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 13,
+        "pdfPage": 19,
+        "supportingParaphrase": "Unnecessary high beams can impair the vision of drivers ahead or coming in the opposite direction."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-13-night-following-gap",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        344,
+        349
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 24,
+        "pdfPage": 30,
+        "supportingParaphrase": "At night a greater following gap provides more time to react and stop."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-14-rain-reduce-speed",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        273,
+        348
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 25,
+        "pdfPage": 31,
+        "supportingParaphrase": "Rain calls for reduced speed, as loss of control becomes more likely."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-15-rain-following-gap",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        273,
+        292
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 25,
+        "pdfPage": 31,
+        "supportingParaphrase": "Rain requires more following distance than usual."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-16-rain-smooth-braking",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        319,
+        320
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 25,
+        "pdfPage": 31,
+        "supportingParaphrase": "Abrupt braking in rain can cause skidding, so braking should be controlled."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-17-rain-light-signals",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        135,
+        292,
+        343
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 25,
+        "pdfPage": 31,
+        "supportingParaphrase": "In rain, keep headlights on; unnecessary hazard lights can obscure intended direction and confuse other traffic."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-18-curve-control",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        274
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 26,
+        "pdfPage": 32,
+        "supportingParaphrase": "Curves require lower speed, remaining in the lane and avoiding overtaking or abrupt stops."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-19-phone-safe-stop",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 14,
+        "pdfPage": 20,
+        "supportingParaphrase": "Phone use distracts the driver; an extended conversation should wait until safely parked."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-20-avoid-alcohol-driving",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        124,
+        125
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 9,
+        "pdfPage": 15,
+        "supportingParaphrase": "Driving under the influence of alcohol creates collision risk and must be avoided."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-21-drowsy-medication",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 67,
+        "pdfPage": 73,
+        "supportingParaphrase": "Medication that causes drowsiness can impair consciousness and makes driving unsafe."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-22-sidewalk-pedestrians",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 16,
+        "pdfPage": 22,
+        "supportingParaphrase": "Sidewalks are for pedestrians, not driving or parking vehicles."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-23-shoulder-no-shortcut",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        277
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 16,
+        "pdfPage": 22,
+        "supportingParaphrase": "The road shoulder serves emergency access and temporary emergency stops; it is not a normal bypass lane."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-24-lane-discipline",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 16,
+        "pdfPage": 22,
+        "supportingParaphrase": "Repeatedly straddling lane dividers creates collision risk."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-25-horn-warning",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        119,
+        121,
+        291
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 15,
+        "pdfPage": 21,
+        "supportingParaphrase": "The horn is for necessary warnings or emergencies, not repeated noise or intimidation."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-26-narrow-road-oncoming",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        107
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 15,
+        "pdfPage": 21,
+        "supportingParaphrase": "On narrow roads with oncoming traffic, reduce speed and keep as far left as possible."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-27-red-signal-stop",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        89
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 37,
+        "pdfPage": 43,
+        "supportingParaphrase": "A red vehicle signal requires vehicles to stop so pedestrians can cross safely."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-28-yellow-signal-prepare-stop",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        247
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 26,
+        "pdfPage": 32,
+        "supportingParaphrase": "A yellow traffic signal warns drivers to slow and prepare to stop before the designated line."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-29-roundabout-yield",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        242
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 34,
+        "pdfPage": 40,
+        "supportingParaphrase": "When entering a roundabout, slow down and yield to vehicles already circulating."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-30-roundabout-path",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        242
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 34,
+        "pdfPage": 40,
+        "supportingParaphrase": "Drivers should follow the designated path in a roundabout without cutting across it."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-31-pedestrian-crossing-yield",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        248,
+        260
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 38,
+        "pdfPage": 44,
+        "supportingParaphrase": "At a pedestrian crossing drivers should slow and stop to let pedestrians cross safely."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-32-crossing-no-parking",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 38,
+        "pdfPage": 44,
+        "supportingParaphrase": "Parking on a pedestrian crossing is prohibited."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-33-entrance-no-blocking",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        116
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 14,
+        "pdfPage": 20,
+        "supportingParaphrase": "Parked vehicles must not block entrances or exits of other premises."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-34-emergency-vehicle-yield",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 71,
+        "pdfPage": 77,
+        "supportingParaphrase": "Drivers should give way to emergency vehicles by stopping or pulling toward the left edge safely."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-35-railway-train-stop",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        118
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 71,
+        "pdfPage": 77,
+        "supportingParaphrase": "An approaching train requires a stop before the tracks; do not stop on the tracks themselves."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-36-railway-uncontrolled-check",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        118
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 71,
+        "pdfPage": 77,
+        "supportingParaphrase": "A railway crossing without warning signals requires extra caution and careful checks in both directions."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-37-overtake-safe-gap",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        115,
+        285
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 34,
+        "pdfPage": 40,
+        "supportingParaphrase": "An overtake needs advance signalling and adequate clearance without obstructing traffic."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-38-allow-overtaking",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        286
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 13,
+        "pdfPage": 19,
+        "supportingParaphrase": "When another vehicle overtakes, cooperate by allowing space rather than competing in speed."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-39-red-white-curb",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 36,
+        "pdfPage": 42,
+        "supportingParaphrase": "Red-and-white curb markings identify a place where stopping and parking are prohibited."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-40-posted-speed-limit",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        126,
+        127
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 31,
+        "pdfPage": 37,
+        "supportingParaphrase": "Where a speed-limit sign is posted, drivers must adhere to that indicated limit."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this car scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-41-seatbelt-every-trip",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        250
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 17,
+        "pdfPage": 23,
+        "supportingParaphrase": "Fastening a seatbelt before driving reduces injury severity in a collision."
+      },
+      "vehicleApplicability": "The safe-driving section recommends fastening seatbelts before driving; this is a car fitted with a seatbelt.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-42-roadworthy-equipment",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        20,
+        21
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 29,
+        "pdfPage": 35,
+        "supportingParaphrase": "Vehicles used on the road must have complete and sound equipment meeting the required criteria."
+      },
+      "vehicleApplicability": "Printed p.29 covers registered road vehicles including this car.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-43-rental-inspection",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 12,
+        "pdfPage": 18,
+        "supportingParaphrase": "When collecting a rental car, inspect it and record existing damage to avoid later disputes."
+      },
+      "vehicleApplicability": "The cited page is explicitly headed Tips for Renting a Car in Thailand.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-44-brake-light-check",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 14,
+        "pdfPage": 20,
+        "supportingParaphrase": "Brake lights should be checked regularly so following drivers receive a clear warning."
+      },
+      "vehicleApplicability": "The car stopping and brake-use section specifically recommends regular brake-light checks.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-45-night-breakdown-warning",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        293,
+        360
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 24,
+        "pdfPage": 30,
+        "supportingParaphrase": "After a night breakdown, park in a safe place off the traffic path and use hazard lights to warn others."
+      },
+      "vehicleApplicability": "The night-driving section explicitly describes breakdowns; this scenario uses a car with hazard lights.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-46-expressway-breakdown",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        293
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 70,
+        "pdfPage": 76,
+        "supportingParaphrase": "If a broken-down car is still driveable on an expressway, move it off the traffic path and activate hazard lights."
+      },
+      "vehicleApplicability": "The cited breakdown procedure concerns an expressway vehicle with seatbelts; this candidate is for cars only.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-47-planned-stop-mirrors",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        284
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 14,
+        "pdfPage": 20,
+        "supportingParaphrase": "Before pulling over to stop, check following traffic, signal in advance and brake gently."
+      },
+      "vehicleApplicability": "The car-stopping paragraph explicitly specifies mirrors, signal and gentle braking.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-48-cyclist-at-entrance",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 18,
+        "pdfPage": 24,
+        "supportingParaphrase": "When entering or leaving roads near communities or parks, check blind spots for cyclists."
+      },
+      "vehicleApplicability": "The shared-road section tells drivers to check for cyclists near parks and community entrances; this scenario uses a car leaving a park.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-49-elderly-pedestrian-patience",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        288
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 27,
+        "pdfPage": 33,
+        "supportingParaphrase": "Elderly pedestrians may need longer to cross, so drivers should slow and stop to allow safe passage."
+      },
+      "vehicleApplicability": "The general driver guidance includes slower elderly pedestrians and applies to the approaching car.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-car-50-right-lane-cooperation",
+      "vehicleType": "CAR",
+      "candidateBatchId": "launch-20261016-car",
+      "upstreamTopicIds": [
+        253,
+        279
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 13,
+        "pdfPage": 19,
+        "supportingParaphrase": "A driver should not remain slowly in the overtaking lane and should allow faster traffic to pass by moving left safely."
+      },
+      "vehicleApplicability": "The normal-driving section describes use of the right overtaking lane; this scenario is a car after completing a pass.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-01-keep-left",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        102
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 8,
+        "pdfPage": 14,
+        "supportingParaphrase": "Normal traffic in Thailand travels on the left side of the road."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-02-signal-lane-change",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        115,
+        285
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 34,
+        "pdfPage": 40,
+        "supportingParaphrase": "Drivers should signal before changing lanes so other road users can anticipate the movement."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-03-safe-following-gap",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        104,
+        122,
+        359
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 17,
+        "pdfPage": 23,
+        "supportingParaphrase": "A following gap must allow a safe stop if the vehicle ahead slows or stops."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-04-school-area-caution",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        264
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 17,
+        "pdfPage": 23,
+        "supportingParaphrase": "Community areas may contain children and pedestrians who cross unexpectedly; low speed and readiness to stop are needed."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-05-conditions-appropriate-speed",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        273,
+        357
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 18,
+        "pdfPage": 24,
+        "supportingParaphrase": "Speed must be adjusted for road surface, weather and traffic rather than treating a legal limit as a target."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-06-blind-spot-check",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        331
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 19,
+        "pdfPage": 25,
+        "supportingParaphrase": "Mirrors do not show all surrounding areas; blind spots require careful checks, particularly before lane changes."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-07-truck-rear-space",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        104
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 22,
+        "pdfPage": 28,
+        "supportingParaphrase": "Both car and motorcycle drivers should avoid following trucks closely, including their rear blind spots."
+      },
+      "vehicleApplicability": "The cited page explicitly addresses both car and motorcycle drivers near trucks.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-08-truck-left-blind-spot",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 22,
+        "pdfPage": 28,
+        "supportingParaphrase": "The area close to a truck on its left has particularly limited visibility for the truck driver."
+      },
+      "vehicleApplicability": "The cited page explicitly addresses both car and motorcycle drivers near trucks.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-09-truck-turning-clearance",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 22,
+        "pdfPage": 28,
+        "supportingParaphrase": "Entering the turning or reversing area of a truck risks being squeezed by its movement."
+      },
+      "vehicleApplicability": "The cited page explicitly addresses both car and motorcycle drivers near trucks.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-10-truck-front-clearance",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 22,
+        "pdfPage": 28,
+        "supportingParaphrase": "Trucks may need a longer stopping distance, so cutting closely in front of one is unsafe."
+      },
+      "vehicleApplicability": "The cited page explicitly addresses both car and motorcycle drivers near trucks.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-11-night-headlights",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        262,
+        344,
+        349
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 24,
+        "pdfPage": 30,
+        "supportingParaphrase": "Headlights should remain on when driving at night to see the road and increase visibility."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-12-avoid-high-beam-glare",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        256,
+        300
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 13,
+        "pdfPage": 19,
+        "supportingParaphrase": "Unnecessary high beams can impair the vision of drivers ahead or coming in the opposite direction."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-13-night-following-gap",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        344,
+        349
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 24,
+        "pdfPage": 30,
+        "supportingParaphrase": "At night a greater following gap provides more time to react and stop."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-14-rain-reduce-speed",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        273,
+        348
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 25,
+        "pdfPage": 31,
+        "supportingParaphrase": "Rain calls for reduced speed, as loss of control becomes more likely."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-15-rain-following-gap",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        273,
+        292
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 25,
+        "pdfPage": 31,
+        "supportingParaphrase": "Rain requires more following distance than usual."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-16-rain-smooth-braking",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        319,
+        320
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 25,
+        "pdfPage": 31,
+        "supportingParaphrase": "Abrupt braking in rain can cause skidding, so braking should be controlled."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-17-rain-light-signals",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        135,
+        292,
+        343
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 25,
+        "pdfPage": 31,
+        "supportingParaphrase": "In rain, keep headlights on; unnecessary hazard lights can obscure intended direction and confuse other traffic."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-18-curve-control",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        274
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 26,
+        "pdfPage": 32,
+        "supportingParaphrase": "Curves require lower speed, remaining in the lane and avoiding overtaking or abrupt stops."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-19-phone-safe-stop",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 14,
+        "pdfPage": 20,
+        "supportingParaphrase": "Phone use distracts the driver; an extended conversation should wait until safely parked."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-20-avoid-alcohol-driving",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        124,
+        125
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 9,
+        "pdfPage": 15,
+        "supportingParaphrase": "Driving under the influence of alcohol creates collision risk and must be avoided."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-21-drowsy-medication",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 67,
+        "pdfPage": 73,
+        "supportingParaphrase": "Medication that causes drowsiness can impair consciousness and makes driving unsafe."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-22-sidewalk-pedestrians",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 16,
+        "pdfPage": 22,
+        "supportingParaphrase": "Sidewalks are for pedestrians, not driving or parking vehicles."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-23-shoulder-no-shortcut",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        277
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 16,
+        "pdfPage": 22,
+        "supportingParaphrase": "The road shoulder serves emergency access and temporary emergency stops; it is not a normal bypass lane."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-24-lane-discipline",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 16,
+        "pdfPage": 22,
+        "supportingParaphrase": "Repeatedly straddling lane dividers creates collision risk."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-25-horn-warning",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        119,
+        121,
+        291
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 15,
+        "pdfPage": 21,
+        "supportingParaphrase": "The horn is for necessary warnings or emergencies, not repeated noise or intimidation."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-26-narrow-road-oncoming",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        107
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 15,
+        "pdfPage": 21,
+        "supportingParaphrase": "On narrow roads with oncoming traffic, reduce speed and keep as far left as possible."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-27-red-signal-stop",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        89
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 37,
+        "pdfPage": 43,
+        "supportingParaphrase": "A red vehicle signal requires vehicles to stop so pedestrians can cross safely."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-28-yellow-signal-prepare-stop",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        247
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 26,
+        "pdfPage": 32,
+        "supportingParaphrase": "A yellow traffic signal warns drivers to slow and prepare to stop before the designated line."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-29-roundabout-yield",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        242
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 34,
+        "pdfPage": 40,
+        "supportingParaphrase": "When entering a roundabout, slow down and yield to vehicles already circulating."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-30-roundabout-path",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        242
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 34,
+        "pdfPage": 40,
+        "supportingParaphrase": "Drivers should follow the designated path in a roundabout without cutting across it."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-31-pedestrian-crossing-yield",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        248,
+        260
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 38,
+        "pdfPage": 44,
+        "supportingParaphrase": "At a pedestrian crossing drivers should slow and stop to let pedestrians cross safely."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-32-crossing-no-parking",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 38,
+        "pdfPage": 44,
+        "supportingParaphrase": "Parking on a pedestrian crossing is prohibited."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-33-entrance-no-blocking",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        116
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 14,
+        "pdfPage": 20,
+        "supportingParaphrase": "Parked vehicles must not block entrances or exits of other premises."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-34-emergency-vehicle-yield",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 71,
+        "pdfPage": 77,
+        "supportingParaphrase": "Drivers should give way to emergency vehicles by stopping or pulling toward the left edge safely."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-35-railway-train-stop",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        118
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 71,
+        "pdfPage": 77,
+        "supportingParaphrase": "An approaching train requires a stop before the tracks; do not stop on the tracks themselves."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-36-railway-uncontrolled-check",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        118
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 71,
+        "pdfPage": 77,
+        "supportingParaphrase": "A railway crossing without warning signals requires extra caution and careful checks in both directions."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-37-overtake-safe-gap",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        115,
+        285
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 34,
+        "pdfPage": 40,
+        "supportingParaphrase": "An overtake needs advance signalling and adequate clearance without obstructing traffic."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-38-allow-overtaking",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        286
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 13,
+        "pdfPage": 19,
+        "supportingParaphrase": "When another vehicle overtakes, cooperate by allowing space rather than competing in speed."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-39-red-white-curb",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 36,
+        "pdfPage": 42,
+        "supportingParaphrase": "Red-and-white curb markings identify a place where stopping and parking are prohibited."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-40-posted-speed-limit",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        126,
+        127
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 31,
+        "pdfPage": 37,
+        "supportingParaphrase": "Where a speed-limit sign is posted, drivers must adhere to that indicated limit."
+      },
+      "vehicleApplicability": "The cited guidance addresses drivers generally; this motorcycle scenario applies that rule without adding a vehicle-specific exception.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-41-helmet-secure-all",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        134
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 20,
+        "pdfPage": 26,
+        "supportingParaphrase": "Both motorcycle rider and passenger should wear helmets with the chin straps securely adjusted."
+      },
+      "vehicleApplicability": "The cited section explicitly concerns safe motorcycle riding or motorcycle road hazards.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-42-roadworthy-equipment",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        20,
+        21,
+        275
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 20,
+        "pdfPage": 26,
+        "supportingParaphrase": "Before riding, check brakes, headlights, tires and other equipment; unreliable parts need replacement."
+      },
+      "vehicleApplicability": "Printed p.20 is the motorcycle readiness checklist.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-43-motorcycle-metal-plates",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 23,
+        "pdfPage": 29,
+        "supportingParaphrase": "Metal plates over roadworks can be slippery; reduce speed and keep a firm grip on the handlebars."
+      },
+      "vehicleApplicability": "The cited section explicitly concerns safe motorcycle riding or motorcycle road hazards.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-44-motorcycle-potholes",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 23,
+        "pdfPage": 29,
+        "supportingParaphrase": "Potholes and puddles threaten stability; low speed and avoiding sudden braking help maintain control."
+      },
+      "vehicleApplicability": "The cited section explicitly concerns safe motorcycle riding or motorcycle road hazards.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-45-motorcycle-oil-spill",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 23,
+        "pdfPage": 29,
+        "supportingParaphrase": "Oil spills create skid risk and should be avoided rather than ridden through unnecessarily."
+      },
+      "vehicleApplicability": "The cited section explicitly concerns safe motorcycle riding or motorcycle road hazards.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-46-motorcycle-loose-surface",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 23,
+        "pdfPage": 29,
+        "supportingParaphrase": "Gravel and sand, especially near roadworks, increase the risk of losing motorcycle control."
+      },
+      "vehicleApplicability": "The cited section explicitly concerns safe motorcycle riding or motorcycle road hazards.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-47-motorcycle-speed-bumps",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 23,
+        "pdfPage": 29,
+        "supportingParaphrase": "At speed bumps, reduce speed according to signs and maintain stable posture."
+      },
+      "vehicleApplicability": "The cited section explicitly concerns safe motorcycle riding or motorcycle road hazards.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-48-motorcycle-no-cutting",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 20,
+        "pdfPage": 26,
+        "supportingParaphrase": "Safe riding excludes cutting between cars or making abrupt lane changes."
+      },
+      "vehicleApplicability": "The cited section explicitly concerns safe motorcycle riding or motorcycle road hazards.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-49-motorcycle-heavy-rain",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [
+        273,
+        343
+      ],
+      "upstreamUse": "TOPIC_DISCOVERY_ONLY",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 20,
+        "pdfPage": 26,
+        "supportingParaphrase": "Heavy rain reduces motorcycle visibility and control; avoiding riding where possible is advised."
+      },
+      "vehicleApplicability": "The cited section explicitly concerns safe motorcycle riding or motorcycle road hazards.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    },
+    {
+      "externalId": "launch-motorcycle-50-keep-traffic-clear",
+      "vehicleType": "MOTORCYCLE",
+      "candidateBatchId": "launch-20261016-motorcycle",
+      "upstreamTopicIds": [],
+      "upstreamUse": "PRIMARY_HANDBOOK_EXPANSION",
+      "primarySource": {
+        "publisher": "Department of Land Transport, Ministry of Transport, Thailand",
+        "title": "Driving in Thailand: Thailand Driving Guide",
+        "url": "https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+        "printedPage": 67,
+        "pdfPage": 73,
+        "supportingParaphrase": "Drivers must not obstruct traffic."
+      },
+      "vehicleApplicability": "The prohibition on obstructing traffic is stated for drivers generally and applies to a stopped motorcycle blocking a traffic lane.",
+      "uncertainClaims": [],
+      "reviewBoundary": "DRAFT; requires independent factual, scope and wording review before any review or activation manifest."
+    }
+  ]
+}
