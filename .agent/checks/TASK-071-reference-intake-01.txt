@@ -1,0 +1,2 @@
+$ node tools/content/prepare-artslob-reference.ts "--" "C:\\Users\\anton\\AppData\\Local\\Temp\\thaidlt-artslob-exact-20261016" ".local-content/artslob-reference-supervisor-20261016"
+{"boundary":"UNREVIEWED_REFERENCE_ONLY","summary":{"total":420,"malformed":21,"imageDependent":123,"duplicates":0,"structurallyValidText":284,"textReviewCandidates":284}}

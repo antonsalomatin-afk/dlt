@@ -53,6 +53,7 @@ files_allowed:
   - content/imports/launch-20261016-motorcycle-candidates.json
   - content/sources/launch-20261016-provenance.json
   - content/sources/launch-20261016-taxonomy.json
+  - content/sources/launch-20261016-taxonomy.sql
   - content/sources/launch-20261016.md
 required_checks:
   - production DNS/TLS verification
