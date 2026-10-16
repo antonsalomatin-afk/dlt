@@ -1,9 +1,20 @@
 id: TASK-071
 title: Prepare ThaiDLT production servers
-status: READY
+status: BUILDING
 owner_role: Admin
 epic: Epic 10 — Production Hardening
 objective: Provision and configure the production web, API/bot and database services for the approved ThaiDLT launch.
+scope_amendment:
+  - On 2026-10-16 the Product Owner approved using artslob/thailand-driving-exam-questions as the reference bank for launch content preparation.
+  - Prepare reproducible offline source intake and review material; do not silently turn upstream answers into VERIFIED content or assume vehicle applicability.
+  - Pin upstream revision 67440927542ae7af7cebe4181c93a2dec07b1259. Keep bulk upstream data and generated reference text in ignored local staging until reuse rights and content review are established. Source code, synthetic tests, metadata, and instructions may be committed.
+reference_intake_acceptance:
+  - An offline TypeScript command reads a local checkout at the pinned revision without executing HTML or JavaScript, fetching URLs, accessing a database, or loading environment secrets.
+  - It extracts source IDs, English question and choice text, upstream answer markers, source page references, image requirements, and record hashes into a bounded local review inventory with no VERIFIED or activation claims.
+  - Account for every numbered upstream output page, classifying malformed, image-dependent, duplicate, and structurally valid text records. Do not guess missing answers or assign CAR/MOTORCYCLE applicability without evidence.
+  - Write bulk generated inventory only beneath ignored .local-content/. Do not commit upstream images, scripts, or question text.
+  - Preserve existing destination output on failure or attempted overwrite and reject unsafe paths or oversized source files. Emit stable safe errors.
+  - Add meaningful synthetic automated coverage and document the pinned command, review prerequisites, output summary, and remaining launch requirements.
 inputs:
   webHost: dlt.thauto.app
   apiBotHost: tele.thauto.app
@@ -24,11 +35,22 @@ files_allowed:
   - .agent/admin/**
   - README.md
   - pnpm-workspace.yaml
+  - .gitignore
+  - package.json
+  - tools/content/artslob-reference.ts
+  - tools/content/prepare-artslob-reference.ts
+  - tests/artslob-reference.test.ts
+  - content/sources/artslob-reference.md
+  - content/README.md
 required_checks:
   - production DNS/TLS verification
   - pnpm prisma migrate deploy
   - API health check
   - bot startup/scheduler health check
   - backup/restore verification
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test
+  - pinned source reference intake and summary verification
 dependencies:
   - TASK-070
