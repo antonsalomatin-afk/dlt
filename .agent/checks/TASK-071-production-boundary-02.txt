@@ -1,0 +1,16 @@
+TASK-071 production boundary verification 02
+Observed: 2026-10-16 04:49 UTC
+
+Owner reports adding the Telegram bot token to an environment file.
+Environment file location and production service loading were not verified.
+No secret files were read and no tokens were requested or printed.
+
+PASS GET https://dlt.thauto.app/ returned HTTP 200.
+FAIL POST https://tele.thauto.app/auth/telegram with Content-Type:
+application/json and body {} returned nginx HTTP 502 Bad Gateway.
+Expected when the API is running: HTTP 401 with {"error":"Unauthorized"}.
+
+The public response does not establish the cause of the upstream failure.
+Production operator action: verify both units load the intended EnvironmentFile,
+restart thaidlt-api and thaidlt-bot, and inspect their status locally.
+Bot /start and scheduler checks and final Admin report remain outstanding.

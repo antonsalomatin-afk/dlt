@@ -10,7 +10,7 @@
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "TASK-070 accepted: live launch approved for web dlt.thauto.app and API/bot tele.thauto.app. TASK-071 repository deployment fixes are reviewed PASS in fcab61d; production BOT_TOKEN smoke tests, the Admin report, and verified question content remain pending.",
+  "notes": "TASK-071 remains open. On 2026-10-16 the owner reported adding the Telegram bot token to an environment file; file location and service loading are unconfirmed. Public web returned HTTP 200; POST /auth/telegram with an empty JSON object returned nginx HTTP 502 at 04:49 UTC. Admin must verify the production EnvironmentFile is loaded and API/bot services are running, then supply the redacted report and bot/scheduler evidence. Production content is still pending. Repository fixes in fcab61d passed local checks; final independent task review and acceptance remain outstanding.",
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
     "latestObservedUsedPercent": 14,
