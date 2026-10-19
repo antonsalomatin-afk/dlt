@@ -5,15 +5,15 @@
   "currentTask": "TASK-071",
   "lastAcceptedTask": "TASK-070",
   "lastAcceptedCommit": "2e8d0a2155d35b471663e543d8ff1ac9e6208ce5",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "2026-10-19 owner explicitly approved publication of the reviewed 100-question English starter bank. Preparing real review/activation manifests, exact release validation/rehearsal and independent release review. Original candidate bytes remain immutable. Production application and final Admin bot/scheduler report still outstanding; do not ask for content approval again.",
+  "notes": "Real approved review/activation manifests committed d418f2c; Supervisor authoritative full checks and actual-manifest disposable rehearsal running. Read-only server access confirmed via existing SSH/Proxmox guest100: active services, 17 migrations, empty production question bank. Production writes await independent release PASS and fresh backup.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
-    "status": "PREPARING_APPROVED_RELEASE",
+    "status": "CHECKING_REAL_MANIFEST_RELEASE",
     "car": 50,
     "motorcycle": 50,
     "language": "ENGLISH",
@@ -28,7 +28,8 @@
     "factualDecisions": ".agent/reviews/TASK-071-content-decisions-01.json",
     "reviewPack": ".agent/admin/TASK-071-content-review-pack.md",
     "handoff": ".agent/admin/TASK-071-launch-handoff.md",
-    "ownerApprovedAt": "2026-10-19"
+    "ownerApprovedAt": "2026-10-19",
+    "releaseBuilderCommit": "d418f2cd228c2222d9d9d6dae525e69439cfca06"
   },
   "referenceIntake": {
     "builderCommit": "d14033bb61c44ef75b0d7297ff1030a73ff0e935",
