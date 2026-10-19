@@ -140,7 +140,7 @@ Potential scope:
 ## Epic 10 — Production Hardening
 
 - TASK-070 — ACCEPTED — approve the production launch boundary (dlt.thauto.app / tele.thauto.app)
-- TASK-071 — BLOCKED — reviewed 100-question English starter bank awaits content release decision; final Admin bot/scheduler report outstanding
+- TASK-071 — BUILDING — starter bank publication approved; preparing release manifests/checks and final Admin handoff
 
 - deployment ADR
 - observability

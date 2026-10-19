@@ -6,13 +6,7 @@ Do not fill it with routine engineering choices.
 
 ## Pending
 
-### 2026-10-16 — Release the reviewed original English starter question bank
-
-Prepared at `65d1c1ade2c48fc4e82388db85da93faf7eee9d8`: 50 CAR and 50 MOTORCYCLE original questions, each with a DLT handbook citation. Independent factual and final-wording reviews PASS; final-batch schema/import/replay/conflict checks and both 50-question exam rehearsals PASS.
-
-Decision requested: approve publication of this concrete English starter learning set through the existing reviewed-content pipeline. It is not an official DLT bank or complete exam syllabus. Review `admin/TASK-071-content-review-pack.md`; technical handoff is `admin/TASK-071-launch-handoff.md`.
-
-This is a production-content decision under PROJECT.md and WORKFLOW.md. No production content has changed and no real review/activation manifests have been issued. Existing live-launch and reference-bank authorizations remain valid and are not being reopened.
+None. Starter bank publication approved on 2026-10-19.
 
 ## Resolved
 
@@ -31,3 +25,7 @@ TypeScript pnpm monorepo with Next.js, Fastify, grammY, PostgreSQL and Prisma.
 ### 2026-10-16 — Reference bank use
 
 The Product Owner approved use of `artslob/thailand-driving-exam-questions` ("yes, use it"). The recovered planning strategy uses it for topic discovery and authors original wording corroborated against SafeDriveDLT, rather than republishing unlicensed source text/images or trusting its answer keys. The pinned intake and original candidates are prepared; this source-use decision is resolved.
+
+### 2026-10-19 — Publish reviewed original English starter bank
+
+The Product Owner explicitly approved: "Approve publishing this starter bank" and instructed "continue". This authorizes release of the exact reviewed 50 CAR and 50 MOTORCYCLE English candidates at `65d1c1ade2c48fc4e82388db85da93faf7eee9d8` through the existing independent-review and activation pipeline. The bounded independent content reviews remain the factual evidence; owner approval does not substitute for those reviews. Prepare exact review and activation manifests, validate and independently review the release chain, and hand the approved release to the server Admin. Do not request this approval again.
