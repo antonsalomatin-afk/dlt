@@ -22,7 +22,7 @@ original_candidate_acceptance:
   - Vehicle applicability is justified per question; use shared safety rules only where the source supports both, and group variants of the same underlying rule under a meaningful common concept.
   - A provenance manifest records each candidate ID, matching reference-bank topic IDs where applicable, exact primary-source title, URL, printed and PDF page numbers, a concise supporting paraphrase, and any uncertain claims. Do not invent legal citations or verified translations.
   - English is required; other language fields remain null unless separately checked. No claims of an official or complete examination bank.
-  - Document required category/concept taxonomy and a safe additive deployment plan; no production database writes in this work cycle.
+  - Original candidate preparation documented taxonomy and an additive deployment plan without production writes. The separately owner-approved 2026-10-19 release cycle may publish only the exact reviewed starter bank after release checks and independent PASS.
 inputs:
   webHost: dlt.thauto.app
   apiBotHost: tele.thauto.app
@@ -81,3 +81,10 @@ blocked_reason: null
 content_preparation_commit: 65d1c1ade2c48fc4e82388db85da93faf7eee9d8
 content_preparation_review: .agent/reviews/TASK-071-content-review-02.md
 content_preparation_verdict: PASS
+
+approved_release_acceptance:
+  - The real review and activation manifests exactly cover the 100 independently supported final candidates; identity, key, wording, evidence and taxonomy remain unchanged from the reviewed candidate revision.
+  - Strict offline validation and a disposable PostgreSQL rehearsal use the actual manifest files, verify inactive review then activation/status and safe replay, preserve unrelated data, and construct 50 distinct exam questions per vehicle with hidden correctness.
+  - Independent release review returns PASS before production writes. The Supervisor records the bounded release acceptance separately from whole-task acceptance.
+  - Publication uses the already-approved production VM and server-side secret injection, a successful fresh database backup, the unchanged accepted import/review/activation tools, and a commit/hash-verified content bundle. Only additive taxonomy and the approved 100 question chains may be changed.
+  - Production status reports exactly 50 verifiedActive questions in each supplied batch with no missing, drifted or invalid lifecycle rows. Remaining operational evidence and final independent review are required before accepting TASK-071 as a whole.
