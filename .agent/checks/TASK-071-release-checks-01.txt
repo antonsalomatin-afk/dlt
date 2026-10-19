@@ -1,0 +1,45 @@
+TASK-071 actual manifest release checks
+Builder d418f2cd228c2222d9d9d6dae525e69439cfca06
+UTC 2026-10-19T18:16:12.9916903Z
+PASS offline approved release: immutable candidates/taxonomy/provenance; 100 SUPPORTED decisions bridged to final PASS; four exact manifests. No database or publication occurred.
+$ eslint .
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 163ms
+
+$ tsc --noEmit
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 200ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  57 passed (57)
+      Tests  323 passed (323)
+   Start at  20:16:34
+   Duration  22.42s (tests 75%, import 19%, transform 6%, worker 1%)
+
+    Isolate  57 workers spawned · ~1.04s startup each (spawn + environment, per file)
+             at least ~1.78s faster with isolate: false — reuses workers across files instead of one per file
+
+PASS additive taxonomy/replay; 100 inactive DRAFT questions and 400 choices; unrelated taxonomy preserved.
+PASS actual review manifests/replay: 50 exact inactive VERIFIED per vehicle; no early activation.
+PASS actual activation manifests/replay/status: 50 exact active VERIFIED per vehicle; no drift or invalid lifecycle.
+PASS isolated CAR exam: 50 distinct questions; correctness hidden before submission.
+PASS isolated MOTORCYCLE exam: 50 distinct questions; correctness hidden before submission.
+PASS conflicting taxonomy refused with all existing rows preserved.
+PASS unrelated user/taxonomy preserved. Actual approved manifests used only in the owned disposable database; production execution remains separate.
+PASS owned isolated database removed.
+ALL AUTHORITATIVE RELEASE CHECKS PASS
