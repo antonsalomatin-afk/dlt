@@ -1,0 +1,208 @@
+{
+  "version": 1,
+  "batchId": "launch-20261016-motorcycle",
+  "reviewer": "Independent reviewer_071_content; TASK-071-content-decisions-01.json + TASK-071-content-review-02.md; issued by Supervisor",
+  "reviewedAt": "2026-10-19T18:10:00.000Z",
+  "decisions": [
+    {
+      "externalId": "launch-motorcycle-01-keep-left",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-02-signal-lane-change",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-03-safe-following-gap",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-04-school-area-caution",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-05-conditions-appropriate-speed",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-06-blind-spot-check",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-07-truck-rear-space",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-08-truck-left-blind-spot",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-09-truck-turning-clearance",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-10-truck-front-clearance",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-11-night-headlights",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-12-avoid-high-beam-glare",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-13-night-following-gap",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-14-rain-reduce-speed",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-15-rain-following-gap",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-16-rain-smooth-braking",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-17-rain-light-signals",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-18-curve-control",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-19-phone-safe-stop",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-20-avoid-alcohol-driving",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-21-drowsy-medication",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-22-sidewalk-pedestrians",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-23-shoulder-no-shortcut",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-24-lane-discipline",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-25-horn-warning",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-26-narrow-road-oncoming",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-27-red-signal-stop",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-28-yellow-signal-prepare-stop",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-29-roundabout-yield",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-30-roundabout-path",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-31-pedestrian-crossing-yield",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-32-crossing-no-parking",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-33-entrance-no-blocking",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-34-emergency-vehicle-yield",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-35-railway-train-stop",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-36-railway-uncontrolled-check",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-37-overtake-safe-gap",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-38-allow-overtaking",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-39-red-white-curb",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-40-posted-speed-limit",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-41-helmet-secure-all",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-42-roadworthy-equipment",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-43-motorcycle-metal-plates",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-44-motorcycle-potholes",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-45-motorcycle-oil-spill",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-46-motorcycle-loose-surface",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-47-motorcycle-speed-bumps",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-48-motorcycle-no-cutting",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-49-motorcycle-heavy-rain",
+      "status": "VERIFIED"
+    },
+    {
+      "externalId": "launch-motorcycle-50-keep-traffic-clear",
+      "status": "VERIFIED"
+    }
+  ]
+}
