@@ -19,7 +19,7 @@ Report date: 2026-10-20. Author: Supervisor, acting as the approved content-publ
 - Guest listener inspection confirms127.0.0.1:3060,127.0.0.1:3061 and127.0.0.1:5434. PostgreSQL runs as container `thaidlt_postgres`, image `postgres:18`, exposing5432 only through127.0.0.1:5434.
 - nginx routes the web and approved API paths. Fresh HTTPS smoke: web200; GET/me401 with `Cache-Control: no-store`; unknown API route404. Fresh HTTP checks also returned301 to the corresponding HTTPS host; Admin limits public API exposure to auth/telegram, me, practice and exam prefixes. No webhook added.
 - `thaidlt-web`, `thaidlt-api`, `thaidlt-bot` are active/running, User=thaidlt and Restart=always. API and bot execute `/opt/node24/bin/node`; verified runtime version24.22.0. Exactly one production bot unit is used; no local polling worker was started.
-- EnvironmentFile references are `/etc/thaidlt/app.env`, `database.env`, `bot.env` as applicable. Secrets remained server-side; files were not printed or copied into the repo. Transient database operations inject only database.env and execute as thaidlt. Read-only Telegram diagnostic used the same three EnvironmentFiles as the bot.
+- EnvironmentFile references are `/etc/thaidlt/app.env`, `database.env`, `bot.env` as applicable. All three files independently checked mode0600 /ownerroot; service UID/GID1002 has only the thaidlt group. Secrets remained server-side; file contents were not printed or copied into the repo. Transient database operations inject only database.env and execute as thaidlt. Read-only Telegram diagnostic used the same three EnvironmentFiles as the bot.
 
 ## Migrations and content publication
 

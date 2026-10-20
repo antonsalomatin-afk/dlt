@@ -126,3 +126,9 @@ active
 http://dlt.thauto.app/ 301 https://dlt.thauto.app/
 http://tele.thauto.app/ 301 https://tele.thauto.app/
 Host backup configuration independently observed: enabled02:00, storage pbs-backup, VM100,101.
+2026-10-20T07:15:15.9448463Z Secret file permissions and unprivileged service identity
+/etc/thaidlt/app.env mode=600 owner=root
+/etc/thaidlt/database.env mode=600 owner=root
+/etc/thaidlt/bot.env mode=600 owner=root
+uid=1002(thaidlt) gid=1002(thaidlt) groups=1002(thaidlt)
+
