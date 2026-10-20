@@ -34,9 +34,11 @@ required_checks:
   - real owner Telegram smoke flow in .agent/admin/TASK-071-owner-smoke-check.md
   - independent evidence review before acceptance
 design_preview_result:
+  owner_selected_flow: Confirm answer
+  owner_selected_behavior: Select or change an answer, press Check answer, view feedback, then Next question.
   verdict: PASS
   review: .agent/reviews/TASK-072-preview-review-02.md
   checks: .agent/checks/TASK-072-preview-checks-02.txt
   accepted_component_commit: 94ecc39edd8b41e0901f4af2c7b4774b1066851c
   boundary: Preview only; no whole-task acceptance or app implementation/deployment approval.
-blocked_reason: Await owner compact-preview feedback and original real-owner Telegram practice/exam smoke observations.
+blocked_reason: Owner selected Confirm answer; broader compact-layout implementation scope and original real-owner Telegram practice/exam smoke observations remain outstanding.

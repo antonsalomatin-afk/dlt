@@ -8,7 +8,7 @@
   "status": "BLOCKED",
   "reviewAttempt": 2,
   "maxReviewAttempts": 3,
-  "blockedReason": "Await owner feedback on the reviewed compact preview before UI implementation; original real-owner Telegram practice/exam observations remain outstanding.",
+  "blockedReason": "Owner selected Confirm answer. Broader compact-layout implementation scope remains unapproved; original real-owner Telegram practice/exam observations remain outstanding.",
   "updatedBy": "Supervisor",
   "notes": "Isolated compact preview component passed authoritative checks and independent review02; Supervisor accepts only that preview component at94ecc39edd8b41e0901f4af2c7b4774b1066851c for owner discussion. No UI implementation/deployment approval. TASK-072 itself remains unaccepted pending original real-owner Telegram smoke and owner design feedback. App, production and accepted TASK-071 unchanged.",
   "launchCandidates": {
@@ -75,8 +75,10 @@
     "status": "Completed both executions; automation deleted"
   },
   "designPreview": {
-    "ownerInstruction": "ok to sketch; not approval to implement or deploy",
-    "status": "AWAITING_OWNER_FEEDBACK",
+    "ownerInstruction": "Owner selected Confirm answer after comparing the preview; broader implementation and deployment were not requested.",
+    "status": "ANSWER_FLOW_SELECTED",
+    "selectedAnswerFlow": "CONFIRM_ANSWER",
+    "selectedAnswerFlowBehavior": "Select or change an answer, press Check answer, view feedback, then Next question.",
     "review": ".agent/reviews/TASK-072-preview-review-02.md",
     "reviewVerdict": "PASS",
     "previousReview": ".agent/reviews/TASK-072-preview-review-01.md",
