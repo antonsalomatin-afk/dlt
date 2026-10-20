@@ -1,6 +1,6 @@
 id: TASK-072
 title: Confirm the owner production Telegram learning smoke flow
-status: BLOCKED
+status: BUILDING
 owner_role: Product Owner
 epic: Epic 10 — Production Hardening
 objective: Obtain a fresh real-owner Telegram observation of the published starter bank and capture any concrete defect before broader launch testing.
@@ -16,10 +16,21 @@ acceptance:
   - For at least one vehicle the owner starts a real 50-question mock exam, observes the timer and hidden correctness, answers once, reopens the app and confirms the current exam resumes with that answer.
   - The report distinguishes owner-reported results, independently observed results, failures and untested scenarios. Completing a full exam or proving a scheduled notification is not required for this initial smoke task.
   - Any reported defect is diagnosed and assigned an explicit scoped Builder correction with required checks and independent review before acceptance; do not mark unobserved flows passed.
+scope_amendment:
+  - On2026-10-20 the owner confirmed pravila.es as the design reference and agreed to sketch question, answer-feedback and menu states before implementation.
+  - Build an isolated in-conversation preview only. Do not change app source, authentication, production data, deployment or accepted runtime behavior. Original live-owner smoke acceptance remains outstanding.
+design_preview_acceptance:
+  - A compact single-column learning surface prioritizes one question and four readable answers, quiet vehicle/progress/menu chrome, contextual feedback and one clear Next action.
+  - Include the requested question, answered-question and menu states with functional local interactions. Keep sample progress explicitly illustrative and show English by default.
+  - Compare direct practice answer submission with an explicit confirmation alternative; these are proposals only. Mock-exam scoring or hidden correctness is not changed.
+  - Fragment follows the complete visualize skill and is copied byte-for-byte to the thread visualization directory for discussion. No network calls, backend APIs, persistent browser storage, secrets, external asset dependency or production state.
+  - Check literal markup/script syntax, primary interactions and responsive layouts down to320px. Independent preview review precedes presentation; original TASK-072 is not accepted based on a mockup.
 files_allowed:
   - .agent/admin/TASK-072-smoke-report.md
+  - .agent/admin/TASK-072-compact-preview.html
+  - .agent/admin/TASK-072-design-preview.md
   - .agent/checks/TASK-072-*.txt
 required_checks:
   - real owner Telegram smoke flow in .agent/admin/TASK-071-owner-smoke-check.md
   - independent evidence review before acceptance
-blocked_reason: Awaiting real-owner Telegram smoke observations; no fresh signed owner session is available to the automated client. No credentials or tokens should be pasted into chat.
+blocked_reason: null

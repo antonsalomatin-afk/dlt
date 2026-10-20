@@ -5,12 +5,12 @@
   "currentTask": "TASK-072",
   "lastAcceptedTask": "TASK-071",
   "lastAcceptedCommit": "9df8c3076667aeac32c1eaff8483dd8e0ba5d9e1",
-  "status": "BLOCKED",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": "Awaiting real-owner Telegram practice/exam smoke observations after publication. No fresh signed owner session is available to the automated client. Content release authorization, publication and TASK-071 acceptance are complete.",
+  "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "Owner feedback2026-10-20: design drifted from pravila.es; discuss improvements before UI implementation. Reference confirmed and public sample/currentpublicscreen/source inspected. Observations and explicitly unapproved proposals in .agent/admin/TASK-072-smoke-report.md. No UI or production changes authorized by this discussion. TASK-072 real-owner smoke criteria remain unobserved; preserve accepted TASK-071 publication and do not repeat release operations.",
+  "notes": "Owner agreed to three-state compact design preview inspired by pravila.es before implementation. Building isolated mockup only under TASK-072 scope amendment, with separate checks/independent preview review. App, production and accepted TASK-071 remain unchanged; original owner Telegram smoke criteria are still unobserved.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -73,5 +73,10 @@
     "preResetUsageCeiling": 100,
     "postResetUsageCeiling": 80,
     "status": "Completed both executions; automation deleted"
+  },
+  "designPreview": {
+    "ownerInstruction": "ok to sketch; not approval to implement or deploy",
+    "status": "BUILDING",
+    "scope": "Isolated question/feedback/menu preview only"
   }
 }
