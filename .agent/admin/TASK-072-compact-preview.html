@@ -111,7 +111,7 @@
         <header class="td-chrome">
           <div class="td-topline">
             <div class="td-brand">Thai<span>DLT</span></div>
-            <label class="td-vehicle"><span class="td-icon"><i data-lucide="car-front" aria-hidden="true"></i></span><select class="cursor-interaction" aria-label="Vehicle"><option>Car</option><option>Motorcycle</option></select></label>
+            <label class="td-vehicle"><span class="td-icon"><i data-lucide="car-front" aria-hidden="true"></i></span><select class="cursor-interaction" data-vehicle aria-label="Vehicle"><option>Car</option><option>Motorcycle</option></select></label>
             <button type="button" class="td-icon-button cursor-interaction" data-action="menu" aria-label="Open menu" aria-expanded="false" aria-controls="td-direct-menu"><i data-lucide="menu" aria-hidden="true"></i></button>
           </div>
           <div class="td-sample"><span class="td-sample-label">Sample session</span><span><b>30</b> answered</span><span><b>80%</b> correct</span></div>
@@ -154,7 +154,7 @@
         <header class="td-chrome">
           <div class="td-topline">
             <div class="td-brand">Thai<span>DLT</span></div>
-            <label class="td-vehicle"><span class="td-icon"><i data-lucide="car-front" aria-hidden="true"></i></span><select class="cursor-interaction" aria-label="Vehicle"><option>Car</option><option>Motorcycle</option></select></label>
+            <label class="td-vehicle"><span class="td-icon"><i data-lucide="car-front" aria-hidden="true"></i></span><select class="cursor-interaction" data-vehicle aria-label="Vehicle"><option>Car</option><option>Motorcycle</option></select></label>
             <button type="button" class="td-icon-button cursor-interaction" data-action="menu" aria-label="Open menu" aria-expanded="false" aria-controls="td-confirm-menu"><i data-lucide="menu" aria-hidden="true"></i></button>
           </div>
           <div class="td-sample"><span class="td-sample-label">Sample session</span><span><b>30</b> answered</span><span><b>80%</b> correct</span></div>
@@ -203,14 +203,68 @@
     { category: 'Road position', topic: 'road', question: 'On an ordinary two-way Thai road with no contrary directions, which side should you use?', answers: ['The left side', 'The right side', 'Whichever side has fewer vehicles', 'The center line'], correct: 0, explanation: 'Normal traffic in Thailand travels on the left side.' },
     { category: 'Lane changes', topic: 'lane', question: 'You plan to move into the next lane. What should accompany the safety checks before moving?', answers: ['Signal only after crossing', 'Give an appropriate turn signal', 'Use hazard lights instead', 'Move first'], correct: 1, explanation: 'Drivers should signal before changing lanes so others can anticipate the movement.' }
   ];
+  const snapshotId = 'thaidlt-compact-preview';
+  const controllers = [];
+  let restoring = true;
+  const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+  const inRange = (value, min, max) => Number.isInteger(value) && value >= min && value <= max;
+  function defaults() {
+    return { index: 0, selected: null, answered: false, menu: false, vehicle: 'Car', topic: 'all', favorites: [false, false], design: { spacing: 16, radius: 12 } };
+  }
+  function validatedFlow(value, flow) {
+    if (!isRecord(value) || !inRange(value.index, 0, questions.length - 1)
+      || !(value.selected === null || inRange(value.selected, 0, 3))
+      || typeof value.answered !== 'boolean' || typeof value.menu !== 'boolean'
+      || !['Car', 'Motorcycle'].includes(value.vehicle) || !['all', 'road', 'lane'].includes(value.topic)
+      || !Array.isArray(value.favorites) || value.favorites.length !== questions.length
+      || !questions.every((_, index) => typeof value.favorites[index] === 'boolean')
+      || !isRecord(value.design) || !inRange(value.design.spacing, 12, 20) || !inRange(value.design.radius, 4, 16)
+      || (value.answered && value.selected === null)
+      || (flow === 'direct' && !value.answered && value.selected !== null)
+      || (value.topic !== 'all' && questions[value.index].topic !== value.topic)) return defaults();
+    return {
+      index: value.index, selected: value.selected, answered: value.answered, menu: value.menu,
+      vehicle: value.vehicle, topic: value.topic, favorites: [...value.favorites],
+      design: { spacing: value.design.spacing, radius: value.design.radius }
+    };
+  }
+  function validatedSnapshot(value) {
+    const saved = isRecord(value) ? value.privateContent : null;
+    const flows = isRecord(saved) && saved.preview === snapshotId && saved.version === 1 && isRecord(saved.flows) ? saved.flows : {};
+    return { direct: validatedFlow(flows.direct, 'direct'), confirm: validatedFlow(flows.confirm, 'confirm') };
+  }
+  function saveSnapshot() {
+    if (restoring || typeof window.openai?.setWidgetState !== 'function') return;
+    const flows = Object.fromEntries(controllers.map(controller => [controller.flow, controller.snapshot()]));
+    const privateContent = { preview: snapshotId, version: 1, flows };
+    const modelContent = {
+      preview: 'ThaiDLT compact practice proposals', version: 1,
+      flows: Object.fromEntries(controllers.map(controller => {
+        const saved = flows[controller.flow];
+        return [controller.flow, {
+          answerMode: controller.flow === 'direct' ? 'Tap to check' : 'Confirm answer',
+          vehicle: saved.vehicle, topic: saved.topic, sampleQuestion: saved.index + 1,
+          selectedAnswer: saved.selected === null ? null : String.fromCharCode(65 + saved.selected),
+          screen: saved.menu ? 'menu' : saved.answered ? 'feedback' : 'question',
+          answerPadding: saved.design.spacing, answerCorners: saved.design.radius
+        }];
+      }))
+    };
+    try {
+      window.openai.setWidgetState({ modelContent, privateContent }).catch(() => {});
+    } catch { /* The preview still works when the optional host bridge is unavailable. */ }
+  }
+  const initial = validatedSnapshot(window.openai?.widgetState);
   root.querySelectorAll('.td-app').forEach(app => {
-    const direct = app.dataset.flow === 'direct';
-    const state = { index: 0, selected: null, answered: false, menu: false, favorites: [false, false], note: '' };
-    const design = { spacing: 16, radius: 12 };
+    const flow = app.dataset.flow;
+    const direct = flow === 'direct';
+    const state = { ...initial[flow], note: '' };
+    const design = state.design;
     const learning = app.querySelector('.td-learning');
     const menu = app.querySelector('.td-menu');
     const menuButton = app.querySelector('[data-action="menu"]');
     const topic = app.querySelector('[data-topic]');
+    const vehicle = app.querySelector('[data-vehicle]');
     const answers = Array.from(app.querySelectorAll('[data-choice]'));
     const feedback = app.querySelector('.td-feedback');
     const hint = app.querySelector('.td-hint');
@@ -222,6 +276,8 @@
       const question = questions[state.index];
       app.style.setProperty('--td-answer-space', `${design.spacing}px`);
       app.style.setProperty('--td-radius', `${design.radius}px`);
+      topic.value = state.topic;
+      vehicle.value = state.vehicle;
       learning.hidden = state.menu;
       menu.hidden = !state.menu;
       menuButton.setAttribute('aria-expanded', String(state.menu));
@@ -257,49 +313,78 @@
     }
     function resetQuestion(index) {
       state.index = index; state.selected = null; state.answered = false; state.note = '';
-      render();
+      render(); saveSnapshot();
     }
     answers.forEach((answer, index) => answer.addEventListener('click', () => {
       if (state.answered) return;
       state.selected = index;
       state.answered = direct;
       state.note = '';
-      render();
+      render(); saveSnapshot();
     }));
     if (check) check.addEventListener('click', () => {
       if (state.selected === null || state.answered) return;
-      state.answered = true; state.note = ''; render();
+      state.answered = true; state.note = ''; render(); saveSnapshot();
     });
     next.addEventListener('click', () => {
-      const nextIndex = topic.value === 'all' ? (state.index + 1) % questions.length : state.index;
+      const nextIndex = state.topic === 'all' ? (state.index + 1) % questions.length : state.index;
       resetQuestion(nextIndex);
       answers[0].focus();
     });
     menuButton.addEventListener('click', () => {
-      state.menu = !state.menu; render();
+      state.menu = !state.menu; render(); saveSnapshot();
       if (state.menu) menu.querySelector('[data-action="close-menu"]').focus();
     });
     app.querySelector('[data-action="close-menu"]').addEventListener('click', () => {
-      state.menu = false; render(); menuButton.focus();
+      state.menu = false; render(); saveSnapshot(); menuButton.focus();
     });
     app.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && state.menu) { state.menu = false; render(); menuButton.focus(); }
+      if (event.key === 'Escape' && state.menu) { state.menu = false; render(); saveSnapshot(); menuButton.focus(); }
     });
-    topic.addEventListener('change', () => resetQuestion(topic.value === 'lane' ? 1 : 0));
+    topic.addEventListener('change', () => {
+      state.topic = ['all', 'road', 'lane'].includes(topic.value) ? topic.value : 'all';
+      resetQuestion(state.topic === 'lane' ? 1 : 0);
+    });
+    vehicle.addEventListener('change', () => {
+      state.vehicle = ['Car', 'Motorcycle'].includes(vehicle.value) ? vehicle.value : 'Car';
+      render(); saveSnapshot();
+    });
     favorite.addEventListener('click', () => {
       state.favorites[state.index] = !state.favorites[state.index];
       state.note = state.favorites[state.index] ? 'Favorite marked for this preview only.' : 'Favorite cleared in this preview only.';
-      render();
+      render(); saveSnapshot();
     });
     app.querySelector('[data-action="report"]').addEventListener('click', () => {
       state.note = 'Report action preview — no report was sent.'; render();
     });
+    controllers.push({
+      flow,
+      snapshot: () => ({
+        index: state.index, selected: state.selected, answered: state.answered, menu: state.menu,
+        vehicle: state.vehicle, topic: state.topic, favorites: [...state.favorites],
+        design: { spacing: design.spacing, radius: design.radius }
+      }),
+      restore: saved => {
+        Object.assign(state, saved, { design, note: '' });
+        Object.assign(design, saved.design);
+        render();
+      }
+    });
     render();
     if (globalThis.Tweak) {
-      const tweak = new Tweak({ container: app, onChange: render });
+      const tweak = new Tweak({ container: app, onChange: () => { render(); saveSnapshot(); } });
       tweak.addSlider(design, 'spacing', { label: 'Answer padding', min: 12, max: 20, unit: 'px', reference: '--td-answer-space' });
       tweak.addSlider(design, 'radius', { label: 'Answer corners', min: 4, max: 16, unit: 'px', reference: '--td-radius' });
     }
+  });
+  restoring = false;
+  window.addEventListener('openai:set_globals', event => {
+    const globals = event.detail?.globals;
+    if (!isRecord(globals) || !Object.prototype.hasOwnProperty.call(globals, 'widgetState')) return;
+    const saved = validatedSnapshot(globals.widgetState);
+    restoring = true;
+    try { controllers.forEach(controller => controller.restore(saved[controller.flow])); }
+    finally { restoring = false; }
   });
 })();
 </script>

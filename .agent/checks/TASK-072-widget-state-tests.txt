@@ -1,0 +1,362 @@
+// Run from the repository root with:
+// node -e "eval(require('node:fs').readFileSync('.agent/checks/TASK-072-widget-state-tests.txt','utf8'))"
+// Executes the actual fragment script against its parsed markup and a small offline
+// DOM/host double. Browser layout and real host behavior remain independent QA gates.
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+
+const html = fs.readFileSync('.agent/admin/TASK-072-compact-preview.html', 'utf8');
+const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+assert.equal(scripts.length, 1);
+const script = scripts[0][1];
+new Function(script);
+assert.ok(Buffer.byteLength(html) < 1000000);
+assert.ok(!/<!doctype|<html\b|<head\b|<body\b/i.test(html));
+assert.ok(!/\\"|\\n/.test(html));
+assert.ok(!/\bfetch\s*\(|XMLHttpRequest|WebSocket|localStorage|sessionStorage|https?:\/\/|<svg\b|<path\b/.test(html));
+
+class ElementDouble {
+  constructor(tag, attrs, document) {
+    this.tag = tag;
+    this.attrs = attrs;
+    this.document = document;
+    this.children = [];
+    this.listeners = new Map();
+    this._text = '';
+    this._value = undefined;
+    this.hidden = Object.hasOwn(attrs, 'hidden');
+    this.disabled = Object.hasOwn(attrs, 'disabled');
+    this.dataset = Object.fromEntries(Object.entries(attrs).filter(([key]) => key.startsWith('data-')).map(([key, value]) => [key.slice(5).replace(/-([a-z])/g, (_, letter) => letter.toUpperCase()), value]));
+    const classes = new Set((attrs.class || '').split(/\s+/));
+    this.classList = {
+      contains: name => classes.has(name),
+      toggle: (name, enabled) => enabled ? classes.add(name) : classes.delete(name)
+    };
+    const properties = new Map();
+    this.style = { setProperty: (key, value) => properties.set(key, value), getPropertyValue: key => properties.get(key) };
+  }
+  get textContent() { return this._text + this.children.map(child => child.textContent).join(''); }
+  set textContent(value) { this._text = String(value); this.children = []; }
+  get value() {
+    if (this._value !== undefined) return this._value;
+    if (this.tag === 'select') return this.querySelector('option')?.value || '';
+    return this.attrs.value ?? this.textContent;
+  }
+  set value(value) { this._value = String(value); }
+  setAttribute(name, value) { this.attrs[name] = String(value); }
+  getAttribute(name) { return this.attrs[name] ?? null; }
+  addEventListener(name, handler) {
+    if (!this.listeners.has(name)) this.listeners.set(name, []);
+    this.listeners.get(name).push(handler);
+  }
+  emit(name, fields = {}) {
+    for (const handler of this.listeners.get(name) || []) handler({ type: name, target: this, ...fields });
+  }
+  click() { if (!this.disabled) this.emit('click'); }
+  change(value) { this.value = value; this.emit('change'); }
+  focus() { this.document.activeElement = this; }
+  matches(selector) {
+    if (selector.startsWith('.')) return this.classList.contains(selector.slice(1));
+    const attr = selector.match(/^\[([\w-]+)(?:="([^"]*)")?\]$/);
+    if (attr) return Object.hasOwn(this.attrs, attr[1]) && (attr[2] === undefined || this.attrs[attr[1]] === attr[2]);
+    return this.tag === selector;
+  }
+  querySelectorAll(selector) {
+    return this.children.flatMap(child => [...(child.matches(selector) ? [child] : []), ...child.querySelectorAll(selector)]);
+  }
+  querySelector(selector) { return this.querySelectorAll(selector)[0] || null; }
+}
+
+function parseDocument() {
+  const document = { activeElement: null };
+  const tree = new ElementDouble('document', {}, document);
+  const stack = [tree];
+  const markup = html.replace(/<style>[\s\S]*?<\/style>|<script>[\s\S]*?<\/script>/g, '');
+  for (const token of markup.match(/<[^>]+>|[^<]+/g) || []) {
+    if (token.startsWith('</')) { stack.pop(); continue; }
+    if (token.startsWith('<')) {
+      const name = token.match(/^<([\w-]+)/)?.[1];
+      if (!name) continue;
+      const attrs = {};
+      const rest = token.slice(name.length + 1, -1);
+      for (const match of rest.matchAll(/([\w-]+)(?:="([^"]*)")?/g)) attrs[match[1]] = match[2] || '';
+      const element = new ElementDouble(name, attrs, document);
+      stack.at(-1).children.push(element);
+      if (!['input', 'img', 'br', 'hr', 'meta', 'link'].includes(name)) stack.push(element);
+    } else stack.at(-1)._text += token;
+  }
+  document.getElementById = id => tree.querySelectorAll('[id]').find(element => element.attrs.id === id) || null;
+  return document;
+}
+
+const clone = value => JSON.parse(JSON.stringify(value));
+function runtime(options = {}) {
+  const document = parseDocument();
+  const saves = [];
+  const listeners = new Map();
+  const tweaks = [];
+  const window = {
+    addEventListener: (name, handler) => {
+      if (!listeners.has(name)) listeners.set(name, []);
+      listeners.get(name).push(handler);
+    },
+    emit: (name, fields) => { for (const handler of listeners.get(name) || []) handler(fields); }
+  };
+  if (!options.absentHost) {
+    window.openai = { widgetState: options.snapshot };
+    if (!options.absentSave) window.openai.setWidgetState = payload => {
+      saves.push(clone(payload));
+      assert.ok(Buffer.byteLength(JSON.stringify(payload)) < 16384, 'snapshot exceeds 16 KiB');
+      if (options.saveResult === 'throw') throw new Error('optional bridge unavailable');
+      if (options.saveResult === 'reject') return Promise.reject(new Error('host rejected save'));
+      if (options.saveResult === 'void') return undefined;
+      return Promise.resolve();
+    };
+  }
+  class TweakDouble {
+    constructor(config) {
+      this.config = config;
+      this.controls = [];
+      tweaks.push(this);
+      config.onChange(); // An eager helper must not cause an initial snapshot write.
+    }
+    addSlider(bound, key, config) {
+      this.controls.push({ bound, key, config });
+      this.config.onChange();
+    }
+    change(key, value) {
+      const control = this.controls.find(item => item.key === key);
+      assert.ok(control, `missing design control ${key}`);
+      control.bound[key] = value;
+      this.config.onChange();
+    }
+  }
+  const context = vm.createContext({ window, document, Promise, ...(options.noTweak ? {} : { Tweak: TweakDouble }) });
+  vm.runInContext(script, context, { filename: 'TASK-072-compact-preview.html' });
+  const root = document.getElementById('thaidlt-compact-preview');
+  const apps = root.querySelectorAll('.td-app');
+  assert.equal(apps.length, 2);
+  assert.equal(root.querySelectorAll('[data-choice]').length, 8);
+  return { document, window, saves, apps, tweaks, flow: name => apps.find(app => app.dataset.flow === name) };
+}
+const query = (app, selector) => {
+  const found = app.querySelector(selector);
+  assert.ok(found, `missing actual fixture element: ${selector}`);
+  return found;
+};
+const action = (app, name) => query(app, `[data-action="${name}"]`);
+const choice = (app, index) => query(app, `[data-choice="${index}"]`);
+const late = (rt, widgetState) => rt.window.emit('openai:set_globals', { detail: { globals: { widgetState } } });
+const flowDefaults = () => ({ index: 0, selected: null, answered: false, menu: false, vehicle: 'Car', topic: 'all', favorites: [false, false], design: { spacing: 16, radius: 12 } });
+function sampleSnapshot() {
+  return {
+    privateContent: {
+      preview: 'thaidlt-compact-preview', version: 1,
+      flows: {
+        direct: { index: 1, selected: 0, answered: true, menu: true, vehicle: 'Motorcycle', topic: 'lane', favorites: [false, true], design: { spacing: 20, radius: 4 } },
+        confirm: { index: 0, selected: 2, answered: false, menu: false, vehicle: 'Car', topic: 'road', favorites: [true, false], design: { spacing: 12, radius: 16 } }
+      }
+    }
+  };
+}
+function assertDefaults(app) {
+  assert.equal(query(app, '[data-counter]').textContent, 'Sample question 1 of 2');
+  assert.equal(query(app, '[data-topic]').value, 'all');
+  assert.equal(query(app, '[data-vehicle]').value, 'Car');
+  assert.equal(query(app, '.td-menu').hidden, true);
+  assert.equal(query(app, '.td-feedback').hidden, true);
+  assert.equal(action(app, 'favorite').getAttribute('aria-pressed'), 'false');
+  assert.equal(app.style.getPropertyValue('--td-answer-space'), '16px');
+  assert.equal(app.style.getPropertyValue('--td-radius'), '12px');
+  if (app.dataset.flow === 'confirm') assert.equal(action(app, 'check').disabled, true);
+}
+
+let groups = 0;
+async function test(name, run) { await run(); groups += 1; console.log(`PASS: ${name}`); }
+(async () => {
+  await test('absent host/helper, both question flows, Next and menu keep working', () => {
+    const rt = runtime({ absentHost: true, noTweak: true });
+    const direct = rt.flow('direct');
+    const confirm = rt.flow('confirm');
+    rt.apps.forEach(assertDefaults);
+    choice(direct, 1).click();
+    assert.equal(query(direct, '.td-feedback').hidden, false);
+    assert.equal(query(direct, '.td-feedback').querySelector('strong').textContent, 'Not quite');
+    assert.equal(choice(direct, 0).classList.contains('is-correct'), true);
+    action(direct, 'next').click();
+    assert.ok(query(direct, '.td-question').textContent.includes('next lane'));
+    assert.equal(query(direct, '.td-feedback').hidden, true);
+    choice(direct, 1).click();
+    action(direct, 'menu').click();
+    assert.equal(query(direct, '.td-learning').hidden, true);
+    action(direct, 'close-menu').click();
+    assert.equal(query(direct, '.td-feedback').hidden, false);
+    assert.equal(rt.document.activeElement, action(direct, 'menu'));
+    query(direct, '[data-vehicle]').change('Motorcycle');
+    query(direct, '[data-topic]').change('lane');
+    action(direct, 'favorite').click();
+    action(direct, 'report').click();
+    assert.ok(query(direct, '.td-local-note').textContent.includes('no report was sent'));
+    choice(confirm, 1).click();
+    assert.equal(query(confirm, '.td-feedback').hidden, true);
+    assert.equal(action(confirm, 'check').disabled, false);
+    choice(confirm, 0).click();
+    action(confirm, 'check').click();
+    assert.equal(query(confirm, '.td-feedback').querySelector('strong').textContent, 'Correct');
+    action(confirm, 'next').click();
+    assert.equal(action(confirm, 'check').disabled, true);
+    assert.equal(rt.saves.length, 0);
+  });
+  await test('compatible initial snapshot restores both flows and design without writes', () => {
+    const input = sampleSnapshot();
+    const original = clone(input);
+    const rt = runtime({ snapshot: input });
+    const direct = rt.flow('direct');
+    const confirm = rt.flow('confirm');
+    assert.equal(rt.saves.length, 0);
+    assert.equal(rt.tweaks.length, 2);
+    assert.equal(query(direct, '.td-menu').hidden, false);
+    assert.equal(query(direct, '[data-counter]').textContent, 'Sample question 2 of 2');
+    assert.equal(query(direct, '[data-vehicle]').value, 'Motorcycle');
+    assert.equal(query(direct, '[data-topic]').value, 'lane');
+    assert.equal(action(direct, 'favorite').getAttribute('aria-pressed'), 'true');
+    assert.equal(direct.style.getPropertyValue('--td-answer-space'), '20px');
+    assert.equal(direct.style.getPropertyValue('--td-radius'), '4px');
+    assert.equal(choice(direct, 1).classList.contains('is-correct'), true);
+    assert.equal(choice(direct, 0).classList.contains('is-wrong'), true);
+    assert.equal(choice(confirm, 2).getAttribute('aria-pressed'), 'true');
+    assert.equal(query(confirm, '.td-feedback').hidden, true);
+    assert.equal(action(confirm, 'check').disabled, false);
+    assert.equal(confirm.style.getPropertyValue('--td-answer-space'), '12px');
+    assert.deepEqual(input, original, 'restoration mutated the host input');
+  });
+  await test('absent/incompatible snapshot envelopes use defaults', () => {
+    const valid = sampleSnapshot();
+    const invalid = [undefined, null, [], 'text', {}, { privateContent: [] }, { privateContent: { ...valid.privateContent, version: 2 } }, { privateContent: { ...valid.privateContent, preview: 'other-preview' } }, { privateContent: { ...valid.privateContent, flows: [] } }];
+    for (const snapshot of invalid) {
+      const rt = runtime({ snapshot });
+      rt.apps.forEach(assertDefaults);
+      assert.equal(rt.saves.length, 0);
+    }
+  });
+  await test('invalid indices, enums, booleans, favorites, design bounds and inconsistent flow states are isolated', () => {
+    const mutations = [
+      value => { value.index = -1; }, value => { value.index = 2; }, value => { value.index = NaN; },
+      value => { value.selected = 4; }, value => { value.selected = '0'; }, value => { value.answered = 'true'; },
+      value => { value.menu = 1; }, value => { value.vehicle = 'Boat'; }, value => { value.topic = 'other'; },
+      value => { value.topic = 'road'; }, value => { value.favorites = [true]; }, value => { value.favorites = [false, 'yes']; }, value => { value.favorites = Array(2); },
+      value => { value.design = null; }, value => { value.design.spacing = 11; }, value => { value.design.spacing = 21; },
+      value => { value.design.spacing = 16.5; }, value => { value.design.spacing = Infinity; }, value => { value.design.radius = 3; },
+      value => { value.design.radius = 17; }, value => { value.design.radius = '12'; },
+      value => { value.selected = null; }, value => { value.answered = false; }
+    ];
+    for (const mutate of mutations) {
+      const snapshot = sampleSnapshot();
+      mutate(snapshot.privateContent.flows.direct);
+      const rt = runtime({ snapshot });
+      assertDefaults(rt.flow('direct'));
+      assert.equal(choice(rt.flow('confirm'), 2).getAttribute('aria-pressed'), 'true');
+      assert.equal(rt.saves.length, 0);
+    }
+    const invalidConfirm = sampleSnapshot();
+    invalidConfirm.privateContent.flows.confirm.answered = true;
+    invalidConfirm.privateContent.flows.confirm.selected = null;
+    assertDefaults(runtime({ snapshot: invalidConfirm }).flow('confirm'));
+  });
+  await test('late globals restore/reset, unrelated events and snapshot echoes never save or loop', () => {
+    const rt = runtime();
+    late(rt, sampleSnapshot());
+    assert.equal(query(rt.flow('direct'), '.td-menu').hidden, false);
+    assert.equal(choice(rt.flow('confirm'), 2).getAttribute('aria-pressed'), 'true');
+    assert.equal(rt.saves.length, 0);
+    rt.window.emit('openai:set_globals', { detail: { globals: { other: true } } });
+    rt.window.emit('openai:set_globals', {});
+    assert.equal(query(rt.flow('direct'), '.td-menu').hidden, false);
+    action(rt.flow('confirm'), 'favorite').click();
+    assert.equal(rt.saves.length, 1);
+    late(rt, rt.saves[0]);
+    assert.equal(rt.saves.length, 1);
+    rt.tweaks[0].change('radius', 9);
+    assert.equal(rt.saves.at(-1).privateContent.flows.direct.design.radius, 9);
+    assert.equal(rt.saves.at(-1).privateContent.flows.direct.design.spacing, 20);
+    const count = rt.saves.length;
+    late(rt, null);
+    rt.apps.forEach(assertDefaults);
+    assert.equal(rt.saves.length, count);
+  });
+  await test('meaningful interactions save detached, versioned snapshots for both flows and design', () => {
+    const rt = runtime();
+    const direct = rt.flow('direct');
+    const confirm = rt.flow('confirm');
+    const expectSave = run => {
+      const before = rt.saves.length;
+      run();
+      assert.equal(rt.saves.length, before + 1);
+      const saved = rt.saves.at(-1);
+      assert.equal(saved.privateContent.version, 1);
+      assert.equal(saved.privateContent.preview, 'thaidlt-compact-preview');
+      assert.deepEqual(Object.keys(saved.privateContent.flows), ['direct', 'confirm']);
+      return saved;
+    };
+    let saved = expectSave(() => choice(direct, 0).click());
+    assert.equal(saved.modelContent.flows.direct.screen, 'feedback');
+    assert.equal(saved.modelContent.flows.direct.selectedAnswer, 'A');
+    assert.equal(saved.modelContent.flows.direct.answerMode, 'Tap to check');
+    assert.deepEqual(saved.privateContent.flows.confirm, flowDefaults());
+    expectSave(() => action(direct, 'menu').click());
+    expectSave(() => action(direct, 'close-menu').click());
+    expectSave(() => action(direct, 'menu').click());
+    expectSave(() => direct.emit('keydown', { key: 'Escape' }));
+    expectSave(() => query(direct, '[data-vehicle]').change('Motorcycle'));
+    expectSave(() => query(direct, '[data-topic]').change('lane'));
+    const beforeFavorite = rt.saves.at(-1);
+    saved = expectSave(() => action(direct, 'favorite').click());
+    assert.equal(saved.privateContent.flows.direct.favorites[1], true);
+    assert.equal(beforeFavorite.privateContent.flows.direct.favorites[1], false);
+    expectSave(() => choice(direct, 1).click());
+    saved = expectSave(() => action(direct, 'next').click());
+    assert.equal(saved.privateContent.flows.direct.index, 1);
+    assert.equal(saved.privateContent.flows.direct.selected, null);
+    assert.equal(saved.privateContent.flows.direct.answered, false);
+    expectSave(() => choice(confirm, 1).click());
+    saved = expectSave(() => choice(confirm, 0).click());
+    assert.equal(saved.privateContent.flows.confirm.answered, false);
+    assert.equal(saved.modelContent.flows.confirm.answerMode, 'Confirm answer');
+    saved = expectSave(() => action(confirm, 'check').click());
+    assert.equal(saved.privateContent.flows.confirm.answered, true);
+    expectSave(() => rt.tweaks[0].change('spacing', 20));
+    saved = expectSave(() => rt.tweaks[1].change('radius', 4));
+    assert.equal(saved.modelContent.flows.direct.answerPadding, 20);
+    assert.equal(saved.privateContent.flows.confirm.design.radius, 4);
+    const recreated = runtime({ snapshot: saved });
+    assert.equal(recreated.saves.length, 0);
+    assert.equal(query(recreated.flow('direct'), '[data-vehicle]').value, 'Motorcycle');
+    assert.equal(action(recreated.flow('direct'), 'favorite').getAttribute('aria-pressed'), 'true');
+    assert.equal(recreated.flow('direct').style.getPropertyValue('--td-answer-space'), '20px');
+    assert.equal(recreated.flow('confirm').style.getPropertyValue('--td-radius'), '4px');
+    assert.equal(query(recreated.flow('confirm'), '.td-feedback').hidden, false);
+  });
+  await test('missing optional save method, synchronous bridge failures and rejected saves are safe', async () => {
+    const noMethod = runtime({ absentSave: true, snapshot: sampleSnapshot() });
+    action(noMethod.flow('direct'), 'close-menu').click();
+    assert.equal(query(noMethod.flow('direct'), '.td-feedback').hidden, false);
+    const unhandled = [];
+    const capture = error => unhandled.push(error);
+    process.on('unhandledRejection', capture);
+    try {
+      for (const saveResult of ['reject', 'throw', 'void']) {
+        const rt = runtime({ saveResult });
+        choice(rt.flow('direct'), 0).click();
+        action(rt.flow('direct'), 'next').click();
+        rt.tweaks[1].change('spacing', 18);
+        assert.equal(rt.saves.length, 3);
+        assert.equal(query(rt.flow('direct'), '.td-feedback').hidden, true);
+      }
+      await new Promise(resolve => setImmediate(resolve));
+      await new Promise(resolve => setImmediate(resolve));
+      assert.equal(unhandled.length, 0);
+    } finally { process.removeListener('unhandledRejection', capture); }
+  });
+  console.log(`PASS: ${groups} lifecycle groups plus fragment/script guards; no network or browser storage used.`);
+})().catch(error => { console.error(error); process.exitCode = 1; });
