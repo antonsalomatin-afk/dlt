@@ -1,3 +1,5 @@
+> Current disposition (2026-10-20): owner approved publication and the exact100-question bank is now active in production. The preparation snapshot below is retained as historical review material. See TASK-071-report.md for current deployment evidence and TASK-071-owner-smoke-check.md for real Telegram testing.
+
 # TASK-071 draft launch question review pack
 
 100 original English candidates: 50 CAR and 50 MOTORCYCLE. DRAFT only; not imported, verified or active in production.
