@@ -1,6 +1,6 @@
 id: TASK-072
 title: Confirm the owner production Telegram learning smoke flow
-status: REVIEW
+status: BLOCKED
 owner_role: Product Owner
 epic: Epic 10 — Production Hardening
 objective: Obtain a fresh real-owner Telegram observation of the published starter bank and capture any concrete defect before broader launch testing.
@@ -33,4 +33,10 @@ files_allowed:
 required_checks:
   - real owner Telegram smoke flow in .agent/admin/TASK-071-owner-smoke-check.md
   - independent evidence review before acceptance
-blocked_reason: null
+design_preview_result:
+  verdict: PASS
+  review: .agent/reviews/TASK-072-preview-review-02.md
+  checks: .agent/checks/TASK-072-preview-checks-02.txt
+  accepted_component_commit: 94ecc39edd8b41e0901f4af2c7b4774b1066851c
+  boundary: Preview only; no whole-task acceptance or app implementation/deployment approval.
+blocked_reason: Await owner compact-preview feedback and original real-owner Telegram practice/exam smoke observations.

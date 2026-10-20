@@ -142,7 +142,7 @@ Potential scope:
 - TASK-070 — ACCEPTED — approve the production launch boundary (dlt.thauto.app / tele.thauto.app)
 - TASK-071 — ACCEPTED — production hosts/services verified;50CAR +50MOTORCYCLE reviewed questions live; backup/restore and independent operational review PASS
 
-- TASK-072 — BLOCKED — await owner real Telegram practice/exam smoke observations after publication
+- TASK-072 — BLOCKED — isolated compact question/feedback/menu preview independently PASS; await owner design feedback and real Telegram practice/exam smoke observations after publication
 
 - deployment ADR
 - observability
