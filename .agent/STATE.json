@@ -5,8 +5,8 @@
   "currentTask": "TASK-072",
   "lastAcceptedTask": "TASK-071",
   "lastAcceptedCommit": "9df8c3076667aeac32c1eaff8483dd8e0ba5d9e1",
-  "status": "BUILDING",
-  "reviewAttempt": 1,
+  "status": "REVIEW",
+  "reviewAttempt": 2,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
@@ -53,14 +53,14 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 7,
-    "latestObservedWeeklyUsedPercent": 1,
+    "latestObservedUsedPercent": 48,
+    "latestObservedWeeklyUsedPercent": 10,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-27T07:03:36Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-20T07:11:31Z",
+    "checkedAt": "2026-10-20T18:23:00Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
-    "sessionResetsAt": "2026-10-20T12:03:36Z"
+    "sessionResetsAt": "2026-10-20T22:27:34Z"
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -76,14 +76,14 @@
   },
   "designPreview": {
     "ownerInstruction": "ok to sketch; not approval to implement or deploy",
-    "status": "REVIEW_FIX",
+    "status": "REVIEW",
     "review": ".agent/reviews/TASK-072-preview-review-01.md",
     "reviewVerdict": "FAIL",
     "reviewFinding": "Add validated guarded host widget snapshot restoration and meaningful interaction saves; no browser storage or application changes.",
     "scope": "Isolated question/feedback/menu preview only",
-    "builderCommit": "c5a575264d98447c2eccec5163f8beb193ae8ef3",
-    "fragmentSha256": "51db964ba508808d418d4be3416014fffa006692c5e890f3e5c17ab2d07b2d36",
-    "checks": ".agent/checks/TASK-072-preview-checks-01.txt",
+    "builderCommit": "94ecc39edd8b41e0901f4af2c7b4774b1066851c",
+    "fragmentSha256": "e3d7002f98fccb928807c610f0b7990e28a0b0b63b1157bb39d3c866d12dd4ad",
+    "checks": ".agent/checks/TASK-072-preview-checks-02.txt",
     "visualizationPath": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/thaidlt-compact-practice.html"
   }
 }
