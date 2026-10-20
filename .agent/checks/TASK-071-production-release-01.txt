@@ -125,3 +125,4 @@ active
 
 http://dlt.thauto.app/ 301 https://dlt.thauto.app/
 http://tele.thauto.app/ 301 https://tele.thauto.app/
+Host backup configuration independently observed: enabled02:00, storage pbs-backup, VM100,101.

@@ -17,7 +17,7 @@ Report date: 2026-10-20. Author: Supervisor, acting as the approved content-publ
 - Both DNS A records independently resolve to139.99.8.128. Admin configured Cloudflare DNS-only.
 - Trusted TLS handshake independently passed for both hosts. Let's Encrypt certificates expire2027-01-12T16:14:36Z (web) and2027-01-12T16:14:51Z (API).
 - Guest listener inspection confirms127.0.0.1:3060,127.0.0.1:3061 and127.0.0.1:5434. PostgreSQL runs as container `thaidlt_postgres`, image `postgres:18`, exposing5432 only through127.0.0.1:5434.
-- nginx routes the web and approved API paths. Fresh HTTPS smoke: web200; GET/me401 with `Cache-Control: no-store`; unknown API route404. Admin's original report states HTTP redirects to HTTPS and limits public API exposure to auth/telegram, me, practice and exam prefixes. No webhook added.
+- nginx routes the web and approved API paths. Fresh HTTPS smoke: web200; GET/me401 with `Cache-Control: no-store`; unknown API route404. Fresh HTTP checks also returned301 to the corresponding HTTPS host; Admin limits public API exposure to auth/telegram, me, practice and exam prefixes. No webhook added.
 - `thaidlt-web`, `thaidlt-api`, `thaidlt-bot` are active/running, User=thaidlt and Restart=always. API and bot execute `/opt/node24/bin/node`; verified runtime version24.22.0. Exactly one production bot unit is used; no local polling worker was started.
 - EnvironmentFile references are `/etc/thaidlt/app.env`, `database.env`, `bot.env` as applicable. Secrets remained server-side; files were not printed or copied into the repo. Transient database operations inject only database.env and execute as thaidlt. Read-only Telegram diagnostic used the same three EnvironmentFiles as the bot.
 
@@ -37,7 +37,7 @@ Report date: 2026-10-20. Author: Supervisor, acting as the approved content-publ
 
 - Read-only Telegram getMe succeeded: public username `thauto_dlt_bot`. getWebhookInfo returned no configured webhook and0 pending updates. No getUpdates call, test notification or user message was sent by the Supervisor.
 - Bot startup initializes Telegram, starts the scheduler and enters polling under the accepted lifecycle code. Scheduler observes every30 seconds; reminders and daily summaries send at11:00ICT; weekly summaries on Monday at11:00ICT. Delivery ledgers and opt-in preference govern recipients; completion does not suppress eligible reminders.
-- Production reminder and summary ledgers were empty in the read-only audit. This does not prove a real notification was delivered. No forced delivery or preference changes were performed.
+- Production reminder and summary ledgers were empty; reminder opt-in count was0 and fixed bot/scheduler failure-message count after publication was0 in the read-only audit. This does not prove a real notification was delivered. No forced delivery or preference changes were performed.
 - Owner previously confirmed real Mini App login with "login ok" on2026-10-16; retained as human-reported evidence in TASK-071-login-evidence.md. A new owner interaction through real Telegram after content publication has not been observed.
 - Local authoritative actual-manifest rehearsal used a disposable database and real API handlers to construct50 distinct questions for each vehicle and reject pre-submit correctness leakage. No fabricated Telegram identity, production test session, exam record or learner data was inserted. Thus real owner end-to-end practice/exam acceptance after publication remains a human testing item, rather than an independently completed check.
 
