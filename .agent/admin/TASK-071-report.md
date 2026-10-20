@@ -61,4 +61,3 @@ The fresh content-count blocker is resolved. Remaining human check: open the rea
 ## Supervisor acceptance
 
 Accepted2026-10-20 after independent whole-task VERDICT: PASS in .agent/reviews/TASK-071-operational-review-01.md, evidence revision9df8c3076667aeac32c1eaff8483dd8e0ba5d9e1. The human-testing limitations above remain open follow-ups and are not represented as completed.
-
