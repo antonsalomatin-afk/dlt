@@ -1,0 +1,25 @@
+id: TASK-072
+title: Confirm the owner production Telegram learning smoke flow
+status: BLOCKED
+owner_role: Product Owner
+epic: Epic 10 — Production Hardening
+objective: Obtain a fresh real-owner Telegram observation of the published starter bank and capture any concrete defect before broader launch testing.
+dependencies:
+  - TASK-071
+context:
+  - Production bank publication and host preparation are already approved, independently reviewed and accepted. This task requests user interaction, not another publication decision.
+  - The published content artifact is 037ac0cbc07d8c2c8686e7dd77fcef2f36281281, with 50 exact active VERIFIED questions per vehicle.
+  - The Supervisor has no fresh signed owner Telegram session available to an automated UI. Prior owner login confirmation predates content publication. Do not fabricate an identity, export auth data or send Telegram messages on the owner's behalf.
+acceptance:
+  - The owner opens @thauto_dlt_bot, sends /start and confirms fresh Mini App login after bank publication.
+  - The owner exercises practice for CAR and MOTORCYCLE, observing four choices, one submitted answer, a result/explanation and continuation without the insufficient-content error.
+  - For at least one vehicle the owner starts a real 50-question mock exam, observes the timer and hidden correctness, answers once, reopens the app and confirms the current exam resumes with that answer.
+  - The report distinguishes owner-reported results, independently observed results, failures and untested scenarios. Completing a full exam or proving a scheduled notification is not required for this initial smoke task.
+  - Any reported defect is diagnosed and assigned an explicit scoped Builder correction with required checks and independent review before acceptance; do not mark unobserved flows passed.
+files_allowed:
+  - .agent/admin/TASK-072-smoke-report.md
+  - .agent/checks/TASK-072-*.txt
+required_checks:
+  - real owner Telegram smoke flow in .agent/admin/TASK-071-owner-smoke-check.md
+  - independent evidence review before acceptance
+blocked_reason: Awaiting real-owner Telegram smoke observations; no fresh signed owner session is available to the automated client. No credentials or tokens should be pasted into chat.
