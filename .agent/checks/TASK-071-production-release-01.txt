@@ -1,0 +1,127 @@
+TASK-071 approved content production release
+Content release commit 037ac0cbc07d8c2c8686e7dd77fcef2f36281281
+Runtime unchanged 1d7eaa0671889ec82edc1b5cf149b4e7c495ffe3
+Archive SHA256 0d357f29e3be39aaa8f0075a7730b2353a303280319f37eeb943fc02ad3cb7bf
+Independent release PASS .agent/reviews/TASK-071-release-review-01.md
+Preflight 2026-10-19: DNS both139.99.8.128, TLSvalid2027-01-12, web200/me401/no-store/unknown404, active services, 17migrations/0questions. Existing SSH knownhost/QEMUguest100 verified.
+2026-10-20T07:06:08.7279268Z Verified bundle staged; fresh pre-publication database backup
+/var/tmp/TASK-071-approved-037ac0c.tar.gz: OK
+16
+Result=success
+ExecMainStartTimestamp=Tue 2026-10-20 07:06:07 UTC
+ExecMainExitTimestamp=Tue 2026-10-20 07:06:07 UTC
+ExecMainStatus=0
+
+2026-10-20T07:06:47.6353461Z Paused API/bot; additive taxonomy and both inactive DRAFT imports
+PASS exact additive taxonomy SQL committed.
+Imported batch launch-20261016-car: 50 new questions, 200 new choices, 0 matched questions and 0 matched choices; all inactive DRAFT.
+Imported batch launch-20261016-motorcycle: 50 new questions, 200 new choices, 0 matched questions and 0 matched choices; all inactive DRAFT.
+{"batchId":"launch-20261016-car","summary":{"total":50,"missing":0,"drifted":0,"exact":50,"draftInactive":50,"verifiedInactive":0,"verifiedActive":0,"rejectedInactive":0,"invalidLifecycle":0}}
+{"batchId":"launch-20261016-motorcycle","summary":{"total":50,"missing":0,"drifted":0,"exact":50,"draftInactive":50,"verifiedInactive":0,"verifiedActive":0,"rejectedInactive":0,"invalidLifecycle":0}}
+
+2026-10-20T07:07:07.9696609Z Applied actual independent review manifests; both inactive VERIFIED
+Reviewed batch launch-20261016-car: 50 VERIFIED applied, 0 REJECTED applied, 0 VERIFIED matched and 0 REJECTED matched; all inactive.
+Reviewed batch launch-20261016-motorcycle: 50 VERIFIED applied, 0 REJECTED applied, 0 VERIFIED matched and 0 REJECTED matched; all inactive.
+{"batchId":"launch-20261016-car","summary":{"total":50,"missing":0,"drifted":0,"exact":50,"draftInactive":0,"verifiedInactive":50,"verifiedActive":0,"rejectedInactive":0,"invalidLifecycle":0}}
+{"batchId":"launch-20261016-motorcycle","summary":{"total":50,"missing":0,"drifted":0,"exact":50,"draftInactive":0,"verifiedInactive":50,"verifiedActive":0,"rejectedInactive":0,"invalidLifecycle":0}}
+
+2026-10-20T07:07:26.3991757Z Activated exact100; final production status PASS; API/bot resumed
+Activated batch launch-20261016-car: 50 applied and 0 matched.
+Activated batch launch-20261016-motorcycle: 50 applied and 0 matched.
+{"batchId":"launch-20261016-car","summary":{"total":50,"missing":0,"drifted":0,"exact":50,"draftInactive":0,"verifiedInactive":0,"verifiedActive":50,"rejectedInactive":0,"invalidLifecycle":0}}
+{"batchId":"launch-20261016-motorcycle","summary":{"total":50,"missing":0,"drifted":0,"exact":50,"draftInactive":0,"verifiedInactive":0,"verifiedActive":50,"rejectedInactive":0,"invalidLifecycle":0}}
+active
+active
+active
+/srv/thaidlt/releases/1d7eaa0671889ec82edc1b5cf149b4e7c495ffe3
+
+2026-10-20T07:07:53.1401050Z Read-only scheduler delivery ledger and supervised service health
+{"reminders":[],"summaries":[]}
+Restart=always
+MainPID=4047099
+NRestarts=1
+User=thaidlt
+ActiveState=active
+SubState=running
+
+Restart=always
+MainPID=1020650
+NRestarts=0
+User=thaidlt
+ActiveState=active
+SubState=running
+
+Restart=always
+MainPID=1020651
+NRestarts=0
+User=thaidlt
+ActiveState=active
+SubState=running
+
+https://dlt.thauto.app/ HTTP 200 cache-control=s-maxage=31536000
+https://tele.thauto.app/me HTTP 401 cache-control=no-store
+https://tele.thauto.app/not-a-route HTTP 404 cache-control=
+2026-10-20T07:08:24.8975074Z Read-only Telegram identity and polling webhook boundary
+node:internal/modules/package_json_reader:314
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'grammy' imported from /srv/thaidlt/releases/1d7eaa0671889ec82edc1b5cf149b4e7c495ffe3/[eval1]
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:855:18)
+    at defaultResolve (node:internal/modules/esm/resolve:985:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v22.23.2
+
+2026-10-20T07:09:01.7472589Z Corrected diagnostic: Node24 bot workspace Telegram identity/webhook
+{"getMeOk":true,"botUsername":"thauto_dlt_bot","webhookConfigured":false,"pendingUpdateCount":0}
+
+2026-10-20T07:09:52.0241146Z Private listener and backup artifact metadata
+127.0.0.1:5434
+127.0.0.1:3060
+127.0.0.1:3061
+thaidlt_postgres postgres:18 127.0.0.1:5434->5432/tcp
+
+2026-10-20T07:10:12.2712841Z Backup path discovery and isolated restore capability
+/srv/thaidlt-db/dumps/thaidlt-
+t
+
+2026-10-20T07:10:43.6319645Z Fresh backup file metadata
+thaidlt-20261014-171206.dump 884 bytes
+thaidlt-20261014-171439.dump 884 bytes
+thaidlt-20261014-175846.dump 55546 bytes
+thaidlt-20261014-175905.dump 55546 bytes
+thaidlt-20261015-013001.dump 55546 bytes
+thaidlt-20261016-013001.dump 55546 bytes
+thaidlt-20261017-013001.dump 55781 bytes
+thaidlt-20261018-013001.dump 55781 bytes
+thaidlt-20261019-013001.dump 55781 bytes
+thaidlt-20261020-013001.dump 55781 bytes
+thaidlt-20261020-070607.dump 55781 bytes
+
+2026-10-20T07:11:11.3804687Z Independent fresh backup restore drill in owned disposable database
+PASS fresh pre-publication dump restored in isolated database: 17 migrations and expected pre-publication empty bank.
+PASS only the owned isolated restore database was removed.
+
+2026-10-20T07:11:30.8392642Z Production Node24 exact activation replay/status; no content changes
+Activated batch launch-20261016-car: 0 applied and 50 matched.
+{"batchId":"launch-20261016-car","summary":{"total":50,"missing":0,"drifted":0,"exact":50,"draftInactive":0,"verifiedInactive":0,"verifiedActive":50,"rejectedInactive":0,"invalidLifecycle":0}}
+Activated batch launch-20261016-motorcycle: 0 applied and 50 matched.
+{"batchId":"launch-20261016-motorcycle","summary":{"total":50,"missing":0,"drifted":0,"exact":50,"draftInactive":0,"verifiedInactive":0,"verifiedActive":50,"rejectedInactive":0,"invalidLifecycle":0}}
+v24.22.0
+
+2026-10-20T07:12:56.3111438Z Scheduler opt-in boundary and fixed error-message audit
+{"reminderOptInCount":0}
+Fixed bot/scheduler failure messages after publication: 0
+active
+active
+
+http://dlt.thauto.app/ 301 https://dlt.thauto.app/
+http://tele.thauto.app/ 301 https://tele.thauto.app/
