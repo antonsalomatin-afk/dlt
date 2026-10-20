@@ -1,6 +1,6 @@
 id: TASK-072
 title: Confirm the owner production Telegram learning smoke flow
-status: BUILDING
+status: REVIEW
 owner_role: Product Owner
 epic: Epic 10 — Production Hardening
 objective: Obtain a fresh real-owner Telegram observation of the published starter bank and capture any concrete defect before broader launch testing.

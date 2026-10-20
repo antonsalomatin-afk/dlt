@@ -1,0 +1,12 @@
+TASK-072 isolated design preview checks
+Builder commit c5a575264d98447c2eccec5163f8beb193ae8ef3
+Final fragment SHA25651db964ba508808d418d4be3416014fffa006692c5e890f3e5c17ab2d07b2d36
+Canonical repo fragment and thread visualization copy hash-identical.
+Builder regression minimum: lint/typecheck PASS, 57files/323tests PASS; runtime/app source unchanged from accepted TASK-071. Root authoritative checks below cover the new isolated fragment.
+PASS authoritative static checks: literal bounded fragment; script compiles; unique IDs; two variants/eight answer controls; no network/storage/assets or authored SVG.
+PASS browser primary flows: direct wrong answer shows correct + selected labels and explanation; Next advances/resets; confirmation selection hides correctness until Check answer, supports changing choice.
+PASS browser menu: open/close on both variants; answered/selected state preserved; Escape restores menu trigger focus.
+PASS final responsive measurements after CSS-only floor correction:320px frame /320px scroll width /312px product /850px product height both before and after feedback;390px frame /390px scroll width /382.29px product /850px product height;736px frame /736px scroll width /452px product /780px height. No horizontal overflow.
+PASS light and dark appearance visually inspected; icons and host carousel initialized. First immediate capture preceded async icon/carousel initialization; subsequent state/screenshot verified normal appearance.
+PASS final confirmation selection B->menu->Escape->A->Check yielded Correct; no early correctness. Browser error logs empty for inspected final narrow and light preview tabs.
+Preview menu destinations are explicitly static/unlinked; sample progress fixed and labeled; no real application behavior, signed login, backend, persistence or production checks were exercised.
