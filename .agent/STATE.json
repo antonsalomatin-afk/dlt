@@ -3,17 +3,17 @@
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
   "currentTask": "TASK-071",
-  "lastAcceptedTask": "TASK-070",
-  "lastAcceptedCommit": "2e8d0a2155d35b471663e543d8ff1ac9e6208ce5",
-  "status": "REVIEW",
-  "reviewAttempt": 1,
+  "lastAcceptedTask": "TASK-071",
+  "lastAcceptedCommit": "9df8c3076667aeac32c1eaff8483dd8e0ba5d9e1",
+  "status": "ACCEPTED",
+  "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "updatedBy": "Supervisor",
-  "notes": "Owner-approved bank published on production VM100 using hash-verified037ac0c bundle and unchanged1d7eaa0 runtime. Fresh backup and independent isolated restore drill passed. Each vehicle has50 exact active VERIFIED questions, no drift; API/bot resumed, HTTPS and Telegram read-onlygetMe/no-webhook passed. Final independent operational review pending. Human post-publication practice/exam journey and actual notification delivery are not independently tested; no new owner authorization required.",
+  "notes": "TASK-071 accepted after final independent operational PASS at9df8c30. Approved production bank has50exact activeVERIFIED questions per vehicle, no drift. Fresh backup/isolated restore, Node24replay/status, supervisedservices, publicHTTP/TLS/Telegramchecks passed. Runtime1d7eaa0 unchanged; contentartifact037ac0c. Real owner post-publication learning journey and actual scheduled delivery remain unobserved follow-ups; no content approval pending.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
-    "status": "PUBLISHED_AWAITING_FINAL_OPERATIONAL_REVIEW",
+    "status": "PUBLISHED_ACCEPTED",
     "car": 50,
     "motorcycle": 50,
     "language": "ENGLISH",
@@ -36,7 +36,8 @@
     "releaseAcceptedCommit": "d418f2cd228c2222d9d9d6dae525e69439cfca06",
     "productionPublishedAt": "2026-10-20T07:07:26Z",
     "productionReleaseCommit": "037ac0cbc07d8c2c8686e7dd77fcef2f36281281",
-    "productionChecks": ".agent/checks/TASK-071-production-release-01.txt"
+    "productionChecks": ".agent/checks/TASK-071-production-release-01.txt",
+    "operationalReview": ".agent/reviews/TASK-071-operational-review-01.md"
   },
   "referenceIntake": {
     "builderCommit": "d14033bb61c44ef75b0d7297ff1030a73ff0e935",

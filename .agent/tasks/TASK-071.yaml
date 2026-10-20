@@ -1,6 +1,6 @@
 id: TASK-071
 title: Prepare ThaiDLT production servers
-status: REVIEW
+status: ACCEPTED
 owner_role: Admin
 epic: Epic 10 — Production Hardening
 objective: Provision and configure the production web, API/bot and database services for the approved ThaiDLT launch.
@@ -88,3 +88,7 @@ approved_release_acceptance:
   - Independent release review returns PASS before production writes. The Supervisor records the bounded release acceptance separately from whole-task acceptance.
   - Publication uses the already-approved production VM and server-side secret injection, a successful fresh database backup, the unchanged accepted import/review/activation tools, and a commit/hash-verified content bundle. Only additive taxonomy and the approved 100 question chains may be changed.
   - Production status reports exactly 50 verifiedActive questions in each supplied batch with no missing, drifted or invalid lifecycle rows. Remaining operational evidence and final independent review are required before accepting TASK-071 as a whole.
+
+accepted_commit: 9df8c3076667aeac32c1eaff8483dd8e0ba5d9e1
+final_review: .agent/reviews/TASK-071-operational-review-01.md
+production_content_commit: 037ac0cbc07d8c2c8686e7dd77fcef2f36281281

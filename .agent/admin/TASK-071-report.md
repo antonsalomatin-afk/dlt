@@ -57,3 +57,8 @@ Authoritative release evidence: `.agent/checks/TASK-071-release-checks-01.txt` (
 Production transcript: `.agent/checks/TASK-071-production-release-01.txt`. It includes one failed read-only diagnostic: importing grammy from the monorepo root using `/usr/bin/node` failed because grammy is a bot-workspace dependency. Corrected diagnostic used bot workspace and `/opt/node24/bin/node`, then succeeded. Initial content CLI execution used the system Node22 executable, which completed successfully; exact Node24 replay and read-only status subsequently passed. The supervised application services use Node24 throughout. Neither diagnostic failure changed content, bypassed review or interrupted the resumed services.
 
 The fresh content-count blocker is resolved. Remaining human check: open the real bot and exercise practice and both mock-exam vehicles. No claim is made that this human journey or a real scheduled notification has already passed. Whole TASK-071 acceptance awaits the final independent operational review of this report and evidence.
+
+## Supervisor acceptance
+
+Accepted2026-10-20 after independent whole-task VERDICT: PASS in .agent/reviews/TASK-071-operational-review-01.md, evidence revision9df8c3076667aeac32c1eaff8483dd8e0ba5d9e1. The human-testing limitations above remain open follow-ups and are not represented as completed.
+

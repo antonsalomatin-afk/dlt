@@ -140,7 +140,7 @@ Potential scope:
 ## Epic 10 — Production Hardening
 
 - TASK-070 — ACCEPTED — approve the production launch boundary (dlt.thauto.app / tele.thauto.app)
-- TASK-071 — BUILDING — starter bank publication approved; preparing release manifests/checks and final Admin handoff
+- TASK-071 — ACCEPTED — production hosts/services verified;50CAR +50MOTORCYCLE reviewed questions live; backup/restore and independent operational review PASS
 
 - deployment ADR
 - observability
