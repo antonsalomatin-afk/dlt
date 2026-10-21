@@ -1,0 +1,11 @@
+TASK-076 Builder evidence checkpoint; NOT Supervisor authoritative acceptance.
+Source: e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2
+21 changed files:6 application files,15 browser test/helper files. No backend/schema/dependency changes.
+Builder reports PASS: pnpm lint; pnpm typecheck; pnpm test --maxWorkers=2 (59files338tests); pnpm build; full226 browser tests.
+Initial failures retained: NodeNext helper imports missing.ts corrected; default59-worker unit run had11 unrelated child-process timeouts, unchanged fullsuite passed with2workers under explicit task amendment; first browser run225PASS/1FAIL because report helper did not open new Topic disclosure, corrected same interaction/assertions, focusedcasePASS then full226PASS.
+Raw local logs retained, ignored: .local-content/task076-builder-checks.txt, task076-browser.txt, task076-browser-02.txt.
+Actual local app screenshot artifacts retained: .local-content/task076-visual/compact-onboarding-320.png, compact-onboarding-390.png, compact-question-390.png, compact-feedback-390.png, compact-menu-390.png, compact-russian-320.png.
+Supervisor visually inspected320onboarding and390question/feedback/menu screenshots: compact header and real answer/menu layout readable, no evident clipping/overlap; mocked local browser harness, not owner Telegram evidence.
+PENDING: Supervisor authoritative sequential lint/typecheck/full338unit(workers2)/build/full226browser, independent Reviewer, accepted release component and approved production rollout/verification. Do not accept or deploy based only on this Builder summary.
+Usage checkpoint:91percent before user95percent five-hour ceiling; reset2026-10-21T10:55:51Z. No reset credits used.
+Production remains accepted b38618f13765ec41ac51421327c1cbbfa347f245 with EN/RU private opt-in scheduler enabled11ICT and100RUstems. Compact frontend NOT deployed.

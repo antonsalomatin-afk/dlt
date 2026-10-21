@@ -5,7 +5,7 @@
   "currentTask": "TASK-076",
   "lastAcceptedTask": "TASK-075",
   "lastAcceptedCommit": "a3fb3564cc314e9a78f3f052554a05c78fccd9a9",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "Owner explicitly expects both compact liveapp and botquestions. TASK-076 implements approved preview composition and correct reminder settings copy; existingprivateENRUscheduler live, opt-in unchanged (0 currentopt-ins). No forcedsends. TASK-072 remains parked for realownerpractice/examsmoke. Preserve95percentceiling and untrackedstarterfiles.",
+  "notes": "TASK-076 real compactUI built/committed with greenBuilder338unit226browser; rootvisualQA inspected screenshots. Authoritativechecks/review/deploy pending after usage reset. Production still b38618f oldlayout; privateENRUscheduler enabled11ICT but diagnosed0opt-ins at08:50UTC. Owner authorized both realUI and chatquestions; no further rolloutapproval needed aftergates. TASK-072parked for genuineownersmoke. Preserveoriginaluntrackedfiles/95ceiling; noresetcredits.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,17 +94,17 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 68,
-    "latestObservedWeeklyUsedPercent": 11,
+    "latestObservedUsedPercent": 91,
+    "latestObservedWeeklyUsedPercent": 14,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-21T09:03:00Z",
+    "checkedAt": "2026-10-21T09:16:31Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-21T10:55:51Z"
   },
-  "executionPaused": false,
-  "pauseReason": null,
+  "executionPaused": true,
+  "pauseReason": "91percent usage checkpoint before95percent ceiling; resume TASK-076 authoritative lint/typecheck/fullunit workers2/build/fullbrowser, independentreview, then approved compact UI deployment. Builder e0bb5c8 reports green338unit226browser, no production change. Never redeem reset credits.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
@@ -157,10 +157,12 @@
   },
   "compactApp": {
     "task": "TASK-076",
-    "status": "BUILDER_SEQUENTIAL_CHECKS",
+    "status": "BUILDER_COMMITTED_AUTHORITATIVE_CHECKS_PENDING",
     "ownerApproval": "Both real compact design and private chat questions",
     "selectedAnswerFlow": "CONFIRM_ANSWER",
     "reminderOptInPreserved": true,
-    "productionDeployed": false
+    "productionDeployed": false,
+    "builderCommit": "e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2",
+    "builderEvidence": ".agent/checks/TASK-076-builder-summary-01.txt"
   }
 }

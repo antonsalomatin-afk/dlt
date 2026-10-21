@@ -1,6 +1,9 @@
 id: TASK-076
 title: Implement the approved compact Mini App learning surface
-status: READY
+status: CHECKING
+builder_commit: e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2
+builder_evidence: .agent/checks/TASK-076-builder-summary-01.txt
+usage_checkpoint: Stopped at91percent before95percent user ceiling. Resume authoritativechecks then independentreview then already-approved productionrollout. No new UI deployed yet.
 owner_role: Builder
 epic: Epic 10 — Production Hardening
 objective: Make the real Mini App match the owner's approved compact question, feedback and menu direction, and accurately expose existing private daily-question opt-in.
