@@ -5,7 +5,7 @@
   "currentTask": "TASK-076",
   "lastAcceptedTask": "TASK-075",
   "lastAcceptedCommit": "a3fb3564cc314e9a78f3f052554a05c78fccd9a9",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK-076 real compactUI built/committed with greenBuilder338unit226browser; rootvisualQA inspected screenshots. Authoritativechecks/review/deploy pending after usage reset. Production still b38618f oldlayout; privateENRUscheduler enabled11ICT but diagnosed0opt-ins at08:50UTC. Owner authorized both realUI and chatquestions; no further rolloutapproval needed aftergates. TASK-072parked for genuineownersmoke. Preserveoriginaluntrackedfiles/95ceiling; noresetcredits.",
+  "notes": "TASK-076 review01 sole vehicle-context blocker fixed in726550f; Builder all338unit229browser PASS, final screenshots refreshed; root authoritative correction gates running sequentially, then independentreview02 and approved existing-host rollout. TASK-077 queued; preserve original untrackedfiles and95percent ceiling.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,12 +94,12 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 0,
-    "latestObservedWeeklyUsedPercent": 15,
+    "latestObservedUsedPercent": 23,
+    "latestObservedWeeklyUsedPercent": 19,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-21T11:54:03Z",
+    "checkedAt": "2026-10-21T12:09:00.278680+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-21T16:54:03Z"
   },
@@ -157,16 +157,17 @@
   },
   "compactApp": {
     "task": "TASK-076",
-    "status": "FIX_VISIBLE_SAVED_VEHICLE_CONTEXT",
+    "status": "AUTHORITATIVE_FIX_CHECKS",
     "ownerApproval": "Both real compact design and private chat questions",
     "selectedAnswerFlow": "CONFIRM_ANSWER",
     "reminderOptInPreserved": true,
     "productionDeployed": false,
     "builderCommit": "e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2",
     "builderEvidence": ".agent/checks/TASK-076-builder-summary-01.txt",
-    "authoritativeChecks": ".agent/checks/TASK-076-checks-01.txt",
+    "authoritativeChecks": ".agent/checks/TASK-076-checks-02.txt",
     "review": ".agent/reviews/TASK-076-review-01.md",
-    "reviewVerdict": "FAIL"
+    "reviewVerdict": "FAIL",
+    "builderFixCommit": "726550f507bd664ec4e752b0917b9a3f959c2683"
   },
   "queuedNativeChatQuiz": {
     "task": "TASK-077",
