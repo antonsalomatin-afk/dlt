@@ -1,6 +1,6 @@
 id: TASK-076
 title: Implement the approved compact Mini App learning surface
-status: CHECKING
+status: REVIEW
 builder_commit: e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2
 builder_evidence: .agent/checks/TASK-076-builder-summary-01.txt
 usage_checkpoint: Fresh five-hour window;23percent observed.95percent ceiling remains. Correction checks then review02 then approved rollout. No new UI deployed yet.
@@ -50,8 +50,8 @@ supervisor_validation_scope:
 owner_decision_required: false
 
 authoritative_checks: .agent/checks/TASK-076-checks-01.txt
-review_attempt: 1
-review_file: .agent/reviews/TASK-076-review-01.md
+review_attempt: 2
+review_file: .agent/reviews/TASK-076-review-02.md
 
 review_fix_scope: Add quiet clearly labeled saved/current profile vehicle context to Practice and Daily including linked presentation states; render honest unset state. Never infer historical snapshot vehicle from current preference. Preserve all handlers/contracts. Add relevant browser regression; rerun mandatory sequential min/build/fullbrowser then independentreview02.
 

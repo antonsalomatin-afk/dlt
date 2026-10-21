@@ -1,0 +1,322 @@
+TASK-076 Supervisor authoritative corrective checks; source726550f507bd664ec4e752b0917b9a3f959c2683; sequential; full suites
+CHECK pnpm lint
+$ eslint .
+EXIT 0
+CHECK pnpm typecheck
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 241ms
+
+$ tsc --noEmit
+EXIT 0
+CHECK pnpm test --maxWorkers=2
+$ pnpm db:generate && vitest run "--maxWorkers=2"
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 272ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  59 passed (59)
+      Tests  338 passed (338)
+   Start at  14:09:24
+   Duration  46.72s (tests 77%, import 17%, transform 5%, worker 1%)
+
+    Isolate  59 workers spawned · ~243ms startup each (spawn + environment, per file)
+             at least ~6.92s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+CHECK pnpm build
+$ pnpm --filter @thai-dlt/web build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 73ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 942ms
+  Running TypeScript ...
+  Finished TypeScript in 2.2s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/3) ...
+✓ Generating static pages using 4 workers (3/3) in 1212ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+EXIT 0
+CHECK pnpm test:e2e --reporter=line
+$ playwright test "--reporter=line"
+[WebServer] (node:4612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] $ pnpm --filter @thai-dlt/web start
+
+[WebServer] (node:16048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] $ next start --hostname 127.0.0.1
+
+[WebServer] (node:21080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 229 tests using 2 workers
+
+(node:2356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:26216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/229] tests\e2e\compact-app.spec.ts:20:3 › practice identifies the saved Car profile selection
+[2/229] tests\e2e\compact-app.spec.ts:20:3 › practice identifies the saved Motorcycle profile selection
+[3/229] tests\e2e\compact-app.spec.ts:31:3 › compact onboarding puts practice first at 320px
+[4/229] tests\e2e\compact-app.spec.ts:31:3 › compact onboarding puts practice first at 390px
+[5/229] tests\e2e\compact-app.spec.ts:31:3 › compact onboarding puts practice first at 1000px
+[6/229] tests\e2e\compact-app.spec.ts:43:1 › menu preserves choices, Escape restores focus, and only Check answer submits
+[7/229] tests\e2e\concept-progress.spec.ts:44:1 › renders exact mastery and facts in English, Russian and Thai, then traverses tied pages
+[8/229] tests\e2e\concept-progress.spec.ts:84:1 › shows the localized NOT_STARTED state for an empty first page
+[9/229] tests\e2e\concept-progress.spec.ts:95:3 › retries the same cursor after a transport next-page failure without discarding validated items
+[10/229] tests\e2e\concept-progress.spec.ts:95:3 › retries the same cursor after a http next-page failure without discarding validated items
+[11/229] tests\e2e\concept-progress.spec.ts:95:3 › retries the same cursor after a malformed next-page failure without discarding validated items
+[12/229] tests\e2e\concept-progress.spec.ts:95:3 › retries the same cursor after a duplicate next-page failure without discarding validated items
+[13/229] tests\e2e\concept-progress.spec.ts:119:1 › a concept-progress 401 expires the session
+[14/229] tests\e2e\concept-progress.spec.ts:126:1 › ignores a late concept response after navigation
+[15/229] tests\e2e\concept-progress.spec.ts:145:1 › the synchronous guard prevents overlapping load-more requests
+[16/229] tests\e2e\daily.spec.ts:48:1 › setup entry sends one exact guarded daily request and exposes loading before the safe question
+[17/229] tests\e2e\daily.spec.ts:73:1 › ordinary practice entry opens daily without requesting an ordinary question
+[18/229] tests\e2e\daily.spec.ts:86:1 › submits captured daily IDs once and preserves the validated result without another assignment
+[19/229] tests\e2e\daily.spec.ts:115:1 › answered replay is explicitly complete and discloses no reconstructed result
+[20/229] tests\e2e\daily.spec.ts:127:1 › language selection uses the accepted English fallback policy
+[21/229] tests\e2e\daily.spec.ts:141:3 › handles daily HTTP 401 without rendering unsafe state
+[22/229] tests\e2e\daily.spec.ts:141:3 › handles daily HTTP 404 without rendering unsafe state
+[23/229] tests\e2e\daily.spec.ts:141:3 › handles daily HTTP 409 without rendering unsafe state
+[24/229] tests\e2e\daily.spec.ts:141:3 › handles daily HTTP 500 without rendering unsafe state
+[25/229] tests\e2e\daily.spec.ts:160:3 › retries a transport daily failure exactly once
+[26/229] tests\e2e\daily.spec.ts:160:3 › retries a malformed daily failure exactly once
+[27/229] tests\e2e\daily.spec.ts:177:1 › rejects a malformed answer without replacing the daily snapshot
+[28/229] tests\e2e\daily.spec.ts:190:3 › handles daily answer HTTP 401 without inventing a result
+[29/229] tests\e2e\daily.spec.ts:190:3 › handles daily answer HTTP 409 without inventing a result
+[30/229] tests\e2e\daily.spec.ts:207:1 › leaving while daily loads is immediate and ignores a late expiry
+[31/229] tests\e2e\daily.spec.ts:220:1 › leaving during answer submission ignores the late result
+[32/229] tests\e2e\deep-link.spec.ts:22:1 › valid daily startapp routes an authenticated learner with a vehicle directly to daily
+[33/229] tests\e2e\deep-link.spec.ts:32:1 › daily intent falls back to setup until vehicle selection exists
+[34/229] tests\e2e\deep-link.spec.ts:40:1 › browser query parameters and unknown start values cannot create daily navigation
+[35/229] tests\e2e\deep-link.spec.ts:51:1 › saved link opens an old snapshot with saved vehicle Not selected and requires explicit confirmation
+[36/229] tests\e2e\deep-link.spec.ts:51:1 › saved link opens an old snapshot with saved vehicle Motorcycle and requires explicit confirmation
+[37/229] tests\e2e\deep-link.spec.ts:88:1 › completed saved link shows history and practice without an answer submission
+[38/229] tests\e2e\deep-link.spec.ts:101:3 › foreign saved link shows safe guidance without today's assignment
+[39/229] tests\e2e\deep-link.spec.ts:101:3 › malformed saved link shows safe guidance without today's assignment
+[40/229] tests\e2e\deep-link.spec.ts:101:3 › mismatch saved link shows safe guidance without today's assignment
+[41/229] tests\e2e\deep-link.spec.ts:119:1 › saved link cannot load a presentation when normal Telegram authentication fails
+[42/229] tests\e2e\exam-history.spec.ts:64:1 › enters from setup and practice and renders pass/fail privacy-safe summaries
+[43/229] tests\e2e\exam-history.spec.ts:87:1 › shows friendly empty history and returns to setup
+[44/229] tests\e2e\exam-history.spec.ts:95:1 › appends two pages once and retries the exact failed cursor
+[45/229] tests\e2e\exam-history.spec.ts:114:1 › rejects a duplicate across pages and preserves validated history for retry
+[46/229] tests\e2e\exam-history.spec.ts:131:1 › renders a perfect review and preserves history when returning
+[47/229] tests\e2e\exam-history.spec.ts:143:1 › renders incorrect and unanswered immutable mistakes with localization
+[48/229] tests\e2e\exam-history.spec.ts:167:1 › opens a direct perfect review from an authoritative exam result then loads clean history
+[49/229] tests\e2e\exam-history.spec.ts:186:1 › history and review 401 responses clear the in-memory session
+[50/229] tests\e2e\exam-history.spec.ts:200:1 › review 404 and not-completed 409 show stable non-destructive states
+[51/229] tests\e2e\exam-history.spec.ts:213:3 › retries a malformed history response without partial content
+[52/229] tests\e2e\exam-history.spec.ts:213:3 › retries a malformed review response without partial content
+[53/229] tests\e2e\exam-history.spec.ts:230:1 › leaving pending history is immediate and ignores a late 401
+[54/229] tests\e2e\exam-history.spec.ts:243:1 › back from a pending review preserves history and ignores its late 401
+[55/229] tests\e2e\exam-report.spec.ts:79:1 › active exam report opens, cancels, validates locally and clears its draft on question switch
+[56/229] tests\e2e\exam-report.spec.ts:110:1 › active exam sends one exact request, blocks cross-question actions and keeps countdown and per-question success
+[57/229] tests\e2e\exam-report.spec.ts:151:1 › reports an answered exam question without changing answer secrecy or navigation
+[58/229] tests\e2e\exam-report.spec.ts:169:1 › active exam keeps exact report details through retryable failures
+[59/229] tests\e2e\exam-report.spec.ts:194:1 › active exam distinguishes unavailable, conflict and session expiry
+[60/229] tests\e2e\exam-report.spec.ts:220:1 › leaving an active exam ignores a late report 401
+[61/229] tests\e2e\exam-report.spec.ts:235:1 › expiry completes normally and invalidates a pending report response
+[62/229] tests\e2e\exam-report.spec.ts:254:1 › report actions appear only inside completed mistake cards, not summaries or perfect reviews
+[63/229] tests\e2e\exam-report.spec.ts:269:1 › review allows one report request across cards and retains per-question outcomes and drafts
+[64/229] tests\e2e\exam-report.spec.ts:306:1 › back from review is immediate and ignores a late report error
+[65/229] tests\e2e\exam.spec.ts:54:1 › no-current entry starts with exact requests and keeps credentials out of URLs and storage
+[66/229] tests\e2e\exam.spec.ts:76:1 › restores persisted answers, authoritative progress and first unanswered question
+[67/229] tests\e2e\exam.spec.ts:87:1 › a fully answered restored exam completes exactly once and renders the result
+[68/229] tests\e2e\exam.spec.ts:102:1 › saves authoritative progress without early correctness and moves to the next unanswered question
+[69/229] tests\e2e\exam.spec.ts:115:1 › the final answer completes once and renders the authoritative result
+[70/229] tests\e2e\exam.spec.ts:130:1 › exact server expiry clamps the timer and completes with unanswered questions
+[71/229] tests\e2e\exam.spec.ts:142:1 › localizes with fallback and supports navigator and previous/next controls
+[72/229] tests\e2e\exam.spec.ts:156:1 › a 401 clears the in-memory session
+[73/229] tests\e2e\exam.spec.ts:164:1 › vehicle and insufficient-content conflicts recover without inventing an exam
+[74/229] tests\e2e\exam.spec.ts:180:1 › an in-progress start conflict performs one current-exam reload
+[75/229] tests\e2e\exam.spec.ts:198:3 › a transport current-exam failure has a deterministic retry
+[76/229] tests\e2e\exam.spec.ts:198:3 › a malformed current-exam failure has a deterministic retry
+[77/229] tests\e2e\exam.spec.ts:214:1 › opens from practice and reloads current after an answer conflict
+[78/229] tests\e2e\exam.spec.ts:228:1 › leaving during answer submission ignores the stale response
+[79/229] tests\e2e\favorites.spec.ts:72:1 › saves the visible presentation exactly once and blocks answer submission while pending
+[80/229] tests\e2e\favorites.spec.ts:99:3 › preserves the question and retries a transport favorite save failure
+[81/229] tests\e2e\favorites.spec.ts:99:3 › preserves the question and retries a http favorite save failure
+[82/229] tests\e2e\favorites.spec.ts:99:3 › preserves the question and retries a malformed favorite save failure
+[83/229] tests\e2e\favorites.spec.ts:121:1 › handles unavailable and expired favorite saves safely
+[84/229] tests\e2e\favorites.spec.ts:135:1 › favorites navigation is immediate during save and ignores its late response
+[85/229] tests\e2e\favorites.spec.ts:150:1 › a newly loaded presentation starts unsaved after saving the previous one
+[86/229] tests\e2e\favorites.spec.ts:174:1 › renders immutable favorites in server order with localization and returns to clean practice
+[87/229] tests\e2e\favorites.spec.ts:201:1 › appends a second page once and retries the exact failed cursor
+[88/229] tests\e2e\favorites.spec.ts:228:1 › retries initial transport failure and shows the friendly empty state
+[89/229] tests\e2e\favorites.spec.ts:243:3 › rejects a favorites page with unknown field and allows retry
+[90/229] tests\e2e\favorites.spec.ts:243:3 › rejects a favorites page with timestamp and allows retry
+[91/229] tests\e2e\favorites.spec.ts:243:3 › rejects a favorites page with cursor and allows retry
+[92/229] tests\e2e\favorites.spec.ts:243:3 › rejects a favorites page with duplicate presentation and allows retry
+[93/229] tests\e2e\favorites.spec.ts:243:3 › rejects a favorites page with duplicate question and allows retry
+[94/229] tests\e2e\favorites.spec.ts:268:3 › rejects a duplicate presentation across favorites pages and preserves the first page
+[95/229] tests\e2e\favorites.spec.ts:268:3 › rejects a duplicate question across favorites pages and preserves the first page
+[96/229] tests\e2e\favorites.spec.ts:290:3 › rejects a repeated presentation after the first-page favorite is removed
+[97/229] tests\e2e\favorites.spec.ts:290:3 › rejects a repeated question after the first-page favorite is removed
+[98/229] tests\e2e\favorites.spec.ts:316:1 › does not resurrect a removed favorite when pending page validation finishes later
+[99/229] tests\e2e\favorites.spec.ts:338:1 › a favorites 401 clears the in-memory session
+[100/229] tests\e2e\favorites.spec.ts:345:1 › a removal 401 clears the in-memory session
+[101/229] tests\e2e\favorites.spec.ts:354:1 › leaving favorites ignores a delayed feed response
+[102/229] tests\e2e\favorites.spec.ts:367:1 › removes only after exact confirmation, prevents duplicates, retries failure, and reaches empty state
+[103/229] tests\e2e\favorites.spec.ts:398:1 › leaving during removal is immediate and ignores its late 401
+[104/229] tests\e2e\history.spec.ts:65:1 › opens owned correct and incorrect history, expands localized snapshots, and returns to clean practice
+[105/229] tests\e2e\history.spec.ts:115:1 › loads two pages once, appends valid items, and preserves the cursor for pagination retry
+[106/229] tests\e2e\history.spec.ts:144:1 › shows initial loading, retries a transport failure, and returns from empty history to setup
+[107/229] tests\e2e\history.spec.ts:166:3 › rejects malformed history responses and allows retry
+[108/229] tests\e2e\history.spec.ts:166:3 › rejects cross-field history responses and allows retry
+[109/229] tests\e2e\history.spec.ts:184:1 › rejects duplicate presentation IDs across pages while preserving the valid first page
+[110/229] tests\e2e\history.spec.ts:202:1 › a history 401 clears the in-memory session
+[111/229] tests\e2e\history.spec.ts:210:1 › leaving history is immediate and ignores a delayed response
+[112/229] tests\e2e\language-settings.spec.ts:29:1 › loads one exact English default and states the future-message boundary
+[113/229] tests\e2e\language-settings.spec.ts:67:1 › saves Russian and Thai through exact guarded requests and reloads server state
+[114/229] tests\e2e\language-settings.spec.ts:128:1 › does not PATCH an unchanged confirmed value
+[115/229] tests\e2e\language-settings.spec.ts:141:1 › opens from practice and returns to clean practice without learning mutations
+[116/229] tests\e2e\language-settings.spec.ts:163:3 › hides choices and retries an initial transport failure
+[117/229] tests\e2e\language-settings.spec.ts:163:3 › hides choices and retries an initial http failure
+[118/229] tests\e2e\language-settings.spec.ts:163:3 › hides choices and retries an initial missing failure
+[119/229] tests\e2e\language-settings.spec.ts:163:3 › hides choices and retries an initial unsupported failure
+[120/229] tests\e2e\language-settings.spec.ts:163:3 › hides choices and retries an initial wrong-case failure
+[121/229] tests\e2e\language-settings.spec.ts:163:3 › hides choices and retries an initial non-string failure
+[122/229] tests\e2e\language-settings.spec.ts:163:3 › hides choices and retries an initial extra failure
+[123/229] tests\e2e\language-settings.spec.ts:186:3 › preserves confirmed state and retries a transport save failure
+[124/229] tests\e2e\language-settings.spec.ts:186:3 › preserves confirmed state and retries a http save failure
+[125/229] tests\e2e\language-settings.spec.ts:186:3 › preserves confirmed state and retries a malformed save failure
+[126/229] tests\e2e\language-settings.spec.ts:186:3 › preserves confirmed state and retries a mismatch save failure
+[127/229] tests\e2e\language-settings.spec.ts:209:3 › a GET 401 expires the memory-only session
+[128/229] tests\e2e\language-settings.spec.ts:209:3 › a PATCH 401 expires the memory-only session
+[129/229] tests\e2e\language-settings.spec.ts:224:1 › leaving invalidates a late response and replacement mount stays authoritative
+[130/229] tests\e2e\mistakes.spec.ts:75:1 › opens mistakes from practice, expands an incorrect localized snapshot, and returns to clean practice
+[131/229] tests\e2e\mistakes.spec.ts:116:1 › loads two mistake pages once and retries the exact failed pagination cursor
+[132/229] tests\e2e\mistakes.spec.ts:145:1 › shows initial loading, retries a transport failure, and returns from empty mistakes to setup
+[133/229] tests\e2e\mistakes.spec.ts:167:3 › rejects a malformed mistakes response and allows retry
+[134/229] tests\e2e\mistakes.spec.ts:167:3 › rejects a logically-correct mistakes response and allows retry
+[135/229] tests\e2e\mistakes.spec.ts:185:1 › rejects a duplicate presentation on a later mistakes page and preserves validated items
+[136/229] tests\e2e\mistakes.spec.ts:203:1 › a mistakes 401 clears the in-memory session
+[137/229] tests\e2e\mistakes.spec.ts:211:1 › leaving mistakes is immediate and ignores a delayed response
+[138/229] tests\e2e\mistakes.spec.ts:225:1 › starts one exact concept retry, shows it before categories load, answers normally, and consumes the handoff
+[139/229] tests\e2e\mistakes.spec.ts:291:1 › retries the same mistake after transport, HTTP, and malformed success or error failures
+[140/229] tests\e2e\mistakes.spec.ts:320:3 › shows stable non-destructive guidance for Mistake not found
+[141/229] tests\e2e\mistakes.spec.ts:320:3 › shows stable non-destructive guidance for No questions available
+[142/229] tests\e2e\mistakes.spec.ts:320:3 › shows stable non-destructive guidance for Mistake has no concept
+[143/229] tests\e2e\mistakes.spec.ts:332:1 › expires on a validated retry 401 and clears the in-memory session
+[144/229] tests\e2e\mistakes.spec.ts:342:1 › returns a missing-vehicle retry conflict to setup and clears the confirmed choice
+[145/229] tests\e2e\mistakes.spec.ts:352:1 › guards same-turn duplicate retry and retry-versus-pagination overlap
+[146/229] tests\e2e\mistakes.spec.ts:384:1 › Back stays available during retry and ignores a late 401
+[147/229] tests\e2e\onboarding.spec.ts:18:1 › missing Telegram data provides launch guidance without login request
+[148/229] tests\e2e\onboarding.spec.ts:27:1 › script failure can be retried
+[149/229] tests\e2e\onboarding.spec.ts:36:1 › login, save and change vehicle with in-memory credentials
+[150/229] tests\e2e\onboarding.spec.ts:58:1 › preserves existing preference and prevents pending duplicate saves
+[151/229] tests\e2e\onboarding.spec.ts:74:3 › rejects malformed login response
+[152/229] tests\e2e\onboarding.spec.ts:80:3 › malformed save retains confirmed preference and permits retry
+[153/229] tests\e2e\onboarding.spec.ts:74:3 › rejects transport login response
+[154/229] tests\e2e\onboarding.spec.ts:80:3 › transport save retains confirmed preference and permits retry
+[155/229] tests\e2e\onboarding.spec.ts:74:3 › rejects http login response
+[156/229] tests\e2e\onboarding.spec.ts:80:3 › http save retains confirmed preference and permits retry
+[157/229] tests\e2e\onboarding.spec.ts:90:1 › protected 401 clears session and offers reopening guidance
+[158/229] tests\e2e\practice.spec.ts:28:1 › loads categories with bearer auth, preserves server order and localizes labels
+[159/229] tests\e2e\practice.spec.ts:48:1 › an empty category list keeps All categories available and sends the exact empty selector
+[160/229] tests\e2e\practice.spec.ts:62:1 › selected scope continues, can change after a result and never changes that result
+[161/229] tests\e2e\practice.spec.ts:100:3 › retries a category transport failure before enabling questions
+[162/229] tests\e2e\practice.spec.ts:100:3 › retries a category http failure before enabling questions
+[163/229] tests\e2e\practice.spec.ts:117:3 › rejects a malformed category payload and allows retry
+[164/229] tests\e2e\practice.spec.ts:117:3 › rejects a duplicate ID category payload and allows retry
+[165/229] tests\e2e\practice.spec.ts:117:3 › rejects a duplicate slug category payload and allows retry
+[166/229] tests\e2e\practice.spec.ts:139:3 › category loading handles HTTP 401
+[167/229] tests\e2e\practice.spec.ts:139:3 › category loading handles HTTP 409
+[168/229] tests\e2e\practice.spec.ts:152:1 › shows distinct filtered and unfiltered no-question guidance without changing selection
+[169/229] tests\e2e\practice.spec.ts:172:1 › shows category loading and ignores a late category response after departure
+[170/229] tests\e2e\practice.spec.ts:187:3 › choice 1, server result, language fallback and continuation
+[171/229] tests\e2e\practice.spec.ts:187:3 › choice 2, server result, language fallback and continuation
+[172/229] tests\e2e\practice.spec.ts:187:3 › choice 3, server result, language fallback and continuation
+[173/229] tests\e2e\practice.spec.ts:187:3 › choice 4, server result, language fallback and continuation
+[174/229] tests\e2e\practice.spec.ts:211:1 › one pending submission, transport retry and already-submitted guidance
+[175/229] tests\e2e\practice.spec.ts:223:3 › next handles HTTP 401
+[176/229] tests\e2e\practice.spec.ts:223:3 › next handles HTTP 404
+[177/229] tests\e2e\practice.spec.ts:223:3 › next handles HTTP 409
+[178/229] tests\e2e\practice.spec.ts:223:3 › next handles HTTP 500
+[179/229] tests\e2e\practice.spec.ts:232:3 › rejects hidden presentation DTO
+[180/229] tests\e2e\practice.spec.ts:232:3 › rejects duplicate presentation DTO
+[181/229] tests\e2e\practice.spec.ts:232:3 › rejects missing presentation DTO
+[182/229] tests\e2e\practice.spec.ts:239:3 › rejects inconsistent answer presentationId
+[183/229] tests\e2e\practice.spec.ts:239:3 › rejects inconsistent answer selectedChoiceId
+[184/229] tests\e2e\practice.spec.ts:239:3 › rejects inconsistent answer correctChoiceId
+[185/229] tests\e2e\practice.spec.ts:239:3 › rejects inconsistent answer isCorrect
+[186/229] tests\e2e\practice.spec.ts:246:1 › ignores a late response after leaving practice
+[187/229] tests\e2e\practice.spec.ts:252:1 › missing vehicle allows resaving the previously confirmed vehicle
+[188/229] tests\e2e\progress.spec.ts:30:1 › sends one exact no-store progress request and renders a nonempty accessible summary
+[189/229] tests\e2e\progress.spec.ts:69:1 › shows the zero state and localizes the complete view in English, Russian, and Thai
+[190/229] tests\e2e\progress.spec.ts:90:1 › opens without a selected vehicle and returns to setup
+[191/229] tests\e2e\progress.spec.ts:98:1 › returns from progress opened in practice to a clean fresh practice view
+[192/229] tests\e2e\progress.spec.ts:130:3 › shows safe guidance without partial metrics and retries a transport failure
+[193/229] tests\e2e\progress.spec.ts:130:3 › shows safe guidance without partial metrics and retries a http failure
+[194/229] tests\e2e\progress.spec.ts:130:3 › shows safe guidance without partial metrics and retries a malformed failure
+[195/229] tests\e2e\progress.spec.ts:160:3 › rejects the strict missing progress response and permits retry
+[196/229] tests\e2e\progress.spec.ts:160:3 › rejects the strict fractional progress response and permits retry
+[197/229] tests\e2e\progress.spec.ts:160:3 › rejects the strict unsafe progress response and permits retry
+[198/229] tests\e2e\progress.spec.ts:160:3 › rejects the strict negative progress response and permits retry
+[199/229] tests\e2e\progress.spec.ts:160:3 › rejects the strict counts progress response and permits retry
+[200/229] tests\e2e\progress.spec.ts:160:3 › rejects the strict rounding progress response and permits retry
+[201/229] tests\e2e\progress.spec.ts:160:3 › rejects the strict zeroAccuracy progress response and permits retry
+[202/229] tests\e2e\progress.spec.ts:160:3 › rejects the strict nullAccuracy progress response and permits retry
+[203/229] tests\e2e\progress.spec.ts:174:1 › a progress 401 clears the in-memory session
+[204/229] tests\e2e\progress.spec.ts:183:3 › a replacement mount stays authoritative after a stale success
+[205/229] tests\e2e\progress.spec.ts:183:3 › a replacement mount stays authoritative after a stale error
+[206/229] tests\e2e\progress.spec.ts:183:3 › a replacement mount stays authoritative after a stale 401
+[207/229] tests\e2e\progress.spec.ts:236:1 › the synchronous guard prevents overlapping retries
+[208/229] tests\e2e\reminders.spec.ts:28:1 › loads one exact default-off preference and documents the active opt-in delivery schedule
+[209/229] tests\e2e\reminders.spec.ts:66:1 › enables, disables and reloads only server-confirmed values with exact guarded requests
+[210/229] tests\e2e\reminders.spec.ts:133:1 › opens from practice and returns to a clean practice destination without learning mutations
+[211/229] tests\e2e\reminders.spec.ts:154:3 › hides the control and retries an initial transport failure
+[212/229] tests\e2e\reminders.spec.ts:154:3 › hides the control and retries an initial http failure
+[213/229] tests\e2e\reminders.spec.ts:154:3 › hides the control and retries an initial missing failure
+[214/229] tests\e2e\reminders.spec.ts:154:3 › hides the control and retries an initial non-boolean failure
+[215/229] tests\e2e\reminders.spec.ts:154:3 › hides the control and retries an initial extra failure
+[216/229] tests\e2e\reminders.spec.ts:175:3 › preserves confirmed state and retries a transport save failure
+[217/229] tests\e2e\reminders.spec.ts:175:3 › preserves confirmed state and retries a http save failure
+[218/229] tests\e2e\reminders.spec.ts:175:3 › preserves confirmed state and retries a malformed save failure
+[219/229] tests\e2e\reminders.spec.ts:175:3 › preserves confirmed state and retries a mismatch save failure
+[220/229] tests\e2e\reminders.spec.ts:198:3 › a GET 401 expires the memory-only session
+[221/229] tests\e2e\reminders.spec.ts:198:3 › a PATCH 401 expires the memory-only session
+[222/229] tests\e2e\reminders.spec.ts:210:1 › leaving invalidates a late response and a replacement mount remains authoritative
+[223/229] tests\e2e\report.spec.ts:30:1 › opens and cancels a report and rejects invalid details without a request
+[224/229] tests\e2e\report.spec.ts:56:1 › submits exact emoji and newline details once and preserves the unanswered question
+[225/229] tests\e2e\report.spec.ts:86:1 › keeps report details retryable across transport, HTTP and invalid success failures
+[226/229] tests\e2e\report.spec.ts:111:1 › distinguishes unavailable and already-submitted reports
+[227/229] tests\e2e\report.spec.ts:131:1 › expires on report 401 and ignores a late 401 after immediate navigation
+[228/229] tests\e2e\report.spec.ts:146:1 › expires the active in-memory session on a report 401
+[229/229] tests\e2e\report.spec.ts:156:1 › reports after answering without changing result, favorite, language or the next presentation
+  229 passed (1.8m)
+EXIT 0
+CHECK git diff --check
+EXIT 0
+PASS all sequential authoritative gates

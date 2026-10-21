@@ -5,8 +5,8 @@
   "currentTask": "TASK-076",
   "lastAcceptedTask": "TASK-075",
   "lastAcceptedCommit": "a3fb3564cc314e9a78f3f052554a05c78fccd9a9",
-  "status": "CHECKING",
-  "reviewAttempt": 1,
+  "status": "REVIEW",
+  "reviewAttempt": 2,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "parkedTasks": [
@@ -157,7 +157,7 @@
   },
   "compactApp": {
     "task": "TASK-076",
-    "status": "AUTHORITATIVE_FIX_CHECKS",
+    "status": "INDEPENDENT_REVIEW_02",
     "ownerApproval": "Both real compact design and private chat questions",
     "selectedAnswerFlow": "CONFIRM_ANSWER",
     "reminderOptInPreserved": true,
@@ -165,8 +165,8 @@
     "builderCommit": "e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2",
     "builderEvidence": ".agent/checks/TASK-076-builder-summary-01.txt",
     "authoritativeChecks": ".agent/checks/TASK-076-checks-02.txt",
-    "review": ".agent/reviews/TASK-076-review-01.md",
-    "reviewVerdict": "FAIL",
+    "review": ".agent/reviews/TASK-076-review-02.md",
+    "reviewVerdict": "PENDING",
     "builderFixCommit": "726550f507bd664ec4e752b0917b9a3f959c2683"
   },
   "queuedNativeChatQuiz": {
