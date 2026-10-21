@@ -5,7 +5,7 @@
   "currentTask": "TASK-076",
   "lastAcceptedTask": "TASK-075",
   "lastAcceptedCommit": "a3fb3564cc314e9a78f3f052554a05c78fccd9a9",
-  "status": "ACCEPTING",
+  "status": "REVIEW",
   "reviewAttempt": 2,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -157,11 +157,11 @@
   },
   "compactApp": {
     "task": "TASK-076",
-    "status": "DEPLOYING_ACCEPTED_CODE",
+    "status": "PRODUCTION_VERIFIED_OPERATIONAL_REVIEW_PENDING",
     "ownerApproval": "Both real compact design and private chat questions",
     "selectedAnswerFlow": "CONFIRM_ANSWER",
     "reminderOptInPreserved": true,
-    "productionDeployed": false,
+    "productionDeployed": true,
     "builderCommit": "e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2",
     "builderEvidence": ".agent/checks/TASK-076-builder-summary-01.txt",
     "authoritativeChecks": ".agent/checks/TASK-076-checks-02.txt",
@@ -170,7 +170,12 @@
     "builderFixCommit": "726550f507bd664ec4e752b0917b9a3f959c2683",
     "acceptedCodeCommit": "726550f507bd664ec4e752b0917b9a3f959c2683",
     "releaseTag": "thaidlt-compact-20261021",
-    "releaseCommit": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8"
+    "releaseCommit": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8",
+    "productionChecks": ".agent/checks/TASK-076-production-checks-01.txt",
+    "releaseArchiveSha256": "fd66ac1d44a97dc714ed9dfd5730bd2122c5ebef69ca16f7b3e82d9539a44f3d",
+    "backup": "thaidlt-20261021-121853.dump;101812bytes;Resultsuccess/ExecMainStatus0",
+    "operationalReview": ".agent/reviews/TASK-076-operational-review-01.md",
+    "operationalVerdict": "PENDING"
   },
   "queuedNativeChatQuiz": {
     "task": "TASK-077",

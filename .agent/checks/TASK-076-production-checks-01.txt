@@ -1,0 +1,54 @@
+
+2026-10-21T12:25:31.510055+00:00 Supervisor independent read-only checks; expected flag=true
+Local exact archive verified against pinned commit LF archive: 581 files; 576 CRLF-only conversions; all remaining bytes exact. Remote source checks bind raw archive entry bytes.
+RELEASE /srv/thaidlt/releases/611a5592ccf4f38612e56dd4c1bb9d906c32bef8
+SOURCE_MATCH apps/api/src/index.ts
+SOURCE_MATCH apps/bot/src/main.ts
+SOURCE_MATCH apps/bot/src/question-post.ts
+SOURCE_MATCH apps/web/next.config.ts
+SOURCE_MATCH apps/web/app/page.tsx
+SOURCE_MATCH apps/web/app/globals.css
+SOURCE_MATCH apps/web/app/practice.tsx
+SOURCE_MATCH apps/web/app/daily.tsx
+SOURCE_MATCH apps/web/app/app-menu.tsx
+SOURCE_MATCH apps/web/app/reminders.tsx
+SOURCE_MATCH packages/database/src/daily-practice.ts
+SOURCE_MATCH tools/content/russian-stems.ts
+SOURCE_MATCH .agent/reviews/TASK-074-translation-review-01.json
+MainPID=2196006
+NRestarts=0
+User=thaidlt
+Id=thaidlt-web.service
+ActiveState=active
+SubState=running
+MainPID=2196001
+NRestarts=0
+User=thaidlt
+Id=thaidlt-api.service
+ActiveState=active
+SubState=running
+MainPID=2196005
+NRestarts=0
+User=thaidlt
+Id=thaidlt-bot.service
+ActiveState=active
+SubState=running
+{"scope":"runtime-public-rollout-keys","flag":"true","username":"thauto_dlt_bot","shortNamePresent":false}
+Russian stems: 0 would apply, 0 applied, 100 matched.
+{"scope":"unauthenticated-http","url":"https://dlt.thauto.app/","method":"GET","status":200,"cacheControl":"s-maxage=31536000"}
+PASS public HTML compact-app present; former marketing headline absent.
+{"scope":"unauthenticated-http","url":"https://tele.thauto.app/me","method":"GET","status":401,"cacheControl":"no-store"}
+{"scope":"unauthenticated-http","url":"http://127.0.0.1:3061/me","method":"GET","status":401,"cacheControl":"no-store"}
+{"scope":"unauthenticated-http","url":"https://tele.thauto.app/practice/presentation","method":"POST","status":401,"cacheControl":"no-store"}
+{"scope":"unauthenticated-http","url":"https://dlt.thauto.app/practice/presentation","method":"POST","status":401,"cacheControl":"no-store"}
+{"scope":"unauthenticated-http","url":"https://tele.thauto.app/not-a-route","method":"GET","status":404,"cacheControl":null}
+PASS root independent read-only release/source/service/rollout/content/HTTP verification.
+Running as unit: run-u68736.service; invocation ID: 394f11f17691479789ec10b5727e55f1
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 1.594s
+CPU time consumed: 1.737s
+Memory peak: 336.0K
+Memory swap peak: 0B
+
+GUEST_EXIT 0
