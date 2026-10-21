@@ -1,3 +1,4 @@
+import { clickNavigation } from './navigation.ts';
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
 const token = 'q'.repeat(43);
@@ -57,7 +58,7 @@ async function authenticate(page: Page) {
 async function openExam(page: Page, current: object = currentPayload()) {
   await page.route('**/exam/current', (route) => route.fulfill({ json: current }));
   await authenticate(page);
-  await page.getByRole('button', { name: 'Mock exam' }).click();
+  await clickNavigation(page, 'Mock exam');
   await expect(page.getByRole('heading', { name: /Question \d+ of 50/ })).toBeVisible();
 }
 
@@ -65,7 +66,7 @@ async function openReview(page: Page, payload: object = review) {
   await page.route('**/exam/history?limit=10', (route) => route.fulfill({ json: { items: [historyItem], nextCursor: null } }));
   await page.route(`**/exam/${examId}/review`, (route) => route.fulfill({ json: payload }));
   await authenticate(page);
-  await page.getByRole('button', { name: 'Exam history' }).click();
+  await clickNavigation(page, 'Exam history');
   await page.getByRole('button', { name: 'Review mistakes' }).click();
   await expect(page.getByRole('heading', { name: 'Exam mistakes' })).toBeVisible();
 }
@@ -255,7 +256,7 @@ test('report actions appear only inside completed mistake cards, not summaries o
   await page.route('**/exam/history?limit=10', (route) => route.fulfill({ json: { items: [historyItem], nextCursor: null } }));
   await page.route(`**/exam/${examId}/review`, (route) => { reviewRequests++; return route.fulfill({ json: reviewRequests === 1 ? review : perfectReview }); });
   await authenticate(page);
-  await page.getByRole('button', { name: 'Exam history' }).click();
+  await clickNavigation(page, 'Exam history');
   await expect(page.getByRole('button', { name: 'Report question' })).toHaveCount(0);
   await page.getByRole('button', { name: 'Review mistakes' }).click();
   await expect(page.locator('.exam-mistake-card').getByRole('button', { name: 'Report question' })).toHaveCount(2);

@@ -1,3 +1,4 @@
+import { clickNavigation, openNavigation } from './navigation.ts';
 import { expect, test, type Page } from '@playwright/test';
 
 const token = 'r'.repeat(43);
@@ -57,7 +58,7 @@ async function authenticate(page: Page) {
 
 async function openHistory(page: Page) {
   await authenticate(page);
-  await page.getByRole('button', { name: 'Exam history' }).click();
+  await clickNavigation(page, 'Exam history');
 }
 
 test('enters from setup and practice and renders pass/fail privacy-safe summaries', async ({ page }) => {
@@ -76,7 +77,7 @@ test('enters from setup and practice and renders pass/fail privacy-safe summarie
   await expect(page.locator('.exam-history-entry').nth(1)).toContainText('Motorcycle');
   await page.getByRole('button', { name: 'Back', exact: true }).click();
   await page.getByRole('button', { name: 'Start practice' }).click();
-  await page.getByRole('button', { name: 'Exam history' }).click();
+  await clickNavigation(page, 'Exam history');
   await expect(page.getByRole('heading', { name: 'Exam history' })).toBeVisible();
   await page.getByRole('button', { name: 'Back', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your next step' })).toBeVisible();
@@ -174,7 +175,7 @@ test('opens a direct perfect review from an authoritative exam result then loads
   await page.route(`**/exam/${examIds[0]}/review`, (route) => route.fulfill({ json: { ...perfectReview(), completedAt: '2098-01-01T00:50:00.000Z' } }));
   await page.route('**/exam/history?limit=10', (route) => route.fulfill({ json: { items: [], nextCursor: null } }));
   await authenticate(page);
-  await page.getByRole('button', { name: 'Mock exam' }).click();
+  await clickNavigation(page, 'Mock exam');
   await expect(page.locator('.exam-result')).toBeVisible();
   await page.getByRole('button', { name: 'Review exam mistakes' }).click();
   await expect(page.getByText('Perfect exam')).toBeVisible();
@@ -192,7 +193,7 @@ test('history and review 401 responses clear the in-memory session', async ({ pa
   await page.route('**/auth/telegram', (route) => route.fulfill({ json: { token, expiresAt: '2099-01-01T00:00:00.000Z', user: { id: uuid(900), username: null, firstName: null, selectedVehicleType: 'CAR' } } }));
   await page.route('**/exam/history?limit=10', (route) => route.fulfill({ json: { items: [historyItem(1, true)], nextCursor: null } }));
   await page.route(`**/exam/${examIds[0]}/review`, (route) => route.fulfill({ status: 401, json: { error: 'Unauthorized' } }));
-  await page.goto('/'); await page.getByRole('button', { name: 'Exam history' }).click(); await page.getByRole('button', { name: 'Review mistakes' }).click();
+  await page.goto('/'); await clickNavigation(page, 'Exam history'); await page.getByRole('button', { name: 'Review mistakes' }).click();
   await expect(page.getByRole('main').getByRole('alert')).toContainText('session has ended');
 });
 
@@ -229,13 +230,13 @@ for (const target of ['history', 'review'] as const) {
 test('leaving pending history is immediate and ignores a late 401', async ({ page }) => {
   let release: (() => void) | undefined; const gate = new Promise<void>((resolve) => { release = resolve; });
   await page.route('**/exam/history?limit=10', async (route) => { await gate; return route.fulfill({ status: 401, json: { error: 'Unauthorized' } }); });
-  await authenticate(page); await page.getByRole('button', { name: 'Exam history' }).click();
+  await authenticate(page); await clickNavigation(page, 'Exam history');
   await expect(page.getByRole('status')).toContainText('Loading your exam history');
   await page.getByRole('button', { name: 'Back', exact: true }).click();
   release?.();
   await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
   await page.waitForTimeout(100);
-  await expect(page.getByRole('button', { name: 'Exam history' })).toBeEnabled();
+  await openNavigation(page, 'Exam history'); await expect(page.getByRole('button', { name: 'Exam history' })).toBeEnabled();
   await expect(page.getByRole('button', { name: 'Try again' })).toHaveCount(0);
 });
 

@@ -1,3 +1,4 @@
+import { clickNavigation, openNavigation } from './navigation.ts';
 import { expect, test, type Page } from '@playwright/test';
 
 const token = 'm'.repeat(43);
@@ -68,7 +69,7 @@ async function authenticate(page: Page, vehicle: 'CAR' | null = 'CAR', mockCateg
 
 async function openFromSetup(page: Page) {
   await authenticate(page);
-  await page.getByRole('button', { name: 'Mistakes', exact: true }).click();
+  await clickNavigation(page, 'Mistakes', true);
 }
 
 test('opens mistakes from practice, expands an incorrect localized snapshot, and returns to clean practice', async ({ page }, testInfo) => {
@@ -84,7 +85,7 @@ test('opens mistakes from practice, expands an incorrect localized snapshot, and
   await page.getByRole('button', { name: 'Start practice' }).click();
   await page.getByRole('button', { name: 'Get a question' }).click();
   await expect(page.getByRole('heading', { name: 'Mistake question 1' })).toBeVisible();
-  await page.getByRole('button', { name: 'Mistakes', exact: true }).click();
+  await clickNavigation(page, 'Mistakes', true);
 
   await expect(page.getByRole('heading', { name: 'Mistakes to review' })).toBeVisible();
   await expect(page.getByText('Review each incorrect submitted answer as its own attempt.')).toBeVisible();
@@ -151,7 +152,7 @@ test('shows initial loading, retries a transport failure, and returns from empty
     return route.fulfill({ json: { items: [], nextCursor: null } });
   });
   await authenticate(page, null);
-  await page.getByRole('button', { name: 'Mistakes', exact: true }).click();
+  await clickNavigation(page, 'Mistakes', true);
   await expect(page.getByRole('status')).toContainText('Loading your incorrect submitted answers');
   await expect(page.getByRole('button', { name: 'Back', exact: true })).toBeEnabled();
   release?.();
@@ -217,7 +218,7 @@ test('leaving mistakes is immediate and ignores a delayed response', async ({ pa
   await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
   release?.();
   await page.waitForTimeout(100);
-  await expect(page.getByRole('button', { name: 'Mistakes', exact: true })).toBeEnabled();
+  await openNavigation(page, 'Mistakes', true); await expect(page.getByRole('button', { name: 'Mistakes', exact: true })).toBeEnabled();
   await expect(page.getByRole('main').getByRole('alert')).toHaveCount(0);
 });
 
@@ -266,7 +267,7 @@ test('starts one exact concept retry, shows it before categories load, answers n
   });
 
   await authenticate(page, 'CAR', false);
-  await page.getByRole('button', { name: 'Mistakes', exact: true }).click();
+  await clickNavigation(page, 'Mistakes', true);
   await page.locator('.history-entry').first().locator(':scope > summary').click();
   await page.getByRole('button', { name: 'Practice this concept' }).click();
   await expect(page.getByRole('heading', { name: retry.question.textEnglish })).toBeVisible();
@@ -276,9 +277,9 @@ test('starts one exact concept retry, shows it before categories load, answers n
 
   releaseCategories?.();
   await page.getByRole('radio', { name: /A\. Mistake choice/ }).check();
-  await page.getByRole('button', { name: 'Submit answer' }).click();
+  await page.getByRole('button', { name: 'Check answer' }).click();
   await expect(page.getByRole('region', { name: 'Answer result' })).toContainText('Correct');
-  await page.getByRole('button', { name: 'Mistakes', exact: true }).click();
+  await clickNavigation(page, 'Mistakes', true);
   await expect(page.locator('.history-entry')).toHaveCount(1);
   expect(feedRequests).toBe(2);
   await page.getByRole('button', { name: 'Back', exact: true }).click();
@@ -396,6 +397,6 @@ test('Back stays available during retry and ignores a late 401', async ({ page }
   await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
   release?.();
   await page.waitForTimeout(100);
-  await expect(page.getByRole('button', { name: 'Mistakes', exact: true })).toBeEnabled();
+  await openNavigation(page, 'Mistakes', true); await expect(page.getByRole('button', { name: 'Mistakes', exact: true })).toBeEnabled();
   await expect(page.getByRole('main').getByRole('alert')).toHaveCount(0);
 });

@@ -1,3 +1,4 @@
+import { clickNavigation, openNavigation } from './navigation.ts';
 import { expect, test, type Page, type Route } from '@playwright/test';
 
 const token = 'p'.repeat(43);
@@ -23,7 +24,7 @@ async function authenticate(page: Page, vehicle: 'CAR' | null = null) {
 
 async function openFromSetup(page: Page, vehicle: 'CAR' | null = null) {
   await authenticate(page, vehicle);
-  await page.getByRole('button', { name: 'Progress', exact: true }).click();
+  await clickNavigation(page, 'Progress', true);
 }
 
 test('sends one exact no-store progress request and renders a nonempty accessible summary', async ({ page }) => {
@@ -116,7 +117,7 @@ test('returns from progress opened in practice to a clean fresh practice view', 
   await page.getByRole('button', { name: 'Start practice' }).click();
   await page.getByRole('button', { name: 'Get a question' }).click();
   await expect(page.getByRole('heading', { name: 'Question before progress' })).toBeVisible();
-  await page.getByRole('button', { name: 'Progress', exact: true }).click();
+  await clickNavigation(page, 'Progress', true);
   await expect(page.getByRole('heading', { name: 'Progress' })).toBeVisible();
   await page.getByRole('button', { name: 'Back' }).click();
   await expect(page.getByRole('heading', { name: 'Your next step' })).toBeVisible();
@@ -207,7 +208,7 @@ for (const stale of ['success', 'error', '401'] as const) {
     await expect(page.getByRole('status')).toContainText('Loading your progress');
     await page.getByRole('button', { name: 'Back' }).click();
     await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
-    await page.getByRole('button', { name: 'Progress', exact: true }).click();
+    await clickNavigation(page, 'Progress', true);
     await expect(metric(page, 'Answered')).toContainText('4');
     await expect(metric(page, 'Accuracy')).toContainText('25%');
     expect(requests).toBe(2);
@@ -226,7 +227,7 @@ for (const stale of ['success', 'error', '401'] as const) {
 
     if (stale === '401') {
       await page.getByRole('button', { name: 'Back' }).click();
-      await expect(page.getByRole('button', { name: 'Progress', exact: true })).toBeEnabled();
+      await openNavigation(page, 'Progress', true); await expect(page.getByRole('button', { name: 'Progress', exact: true })).toBeEnabled();
       await expect(page.getByRole('button', { name: 'Try again' })).toHaveCount(0);
     }
   });

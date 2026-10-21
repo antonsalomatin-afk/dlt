@@ -1,3 +1,4 @@
+import { clickNavigation, openTopics } from './navigation.ts';
 import { expect, test, type Page } from '@playwright/test';
 
 const ids = ['550e8400-e29b-41d4-a716-446655440001', '550e8400-e29b-41d4-a716-446655440002', '550e8400-e29b-41d4-a716-446655440003', '550e8400-e29b-41d4-a716-446655440004'];
@@ -31,6 +32,7 @@ test('loads categories with bearer auth, preserves server order and localizes la
     return route.fulfill({ json: { categories } });
   });
   await openPractice(page);
+  await openTopics(page);
   const scope = page.getByRole('group', { name: 'Practice scope' });
   await expect(scope.getByRole('radio')).toHaveCount(3);
   await expect(scope.getByRole('radio').nth(0)).toHaveAccessibleName('All categories');
@@ -49,6 +51,7 @@ test('an empty category list keeps All categories available and sends the exact 
     return route.fulfill({ json: presentation });
   });
   await openPractice(page);
+  await openTopics(page);
   const scope = page.getByRole('group', { name: 'Practice scope' });
   await expect(scope.getByRole('radio')).toHaveCount(1);
   await expect(scope.getByRole('radio', { name: 'All categories' })).toBeChecked();
@@ -72,19 +75,20 @@ test('selected scope continues, can change after a result and never changes that
     return route.fulfill({ json: { ...answer(ids[0] ?? ''), presentationId: body.presentationId } });
   });
   await openPractice(page);
+  await openTopics(page);
   const scope = page.getByRole('group', { name: 'Practice scope' });
   await scope.getByRole('radio', { name: /Road signs/ }).check();
   await page.getByRole('button', { name: 'Get a question' }).click();
   await expect(scope.getByRole('radio', { name: /Safety/ })).toBeDisabled();
   await page.getByRole('radio', { name: 'Action 1', exact: false }).check();
-  await page.getByRole('button', { name: 'Submit answer' }).click();
+  await page.getByRole('button', { name: 'Check answer' }).click();
   await expect(page.getByRole('region', { name: 'Answer result' })).toBeVisible();
   await scope.getByRole('radio', { name: /Safety/ }).check();
   await expect(page.getByRole('region', { name: 'Answer result' })).toContainText('Incorrect');
-  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Next question' }).click();
   await page.getByRole('radio', { name: 'Action 1', exact: false }).check();
-  await page.getByRole('button', { name: 'Submit answer' }).click();
-  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Check answer' }).click();
+  await page.getByRole('button', { name: 'Next question' }).click();
   await expect.poll(() => nextBodies).toEqual([
     { categoryId: categoryIds[0] },
     { categoryId: categoryIds[1] },
@@ -126,6 +130,7 @@ for (const invalid of ['malformed', 'duplicate ID', 'duplicate slug'] as const) 
     await expect(page.getByRole('main').getByRole('alert')).toContainText('could not load practice categories');
     await expect(page.getByRole('group', { name: 'Practice scope' })).toHaveCount(0);
     await page.getByRole('button', { name: 'Retry categories' }).click();
+    await openTopics(page);
     await expect(page.getByRole('group', { name: 'Practice scope' }).getByRole('radio')).toHaveCount(3);
   });
 }
@@ -153,6 +158,7 @@ test('shows distinct filtered and unfiltered no-question guidance without changi
     return route.fulfill({ status: 404, json: { error: 'No questions available' } });
   });
   await openPractice(page);
+  await openTopics(page);
   const scope = page.getByRole('group', { name: 'Practice scope' });
   await scope.getByRole('radio', { name: /Road signs/ }).check();
   await page.getByRole('button', { name: 'Get a question' }).click();
@@ -170,7 +176,7 @@ test('shows category loading and ignores a late category response after departur
   await openPractice(page);
   await expect(page.getByRole('status')).toContainText('Loading practice categories');
   await expect(page.getByRole('button', { name: 'Get a question' })).toHaveCount(0);
-  await page.getByRole('button', { name: 'Change vehicle' }).click();
+  await clickNavigation(page, 'Change vehicle');
   release?.();
   await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
   await page.waitForTimeout(100);
@@ -189,16 +195,16 @@ for (const selected of [0, 1, 2, 3]) {
     await page.getByRole('radio', { name: 'Thai', exact: true }).check(); await expect(page.getByRole('heading', { name: 'Which action is safe?' })).toBeVisible();
     await page.getByText('Exam English wording').click(); await expect(page.getByText('Select safe action.')).toBeVisible();
     await page.getByRole('radio', { name: `Action ${selected + 1}`, exact: false }).check();
-    await page.getByRole('button', { name: 'Submit answer' }).click();
+    await page.getByRole('button', { name: 'Check answer' }).click();
     await expect(page.getByRole('region', { name: 'Answer result' }).getByRole('heading', { name: selected === 2 ? 'Correct' : 'Incorrect', exact: true })).toBeVisible();
     await expect(page.getByText('Keep a safe distance.')).toBeVisible(); await expect(page.getByText('Trap explanation unavailable.')).toBeVisible();
     await expect(page.getByRole('radio', { name: 'Action 3', exact: false })).toHaveAccessibleName(/Correct answer/);
     await expect(page.getByRole('radio', { name: `Action ${selected + 1}`, exact: false })).toBeChecked();
     if (selected === 2) await page.screenshot({ path: info.outputPath('practice-result.png'), fullPage: true });
-    await page.getByRole('button', { name: 'Continue' }).click();
+    await page.getByRole('button', { name: 'Next question' }).click();
     await expect(page.getByRole('region', { name: 'Answer result' })).toHaveCount(0);
     await expect(page.getByRole('group', { name: 'Answer choices' }).locator('input:checked')).toHaveCount(0);
-    await expect(page.getByRole('button', { name: 'Submit answer' })).toBeDisabled(); expect(count).toBe(2);
+    await expect(page.getByRole('button', { name: 'Check answer' })).toBeDisabled(); expect(count).toBe(2);
   });
 }
 
@@ -206,12 +212,12 @@ test('one pending submission, transport retry and already-submitted guidance', a
   await page.route('**/practice/next', (route) => route.fulfill({ json: presentation }));
   let release: (() => void) | undefined; const gate = new Promise<void>((resolve) => { release = resolve; }); let count = 0;
   await page.route('**/practice/answer', async (route) => { count++; if (count === 1) { await gate; await route.abort(); } else await route.fulfill({ status: 409, json: { error: 'Answer already submitted' } }); });
-  await start(page); await page.getByRole('radio', { name: 'Action 1', exact: false }).check(); await page.getByRole('button', { name: 'Submit answer' }).click();
+  await start(page); await page.getByRole('radio', { name: 'Action 1', exact: false }).check(); await page.getByRole('button', { name: 'Check answer' }).click();
   await expect(page.getByRole('button', { name: 'Please wait' }).first()).toBeDisabled(); await expect(page.getByRole('radio', { name: 'Action 2', exact: false })).toBeDisabled();
   expect(count).toBe(1); release?.(); await expect(page.getByRole('main').getByRole('alert')).toContainText('could not confirm');
   await expect(page.getByRole('radio', { name: 'Action 1', exact: false })).toBeChecked(); await page.getByRole('button', { name: 'Retry answer' }).click();
   await expect(page.getByRole('main').getByRole('alert')).toContainText('already submitted'); await expect(page.getByRole('region', { name: 'Answer result' })).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'Continue' })).toBeEnabled(); expect(count).toBe(2);
+  await expect(page.getByRole('button', { name: 'Next question' })).toBeEnabled(); expect(count).toBe(2);
 });
 for (const status of [401, 404, 409, 500]) {
   test(`next handles HTTP ${status}`, async ({ page }) => {
@@ -233,14 +239,14 @@ for (const mismatch of ['presentationId', 'selectedChoiceId', 'correctChoiceId',
   test(`rejects inconsistent answer ${mismatch}`, async ({ page }) => {
     await page.route('**/practice/next', (route) => route.fulfill({ json: presentation }));
     await page.route('**/practice/answer', (route) => route.fulfill({ json: { ...answer(ids[0] ?? ''), [mismatch]: mismatch === 'isCorrect' ? true : presentation.question.id } }));
-    await start(page); await page.getByRole('radio', { name: 'Action 1', exact: false }).check(); await page.getByRole('button', { name: 'Submit answer' }).click();
+    await start(page); await page.getByRole('radio', { name: 'Action 1', exact: false }).check(); await page.getByRole('button', { name: 'Check answer' }).click();
     await expect(page.getByRole('main').getByRole('alert')).toContainText('could not confirm'); await expect(page.getByRole('region', { name: 'Answer result' })).toHaveCount(0);
   });
 }
 test('ignores a late response after leaving practice', async ({ page }) => {
   let release: (() => void) | undefined; const gate = new Promise<void>((resolve) => { release = resolve; });
   await page.route('**/practice/next', async (route) => { await gate; await route.fulfill({ status: 401, json: { error: 'Unauthorized' } }); });
-  await start(page); await page.getByRole('button', { name: 'Change vehicle' }).click(); release?.();
+  await start(page); await clickNavigation(page, 'Change vehicle'); release?.();
   await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible(); await expect(page.getByRole('button', { name: 'Save vehicle' })).toBeVisible();
 });
 test('missing vehicle allows resaving the previously confirmed vehicle', async ({ page }) => {

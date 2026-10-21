@@ -1,3 +1,4 @@
+import { clickNavigation, openTopics } from './navigation.ts';
 import { expect, test, type Page, type Route } from '@playwright/test';
 
 const token = 'x'.repeat(43);
@@ -16,7 +17,7 @@ async function openPractice(page: Page, next: (route: Route) => void | Promise<v
   await page.route('**/practice/next', next);
   await page.goto('/');
   await page.getByRole('button', { name: 'Start practice' }).click();
-  if (categories.length > 0) await page.getByRole('radio', { name: /Road signs/ }).check();
+  if (categories.length > 0) { await openTopics(page); await page.getByRole('radio', { name: /Road signs/ }).check(); }
   await page.getByRole('button', { name: 'Get a question' }).click();
   await expect(page.getByRole('heading', { name: 'Which action is safe?' })).toBeVisible();
 }
@@ -73,7 +74,7 @@ test('submits exact emoji and newline details once and preserves the unanswered 
   await page.getByRole('button', { name: 'Submit report' }).evaluate((button: HTMLButtonElement) => { button.click(); button.click(); });
   await expect.poll(() => requests).toBe(1);
   await expect(page.getByRole('button', { name: 'Save to favorites' })).toBeDisabled();
-  await expect(page.getByRole('button', { name: 'Submit answer' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Check answer' })).toBeDisabled();
   await expect(page.getByRole('radio', { name: /Action 2/ })).toBeDisabled();
   release?.();
   await expect(page.getByText('Report submitted', { exact: true })).toBeVisible();
@@ -135,7 +136,7 @@ test('expires on report 401 and ignores a late 401 after immediate navigation', 
   await openReport(page);
   await page.getByRole('textbox', { name: 'What may be wrong with this question?' }).fill('A valid report description');
   await page.getByRole('button', { name: 'Submit report' }).click();
-  await page.getByRole('button', { name: 'Change vehicle' }).click();
+  await clickNavigation(page, 'Change vehicle');
   release?.();
   await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
   await page.waitForTimeout(100);
@@ -169,7 +170,7 @@ test('reports after answering without changing result, favorite, language or the
   }, [category]);
   await page.getByRole('radio', { name: 'Russian' }).check();
   await page.getByRole('radio', { name: /Action 1/ }).check();
-  await page.getByRole('button', { name: 'Submit answer' }).click();
+  await page.getByRole('button', { name: 'Check answer' }).click();
   await page.getByRole('button', { name: 'Save to favorites' }).click();
   await openReport(page);
   await page.getByRole('textbox', { name: 'What may be wrong with this question?' }).fill('The wording may be misleading');
@@ -178,7 +179,7 @@ test('reports after answering without changing result, favorite, language or the
   await expect(page.getByRole('region', { name: 'Answer result' })).toContainText('Incorrect');
   await expect(page.getByRole('button', { name: 'Saved to favorites' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Какое действие безопасно?' })).toBeVisible();
-  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Next question' }).click();
   await expect(page.getByRole('button', { name: 'Report question' })).toBeVisible();
   await openReport(page);
   await expect(page.getByRole('textbox', { name: 'What may be wrong with this question?' })).toHaveValue('');

@@ -1,3 +1,4 @@
+import { clickNavigation } from './navigation.ts';
 import { expect, test, type Page, type Route } from '@playwright/test';
 
 const token = 'r'.repeat(43);
@@ -21,10 +22,10 @@ async function authenticate(page: Page, vehicle: 'CAR' | null = null) {
 
 async function openFromSetup(page: Page, vehicle: 'CAR' | null = null) {
   await authenticate(page, vehicle);
-  await page.getByRole('button', { name: 'Reminder settings' }).click();
+  await clickNavigation(page, 'Reminder settings');
 }
 
-test('loads one exact default-off preference and documents the inactive delivery boundary', async ({ page }) => {
+test('loads one exact default-off preference and documents the active opt-in delivery schedule', async ({ page }) => {
   await page.addInitScript(() => {
     const records: Array<{ method: string | undefined; hasBody: boolean; cache: RequestCache | undefined }> = [];
     Object.defineProperty(window, '__reminderFetches', { value: records });
@@ -51,9 +52,9 @@ test('loads one exact default-off preference and documents the inactive delivery
   await openFromSetup(page);
   const toggle = page.getByRole('checkbox', { name: 'Daily-question reminder preference' });
   await expect(toggle).not.toBeChecked();
-  await expect(page.getByText('Delivery is not active yet.')).toBeVisible();
-  await expect(page.getByText('ThaiDLT does not currently send Telegram reminders.')).toBeVisible();
-  await expect(page.getByText(/send time|frequency|timezone/iu)).toHaveCount(0);
+  await expect(page.getByText('Daily questions in Telegram', { exact: true })).toBeVisible();
+  await expect(page.getByText(/11:00 Thailand time/)).toBeVisible();
+  await expect(page.getByText(/Saving does not send a message immediately/)).toBeVisible();
   await renderCheckpoint(page);
   expect(requests).toBe(1);
   expect(await page.evaluate(() => (window as unknown as { __reminderFetches: unknown }).__reminderFetches)).toEqual([
@@ -120,7 +121,7 @@ test('enables, disables and reloads only server-confirmed values with exact guar
 
   await page.getByRole('button', { name: 'Back' }).click();
   await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
-  await page.getByRole('button', { name: 'Reminder settings' }).click();
+  await clickNavigation(page, 'Reminder settings');
   await expect(page.getByRole('checkbox', { name: 'Daily-question reminder preference' })).not.toBeChecked();
   expect(getRequests).toBe(2);
   expect(await page.evaluate(() => (window as unknown as { __reminderMutations: unknown }).__reminderMutations)).toEqual([
@@ -141,7 +142,7 @@ test('opens from practice and returns to a clean practice destination without le
   await authenticate(page, 'CAR');
   await page.getByRole('button', { name: 'Start practice' }).click();
   await expect(page.getByRole('heading', { name: 'Your next step' })).toBeVisible();
-  await page.getByRole('button', { name: 'Reminder settings' }).click();
+  await clickNavigation(page, 'Reminder settings');
   await expect(page.getByRole('checkbox', { name: 'Daily-question reminder preference' })).toBeChecked();
   await page.getByRole('button', { name: 'Back' }).click();
   await expect(page.getByRole('heading', { name: 'Your next step' })).toBeVisible();
@@ -221,7 +222,7 @@ test('leaving invalidates a late response and a replacement mount remains author
   await openFromSetup(page, 'CAR');
   await expect(page.getByRole('status')).toContainText('Loading your reminder preference');
   await page.getByRole('button', { name: 'Back' }).click();
-  await page.getByRole('button', { name: 'Reminder settings' }).click();
+  await clickNavigation(page, 'Reminder settings');
   await expect(page.getByRole('checkbox', { name: 'Daily-question reminder preference' })).toBeChecked();
   releaseOld?.();
   await renderCheckpoint(page);

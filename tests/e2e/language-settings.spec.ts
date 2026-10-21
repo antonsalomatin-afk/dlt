@@ -1,3 +1,4 @@
+import { clickNavigation } from './navigation.ts';
 import { expect, test, type Page, type Route } from '@playwright/test';
 
 const token = 'l'.repeat(43);
@@ -22,7 +23,7 @@ async function authenticate(page: Page, vehicle: 'CAR' | null = null) {
 
 async function openFromSetup(page: Page, vehicle: 'CAR' | null = null) {
   await authenticate(page, vehicle);
-  await page.getByRole('button', { name: 'Language settings' }).click();
+  await clickNavigation(page, 'Language settings');
 }
 
 test('loads one exact English default and states the future-message boundary', async ({ page }) => {
@@ -115,7 +116,7 @@ test('saves Russian and Thai through exact guarded requests and reloads server s
   expect(patches).toBe(2);
 
   await page.getByRole('button', { name: 'Back' }).click();
-  await page.getByRole('button', { name: 'Language settings' }).click();
+  await clickNavigation(page, 'Language settings');
   await expect(page.getByRole('radio', { name: 'Thai' })).toBeChecked();
   expect(gets).toBe(2);
   expect(await page.evaluate(() => (window as unknown as { __languageMutations: unknown }).__languageMutations)).toEqual([
@@ -149,7 +150,7 @@ test('opens from practice and returns to clean practice without learning mutatio
   await authenticate(page, 'CAR');
   await page.getByRole('button', { name: 'Start practice' }).click();
   await expect(page.getByRole('heading', { name: 'Your next step' })).toBeVisible();
-  await page.getByRole('button', { name: 'Language settings' }).click();
+  await clickNavigation(page, 'Language settings');
   await expect(page.getByRole('radio', { name: 'Russian' })).toBeChecked();
   await page.getByRole('button', { name: 'Back' }).click();
   await expect(page.getByRole('heading', { name: 'Your next step' })).toBeVisible();
@@ -235,7 +236,7 @@ test('leaving invalidates a late response and replacement mount stays authoritat
   await openFromSetup(page, 'CAR');
   await expect(page.getByRole('status')).toContainText('Loading your preferred language');
   await page.getByRole('button', { name: 'Back' }).click();
-  await page.getByRole('button', { name: 'Language settings' }).click();
+  await clickNavigation(page, 'Language settings');
   await expect(page.getByRole('radio', { name: 'Thai' })).toBeChecked();
   releaseOld?.();
   await renderCheckpoint(page);

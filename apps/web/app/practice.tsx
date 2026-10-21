@@ -1,5 +1,6 @@
 'use client';
 
+import { AppMenu } from './app-menu';
 import { useEffect, useRef, useState } from 'react';
 import { answerSchema, favoriteResponseSchema, practiceCategoriesSchema, practiceReportRequestSchema, practiceReportResponseSchema, presentationSchema, type Answer, type PracticeCategory, type Presentation, type Session } from '../lib/contracts';
 
@@ -209,18 +210,26 @@ export function Practice({ session, initialPresentation = null, onHandoffConsume
 
   const scopeLocked = categoriesPending || pending || reportPending || (!!presentation && !answer);
 
+  const selectedCategory = categories?.find((category) => category.id === selectedCategoryId);
+
   return <section className="panel practice" aria-labelledby="practice-title" aria-busy={categoriesPending || pending || favoritePending || reportPending}>
-    <p className="eyebrow accent">02 / ONE QUESTION AT A TIME</p>
+    <p className="eyebrow accent">PRACTICE</p>
     <h2 id="practice-title">Your next step</h2>
-    <div className="panel-nav"><button className="secondary" onClick={() => leave(() => onVehicle())}>Change vehicle</button><button className="secondary" onClick={() => leave(onDaily)}>Today’s question</button><button className="secondary" onClick={() => leave(onExam)}>Mock exam</button><button className="secondary" onClick={() => leave(onExamHistory)}>Exam history</button><button className="secondary" onClick={() => leave(onProgress)}>Progress</button><button className="secondary" onClick={() => leave(onHistory)}>History</button><button className="secondary" onClick={() => leave(onMistakes)}>Mistakes</button><button className="secondary" onClick={() => leave(onFavorites)}>Favorites</button><button className="secondary" onClick={() => leave(onReminders)}>Reminder settings</button><button className="secondary" onClick={() => leave(onLanguage)}>Language settings</button></div>
+    <AppMenu><button className="secondary" onClick={() => leave(() => onVehicle())}>Change vehicle</button><button className="secondary" onClick={() => leave(onDaily)}>Today’s question</button><button className="secondary" onClick={() => leave(onExam)}>Mock exam</button><button className="secondary" onClick={() => leave(onExamHistory)}>Exam history</button><button className="secondary" onClick={() => leave(onProgress)}>Progress</button><button className="secondary" onClick={() => leave(onHistory)}>History</button><button className="secondary" onClick={() => leave(onMistakes)}>Mistakes</button><button className="secondary" onClick={() => leave(onFavorites)}>Favorites</button><button className="secondary" onClick={() => leave(onReminders)}>Reminder settings</button><button className="secondary" onClick={() => leave(onLanguage)}>Language settings</button></AppMenu>
     <fieldset className="languages"><legend>Practice language</legend>{(['English', 'Russian', 'Thai'] as const).map((item) => <label key={item}><input type="radio" name="language" checked={language === item} onChange={() => setLanguage(item)} /> {item}</label>)}</fieldset>
-    {categories && <fieldset className="practice-scope" disabled={scopeLocked}><legend>Practice scope</legend>
+    {categories && <details className="scope-picker"><summary>Topic: {selectedCategory ? localizedCategory(language, selectedCategory) : 'All categories'}</summary><fieldset className="practice-scope" disabled={scopeLocked}><legend>Practice scope</legend>
       <label className={selectedCategoryId === null ? 'selected' : ''}><input type="radio" name="practice-scope" value="all" checked={selectedCategoryId === null} onChange={() => setSelectedCategoryId(null)} /><span>All categories</span></label>
       {categories.map((category) => <label className={selectedCategoryId === category.id ? 'selected' : ''} key={category.id}><input type="radio" name="practice-scope" value={category.id} checked={selectedCategoryId === category.id} onChange={() => setSelectedCategoryId(category.id)} /><span>{localizedCategory(language, category)} <small>{category.questionCount} {category.questionCount === 1 ? 'question' : 'questions'}</small></span></label>)}
-    </fieldset>}
+    </fieldset></details>}
     {presentation && <>
       <h3 className="question">{localized(language, presentation.question.textEnglish, presentation.question.textRussian, presentation.question.textThai)}</h3>
       {presentation.question.textExamEnglish && <details><summary>Exam English wording</summary><p>{presentation.question.textExamEnglish}</p></details>}
+      <fieldset className="answers" disabled={pending || reportPending || attempted || !!answer || closed}><legend className="sr-only">Answer choices</legend>{presentation.question.choices.map((item) => <label className={`answer-choice ${choice === item.id ? 'selected' : ''}`} key={item.id}>
+        <input type="radio" name="answer" checked={choice === item.id} onChange={() => setChoice(item.id)} />
+        <span>{item.key}. {localized(language, item.textEnglish, item.textRussian, item.textThai)}{answer?.correctChoiceId === item.id && <strong> — Correct answer</strong>}{answer?.selectedChoiceId === item.id && <strong> — Your answer</strong>}</span>
+      </label>)}</fieldset>
+      {answer && <div className={`result ${answer.isCorrect ? 'correct' : 'incorrect'}`} role="region" aria-label="Answer result"><h3>{answer.isCorrect ? 'Correct' : 'Incorrect'}</h3><h4>Explanation</h4><p>{localized(language, answer.explanationEnglish, answer.explanationRussian, answer.explanationThai) ?? 'Explanation unavailable.'}</p><h4>Watch out for</h4><p>{localized(language, answer.trapExplanationEnglish, answer.trapExplanationRussian, answer.trapExplanationThai) ?? 'Trap explanation unavailable.'}</p></div>}
+      <div className="question-tools">
       <button className="secondary favorite-action" disabled={pending || favoritePending || reportPending || savedPresentationId === presentation.presentationId} onClick={() => void saveFavorite()}>{favoritePending ? 'Saving favorite…' : savedPresentationId === presentation.presentationId ? 'Saved to favorites' : favoriteError ? 'Retry favorite' : 'Save to favorites'}</button>
       {reportedPresentation?.id === presentation.presentationId
         ? <p className="report-state" role="status">{reportedPresentation.duplicate ? 'Report already submitted' : 'Report submitted'}</p>
@@ -233,16 +242,12 @@ export function Practice({ session, initialPresentation = null, onHandoffConsume
             <div className="report-controls"><button className="secondary" type="button" disabled={reportPending} onClick={cancelReport}>Cancel</button><button className="primary" type="submit" disabled={reportPending}>{reportPending ? 'Submitting report…' : 'Submit report'}</button></div>
           </form>
           : <button className="secondary report-action" disabled={pending || favoritePending} onClick={() => { setReportOpen(true); setReportError(null); }}>Report question</button>}
-      <fieldset className="answers" disabled={pending || reportPending || attempted || !!answer || closed}><legend className="sr-only">Answer choices</legend>{presentation.question.choices.map((item) => <label className={`answer-choice ${choice === item.id ? 'selected' : ''}`} key={item.id}>
-        <input type="radio" name="answer" checked={choice === item.id} onChange={() => setChoice(item.id)} />
-        <span>{item.key}. {localized(language, item.textEnglish, item.textRussian, item.textThai)}{answer?.correctChoiceId === item.id && <strong> — Correct answer</strong>}{answer?.selectedChoiceId === item.id && <strong> — Your answer</strong>}</span>
-      </label>)}</fieldset>
-      {answer && <div className="result" role="region" aria-label="Answer result"><h3>{answer.isCorrect ? 'Correct' : 'Incorrect'}</h3><h4>Explanation</h4><p>{localized(language, answer.explanationEnglish, answer.explanationRussian, answer.explanationThai) ?? 'Explanation unavailable.'}</p><h4>Watch out for</h4><p>{localized(language, answer.trapExplanationEnglish, answer.trapExplanationRussian, answer.trapExplanationThai) ?? 'Trap explanation unavailable.'}</p></div>}
+      </div>
     </>}
     <div className={`message ${error ? 'error' : ''}`} role={error ? 'alert' : 'status'}><p>{message}</p></div>
     {!categories && !categoriesPending && <button className="primary" onClick={() => void loadCategories()}>Retry categories</button>}
-    {presentation && !answer && !closed && <button className="primary" disabled={pending || favoritePending || reportPending || !choice} onClick={() => void request(true)}>{pending || favoritePending ? 'Please wait…' : attempted ? 'Retry answer' : 'Submit answer'}</button>}
-    {categories && (!presentation || answer || attempted || closed) && <button className="primary next" disabled={pending || favoritePending || reportPending} onClick={() => void request(false)}>{pending || favoritePending ? 'Please wait…' : presentation ? 'Continue' : 'Get a question'}</button>}
+    {presentation && !answer && !closed && <button className="primary" disabled={pending || favoritePending || reportPending || !choice} onClick={() => void request(true)}>{pending || favoritePending ? 'Please wait…' : attempted ? 'Retry answer' : 'Check answer'}</button>}
+    {categories && (!presentation || answer || attempted || closed) && <button className="primary next" disabled={pending || favoritePending || reportPending} onClick={() => void request(false)}>{pending || favoritePending ? 'Please wait…' : presentation ? 'Next question' : 'Get a question'}</button>}
   </section>;
 }
 

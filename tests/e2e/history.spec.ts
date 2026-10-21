@@ -1,3 +1,4 @@
+import { clickNavigation, openNavigation } from './navigation.ts';
 import { expect, test, type Page } from '@playwright/test';
 
 const token = 'h'.repeat(43);
@@ -58,7 +59,7 @@ async function authenticate(page: Page, vehicle: 'CAR' | null = 'CAR') {
 
 async function openFromSetup(page: Page) {
   await authenticate(page);
-  await page.getByRole('button', { name: 'History', exact: true }).click();
+  await clickNavigation(page, 'History', true);
 }
 
 test('opens owned correct and incorrect history, expands localized snapshots, and returns to clean practice', async ({ page }, testInfo) => {
@@ -75,7 +76,7 @@ test('opens owned correct and incorrect history, expands localized snapshots, an
   await page.getByRole('button', { name: 'Start practice' }).click();
   await page.getByRole('button', { name: 'Get a question' }).click();
   await expect(page.getByRole('heading', { name: 'History question 1' })).toBeVisible();
-  await page.getByRole('button', { name: 'History', exact: true }).click();
+  await clickNavigation(page, 'History', true);
 
   await expect(page.locator('.history-entry')).toHaveCount(2);
   await expect(page.getByRole('button', { name: 'Practice this concept' })).toHaveCount(0);
@@ -150,7 +151,7 @@ test('shows initial loading, retries a transport failure, and returns from empty
     return route.fulfill({ json: { items: [], nextCursor: null } });
   });
   await authenticate(page, null);
-  await page.getByRole('button', { name: 'History', exact: true }).click();
+  await clickNavigation(page, 'History', true);
   await expect(page.getByRole('status')).toContainText('Loading your answer history');
   await expect(page.getByRole('button', { name: 'Back', exact: true })).toBeEnabled();
   release?.();
@@ -216,6 +217,6 @@ test('leaving history is immediate and ignores a delayed response', async ({ pag
   await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
   release?.();
   await page.waitForTimeout(100);
-  await expect(page.getByRole('button', { name: 'History', exact: true })).toBeEnabled();
+  await openNavigation(page, 'History', true); await expect(page.getByRole('button', { name: 'History', exact: true })).toBeEnabled();
   await expect(page.getByRole('main').getByRole('alert')).toHaveCount(0);
 });

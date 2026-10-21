@@ -1,5 +1,6 @@
 'use client';
 
+import { AppMenu } from './app-menu';
 import { useEffect, useRef, useState } from 'react';
 import {
   answerSchema,
@@ -147,11 +148,11 @@ export function Daily({ linkedPresentationId, session, onSetup, onPractice, onHi
   return <section className="panel practice daily" aria-labelledby="daily-title" aria-busy={loadState === 'loading' || answerPending}>
     <p className="eyebrow accent">{linked ? `SAVED QUESTION${daily ? ` · ${daily.day}` : ''}` : 'TODAY · ONE STABLE QUESTION'}</p>
     <h2 id="daily-title">{linked ? 'Linked question' : 'Today’s question'}</h2>
-    <div className="panel-nav">
+    <AppMenu>
       <button className="secondary" onClick={() => leave(onSetup)}>Vehicle setup</button>
       <button className="secondary" onClick={() => leave(onPractice)}>Ordinary practice</button>
       <button className="secondary" onClick={() => leave(onHistory)}>History</button>
-    </div>
+    </AppMenu>
     <fieldset className="languages" disabled={loadState === 'loading' || answerPending}>
       <legend>Question language</legend>
       {(['English', 'Russian', 'Thai'] as const).map((item) => <label key={item}><input type="radio" name="daily-language" checked={language === item} onChange={() => setLanguage(item)} /> {item}</label>)}
@@ -165,12 +166,12 @@ export function Daily({ linkedPresentationId, session, onSetup, onPractice, onHi
           <input type="radio" name="daily-answer" checked={choice === item.id} onChange={() => selectChoice(item.id)} />
           <span>{item.key}. {localized(language, item.textEnglish, item.textRussian, item.textThai)}{answer?.correctChoiceId === item.id && <strong> — Correct answer</strong>}{answer?.selectedChoiceId === item.id && <strong> — Your answer</strong>}</span>
         </label>)}</fieldset>}
-      {answer && <div className="result" role="region" aria-label="Answer result"><h3>{answer.isCorrect ? 'Correct' : 'Incorrect'}</h3><h4>Explanation</h4><p>{localized(language, answer.explanationEnglish, answer.explanationRussian, answer.explanationThai) ?? 'Explanation unavailable.'}</p><h4>Watch out for</h4><p>{localized(language, answer.trapExplanationEnglish, answer.trapExplanationRussian, answer.trapExplanationThai) ?? 'Trap explanation unavailable.'}</p></div>}
+      {answer && <div className={`result ${answer.isCorrect ? 'correct' : 'incorrect'}`} role="region" aria-label="Answer result"><h3>{answer.isCorrect ? 'Correct' : 'Incorrect'}</h3><h4>Explanation</h4><p>{localized(language, answer.explanationEnglish, answer.explanationRussian, answer.explanationThai) ?? 'Explanation unavailable.'}</p><h4>Watch out for</h4><p>{localized(language, answer.trapExplanationEnglish, answer.trapExplanationRussian, answer.trapExplanationThai) ?? 'Trap explanation unavailable.'}</p></div>}
     </>}
     <div className={`message ${loadState === 'error' || answerError ? 'error' : ''}`} role={loadState === 'error' || answerError ? 'alert' : 'status'}><p>{message}</p></div>
     {(loadState === 'error' || loadState === 'empty') && <button className="primary" onClick={() => void loadDaily()}>{linked ? 'Retry linked question' : 'Retry today’s question'}</button>}
-    {daily && loadState === 'ready' && !answer && <button className="primary" disabled={answerPending || !choice} onClick={() => void submitAnswer()}>{answerPending ? 'Please wait…' : attempted ? 'Retry answer' : linked ? 'Check answer' : 'Submit answer'}</button>}
-    {answer && linked && <button className="primary next" onClick={() => leave(onPractice)}>Next question</button>}
+    {daily && loadState === 'ready' && !answer && <button className="primary" disabled={answerPending || !choice} onClick={() => void submitAnswer()}>{answerPending ? 'Please wait…' : attempted ? 'Retry answer' : 'Check answer'}</button>}
+    {answer && <button className="primary next" onClick={() => leave(onPractice)}>Next question</button>}
     {replayComplete && <div className="daily-complete-actions"><button className="primary" onClick={() => leave(onHistory)}>Open History</button><button className="secondary" onClick={() => leave(onPractice)}>Continue with ordinary practice</button></div>}
   </section>;
 }

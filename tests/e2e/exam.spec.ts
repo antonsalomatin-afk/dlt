@@ -1,3 +1,4 @@
+import { clickNavigation } from './navigation.ts';
 import { expect, test, type Page, type Route } from '@playwright/test';
 
 const token = 'e'.repeat(43);
@@ -47,7 +48,7 @@ async function openExam(page: Page, current: object | null = null) {
     ? route.fulfill({ json: current })
     : route.fulfill({ status: 404, json: { error: 'Exam not found' } }));
   await authenticate(page);
-  await page.getByRole('button', { name: 'Mock exam' }).click();
+  await clickNavigation(page, 'Mock exam');
 }
 
 test('no-current entry starts with exact requests and keeps credentials out of URLs and storage', async ({ page }) => {
@@ -61,7 +62,7 @@ test('no-current entry starts with exact requests and keeps credentials out of U
     return route.fulfill({ json: startPayload });
   });
   await authenticate(page);
-  await page.getByRole('button', { name: 'Mock exam' }).click();
+  await clickNavigation(page, 'Mock exam');
   await expect(page.getByText('50', { exact: true })).toBeVisible();
   await expect(page.getByText('60 minutes', { exact: true })).toBeVisible();
   await expect(page.getByText('45 / 50')).toBeVisible();
@@ -155,7 +156,7 @@ test('localizes with fallback and supports navigator and previous/next controls'
 test('a 401 clears the in-memory session', async ({ page }) => {
   await page.route('**/exam/current', (route) => route.fulfill({ status: 401, json: { error: 'Unauthorized' } }));
   await authenticate(page);
-  await page.getByRole('button', { name: 'Mock exam' }).click();
+  await clickNavigation(page, 'Mock exam');
   await expect(page.getByRole('main').getByRole('alert')).toContainText('session has ended');
   await expect(page.getByRole('button', { name: 'Try again' })).toBeEnabled();
 });
@@ -187,7 +188,7 @@ test('an in-progress start conflict performs one current-exam reload', async ({ 
   });
   await page.route('**/exam/start', (route) => { starts++; return route.fulfill({ status: 409, json: { error: 'Exam already in progress' } }); });
   await authenticate(page);
-  await page.getByRole('button', { name: 'Mock exam' }).click();
+  await clickNavigation(page, 'Mock exam');
   await page.getByRole('button', { name: 'Start mock exam' }).click();
   await expect(page.getByRole('heading', { name: 'Question 4 of 50' })).toBeVisible();
   expect({ currentRequests, starts }).toEqual({ currentRequests: 2, starts: 1 });
@@ -202,7 +203,7 @@ for (const failure of ['transport', 'malformed'] as const) {
       return failure === 'transport' ? route.abort() : route.fulfill({ json: { ...currentPayload(0), score: 50 } });
     });
     await authenticate(page);
-    await page.getByRole('button', { name: 'Mock exam' }).click();
+    await clickNavigation(page, 'Mock exam');
     await expect(page.locator('.exam').getByRole('alert')).toContainText('could not load your mock exam');
     await page.getByRole('button', { name: 'Retry exam' }).click();
     await expect(page.getByRole('button', { name: 'Start mock exam' })).toBeEnabled();
@@ -217,7 +218,7 @@ test('opens from practice and reloads current after an answer conflict', async (
   await page.route('**/exam/answer', (route) => route.fulfill({ status: 409, json: { error: 'Answer already submitted' } }));
   await authenticate(page);
   await page.getByRole('button', { name: 'Start practice' }).click();
-  await page.getByRole('button', { name: 'Mock exam' }).click();
+  await clickNavigation(page, 'Mock exam');
   await page.getByRole('radio', { name: /Choice A for 1/ }).check();
   await page.getByRole('button', { name: 'Submit answer' }).click();
   await expect(page.getByRole('heading', { name: 'Question 2 of 50' })).toBeVisible();

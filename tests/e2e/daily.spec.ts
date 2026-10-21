@@ -1,3 +1,4 @@
+import { clickNavigation } from './navigation.ts';
 import { expect, test, type Page, type Route } from '@playwright/test';
 
 const token = 'x'.repeat(43);
@@ -41,7 +42,7 @@ async function authenticate(page: Page, vehicle: 'CAR' | null = 'CAR') {
 
 async function enterDaily(page: Page) {
   await authenticate(page);
-  await page.getByRole('button', { name: 'Today’s question' }).click();
+  await clickNavigation(page, 'Today’s question');
 }
 
 test('setup entry sends one exact guarded daily request and exposes loading before the safe question', async ({ page }) => {
@@ -58,7 +59,7 @@ test('setup entry sends one exact guarded daily request and exposes loading befo
   });
   await authenticate(page);
   expect(requests).toBe(0);
-  await page.getByRole('button', { name: 'Today’s question' }).click();
+  await clickNavigation(page, 'Today’s question');
   await expect(page.getByRole('heading', { name: 'Today’s question' })).toBeVisible();
   await expect(page.locator('section.daily')).toHaveAttribute('aria-busy', 'true');
   await expect(page.getByRole('status')).toContainText('Loading today’s question');
@@ -77,7 +78,7 @@ test('ordinary practice entry opens daily without requesting an ordinary questio
   await page.route('**/practice/daily', (route) => { dailyRequests++; return route.fulfill({ json: daily }); });
   await authenticate(page);
   await page.getByRole('button', { name: 'Start practice' }).click();
-  await page.getByRole('button', { name: 'Today’s question' }).click();
+  await clickNavigation(page, 'Today’s question');
   await expect(page.getByRole('heading', { name: question.textEnglish })).toBeVisible();
   expect({ dailyRequests, ordinaryRequests }).toEqual({ dailyRequests: 1, ordinaryRequests: 0 });
 });
@@ -98,7 +99,7 @@ test('submits captured daily IDs once and preserves the validated result without
   });
   await enterDaily(page);
   await page.getByRole('radio', { name: /Daily action 1/ }).check();
-  await page.getByRole('button', { name: 'Submit answer' }).click({ clickCount: 2 });
+  await page.getByRole('button', { name: 'Check answer' }).click({ clickCount: 2 });
   await expect(page.getByRole('button', { name: 'Please wait' })).toBeDisabled();
   expect(answerRequests).toBe(1);
   release?.();
@@ -178,7 +179,7 @@ test('rejects a malformed answer without replacing the daily snapshot', async ({
   await page.route('**/practice/answer', (route) => route.fulfill({ json: { ...answer, presentationId: ids[6] } }));
   await enterDaily(page);
   await page.getByRole('radio', { name: /Daily action 1/ }).check();
-  await page.getByRole('button', { name: 'Submit answer' }).click();
+  await page.getByRole('button', { name: 'Check answer' }).click();
   await expect(page.getByRole('main').getByRole('alert')).toContainText('could not confirm');
   await expect(page.getByRole('heading', { name: question.textEnglish })).toBeVisible();
   await expect(page.getByRole('region', { name: 'Answer result' })).toHaveCount(0);
@@ -191,7 +192,7 @@ for (const status of [401, 409]) {
     await page.route('**/practice/answer', (route) => route.fulfill({ status, json: { error: 'test' } }));
     await enterDaily(page);
     await page.getByRole('radio', { name: /Daily action 1/ }).check();
-    await page.getByRole('button', { name: 'Submit answer' }).click();
+    await page.getByRole('button', { name: 'Check answer' }).click();
     await expect(page.getByRole('region', { name: 'Answer result' })).toHaveCount(0);
     if (status === 401) {
       await expect(page.getByRole('main').getByRole('alert')).toContainText('session has ended');
@@ -208,8 +209,8 @@ test('leaving while daily loads is immediate and ignores a late expiry', async (
   const gate = new Promise<void>((resolve) => { release = resolve; });
   await page.route('**/practice/daily', async (route) => { await gate; await route.fulfill({ status: 401, json: { error: 'Unauthorized' } }); });
   await authenticate(page);
-  await page.getByRole('button', { name: 'Today’s question' }).click();
-  await page.getByRole('button', { name: 'Vehicle setup' }).click();
+  await clickNavigation(page, 'Today’s question');
+  await clickNavigation(page, 'Vehicle setup');
   await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
   release?.();
   await expect(page.getByRole('button', { name: 'Selection saved' })).toBeDisabled();
@@ -224,8 +225,8 @@ test('leaving during answer submission ignores the late result', async ({ page }
   await page.route('**/practice/answer', async (route) => { await gate; await route.fulfill({ status: 401, json: { error: 'Unauthorized' } }); });
   await enterDaily(page);
   await page.getByRole('radio', { name: /Daily action 1/ }).check();
-  await page.getByRole('button', { name: 'Submit answer' }).click();
-  await page.getByRole('button', { name: 'Ordinary practice' }).click();
+  await page.getByRole('button', { name: 'Check answer' }).click();
+  await clickNavigation(page, 'Ordinary practice');
   await expect(page.getByRole('heading', { name: 'Your next step' })).toBeVisible();
   release?.();
   await expect(page.getByRole('button', { name: 'Get a question' })).toBeEnabled();

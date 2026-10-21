@@ -1,3 +1,4 @@
+import { clickNavigation } from './navigation.ts';
 import { expect, test, type Page, type Route } from '@playwright/test';
 
 const token = 'c'.repeat(43);
@@ -37,7 +38,7 @@ async function authenticate(page: Page) {
   } }));
   await page.route('**/me/progress', (route) => route.fulfill({ json: summary }));
   await page.goto('/');
-  await page.getByRole('button', { name: 'Progress', exact: true }).click();
+  await clickNavigation(page, 'Progress', true);
 }
 
 test('renders exact mastery and facts in English, Russian and Thai, then traverses tied pages', async ({ page }) => {

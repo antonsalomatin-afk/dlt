@@ -126,8 +126,8 @@ export function Reminders({ session, onBack, onExpired }: {
     <p className="panel-copy">Record whether you would like a daily-question reminder.</p>
     <button className="secondary" onClick={leave}>Back</button>
     <div className="reminder-notice">
-      <strong>Delivery is not active yet.</strong>
-      <p>Saving this preference records your choice. ThaiDLT does not currently send Telegram reminders.</p>
+      <strong>Daily questions in Telegram</strong>
+      <p>Enable this preference to receive a question in your private bot chat at 11:00 Thailand time. Choose a vehicle for English and Russian questions. Saving does not send a message immediately.</p>
     </div>
     {confirmed !== null && <label className="reminder-control">
       <input

@@ -1,3 +1,4 @@
+import { clickNavigation, openNavigation } from './navigation.ts';
 import { expect, test, type Page } from '@playwright/test';
 
 const token = 'f'.repeat(43);
@@ -65,7 +66,7 @@ async function openPracticeQuestion(page: Page) {
 
 async function openFavorites(page: Page, vehicle: 'CAR' | null = 'CAR') {
   await authenticate(page, vehicle);
-  await page.getByRole('button', { name: 'Favorites', exact: true }).click();
+  await clickNavigation(page, 'Favorites', true);
 }
 
 test('saves the visible presentation exactly once and blocks answer submission while pending', async ({ page }) => {
@@ -91,7 +92,7 @@ test('saves the visible presentation exactly once and blocks answer submission w
   expect(calls).toBe(1);
   release?.();
   await expect(page.getByRole('button', { name: 'Saved to favorites' })).toBeDisabled();
-  await expect(page.getByRole('button', { name: 'Submit answer' })).toBeEnabled();
+  await expect(page.getByRole('button', { name: 'Check answer' })).toBeEnabled();
 });
 
 for (const failure of ['transport', 'http', 'malformed'] as const) {
@@ -138,7 +139,7 @@ test('favorites navigation is immediate during save and ignores its late respons
   await page.route('**/me/favorites?limit=10', (route) => route.fulfill({ json: { items: [], nextCursor: null } }));
   await openPracticeQuestion(page);
   await page.getByRole('button', { name: 'Save to favorites' }).click();
-  await page.getByRole('button', { name: 'Favorites', exact: true }).click();
+  await clickNavigation(page, 'Favorites', true);
   await expect(page.getByRole('heading', { name: 'Favorites', exact: true })).toBeVisible();
   release?.();
   await page.waitForTimeout(100);
@@ -165,8 +166,8 @@ test('a newly loaded presentation starts unsaved after saving the previous one',
   await page.getByRole('button', { name: 'Save to favorites' }).click();
   await expect(page.getByRole('button', { name: 'Saved to favorites' })).toBeDisabled();
   await page.getByRole('radio', { name: /Action 1/ }).check();
-  await page.getByRole('button', { name: 'Submit answer' }).click();
-  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Check answer' }).click();
+  await page.getByRole('button', { name: 'Next question' }).click();
   await expect(page.getByRole('button', { name: 'Save to favorites' })).toBeEnabled();
 });
 
@@ -179,7 +180,7 @@ test('renders immutable favorites in server order with localization and returns 
   await page.route('**/practice/next', (route) => route.fulfill({ json: presentation }));
   await authenticate(page);
   await page.getByRole('button', { name: 'Start practice' }).click();
-  await page.getByRole('button', { name: 'Favorites', exact: true }).click();
+  await clickNavigation(page, 'Favorites', true);
   await expect(page.locator('.favorite-entry')).toHaveCount(2);
   await expect(page.locator('.favorite-entry').first().locator('time')).toHaveAttribute('datetime', '2026-09-16T08:00:00.000Z');
   await expect(page.locator('.favorite-entry').first().getByText('D. Action 1')).toBeVisible();
@@ -360,7 +361,7 @@ test('leaving favorites ignores a delayed feed response', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
   release?.();
   await page.waitForTimeout(100);
-  await expect(page.getByRole('button', { name: 'Favorites', exact: true })).toBeEnabled();
+  await openNavigation(page, 'Favorites', true); await expect(page.getByRole('button', { name: 'Favorites', exact: true })).toBeEnabled();
 });
 
 test('removes only after exact confirmation, prevents duplicates, retries failure, and reaches empty state', async ({ page }) => {
@@ -405,6 +406,6 @@ test('leaving during removal is immediate and ignores its late 401', async ({ pa
   await expect(page.getByRole('heading', { name: 'What will you drive?' })).toBeVisible();
   release?.();
   await page.waitForTimeout(100);
-  await expect(page.getByRole('button', { name: 'Favorites', exact: true })).toBeEnabled();
+  await openNavigation(page, 'Favorites', true); await expect(page.getByRole('button', { name: 'Favorites', exact: true })).toBeEnabled();
   await expect(page.getByRole('main').getByText('session has ended')).toHaveCount(0);
 });
