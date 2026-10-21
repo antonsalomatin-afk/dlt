@@ -30,6 +30,25 @@ storage or Mini App delivery logic is introduced.
 
 ## Tradeoffs
 
+### TASK-073 private question-post refinement (2026-10-21)
+
+The owner chose private bot messages containing both English and Russian. An
+explicit, disabled-by-default rollout option may enrich the existing reminder
+with the learner's stable saved daily question and an exact owned-presentation
+Mini App link. Reuse the current QuestionPresentation and delivery ledger; do
+not introduce a channel, new persistence system or extra scheduler. Share daily
+assignment logic between the API and bot so both resolve the same user/date.
+The linked presentation remains owned server-side after authentication even
+when opened on another date. Do not expose answer metadata in the message.
+
+Use only stored active VERIFIED question content and approved associated image
+references. If bilingual content or safe post construction is unavailable,
+preserve the existing localized generic invitation; summaries keep their
+existing language policy. No automatic translation or content publication.
+Telegram transport failures can be ambiguous after a send; the existing ledger
+does not establish end-to-end exactly-once delivery. No new such guarantee is
+introduced by this refinement.
+
 This keeps the first delivery slice within the existing services and avoids a
 new paid or operational dependency. A bot-process restart can delay a tick
 until the next scheduler observation, while the delivery ledger prevents

@@ -121,7 +121,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-066 — ACCEPTED — deliver daily Telegram reminders at 11:00 ICT
 - TASK-067 — ACCEPTED — deliver daily and weekly learner summaries at 11:00 ICT
 - TASK-068 — ACCEPTED — open the daily question from Telegram deep links
-- TASK-073 — PLANNED — Telegram question posts with optional image and exact-question Answer link; destination/language decisions pending
+- TASK-073 — READY — private daily EN/RU question messages with optional image and exact owned-question Answer link; reuse opt-in11:00 ICT, no channel
 
 ## Epic 9 — Commercial
 

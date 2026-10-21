@@ -1,41 +1,64 @@
 id: TASK-073
-title: Define and deliver Telegram question posts with an exact-question answer link
-status: PLANNED
-owner_role: Supervisor
+title: Deliver bilingual daily questions in private Telegram reminders
+status: READY
+owner_role: Builder
 epic: Epic 8 — Telegram Engagement
 objective: Support the owner's requested Telegram question-post format illustrated by the supplied screenshot, with an optional question image and an Answer button opening the corresponding question in ThaiDLT.
 context:
   - Owner requested this additional capability on 2026-10-21. The screenshot is a visual reference, not instructions or permission to reuse its Spanish content or image.
-  - The screenshot header identifies a private bot chat although the owner called the requested destination a channel. Destination and shared-post language were asked explicitly; answers are pending.
+  - Owner selected PRIVATE BOT CHAT and ENGLISH PLUS RUSSIAN in one message on 2026-10-21. Reuse existing opt-in and 11:00 ICT schedule. No separate channel.
   - Existing reminders are generic private opt-in messages. Existing startapp=daily navigation opens a per-user daily presentation; it does not identify the exact question in a shared post or preserve an old post's question.
   - Current accepted starter bank contains reviewed English content; Russian fields in inspected launch batches are null. Do not silently publish unreviewed translations or substitute unrelated images.
   - TASK-072 remains blocked on its original owner smoke observations and broader design scope; this queued task does not accept or replace it.
 confirmed_scope:
   - A Telegram post displays question text and its associated image when a publishable image exists, plus a clearly labeled Answer action.
-  - The action opens the question shown in that post, including from an older post, after normal signed Telegram authentication.
+  - The action opens the exact owned saved question shown in that post, including from an older post, after normal signed Telegram authentication.
   - Practice follows the owner's selected explicit-confirmation flow before revealing correctness and explanation.
-pending_product_decisions:
-  - Destination: separate channel, private bot chat, or both.
-  - Shared-channel language: English plus Russian, English only, or Russian only.
-  - Frequency/time and vehicle coverage remain to be finalized after destination; existing private-reminder 11:00 ICT policy is a proposed reuse, not approval for public posting.
-external_setup_needed:
-  - If a channel is selected, obtain the owner-created channel identifier and arrange bot posting rights through the owner/admin. No credential belongs in repository files.
+owner_decision_required: false
+acceptance:
+  - Add a strict server-only, disabled-by-default question-post rollout option. Disabled mode preserves existing reminder/summary behavior with no question lookup or extra Telegram calls.
+  - Enabled mode reuses the current opt-in11:00 ICT reminder schedule, recipient's saved vehicle and delivery ledger. Extract shared daily assignment logic from the API if needed; bot and API must obtain the same stable per-user/date QuestionPresentation with active VERIFIED selection, unique user/day, bounded serializable retries and unchanged existing API responses. No second assignment for a date.
+  - Post full nonblank English and stored Russian question stems, clearly separated, and one Answer / Ответить URL button. No answer keys, correctness, explanation, session tokens or user identity. This explicit bilingual post choice overrides preferred-language-only question text; summaries and generic fallback keep their accepted language policy.
+  - Missing Russian, missing vehicle/content, oversized text or preparation failure uses the existing generic localized training invitation for that delivery. Never silently stop reminders, substitute another question or auto-translate; document the English-only launch-bank readiness gap.
+  - Send a photo with bilingual caption when a publishable HTTPS imageReference exists and caption fits Telegram limits, otherwise send the complete text-only post. Validate image metadata; reject credentials, controls, non-HTTPS and local references. No bot-side file/URL fetch, new asset source or copying the screenshot. Existing active VERIFIED source metadata is the trust boundary for publishable references.
+  - Include saved presentation ID in bounded allowlisted startapp navigation. Add authenticated owned-presentation retrieval with strict request/response validation and explicit Next.js rewrite. Open the original snapshot/date even after midnight, vehicle changes or question edits. Foreign/invalid/missing/unavailable links yield safe guidance without substituting today's question. Normal signed initData authentication remains mandatory; URL is navigation intent only.
+  - Already answered links open completed with History/practice navigation and no new attempt. Unanswered links show four choices, allow changing selection before explicit Check answer, then authoritative feedback/explanation and continuation. Preserve ordinary daily/practice/exam behavior and no-store headers. No compact-layout redesign or browser persistence.
+  - Keep existing delivery claims, SENT/FAILED recording, retry boundaries, shutdown and failure isolation. Repeated ticks add no duplicate after recorded success; document inherited ambiguous transport failures without claiming exactly-once Telegram delivery. Summaries remain unchanged.
+  - Tests use fake transports and isolated PostgreSQL, covering both send paths, bilingual/overlong/missing-content fallbacks, disabled mode, completion not suppressing reminders, exact/old/foreign/malformed links, auth/vehicle gating and duplicate answer protection.
+files_allowed:
+  - apps/bot/**
+  - apps/api/**
+  - apps/web/**
+  - packages/database/src/**
+  - packages/shared/**
+  - tests/**
+  - README.md
+files_forbidden:
+  - content/**
+  - packages/database/prisma/**
+  - .env
+  - pnpm-lock.yaml
 implementation_gates:
-  - Supervisor must refine an exact bounded Builder task, allowed files and acceptance checks after product answers; no implementation is dispatched by this planning record.
+  - Implement only this refined task. No real bot startup, Telegram sends, credential reads, production database access or deployment. Use established isolated harnesses for local tests. Request Supervisor amendment before forbidden-file changes.
   - Use the existing services and approved database; document any material publication ledger/schema boundary through a relevant ADR before implementation.
   - Select only active VERIFIED content with approved text and image rights; support a clean text-only post when no image exists.
-  - Keep shared-post selection distinct from per-user daily assignment; bind a stable public post/question reference without placing user sessions or correctness in URLs.
+  - Reuse QuestionPresentation and DailyReminderDelivery; no schema migration or new persistence system expected. Link an owned saved presentation rather than a public shared question.
   - Validate link parameters server-side and preserve ownership, duplicate-submission and hidden-correctness rules. Handle removed or unavailable questions explicitly.
   - Define publication deduplication, restarts and ambiguous-send failure behavior before scheduling. Do not promise exactly-once Telegram delivery across an unacknowledged send.
-  - For channels, use a URL button to the configured Telegram Mini App direct link; the Bot API web_app button is private-chat-only.
+  - Use validated public bot identity/configuration for a Telegram Mini App startapp URL. No channel configuration is required.
   - Sender remains disabled without explicit configuration; tests use fake transports and isolated data. No production posts, channel creation or deployment during local implementation.
 required_checks_before_acceptance:
   - pnpm lint
   - pnpm typecheck
   - pnpm test
+  - pnpm build
+  - pnpm test:integration
+  - pnpm test:e2e
   - Relevant isolated integration checks for publication/link persistence and deduplication.
   - Relevant web build and E2E checks for exact-question navigation, old links, authentication and explicit answer confirmation.
   - Independent Reviewer PASS before Supervisor acceptance.
+documentation:
+  - Document strict rollout configuration, disabled default, direct-link identity setup, photo/text fallbacks and verified Russian content readiness. Capability acceptance does not mean translation content is published or code is deployed.
 references:
   - https://core.telegram.org/bots/api#inlinekeyboardbutton
   - https://core.telegram.org/bots/webapps#direct-link-mini-apps
