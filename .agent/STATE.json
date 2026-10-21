@@ -65,14 +65,14 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 48,
-    "latestObservedWeeklyUsedPercent": 10,
+    "latestObservedUsedPercent": 19,
+    "latestObservedWeeklyUsedPercent": 14,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-27T07:03:36Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-20T18:23:00Z",
+    "checkedAt": "2026-10-21T04:33:34Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
-    "sessionResetsAt": "2026-10-20T22:27:34Z"
+    "sessionResetsAt": "2026-10-21T09:17:44Z"
   },
   "executionPaused": false,
   "pauseReason": null,
