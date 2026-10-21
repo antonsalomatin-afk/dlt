@@ -5,7 +5,7 @@
   "currentTask": "TASK-075",
   "lastAcceptedTask": "TASK-074",
   "lastAcceptedCommit": "e1f6935cd7341449ef3aa6cc7fd8048dd0061169",
-  "status": "REVIEW",
+  "status": "ACCEPTING",
   "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -134,7 +134,7 @@
   },
   "bilingualRollout": {
     "task": "TASK-075",
-    "status": "ENABLED_INDEPENDENT_OPERATIONAL_REVIEW",
+    "status": "PASS_ACCEPTING",
     "ownerApproval": "deploy",
     "approvedAt": "2026-10-21",
     "releaseCommit": "b38618f13765ec41ac51421327c1cbbfa347f245",
@@ -150,6 +150,8 @@
     "adminReport": ".agent/admin/TASK-074-production-report.md",
     "adminCommit": "a3fb356",
     "lastTelegramReadinessCheck": "2026-10-21T08:23:20Z;has_main_web_app=true;no webhook",
-    "enabledAt": "2026-10-21T08:22:43Z"
+    "enabledAt": "2026-10-21T08:22:43Z",
+    "review": ".agent/reviews/TASK-075-review-01.md",
+    "reviewVerdict": "PASS"
   }
 }
