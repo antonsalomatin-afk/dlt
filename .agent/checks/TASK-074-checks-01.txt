@@ -1,0 +1,49 @@
+TASK-074 authoritative checks; Builder 25278ec5c4cc864496071614b5865ca54610a47d
+CHECK pnpm lint
+$ eslint .
+EXIT 0
+CHECK pnpm typecheck
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 244ms
+
+$ tsc --noEmit
+EXIT 0
+CHECK pnpm test
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 271ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  59 passed (59)
+      Tests  336 passed (336)
+   Start at  07:22:46
+   Duration  17.77s (tests 57%, transform 23%, import 20%, worker 1%)
+
+    Isolate  59 workers spawned · ~652ms startup each (spawn + environment, per file)
+             at least ~1.18s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  07:23:05
+   Duration  29.85s (tests 96%, import 3%, transform 1%)
+
+PASS minimum and focused full100 synthetic-review integration. Independent actual translation review and actual-manifest rerun still required.
