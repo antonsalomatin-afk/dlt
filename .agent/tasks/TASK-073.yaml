@@ -1,6 +1,7 @@
 id: TASK-073
 title: Deliver bilingual daily questions in private Telegram reminders
-status: CHECKING
+status: REVIEW
+review_attempt: 1
 builder_commit: d40b80a9008e3cf8a8830b6e5430f08f06ae8a6a
 authoritative_checks: .agent/checks/TASK-073-checks-01.txt
 owner_role: Builder
