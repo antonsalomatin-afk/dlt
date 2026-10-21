@@ -1,6 +1,6 @@
 # TASK-073/074 bilingual private reminders — production handoff
 
-Status: prepared for owner approval, not deployed. TASK-074 final acceptance and release identity are recorded below after the remaining gates. This document is not deployment authorization.
+Status: TASK-073 and TASK-074 accepted; prepared for owner approval, not deployed. Exact release tag: `thaidlt-bilingual-20261021` (created only after Supervisor acceptance and main integration). TASK-074 implementation source: `e1f6935cd7341449ef3aa6cc7fd8048dd0061169`; actual manifest introduced at `173ad252818d7209112f97310243bd05cd90c6b9`. Authoritative checks03 pass lint/typecheck/338 unit tests/two isolated PostgreSQL tests; review02 is PASS; checks04 repeats both full-100 integration tests using the actual manifest and passes. TASK-073 runtime checks and inherited build/browser evidence are recorded in its accepted task. This document is not deployment authorization.
 
 ## Scope
 

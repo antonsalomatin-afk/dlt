@@ -1,0 +1,13 @@
+TASK-074 Supervisor actual independent-manifest isolated proof; source e1f6935cd7341449ef3aa6cc7fd8048dd0061169
+Actual manifest .agent/reviews/TASK-074-translation-review-01.json; pack canonical SHA c50e945d4f2371616ca5947a2551ec16ecbe8a6908d4b4c57fd8cf140f5e002d
+CHECK node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts tests/russian-stems.integration.test.ts; TASK074_REVIEW_MANIFEST set to actual manifest
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  08:03:46
+   Duration  17.50s (tests 94%, import 4%, transform 2%)
+
+EXIT 0

@@ -1,0 +1,34 @@
+id: TASK-075
+title: Deploy accepted bilingual private reminders and reviewed Russian stems
+status: BLOCKED
+owner_role: Admin
+epic: Epic 10 — Production Hardening
+blocked_reason: Product Owner approval of this concrete production content update and runtime rollout is required; no new credential or routine implementation decision is needed.
+owner_decision_required: true
+release_tag: thaidlt-bilingual-20261021
+handoff: .agent/admin/TASK-074-deploy-handoff.md
+objective: After explicit owner production approval, publish100 reviewed Russian stems to the existing starter bank and deploy/enable accepted TASK-073 reminder behavior on the existing hosts.
+scope:
+  - Existing dlt.thauto.app and tele.thauto.app infrastructure and protected server-side environment files only; no new provider, domain, paid dependency, webhook or channel.
+  - Private opt-in messages at11:00 ICT; English and Russian together with exact owned-question Answer link. Existing summaries and generic fallback remain.
+  - Apply only the independently reviewed pack through the accepted guarded offline CLI; preserve all saved presentations, user settings and learning data.
+  - Deploy exact accepted release tag with frozen installation, db:generate and web build. No schema change introduced by TASK-073/074.
+  - Verify BotFather Main Mini App for thauto_dlt_bot and set accepted strict bot rollout configuration; exactly one production polling bot instance.
+  - No forced production Telegram message without explicit owner authorization. Genuine owner-session observations remain manual evidence and must not be inferred from synthetic tests.
+acceptance:
+  - Owner approval recorded before any production mutation or rollout.
+  - Fresh database backup succeeds before content application.
+  - Initial read-only overlay state is100wouldApply or100exactMatched; approved apply and final read-only verification exit0 with100matched.
+  - Exact release identity, generated client and configuration are verified; all three established services active after cutover.
+  - HTTPS web200, unauthenticated POST/practice/presentation401 with no-store, and unknown public API route404; no new public API prefix.
+  - Safe production report records observed counts/statuses/backup/release/Main Mini App setup and clearly lists any pending real-owner Telegram smoke.
+  - Independent operational Reviewer PASS and Supervisor acceptance before marking the rollout complete.
+files_allowed:
+  - .agent/**
+files_forbidden:
+  - .env
+  - apps/**
+  - packages/**
+  - content/**
+  - tools/**
+report: .agent/admin/TASK-074-production-report.md

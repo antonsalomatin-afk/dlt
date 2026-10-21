@@ -1,7 +1,13 @@
 id: TASK-074
 title: Prepare reviewed Russian question stems for bilingual reminders
-status: REVIEW
-usage_checkpoint: Resumed at0percent observed five-hour usage; retain95percent ceiling. Independent review02 and actual-manifest real100 proof remain required.
+status: ACCEPTED
+accepted_commit: e1f6935cd7341449ef3aa6cc7fd8048dd0061169
+accepted_at: 2026-10-21T06:04:15Z
+actual_manifest_proof: .agent/checks/TASK-074-checks-04.txt
+translation_review_manifest: .agent/reviews/TASK-074-translation-review-01.json
+release_tag: thaidlt-bilingual-20261021
+deploy_handoff: .agent/admin/TASK-074-deploy-handoff.md
+usage_checkpoint: Resumed under95percent ceiling; latest observation7percent. All task acceptance gates now pass; production approval remains separate TASK-075.
 review_file: .agent/reviews/TASK-074-review-02.md
 review_fix_scope: Only neutral CLI failure wording and cleanup-failure regression; translations/hash unchanged. Required minimum lint/typecheck/test and existing focused2-test integration remain applicable.
 review_attempt: 2
