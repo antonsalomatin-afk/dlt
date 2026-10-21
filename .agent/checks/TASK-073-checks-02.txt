@@ -1,0 +1,52 @@
+TASK-073 Supervisor authoritative review-fix checks; source a1900d21fbc404b4e8810f47b51a813310ef74d8
+Only question-post.ts and its unit test changed since d40b80a; prior build222E2E203integration inherited per task amendment.
+apps/bot/src/question-post.ts
+tests/question-post.test.ts
+CHECK pnpm lint
+$ eslint .
+EXIT 0
+CHECK pnpm typecheck
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 590ms
+
+$ tsc --noEmit
+EXIT 0
+CHECK pnpm test
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 321ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  58 passed (58)
+      Tests  331 passed (331)
+   Start at  07:07:04
+   Duration  22.00s (tests 59%, transform 21%, import 20%, worker 1%)
+
+    Isolate  58 workers spawned · ~747ms startup each (spawn + environment, per file)
+             at least ~1.32s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  1 passed (1)
+      Tests  12 passed (12)
+   Start at  07:07:27
+   Duration  12.01s (tests 77%, import 16%, transform 8%)
+
+PASS all authoritative review-fix checks
