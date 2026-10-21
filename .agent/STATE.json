@@ -5,7 +5,7 @@
   "currentTask": "TASK-076",
   "lastAcceptedTask": "TASK-075",
   "lastAcceptedCommit": "a3fb3564cc314e9a78f3f052554a05c78fccd9a9",
-  "status": "READY",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -154,5 +154,13 @@
     "review": ".agent/reviews/TASK-075-review-01.md",
     "reviewVerdict": "PASS",
     "acceptedAt": "2026-10-21T08:29:33Z"
+  },
+  "compactApp": {
+    "task": "TASK-076",
+    "status": "BUILDING",
+    "ownerApproval": "Both real compact design and private chat questions",
+    "selectedAnswerFlow": "CONFIRM_ANSWER",
+    "reminderOptInPreserved": true,
+    "productionDeployed": false
   }
 }
