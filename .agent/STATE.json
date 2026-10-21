@@ -5,10 +5,10 @@
   "currentTask": "TASK-075",
   "lastAcceptedTask": "TASK-074",
   "lastAcceptedCommit": "e1f6935cd7341449ef3aa6cc7fd8048dd0061169",
-  "status": "BLOCKED",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": "Runtime and100 reviewed Russian stems are deployed and independently checked. Bot owner must configure Main Mini App for thauto_dlt_bot at https://dlt.thauto.app; read-only getMe stillfalse at2026-10-21T07:34:08Z. Existing deploy approval covers remaining enablement; do not ask again. Then enableflagtrue, authoritative recheck and independent operational review before acceptance.",
+  "blockedReason": null,
   "parkedTasks": [
     {
       "task": "TASK-072",
@@ -94,8 +94,8 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 26,
-    "latestObservedWeeklyUsedPercent": 4,
+    "latestObservedUsedPercent": 35,
+    "latestObservedWeeklyUsedPercent": 5,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
@@ -134,7 +134,7 @@
   },
   "bilingualRollout": {
     "task": "TASK-075",
-    "status": "DEPLOYED_WAITING_OWNER_MAIN_MINI_APP",
+    "status": "OWNER_SETUP_DONE_VERIFY_AND_ENABLE",
     "ownerApproval": "deploy",
     "approvedAt": "2026-10-21",
     "releaseCommit": "b38618f13765ec41ac51421327c1cbbfa347f245",
