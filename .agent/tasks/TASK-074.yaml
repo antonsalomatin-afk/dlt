@@ -1,6 +1,8 @@
 id: TASK-074
 title: Prepare reviewed Russian question stems for bilingual reminders
-status: BUILDING
+status: CHECKING
+builder_commit: 25278ec5c4cc864496071614b5865ca54610a47d
+authoritative_checks: .agent/checks/TASK-074-checks-01.txt
 owner_role: Builder
 epic: Epic 7 — Content Operations
 objective: Prepare Russian stems for all100 accepted English starter questions and a narrowly guarded offline application path, ready for owner production approval without changing question identities or saved presentations.
