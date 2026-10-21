@@ -19,3 +19,9 @@ The current ThaiDLT public page and app source show a persistent promotional int
 - Review compact before-answer, after-answer and menu sketches before implementation. Preserve ThaiDLT's own branding and the existing approved data/authentication/scoring behavior.
 
 No UI code, runtime configuration, production content or deployment changed in this design discussion. Fresh owner Telegram practice/exam acceptance and scheduled delivery remain unobserved.
+
+## Owner observation and scope clarification — 2026-10-21
+
+Owner supplied a fresh Telegram Mini App screenshot showing the existing promotional ThaiDLT onboarding screen and reported seeing no chat updates. This establishes rendering of that screen only, not practice/exam/scheduled-message success. Read-only production diagnosis at08:50:15UTC found the bot active/running with0 restarts,3 users,0 reminder opt-ins,0 opted-in users with a selected vehicle and no delivery rows for the current ICT date. No user identifiers, credentials or preferences were changed. The11:00 ICT send window preceded deployment; next normal window is2026-10-22 at11:00 ICT for opted-in learners.
+
+The owner explicitly clarified they expected both real chat-question messages and the compact Mini App design. TASK-076 implements the approved real interface and corrects the obsolete reminder settings claim that delivery is inactive. User opt-in remains required; no forced/test message is inferred from this feedback. Original real-owner learning smoke remains unpassed.

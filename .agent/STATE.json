@@ -2,14 +2,20 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-072",
+  "currentTask": "TASK-076",
   "lastAcceptedTask": "TASK-075",
   "lastAcceptedCommit": "a3fb3564cc314e9a78f3f052554a05c78fccd9a9",
-  "status": "BLOCKED",
+  "status": "READY",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": "TASK-075 deployment accepted after checks and independent PASS. TASK-072 awaits genuine owner Telegram practice/exam smoke observations; no fresh signed owner session available to automation. No further deployment approval is needed.",
-  "parkedTasks": [],
+  "blockedReason": null,
+  "parkedTasks": [
+    {
+      "task": "TASK-072",
+      "status": "BLOCKED",
+      "reason": "Real-owner practice/exam smoke still unobserved; actual compact UI explicitly authorized underTASK-076."
+    }
+  ],
   "updatedBy": "Supervisor",
   "russianStemOverlay": {
     "status": "PRODUCTION_PUBLISHED_ACCEPTED",
@@ -45,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK-075 accepted: exactb38618f runtime/100reviewedRUstems live; MainMiniApptrue, private opt-in ENRU enrichment enabled11ICT. Backup/preservation/source/service/HTTP and independent operationalreviewPASS. No forcedsends or invented ownerUI/scheduledpost evidence. TASK-072 nowcurrentawaits realownerpractice/examsmoke; previewConfirmanswerselected only. Preserve95percentusageceiling and originaluntrackedstarterfiles; neverresetcredits.",
+  "notes": "Owner explicitly expects both compact liveapp and botquestions. TASK-076 implements approved preview composition and correct reminder settings copy; existingprivateENRUscheduler live, opt-in unchanged (0 currentopt-ins). No forcedsends. TASK-072 remains parked for realownerpractice/examsmoke. Preserve95percentceiling and untrackedstarterfiles.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -88,8 +94,8 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 41,
-    "latestObservedWeeklyUsedPercent": 6,
+    "latestObservedUsedPercent": 56,
+    "latestObservedWeeklyUsedPercent": 9,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
