@@ -1,10 +1,10 @@
 id: TASK-074
 title: Prepare reviewed Russian question stems for bilingual reminders
-status: CHECKING
+status: REVIEW
 usage_checkpoint: Resumed at0percent observed five-hour usage; retain95percent ceiling. Independent review02 and actual-manifest real100 proof remain required.
-review_file: .agent/reviews/TASK-074-review-01.md
+review_file: .agent/reviews/TASK-074-review-02.md
 review_fix_scope: Only neutral CLI failure wording and cleanup-failure regression; translations/hash unchanged. Required minimum lint/typecheck/test and existing focused2-test integration remain applicable.
-review_attempt: 1
+review_attempt: 2
 builder_commit: e1f6935cd7341449ef3aa6cc7fd8048dd0061169
 authoritative_checks: .agent/checks/TASK-074-checks-03.txt
 owner_role: Builder
@@ -50,4 +50,5 @@ supervisor_validation_scope:
   - Supervisor runs an additional isolated real-pack check/apply/replay with that manifest before acceptance; no production access.
 owner_decision_required: false
 corrective_check_finding: checks02 lint/typecheck338unit PASS; integration preservation comparison fails on nonunique createdAt ordering. Builder must diagnose, retain full preservation assertions, add deterministic ID tie-breaker when confirmed, then rerun mandatory checks sequentially.
+
 
