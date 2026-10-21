@@ -1208,3 +1208,79 @@ A saved HTTPS image reference produces one photo with the complete bilingual cap
 The start parameter conveys navigation intent, never authentication. The browser still supplies signed Telegram `initData`, keeps its session only in memory, and requests `POST /practice/presentation` with exactly `{ "presentationId": "<canonical UUID>" }` through an explicit Next.js rewrite. The authenticated endpoint returns the existing safe daily-question response shape with the original date and wording snapshot. Ownership and active VERIFIED availability are checked; historical retrieval does not require the current vehicle to match or remain selected. Foreign, missing, malformed and unavailable links show safe guidance without assigning today's question. Linked questions allow selecting/changing a choice and then **Check answer** before feedback; completed links offer History and ordinary practice without another attempt. All practice responses remain `no-store`.
 
 Delivery still claims the existing learner/date ledger, records SENT/FAILED and uses its existing retry/shutdown rules. Recorded success prevents another post on later ticks or restarts. A transport exception can occur after Telegram accepted a message: FAILED retries can therefore duplicate an unacknowledged delivery. A crash after claiming may leave CLAIMED without a send. There is no end-to-end exactly-once guarantee and no second fallback send after a transport failure.
+
+### Reviewed Russian stem overlay (TASK-074 release handoff)
+
+`content/imports/launch-20261021-russian-stems.json` contains 100 Russian question
+stems for the two accepted 50-question English launch batches. These are drafts
+until an independent reviewer has inspected every English/Russian pair and issued
+the exact review below. Choices and explanations retain their existing languages.
+Preparation and isolated tests do not constitute production approval.
+
+The strict pack contains `version: 1`, its fixed `packId`, canonical UTC
+`createdAt`, two `sources` (`batchId`, canonical JSON `sha256`, original English
+`reviewer` and `reviewedAt`) and 100 `translations` (`batchId`, `externalId`,
+`textRussian`). Hashing recursively sorts object keys, preserves array order and
+JSON scalar values, and SHA256-hashes the resulting compact UTF-8 JSON. Equivalent
+indentation, key order and LF/CRLF file formatting produce the same hash. String
+contents and array ordering remain significant. The review binds the entire pack,
+including source hashes and original review provenance; there is no self-hash field.
+
+The independent Reviewer writes
+`.agent/reviews/TASK-074-translation-review-01.json` only after approving all100
+pairs, with exactly:
+
+```json
+{
+  "version": 1,
+  "packSha256": "<canonicalJsonSha256 of the entire parsed pack>",
+  "reviewer": "<independent reviewer identity>",
+  "reviewedAt": "<canonical past ISO UTC with milliseconds>",
+  "verdict": "PASS"
+}
+```
+
+The Builder creates only synthetic in-memory/temporary review fixtures for tests.
+The review timestamp must follow the original English reviews and must not precede
+pack creation. Review manifests record an operator assertion; they do not establish
+legal permission, official accuracy or owner production approval.
+
+After independent review, the Supervisor can run the focused local test with
+`TASK074_REVIEW_MANIFEST=.agent/reviews/TASK-074-translation-review-01.json` in the
+environment:
+
+```bash
+node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts tests/russian-stems.integration.test.ts
+```
+
+The harness creates and drops only its own random loopback PostgreSQL database,
+seeds all100 original questions, and checks/applies/replays the real pack. Without
+that environment variable it uses an explicitly synthetic test review. The test
+preserves saved practice/exam snapshots, answers, learning state and user fields.
+Never reset the normal database for this test.
+
+The offline command takes four paths in this exact order. Default mode checks
+database state without writing; `--apply` must be the first option to enable writes:
+
+```bash
+pnpm content:overlay-russian-stems -- content/imports/launch-20261021-russian-stems.json .agent/reviews/TASK-074-translation-review-01.json content/imports/launch-20261016-car-candidates.json content/imports/launch-20261016-motorcycle-candidates.json
+pnpm content:overlay-russian-stems -- --apply content/imports/launch-20261021-russian-stems.json .agent/reviews/TASK-074-translation-review-01.json content/imports/launch-20261016-car-candidates.json content/imports/launch-20261016-motorcycle-candidates.json
+```
+
+Only loopback `DATABASE_URL` values pass the existing configuration guard. All
+files and relationships are validated before reading database configuration or
+creating a client. One Serializable transaction requires exact active VERIFIED
+source rows, original review provenance, resolved taxonomy and all four unchanged
+deterministic choices. It changes only the Russian stem and review identity/time
+(Prisma may advance `updatedAt`). Any mismatch aborts the entire overlay. Exact
+replay requires the complete overlay and new review provenance, and writes nothing.
+Output contains only would-apply/applied/matched counts or one fixed generic error.
+
+After application, original candidate-status tooling intentionally reports content
+drift because it compares with the historical English-only source. Use the overlay
+check above to verify the expected Russian state; keep the original English review
+manifests as historical audit records. Existing saved daily/practice/exam snapshots
+remain unchanged and may be English-only until a later daily date is assigned.
+This handoff leaves production data, deployment and Telegram posting unchanged.
+Owner production approval is required before any production application or rollout;
+the local-only command guard must not be weakened to bypass that release boundary.

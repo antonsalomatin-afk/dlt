@@ -1,0 +1,521 @@
+{
+  "version": 1,
+  "packId": "launch-20261021-russian-stems",
+  "createdAt": "2026-10-21T00:00:00.000Z",
+  "sources": [
+    {
+      "batchId": "launch-20261016-car",
+      "sha256": "ba023401107ad762eaa434595b805dcbdbb49f79d8d1c64d76e5a51198b8f211",
+      "reviewer": "Independent reviewer_071_content; TASK-071-content-decisions-01.json + TASK-071-content-review-02.md; issued by Supervisor",
+      "reviewedAt": "2026-10-19T18:10:00.000Z"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "sha256": "fa7996fc1891ee982deaddb7793630f42547eacca939482081af06cbba1abc33",
+      "reviewer": "Independent reviewer_071_content; TASK-071-content-decisions-01.json + TASK-071-content-review-02.md; issued by Supervisor",
+      "reviewedAt": "2026-10-19T18:10:00.000Z"
+    }
+  ],
+  "translations": [
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-01-keep-left",
+      "textRussian": "По какой стороне обычной двусторонней дороги в Таиланде следует ехать на автомобиле, если нет иных указаний?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-02-signal-lane-change",
+      "textRussian": "Вы собираетесь перестроиться на автомобиле в соседнюю полосу. Что нужно сделать помимо проверки безопасности перед перестроением?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-03-safe-following-gap",
+      "textRussian": "Автомобили впереди начинают тормозить. Для чего прежде всего нужно соблюдать достаточную дистанцию до впереди идущего автомобиля?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-04-school-area-caution",
+      "textRussian": "Вы подъезжаете на автомобиле к школьному входу, где дети могут выйти на дорогу. Как безопаснее всего действовать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-05-conditions-appropriate-speed",
+      "textRussian": "Вы едете в пределах установленного ограничения скорости, но видимость плохая, а движение плотное. Как следует выбирать скорость автомобиля?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-06-blind-spot-check",
+      "textRussian": "В зеркалах вашего автомобиля не видно транспорта в соседней полосе. Что всё равно необходимо проверить перед перестроением?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-07-truck-rear-space",
+      "textRussian": "Вы едете на автомобиле вплотную за большим грузовиком, который закрывает обзор дороги впереди. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-08-truck-left-blind-spot",
+      "textRussian": "Вы выбираете положение автомобиля рядом с большим грузовиком. В каком положении не следует задерживаться?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-09-truck-turning-clearance",
+      "textRussian": "Грузовик впереди начинает поворачивать. Что следует сделать на автомобиле вместо того, чтобы въезжать в пространство сбоку от него?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-10-truck-front-clearance",
+      "textRussian": "Почему после обгона грузовика не следует сразу перестраиваться непосредственно перед ним?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-11-night-headlights",
+      "textRussian": "После захода солнца вы въезжаете на неосвещённую дорогу. Как следует пользоваться фарами автомобиля?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-12-avoid-high-beam-glare",
+      "textRussian": "Вы едете с включённым дальним светом, и навстречу приближается другой автомобиль. Что нужно сделать, чтобы не ослепить его водителя?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-13-night-following-gap",
+      "textRussian": "Почему ночью следует оставлять больше обычного расстояния до впереди идущего автомобиля?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-14-rain-reduce-speed",
+      "textRussian": "Во время поездки начинается дождь. Как следует изменить скорость автомобиля?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-15-rain-following-gap",
+      "textRussian": "Как должна измениться дистанция до впереди идущего автомобиля, когда дорога становится мокрой?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-16-rain-smooth-braking",
+      "textRussian": "На мокрой дороге вам нужно снизить скорость автомобиля из-за транспорта впереди. Какой способ торможения безопаснее?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-17-rain-light-signals",
+      "textRussian": "Вы продолжаете обычное движение на автомобиле под дождём, не остановились и не сломались. Какие световые приборы следует использовать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-18-curve-control",
+      "textRussian": "Впереди крутой поворот. Как безопаснее всего действовать за рулём автомобиля?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-19-phone-safe-stop",
+      "textRussian": "Во время вождения вам звонят, и разговор обещает быть долгим. Как безопаснее всего поступить?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-20-avoid-alcohol-driving",
+      "textRussian": "Вы употребляли алкоголь и хотите добраться домой. Какой план безопаснее всего?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-21-drowsy-medication",
+      "textRussian": "Перед запланированной поездкой на автомобиле лекарство от простуды вызвало у вас сонливость. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-22-sidewalk-pedestrians",
+      "textRussian": "Рядом с пробкой находится пустой тротуар. Можно ли проехать по нему на автомобиле, чтобы объехать пробку?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-23-shoulder-no-shortcut",
+      "textRussian": "Впереди автомобили начинают объезжать пробку по обочине. Что следует сделать вам?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-24-lane-discipline",
+      "textRussian": "Вы едете по дороге с двумя размеченными полосами в вашем направлении. Как следует располагать автомобиль при обычном движении?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-25-horn-warning",
+      "textRussian": "В каком случае уместно использовать звуковой сигнал автомобиля?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-26-narrow-road-oncoming",
+      "textRussian": "На узкой двусторонней дороге появляется встречный автомобиль. Как следует действовать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-27-red-signal-stop",
+      "textRussian": "Светофор, регулирующий движение по вашей полосе, переключается на красный. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-28-yellow-signal-prepare-stop",
+      "textRussian": "В момент включения жёлтого сигнала вы находитесь достаточно далеко от стоп-линии, чтобы безопасно остановиться. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-29-roundabout-yield",
+      "textRussian": "Вы подъезжаете к перекрёстку с круговым движением, а по кругу к вашему въезду уже приближается автомобиль. Кому следует уступить дорогу?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-30-roundabout-path",
+      "textRussian": "Как следует вести автомобиль по траектории после въезда на перекрёсток с круговым движением?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-31-pedestrian-crossing-yield",
+      "textRussian": "Пешеход начинает переходить дорогу по обозначенному переходу перед вашим автомобилем. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-32-crossing-no-parking",
+      "textRussian": "Единственное видимое свободное место у магазина находится на пешеходном переходе. Где следует припарковать автомобиль?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-33-entrance-no-blocking",
+      "textRussian": "Вы нашли свободное место у края дороги прямо перед выездом из жилого двора, где автомобиль перекроет проезд. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-34-emergency-vehicle-yield",
+      "textRussian": "Сзади к вашему автомобилю приближается транспорт экстренной службы с включёнными специальными сигналами. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-35-railway-train-stop",
+      "textRussian": "Вы подъезжаете к железнодорожному переезду, к которому приближается поезд. Что следует сделать за рулём автомобиля?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-36-railway-uncontrolled-check",
+      "textRussian": "Вы подъезжаете на автомобиле к железнодорожному переезду без предупредительной сигнализации. Как безопасно действовать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-37-overtake-safe-gap",
+      "textRussian": "В чём необходимо убедиться перед обгоном другого транспортного средства на автомобиле?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-38-allow-overtaking",
+      "textRussian": "Водитель сзади подаёт сигнал о намерении обогнать ваш автомобиль. Как безопаснее всего действовать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-39-red-white-curb",
+      "textRussian": "В месте, где вы собираетесь остановиться на автомобиле для посадки пассажира, бордюр окрашен в красно-белые цвета. Что означает эта разметка?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-40-posted-speed-limit",
+      "textRussian": "Знак впереди устанавливает более низкое ограничение скорости, чем на дороге, с которой вы только что съехали. Какое ограничение действует?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-41-seatbelt-every-trip",
+      "textRussian": "Вы собираетесь проехать на автомобиле небольшое расстояние по тихому жилому району. Как следует поступить с ремнём безопасности?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-42-roadworthy-equipment",
+      "textRussian": "Перед поездкой вы обнаружили неисправность обязательного оборудования автомобиля. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-43-rental-inspection",
+      "textRussian": "При получении арендованного автомобиля вы заметили вмятину. Что следует сделать перед началом поездки?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-44-brake-light-check",
+      "textRussian": "Почему нужно регулярно проверять исправность стоп-сигналов автомобиля?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-45-night-breakdown-warning",
+      "textRussian": "Ночью у вашего автомобиля возникла неисправность, и вы можете безопасно съехать с полосы движения. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-46-expressway-breakdown",
+      "textRussian": "На скоростной автомагистрали ваш автомобиль начинает работать неисправно, но его ещё можно безопасно переместить. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-47-planned-stop-mirrors",
+      "textRussian": "Вы хотите съехать на автомобиле влево к краю дороги и остановиться. Какая последовательность действий учитывает безопасность транспорта сзади?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-48-cyclist-at-entrance",
+      "textRussian": "Вы выезжаете на автомобиле из парка рядом с велосипедным маршрутом. Что нужно тщательно проверить перед выездом на дорогу?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-49-elderly-pedestrian-patience",
+      "textRussian": "Перед вашим автомобилем пожилой пешеход медленно переходит дорогу. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-50-right-lane-cooperation",
+      "textRussian": "Вы завершили обгон в правой полосе, и сзади приближается другой автомобиль. Что следует сделать, когда это будет безопасно?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-01-keep-left",
+      "textRussian": "Вы выезжаете на мотоцикле на обычную двустороннюю дорогу в Таиланде. По какой стороне обычно следует двигаться?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-02-signal-lane-change",
+      "textRussian": "Вы убедились, что соседняя полоса безопасна для вашего мотоцикла. Что нужно сделать перед перестроением в неё?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-03-safe-following-gap",
+      "textRussian": "Фургон впереди вашего мотоцикла может резко остановиться. Почему следует соблюдать достаточную дистанцию?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-04-school-area-caution",
+      "textRussian": "Вы проезжаете на мотоцикле мимо оживлённого школьного входа. Как следует учитывать возможность появления детей на дороге?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-05-conditions-appropriate-speed",
+      "textRussian": "Установленное ограничение скорости выше скорости, которая кажется безопасной на мокрой дороге с плотным движением. Как следует выбирать скорость мотоцикла?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-06-blind-spot-check",
+      "textRussian": "О чём следует помнить, пользуясь зеркалами перед перестроением на мотоцикле в соседнюю полосу?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-07-truck-rear-space",
+      "textRussian": "Вы едете на мотоцикле сразу за грузовиком, где его водитель может вас не видеть. Что следует изменить?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-08-truck-left-blind-spot",
+      "textRussian": "Впереди медленно движется грузовик. В каком положении рядом с ним особенно опасно оставаться на мотоцикле?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-09-truck-turning-clearance",
+      "textRussian": "Большой грузовик поворачивает на перекрёстке. Что следует сделать вам на мотоцикле?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-10-truck-front-clearance",
+      "textRussian": "Вы обогнали грузовик на мотоцикле. Почему перед возвращением в полосу перед ним следует оставить значительное расстояние?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-11-night-headlights",
+      "textRussian": "Вы продолжаете ехать на мотоцикле после наступления темноты по дороге с уличным освещением. Как следует пользоваться фарой мотоцикла?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-12-avoid-high-beam-glare",
+      "textRussian": "Ночью вы едете на мотоцикле за другим транспортным средством с включённым дальним светом. Что следует сделать, чтобы не ослепить его водителя?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-13-night-following-gap",
+      "textRussian": "Ночью вы заметили, что едете на мотоцикле слишком близко за такси. Почему следует увеличить дистанцию?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-14-rain-reduce-speed",
+      "textRussian": "Во время поездки на мотоцикле начинается дождь. Как следует изменить скорость?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-15-rain-following-gap",
+      "textRussian": "Вы едете на мотоцикле за развозным фургоном, когда начинается продолжительный дождь. Как следует изменить дистанцию?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-16-rain-smooth-braking",
+      "textRussian": "Во время езды на мотоцикле под дождём вы видите, что транспорт впереди замедляется. Как следует спланировать снижение скорости?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-17-rain-light-signals",
+      "textRussian": "Вы продолжаете обычное движение на мотоцикле под дождём. Какие световые приборы лучше всего помогают другим участникам движения понимать ваши действия?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-18-curve-control",
+      "textRussian": "Вы подъезжаете на мотоцикле к повороту дороги. Какой план действий снижает риск потери управления?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-19-phone-safe-stop",
+      "textRussian": "Во время поездки на мотоцикле на телефон приходит сообщение, требующее подробного ответа. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-20-avoid-alcohol-driving",
+      "textRussian": "После употребления алкоголя за ужином вы думаете поехать домой на мотоцикле. Какой план безопаснее всего?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-21-drowsy-medication",
+      "textRussian": "После приёма лекарства вы чувствуете сонливость перед поездкой на мотоцикле. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-22-sidewalk-pedestrians",
+      "textRussian": "Пробка перекрывает ваш путь, но тротуар выглядит свободным. Что следует сделать вам на мотоцикле?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-23-shoulder-no-shortcut",
+      "textRussian": "Другие мотоциклисты объезжают затор по обочине. Чем следует руководствоваться при принятии решения?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-24-lane-discipline",
+      "textRussian": "Как следует учитывать разметку полос при обычном движении на мотоцикле по размеченной дороге?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-25-horn-warning",
+      "textRussian": "Когда уместно использовать звуковой сигнал мотоцикла?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-26-narrow-road-oncoming",
+      "textRussian": "Во время поездки на мотоцикле по узкой дороге навстречу приближается автомобиль. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-27-red-signal-stop",
+      "textRussian": "Вы подъезжаете на мотоцикле к светофору с красным сигналом, регулирующему вашу полосу. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-28-yellow-signal-prepare-stop",
+      "textRussian": "При включении жёлтого сигнала вы можете безопасно остановить мотоцикл перед стоп-линией. Как следует поступить?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-29-roundabout-yield",
+      "textRussian": "Вы собираетесь въехать на мотоцикле на перекрёсток с круговым движением, по которому уже движется транспорт. Кому следует уступить дорогу?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-30-roundabout-path",
+      "textRussian": "По какой траектории следует двигаться на мотоцикле через перекрёсток с круговым движением?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-31-pedestrian-crossing-yield",
+      "textRussian": "Перед вашим мотоциклом человек переходит дорогу по обозначенному пешеходному переходу. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-32-crossing-no-parking",
+      "textRussian": "Вы хотите оставить мотоцикл на время посещения магазина, но свободное место рядом является обозначенным пешеходным переходом. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-33-entrance-no-blocking",
+      "textRussian": "Вы собираетесь припарковать мотоцикл поперёк входа в здание. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-34-emergency-vehicle-yield",
+      "textRussian": "Сзади к вашему мотоциклу приближается скорая помощь, следующая на экстренный вызов. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-35-railway-train-stop",
+      "textRussian": "У переезда вы видите и слышите приближающийся поезд. Что следует сделать вам на мотоцикле?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-36-railway-uncontrolled-check",
+      "textRussian": "На железнодорожном переезде по вашему мотоциклетному маршруту нет предупредительной сигнализации. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-37-overtake-safe-gap",
+      "textRussian": "Вы хотите обогнать на мотоцикле более медленное транспортное средство. В чём следует убедиться перед началом обгона?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-38-allow-overtaking",
+      "textRussian": "Транспортное средство сзади начинает безопасный обгон вашего мотоцикла. Как следует действовать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-39-red-white-curb",
+      "textRussian": "У кафе, где вы хотите припарковать мотоцикл, бордюр окрашен в красно-белые цвета. Что это означает?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-40-posted-speed-limit",
+      "textRussian": "Вы съезжаете на мотоцикле с дороги, где разрешена более высокая скорость, в зону с более низким обозначенным ограничением. Какое ограничение действует?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-41-helmet-secure-all",
+      "textRussian": "Вы собираетесь в короткую поездку на мотоцикле с пассажиром. Как следует подготовиться в отношении шлемов?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-42-roadworthy-equipment",
+      "textRussian": "Перед выездом вы обнаружили, что тормоза мотоцикла работают ненадёжно. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-43-motorcycle-metal-plates",
+      "textRussian": "На вашем мотоциклетном маршруте раскопку поперёк дороги закрывает металлическая плита. Как безопаснее всего действовать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-44-motorcycle-potholes",
+      "textRussian": "Во время езды на мотоцикле вы подъезжаете к повреждённому участку дороги с выбоинами и лужами. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-45-motorcycle-oil-spill",
+      "textRussian": "Впереди вы видите разлитое масло и можете безопасно выбрать для мотоцикла свободную от него траекторию. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-46-motorcycle-loose-surface",
+      "textRussian": "В зоне дорожных работ часть дороги покрыта рыхлым песком. Как следует проехать этот участок на мотоцикле?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-47-motorcycle-speed-bumps",
+      "textRussian": "Во время поездки на мотоцикле вы видите впереди обозначенную знаком искусственную неровность. Что следует сделать?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-48-motorcycle-no-cutting",
+      "textRussian": "Впереди между движущимися автомобилями появляется узкий промежуток. Какое действие соответствует рекомендациям по безопасной езде на мотоцикле?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-49-motorcycle-heavy-rain",
+      "textRussian": "Перед вашим выездом на мотоцикле сильный дождь значительно ухудшает видимость. Какой план безопаснее всего, если поездку можно отложить?"
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-50-keep-traffic-clear",
+      "textRussian": "Вы хотите остановить мотоцикл, чтобы поговорить, но при этом перекроете полосу движения. Что следует сделать?"
+    }
+  ]
+}

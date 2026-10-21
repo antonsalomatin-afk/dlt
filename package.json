@@ -28,6 +28,7 @@
     "content:review-candidates": "node --env-file=.env tools/content/review-candidates.ts",
     "content:activate-candidates": "node --env-file=.env tools/content/activate-candidates.ts",
     "content:status-candidates": "node --env-file=.env tools/content/status-candidates.ts",
+    "content:overlay-russian-stems": "node --env-file=.env tools/content/overlay-russian-stems.ts",
     "content:inspect-reports": "node --env-file=.env tools/content/inspect-reports.ts",
     "content:triage-reports": "node --env-file=.env tools/content/triage-reports.ts",
     "content:inspect-report-triage": "node --env-file=.env tools/content/inspect-report-triage.ts",
