@@ -8,12 +8,23 @@ const question = {
   choices: choices.map((id, index) => ({ id, key: ['A', 'B', 'C', 'D'][index], textEnglish: ['Turn immediately', 'Check mirrors and blind spots', 'Close your eyes', 'Ignore other vehicles'][index], textRussian: null, textThai: null })),
 };
 
-async function signIn(page: Page) {
+async function signIn(page: Page, vehicle: 'CAR' | 'MOTORCYCLE' = 'CAR') {
   await page.route('https://telegram.org/js/telegram-web-app.js', route => route.fulfill({ contentType:'application/javascript', body:'window.Telegram={WebApp:{initData:"compact-test",ready(){}}};' }));
-  await page.route('**/auth/telegram', route => route.fulfill({ json: { token:'x'.repeat(43),expiresAt:'2099-01-01T00:00:00.000Z',user:{id:choices[0],username:null,firstName:null,selectedVehicleType:'CAR'} } }));
+  await page.route('**/auth/telegram', route => route.fulfill({ json: { token:'x'.repeat(43),expiresAt:'2099-01-01T00:00:00.000Z',user:{id:choices[0],username:null,firstName:null,selectedVehicleType:vehicle} } }));
   await page.route('**/practice/categories', route => route.fulfill({json:{categories:[]}}));
   await page.goto('/');
   await expect(page.getByRole('heading',{name:'What will you drive?'})).toBeVisible();
+}
+
+for (const [vehicle, label] of [['CAR', 'Car'], ['MOTORCYCLE', 'Motorcycle']] as const) {
+  test(`practice identifies the saved ${label} profile selection`, async ({ page }) => {
+    await signIn(page, vehicle);
+    await page.getByRole('button', { name: 'Start practice' }).click();
+    await expect(page.locator('.vehicle-context')).toHaveText(`Saved vehicle: ${label}`);
+    await page.getByRole('button', { name: 'Menu', exact: true }).click();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('.vehicle-context')).toHaveText(`Saved vehicle: ${label}`);
+  });
 }
 
 for (const width of [320,390,1000]) {

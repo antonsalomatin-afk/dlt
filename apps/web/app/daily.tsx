@@ -148,6 +148,7 @@ export function Daily({ linkedPresentationId, session, onSetup, onPractice, onHi
   return <section className="panel practice daily" aria-labelledby="daily-title" aria-busy={loadState === 'loading' || answerPending}>
     <p className="eyebrow accent">{linked ? `SAVED QUESTION${daily ? ` · ${daily.day}` : ''}` : 'TODAY · ONE STABLE QUESTION'}</p>
     <h2 id="daily-title">{linked ? 'Linked question' : 'Today’s question'}</h2>
+    <p className="saved vehicle-context">Saved vehicle: <strong>{session.user.selectedVehicleType === 'CAR' ? 'Car' : session.user.selectedVehicleType === 'MOTORCYCLE' ? 'Motorcycle' : 'Not selected'}</strong></p>
     <AppMenu>
       <button className="secondary" onClick={() => leave(onSetup)}>Vehicle setup</button>
       <button className="secondary" onClick={() => leave(onPractice)}>Ordinary practice</button>

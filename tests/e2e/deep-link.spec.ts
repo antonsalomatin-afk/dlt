@@ -8,7 +8,7 @@ const question = {
     .map((id, index) => ({ id, key: ['A', 'B', 'C', 'D'][index], textThai: null, textEnglish: `Choice ${index + 1}`, textRussian: null })),
 };
 
-async function openFromTelegram(page: Page, startParameter: string, vehicle: 'CAR' | null, url = '/') {
+async function openFromTelegram(page: Page, startParameter: string, vehicle: 'CAR' | 'MOTORCYCLE' | null, url = '/') {
   await page.route('https://telegram.org/js/telegram-web-app.js', (route) => route.fulfill({
     contentType: 'application/javascript', body: `window.Telegram={WebApp:{initData:${JSON.stringify(startParameter)},ready(){}}};`,
   }));
@@ -25,6 +25,7 @@ test('valid daily startapp routes an authenticated learner with a vehicle direct
   await openFromTelegram(page, 'auth_date=1&start_param=daily&hash=signed', 'CAR');
   await expect(page.getByRole('heading', { name: 'Today’s question' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Daily deep-link question' })).toBeVisible();
+  await expect(page.locator('.vehicle-context')).toHaveText('Saved vehicle: Car');
   expect(dailyRequests).toBe(1);
 });
 
@@ -46,7 +47,8 @@ test('browser query parameters and unknown start values cannot create daily navi
 
 const presentationId = '550e8400-e29b-41d4-a716-446655440010';
 
-test('saved link opens an old snapshot after vehicle clearing and requires explicit confirmation', async ({ page }) => {
+for (const [vehicle, label] of [[null, 'Not selected'], ['MOTORCYCLE', 'Motorcycle']] as const) {
+test(`saved link opens an old snapshot with saved vehicle ${label} and requires explicit confirmation`, async ({ page }) => {
   let dailyRequests = 0;
   let answerRequests = 0;
   await page.route('**/practice/daily', (route) => { dailyRequests++; return route.fulfill({ status: 500 }); });
@@ -63,11 +65,17 @@ test('saved link opens an old snapshot after vehicle clearing and requires expli
       trapExplanationThai: null, trapExplanationEnglish: null, trapExplanationRussian: null,
     } });
   });
-  await openFromTelegram(page, `start_param=question_${presentationId}`, null);
+  await openFromTelegram(page, `start_param=question_${presentationId}`, vehicle);
   await expect(page.getByRole('heading', { name: 'Linked question' })).toBeVisible();
   await expect(page.getByText('SAVED QUESTION · 2026-01-01')).toBeVisible();
+  await expect(page.locator('.vehicle-context')).toHaveText(`Saved vehicle: ${label}`);
   await page.getByRole('radio', { name: 'A. Choice 1' }).check();
   await page.getByRole('radio', { name: 'B. Choice 2' }).check();
+  await page.getByRole('button', { name: 'Menu', exact: true }).click();
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('radio', { name: 'B. Choice 2' })).toBeChecked();
+  await expect(page.getByRole('heading', { name: 'Daily deep-link question' })).toBeVisible();
+  await expect(page.locator('.vehicle-context')).toHaveText(`Saved vehicle: ${label}`);
   expect(answerRequests).toBe(0);
   await expect(page.getByRole('region', { name: 'Answer result' })).toHaveCount(0);
   await page.getByRole('button', { name: 'Check answer' }).click({ clickCount: 2 });
@@ -75,6 +83,7 @@ test('saved link opens an old snapshot after vehicle clearing and requires expli
   await expect(page.getByRole('button', { name: 'Next question' })).toBeVisible();
   expect({ answerRequests, dailyRequests }).toEqual({ answerRequests: 1, dailyRequests: 0 });
 });
+}
 
 test('completed saved link shows history and practice without an answer submission', async ({ page }) => {
   let answerRequests = 0;
