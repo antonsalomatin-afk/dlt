@@ -31,7 +31,7 @@
     "actualManifestProof": ".agent/checks/TASK-074-checks-04.txt",
     "releaseTag": "thaidlt-bilingual-20261021",
     "deployHandoff": ".agent/admin/TASK-074-deploy-handoff.md",
-    "productionAppliedAt": "2026-10-21T07:28:00Z"
+    "productionVerifiedAt": "2026-10-21T07:31:25Z"
   },
   "queuedTelegramPosts": {
     "task": "TASK-073",
@@ -146,6 +146,8 @@
     "productionReleaseCommit": "b38618f13765ec41ac51421327c1cbbfa347f245",
     "authoritativeChecks": ".agent/checks/TASK-075-checks-01.txt",
     "backup": "thaidlt-20261021-072832.dump;92170bytes;Resultsuccess/ExecMainStatus0",
-    "postFlag": false
+    "postFlag": false,
+    "adminReport": ".agent/admin/TASK-074-production-report.md",
+    "adminCommit": "c2162f0"
   }
 }
