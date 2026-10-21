@@ -1,7 +1,7 @@
 # TASK-073 private question reminders — release candidate
 
-Candidate source: `d40b80a9008e3cf8a8830b6e5430f08f06ae8a6a` on `codex/task-073`.
-Status: Builder checks passed; Supervisor authoritative checks and independent review pending. Not deployed or enabled by this handoff.
+Accepted source: `a1900d21fbc404b4e8810f47b51a813310ef74d8` on `codex/task-073`.
+Status: Supervisor authoritative checks and independent review02 PASS. Final lint/typecheck331unit/12daily-integration tests PASS; unchanged web build222browser/203full integration results inherited from checks01 per task amendment. Not deployed or enabled by this handoff.
 
 ## Behavior and content readiness
 
