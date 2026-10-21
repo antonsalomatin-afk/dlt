@@ -14,6 +14,8 @@
   "queuedTelegramPosts": {
     "task": "TASK-073",
     "status": "CHECKING",
+    "builderCommit": "d40b80a9008e3cf8a8830b6e5430f08f06ae8a6a",
+    "checks": ".agent/checks/TASK-073-checks-01.txt",
     "ownerRequestedAt": "2026-10-21",
     "scope": "Question post, optional associated image and Answer button opening that exact question with explicit confirmation.",
     "destination": "PRIVATE_BOT_CHAT",
