@@ -20,6 +20,8 @@ acceptance:
 files_allowed:
   - apps/web/app/**
   - tests/**
+  - .local-content/task076* # Ignored QA logs/screenshots and later administrative helpers only; no extra implementation scope.
+  - .local-content/TASK-076* # Ignored exact reviewed release archive only.
 files_forbidden:
   - apps/api/**
   - apps/bot/**
