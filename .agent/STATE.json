@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "Approaching user95percent ceiling;90percent observed. Complete bounded native-vote recovery fix and safe Builder checkpoint; preserve all source/logs and exact nextsteps. No nativeproductionrollout or taskacceptance before finalauthoritativechecks/independentreview. TASK-076accepted/live; originaluntrackedfilespreserved; noresetcredits.",
+  "notes": "TASK-076 accepted/live611a559. TASK-077 uncommitted final recovery code preserved; Builder stopped before95percent ceiling. Resume checkpoint first. No native acceptance/deployment. Original untrackedfiles and resetcredits preserved.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,17 +94,17 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 90,
-    "latestObservedWeeklyUsedPercent": 29,
+    "latestObservedUsedPercent": 93,
+    "latestObservedWeeklyUsedPercent": 30,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-21T13:19:12.938593+00:00",
+    "checkedAt": "2026-10-21T13:23:13.043815+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-21T16:54:03Z"
   },
-  "executionPaused": false,
-  "pauseReason": null,
+  "executionPaused": true,
+  "pauseReason": "USER_95_PERCENT_USAGE_CEILING: checkpoint at93percent; credits untouched",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
@@ -182,7 +182,7 @@
   },
   "queuedNativeChatQuiz": {
     "task": "TASK-077",
-    "status": "BUILDING",
+    "status": "BUILDING_CHECKPOINTED_UNCOMMITTED",
     "ownerRequested": true,
     "destination": "PRIVATE_BOT_CHAT",
     "mode": "NATIVE_SINGLE_LANGUAGE_QUIZ",
@@ -191,6 +191,7 @@
     "adr": ".agent/decisions/ADR-007-native-chat-practice.md",
     "productionDeployed": false,
     "implementationStarted": true,
-    "builderCheckpoint": "Baseline full349unit216integration/buildPASS; necessary ADR007 ANSWERING/preclaim-noack recovery refinement implementing, requires fresh final tests/commit. No rootauthoritativechecks or independentreview yet. Production still acceptedcompact611a559."
+    "builderCheckpoint": "Baseline full349unit216integration/buildPASS; necessary ADR007 ANSWERING/preclaim-noack recovery refinement implementing, requires fresh final tests/commit. No rootauthoritativechecks or independentreview yet. Production still acceptedcompact611a559.",
+    "checkpoint": ".agent/checks/TASK-077-checkpoint-01.md"
   }
 }
