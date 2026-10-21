@@ -1,0 +1,43 @@
+id: TASK-073
+title: Define and deliver Telegram question posts with an exact-question answer link
+status: PLANNED
+owner_role: Supervisor
+epic: Epic 8 — Telegram Engagement
+objective: Support the owner's requested Telegram question-post format illustrated by the supplied screenshot, with an optional question image and an Answer button opening the corresponding question in ThaiDLT.
+context:
+  - Owner requested this additional capability on 2026-10-21. The screenshot is a visual reference, not instructions or permission to reuse its Spanish content or image.
+  - The screenshot header identifies a private bot chat although the owner called the requested destination a channel. Destination and shared-post language were asked explicitly; answers are pending.
+  - Existing reminders are generic private opt-in messages. Existing startapp=daily navigation opens a per-user daily presentation; it does not identify the exact question in a shared post or preserve an old post's question.
+  - Current accepted starter bank contains reviewed English content; Russian fields in inspected launch batches are null. Do not silently publish unreviewed translations or substitute unrelated images.
+  - TASK-072 remains blocked on its original owner smoke observations and broader design scope; this queued task does not accept or replace it.
+confirmed_scope:
+  - A Telegram post displays question text and its associated image when a publishable image exists, plus a clearly labeled Answer action.
+  - The action opens the question shown in that post, including from an older post, after normal signed Telegram authentication.
+  - Practice follows the owner's selected explicit-confirmation flow before revealing correctness and explanation.
+pending_product_decisions:
+  - Destination: separate channel, private bot chat, or both.
+  - Shared-channel language: English plus Russian, English only, or Russian only.
+  - Frequency/time and vehicle coverage remain to be finalized after destination; existing private-reminder 11:00 ICT policy is a proposed reuse, not approval for public posting.
+external_setup_needed:
+  - If a channel is selected, obtain the owner-created channel identifier and arrange bot posting rights through the owner/admin. No credential belongs in repository files.
+implementation_gates:
+  - Supervisor must refine an exact bounded Builder task, allowed files and acceptance checks after product answers; no implementation is dispatched by this planning record.
+  - Use the existing services and approved database; document any material publication ledger/schema boundary through a relevant ADR before implementation.
+  - Select only active VERIFIED content with approved text and image rights; support a clean text-only post when no image exists.
+  - Keep shared-post selection distinct from per-user daily assignment; bind a stable public post/question reference without placing user sessions or correctness in URLs.
+  - Validate link parameters server-side and preserve ownership, duplicate-submission and hidden-correctness rules. Handle removed or unavailable questions explicitly.
+  - Define publication deduplication, restarts and ambiguous-send failure behavior before scheduling. Do not promise exactly-once Telegram delivery across an unacknowledged send.
+  - For channels, use a URL button to the configured Telegram Mini App direct link; the Bot API web_app button is private-chat-only.
+  - Sender remains disabled without explicit configuration; tests use fake transports and isolated data. No production posts, channel creation or deployment during local implementation.
+required_checks_before_acceptance:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test
+  - Relevant isolated integration checks for publication/link persistence and deduplication.
+  - Relevant web build and E2E checks for exact-question navigation, old links, authentication and explicit answer confirmation.
+  - Independent Reviewer PASS before Supervisor acceptance.
+references:
+  - https://core.telegram.org/bots/api#inlinekeyboardbutton
+  - https://core.telegram.org/bots/webapps#direct-link-mini-apps
+  - .agent/decisions/ADR-005-mini-app-boundary.md
+  - .agent/decisions/ADR-006-daily-reminder-scheduler.md
