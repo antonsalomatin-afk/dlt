@@ -133,11 +133,12 @@
   },
   "bilingualRollout": {
     "task": "TASK-075",
-    "status": "APPROVED_PREFLIGHT",
+    "status": "PREFLIGHT_PASS_STAGING_RELEASE",
     "ownerApproval": "deploy",
     "approvedAt": "2026-10-21",
     "releaseCommit": "b38618f13765ec41ac51421327c1cbbfa347f245",
     "releaseTag": "thaidlt-bilingual-20261021",
-    "productionMutated": false
+    "productionMutated": false,
+    "preflight": "Strict known-host SSH/QEMU guest100 verified; old runtime1d7eaa0 and three active services; envfiles root0600; loopbackports3060/3061/5434; Node24.22.0; pnpm11.19.0 required despite global12.4.2."
   }
 }

@@ -25,6 +25,7 @@ acceptance:
   - Independent operational Reviewer PASS and Supervisor acceptance before marking the rollout complete.
 files_allowed:
   - .agent/**
+  - .local-content/task075* # Ignored transient administrative SSH/guest scripts and exact release archive only; no application source.
 files_forbidden:
   - .env
   - apps/**
