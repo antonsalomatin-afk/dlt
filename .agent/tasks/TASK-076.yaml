@@ -1,6 +1,6 @@
 id: TASK-076
 title: Implement the approved compact Mini App learning surface
-status: CHECKING
+status: REVIEW
 builder_commit: e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2
 builder_evidence: .agent/checks/TASK-076-builder-summary-01.txt
 usage_checkpoint: Stopped at91percent before95percent user ceiling. Resume authoritativechecks then independentreview then already-approved productionrollout. No new UI deployed yet.
@@ -48,3 +48,7 @@ supervisor_validation_scope:
   - Keep Prisma generation and generated-client consumers sequential. No local bot startup, production operation or messaging. Root performs approved rollout only after independentPASS.
   - Deliver mobile screenshots of actual local app under existing mocked E2E harness for owner-facing visual verification, distinct from real-owner Telegram smoke.
 owner_decision_required: false
+
+authoritative_checks: .agent/checks/TASK-076-checks-01.txt
+review_attempt: 1
+review_file: .agent/reviews/TASK-076-review-01.md
