@@ -39,6 +39,7 @@ required_checks:
 supervisor_validation_scope:
   - No backend, schema, dependency or API contract change; inherit accepted integration evidence unless implementation expands scope. Minimum lint/types/unit, web build and full browser suite are authoritative Supervisor gates.
   - Builder reads apps/web/AGENTS.md and relevant installed Next docs before editing. Do not commit original untracked apps/web/AGENTS.md,CLAUDE.md or starterZIP.
+  - Resource-bounded full unit runs may use pnpm test --maxWorkers=2; this retains all tests/assertions/timeouts and avoids unrelated CLI child-process contention observed at59 workers. Record the initial resource failure and exact successful command; do not alter tests to hide it.
   - Keep Prisma generation and generated-client consumers sequential. No local bot startup, production operation or messaging. Root performs approved rollout only after independentPASS.
   - Deliver mobile screenshots of actual local app under existing mocked E2E harness for owner-facing visual verification, distinct from real-owner Telegram smoke.
 owner_decision_required: false
