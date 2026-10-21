@@ -32,6 +32,18 @@ describe('private bilingual question post construction', () => {
       expect(() => buildQuestionPost({ ...input, question: { ...input.question, textRussian } }, null, config)).toThrow();
     }
   });
+  it.each([
+    'https://localhost./image.png',
+    'https://foo.localhost./image.png',
+    'https://foo.local./image.png',
+  ])('keeps the complete bilingual text when a dotted local image reference is rejected: %s', (image) => {
+    expect(publishableImageReference(image)).toBeNull();
+    expect(buildQuestionPost(input, image, config)).toEqual({
+      text: 'English\nWhen should you stop?\n\nРусский\nКогда нужно остановиться?',
+      image: null,
+      url: `https://t.me/thaidlt_test_bot?startapp=question_${id}`,
+    });
+  });
   it('rejects unsafe or local image metadata and leaves a complete text-only post', () => {
     for (const image of ['http://example.org/x', 'file:///tmp/x', '/local.png', 'https://user:pass@example.org/x', 'https://localhost/x', 'https://127.0.0.1/x', 'https://[::1]/x', 'https://example.org/%00x', 'https://example.org/x\n', 'https://example.org/\\x']) {
       expect(publishableImageReference(image)).toBeNull();

@@ -14,8 +14,9 @@ export function publishableImageReference(input: unknown): string | null {
   if (typeof input !== 'string' || input.length > 2048 || /[\s\p{Cc}\p{Cf}\\]/u.test(input)) return null;
   try {
     const url = new URL(input);
+    const hostname = url.hostname.replace(/\.$/u, '');
     if (url.protocol !== 'https:' || !url.hostname || url.username || url.password || url.hash
-      || url.hostname === 'localhost' || url.hostname.endsWith('.localhost') || url.hostname.endsWith('.local')
+      || hostname === 'localhost' || hostname.endsWith('.localhost') || hostname.endsWith('.local')
       || url.hostname.includes(':') || /^\d+(?:\.\d+){3}$/u.test(url.hostname)) return null;
     if (/[\p{Cc}\p{Cf}]/u.test(decodeURIComponent(input))) return null;
     return url.toString();
