@@ -1,0 +1,486 @@
+TASK-074 authoritative fix checks; source c2ec8e8b8bbcc5e322a703aec638fb20bb7e21e8; sequential commands
+CHECK pnpm lint
+$ eslint .
+EXIT 0
+CHECK pnpm typecheck
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 184ms
+
+$ tsc --noEmit
+EXIT 0
+CHECK pnpm test
+$ pnpm db:generate && vitest run
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 158ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  59 passed (59)
+      Tests  338 passed (338)
+   Start at  07:56:35
+   Duration  21.34s (tests 72%, import 20%, transform 7%, worker 1%)
+
+    Isolate  59 workers spawned · ~978ms startup each (spawn + environment, per file)
+             at least ~1.77s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+CHECK focused isolated PostgreSQL integration (synthetic review; real-manifest proof follows review)
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+ ❯ tests/russian-stems.integration.test.ts (2 tests | 1 failed) 13500ms
+   × checks, applies and exactly replays all100 real stems while preserving choices, users, answers, learning and saved snapshots 2856ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/russian-stems.integration.test.ts > checks, applies and exactly replays all100 real stems while preserving choices, users, answers, learning and saved snapshots
+AssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(97) ] to deeply equal [ { …(7) }, { …(7) }, { …(7) }, …(97) ]
+
+- Expected
++ Received
+
+@@ -218,53 +218,53 @@
+        "version": 1,
+      },
+      "userId": "369fd4a5-b147-4bea-8b65-38d3d92ab90c",
+    },
+    {
+-     "conceptId": "264a1f1d-c434-46c5-b283-36a797254812",
++     "conceptId": "9c893a66-57d0-4fe1-8dfd-9e48f773431e",
+      "createdAt": 2026-10-21T05:57:02.795Z,
+      "dailyDate": null,
+-     "id": "96d7fdee-e885-4c33-bc44-2e9e3694c217",
+-     "questionId": "0b797912-4f96-57ab-84e4-9129e4d71094",
++     "id": "ccb1cef0-1c94-4560-802a-87a36a1e440f",
++     "questionId": "0c87835c-1221-51d9-815f-360831014c00",
+      "snapshot": {
+-       "correctChoiceId": "eb6e6b58-8606-5a01-8a65-625fcfd2e9b0",
+-       "explanationEnglish": "Drivers must not obstruct traffic.",
++       "correctChoiceId": "184db397-9595-5f6a-8789-9909823c9935",
++       "explanationEnglish": "Speed must be adjusted for road surface, weather and traffic rather than treating a legal limit as a target.",
+        "explanationRussian": null,
+        "explanationThai": null,
+        "question": {
+          "choices": [
+            {
+-             "id": "ac060fb2-f52c-5829-8e13-7f6d9989cfe4",
++             "id": "184db397-9595-5f6a-8789-9909823c9935",
+              "key": "A",
+-             "textEnglish": "Stop in the lane if the conversation is brief",
++             "textEnglish": "Reduce speed to suit the conditions",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "eb6e6b58-8606-5a01-8a65-625fcfd2e9b0",
++             "id": "35338a47-cbbf-5567-8f67-f17ff10de9f5",
+              "key": "B",
+-             "textEnglish": "Choose a permitted place that keeps the traffic route clear",
++             "textEnglish": "Maintain the maximum posted speed regardless of conditions",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "4697fb20-b09e-5b45-879a-60187ad69365",
++             "id": "c270a262-7084-5dbc-8324-54864cbcaeeb",
+              "key": "C",
+-             "textEnglish": "Block the lane and leave the engine running",
++             "textEnglish": "Match the fastest nearby vehicle",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "1c7a6ea6-c10c-56e6-8738-8eacd64ad9cd",
++             "id": "0269bfd4-8c61-528c-875b-311a09829664",
+              "key": "D",
+-             "textEnglish": "Ask following drivers to use the opposite lane",
++             "textEnglish": "Increase speed to leave the difficult area quickly",
+              "textRussian": null,
+              "textThai": null,
+            },
+          ],
+-         "id": "0b797912-4f96-57ab-84e4-9129e4d71094",
+-         "textEnglish": "You want to stop your motorcycle to chat and would block the traffic lane. What should you do?",
++         "id": "0c87835c-1221-51d9-815f-360831014c00",
++         "textEnglish": "The posted limit is higher than feels safe on a wet, crowded road. How should you choose your motorcycle speed?",
+          "textExamEnglish": null,
+          "textRussian": null,
+          "textThai": null,
+        },
+        "trapExplanationEnglish": null,
+@@ -273,53 +273,53 @@
+        "version": 1,
+      },
+      "userId": "369fd4a5-b147-4bea-8b65-38d3d92ab90c",
+    },
+    {
+-     "conceptId": "9c893a66-57d0-4fe1-8dfd-9e48f773431e",
++     "conceptId": "264a1f1d-c434-46c5-b283-36a797254812",
+      "createdAt": 2026-10-21T05:57:02.795Z,
+      "dailyDate": null,
+-     "id": "ccb1cef0-1c94-4560-802a-87a36a1e440f",
+-     "questionId": "0c87835c-1221-51d9-815f-360831014c00",
++     "id": "96d7fdee-e885-4c33-bc44-2e9e3694c217",
++     "questionId": "0b797912-4f96-57ab-84e4-9129e4d71094",
+      "snapshot": {
+-       "correctChoiceId": "184db397-9595-5f6a-8789-9909823c9935",
+-       "explanationEnglish": "Speed must be adjusted for road surface, weather and traffic rather than treating a legal limit as a target.",
++       "correctChoiceId": "eb6e6b58-8606-5a01-8a65-625fcfd2e9b0",
++       "explanationEnglish": "Drivers must not obstruct traffic.",
+        "explanationRussian": null,
+        "explanationThai": null,
+        "question": {
+          "choices": [
+            {
+-             "id": "184db397-9595-5f6a-8789-9909823c9935",
++             "id": "ac060fb2-f52c-5829-8e13-7f6d9989cfe4",
+              "key": "A",
+-             "textEnglish": "Reduce speed to suit the conditions",
++             "textEnglish": "Stop in the lane if the conversation is brief",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "35338a47-cbbf-5567-8f67-f17ff10de9f5",
++             "id": "eb6e6b58-8606-5a01-8a65-625fcfd2e9b0",
+              "key": "B",
+-             "textEnglish": "Maintain the maximum posted speed regardless of conditions",
++             "textEnglish": "Choose a permitted place that keeps the traffic route clear",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "c270a262-7084-5dbc-8324-54864cbcaeeb",
++             "id": "4697fb20-b09e-5b45-879a-60187ad69365",
+              "key": "C",
+-             "textEnglish": "Match the fastest nearby vehicle",
++             "textEnglish": "Block the lane and leave the engine running",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "0269bfd4-8c61-528c-875b-311a09829664",
++             "id": "1c7a6ea6-c10c-56e6-8738-8eacd64ad9cd",
+              "key": "D",
+-             "textEnglish": "Increase speed to leave the difficult area quickly",
++             "textEnglish": "Ask following drivers to use the opposite lane",
+              "textRussian": null,
+              "textThai": null,
+            },
+          ],
+-         "id": "0c87835c-1221-51d9-815f-360831014c00",
+-         "textEnglish": "The posted limit is higher than feels safe on a wet, crowded road. How should you choose your motorcycle speed?",
++         "id": "0b797912-4f96-57ab-84e4-9129e4d71094",
++         "textEnglish": "You want to stop your motorcycle to chat and would block the traffic lane. What should you do?",
+          "textExamEnglish": null,
+          "textRussian": null,
+          "textThai": null,
+        },
+        "trapExplanationEnglish": null,
+@@ -438,53 +438,53 @@
+        "version": 1,
+      },
+      "userId": "369fd4a5-b147-4bea-8b65-38d3d92ab90c",
+    },
+    {
+-     "conceptId": "a701c268-48bf-48b9-90c4-822b7ff29e88",
++     "conceptId": "dddbd93f-cc83-43d1-95f8-d678ef1ecf6d",
+      "createdAt": 2026-10-21T05:57:02.799Z,
+      "dailyDate": null,
+-     "id": "bd3adc30-ced7-42c5-b348-a987a618f19a",
+-     "questionId": "0fe48428-06c8-5242-84c2-c675fccfa522",
++     "id": "933d95b3-42e7-4720-9aa9-e8bac7a15c35",
++     "questionId": "13b47cc9-865f-5236-891e-d946c4c71041",
+      "snapshot": {
+-       "correctChoiceId": "ad979a60-69ea-50e6-85f0-3d758ba251a1",
+-       "explanationEnglish": "Normal traffic in Thailand travels on the left side of the road.",
++       "correctChoiceId": "f4dc244c-54b4-5b93-8bed-b44007dd15aa",
++       "explanationEnglish": "Sidewalks are for pedestrians, not driving or parking vehicles.",
+        "explanationRussian": null,
+        "explanationThai": null,
+        "question": {
+          "choices": [
+            {
+-             "id": "ad979a60-69ea-50e6-85f0-3d758ba251a1",
++             "id": "ab7bc67a-19d1-569f-8b02-19d204111207",
+              "key": "A",
+-             "textEnglish": "The left side",
++             "textEnglish": "Use the sidewalk if no pedestrian is immediately visible",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "585c7930-7056-5680-8f7a-df420f43b1fa",
++             "id": "f4dc244c-54b4-5b93-8bed-b44007dd15aa",
+              "key": "B",
+-             "textEnglish": "The right side",
++             "textEnglish": "Remain on the roadway and keep the sidewalk clear",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "bee37280-d425-5981-8b3f-f619a7439ba7",
++             "id": "7326775f-7a19-5133-8334-9255304fc708",
+              "key": "C",
+-             "textEnglish": "Whichever side has fewer vehicles",
++             "textEnglish": "Ride or drive along the sidewalk with the horn sounding",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "780143f7-2ea3-5a17-8781-fcfaa35760c3",
++             "id": "eb45d2ac-14d8-5399-8451-e5f26c8f8b08",
+              "key": "D",
+-             "textEnglish": "The center line",
++             "textEnglish": "Use the sidewalk whenever traffic is stationary",
+              "textRussian": null,
+              "textThai": null,
+            },
+          ],
+-         "id": "0fe48428-06c8-5242-84c2-c675fccfa522",
+-         "textEnglish": "You join an ordinary two-way road on your motorcycle in Thailand. Which side should you normally ride on?",
++         "id": "13b47cc9-865f-5236-891e-d946c4c71041",
++         "textEnglish": "Traffic is queuing beside an empty sidewalk. May you drive your car along it to pass the queue?",
+          "textExamEnglish": null,
+          "textRussian": null,
+          "textThai": null,
+        },
+        "trapExplanationEnglish": null,
+@@ -493,53 +493,53 @@
+        "version": 1,
+      },
+      "userId": "369fd4a5-b147-4bea-8b65-38d3d92ab90c",
+    },
+    {
+-     "conceptId": "dddbd93f-cc83-43d1-95f8-d678ef1ecf6d",
++     "conceptId": "a701c268-48bf-48b9-90c4-822b7ff29e88",
+      "createdAt": 2026-10-21T05:57:02.799Z,
+      "dailyDate": null,
+-     "id": "933d95b3-42e7-4720-9aa9-e8bac7a15c35",
+-     "questionId": "13b47cc9-865f-5236-891e-d946c4c71041",
++     "id": "bd3adc30-ced7-42c5-b348-a987a618f19a",
++     "questionId": "0fe48428-06c8-5242-84c2-c675fccfa522",
+      "snapshot": {
+-       "correctChoiceId": "f4dc244c-54b4-5b93-8bed-b44007dd15aa",
+-       "explanationEnglish": "Sidewalks are for pedestrians, not driving or parking vehicles.",
++       "correctChoiceId": "ad979a60-69ea-50e6-85f0-3d758ba251a1",
++       "explanationEnglish": "Normal traffic in Thailand travels on the left side of the road.",
+        "explanationRussian": null,
+        "explanationThai": null,
+        "question": {
+          "choices": [
+            {
+-             "id": "ab7bc67a-19d1-569f-8b02-19d204111207",
++             "id": "ad979a60-69ea-50e6-85f0-3d758ba251a1",
+              "key": "A",
+-             "textEnglish": "Use the sidewalk if no pedestrian is immediately visible",
++             "textEnglish": "The left side",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "f4dc244c-54b4-5b93-8bed-b44007dd15aa",
++             "id": "585c7930-7056-5680-8f7a-df420f43b1fa",
+              "key": "B",
+-             "textEnglish": "Remain on the roadway and keep the sidewalk clear",
++             "textEnglish": "The right side",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "7326775f-7a19-5133-8334-9255304fc708",
++             "id": "bee37280-d425-5981-8b3f-f619a7439ba7",
+              "key": "C",
+-             "textEnglish": "Ride or drive along the sidewalk with the horn sounding",
++             "textEnglish": "Whichever side has fewer vehicles",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "eb45d2ac-14d8-5399-8451-e5f26c8f8b08",
++             "id": "780143f7-2ea3-5a17-8781-fcfaa35760c3",
+              "key": "D",
+-             "textEnglish": "Use the sidewalk whenever traffic is stationary",
++             "textEnglish": "The center line",
+              "textRussian": null,
+              "textThai": null,
+            },
+          ],
+-         "id": "13b47cc9-865f-5236-891e-d946c4c71041",
+-         "textEnglish": "Traffic is queuing beside an empty sidewalk. May you drive your car along it to pass the queue?",
++         "id": "0fe48428-06c8-5242-84c2-c675fccfa522",
++         "textEnglish": "You join an ordinary two-way road on your motorcycle in Thailand. Which side should you normally ride on?",
+          "textExamEnglish": null,
+          "textRussian": null,
+          "textThai": null,
+        },
+        "trapExplanationEnglish": null,
+@@ -2693,53 +2693,53 @@
+        "version": 1,
+      },
+      "userId": "369fd4a5-b147-4bea-8b65-38d3d92ab90c",
+    },
+    {
+-     "conceptId": "f91cabe3-8c41-4ca9-8792-7dce7c99bbd2",
++     "conceptId": "7ea925db-f6e5-400a-b895-97ba0df7189d",
+      "createdAt": 2026-10-21T05:57:02.828Z,
+      "dailyDate": null,
+-     "id": "8e8bf6af-1a02-4bd2-a84f-8cfc5a232041",
+-     "questionId": "63c8ec29-53d6-539f-8a30-6d5459e97d47",
++     "id": "30a406ff-61e3-47c3-83f6-2cbbd6703d99",
++     "questionId": "693f8ad4-1f50-5559-8218-cd8e8f0e24d5",
+      "snapshot": {
+-       "correctChoiceId": "2a33eede-65da-50a0-84fd-ad8497a93cfb",
+-       "explanationEnglish": "Parked vehicles must not block entrances or exits of other premises.",
++       "correctChoiceId": "44b99deb-6d4f-5109-87b2-c59d5820b210",
++       "explanationEnglish": "Before riding, check brakes, headlights, tires and other equipment; unreliable parts need replacement.",
+        "explanationRussian": null,
+        "explanationThai": null,
+        "question": {
+          "choices": [
+            {
+-             "id": "2a33eede-65da-50a0-84fd-ad8497a93cfb",
++             "id": "19d4f9aa-fc12-53cb-8483-0b79bd0d2af9",
+              "key": "A",
+-             "textEnglish": "Choose another place that keeps the entrance clear",
++             "textEnglish": "Use the horn as a substitute for reliable brakes",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "66618101-41a7-501d-8ccf-3fcac4e4dabd",
++             "id": "44b99deb-6d4f-5109-87b2-c59d5820b210",
+              "key": "B",
+-             "textEnglish": "Park there if you will return quickly",
++             "textEnglish": "Have the fault repaired before riding",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "73266146-bdd2-5a07-8a88-858d25c2d28a",
++             "id": "5383228e-ee63-5cff-8a55-f871aa92b171",
+              "key": "C",
+-             "textEnglish": "Block it and leave a phone number as permission",
++             "textEnglish": "Ride more slowly and postpone the repair indefinitely",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "5b8ecf6d-3195-578e-8076-9a03d5e31fd3",
++             "id": "46dbe929-ad20-5e5a-81c6-2adf00514553",
+              "key": "D",
+-             "textEnglish": "Park there whenever the gate is closed",
++             "textEnglish": "Carry a passenger to help stop the motorcycle",
+              "textRussian": null,
+              "textThai": null,
+            },
+          ],
+-         "id": "63c8ec29-53d6-539f-8a30-6d5459e97d47",
+-         "textEnglish": "You are about to park your motorcycle across a building entrance. What should you do?",
++         "id": "693f8ad4-1f50-5559-8218-cd8e8f0e24d5",
++         "textEnglish": "Before leaving, you find your motorcycle brakes are unreliable. What should you do?",
+          "textExamEnglish": null,
+          "textRussian": null,
+          "textThai": null,
+        },
+        "trapExplanationEnglish": null,
+@@ -2748,53 +2748,53 @@
+        "version": 1,
+      },
+      "userId": "369fd4a5-b147-4bea-8b65-38d3d92ab90c",
+    },
+    {
+-     "conceptId": "7ea925db-f6e5-400a-b895-97ba0df7189d",
++     "conceptId": "f91cabe3-8c41-4ca9-8792-7dce7c99bbd2",
+      "createdAt": 2026-10-21T05:57:02.828Z,
+      "dailyDate": null,
+-     "id": "30a406ff-61e3-47c3-83f6-2cbbd6703d99",
+-     "questionId": "693f8ad4-1f50-5559-8218-cd8e8f0e24d5",
++     "id": "8e8bf6af-1a02-4bd2-a84f-8cfc5a232041",
++     "questionId": "63c8ec29-53d6-539f-8a30-6d5459e97d47",
+      "snapshot": {
+-       "correctChoiceId": "44b99deb-6d4f-5109-87b2-c59d5820b210",
+-       "explanationEnglish": "Before riding, check brakes, headlights, tires and other equipment; unreliable parts need replacement.",
++       "correctChoiceId": "2a33eede-65da-50a0-84fd-ad8497a93cfb",
++       "explanationEnglish": "Parked vehicles must not block entrances or exits of other premises.",
+        "explanationRussian": null,
+        "explanationThai": null,
+        "question": {
+          "choices": [
+            {
+-             "id": "19d4f9aa-fc12-53cb-8483-0b79bd0d2af9",
++             "id": "2a33eede-65da-50a0-84fd-ad8497a93cfb",
+              "key": "A",
+-             "textEnglish": "Use the horn as a substitute for reliable brakes",
++             "textEnglish": "Choose another place that keeps the entrance clear",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "44b99deb-6d4f-5109-87b2-c59d5820b210",
++             "id": "66618101-41a7-501d-8ccf-3fcac4e4dabd",
+              "key": "B",
+-             "textEnglish": "Have the fault repaired before riding",
++             "textEnglish": "Park there if you will return quickly",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "5383228e-ee63-5cff-8a55-f871aa92b171",
++             "id": "73266146-bdd2-5a07-8a88-858d25c2d28a",
+              "key": "C",
+-             "textEnglish": "Ride more slowly and postpone the repair indefinitely",
++             "textEnglish": "Block it and leave a phone number as permission",
+              "textRussian": null,
+              "textThai": null,
+            },
+            {
+-             "id": "46dbe929-ad20-5e5a-81c6-2adf00514553",
++             "id": "5b8ecf6d-3195-578e-8076-9a03d5e31fd3",
+              "key": "D",
+-             "textEnglish": "Carry a passenger to help stop the motorcycle",
++             "textEnglish": "Park there whenever the gate is closed",
+              "textRussian": null,
+              "textThai": null,
+            },
+          ],
+-         "id": "693f8ad4-1f50-5559-8218-cd8e8f0e24d5",
+-         "textEnglish": "Before leaving, you find your motorcycle brakes are unreliable. What should you do?",
++         "id": "63c8ec29-53d6-539f-8a30-6d5459e97d47",
++         "textEnglish": "You are about to park your motorcycle across a building entrance. What should you do?",
+          "textExamEnglish": null,
+          "textRussian": null,
+          "textThai": null,
+        },
+        "trapExplanationEnglish": null,
+
+ ❯ tests/russian-stems.integration.test.ts:123:91
+    121|   expect(cli().stdout.trim()).toBe('Russian stems: 0 would apply, 0 ap…
+    122|   expect(await questions()).toEqual(after); // includes updatedAt: rep…
+    123|   expect(await database.questionPresentation.findMany({ orderBy: { cre…
+       |                                                                                           ^
+    124|   expect(await database.answerAttempt.findUnique({ where: { id: answer…
+    125|   expect(await database.user.findUnique({ where: { id: user.id } })).t…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  07:56:57
+   Duration  14.36s (tests 95%, import 3%, transform 2%)
+
+EXIT 1

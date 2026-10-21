@@ -49,3 +49,4 @@ supervisor_validation_scope:
   - Reviewer must inspect every English/Russian pair as well as code/tests, then write the actual review manifest under .agent/reviews/TASK-074-translation-review-01.json with the exact pack SHA. No automatic production verification or publication.
   - Supervisor runs an additional isolated real-pack check/apply/replay with that manifest before acceptance; no production access.
 owner_decision_required: false
+corrective_check_finding: checks02 lint/typecheck338unit PASS; integration preservation comparison fails on nonunique createdAt ordering. Builder must diagnose, retain full preservation assertions, add deterministic ID tie-breaker when confirmed, then rerun mandatory checks sequentially.
