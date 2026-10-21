@@ -1,0 +1,271 @@
+
+2026-10-21T07:22:32.727359+00:00 Read-only production preflight
+2026-10-21T07:22:36Z
+ubuntu-apps
+/srv/thaidlt/releases/1d7eaa0671889ec82edc1b5cf149b4e7c495ffe3
+MainPID=4047099
+NRestarts=1
+ExecStart={ path=/opt/node24/bin/node ; argv[]=/opt/node24/bin/node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3060 ; ignore_errors=no ; start_time=[n/a] ; stop_time=[n/a] ; pid=0 ; code=(null) ; status=0/0 }
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current/apps/web
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+FragmentPath=/etc/systemd/system/thaidlt-web.service
+DropInPaths=
+MainPID=1020650
+NRestarts=0
+ExecStart={ path=/opt/node24/bin/node ; argv[]=/opt/node24/bin/node apps/api/src/main.ts ; ignore_errors=no ; start_time=[Tue 2026-10-20 07:07:25 UTC] ; stop_time=[n/a] ; pid=1020650 ; code=(null) ; status=0/0 }
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+FragmentPath=/etc/systemd/system/thaidlt-api.service
+DropInPaths=
+MainPID=1020651
+NRestarts=0
+ExecStart={ path=/opt/node24/bin/node ; argv[]=/opt/node24/bin/node apps/bot/src/main.ts ; ignore_errors=no ; start_time=[Tue 2026-10-20 07:07:25 UTC] ; stop_time=[n/a] ; pid=1020651 ; code=(null) ; status=0/0 }
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+FragmentPath=/etc/systemd/system/thaidlt-bot.service
+DropInPaths=
+600 root root /etc/thaidlt/app.env
+600 root root /etc/thaidlt/database.env
+600 root root /etc/thaidlt/bot.env
+v24.22.0
+/usr/bin/pnpm
+12.4.2
+Result=success
+ExecMainStatus=0
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       1.2T   19G  1.2T   2% /
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+LISTEN 0      4096       127.0.0.1:5434      0.0.0.0:*
+LISTEN 0      511        127.0.0.1:3060      0.0.0.0:*
+LISTEN 0      511        127.0.0.1:3061      0.0.0.0:*
+
+GUEST_EXIT 0
+Transfer attempt1 base64 payload exceeded qm pass-stdin1MiB limit; no extraction/runtime/content change. Retried raw797219-byte archive under limit, exactSHA required.
+Archive transfer {"exitcode": 0, "exited": 1, "out-data": "Guest archive verified 2514ab52411459cc93d8da53ff0fb97eab737b15ec54dac4c58ac14aa8d9c2b4\n"}
+
+2026-10-21T07:25:22.673124+00:00 Read-only Telegram Main Mini App webhook and menu setup
+{"username":"thauto_dlt_bot","hasMainWebApp":false,"webhookConfigured":false,"pendingUpdateCount":0,"menuType":"commands","menuExpectedUrl":false,"miniAppUrlExpected":true,"existingPostFlag":"unset","existingBotUsername":false,"shortNamePresent":false}
+Running as unit: thaidlt-task075-telegram-check.service; invocation ID: 0fa586da337d48999e19583dcf7f9b17
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 1.708s
+CPU time consumed: 209ms
+Memory peak: 2.4M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-21T07:24:38.594180+00:00 Stage exact accepted release; frozen install generate and build
+/var/tmp/TASK-075-b38618f.tar.gz: OK
+Schema and migration history unchanged.
+Scope: all 6 workspace projects
+Ã¢ÂœÂ“ Lockfile passes supply-chain policies (verified 6d ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +382
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+   Ã¢Â•Â­Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â•Â®
+   Ã¢Â”Â‚                                           Ã¢Â”Â‚
+   Ã¢Â”Â‚   Update available! 11.19.0 Ã¢Â†Â’ 12.14.0.    Ã¢Â”Â‚
+   Ã¢Â”Â‚   Changelog: https://pnpm.io/v/12.14.0    Ã¢Â”Â‚
+   Ã¢Â”Â‚   To update, run: pnpm add -g @pnpm/exe   Ã¢Â”Â‚
+   Ã¢Â”Â‚                                           Ã¢Â”Â‚
+   Ã¢Â•Â°Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â•Â¯
+
+Progress: resolved 382, reused 7, downloaded 0, added 0
+Progress: resolved 382, reused 15, downloaded 0, added 0
+Progress: resolved 382, reused 116, downloaded 0, added 0
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/thaidlt/.local/share/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Progress: resolved 382, reused 381, downloaded 0, added 19
+Progress: resolved 382, reused 382, downloaded 0, added 231
+Progress: resolved 382, reused 382, downloaded 0, added 379
+Progress: resolved 382, reused 382, downloaded 0, added 380
+Progress: resolved 382, reused 382, downloaded 0, added 381
+Progress: resolved 382, reused 382, downloaded 0, added 382
+Progress: resolved 382, reused 382, downloaded 0, added 382, done
+.../node_modules/prisma preinstall$ node scripts/preinstall-entry.js
+.../node_modules/prisma preinstall: Done
+
+devDependencies:
++ @eslint/js 10.0.1
++ @playwright/test 1.63.0
++ @types/node 24.13.3
++ @types/node-fetch 2.6.13
++ @types/pg 8.23.1
++ embedded-postgres 18.4.0-beta.17
++ eslint 10.10.0
++ node-fetch 2.7.0
++ pg 8.23.0
++ prisma 7.10.0
++ typescript 5.9.3
++ typescript-eslint 8.69.0
++ vitest 5.0.0
++ zod 4.5.4
+
+Done in 18s using pnpm v11.19.0
+
+Ã¢ÂœÂ” Generated Prisma Client (7.10.0) to ./packages/database/generated in 357ms
+
+Ã¢Â–Â² Next.js 16.3.5 (Turbopack)
+Ã¢ÂœÂ“ Running next.config.ts took 1697ms
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+
+  Creating an optimized production build ...
+Ã¢ÂœÂ“ Compiled successfully in 31.0s
+  Running TypeScript ...
+  Finished TypeScript in 11.5s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/3) ...
+Ã¢ÂœÂ“ Generating static pages using 3 workers (3/3) in 239ms
+  Finalizing page optimization ...
+
+Route (app)
+Ã¢Â”ÂŒ Ã¢Â—Â‹ /
+Ã¢Â”Â” Ã¢Â—Â‹ /_not-found
+
+
+Ã¢Â—Â‹  (Static)  prerendered as static content
+
+Accepted release staged and production build complete.
+Running as unit: thaidlt-task075-install.service; invocation ID: b50547c7fefb49a39001be2d34d21e7d
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts generate
+.env not found. Continuing without it.
+Loaded Prisma config from packages/database/prisma.config.ts.
+
+Prisma schema loaded from packages/database/prisma/schema.prisma.
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 52.721s
+CPU time consumed: 30.690s
+Memory peak: 844.0K
+Memory swap peak: 0B
+Running as unit: thaidlt-task075-build.service
+$ pnpm --filter @thai-dlt/web build
+$ next build
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 58.756s
+CPU time consumed: 57.321s
+Memory peak: 7.8M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-21T07:28:28.703104+00:00 Fresh backup reviewed Russian overlay preservation and runtime cutover
+Result=success
+ExecMainStartTimestamp=Wed 2026-10-21 07:28:32 UTC
+ExecMainExitTimestamp=Wed 2026-10-21 07:28:34 UTC
+ExecMainStatus=0
+thaidlt-20261021-072832.dump 92170 bytes
+{"phase":"before","tables":16,"migrations":17,"questions":100}
+Russian stems: 100 would apply, 0 applied, 0 matched.
+Russian stems: 0 would apply, 100 applied, 0 matched.
+Russian stems: 0 would apply, 0 applied, 100 matched.
+{"phase":"after","all16TableFingerprintsPreserved":true,"migrations":17,"activeVerified":[{"vehicleType":"CAR","total":50,"russian":50},{"vehicleType":"MOTORCYCLE","total":50,"russian":50}]}
+/srv/thaidlt/releases/b38618f13765ec41ac51421327c1cbbfa347f245
+active
+active
+active
+600 root root /etc/thaidlt/question-posts.env
+644 root root /etc/systemd/system/thaidlt-bot.service.d/75-question-posts.conf
+Accepted runtime and100 reviewed Russian stems deployed; enrichment held false pending Main Mini App configuration.
+Running as unit: run-u67914.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 1.121s
+CPU time consumed: 135ms
+Memory peak: 1.3M
+Memory swap peak: 0B
+Running as unit: run-u67915.service; invocation ID: b055a850347648bfbb12bb1acca11a0f
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 1.746s
+CPU time consumed: 1.142s
+Memory peak: 1.1M
+Memory swap peak: 0B
+Running as unit: run-u67916.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 912ms
+CPU time consumed: 1.285s
+Memory peak: 3.4M
+Memory swap peak: 0B
+Running as unit: run-u67917.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 770ms
+CPU time consumed: 1.219s
+Memory peak: 3.6M
+Memory swap peak: 0B
+Running as unit: run-u67918.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 124ms
+CPU time consumed: 112ms
+Memory peak: 3.6M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-21T07:29:35.758034+00:00 Post-cutover authoritative admin service HTTP effective configuration and single bot checks
+2026-10-21T07:29:39Z
+/srv/thaidlt/releases/b38618f13765ec41ac51421327c1cbbfa347f245
+MainPID=2001239
+NRestarts=0
+ExecMainStatus=0
+WorkingDirectory=/srv/thaidlt/current/apps/web
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+MainPID=2001184
+NRestarts=0
+ExecMainStatus=0
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+MainPID=2001185
+NRestarts=0
+ExecMainStatus=0
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+{"url": "https://dlt.thauto.app/", "status": 200, "cacheControl": "s-maxage=31536000"}
+{"url": "https://tele.thauto.app/me", "status": 401, "cacheControl": "no-store"}
+{"url": "https://tele.thauto.app/not-a-route", "status": 404, "cacheControl": ""}
+{"url": "http://127.0.0.1:3061/me", "status": 401, "cacheControl": "no-store"}
+{"url": "https://tele.thauto.app/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"url": "https://dlt.thauto.app/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"singleBotInstance": true, "dailyQuestionPostsEnabled": false, "publicBotUsernameExpected": true, "shortNameUnset": true}
+{"knownBotFailureMessageCountSinceCutover": 0}
+
+GUEST_EXIT 0
+All 566 archive regular files LF-normalized byte-equal to accepted Git blobs; raw entry hashes saved in ignored helper artifact. git archive honored checkout CRLF conversion; no semantic source delta.
