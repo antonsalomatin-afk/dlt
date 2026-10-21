@@ -1,7 +1,7 @@
 id: TASK-077
 title: Answer native Telegram quizzes directly in the private bot chat
-status: PLANNED
-owner_role: Supervisor
+status: READY
+owner_role: Builder
 objective: Add the owner's requested question-and-answer learning flow entirely inside the private Telegram bot chat, without opening the Mini App.
 depends_on:
   - TASK-076
@@ -15,7 +15,7 @@ confirmed_scope:
   - Use Telegram quiz feedback behavior rather than imposing Mini App Check answer controls on a native poll. Preserve explicit confirmation in the Mini App.
   - Use an approved associated image only when one exists; current starter bank has none. No copied art-group content, external translation service or fake questions/statistics.
 planning_gates:
-  - Finish TASK-076 first; do not implement this task in the current cycle.
+  - TASK-076 accepted and deployed611a559 with independent code and operational PASS; main includes acceptancebfe3d9f. TASK-077 is now the sole current implementation cycle.
   - Supervisor verifies current official Bot API quiz/non-anonymous answer updates, supported runtimegrammy fields, payload limits and explanation behavior, then refines exact tests/files and any needed persistence/scheduler ADR before READY.
   - Decide a bounded shared answering path instead of duplicating API business rules; document Telegram trusted-update identity and transaction/delivery ambiguity boundaries.
   - Test with injected transports and isolated database; no forced production test message or new polling instance without explicit authorization.
@@ -24,3 +24,43 @@ references:
   - https://core.telegram.org/bots/api#sendpoll
   - https://core.telegram.org/bots/api#pollanswer
 owner_decision_required: false
+adr: .agent/decisions/ADR-007-native-chat-practice.md
+acceptance:
+  - User can send /quiz or /practice in private chat, choose Car/Motorcycle there if unset, receive a real active VERIFIED question and four native quiz options, answer, read correctness and full explanation, then request Next without opening Mini App. /start retains existing buttons and adds discoverable chat-practice guidance.
+  - Reuse saved vehicle/language and same Telegram User identity; never change opt-in or language automatically. Explicit private vehicle choice may set the existing saved vehicle. Reject groups, mismatched chat/from identity, bot users, anonymous/foreign/unbound/invalid answers and malformed callbacks before persistence.
+  - Implement the exact durable current-session, bounded sending lease, uncertain-send explicit replacement, answered-feedback recovery and current-presentation Next semantics in ADR-007. Restart reuses bound unanswered poll; duplicate commands/answers/Next cannot create duplicate credit or multiple current questions. Retain learning history; unknown/stale/retired poll and retraction/multiple/out-of-range votes cannot mutate it.
+  - Extract shared practice answer business logic and transaction-safe concept accounting used by API and bot. Preserve every existing HTTP answer status/error/DTO and pre-answer secrecy. Share existing selection/snapshot rules; no forked scoring engine. Test concurrent duplicate transactions and rollback of all related writes.
+  - Use non-anonymous quiz with four options and current correct_option_ids, immutable persisted index-to-choice mapping, revoting/multiple/shuffle disabled. Explicitly request message/callback_query/poll_answer updates; no drop_pending_updates or webhook.
+  - Coherent English default or fully available preferred language including feedback; RU stem-only bank falls back to English. Safely handle300question/100option/200nativeexplanation/two-linefeed limits without changing meaningful text. Long context/choices and full explanation remain available as plain-text messages, with safely bounded chunks. Approved media only through existing safe validation; no external fetch/content or translations.
+  - Add one durable ChatQuizSession model plus additive checked-in migration using existing PostgreSQL. Enforce unique user/current presentation/poll mapping and owned relation at persistence boundary; no schema reset, destructive migration, seed, real-data write, new dependency/env/API route or provider.
+  - Meaningful injected-transport unit and real isolated Postgres integration tests cover normal correct/incorrect flow, unset/saved vehicles, locale fallback/full locale, limits, private identity, exact mapping, duplicate/foreign/stale/retracted/out-of-range updates, concurrent commands/answers/Next, normal restart, send/bind ambiguity and feedback recovery. Retain all existing tests; API regression suite verifies extraction preserves contracts.
+  - Update README with /quiz usage, recovery/language behavior and rollout migration requirement. Do not deploy or send production messages in Builder role. Supervisor selects publication after code checks/review PASS; no claim of live chat feature until actual reviewed rollout.
+files_allowed:
+  - apps/bot/src/**
+  - apps/api/src/index.ts
+  - packages/database/src/**
+  - packages/database/prisma/schema.prisma
+  - packages/database/prisma/migrations/**
+  - tests/**
+  - README.md
+  - .local-content/task077*
+files_forbidden:
+  - apps/web/**
+  - content/**
+  - tools/**
+  - package.json
+  - pnpm-lock.yaml
+  - pnpm-workspace.yaml
+  - .env
+  - .agent/** # Supervisor owns state/architecture; request amendment if protocol genuinely needs changes.
+required_checks:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test --maxWorkers=2
+  - pnpm prisma validate
+  - pnpm test:integration
+  - pnpm build
+supervisor_validation_scope:
+  - Sequential generated-client generation/consumers only. Full unit338plusnew and full backend integration are authoritative. Web/bearer contracts and source remain unchanged; inherit accepted TASK-076 full229 browser evidence unless shared API responses/behavior differ or any regression requires a focused browser check.
+  - Use existing isolated local database tooling and safety checks; inspect before resetting. Never log local .env credentials or use production DATABASE_URL in tests. No polling or real Telegram transport.
+  - Maximum3 independent failed reviews. Builder commits scoped source/tests/README only and stops; no task acceptance or main change.

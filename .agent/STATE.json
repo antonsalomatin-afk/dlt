@@ -2,10 +2,10 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-076",
+  "currentTask": "TASK-077",
   "lastAcceptedTask": "TASK-076",
   "lastAcceptedCommit": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8",
-  "status": "ACCEPTED",
+  "status": "READY",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -182,11 +182,13 @@
   },
   "queuedNativeChatQuiz": {
     "task": "TASK-077",
-    "status": "PLANNED",
+    "status": "READY",
     "ownerRequested": true,
     "destination": "PRIVATE_BOT_CHAT",
     "mode": "NATIVE_SINGLE_LANGUAGE_QUIZ",
     "dependsOn": "TASK-076",
-    "implemented": false
+    "implemented": false,
+    "adr": ".agent/decisions/ADR-007-native-chat-practice.md",
+    "productionDeployed": false
   }
 }

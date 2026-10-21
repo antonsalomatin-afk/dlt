@@ -124,7 +124,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-073 — ACCEPTED — private opt-in11:00 ICT EN/RU question messages and exact owned links; runtime deployed and enrichment enabled in TASK-075
 - TASK-074 — ACCEPTED — all100 Russian stems independently approved; guarded overlay and actual-manifest isolated proof PASS; production overlay applied and rechecked in TASK-075
 - TASK-075 — ACCEPTED — approved runtime and100RUstems deployed; Main Mini App ready and private enrichment enabled; backup/preservation/rootchecks and independent operational review PASS; real-owner smoke remains TASK-072
-- TASK-076 — BUILDING — implement the explicitly approved compact real Mini App, functional menu/confirmation flow and accurate daily-question opt-in guidance; then reviewed rollout to existing hosts
+- TASK-076 — ACCEPTED — compact Mini App deployed611a559; root checks, independent code/operational PASS, backup and data preservation. Owner smoke remains TASK-072.
 
 ## Epic 9 — Commercial
 
@@ -156,4 +156,4 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
-- TASK-077 — PLANNED — native single-language question/answer quizzes in the private bot chat, without Mini App navigation; owner requested, queued after TASK-076
+- TASK-077 — READY — native single-language private-chat quizzes; ADR-007 and bounded durable recovery protocol accepted; Builder implementation next.

@@ -10,6 +10,10 @@ None. Starter bank publication approved on 2026-10-19.
 
 ## Resolved
 
+### 2026-10-21 — Native quizzes in the private bot chat
+
+The owner explicitly asked for the test itself to work directly in the bot chat without opening the Mini App, using the supplied Telegram quiz examples, and confirmed "lets do it" and "continue". Implement TASK-077 as user-triggered native question/options/correctness/explanation/Next in the private chat. One coherent language per quiz is acceptable; use English by default or complete reviewed preferred-language content. This does not request a public group/channel, automatic translation, a scheduled-format switch or automatic opt-in. Existing learning history and Mini App remain. Builder must finish a concrete checked/reviewed candidate before any separate production migration/publication action.
+
 ### 2026-09-07 — Development operating model
 
 Decision:

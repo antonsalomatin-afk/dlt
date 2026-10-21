@@ -1,0 +1,28 @@
+# ADR-007 — Native private-chat practice
+
+Status: Accepted
+Date: 2026-10-21
+
+## Context
+
+The owner explicitly requests answering driving questions as native Telegram quizzes in the private bot chat, without opening the Mini App. Keep PostgreSQL, grammY, the existing learner identity and immutable QuestionPresentation/AnswerAttempt/concept counters. No public group, queue, paid provider, translation service or new HTTP authentication route is needed.
+
+## Decision
+
+The single existing bot registers user-triggered /quiz (and /practice alias), private vehicle selection when necessary, and presentation-bound Next callbacks. /start retains its Mini App button and explains the chat command. Only validated user-bearing updates received through authenticated Telegram long polling establish chat identity; private chat ID must equal the positive safe Telegram user ID. Group/channel, anonymous voter_chat and foreign/unbound poll updates cannot write learning state. Never manufacture initData or expose bot credentials to the web/API. Upsert the same User by telegramUserId, preserve saved language/reminder/vehicle unless the learner explicitly chooses a vehicle.
+
+Add one PostgreSQL ChatQuizSession row per User with a unique current presentation and nullable unique poll ID, sent message ID, chosen language, explicit delivery state and claim timestamp. Keep immutable question snapshots and all learning attempts in the existing tables. Replacing a current session invalidates its old poll/Next capability; old QuestionPresentation/AnswerAttempt history remains. Lock the user/session consistently during state transitions; concurrent commands cannot allocate multiple active presentations. Mapping option indices to stable choice IDs follows the persisted snapshot order, never Telegram display text. Use four choices, one correct answer, non-anonymous quiz, no revoting/multiple answers/shuffling/additional options. Validate incoming and transport-result fields at runtime before binding or scoring.
+
+Extract the existing practice answer transaction into a shared server-only helper used by HTTP and bot. Preserve HTTP status/DTO/duplicate semantics. One AnswerAttempt and concept-counter increment commit atomically. The bot locks and checks current ownership/binding before calling the helper; duplicate/replayed answers return or recover the stored outcome without additional credit. The API keeps its correctness-free pre-answer DTO; Telegram receives the quiz answer key as the native quiz platform, not as a new browser disclosure. Share existing snapshot/selection invariants rather than fork scoring logic.
+
+Delivery is claimed durably before calling Telegram. A successful response binds its poll/message IDs to the same current presentation. An unanswered bound quiz is reused after restart; /quiz points to it rather than creating another credit-bearing attempt. An answered bound quiz can recover its full feedback and Next control through /quiz if feedback delivery failed. Next requires the current owned answered presentation; duplicate/old callbacks cannot advance twice. A sending claim older than a bounded documented lease, or a failed/ambiguous send/bind, becomes uncertain: no automatic resend. Offer an explicit presentation-bound replacement action to the learner. In-flight claims remain busy until completion/lease expiry. A superseded or unbound poll cannot score. Database commits and Telegram sends cannot be atomic; this protocol does not promise exactly-once transport or feedback. Never hold a database transaction across a network send.
+
+Use one coherent stored language for question, choices and explanation; English defaults. Preferred RU/Thai is used only when all corresponding text is available, otherwise English. Current production RU stems alone therefore fall back to a complete English quiz. Do not translate at runtime. Respect Telegram limits without shortening meaningful question/options/explanation: long question/options may be sent as preceding plain-text context with A/B/C/D poll labels; a long explanation is delivered in full after answering. Omit the optional native explanation when it cannot fit unchanged. Chunk long plain text safely; no parsing mode or new asset. Approved associated media may reuse existing validation; current bank has no images.
+
+Keep current opt-in 11:00 ICT EN/RU reminders, summaries, linked Mini App questions and explicit Mini App confirmation unchanged. This task adds user-triggered practice, not a reminder-format switch or exam mode. No forced production test send or second polling instance.
+
+## Verification and compatibility
+
+Official Bot API checked 2026-10-21: https://core.telegram.org/bots/api#sendpoll and #pollanswer. Question 1–300 characters, option text 1–100, native explanation 0–200 with at most two line feeds; use exactly four options. Current API and installed grammY1.46.0/@grammyjs/types5.0.0 support `correct_option_ids` (plural), `allows_revoting` and `shuffle_options`. Do not use the obsolete singular field. PollAnswer has optional user/voter_chat and zero-based option_ids (empty on retraction). Receive message, callback_query and poll_answer updates explicitly without dropping pending updates. Inject transports in tests; no real token.
+
+Require isolated PostgreSQL tests for migration, ownership, concurrency, replay/duplicate credit, restart/replacement and atomic rollback, plus existing HTTP regression suite and unit coverage of limits/language/transport recovery. New migration is additive only; publication requires the normal reviewed release/backup gates. Production migration/deployment is a separate Supervisor-controlled action after a concrete reviewed candidate exists.

@@ -142,6 +142,10 @@ Responsible for:
 
 It should not duplicate business logic from the API.
 
+### Accepted native private-chat practice extension
+
+ADR-007 permits the existing authenticated long-polling bot to offer user-triggered native quizzes using the same Telegram User, immutable question presentations, shared server-only practice answering and concept accounting. One PostgreSQL ChatQuizSession per learner durably binds the current owned presentation to the Telegram poll; explicit delivery uncertainty/recovery avoids false exactly-once guarantees. This does not create a new HTTP auth path or change Mini App pre-answer secrecy. Existing opt-in reminders and summaries remain independent. See TASK-077 for implementation and release gates; this paragraph is an architectural decision, not a claim that the feature is deployed.
+
 ## Authentication
 
 Telegram Mini App authentication is based on signed `initData`.
