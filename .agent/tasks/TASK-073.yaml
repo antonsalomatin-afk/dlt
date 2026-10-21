@@ -1,6 +1,6 @@
 id: TASK-073
 title: Deliver bilingual daily questions in private Telegram reminders
-status: BUILDING
+status: CHECKING
 owner_role: Builder
 epic: Epic 8 — Telegram Engagement
 objective: Support the owner's requested Telegram question-post format illustrated by the supplied screenshot, with an optional question image and an Answer button opening the corresponding question in ThaiDLT.
