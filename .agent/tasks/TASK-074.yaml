@@ -1,0 +1,45 @@
+id: TASK-074
+title: Prepare reviewed Russian question stems for bilingual reminders
+status: BUILDING
+owner_role: Builder
+epic: Epic 7 — Content Operations
+objective: Prepare Russian stems for all100 accepted English starter questions and a narrowly guarded offline application path, ready for owner production approval without changing question identities or saved presentations.
+context:
+  - Owner explicitly selected private messages containing English plus Russian. TASK-073 capability is accepted at a1900d21fbc404b4e8810f47b51a813310ef74d8; main checkpoint eb1ff79. Production is unchanged and rollout remains disabled.
+  - Sources are content/imports/launch-20261016-car-candidates.json and launch-20261016-motorcycle-candidates.json,50 questions each, all English stems present and Russian null. Existing candidate import/review tools deliberately reject content drift and must not be weakened.
+  - This task translates only question stems needed for Telegram posts. Do not translate choices/explanations, alter English or invent legal facts/images. Existing app language fallback remains unchanged.
+acceptance:
+  - Add one traceable JSON translation pack containing exactly one nonblank accurate Russian stem for every external ID in both source batches. Preserve numbers, conditions, negations, vehicle types and legal distinctions of the accepted English. No network translation service. Treat drafts as unverified until an independent reviewer explicitly approves the exact pack.
+  - Bind each source batch and the pack itself with canonical parsed-JSON SHA256 (stable across LF/CRLF and equivalent JSON formatting), not checkout-dependent raw file bytes. Validate versions, strict fields, bounds, IDs, unique complete coverage and all source relationships before any database access.
+  - Add a narrow offline CLI requiring translation pack, independent review manifest and the two source batch paths. Default is read-only check/dry-run; an explicit --apply enables writes. The review manifest must identify the exact canonical pack SHA, reviewer, canonical past review timestamp and PASS verdict. Builder supplies only synthetic review fixtures; the actual review manifest is written by the independent Reviewer after inspecting all100 translations.
+  - Reuse existing bounded fatal-UTF8 JSON loading, loopback-only DATABASE_URL validation, candidateQuestionId/mapCandidateQuestion/candidateContentMatches where possible. No new dependency, schema migration, service, network request or new general-purpose editor.
+  - In one serializable transaction, require every target to be an exact active VERIFIED accepted source record with exact taxonomy, provenance, original wording, image state and all four deterministic choices. Resolve taxonomy by source slugs. Missing rows, inactive/unverified state, source/choice drift, unexpected nonnull Russian, conflicting review state or stale review timestamps abort the entire batch without partial changes.
+  - Apply only textRussian plus reviewer/reviewedAt from the approved translation review; Prisma updatedAt may advance. Do not change IDs, English/Thai, choices/correctness, explanation, source fields, active/verificationStatus, learning state, user preferences or stored QuestionPresentation snapshots. Previous English review manifests remain the historical audit; new review manifest records Russian verification.
+  - Exact reapplication is a no-op only when the complete expected overlay and translation review provenance match. Read-only check reports would-apply/matched counts without writes. Never overwrite an unrelated translation or roll back content. CLI prints only safe counts and fixed generic errors, never credentials or raw database exceptions; always disconnect created clients.
+  - Tests cover malformed/incomplete/duplicate packs, canonical hashing across formatting, review mismatch/invalid timestamps, pre-DB CLI validation, dry-run, application, exact replay, multiple-record rollback, content/choice/status/provenance conflicts and preservation of existing snapshots/answers.
+  - Document that original candidate-status tooling reports intentional content drift after the reviewed RU overlay; use the overlay check to verify the new expected state. Existing saved daily snapshots may remain English-only until a later date assignment; do not rewrite them.
+  - No production database operation, bot startup, Telegram send, deployment or real content activation. Deliver a concrete release handoff for owner approval only after checks and independent review.
+files_allowed:
+  - content/imports/launch-20261021-russian-stems.json
+  - tools/content/**
+  - tests/**
+  - package.json
+  - README.md
+files_forbidden:
+  - content/imports/launch-20261016-car-candidates.json
+  - content/imports/launch-20261016-motorcycle-candidates.json
+  - apps/**
+  - packages/**
+  - pnpm-lock.yaml
+  - .env
+required_checks:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test
+  - Focused isolated PostgreSQL integration suite for the new translation overlay and CLI contracts.
+  - Validate all100 real pack entries and source hashes offline before review.
+supervisor_validation_scope:
+  - Apps, schema and existing shared helpers are unchanged; inherit TASK-073 build/browser/full-integration evidence. Expand relevant checks if implementation scope changes.
+  - Reviewer must inspect every English/Russian pair as well as code/tests, then write the actual review manifest under .agent/reviews/TASK-074-translation-review-01.json with the exact pack SHA. No automatic production verification or publication.
+  - Supervisor runs an additional isolated real-pack check/apply/replay with that manifest before acceptance; no production access.
+owner_decision_required: false

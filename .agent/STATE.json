@@ -1,11 +1,11 @@
 {
   "project": "ThaiDLT",
   "workflowVersion": 1,
-  "currentEpic": "Epic 8 — Telegram Engagement",
-  "currentTask": "TASK-073",
+  "currentEpic": "Epic 7 — Content Operations",
+  "currentTask": "TASK-074",
   "lastAcceptedTask": "TASK-073",
   "lastAcceptedCommit": "a1900d21fbc404b4e8810f47b51a813310ef74d8",
-  "status": "ACCEPTED",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -26,7 +26,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": false
   },
-  "notes": "Owner chose private bilingual EN/RU question messages. TASK-073 reuses opt-in11:00 ICT reminders, stable owned presentation links and disabled-by-default rollout. Missing reviewed Russian uses existing generic invitation; no translation publication/deployment in this task. TASK-072 remains parked, not accepted; compact redesign unapproved.",
+  "notes": "TASK-073 accepted and pushed to main, not deployed. TASK-074 prepares100 Russian question stems plus narrow reviewed offline overlay; no production content changes or sends. TASK-072 remains parked and unaccepted. Stop before95percent usage; never redeem reset credits.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",

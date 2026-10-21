@@ -122,6 +122,7 @@ At the end of this epic the core end-to-end flow must work.
 - TASK-067 — ACCEPTED — deliver daily and weekly learner summaries at 11:00 ICT
 - TASK-068 — ACCEPTED — open the daily question from Telegram deep links
 - TASK-073 — ACCEPTED — private opt-in11:00 ICT EN/RU question messages and exact owned links; defaultoff, not deployed; Russian content still needed
+- TASK-074 — BUILDING — prepare100 reviewed Russian question stems and guarded offline translation overlay; no production publication
 
 ## Epic 9 — Commercial
 
