@@ -11,3 +11,12 @@ describe('Mini App Telegram start parameter boundary', () => {
     expect(readTelegramStartParameter(`start_param=${'x'.repeat(16_385)}`)).toBeNull();
   });
 });
+
+it('accepts only canonical bounded question destinations and marks malformed question links for safe guidance', () => {
+  const value = 'question_550e8400-e29b-41d4-a716-446655440000';
+  expect(readTelegramStartParameter(`start_param=${value}`)).toBe(value);
+  for (const malformed of ['question_nope', value.toUpperCase().replace('QUESTION_', 'question_'), `${value}%00`]) {
+    expect(readTelegramStartParameter(`start_param=${malformed}`)).toBe('invalid-question');
+  }
+  expect(readTelegramStartParameter(`start_param=${value}&start_param=daily`)).toBe('invalid-question');
+});

@@ -1,7 +1,10 @@
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import pg from 'pg';
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { createReminderScheduler } from '../apps/bot/src/reminders.ts';
+import { reminderMessages } from '../packages/database/src/reminder-delivery.ts';
+import { prepareQuestionPost } from '../apps/bot/src/question-post.ts';
 import { createApi } from '../apps/api/src/index.ts';
 import { createDatabaseClient } from '../packages/database/src/index.ts';
 import {
@@ -158,7 +161,7 @@ beforeEach(async () => {
   await database.user.update({ where: { id: learners.noVehicle.id }, data: { selectedVehicleType: null } });
   await database.question.updateMany({
     where: { id: { in: [questionIds.first, questionIds.middle, questionIds.last] } },
-    data: { active: true, verificationStatus: 'VERIFIED' },
+    data: { active: true, verificationStatus: 'VERIFIED', textRussian: null, imageReference: null },
   });
   await database.question.update({
     where: { id: questionIds.motorcycle },
@@ -436,5 +439,121 @@ describe('POST /practice/daily', () => {
     expect(corrupt.statusCode).toBe(500);
     expect(corrupt.json()).toEqual({ error: 'Internal Server Error' });
     expect(await database.questionPresentation.findMany({ orderBy: { id: 'asc' } })).toEqual(corruptBefore);
+  });
+});
+
+describe('saved daily question posts and owned links', () => {
+  const config = { enabled: true, botUsername: 'thaidlt_test_bot' } as const;
+  const linked = (presentationId: unknown, token = learners.primary.token, query = '') => app.inject({
+    method: 'POST', url: `/practice/presentation${query}`, headers: authorization(token), payload: { presentationId },
+  });
+
+  it('opens the original snapshot across midnight, wording edits, vehicle changes/clearing, then completes without a new attempt', async () => {
+    const original = dailyPracticeResponseSchema.parse((await daily(learners.primary.token)).json());
+    requestInstant = new Date('2026-10-04T04:00:00.000Z');
+    await database.question.update({ where: { id: original.question.id }, data: { textEnglish: 'Edited live wording' } });
+    for (const selectedVehicleType of ['MOTORCYCLE', null] as const) {
+      await database.user.update({ where: { id: learners.primary.id }, data: { selectedVehicleType } });
+      const response = await linked(original.presentationId);
+      expect(response.statusCode).toBe(200);
+      expect(response.headers['cache-control']).toBe('no-store');
+      expect(response.json()).toEqual(original);
+    }
+    const submit = () => app.inject({ method: 'POST', url: '/practice/answer', headers: authorization(learners.primary.token), payload: { presentationId: original.presentationId, choiceId: original.question.choices[0]?.id } });
+    expect((await submit()).statusCode).toBe(200);
+    expect((await submit()).statusCode).toBe(409);
+    expect((await linked(original.presentationId)).json()).toEqual({ ...original, answered: true });
+    expect(await database.answerAttempt.count()).toBe(1);
+    expect(await database.questionPresentation.count()).toBe(1);
+    await database.question.update({ where: { id: original.question.id }, data: { textEnglish: 'first wording' } });
+  });
+
+  it('rejects unauthenticated, foreign, missing, malformed and unavailable links without assignment', async () => {
+    const original = dailyPracticeResponseSchema.parse((await daily(learners.primary.token)).json());
+    expect((await linked(original.presentationId, 'invalid')).statusCode).toBe(401);
+    expect((await linked(original.presentationId, learners.second.token)).statusCode).toBe(404);
+    expect((await linked(randomUUID())).statusCode).toBe(404);
+    for (const invalid of ['not-a-uuid', original.presentationId.toUpperCase(), null]) expect((await linked(invalid)).statusCode).toBe(400);
+    expect((await linked(original.presentationId, learners.primary.token, '?other=1')).statusCode).toBe(400);
+    await database.question.update({ where: { id: original.question.id }, data: { active: false } });
+    expect((await linked(original.presentationId)).statusCode).toBe(404);
+    expect(await database.questionPresentation.count()).toBe(1);
+  });
+
+  it('shares the exact API assignment with bot preparation under concurrent calls and preserves its image', async () => {
+    await database.question.updateMany({ where: { vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED' }, data: { textRussian: 'Сохранённый вопрос', imageReference: 'https://images.example.org/saved.png' } });
+    const [apiResponse, post] = await Promise.all([daily(learners.primary.token), prepareQuestionPost(database, learners.primary.id, requestInstant, config)]);
+    const original = dailyPracticeResponseSchema.parse(apiResponse.json());
+    expect(post?.url).toContain(`question_${original.presentationId}`);
+    expect(post?.text).toContain(original.question.textEnglish);
+    expect(post?.text).toContain('Сохранённый вопрос');
+    expect(post?.image).toBe('https://images.example.org/saved.png');
+    expect(await database.questionPresentation.count()).toBe(1);
+  });
+
+  it('keeps missing vehicle/content reminders eligible for generic fallback without a replacement question', async () => {
+    expect(await prepareQuestionPost(database, learners.noVehicle.id, requestInstant, config)).toBeNull();
+    expect(await database.questionPresentation.count()).toBe(0);
+    await database.question.updateMany({ data: { active: false } });
+    expect(await prepareQuestionPost(database, learners.primary.id, requestInstant, config)).toBeNull();
+    expect(await database.questionPresentation.count()).toBe(0);
+  });
+
+  it('delivers photo/text through fake transports, falls back safely and deduplicates even after completion', async () => {
+    await database.user.update({ where: { id: learners.primary.id }, data: { dailyQuestionReminderEnabled: true, preferredLanguage: 'RUSSIAN' } });
+    await database.question.updateMany({ where: { vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED' }, data: { textRussian: 'Вопрос', textEnglish: 'Question', imageReference: 'https://images.example.org/saved.png' } });
+    const sent: Array<{ text: string; photo: boolean }> = [];
+    let failPhoto = false;
+    const sendMessage = vi.fn(async (_chat: string, text: string) => { sent.push({ text, photo: false }); });
+    const sendPhoto = vi.fn(async (_chat: string, _image: string, options: { caption: string }) => { if (failPhoto) throw new Error('ambiguous transport'); sent.push({ text: options.caption, photo: true }); });
+    const run = async (enabled = true) => {
+      const scheduler = createReminderScheduler({ database, api: { sendMessage }, miniAppUrl: 'https://example.org/app', now: () => requestInstant,
+        ...(enabled ? { questionPosts: { database, config, sendPhoto } } : {}),
+      });
+      const lookup = vi.spyOn(database.dailyReminderDelivery, 'findUnique');
+      const questionLookup = vi.spyOn(database.questionPresentation, 'findFirst');
+      const vehicleLookup = vi.spyOn(database.user, 'findUnique');
+      scheduler.start();
+      await vi.waitFor(() => expect(lookup).toHaveBeenCalled());
+      await vi.waitFor(async () => expect(await database.dailyReminderDelivery.count({ where: { status: { in: ['SENT', 'FAILED'] } } })).toBe(1));
+      await scheduler.stop();
+      if (!enabled) {
+        expect(questionLookup).not.toHaveBeenCalled();
+        expect(vehicleLookup).not.toHaveBeenCalled();
+      }
+      lookup.mockRestore(); questionLookup.mockRestore(); vehicleLookup.mockRestore();
+    };
+    requestInstant = new Date('2026-10-02T04:00:00.000Z');
+    await daily(learners.primary.token);
+    const first = await database.questionPresentation.findFirstOrThrow({ where: { userId: learners.primary.id } });
+    const snapshot = parsePresentationSnapshot(first.snapshot);
+    await database.answerAttempt.create({ data: { presentationId: first.id, selectedChoiceId: snapshot.correctChoiceId, isCorrect: true } });
+    await run();
+    expect(sendPhoto).toHaveBeenCalledTimes(1);
+    await run();
+    expect(sendPhoto).toHaveBeenCalledTimes(1);
+    expect(await database.questionPresentation.count()).toBe(1);
+    expect(sendPhoto.mock.calls[0]?.[2]).toMatchObject({ caption: 'English\nQuestion\n\nРусский\nВопрос', reply_markup: { inline_keyboard: [[{ text: 'Answer / Ответить', url: expect.stringContaining(`question_${first.id}`) }]] } });
+    for (const mode of ['text', 'missing', 'long', 'failure', 'disabled'] as const) {
+      await database.dailyReminderDelivery.deleteMany();
+      await database.reminderSummaryDelivery.deleteMany();
+      await database.answerAttempt.deleteMany();
+      await database.questionPresentation.deleteMany();
+      sent.length = 0;
+      failPhoto = mode === 'failure';
+      await database.question.updateMany({ where: { vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED' }, data: {
+        textRussian: mode === 'missing' ? null : 'Вопрос', textEnglish: mode === 'long' ? 'x'.repeat(4096) : 'Question',
+        imageReference: mode === 'text' ? 'file:///unsafe.png' : 'https://images.example.org/saved.png',
+      } });
+      await run(mode !== 'disabled');
+      const row = await database.dailyReminderDelivery.findFirstOrThrow();
+      expect(row.status).toBe(mode === 'failure' ? 'FAILED' : 'SENT');
+      if (mode === 'failure') expect(sent.some(({ text }) => text === reminderMessages.RUSSIAN)).toBe(false);
+      else if (mode === 'text') expect(sent).toContainEqual({ text: 'English\nQuestion\n\nРусский\nВопрос', photo: false });
+      else expect(sent.some(({ text }) => text === reminderMessages.RUSSIAN)).toBe(true);
+      if (mode === 'disabled') expect(await database.questionPresentation.count()).toBe(0);
+    }
+    await database.user.update({ where: { id: learners.primary.id }, data: { dailyQuestionReminderEnabled: false } });
+    await database.question.updateMany({ where: { vehicleType: 'CAR' }, data: { textRussian: null, imageReference: null } });
   });
 });

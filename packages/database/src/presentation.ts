@@ -18,7 +18,7 @@ export const presentationResponseSchema = z.strictObject({ presentationId: z.uui
 export const practiceNextRequestSchema = z.strictObject({ categoryId: z.uuid().optional() }).optional();
 export const retryMistakeRequestSchema = z.strictObject({ presentationId: z.uuid() });
 export const presentationSnapshotSchema = z.strictObject({
-  version: z.literal(1), question: presentedQuestionSchema, correctChoiceId: z.uuid(),
+  version: z.literal(1), imageReference: translation.optional(), question: presentedQuestionSchema, correctChoiceId: z.uuid(),
   explanationThai: translation, explanationEnglish: translation, explanationRussian: translation,
   trapExplanationThai: translation, trapExplanationEnglish: translation, trapExplanationRussian: translation,
 }).refine((snapshot) => snapshot.question.choices.some((choice) => choice.id === snapshot.correctChoiceId));
@@ -31,6 +31,7 @@ export function snapshotQuestion(source: Prisma.QuestionGetPayload<{ include: { 
   if (correct.length !== 1) throw new Error('Invalid question answer count');
   return parsePresentationSnapshot({
     version: 1,
+    ...(source.imageReference === null ? {} : { imageReference: source.imageReference }),
     question: {
       id: source.id, textThai: source.textThai, textExamEnglish: source.textExamEnglish,
       textEnglish: source.textEnglish, textRussian: source.textRussian,

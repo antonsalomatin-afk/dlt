@@ -1,5 +1,5 @@
 export const DAILY_START_PARAMETER = 'daily';
-export type TelegramStartParameter = typeof DAILY_START_PARAMETER;
+export type TelegramStartParameter = typeof DAILY_START_PARAMETER | `question_${string}` | 'invalid-question';
 
 export function readTelegramStartParameter(initData: string): TelegramStartParameter | null {
   if (initData.length > 16 * 1024) return null;
@@ -7,9 +7,14 @@ export function readTelegramStartParameter(initData: string): TelegramStartParam
   try { params = new URLSearchParams(initData); }
   catch { return null; }
   const values = params.getAll('start_param');
-  return values.length === 1 && values[0] === DAILY_START_PARAMETER && values[0].length <= 64
-    ? DAILY_START_PARAMETER
-    : null;
+  if (values.length !== 1) return values.some((value) => value.startsWith('question_')) ? 'invalid-question' : null;
+  const value = values[0];
+  if (value === DAILY_START_PARAMETER) return DAILY_START_PARAMETER;
+  if (value?.startsWith('question_')) {
+    return /^question_[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u.test(value)
+      ? `question_${value.slice(9)}` : 'invalid-question';
+  }
+  return null;
 }
 
 type Bridge = { initData: string; startParameter: TelegramStartParameter | null; ready: () => void };

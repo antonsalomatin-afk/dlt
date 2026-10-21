@@ -1,5 +1,6 @@
-import type { Api } from 'grammy';
 import { InlineKeyboard } from 'grammy';
+import { prepareQuestionPost } from './question-post.ts';
+import type { QuestionPostConfig } from './config.ts';
 import {
   claimReminderDelivery,
   isReminderTick,
@@ -22,7 +23,12 @@ import {
 } from '../../../packages/database/src/summary.ts';
 
 type ReminderDatabase = Pick<PrismaClient, 'answerAttempt' | 'dailyReminderDelivery' | 'reminderSummaryDelivery' | 'user'>;
-type ReminderApi = Pick<Api, 'sendMessage'>;
+type ReminderApi = {
+  sendMessage(chatId: string, text: string, options: { reply_markup: InlineKeyboard }): Promise<unknown>;
+};
+type QuestionPostOptions = { config: Extract<QuestionPostConfig, { enabled: true }>; database: Parameters<typeof prepareQuestionPost>[0];
+  sendPhoto(chatId: string, image: string, options: { caption: string; reply_markup: InlineKeyboard }): Promise<unknown>;
+};
 
 export type ReminderScheduler = {
   start(): void;
@@ -34,6 +40,7 @@ type SchedulerOptions = {
   database: ReminderDatabase;
   api: ReminderApi;
   miniAppUrl: string;
+  questionPosts?: QuestionPostOptions;
   now?: () => Date;
   setInterval?: (handler: () => void, timeout: number) => ReturnType<typeof setInterval>;
   clearInterval?: (handle: ReturnType<typeof setInterval>) => void;
@@ -113,9 +120,23 @@ export function createReminderScheduler(options: SchedulerOptions): ReminderSche
       if (claim.claimed) {
         let delivered = false;
         try {
-          await options.api.sendMessage(recipient.telegramUserId.toString(), reminderMessages[recipient.preferredLanguage], {
-            reply_markup: new InlineKeyboard().webApp('Open ThaiDLT', options.miniAppUrl),
-          });
+          let post: Awaited<ReturnType<typeof prepareQuestionPost>> = null;
+          if (options.questionPosts) {
+            try { post = await prepareQuestionPost(options.questionPosts.database, recipient.id, instant, options.questionPosts.config); }
+            catch { console.error('Daily question preparation failed; using training invitation.'); }
+          }
+          if (post) {
+            const reply_markup = new InlineKeyboard().url('Answer / Ответить', post.url);
+            if (post.image && options.questionPosts) {
+              await options.questionPosts.sendPhoto(recipient.telegramUserId.toString(), post.image, { caption: post.text, reply_markup });
+            } else {
+              await options.api.sendMessage(recipient.telegramUserId.toString(), post.text, { reply_markup });
+            }
+          } else {
+            await options.api.sendMessage(recipient.telegramUserId.toString(), reminderMessages[recipient.preferredLanguage], {
+              reply_markup: new InlineKeyboard().webApp('Open ThaiDLT', options.miniAppUrl),
+            });
+          }
           delivered = true;
         } catch {
           try { await markReminderDeliveryFailed(options.database, claim.deliveryId, now()); }

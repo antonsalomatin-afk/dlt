@@ -4,13 +4,11 @@ import { z } from 'zod';
 import { Prisma, type PrismaClient } from '../../../packages/database/src/index.ts';
 import { parsePresentationSnapshot, practiceNextRequestSchema, presentationResponseSchema, retryMistakeRequestSchema, selectRetryCandidateSet, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
 import {
-  buildDailyPracticeResponse,
-  dailyPracticeDate,
   dailyPracticeQuerySchema,
   dailyPracticeRequestSchema,
-  isRetryableDailyPracticeConflict,
-  retryDailyPractice,
-  thailandCalendarDay,
+  assignDailyPresentation,
+  getOwnedDailyPresentation,
+  ownedDailyPresentationRequestSchema,
 } from '../../../packages/database/src/daily-practice.ts';
 import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '../../../packages/database/src/answer.ts';
 import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
@@ -281,7 +279,7 @@ export function createApi(options: {
   const randomOffset = options.randomOffset ?? ((eligibleCount: number) => randomInt(eligibleCount));
   const examRandomOffset = options.examRandomOffset ?? ((remainingCount: number) => randomInt(remainingCount));
   app.addHook('onRequest', async (request, reply) => {
-    if (['/me/reminders', '/me/language', '/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/daily', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/practice/report', '/exam/start', '/exam/answer', '/exam/complete', '/exam/report', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
+    if (['/me/reminders', '/me/language', '/me/history', '/me/mistakes', '/me/favorites', '/me/progress', '/me/concept-progress', '/practice/categories', '/practice/next', '/practice/daily', '/practice/presentation', '/practice/retry-mistake', '/practice/answer', '/practice/favorite', '/practice/report', '/exam/start', '/exam/answer', '/exam/complete', '/exam/report', '/exam/history', '/exam/current', '/exam/:examId/review'].includes(request.routeOptions.url ?? '')) reply.header('Cache-Control', 'no-store');
   });
   async function authenticatedUser(header: unknown, referenceTime = now()) {
     const authorization = bearerSchema.safeParse(header);
@@ -661,6 +659,17 @@ export function createApi(options: {
       if (!result) return reply.code(404).send(errorSchema.parse({ error: 'No questions available' }));
       return result;
     });
+    practiceApp.post('/practice/presentation', async (request, reply) => {
+      const user = authenticatedUsers.get(request);
+      if (!user) throw new Error('Authenticated presentation request missing');
+      const body = ownedDailyPresentationRequestSchema.safeParse(request.body);
+      if (!body.success || !dailyPracticeQuerySchema.safeParse(request.query).success) {
+        return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
+      }
+      const result = await getOwnedDailyPresentation(options.database, user.id, body.data.presentationId);
+      if (!result) return reply.code(404).send(errorSchema.parse({ error: 'Presentation not found' }));
+      return result;
+    });
     practiceApp.post('/practice/daily', async (request, reply) => {
       const user = authenticatedUsers.get(request);
       const requestInstant = requestInstants.get(request);
@@ -669,69 +678,7 @@ export function createApi(options: {
         !dailyPracticeQuerySchema.safeParse(request.query).success
         || !dailyPracticeRequestSchema.safeParse(request.body).success
       ) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
-      const day = thailandCalendarDay(requestInstant);
-      const dailyDate = dailyPracticeDate(day);
-
-      const assignDailyPresentation = () => options.database.$transaction(async (transaction) => {
-        const existing = await transaction.questionPresentation.findUnique({
-          where: { userId_dailyDate: { userId: user.id, dailyDate } },
-          select: {
-            id: true,
-            userId: true,
-            questionId: true,
-            dailyDate: true,
-            snapshot: true,
-            answer: { select: { id: true } },
-            question: { select: { id: true } },
-          },
-        });
-        if (existing) {
-          return { kind: 'presentation', response: buildDailyPracticeResponse(existing, user.id, day) } as const;
-        }
-        if (!user.selectedVehicleType) return { kind: 'vehicle-required' } as const;
-        const eligibleQuestion = {
-          vehicleType: user.selectedVehicleType,
-          active: true,
-          verificationStatus: 'VERIFIED',
-        } as const;
-        const eligibleCount = await transaction.question.count({ where: eligibleQuestion });
-        if (eligibleCount === 0) return { kind: 'empty' } as const;
-        const offset = checkedRandomOffset(randomOffset, eligibleCount);
-        const question = await transaction.question.findFirst({
-          where: eligibleQuestion,
-          orderBy: { id: 'asc' },
-          skip: offset,
-          include: { choices: { orderBy: { key: 'asc' } } },
-        });
-        if (!question) throw new Error('Eligible daily question offset did not resolve');
-        const snapshot = snapshotQuestion(question);
-        if (snapshot.question.id !== question.id) throw new Error('Daily question snapshot is inconsistent');
-        const presentation = await transaction.questionPresentation.create({
-          data: {
-            userId: user.id,
-            questionId: question.id,
-            conceptId: question.conceptId,
-            createdAt: requestInstant,
-            dailyDate,
-            snapshot,
-          },
-          select: {
-            id: true,
-            userId: true,
-            questionId: true,
-            dailyDate: true,
-            snapshot: true,
-            answer: { select: { id: true } },
-            question: { select: { id: true } },
-          },
-        });
-        return {
-          kind: 'presentation',
-          response: buildDailyPracticeResponse(presentation, user.id, day),
-        } as const;
-      }, { isolationLevel: 'Serializable', maxWait: 5_000, timeout: 30_000 });
-
-      const result = await retryDailyPractice(assignDailyPresentation, isRetryableDailyPracticeConflict);
+      const result = await assignDailyPresentation(options.database, user, requestInstant, randomOffset);
       if (result.kind === 'vehicle-required') {
         return reply.code(409).send(errorSchema.parse({ error: 'Vehicle selection required' }));
       }

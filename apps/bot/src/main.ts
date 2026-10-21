@@ -1,3 +1,4 @@
+import { readQuestionPostConfig } from './config.ts';
 import { createBot } from './bot.ts';
 import { createReminderScheduler } from './reminders.ts';
 import { runBot } from './lifecycle.ts';
@@ -10,7 +11,12 @@ try {
   if (!databaseUrl) throw new Error('DATABASE_URL is required.');
   database = createDatabaseClient(databaseUrl);
   const miniAppUrl = new URL(process.env.MINI_APP_URL ?? '').toString();
-  const scheduler = createReminderScheduler({ database, api: bot.api, miniAppUrl });
+  const questionPostConfig = readQuestionPostConfig(process.env);
+  const scheduler = createReminderScheduler({ database, api: bot.api, miniAppUrl,
+    ...(questionPostConfig.enabled ? { questionPosts: { config: questionPostConfig, database,
+      sendPhoto: (chatId, image, options) => bot.api.sendPhoto(chatId, image, options),
+    } } : {}),
+  });
   // Telegram errors can include sensitive request context. Emit fixed text only.
   bot.catch(() => { console.error('Bot update failed.'); });
   await runBot(bot, process, scheduler);

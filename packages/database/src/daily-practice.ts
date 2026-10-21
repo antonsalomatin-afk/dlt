@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Prisma } from './index.ts';
-import { parsePresentationSnapshot, presentedQuestionSchema } from './presentation.ts';
+import { randomInt } from 'node:crypto';
+import { Prisma, type PrismaClient, type VehicleType } from './index.ts';
+import { parsePresentationSnapshot, presentedQuestionSchema, snapshotQuestion } from './presentation.ts';
 
 export const DAILY_PRACTICE_MAX_ATTEMPTS = 8;
 const DAILY_PRACTICE_RETRY_BASE_DELAY_MS = 10;
@@ -126,4 +127,104 @@ export async function retryDailyPractice<T>(
     }
   }
   throw new Error('Daily practice retry did not resolve');
+}
+
+const dailyPresentationSelect = {
+  id: true, userId: true, questionId: true, dailyDate: true, snapshot: true,
+  answer: { select: { id: true } }, question: { select: { id: true } },
+} as const;
+
+export const ownedDailyPresentationRequestSchema = z.strictObject({ presentationId: canonicalUuidSchema });
+
+export async function getOwnedDailyPresentation(
+  database: Pick<PrismaClient, 'questionPresentation'>,
+  userId: string,
+  presentationIdInput: unknown,
+) {
+  const presentationId = canonicalUuidSchema.parse(presentationIdInput);
+  const row = await database.questionPresentation.findFirst({
+    where: { id: presentationId, userId, dailyDate: { not: null }, question: { active: true, verificationStatus: 'VERIFIED' } },
+    select: dailyPresentationSelect,
+  });
+  if (!row?.dailyDate) return null;
+  return buildDailyPracticeResponse(row, userId, row.dailyDate.toISOString().slice(0, 10));
+}
+
+function checkedDailyRandomOffset(randomOffset: (count: number) => unknown, eligibleCount: number) {
+  const offset = randomOffset(eligibleCount);
+  if (typeof offset !== 'number' || !Number.isSafeInteger(offset) || offset < 0 || offset >= eligibleCount) {
+    throw new Error('Random offset is outside the daily candidate range');
+  }
+  return offset;
+}
+
+/** Shared API/bot assignment: one stable snapshot per learner and ICT day. */
+export async function assignDailyPresentation(
+  database: Pick<PrismaClient, '$transaction'>,
+  user: { id: string; selectedVehicleType: VehicleType | null },
+  requestInstant: Date,
+  randomOffset: (count: number) => unknown = randomInt,
+) {
+  const day = thailandCalendarDay(requestInstant);
+  const dailyDate = dailyPracticeDate(day);
+  const assignOnce = () => database.$transaction(async (transaction) => {
+    const existing = await transaction.questionPresentation.findUnique({
+      where: { userId_dailyDate: { userId: user.id, dailyDate } },
+      select: {
+        id: true,
+        userId: true,
+        questionId: true,
+        dailyDate: true,
+        snapshot: true,
+        answer: { select: { id: true } },
+        question: { select: { id: true } },
+      },
+    });
+    if (existing) {
+      return { kind: 'presentation', response: buildDailyPracticeResponse(existing, user.id, day) } as const;
+    }
+    if (!user.selectedVehicleType) return { kind: 'vehicle-required' } as const;
+    const eligibleQuestion = {
+      vehicleType: user.selectedVehicleType,
+      active: true,
+      verificationStatus: 'VERIFIED',
+    } as const;
+    const eligibleCount = await transaction.question.count({ where: eligibleQuestion });
+    if (eligibleCount === 0) return { kind: 'empty' } as const;
+    const offset = checkedDailyRandomOffset(randomOffset, eligibleCount);
+    const question = await transaction.question.findFirst({
+      where: eligibleQuestion,
+      orderBy: { id: 'asc' },
+      skip: offset,
+      include: { choices: { orderBy: { key: 'asc' } } },
+    });
+    if (!question) throw new Error('Eligible daily question offset did not resolve');
+    const snapshot = snapshotQuestion(question);
+    if (snapshot.question.id !== question.id) throw new Error('Daily question snapshot is inconsistent');
+    const presentation = await transaction.questionPresentation.create({
+      data: {
+        userId: user.id,
+        questionId: question.id,
+        conceptId: question.conceptId,
+        createdAt: requestInstant,
+        dailyDate,
+        snapshot,
+      },
+      select: {
+        id: true,
+        userId: true,
+        questionId: true,
+        dailyDate: true,
+        snapshot: true,
+        answer: { select: { id: true } },
+        question: { select: { id: true } },
+      },
+    });
+    return {
+      kind: 'presentation',
+      response: buildDailyPracticeResponse(presentation, user.id, day),
+    } as const;
+  }, { isolationLevel: 'Serializable', maxWait: 5_000, timeout: 30_000 });
+
+  return retryDailyPractice(assignOnce, isRetryableDailyPracticeConflict);
 }
