@@ -43,6 +43,7 @@ Status: accepted runtime and all100 reviewed Russian stems are deployed. New bil
 - The owner must configure the production bot's Main Mini App in BotFather to `https://dlt.thauto.app`. Supervisor has requested that setup. After read-only `getMe` confirms Main Mini App availability, enable the approved enrichment by changing only the new non-secret flag to `true`, restart the single bot unit, and verify its effective configuration and services again. No second deployment approval is needed for that already-approved remaining step.
 - Until then the existing generic localized opt-in reminder and summaries remain operational; new bilingual enrichment stays off. No forced scheduler tick, test Telegram message, BotFather message, user impersonation or fake signed initData was used.
 - Remaining manual evidence: owner opens the real bot/Mini App and exercises an actual scheduled post, exact-question link including an older link, answer selection/change followed by Check answer, and completion handling. These observations are not inferred from synthetic tests. TASK-072's original broader design/smoke scope is not accepted by this deployment.
+- Final bounded read-only readiness recheck at2026-10-21T07:34:08Z still returned `has_main_web_app=false`, menu type `commands`, no webhook and0 pending updates for `thauto_dlt_bot`. No flag, service, content or Telegram message changed during this recheck. Waiting for owner Main Mini App setup; the dedicated process rollout flag remains false as previously verified.
 
 ## Evidence and rollback
 

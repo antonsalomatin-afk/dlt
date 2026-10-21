@@ -269,3 +269,15 @@ SubState=running
 
 GUEST_EXIT 0
 All 566 archive regular files LF-normalized byte-equal to accepted Git blobs; raw entry hashes saved in ignored helper artifact. git archive honored checkout CRLF conversion; no semantic source delta.
+
+2026-10-21T07:34:08.986830+00:00 Final bounded read-only Telegram readiness recheck before waiting for owner
+{"username":"thauto_dlt_bot","hasMainWebApp":false,"webhookConfigured":false,"pendingUpdateCount":0,"menuType":"commands","menuExpectedUrl":false,"miniAppUrlExpected":true,"existingPostFlag":"unset","existingBotUsername":false,"shortNamePresent":false}
+Running as unit: thaidlt-task075-telegram-check.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 728ms
+CPU time consumed: 186ms
+Memory peak: 3.6M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
