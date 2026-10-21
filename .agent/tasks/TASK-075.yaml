@@ -1,9 +1,9 @@
 id: TASK-075
 title: Deploy accepted bilingual private reminders and reviewed Russian stems
-status: BUILDING
+status: BLOCKED
 owner_role: Admin
 epic: Epic 10 — Production Hardening
-blocked_reason: null
+blocked_reason: Owner reported ready but getMe twice still explicitlyfalse for thauto_dlt_bot; propertyPresenttrue at08:18:04UTC. Await exact BotFather final response for diagnosis; flagfalse and no new production writes.
 owner_decision_required: false
 release_tag: thaidlt-bilingual-20261021
 handoff: .agent/admin/TASK-074-deploy-handoff.md
@@ -43,3 +43,4 @@ production_state: Accepted runtimeb38618f and100RUstems deployed; flagfalse unti
 resume_sequence: Read-only getMe readiness -> enable dedicatedflagtrue ifready -> rootread-onlychecks expectedtrue -> independent operationalreview -> accept. No new deployment approval or forced test sends.
 
 owner_setup_confirmation: Owner replied готово; verify actual Telegram readiness before enabling. Existing deploy approval remains sufficient.
+

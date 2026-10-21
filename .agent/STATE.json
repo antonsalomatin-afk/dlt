@@ -5,10 +5,10 @@
   "currentTask": "TASK-075",
   "lastAcceptedTask": "TASK-074",
   "lastAcceptedCommit": "e1f6935cd7341449ef3aa6cc7fd8048dd0061169",
-  "status": "BUILDING",
+  "status": "BLOCKED",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": null,
+  "blockedReason": "Owner reported setup done, but two fresh getMe checks still explicitly show has_main_web_app=false for thauto_dlt_bot; property presence verified at2026-10-21T08:18:04Z. Awaiting exact final BotFather response to diagnose remaining setup. Enrichment remainsfalse; no production change in this resume. Existing deploy approval remains sufficient.",
   "parkedTasks": [
     {
       "task": "TASK-072",
@@ -99,7 +99,7 @@
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-21T07:29:25Z",
+    "checkedAt": "2026-10-21T08:17:23Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-21T10:55:51Z"
   },
@@ -134,7 +134,7 @@
   },
   "bilingualRollout": {
     "task": "TASK-075",
-    "status": "OWNER_SETUP_DONE_VERIFY_AND_ENABLE",
+    "status": "DEPLOYED_WAITING_MAIN_MINI_APP_CONFIGURATION_CONFIRMATION",
     "ownerApproval": "deploy",
     "approvedAt": "2026-10-21",
     "releaseCommit": "b38618f13765ec41ac51421327c1cbbfa347f245",
@@ -148,7 +148,7 @@
     "backup": "thaidlt-20261021-072832.dump;92170bytes;Resultsuccess/ExecMainStatus0",
     "postFlag": false,
     "adminReport": ".agent/admin/TASK-074-production-report.md",
-    "adminCommit": "4812439",
-    "lastTelegramReadinessCheck": "2026-10-21T07:34:08Z;has_main_web_app=false;no new writes or sends"
+    "adminCommit": "9e69dd9",
+    "lastTelegramReadinessCheck": "2026-10-21T08:18:04Z;propertyPresent=true;has_main_web_app=false;no production writes or sends"
   }
 }
