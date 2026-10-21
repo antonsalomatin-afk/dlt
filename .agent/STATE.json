@@ -5,7 +5,7 @@
   "currentTask": "TASK-075",
   "lastAcceptedTask": "TASK-074",
   "lastAcceptedCommit": "e1f6935cd7341449ef3aa6cc7fd8048dd0061169",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -35,7 +35,7 @@
   },
   "queuedTelegramPosts": {
     "task": "TASK-073",
-    "status": "DEPLOYED_DISABLED_AWAITING_MAIN_MINI_APP",
+    "status": "PRODUCTION_ENABLED_OPERATIONAL_REVIEW_PENDING",
     "review": ".agent/reviews/TASK-073-review-02.md",
     "reviewVerdict": "PASS",
     "builderCommit": "a1900d21fbc404b4e8810f47b51a813310ef74d8",
@@ -49,7 +49,7 @@
     ],
     "pendingDecisions": [],
     "implementationStarted": true,
-    "productionPostingEnabled": false
+    "productionPostingEnabled": true
   },
   "notes": "TASK-075 runtimeb38618f and100RUstems live after successfulbackup; guardedcontentcheck/apply/recheck, all16tablepreservation, source/service/HTTPchecksPASS. Whole task remainsunaccepted: owner MainMiniAppsetup needed, enrichmentfalse. Existing genericreminders/summaries remain. Aftersetupverifyreadiness,enableapprovedflag,roottruechecks,independentReviewer,accept. No deploymentapprovalneededagain. TASK-072parked;95percent ceiling;neverresetcredits.",
   "launchCandidates": {
@@ -134,21 +134,22 @@
   },
   "bilingualRollout": {
     "task": "TASK-075",
-    "status": "MAIN_MINI_APP_READY_ENABLING",
+    "status": "ENABLED_AUTHORITATIVE_CHECKS_RUNNING",
     "ownerApproval": "deploy",
     "approvedAt": "2026-10-21",
     "releaseCommit": "b38618f13765ec41ac51421327c1cbbfa347f245",
     "releaseTag": "thaidlt-bilingual-20261021",
     "productionMutated": true,
     "preflight": "Strict known-host SSH/QEMU guest100 verified; old runtime1d7eaa0 and three active services; envfiles root0600; loopbackports3060/3061/5434; Node24.22.0; pnpm11.19.0 required despite global12.4.2.",
-    "telegramSetup": "Read-only getMe shows thauto_dlt_bot has_main_web_app=false, no webhook; owner asked to configure Main Mini App. Keep enrichment false until verified.",
+    "telegramSetup": "Main Mini App confirmed by getMe explicitlytrue at08:21:21Z and08:23:20Z; owner set expected URL. BotAPI does not expose actual Main Mini App target URL.",
     "releaseArchiveSha256": "2514ab52411459cc93d8da53ff0fb97eab737b15ec54dac4c58ac14aa8d9c2b4",
     "productionReleaseCommit": "b38618f13765ec41ac51421327c1cbbfa347f245",
     "authoritativeChecks": ".agent/checks/TASK-075-checks-01.txt",
     "backup": "thaidlt-20261021-072832.dump;92170bytes;Resultsuccess/ExecMainStatus0",
-    "postFlag": false,
+    "postFlag": true,
     "adminReport": ".agent/admin/TASK-074-production-report.md",
     "adminCommit": "9e69dd9",
-    "lastTelegramReadinessCheck": "2026-10-21T08:21:21Z;propertyPresent=true;has_main_web_app=true;username=thauto_dlt_bot;no webhook"
+    "lastTelegramReadinessCheck": "2026-10-21T08:23:20Z;has_main_web_app=true;no webhook",
+    "enabledAt": "2026-10-21T08:22:43Z"
   }
 }
