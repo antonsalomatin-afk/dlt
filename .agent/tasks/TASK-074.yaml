@@ -1,6 +1,8 @@
 id: TASK-074
 title: Prepare reviewed Russian question stems for bilingual reminders
-status: REVIEW
+status: BUILDING
+review_file: .agent/reviews/TASK-074-review-01.md
+review_fix_scope: Only neutral CLI failure wording and cleanup-failure regression; translations/hash unchanged. Required minimum lint/typecheck/test and existing focused2-test integration remain applicable.
 review_attempt: 1
 builder_commit: 25278ec5c4cc864496071614b5865ca54610a47d
 authoritative_checks: .agent/checks/TASK-074-checks-01.txt

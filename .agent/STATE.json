@@ -5,7 +5,7 @@
   "currentTask": "TASK-074",
   "lastAcceptedTask": "TASK-073",
   "lastAcceptedCommit": "a1900d21fbc404b4e8810f47b51a813310ef74d8",
-  "status": "REVIEW",
+  "status": "BUILDING",
   "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
