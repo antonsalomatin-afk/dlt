@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK-076 production accepted611a559 and mainbfe3d9f. CurrentTASK-077 Builderimplementing nativeprivatechatquiz underADR007 exactdurableprotocol; no nativefeaturedeployed. Currentproduction compactapp/scheduler preserved. Rootauthoritativegates thenindependentReviewer, no mainuntilPASS. User95percentceiling andnoresetcredits.",
+  "notes": "Approaching user95percent ceiling;90percent observed. Complete bounded native-vote recovery fix and safe Builder checkpoint; preserve all source/logs and exact nextsteps. No nativeproductionrollout or taskacceptance before finalauthoritativechecks/independentreview. TASK-076accepted/live; originaluntrackedfilespreserved; noresetcredits.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,12 +94,12 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 70,
-    "latestObservedWeeklyUsedPercent": 26,
+    "latestObservedUsedPercent": 90,
+    "latestObservedWeeklyUsedPercent": 29,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-21T12:56:31.632951+00:00",
+    "checkedAt": "2026-10-21T13:19:12.938593+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-21T16:54:03Z"
   },
@@ -191,6 +191,6 @@
     "adr": ".agent/decisions/ADR-007-native-chat-practice.md",
     "productionDeployed": false,
     "implementationStarted": true,
-    "builderCheckpoint": "Shared answer/selection, owned additive session, native handlers implemented; focused26unit/8isolatedPostgres PASS. Acceptance edge coverage/fullBuildergates in progress. No native deployment."
+    "builderCheckpoint": "Baseline full349unit216integration/buildPASS; necessary ADR007 ANSWERING/preclaim-noack recovery refinement implementing, requires fresh final tests/commit. No rootauthoritativechecks or independentreview yet. Production still acceptedcompact611a559."
   }
 }
