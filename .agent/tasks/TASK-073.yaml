@@ -47,13 +47,14 @@ implementation_gates:
   - Define publication deduplication, restarts and ambiguous-send failure behavior before scheduling. Do not promise exactly-once Telegram delivery across an unacknowledged send.
   - Use validated public bot identity/configuration for a Telegram Mini App startapp URL. No channel configuration is required.
   - Sender remains disabled without explicit configuration; tests use fake transports and isolated data. No production posts, channel creation or deployment during local implementation.
-required_checks_before_acceptance:
+required_checks:
   - pnpm lint
   - pnpm typecheck
   - pnpm test
   - pnpm build
   - pnpm test:integration
   - pnpm test:e2e
+required_tests:
   - Relevant isolated integration checks for publication/link persistence and deduplication.
   - Relevant web build and E2E checks for exact-question navigation, old links, authentication and explicit answer confirmation.
   - Independent Reviewer PASS before Supervisor acceptance.
