@@ -1,6 +1,6 @@
 id: TASK-073
 title: Deliver bilingual daily questions in private Telegram reminders
-status: REVIEW
+status: BUILDING
 review_attempt: 1
 builder_commit: d40b80a9008e3cf8a8830b6e5430f08f06ae8a6a
 authoritative_checks: .agent/checks/TASK-073-checks-01.txt
@@ -54,9 +54,10 @@ required_checks:
   - pnpm lint
   - pnpm typecheck
   - pnpm test
-  - pnpm build
-  - pnpm test:integration
-  - pnpm test:e2e
+  - node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts tests/daily-practice.integration.test.ts
+review_fix_validation_scope:
+  - Review01 fixes only trailing-dot local image hostname validation and regression tests. No web, API, database or build configuration changes are authorized by this correction.
+  - Supervisor authorizes inheriting the passing web build,222browser tests and203full integration tests from .agent/checks/TASK-073-checks-01.txt at d40b80a9008e3cf8a8830b6e5430f08f06ae8a6a because their source is unchanged. Always rerun lint/typecheck/unit plus the12-test daily integration file covering enabled sender/photo/text behavior. If the fix expands beyond the helper/tests, broaden relevant checks again.
 required_tests:
   - Relevant isolated integration checks for publication/link persistence and deduplication.
   - Relevant web build and E2E checks for exact-question navigation, old links, authentication and explicit answer confirmation.
