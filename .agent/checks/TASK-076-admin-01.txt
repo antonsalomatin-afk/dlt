@@ -1,0 +1,256 @@
+
+2026-10-21T12:10:08.910157+00:00 Read-only TASK-076 rollout preflight before review PASS
+2026-10-21T12:10:17Z
+ubuntu-apps
+/srv/thaidlt/releases/b38618f13765ec41ac51421327c1cbbfa347f245
+MainPID=2001239
+NRestarts=0
+ExecStart={ path=/opt/node24/bin/node ; argv[]=/opt/node24/bin/node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3060 ; ignore_errors=no ; start_time=[Wed 2026-10-21 07:28:42 UTC] ; stop_time=[n/a] ; pid=2001239 ; code=(null) ; status=0/0 }
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current/apps/web
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+FragmentPath=/etc/systemd/system/thaidlt-web.service
+DropInPaths=
+MainPID=2001184
+NRestarts=0
+ExecStart={ path=/opt/node24/bin/node ; argv[]=/opt/node24/bin/node apps/api/src/main.ts ; ignore_errors=no ; start_time=[Wed 2026-10-21 07:28:42 UTC] ; stop_time=[n/a] ; pid=2001184 ; code=(null) ; status=0/0 }
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+FragmentPath=/etc/systemd/system/thaidlt-api.service
+DropInPaths=
+MainPID=2037615
+NRestarts=0
+ExecStart={ path=/opt/node24/bin/node ; argv[]=/opt/node24/bin/node apps/bot/src/main.ts ; ignore_errors=no ; start_time=[Wed 2026-10-21 08:22:44 UTC] ; stop_time=[n/a] ; pid=2037615 ; code=(null) ; status=0/0 }
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/question-posts.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+FragmentPath=/etc/systemd/system/thaidlt-bot.service
+DropInPaths=/etc/systemd/system/thaidlt-bot.service.d/75-question-posts.conf
+600 root root /etc/thaidlt/app.env
+600 root root /etc/thaidlt/database.env
+600 root root /etc/thaidlt/bot.env
+600 root root /etc/thaidlt/question-posts.env
+v24.22.0
+Result=success
+ExecMainStatus=0
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       1.2T   19G  1.2T   2% /
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+LISTEN 0      4096       127.0.0.1:5434      0.0.0.0:*
+LISTEN 0      511        127.0.0.1:3060      0.0.0.0:*
+LISTEN 0      511        127.0.0.1:3061      0.0.0.0:*
+{"singleBotInstance": true, "dailyQuestionPostsEnabled": true, "expectedPublicUsername": true, "shortNameUnset": true}
+Russian stems: 0 would apply, 0 applied, 100 matched.
+Read-only preflight complete; no archive/release, backup, configuration, content or service mutation performed.
+Running as unit: run-u68691.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 956ms
+CPU time consumed: 1.407s
+Memory peak: 3.6M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-21T12:15:12.019528+00:00 Exact accepted release archive proof
+{"release": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8", "archiveSha256": "fd66ac1d44a97dc714ed9dfd5730bd2122c5ebef69ca16f7b3e82d9539a44f3d", "size": 832953, "regularFiles": 581, "crlfOnlyConversions": 576}
+All regular files match pinned core.autocrlf=false archive after CRLF-only normalization.
+2026-10-21T12:16:05.100620+00:00 Exact archive host+guest transfer
+{"exitcode": 0, "exited": 1, "out-data": "Guest archive verified fd66ac1d44a97dc714ed9dfd5730bd2122c5ebef69ca16f7b3e82d9539a44f3d\n"}
+
+2026-10-21T12:16:05.665816+00:00 Stage exact reviewed compact release; prove backend and content unchanged; production install generate build
+/var/tmp/TASK-076-611a559.tar.gz: OK
+Backend, bot, packages/schema/migrations, content, tools and dependency manifests unchanged.
+Scope: all 6 workspace projects
+â Lockfile passes supply-chain policies (verified 6d ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +382
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 382, reused 2, downloaded 0, added 0
+Progress: resolved 382, reused 14, downloaded 0, added 0
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/thaidlt/.local/share/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Progress: resolved 382, reused 382, downloaded 0, added 179
+Progress: resolved 382, reused 382, downloaded 0, added 180
+Progress: resolved 382, reused 382, downloaded 0, added 380
+Progress: resolved 382, reused 382, downloaded 0, added 381
+Progress: resolved 382, reused 382, downloaded 0, added 382
+Progress: resolved 382, reused 382, downloaded 0, added 382, done
+.../node_modules/prisma preinstall$ node scripts/preinstall-entry.js
+.../node_modules/prisma preinstall: Done
+
+devDependencies:
++ @eslint/js 10.0.1
++ @playwright/test 1.63.0
++ @types/node 24.13.3
++ @types/node-fetch 2.6.13
++ @types/pg 8.23.1
++ embedded-postgres 18.4.0-beta.17
++ eslint 10.10.0
++ node-fetch 2.7.0
++ pg 8.23.0
++ prisma 7.10.0
++ typescript 5.9.3
++ typescript-eslint 8.69.0
++ vitest 5.0.0
++ zod 4.5.4
+
+Done in 18.3s using pnpm v11.19.0
+
+â Generated Prisma Client (7.10.0) to ./packages/database/generated in 305ms
+
+â² Next.js 16.3.5 (Turbopack)
+â Running next.config.ts took 59ms
+
+  Creating an optimized production build ...
+â Compiled successfully in 27.0s
+  Running TypeScript ...
+  Finished TypeScript in 21.3s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/3) ...
+â Generating static pages using 3 workers (3/3) in 348ms
+  Finalizing page optimization ...
+
+Route (app)
+â â /
+â â /_not-found
+
+
+â  (Static)  prerendered as static content
+
+Reviewed compact release staged with pinned install, generated client and production build; runtime not switched yet.
+Running as unit: thaidlt-task076-install.service
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts generate
+.env not found. Continuing without it.
+Loaded Prisma config from packages/database/prisma.config.ts.
+
+Prisma schema loaded from packages/database/prisma/schema.prisma.
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 46.083s
+CPU time consumed: 12.982s
+Memory peak: 844.0K
+Memory swap peak: 0B
+Running as unit: thaidlt-task076-build.service
+$ pnpm --filter @thai-dlt/web build
+$ next build
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 1min 5.795s
+CPU time consumed: 46.726s
+Memory peak: 7.8M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-21T12:18:39.678543+00:00 Raw remote critical source hashes match exact reviewed archive
+{"criticalRawArchiveHashesMatched": 16, "release": "/srv/thaidlt/releases/611a5592ccf4f38612e56dd4c1bb9d906c32bef8"}
+
+GUEST_EXIT 0
+
+2026-10-21T12:18:50.231953+00:00 Fresh backup full data preservation and approved compact runtime cutover
+Result=success
+ExecMainStartTimestamp=Wed 2026-10-21 12:18:53 UTC
+ExecMainExitTimestamp=Wed 2026-10-21 12:18:55 UTC
+ExecMainStatus=0
+thaidlt-20261021-121853.dump 101812 bytes
+{"phase":"before","tables":16,"migrations":17}
+{"phase":"after","all16CompleteTableFingerprintsPreserved":true,"migrations":17,"noContentOrUserDataWrites":true}
+active
+active
+active
+MainPID=2196006
+NRestarts=0
+ExecMainStatus=0
+WorkingDirectory=/srv/thaidlt/current/apps/web
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+MainPID=2196001
+NRestarts=0
+ExecMainStatus=0
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+MainPID=2196005
+NRestarts=0
+ExecMainStatus=0
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+/srv/thaidlt/releases/611a5592ccf4f38612e56dd4c1bb9d906c32bef8
+600 root root /etc/thaidlt/app.env
+600 root root /etc/thaidlt/database.env
+600 root root /etc/thaidlt/bot.env
+600 root root /etc/thaidlt/question-posts.env
+Compact runtime switched; all established services active; no content, preferences, protected environment or rollout flag changed.
+Running as unit: run-u68716.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 730ms
+CPU time consumed: 140ms
+Memory peak: 2.8M
+Memory swap peak: 0B
+Running as unit: run-u68717.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 143ms
+CPU time consumed: 133ms
+Memory peak: 3.6M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-21T12:25:23.593702+00:00 Final live compact UI HTTP content replay and enabled bot checks
+2026-10-21T12:25:29Z
+/srv/thaidlt/releases/611a5592ccf4f38612e56dd4c1bb9d906c32bef8
+{"url": "https://dlt.thauto.app/", "status": 200, "cacheControl": "s-maxage=31536000"}
+{"liveCompactShell": true, "oldMarketingHeadlineAbsent": true, "oldRoadHeroAbsent": true}
+{"url": "https://tele.thauto.app/me", "status": 401, "cacheControl": "no-store"}
+{"url": "http://127.0.0.1:3061/me", "status": 401, "cacheControl": "no-store"}
+{"url": "https://tele.thauto.app/not-a-route", "status": 404, "cacheControl": ""}
+{"url": "https://tele.thauto.app/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"url": "https://dlt.thauto.app/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"singleBotInstance": true, "dailyQuestionPostsEnabled": true, "publicBotUsernameExpected": true, "shortNameUnset": true, "failureMessagesRecent3Minutes": 0}
+{"username":"thauto_dlt_bot","hasMainWebApp":true,"webhookConfigured":false,"pendingUpdateCount":0,"miniAppUrlExpected":true}
+Russian stems: 0 would apply, 0 applied, 100 matched.
+Post-cutover compact UI, protected routes, unchanged content and enabled single-bot checks PASS; no forced user interaction.
+Running as unit: run-u68737.service; invocation ID: 9e586e4788a647738f0cde3c34ad5e82
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 681ms
+CPU time consumed: 191ms
+Memory peak: 4.3M
+Memory swap peak: 0B
+Running as unit: run-u68738.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 858ms
+CPU time consumed: 1.274s
+Memory peak: 1.0M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
