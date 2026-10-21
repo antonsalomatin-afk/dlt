@@ -1,11 +1,11 @@
 id: TASK-074
 title: Prepare reviewed Russian question stems for bilingual reminders
 status: CHECKING
-usage_checkpoint: Stop before95percent5h usage; independent review02 and actual-manifest real100 proof remain pending. Do not accept or deploy based on language-only PASS.
+usage_checkpoint: Resumed at0percent observed five-hour usage; retain95percent ceiling. Independent review02 and actual-manifest real100 proof remain required.
 review_file: .agent/reviews/TASK-074-review-01.md
 review_fix_scope: Only neutral CLI failure wording and cleanup-failure regression; translations/hash unchanged. Required minimum lint/typecheck/test and existing focused2-test integration remain applicable.
 review_attempt: 1
-builder_commit: 25278ec5c4cc864496071614b5865ca54610a47d
+builder_commit: c2ec8e8b8bbcc5e322a703aec638fb20bb7e21e8
 authoritative_checks: .agent/checks/TASK-074-checks-01.txt
 owner_role: Builder
 epic: Epic 7 — Content Operations

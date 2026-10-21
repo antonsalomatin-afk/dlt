@@ -9,9 +9,25 @@
   "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
-  "parkedTasks": [{"task":"TASK-072","status":"BLOCKED","reason":"Original real-owner Telegram smoke and broader compact-design implementation scope remain outstanding."}],
+  "parkedTasks": [
+    {
+      "task": "TASK-072",
+      "status": "BLOCKED",
+      "reason": "Original real-owner Telegram smoke and broader compact-design implementation scope remain outstanding."
+    }
+  ],
   "updatedBy": "Supervisor",
-  "russianStemOverlay": {"status":"FIX_CHECKS_PENDING_USAGE_RESUME","builderCommit":"25278ec5c4cc864496071614b5865ca54610a47d","packSha256":"c50e945d4f2371616ca5947a2551ec16ecbe8a6908d4b4c57fd8cf140f5e002d","checks":".agent/checks/TASK-074-checks-01.txt","review":".agent/reviews/TASK-074-review-01.md","reviewVerdict":"FAIL","languageReview":"100 of100 PASS; code cleanup-failure correction pending independent review02","count":100,"productionApplied":false},
+  "russianStemOverlay": {
+    "status": "CORRECTIVE_CHECKS_RUNNING",
+    "builderCommit": "c2ec8e8b8bbcc5e322a703aec638fb20bb7e21e8",
+    "packSha256": "c50e945d4f2371616ca5947a2551ec16ecbe8a6908d4b4c57fd8cf140f5e002d",
+    "checks": ".agent/checks/TASK-074-checks-01.txt",
+    "review": ".agent/reviews/TASK-074-review-01.md",
+    "reviewVerdict": "FAIL",
+    "languageReview": "100 of100 PASS; code cleanup-failure correction pending independent review02",
+    "count": 100,
+    "productionApplied": false
+  },
   "queuedTelegramPosts": {
     "task": "TASK-073",
     "status": "ACCEPTED_NOT_DEPLOYED",
@@ -22,7 +38,10 @@
     "ownerRequestedAt": "2026-10-21",
     "scope": "Question post, optional associated image and Answer button opening that exact question with explicit confirmation.",
     "destination": "PRIVATE_BOT_CHAT",
-    "languages": ["ENGLISH", "RUSSIAN"],
+    "languages": [
+      "ENGLISH",
+      "RUSSIAN"
+    ],
     "pendingDecisions": [],
     "implementationStarted": true,
     "productionPostingEnabled": false
@@ -70,17 +89,17 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 93,
-    "latestObservedWeeklyUsedPercent": 25,
+    "latestObservedUsedPercent": 0,
+    "latestObservedWeeklyUsedPercent": 0,
     "weeklyWindowMinutes": 10080,
-    "weeklyResetsAt": "2026-10-27T07:03:36Z",
+    "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-21T05:09:00Z",
+    "checkedAt": "2026-10-21T05:55:58Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
-    "sessionResetsAt": "2026-10-21T09:17:44Z"
+    "sessionResetsAt": "2026-10-21T10:55:51Z"
   },
-  "executionPaused": true,
-  "pauseReason": "Usage checkpoint at93percent before95percent five-hour ceiling. Finish owned narrow-fix checks/commit only; next continuation must run authoritative fix checks, independent TASK-074 review02 and actual-manifest isolated proof before acceptance. No production changes.",
+  "executionPaused": false,
+  "pauseReason": null,
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
