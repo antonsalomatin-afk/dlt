@@ -27,3 +27,5 @@ Original untracked apps/web/AGENTS.md, apps/web/CLAUDE.md, thai-dlt-agent-starte
 - packages/database/src/chat-quiz.ts: 017a9c9ae78e1ecdc0ba1db30dbc9b0ac9b6a88b30eb3a8b11a3851e58a7f119
 - tests/chat-quiz.integration.test.ts: 927ea0a63fa844e95fa8cf1aaba2a3022fdee734e1418b6cb3fc501442ddadb3
 - tests/chat-quiz.test.ts: 5c34e2beadec04ee42ff259e44402b540f8da2e16f4593a5fb145016cfeddc9b
+
+Final observed recovery-focused results: 12 unit PASS and 13 isolated PostgreSQL integration PASS (logs above,15:21UTC-local tool time). Full final gates/Builder commit/root gates/review remain pending; no need to rerun the completed focused process unless source changes.
