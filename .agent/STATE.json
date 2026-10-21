@@ -94,12 +94,12 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 56,
-    "latestObservedWeeklyUsedPercent": 9,
+    "latestObservedUsedPercent": 68,
+    "latestObservedWeeklyUsedPercent": 11,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-21T08:21:21Z",
+    "checkedAt": "2026-10-21T09:03:00Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-21T10:55:51Z"
   },
@@ -157,7 +157,7 @@
   },
   "compactApp": {
     "task": "TASK-076",
-    "status": "BUILDING",
+    "status": "BUILDER_SEQUENTIAL_CHECKS",
     "ownerApproval": "Both real compact design and private chat questions",
     "selectedAnswerFlow": "CONFIRM_ANSWER",
     "reminderOptInPreserved": true,
