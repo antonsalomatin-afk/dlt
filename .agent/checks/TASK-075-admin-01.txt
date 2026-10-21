@@ -318,3 +318,41 @@ Memory peak: 3.8M
 Memory swap peak: 0B
 
 GUEST_EXIT 0
+
+2026-10-21T08:22:39.472396+00:00 Verified Main Mini App; enable approved daily bilingual question posts and restart only bot
+2026-10-21T08:22:42Z
+{"username":"thauto_dlt_bot","hasMainWebAppFieldPresent":true,"hasMainWebAppValue":true,"webhookConfigured":false}
+Dedicated non-secret daily question flag enabled; root0600 and public username preserved.
+active
+active
+active
+{"enabledAt": "2026-10-21T08:22:43Z", "singleBotInstance": true, "botPid": 2037615, "dailyQuestionPostsEnabled": true, "publicBotUsernameExpected": true, "shortNameUnset": true, "otherServicePidsUnchanged": true, "failureMessagesSinceEnable": 0}
+NRestarts=0
+ExecMainStatus=0
+ActiveState=active
+SubState=running
+
+600 root root /etc/thaidlt/question-posts.env
+2026-10-21T08:22:49Z
+Running as unit: run-u68073.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 663ms
+CPU time consumed: 180ms
+Memory peak: 3.4M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-21T08:23:20.964665+00:00 Post-enable read-only Telegram Main Mini App and webhook verification
+{"username":"thauto_dlt_bot","hasMainWebAppFieldPresent":true,"hasMainWebAppValue":true,"hasMainWebApp":true,"webhookConfigured":false,"pendingUpdateCount":0,"menuType":"commands","menuExpectedUrl":false,"miniAppUrlExpected":true,"existingPostFlag":"unset","existingBotUsername":false,"shortNamePresent":false}
+Running as unit: thaidlt-task075-telegram-check.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 679ms
+CPU time consumed: 169ms
+Memory peak: 3.8M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+{"observedAt": "2026-10-21T08:24:42.480709+00:00", "anonymousPublicBotPage": "https://t.me/thauto_dlt_bot?startapp", "publicTitle": ["Thauto_DLT"], "openAppMarkupPresent": true, "expectedTargetUrlInMarkup": false, "limitation": "Public landing markup does not independently resolve or verify the configured Main Mini App target URL."}
