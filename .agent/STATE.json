@@ -94,12 +94,12 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 23,
-    "latestObservedWeeklyUsedPercent": 19,
+    "latestObservedUsedPercent": 35,
+    "latestObservedWeeklyUsedPercent": 21,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-21T12:09:00.278680+00:00",
+    "checkedAt": "2026-10-21T12:15:11.943225+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-21T16:54:03Z"
   },
@@ -157,7 +157,7 @@
   },
   "compactApp": {
     "task": "TASK-076",
-    "status": "CODE_COMPONENT_ACCEPTED_ROLLOUT_PENDING",
+    "status": "DEPLOYING_ACCEPTED_CODE",
     "ownerApproval": "Both real compact design and private chat questions",
     "selectedAnswerFlow": "CONFIRM_ANSWER",
     "reminderOptInPreserved": true,
@@ -169,7 +169,8 @@
     "reviewVerdict": "PASS",
     "builderFixCommit": "726550f507bd664ec4e752b0917b9a3f959c2683",
     "acceptedCodeCommit": "726550f507bd664ec4e752b0917b9a3f959c2683",
-    "releaseTag": "thaidlt-compact-20261021"
+    "releaseTag": "thaidlt-compact-20261021",
+    "releaseCommit": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8"
   },
   "queuedNativeChatQuiz": {
     "task": "TASK-077",
