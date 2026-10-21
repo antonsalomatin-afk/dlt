@@ -133,12 +133,14 @@
   },
   "bilingualRollout": {
     "task": "TASK-075",
-    "status": "PREFLIGHT_PASS_STAGING_RELEASE",
+    "status": "BUILD_PASS_BACKUP_CONTENT_CUTOVER",
     "ownerApproval": "deploy",
     "approvedAt": "2026-10-21",
     "releaseCommit": "b38618f13765ec41ac51421327c1cbbfa347f245",
     "releaseTag": "thaidlt-bilingual-20261021",
     "productionMutated": false,
-    "preflight": "Strict known-host SSH/QEMU guest100 verified; old runtime1d7eaa0 and three active services; envfiles root0600; loopbackports3060/3061/5434; Node24.22.0; pnpm11.19.0 required despite global12.4.2."
+    "preflight": "Strict known-host SSH/QEMU guest100 verified; old runtime1d7eaa0 and three active services; envfiles root0600; loopbackports3060/3061/5434; Node24.22.0; pnpm11.19.0 required despite global12.4.2.",
+    "telegramSetup": "Read-only getMe shows thauto_dlt_bot has_main_web_app=false, no webhook; owner asked to configure Main Mini App. Keep enrichment false until verified.",
+    "releaseArchiveSha256": "2514ab52411459cc93d8da53ff0fb97eab737b15ec54dac4c58ac14aa8d9c2b4"
   }
 }
