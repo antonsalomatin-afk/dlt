@@ -94,12 +94,12 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 45,
-    "latestObservedWeeklyUsedPercent": 22,
+    "latestObservedUsedPercent": 70,
+    "latestObservedWeeklyUsedPercent": 26,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-21T12:15:11.943225+00:00",
+    "checkedAt": "2026-10-21T12:56:31.632951+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-21T16:54:03Z"
   },
@@ -190,6 +190,7 @@
     "implemented": false,
     "adr": ".agent/decisions/ADR-007-native-chat-practice.md",
     "productionDeployed": false,
-    "implementationStarted": true
+    "implementationStarted": true,
+    "builderCheckpoint": "Shared answer/selection, owned additive session, native handlers implemented; focused26unit/8isolatedPostgres PASS. Acceptance edge coverage/fullBuildergates in progress. No native deployment."
   }
 }

@@ -156,4 +156,4 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
-- TASK-077 — READY — native single-language private-chat quizzes; ADR-007 and bounded durable recovery protocol accepted; Builder implementation next.
+- TASK-077 — BUILDING — native private-chat quizzes under ADR-007; focused tests green, full gates/review pending; not deployed.
