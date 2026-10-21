@@ -29,3 +29,7 @@ The Product Owner approved use of `artslob/thailand-driving-exam-questions` ("ye
 ### 2026-10-19 — Publish reviewed original English starter bank
 
 The Product Owner explicitly approved: "Approve publishing this starter bank" and instructed "continue". This authorizes release of the exact reviewed 50 CAR and 50 MOTORCYCLE English candidates at `65d1c1ade2c48fc4e82388db85da93faf7eee9d8` through the existing independent-review and activation pipeline. The bounded independent content reviews remain the factual evidence; owner approval does not substitute for those reviews. Prepare exact review and activation manifests, validate and independently review the release chain, and hand the approved release to the server Admin. Do not request this approval again.
+
+### 2026-10-21 — Deploy reviewed bilingual private reminders
+
+The Product Owner explicitly replied "deploy" after the Supervisor presented accepted TASK-074, release tag thaidlt-bilingual-20261021, and requested approval to publish all100 reviewed Russian stems and enable private EN/RU question reminders at11:00 Thailand time. This authorizes TASK-075 on the existing dlt.thauto.app / tele.thauto.app infrastructure, including the reviewed content overlay, exact accepted runtime deployment and strict bot rollout settings. No forced test messages, new channel, paid service or unrelated design change is included. Do not request this deployment approval again.
