@@ -5,10 +5,10 @@
   "currentTask": "TASK-075",
   "lastAcceptedTask": "TASK-074",
   "lastAcceptedCommit": "e1f6935cd7341449ef3aa6cc7fd8048dd0061169",
-  "status": "BLOCKED",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": "Owner reported setup done, but two fresh getMe checks still explicitly show has_main_web_app=false for thauto_dlt_bot; property presence verified at2026-10-21T08:18:04Z. Awaiting exact final BotFather response to diagnose remaining setup. Enrichment remainsfalse; no production change in this resume. Existing deploy approval remains sufficient.",
+  "blockedReason": null,
   "parkedTasks": [
     {
       "task": "TASK-072",
@@ -134,7 +134,7 @@
   },
   "bilingualRollout": {
     "task": "TASK-075",
-    "status": "DEPLOYED_WAITING_MAIN_MINI_APP_CONFIGURATION_CONFIRMATION",
+    "status": "MAIN_MINI_APP_READY_ENABLING",
     "ownerApproval": "deploy",
     "approvedAt": "2026-10-21",
     "releaseCommit": "b38618f13765ec41ac51421327c1cbbfa347f245",
@@ -149,6 +149,6 @@
     "postFlag": false,
     "adminReport": ".agent/admin/TASK-074-production-report.md",
     "adminCommit": "9e69dd9",
-    "lastTelegramReadinessCheck": "2026-10-21T08:18:04Z;propertyPresent=true;has_main_web_app=false;no production writes or sends"
+    "lastTelegramReadinessCheck": "2026-10-21T08:21:21Z;propertyPresent=true;has_main_web_app=true;username=thauto_dlt_bot;no webhook"
   }
 }
