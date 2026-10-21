@@ -2,23 +2,17 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-075",
-  "lastAcceptedTask": "TASK-074",
-  "lastAcceptedCommit": "e1f6935cd7341449ef3aa6cc7fd8048dd0061169",
-  "status": "ACCEPTING",
-  "reviewAttempt": 1,
+  "currentTask": "TASK-072",
+  "lastAcceptedTask": "TASK-075",
+  "lastAcceptedCommit": "a3fb3564cc314e9a78f3f052554a05c78fccd9a9",
+  "status": "BLOCKED",
+  "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": null,
-  "parkedTasks": [
-    {
-      "task": "TASK-072",
-      "status": "BLOCKED",
-      "reason": "Original real-owner Telegram smoke and broader compact-design implementation scope remain outstanding."
-    }
-  ],
+  "blockedReason": "TASK-075 deployment accepted after checks and independent PASS. TASK-072 awaits genuine owner Telegram practice/exam smoke observations; no fresh signed owner session available to automation. No further deployment approval is needed.",
+  "parkedTasks": [],
   "updatedBy": "Supervisor",
   "russianStemOverlay": {
-    "status": "PRODUCTION_APPLIED_OPERATIONAL_REVIEW_PENDING",
+    "status": "PRODUCTION_PUBLISHED_ACCEPTED",
     "builderCommit": "e1f6935cd7341449ef3aa6cc7fd8048dd0061169",
     "packSha256": "c50e945d4f2371616ca5947a2551ec16ecbe8a6908d4b4c57fd8cf140f5e002d",
     "checks": ".agent/checks/TASK-074-checks-03.txt",
@@ -35,7 +29,7 @@
   },
   "queuedTelegramPosts": {
     "task": "TASK-073",
-    "status": "PRODUCTION_ENABLED_OPERATIONAL_REVIEW_PENDING",
+    "status": "PRODUCTION_ENABLED_ACCEPTED",
     "review": ".agent/reviews/TASK-073-review-02.md",
     "reviewVerdict": "PASS",
     "builderCommit": "a1900d21fbc404b4e8810f47b51a813310ef74d8",
@@ -51,7 +45,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK-075 exactb38618f runtime and100RUstems live; freshbackup, guardedoverlay/preservation/source/service/HTTPchecksPASS. MainMiniApp explicitlytrue, approvedenrichment enabled08:22:43Z; roottruechecksPASS08:24:01Z. Independent operationalreviewpending; realownerUI/scheduledmessage unobserved and TASK-072 remainsparked. No forcedsends;95percentusageceiling;neverresetcredits.",
+  "notes": "TASK-075 accepted: exactb38618f runtime/100reviewedRUstems live; MainMiniApptrue, private opt-in ENRU enrichment enabled11ICT. Backup/preservation/source/service/HTTP and independent operationalreviewPASS. No forcedsends or invented ownerUI/scheduledpost evidence. TASK-072 nowcurrentawaits realownerpractice/examsmoke; previewConfirmanswerselected only. Preserve95percentusageceiling and originaluntrackedstarterfiles; neverresetcredits.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -134,7 +128,7 @@
   },
   "bilingualRollout": {
     "task": "TASK-075",
-    "status": "PASS_ACCEPTING",
+    "status": "ACCEPTED_ENABLED",
     "ownerApproval": "deploy",
     "approvedAt": "2026-10-21",
     "releaseCommit": "b38618f13765ec41ac51421327c1cbbfa347f245",
@@ -148,10 +142,11 @@
     "backup": "thaidlt-20261021-072832.dump;92170bytes;Resultsuccess/ExecMainStatus0",
     "postFlag": true,
     "adminReport": ".agent/admin/TASK-074-production-report.md",
-    "adminCommit": "a3fb356",
+    "adminCommit": "a3fb3564cc314e9a78f3f052554a05c78fccd9a9",
     "lastTelegramReadinessCheck": "2026-10-21T08:23:20Z;has_main_web_app=true;no webhook",
     "enabledAt": "2026-10-21T08:22:43Z",
     "review": ".agent/reviews/TASK-075-review-01.md",
-    "reviewVerdict": "PASS"
+    "reviewVerdict": "PASS",
+    "acceptedAt": "2026-10-21T08:29:33Z"
   }
 }

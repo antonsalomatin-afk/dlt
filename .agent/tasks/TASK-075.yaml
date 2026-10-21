@@ -1,6 +1,6 @@
 id: TASK-075
 title: Deploy accepted bilingual private reminders and reviewed Russian stems
-status: REVIEW
+status: ACCEPTED
 owner_role: Admin
 epic: Epic 10 — Production Hardening
 blocked_reason: null
@@ -38,7 +38,7 @@ report: .agent/admin/TASK-074-production-report.md
 owner_approval: Explicit deploy instruction after concrete release handoff on2026-10-21.
 validation_scope: Deployment-only task inherits accepted source lint/typecheck/unit/build/browser/integration evidence; run production install/generate/build plus safe read-only authoritative service/content/HTTP checks. No feature edits allowed.
 
-production_state: Accepted runtimeb38618f and100RUstems live; Main Mini App confirmedtrue and approved enrichment enabled08:22:43Z. Root enabled-state checksPASS08:24:01Z; independent review remains.
+production_state: Accepted runtimeb38618f and100RUstems live; Main Mini App confirmedtrue; enrichment enabled08:22:43Z; rootenabled-statechecks and independent operationalreviewPASS. Manual owner journey/scheduledpost remain unobserved as permitted.
 
 resume_sequence: Read-only getMe readiness -> enable dedicatedflagtrue ifready -> rootread-onlychecks expectedtrue -> independent operationalreview -> accept. No new deployment approval or forced test sends.
 
@@ -52,3 +52,6 @@ builder_commit: a3fb356
 authoritative_checks: .agent/checks/TASK-075-checks-01.txt
 review_attempt: 1
 review_file: .agent/reviews/TASK-075-review-01.md
+
+accepted_commit: a3fb3564cc314e9a78f3f052554a05c78fccd9a9
+accepted_at: 2026-10-21T08:29:33Z
