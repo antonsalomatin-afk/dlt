@@ -1,0 +1,44 @@
+id: TASK-076
+title: Implement the approved compact Mini App learning surface
+status: READY
+owner_role: Builder
+epic: Epic 10 — Production Hardening
+objective: Make the real Mini App match the owner's approved compact question, feedback and menu direction, and accurately expose existing private daily-question opt-in.
+context:
+  - Owner explicitly selected both private chat questions and the compact real app on2026-10-21 after screenshotting the unchanged promotional onboarding. Previous preview-only limitation is superseded for this task. Deployment to existing approved hosts is included after checks and independent PASS.
+  - Reference is .agent/admin/TASK-072-compact-preview.html, Confirm answer composition; read .agent/admin/TASK-072-design-preview.md. Use actual application state/content and existing functional destinations, not illustrative metrics, fake controls, host widgets or sample questions.
+  - Accepted runtimeb38618f and100reviewedRUstems are live; MainMiniAppready, private ENRU enrichment enabled11ICT. Production currently0 reminder opt-ins. Do not enable anyone automatically or force a Telegram send.
+acceptance:
+  - Replace the large promotional hero/road illustration and oversized onboarding with a quiet ThaiDLT header and compact single-column mobile surface consistent with the selected preview. Vehicle choices and primary practice entry are visible promptly; a saved-vehicle learner can enter practice without scrolling past marketing content. Preserve genuine Telegram authentication and signed-data boundaries.
+  - Practice and daily/linked-question screens prioritize one question and its four readable answer cards, with compact topic/language/vehicle context. Secondary destinations move into an accessible compact menu instead of the current wall of navigation buttons. Every existing destination remains functional.
+  - Preserve explicit Confirm answer behavior: select/change a choice, Check answer, contextual feedback/explanation, Next question. Do not submit by merely selecting an answer. Preserve duplicate/retry protections and owned exact/old-link completion/unavailable handling. Mock-exam timer, hidden correctness, resume and server scoring must not change.
+  - Opening/closing the menu preserves the active presentation and unsubmitted selection; support keyboard focus, Escape dismissal and clear accessible names. Favorite/report remain real functions with their existing safeguards; no fake progress or invented metrics.
+  - English default and saved language preference/fallback remain. Correct reminder settings copy to state that opt-in Telegram questions send at11:00 Thailand time and are not sent immediately on save. Preserve current GET/PATCH preference contracts and explicit checkbox opt-in; no claim that delivery is inactive.
+  - Responsive readable layout at320px,390px and desktop; no horizontal overflow, clipped long EN/RU wording, inaccessible answer controls or promotional hero crowding the core task. Use original branding and existing assets; no external visual/content source or dependency.
+  - Preserve all existing non-target feature functionality and auth failure/expired-session guidance. No API/database/bot/env/dependency change or production data mutation in this Builder task.
+  - Meaningful browser coverage proves compact onboarding/navigation, menu preservation/Escape, selection changes without submission followed by Check answer, contextual result/Next, linked-question behavior and reminder preference save/copy. Update old layout interactions in existing tests without reducing behavior assertions. Run full existing E2E suite because shared shell/styles change.
+files_allowed:
+  - apps/web/app/**
+  - tests/**
+files_forbidden:
+  - apps/api/**
+  - apps/bot/**
+  - packages/**
+  - content/**
+  - tools/**
+  - package.json
+  - pnpm-lock.yaml
+  - .env
+  - .agent/admin/TASK-072-compact-preview.html
+required_checks:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test
+  - pnpm build
+  - pnpm test:e2e
+supervisor_validation_scope:
+  - No backend, schema, dependency or API contract change; inherit accepted integration evidence unless implementation expands scope. Minimum lint/types/unit, web build and full browser suite are authoritative Supervisor gates.
+  - Builder reads apps/web/AGENTS.md and relevant installed Next docs before editing. Do not commit original untracked apps/web/AGENTS.md,CLAUDE.md or starterZIP.
+  - Keep Prisma generation and generated-client consumers sequential. No local bot startup, production operation or messaging. Root performs approved rollout only after independentPASS.
+  - Deliver mobile screenshots of actual local app under existing mocked E2E harness for owner-facing visual verification, distinct from real-owner Telegram smoke.
+owner_decision_required: false
