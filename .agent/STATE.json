@@ -5,7 +5,7 @@
   "currentTask": "TASK-077",
   "lastAcceptedTask": "TASK-076",
   "lastAcceptedCommit": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8",
-  "status": "READY",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK-076 accepted: reviewed compact app live611a559, root338unit229browser + independentcode/opsPASS, all16tablespreserved, freshbackup,100RUmatched, singleenabled bot. TASK-072 realownerjourney remains parked; next077 nativechatquiz approved implementation planning. Preserve95percentceiling/originaluntrackedfiles; noresetcredits.",
+  "notes": "TASK-076 production accepted611a559 and mainbfe3d9f. CurrentTASK-077 Builderimplementing nativeprivatechatquiz underADR007 exactdurableprotocol; no nativefeaturedeployed. Currentproduction compactapp/scheduler preserved. Rootauthoritativegates thenindependentReviewer, no mainuntilPASS. User95percentceiling andnoresetcredits.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -182,13 +182,14 @@
   },
   "queuedNativeChatQuiz": {
     "task": "TASK-077",
-    "status": "READY",
+    "status": "BUILDING",
     "ownerRequested": true,
     "destination": "PRIVATE_BOT_CHAT",
     "mode": "NATIVE_SINGLE_LANGUAGE_QUIZ",
     "dependsOn": "TASK-076",
     "implemented": false,
     "adr": ".agent/decisions/ADR-007-native-chat-practice.md",
-    "productionDeployed": false
+    "productionDeployed": false,
+    "implementationStarted": true
   }
 }
