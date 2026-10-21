@@ -1,6 +1,6 @@
 id: TASK-076
 title: Implement the approved compact Mini App learning surface
-status: REVIEW
+status: ACCEPTING
 builder_commit: e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2
 builder_evidence: .agent/checks/TASK-076-builder-summary-01.txt
 usage_checkpoint: Fresh five-hour window;23percent observed.95percent ceiling remains. Correction checks then review02 then approved rollout. No new UI deployed yet.
@@ -57,3 +57,7 @@ review_fix_scope: Add quiet clearly labeled saved/current profile vehicle contex
 
 builder_fix_commit: 726550f507bd664ec4e752b0917b9a3f959c2683
 corrective_checks: .agent/checks/TASK-076-checks-02.txt
+
+code_component_accepted_commit: 726550f507bd664ec4e752b0917b9a3f959c2683
+code_verdict: PASS
+release_tag: thaidlt-compact-20261021

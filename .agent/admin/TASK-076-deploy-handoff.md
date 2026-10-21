@@ -1,6 +1,6 @@
 # TASK-076 compact Mini App rollout
 
-Preparation status: implementation `e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2`; Supervisor checks and independent code review must pass before a release is selected. The owner approved the real compact design and its publication under the existing-host deployment scope in OWNER_DECISIONS.md. Do not ask for that approval again. Native in-chat quiz practice remains separate TASK-077.
+Code release gate: initial implementation `e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2` plus correction `726550f507bd664ec4e752b0917b9a3f959c2683` accepted after Supervisor checks02 and independent review02 PASS. Exact immutable tag `thaidlt-compact-20261021` is selected at the Supervisor code-acceptance metadata commit; no later code changes are included. Whole-task acceptance remains pending rollout and independent operational validation. The owner approved the real compact design and its publication under the existing-host deployment scope in OWNER_DECISIONS.md. Do not ask for that approval again. Native in-chat quiz practice remains separate TASK-077.
 
 ## Release boundary
 

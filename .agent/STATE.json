@@ -5,7 +5,7 @@
   "currentTask": "TASK-076",
   "lastAcceptedTask": "TASK-075",
   "lastAcceptedCommit": "a3fb3564cc314e9a78f3f052554a05c78fccd9a9",
-  "status": "REVIEW",
+  "status": "ACCEPTING",
   "reviewAttempt": 2,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK-076 review01 sole vehicle-context blocker fixed in726550f; Builder all338unit229browser PASS, final screenshots refreshed; root authoritative correction gates running sequentially, then independentreview02 and approved existing-host rollout. TASK-077 queued; preserve original untrackedfiles and95percent ceiling.",
+  "notes": "TASK-076 code component accepted after rootchecks02 full338unit229browser and independentreview02PASS at726550f; existing-host rollout authorized, whole-task acceptance waits deployment/rootlivechecks/independentopsreview. TASK-077 remains queued until acceptance.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -157,7 +157,7 @@
   },
   "compactApp": {
     "task": "TASK-076",
-    "status": "INDEPENDENT_REVIEW_02",
+    "status": "CODE_COMPONENT_ACCEPTED_ROLLOUT_PENDING",
     "ownerApproval": "Both real compact design and private chat questions",
     "selectedAnswerFlow": "CONFIRM_ANSWER",
     "reminderOptInPreserved": true,
@@ -166,8 +166,10 @@
     "builderEvidence": ".agent/checks/TASK-076-builder-summary-01.txt",
     "authoritativeChecks": ".agent/checks/TASK-076-checks-02.txt",
     "review": ".agent/reviews/TASK-076-review-02.md",
-    "reviewVerdict": "PENDING",
-    "builderFixCommit": "726550f507bd664ec4e752b0917b9a3f959c2683"
+    "reviewVerdict": "PASS",
+    "builderFixCommit": "726550f507bd664ec4e752b0917b9a3f959c2683",
+    "acceptedCodeCommit": "726550f507bd664ec4e752b0917b9a3f959c2683",
+    "releaseTag": "thaidlt-compact-20261021"
   },
   "queuedNativeChatQuiz": {
     "task": "TASK-077",
