@@ -156,3 +156,4 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
+- TASK-077 — PLANNED — native single-language question/answer quizzes in the private bot chat, without Mini App navigation; owner requested, queued after TASK-076

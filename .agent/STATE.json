@@ -94,17 +94,17 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 91,
-    "latestObservedWeeklyUsedPercent": 14,
+    "latestObservedUsedPercent": 96,
+    "latestObservedWeeklyUsedPercent": 15,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-21T09:16:31Z",
+    "checkedAt": "2026-10-21T09:19:54Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-21T10:55:51Z"
   },
   "executionPaused": true,
-  "pauseReason": "91percent usage checkpoint before95percent ceiling; resume TASK-076 authoritative lint/typecheck/fullunit workers2/build/fullbrowser, independentreview, then approved compact UI deployment. Builder e0bb5c8 reports green338unit226browser, no production change. Never redeem reset credits.",
+  "pauseReason": "Usage now96percent on latest owner-requirement intake; no implementation/check/review/deploy may start before reset under user95percent ceiling. TASK-076 remains queued for authoritativechecks/review/rollout; TASK-077 nativechatquiz requirement saved asPLANNED only. No reset credits used.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
@@ -164,5 +164,14 @@
     "productionDeployed": false,
     "builderCommit": "e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2",
     "builderEvidence": ".agent/checks/TASK-076-builder-summary-01.txt"
+  },
+  "queuedNativeChatQuiz": {
+    "task": "TASK-077",
+    "status": "PLANNED",
+    "ownerRequested": true,
+    "destination": "PRIVATE_BOT_CHAT",
+    "mode": "NATIVE_SINGLE_LANGUAGE_QUIZ",
+    "dependsOn": "TASK-076",
+    "implemented": false
   }
 }

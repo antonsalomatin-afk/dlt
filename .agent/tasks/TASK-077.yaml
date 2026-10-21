@@ -1,0 +1,26 @@
+id: TASK-077
+title: Answer native Telegram quizzes directly in the private bot chat
+status: PLANNED
+owner_role: Supervisor
+objective: Add the owner's requested question-and-answer learning flow entirely inside the private Telegram bot chat, without opening the Mini App.
+depends_on:
+  - TASK-076
+owner_request: Explicit request on2026-10-21 with art-group quiz screenshots. References illustrate native Telegram question/options/result/explanation behavior only; no art content or assets are authorized for reuse.
+confirmed_scope:
+  - Private bot chat remains the destination; the screenshot does not request a public group or channel.
+  - Present an existing active VERIFIED driving question and its four real choices using native Telegram quiz behavior; let the learner answer in chat, see correctness/explanation and request the next question there.
+  - One language per quiz; English default and preferred language when the complete question/choice text is reviewed and available. Current RU overlay translates stems only, so do not silently mix RU stems with untranslated choices or invent unreviewed translations; coherent English fallback is available.
+  - Keep the Mini App and current private EN/RU deep-link reminders functional. Do not silently change scheduled reminder format or subscription preferences; this adds native chat practice.
+  - Persist ownership, poll-to-question/choice mapping and authoritative answer results through the existing PostgreSQL/learning model; prevent duplicate credit, foreign answers, stale/replayed updates and lost state across restart. Specify exact semantics before Builder work.
+  - Use Telegram quiz feedback behavior rather than imposing Mini App Check answer controls on a native poll. Preserve explicit confirmation in the Mini App.
+  - Use an approved associated image only when one exists; current starter bank has none. No copied art-group content, external translation service or fake questions/statistics.
+planning_gates:
+  - Finish TASK-076 first; do not implement this task in the current cycle.
+  - Supervisor verifies current official Bot API quiz/non-anonymous answer updates, supported runtimegrammy fields, payload limits and explanation behavior, then refines exact tests/files and any needed persistence/scheduler ADR before READY.
+  - Decide a bounded shared answering path instead of duplicating API business rules; document Telegram trusted-update identity and transaction/delivery ambiguity boundaries.
+  - Test with injected transports and isolated database; no forced production test message or new polling instance without explicit authorization.
+  - Full mock-exam chat sessions, automatic translation and public channel/group statistics are not implied by the supplied single-question examples.
+references:
+  - https://core.telegram.org/bots/api#sendpoll
+  - https://core.telegram.org/bots/api#pollanswer
+owner_decision_required: false
