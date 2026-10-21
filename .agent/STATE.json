@@ -94,17 +94,17 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 96,
+    "latestObservedUsedPercent": 0,
     "latestObservedWeeklyUsedPercent": 15,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-21T09:19:54Z",
+    "checkedAt": "2026-10-21T11:54:03Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
-    "sessionResetsAt": "2026-10-21T10:55:51Z"
+    "sessionResetsAt": "2026-10-21T16:54:03Z"
   },
-  "executionPaused": true,
-  "pauseReason": "Usage now96percent on latest owner-requirement intake; no implementation/check/review/deploy may start before reset under user95percent ceiling. TASK-076 remains queued for authoritativechecks/review/rollout; TASK-077 nativechatquiz requirement saved asPLANNED only. No reset credits used.",
+  "executionPaused": false,
+  "pauseReason": null,
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
@@ -157,7 +157,7 @@
   },
   "compactApp": {
     "task": "TASK-076",
-    "status": "BUILDER_COMMITTED_AUTHORITATIVE_CHECKS_PENDING",
+    "status": "AUTHORITATIVE_CHECKS_RUNNING",
     "ownerApproval": "Both real compact design and private chat questions",
     "selectedAnswerFlow": "CONFIRM_ANSWER",
     "reminderOptInPreserved": true,
