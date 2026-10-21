@@ -5,7 +5,7 @@
   "currentTask": "TASK-074",
   "lastAcceptedTask": "TASK-073",
   "lastAcceptedCommit": "a1900d21fbc404b4e8810f47b51a813310ef74d8",
-  "status": "REVIEW",
+  "status": "CHECKING",
   "reviewAttempt": 2,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -18,15 +18,16 @@
   ],
   "updatedBy": "Supervisor",
   "russianStemOverlay": {
-    "status": "INDEPENDENT_REVIEW_02",
+    "status": "ACTUAL_MANIFEST_ISOLATED_PROOF",
     "builderCommit": "e1f6935cd7341449ef3aa6cc7fd8048dd0061169",
     "packSha256": "c50e945d4f2371616ca5947a2551ec16ecbe8a6908d4b4c57fd8cf140f5e002d",
     "checks": ".agent/checks/TASK-074-checks-03.txt",
     "review": ".agent/reviews/TASK-074-review-02.md",
-    "reviewVerdict": "PENDING",
-    "languageReview": "100 of100 PASS; code cleanup-failure correction pending independent review02",
+    "reviewVerdict": "PASS",
+    "languageReview": "All100 PASS at unchanged canonical pack SHA; actual independent manifest issued",
     "count": 100,
-    "productionApplied": false
+    "productionApplied": false,
+    "translationReviewManifest": ".agent/reviews/TASK-074-translation-review-01.json"
   },
   "queuedTelegramPosts": {
     "task": "TASK-073",
