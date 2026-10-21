@@ -5,13 +5,13 @@
   "currentTask": "TASK-074",
   "lastAcceptedTask": "TASK-073",
   "lastAcceptedCommit": "a1900d21fbc404b4e8810f47b51a813310ef74d8",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "parkedTasks": [{"task":"TASK-072","status":"BLOCKED","reason":"Original real-owner Telegram smoke and broader compact-design implementation scope remain outstanding."}],
   "updatedBy": "Supervisor",
-  "russianStemOverlay": {"status":"REVIEW","builderCommit":"25278ec5c4cc864496071614b5865ca54610a47d","packSha256":"c50e945d4f2371616ca5947a2551ec16ecbe8a6908d4b4c57fd8cf140f5e002d","checks":".agent/checks/TASK-074-checks-01.txt","count":100,"productionApplied":false},
+  "russianStemOverlay": {"status":"FIX_CHECKS_PENDING_USAGE_RESUME","builderCommit":"25278ec5c4cc864496071614b5865ca54610a47d","packSha256":"c50e945d4f2371616ca5947a2551ec16ecbe8a6908d4b4c57fd8cf140f5e002d","checks":".agent/checks/TASK-074-checks-01.txt","review":".agent/reviews/TASK-074-review-01.md","reviewVerdict":"FAIL","languageReview":"100 of100 PASS; code cleanup-failure correction pending independent review02","count":100,"productionApplied":false},
   "queuedTelegramPosts": {
     "task": "TASK-073",
     "status": "ACCEPTED_NOT_DEPLOYED",
@@ -70,8 +70,8 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 65,
-    "latestObservedWeeklyUsedPercent": 21,
+    "latestObservedUsedPercent": 93,
+    "latestObservedWeeklyUsedPercent": 25,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-27T07:03:36Z",
     "windowMinutes": 300,
@@ -79,8 +79,8 @@
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-21T09:17:44Z"
   },
-  "executionPaused": false,
-  "pauseReason": null,
+  "executionPaused": true,
+  "pauseReason": "Usage checkpoint at93percent before95percent five-hour ceiling. Finish owned narrow-fix checks/commit only; next continuation must run authoritative fix checks, independent TASK-074 review02 and actual-manifest isolated proof before acceptance. No production changes.",
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",

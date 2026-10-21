@@ -1,6 +1,7 @@
 id: TASK-074
 title: Prepare reviewed Russian question stems for bilingual reminders
-status: BUILDING
+status: CHECKING
+usage_checkpoint: Stop before95percent5h usage; independent review02 and actual-manifest real100 proof remain pending. Do not accept or deploy based on language-only PASS.
 review_file: .agent/reviews/TASK-074-review-01.md
 review_fix_scope: Only neutral CLI failure wording and cleanup-failure regression; translations/hash unchanged. Required minimum lint/typecheck/test and existing focused2-test integration remain applicable.
 review_attempt: 1
