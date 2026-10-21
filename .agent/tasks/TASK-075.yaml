@@ -1,9 +1,9 @@
 id: TASK-075
 title: Deploy accepted bilingual private reminders and reviewed Russian stems
-status: CHECKING
+status: BLOCKED
 owner_role: Admin
 epic: Epic 10 — Production Hardening
-blocked_reason: null
+blocked_reason: Main Mini App is absent for thauto_dlt_bot. Owner received official BotFather setup instructions; final getMe remainsfalse at2026-10-21T07:34:08Z. Runtime/content deployed and rootchecksPASS; enrichmentfalse, operationalreview/acceptance pending. Existing deploy approval covers enablement after readiness verification.
 owner_decision_required: false
 release_tag: thaidlt-bilingual-20261021
 handoff: .agent/admin/TASK-074-deploy-handoff.md
@@ -39,3 +39,5 @@ owner_approval: Explicit deploy instruction after concrete release handoff on202
 validation_scope: Deployment-only task inherits accepted source lint/typecheck/unit/build/browser/integration evidence; run production install/generate/build plus safe read-only authoritative service/content/HTTP checks. No feature edits allowed.
 
 production_state: Accepted runtimeb38618f and100RUstems deployed; flagfalse until owner configures Main Mini App. Rootread-onlychecksPASS at07:31UTC. Whole task not accepted.
+
+resume_sequence: Read-only getMe readiness -> enable dedicatedflagtrue ifready -> rootread-onlychecks expectedtrue -> independent operationalreview -> accept. No new deployment approval or forced test sends.
