@@ -125,3 +125,18 @@ it('defaults to check, enables only explicit apply, hides failures and always di
   expect(failed.writeStdout).not.toHaveBeenCalled();
   expect(failed.writeStderr).toHaveBeenCalledWith(`${russianStemsFailureMessage}\n`);
 });
+
+it.each(['disconnect', 'output'])('reports a neutral error after a successful apply followed by %s failure', async (phase) => {
+  const dep = dependencies(['--apply', ...paths()]);
+  const database = { $disconnect: vi.fn(async () => {}) };
+  dep.createDatabaseClient.mockReturnValue(database);
+  dep.overlay.mockResolvedValue({ wouldApply: 0, applied: 100, matched: 0 });
+  if (phase === 'disconnect') database.$disconnect.mockRejectedValue(new Error('private cleanup exception'));
+  else dep.writeStdout.mockImplementation(() => { throw new Error('private output exception'); });
+
+  expect(await runRussianStemsCli(dep)).toBe(1);
+  expect(dep.overlay).toHaveBeenCalledWith(database, expect.any(Object), true);
+  expect(database.$disconnect).toHaveBeenCalledOnce();
+  expect(dep.writeStderr).toHaveBeenCalledWith('Russian stem command failed. Verify database state before retrying.\n');
+  if (phase === 'disconnect') expect(dep.writeStdout).not.toHaveBeenCalled();
+});

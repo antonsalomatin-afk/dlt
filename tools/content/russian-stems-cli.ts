@@ -1,6 +1,6 @@
 import { readRussianStemInputs } from './russian-stems.ts';
 
-export const russianStemsFailureMessage = 'Russian stem overlay failed. No translations were applied.';
+export const russianStemsFailureMessage = 'Russian stem command failed. Verify database state before retrying.';
 interface Database { $disconnect(): Promise<void> }
 export async function runRussianStemsCli<Client extends Database>(dependencies: {
   args: string[];
