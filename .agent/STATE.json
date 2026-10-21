@@ -5,7 +5,7 @@
   "currentTask": "TASK-075",
   "lastAcceptedTask": "TASK-074",
   "lastAcceptedCommit": "e1f6935cd7341449ef3aa6cc7fd8048dd0061169",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -18,7 +18,7 @@
   ],
   "updatedBy": "Supervisor",
   "russianStemOverlay": {
-    "status": "ACCEPTED_NOT_PUBLISHED",
+    "status": "PRODUCTION_APPLIED_OPERATIONAL_REVIEW_PENDING",
     "builderCommit": "e1f6935cd7341449ef3aa6cc7fd8048dd0061169",
     "packSha256": "c50e945d4f2371616ca5947a2551ec16ecbe8a6908d4b4c57fd8cf140f5e002d",
     "checks": ".agent/checks/TASK-074-checks-03.txt",
@@ -26,15 +26,16 @@
     "reviewVerdict": "PASS",
     "languageReview": "All100 PASS at unchanged canonical pack SHA; actual independent manifest issued",
     "count": 100,
-    "productionApplied": false,
+    "productionApplied": true,
     "translationReviewManifest": ".agent/reviews/TASK-074-translation-review-01.json",
     "actualManifestProof": ".agent/checks/TASK-074-checks-04.txt",
     "releaseTag": "thaidlt-bilingual-20261021",
-    "deployHandoff": ".agent/admin/TASK-074-deploy-handoff.md"
+    "deployHandoff": ".agent/admin/TASK-074-deploy-handoff.md",
+    "productionAppliedAt": "2026-10-21T07:28:00Z"
   },
   "queuedTelegramPosts": {
     "task": "TASK-073",
-    "status": "ACCEPTED_NOT_DEPLOYED",
+    "status": "DEPLOYED_DISABLED_AWAITING_MAIN_MINI_APP",
     "review": ".agent/reviews/TASK-073-review-02.md",
     "reviewVerdict": "PASS",
     "builderCommit": "a1900d21fbc404b4e8810f47b51a813310ef74d8",
@@ -50,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": false
   },
-  "notes": "Owner explicitly approved deploy of accepted bilingual release. TASK-075 admin executes backup-first deployment and independently verified production checks; approval no longer pending. Preserve95percent ceiling and untracked starter files; never redeem reset credits.",
+  "notes": "Approved TASK-075 deployed exactb38618f after freshbackup;100reviewedRU stems applied/rechecked, preservation and rootread-onlyHTTP/service/source checks PASS. Main Mini App absent; owner receivedofficialBotFathersteps and mustconfigure it. Enrichment explicitlyfalse; noforcedmessages. WholeTASK075 notaccepted; operationalreview/enable remain. Preserve95percent ceiling; noresetcredits.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -93,12 +94,12 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 11,
-    "latestObservedWeeklyUsedPercent": 2,
+    "latestObservedUsedPercent": 26,
+    "latestObservedWeeklyUsedPercent": 4,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-21T06:02:00Z",
+    "checkedAt": "2026-10-21T07:29:25Z",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-21T10:55:51Z"
   },
@@ -133,14 +134,18 @@
   },
   "bilingualRollout": {
     "task": "TASK-075",
-    "status": "BUILD_PASS_BACKUP_CONTENT_CUTOVER",
+    "status": "DEPLOYED_CHECKS_PASS_AWAITING_MAIN_MINI_APP",
     "ownerApproval": "deploy",
     "approvedAt": "2026-10-21",
     "releaseCommit": "b38618f13765ec41ac51421327c1cbbfa347f245",
     "releaseTag": "thaidlt-bilingual-20261021",
-    "productionMutated": false,
+    "productionMutated": true,
     "preflight": "Strict known-host SSH/QEMU guest100 verified; old runtime1d7eaa0 and three active services; envfiles root0600; loopbackports3060/3061/5434; Node24.22.0; pnpm11.19.0 required despite global12.4.2.",
     "telegramSetup": "Read-only getMe shows thauto_dlt_bot has_main_web_app=false, no webhook; owner asked to configure Main Mini App. Keep enrichment false until verified.",
-    "releaseArchiveSha256": "2514ab52411459cc93d8da53ff0fb97eab737b15ec54dac4c58ac14aa8d9c2b4"
+    "releaseArchiveSha256": "2514ab52411459cc93d8da53ff0fb97eab737b15ec54dac4c58ac14aa8d9c2b4",
+    "productionReleaseCommit": "b38618f13765ec41ac51421327c1cbbfa347f245",
+    "authoritativeChecks": ".agent/checks/TASK-075-checks-01.txt",
+    "backup": "thaidlt-20261021-072832.dump;92170bytes;Resultsuccess/ExecMainStatus0",
+    "postFlag": false
   }
 }
