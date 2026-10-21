@@ -1,6 +1,6 @@
 id: TASK-076
 title: Implement the approved compact Mini App learning surface
-status: ACCEPTING
+status: ACCEPTED
 builder_commit: e0bb5c8a94bf6ff9ffb780105c67f913d05adfc2
 builder_evidence: .agent/checks/TASK-076-builder-summary-01.txt
 usage_checkpoint: Fresh five-hour window;23percent observed.95percent ceiling remains. Correction checks then review02 then approved rollout. No new UI deployed yet.
@@ -61,3 +61,9 @@ corrective_checks: .agent/checks/TASK-076-checks-02.txt
 code_component_accepted_commit: 726550f507bd664ec4e752b0917b9a3f959c2683
 code_verdict: PASS
 release_tag: thaidlt-compact-20261021
+
+accepted_commit: 611a5592ccf4f38612e56dd4c1bb9d906c32bef8
+production_checks: .agent/checks/TASK-076-production-checks-01.txt
+operational_review: .agent/reviews/TASK-076-operational-review-01.md
+operational_verdict: PASS
+production_report: .agent/admin/TASK-076-production-report.md
