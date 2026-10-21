@@ -281,3 +281,28 @@ Memory peak: 3.6M
 Memory swap peak: 0B
 
 GUEST_EXIT 0
+
+2026-10-21T08:17:00.261638+00:00 Owner configured Main Mini App; read-only Telegram readiness verification
+{"username":"thauto_dlt_bot","hasMainWebApp":false,"webhookConfigured":false,"pendingUpdateCount":0,"menuType":"commands","menuExpectedUrl":false,"miniAppUrlExpected":true,"existingPostFlag":"unset","existingBotUsername":false,"shortNamePresent":false}
+Running as unit: thaidlt-task075-telegram-check.service; invocation ID: c554fc7d734c4830801e117114d1bcc9
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 621ms
+CPU time consumed: 177ms
+Memory peak: 856.0K
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-21T08:18:04.633472+00:00 One propagation recheck with explicit supported getMe field presence/value
+{"username":"thauto_dlt_bot","hasMainWebAppFieldPresent":true,"hasMainWebAppValue":false,"hasMainWebApp":false,"webhookConfigured":false,"pendingUpdateCount":0,"menuType":"commands","menuExpectedUrl":false,"miniAppUrlExpected":true,"existingPostFlag":"unset","existingBotUsername":false,"shortNamePresent":false}
+Running as unit: thaidlt-task075-telegram-check.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 705ms
+CPU time consumed: 163ms
+Memory peak: 3.6M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+Read-only anonymous public bot metadata: title Thauto_DLT, description Thai Driving License; ?startapp landing has generic Open App/startapp/web_app markers. No configured target URL revealed; generic markup is not readiness proof and does not override explicit getMe false. No flag/service/content changes or sends.
