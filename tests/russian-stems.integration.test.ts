@@ -81,9 +81,12 @@ it('checks, applies and exactly replays all100 real stems while preserving choic
   expect(before).toHaveLength(100);
   const user = await database.user.create({ data: { telegramUserId: 740001n, firstName: 'Synthetic Russian overlay learner' } });
   const presentations = [];
+  // Force timestamp ties: createdAt alone cannot define a stable row order.
+  const presentationCreatedAt = new Date('2026-10-20T00:00:00.000Z');
   for (const question of before) {
     presentations.push(await database.questionPresentation.create({ data: {
-      userId: user.id, questionId: question.id, conceptId: question.conceptId, snapshot: snapshotQuestion(question),
+      userId: user.id, questionId: question.id, conceptId: question.conceptId,
+      createdAt: presentationCreatedAt, snapshot: snapshotQuestion(question),
     } }));
   }
   const first = before[0];
@@ -120,7 +123,8 @@ it('checks, applies and exactly replays all100 real stems while preserving choic
   expect(cli(true).stdout.trim()).toBe('Russian stems: 0 would apply, 0 applied, 100 matched.');
   expect(cli().stdout.trim()).toBe('Russian stems: 0 would apply, 0 applied, 100 matched.');
   expect(await questions()).toEqual(after); // includes updatedAt: replay makes no write
-  expect(await database.questionPresentation.findMany({ orderBy: { createdAt: 'asc' } })).toEqual(presentations);
+  expect(await database.questionPresentation.findMany({ orderBy: { id: 'asc' } }))
+    .toEqual([...presentations].sort((left, right) => left.id < right.id ? -1 : left.id > right.id ? 1 : 0));
   expect(await database.answerAttempt.findUnique({ where: { id: answer.id } })).toEqual(answer);
   expect(await database.user.findUnique({ where: { id: user.id } })).toEqual(user);
   expect(await database.conceptLearningState.findUnique({ where: { userId_conceptId: { userId: user.id, conceptId: first.conceptId } } })).toEqual(learning);
