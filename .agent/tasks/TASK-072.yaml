@@ -15,6 +15,7 @@ acceptance:
   - The owner exercises practice for CAR and MOTORCYCLE, observing four choices, one submitted answer, a result/explanation and continuation without the insufficient-content error.
   - For at least one vehicle the owner starts a real 50-question mock exam, observes the timer and hidden correctness, answers once, reopens the app and confirms the current exam resumes with that answer.
   - The owner sends /quiz in the private bot chat, answers a native quiz, observes correctness and full explanation, then uses Next without opening the Mini App. Current incomplete Russian quiz translations coherently fall back to English.
+  - The owner grants the bot administrator status in the intended group, sends /quiz@thauto_dlt_bot, has two real members answer the shared question, then uses Finish round and Next as starter or administrator. Record actual results without substituting local tests or read-only health checks.
   - The report distinguishes owner-reported results, independently observed results, failures and untested scenarios. Completing a full exam or proving a scheduled notification is not required for this initial smoke task.
   - Any reported defect is diagnosed and assigned an explicit scoped Builder correction with required checks and independent review before acceptance; do not mark unobserved flows passed.
 scope_amendment:
@@ -42,6 +43,6 @@ design_preview_result:
   checks: .agent/checks/TASK-072-preview-checks-02.txt
   accepted_component_commit: 94ecc39edd8b41e0901f4af2c7b4774b1066851c
   boundary: Preview only; no whole-task acceptance or app implementation/deployment approval.
-blocked_reason: Real-owner native quiz and signed Mini App practice/exam observations remain outstanding. Compact implementation and native production rollout are accepted; no implementation-scope or deployment decision is pending.
-latest_deployment: TASK-078 accepted after independent operational PASS; release 0a4d7b3291f346581174aa5ac3ffe7d5404f73be includes the accepted compact Mini App and native private-chat quizzes. All 100 verified questions and Russian stems remain unchanged; opt-in 11 ICT reminders preserved. Actual owner journeys remain unobserved.
+blocked_reason: Owner group administrator setup and actual two-member answer/finish/Next plus signed Mini App practice/exam observations remain outstanding. Code and existing-host deployments are accepted; no implementation or deployment decision is pending.
+latest_deployment: TASK-081 accepted after independent operational PASS; release 3cbcbac2976014f4d3bf6346341b6667f14b44d1 includes compact Mini App, private and group native quizzes. Owner reported private chat works before this rollout. Fresh post-rollout group and signed Mini App journeys remain unobserved.
 latest_scope_status: Historical preview-only boundary was superseded by explicit compact implementation approval in TASK-076 and native chat approval in TASK-077. The original manual smoke task remains unaccepted.

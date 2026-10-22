@@ -146,7 +146,7 @@ Potential scope:
 - TASK-070 — ACCEPTED — approve the production launch boundary (dlt.thauto.app / tele.thauto.app)
 - TASK-071 — ACCEPTED — production hosts/services verified;50CAR +50MOTORCYCLE reviewed questions live; backup/restore and independent operational review PASS
 
-- TASK-072 — BLOCKED — compact Mini App and native private-chat quizzes are accepted and live; await real-owner /quiz answer/feedback/Next and signed Mini App practice/exam-resume observations only
+- TASK-072 — BLOCKED — compact/private/group modes are accepted and live; owner reports private success. Await group administrator setup/two-member answer/finish/Next and signed Mini App practice/exam-resume observations.
 
 - deployment ADR
 - observability
@@ -160,4 +160,6 @@ Potential scope:
 - TASK-078 — ACCEPTED — native quiz release0a4d7b3 live; fresh backup, migration18 once, old16 tables preserved; independent operations PASS.
 
 - TASK-079 — ACCEPTED — shared group quiz architecture, per-user scoring and recovery; independent design PASS.
-- TASK-080 — ACCEPTED — shared native group quizzes with individual credit, recovery and scoped controls; full authoritative checks and independent source review PASS. Production rollout next.
+- TASK-080 — ACCEPTED — shared native group quizzes with individual credit, recovery and scoped controls; full authoritative checks and independent source review PASS. Published through accepted TASK-081.
+
+- TASK-081 — ACCEPTED — exact group release3cbcbac live; backup beforemigration19, all17oldtables preserved, healthyonebot and independent operational PASS.

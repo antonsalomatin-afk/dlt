@@ -39,3 +39,11 @@ TASK-072 remains BLOCKED on real-owner interaction. Do not mark it passed, manuf
 ### Owner report — 2026-10-22
 
 The owner states that the private chat works. This is an owner-reported positive observation, not independent observation or explicit confirmation of every answer/feedback/Next step. The supplied screenshot shows a group, where the accepted private-only implementation intentionally ignores quiz commands. The owner subsequently requested group support; TASK-079/080 address this new scope. Mini App practice/exam-resume observations remain outstanding.
+
+## Group rollout owner handoff — 2026-10-22
+
+TASK-080 implementation and TASK-081 production rollout are accepted after full authoritative checks and independent source/operational PASS. Live release is `3cbcbac2976014f4d3bf6346341b6667f14b44d1`; evidence is `.agent/admin/TASK-081-production-report.md` and `.agent/reviews/TASK-081-review-01.md`. All17 old tables, including private chat sessions, remained unchanged; fresh backup preceded the additive migration.
+
+The owner must make @thauto_dlt_bot an administrator of the intended group and send `/quiz@thauto_dlt_bot` (or append `motorcycle`). Two real members should answer the shared native quiz; starter/admin uses Finish round, checks full explanation/aggregate accuracy and then Next. Current shared language is English. No automatic private message or group permission change was performed.
+
+Owner-reported private-chat success predates this rollout. Actual group setup/two-member answer/finish/Next, fresh post-rollout private usability and signed Mini App practice/exam-resume remain unobserved. TASK-072 remains BLOCKED on owner interaction, not further deployment approval. Do not manufacture signed identities, send forced test messages or mark these observations passed. Any concrete reported defect needs a scoped Builder correction and independent review.

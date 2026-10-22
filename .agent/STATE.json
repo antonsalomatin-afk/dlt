@@ -2,20 +2,14 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-081",
-  "lastAcceptedTask": "TASK-080",
-  "lastAcceptedCommit": "6a0fd0028c7036fa8a4d857af305fbefccddf094",
-  "status": "REVIEW",
-  "reviewAttempt": 1,
+  "currentTask": "TASK-072",
+  "lastAcceptedTask": "TASK-081",
+  "lastAcceptedCommit": "8c7a5ef03af5b5c8032d7529b000c0ad66ea01f0",
+  "status": "BLOCKED",
+  "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": null,
-  "parkedTasks": [
-    {
-      "task": "TASK-072",
-      "status": "BLOCKED",
-      "reason": "Owner reports private chat works; detailed native feedback/Next and signed Mini App practice/exam observations remain unconfirmed."
-    }
-  ],
+  "blockedReason": "Group support is implemented, independently reviewed and live. Real owner must grant bot administrator status in the intended group and observe two-member answer/finish/Next; signed Mini App practice/exam smoke also remains unobserved. No engineering or deployment approval is pending.",
+  "parkedTasks": [],
   "updatedBy": "Supervisor",
   "russianStemOverlay": {
     "status": "PRODUCTION_PUBLISHED_ACCEPTED",
@@ -51,7 +45,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "Accepted TASK-080 release3cbcbac/tag pushed. TASK-081 separate existing-host group rollout selected; exact plan, backup/additive migration and independent operations gates required. No production mutation yet.",
+  "notes": "TASK-080 code and TASK-081 existing-host group rollout accepted with independent PASS. Release3cbcbac live and all preservation/backup/runtime gates passed. Only TASK-072 owner interaction remains; native private success was reported before this rollout. Originaluntracked preserved; resetcredits untouched; below95ceiling.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,12 +88,12 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 47,
-    "latestObservedWeeklyUsedPercent": 53,
+    "latestObservedUsedPercent": 77,
+    "latestObservedWeeklyUsedPercent": 57,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-22T11:43:32.687874+00:00",
+    "checkedAt": "2026-10-22T13:36:51.764601+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-22T16:42:47+00:00"
   },
@@ -234,7 +228,7 @@
   },
   "groupChatQuiz": {
     "task": "TASK-080",
-    "status": "OPERATIONAL_REVIEW",
+    "status": "PRODUCTION_ACCEPTED",
     "ownerRequested": true,
     "implemented": true,
     "productionDeployed": true,
@@ -255,12 +249,15 @@
     "archiveSha256": "638599537516b0448f53a2d6958aa7ef45df42c69fe479e0a9bd21d578c18112",
     "archiveBytes": 913168,
     "archiveFiles": 619,
-    "rolloutCheckpoint": "Admin and rootlivechecksPASS:619archiveidentity/24criticalraw/19migrations/13constraints10uniques19nonnull/all17oldtablefullpreservation/freshPGDMPbackupbeforemigration/3healthyexactruntimeunits/onebot/HTTP/RU/Telegramgroupready. Rootcatalogcontypeinspectionfailedthenprovednativecharqueryfailure and textcastsuccess; onlyreadonlyinspectorcorrected, no app/schema/data mutation. Independent operations review next.",
+    "rolloutCheckpoint": "Admin/root/independentReviewer allPASS. Exact3cbcbac live; freshbackup before19thmigration;619installedfiles verified, all17oldtables unchanged,3healthyunits/onebot and Telegramgroupready. Actualowner/groupjourneys remain unobserved.",
     "productionMutated": true,
     "backup": "thaidlt-20261022-132604.dump;110421bytes",
     "adminCommit": "8c7a5ef03af5b5c8032d7529b000c0ad66ea01f0",
     "adminReport": ".agent/admin/TASK-081-production-report.md",
     "productionChecks": ".agent/checks/TASK-081-checks-01.txt",
-    "productionVerifiedAt": "2026-10-22T13:30:31Z"
+    "productionVerifiedAt": "2026-10-22T13:30:31Z",
+    "operationalReview": ".agent/reviews/TASK-081-review-01.md",
+    "operationalVerdict": "PASS",
+    "productionAcceptedAt": "2026-10-22T13:36:51.764573+00:00"
   }
 }

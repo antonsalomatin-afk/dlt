@@ -58,4 +58,6 @@ review_attempt: 1
 review_file: .agent/reviews/TASK-080-review-01.md
 review_verdict: PASS
 accepted_commit: 6a0fd0028c7036fa8a4d857af305fbefccddf094
-production_deployed: false
+production_deployed: true
+production_task: TASK-081
+production_release_commit: 3cbcbac2976014f4d3bf6346341b6667f14b44d1
