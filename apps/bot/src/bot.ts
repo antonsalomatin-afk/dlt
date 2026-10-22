@@ -1,6 +1,7 @@
 import { Bot, InlineKeyboard } from 'grammy';
 import type { BotConfig, Context } from 'grammy';
 import { readBotConfig } from './config.ts';
+import { protectPollingAcknowledgements } from './lifecycle.ts';
 
 export const DAILY_START_PARAMETER = 'daily';
 
@@ -17,6 +18,7 @@ function dailyStartAppUrl(username: string): string | null {
 export function createBot(environment: Record<string, string | undefined>, options: BotConfig<Context> = {}) {
   const config = readBotConfig(environment);
   const bot = new Bot(config.token, options);
+  protectPollingAcknowledgements(bot);
   bot.command('start', async (context) => {
     if (context.chat.type !== 'private') {
       await context.reply('Open a private chat with this bot and send /start to launch ThaiDLT.');
