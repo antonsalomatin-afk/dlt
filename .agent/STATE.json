@@ -5,7 +5,7 @@
   "currentTask": "TASK-080",
   "lastAcceptedTask": "TASK-079",
   "lastAcceptedCommit": "abc77865a6aeae37749dcebc03459f3ea4a536c5",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -234,7 +234,7 @@
   },
   "groupChatQuiz": {
     "task": "TASK-080",
-    "status": "BUILDING",
+    "status": "CHECKING",
     "ownerRequested": true,
     "implemented": false,
     "productionDeployed": false,
@@ -244,6 +244,7 @@
     "review": ".agent/reviews/TASK-079-review-01.md",
     "reviewVerdict": "PASS",
     "architectureTask": "TASK-079",
-    "builderCheckpoint": "Group schema/DB/bot implemented. Targeted14integration PASS; full Builder gate01 retained failed testimport scope and exact18migration expectation. Both corrected without dependencychange or assertionweakening; frozen-source full gate02 in progress. Root authoritative checks and independent code review not yet run."
+    "builderCheckpoint": "Final Builder frozen gate03 all PASS: lint/types/369unit62files/Prisma/234integration44files/build/diff. Earlier run failures and pre-start delay retained in ignored logs; no tests weakened. Supervisor fresh authoritative gates next.",
+    "implementationCommit": "6a0fd0028c7036fa8a4d857af305fbefccddf094"
   }
 }

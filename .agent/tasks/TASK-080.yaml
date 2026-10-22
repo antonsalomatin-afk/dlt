@@ -1,6 +1,6 @@
 id: TASK-080
 title: Implement shared native group quizzes with individual practice credit
-status: BUILDING
+status: CHECKING
 owner_role: Builder
 depends_on:
   - TASK-079
@@ -51,3 +51,5 @@ implementation_clarification:
   - GroupQuizRound may additionally store nullable controlMessageId for exact binding of separately sent finish, Next and uncertain-delivery recovery messages. This is a routine schema detail required by ADR-008 callback authorization, not a product or architecture expansion. Persist the returned validated control message identity before enabling it; recovery remains fail-closed.
   - Supervisor authorizes tests/exam-session.integration.test.ts solely to append the new group migration to its exact complete migration-chain expectation; retain all assertions and existing entries. Full integration gate exposed the expected baseline change.
   - Closed-round vehicle selection is explicit: /quiz car or /quiz motorcycle from the current starter/member or administrator starts the next round with that vehicle; no argument recovers closed feedback. Other members cannot advance, open rounds cannot be replaced and concurrent/repeated commands cannot advance twice. ADR-008 is clarified accordingly; include tests in final independent review.
+
+builder_commit: 6a0fd0028c7036fa8a4d857af305fbefccddf094
