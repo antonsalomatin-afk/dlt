@@ -94,12 +94,12 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 0,
-    "latestObservedWeeklyUsedPercent": 0,
+    "latestObservedUsedPercent": 22,
+    "latestObservedWeeklyUsedPercent": 4,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-29T17:14:26+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-22T17:17:33.242329+00:00",
+    "checkedAt": "2026-10-22T17:39:22.206444+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-22T22:14:26+00:00"
   },
@@ -270,6 +270,7 @@
     "task": "TASK-082",
     "status": "BUILDING",
     "ownerRequested": true,
-    "productionDeployed": false
+    "productionDeployed": false,
+    "checkpoint": "Scoped5file correction implemented; targeted13unit18integration and full369unit PASS. Initial fullintegration reported500vs200 in unchanged daily-practice/exam-start concurrent scenarios; focused18test rerun PASS withoutcodechanges. Exactfirstfailure/focused logs retained; fullintegrationretry underway, no source/testweakening. Rootchecks/review notyetstarted."
   }
 }
