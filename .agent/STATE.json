@@ -208,7 +208,7 @@
   },
   "nativeQuizRollout": {
     "task": "TASK-078",
-    "status": "MIGRATION_APPLIED_INSPECTION_DIAGNOSIS_RUNTIME_OLD",
+    "status": "SCHEMA_PRESERVATION_CONFIRMED_CUTOVER_PENDING",
     "releaseCommit": "0a4d7b3291f346581174aa5ac3ffe7d5404f73be",
     "releaseTag": "thaidlt-native-quiz-20261022",
     "previousRuntime": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8",
@@ -220,7 +220,8 @@
     "releaseArchiveBytes": 873297,
     "staging": "Exactacceptedarchive599entries/594CRLFonly,91unchangedfiles, pinnedfrozeninstall/dbgenerate/productionbuildPASS. Currentruntime611a559 still active; freshbackup/migration/cutover next.",
     "migrationDeployExit": 0,
-    "postMigrationInspection": "Operator readonlyinspector failed; safe cleanup resumedprior611a559 API/bot; symlinknotchanged. Readonlydiagnosis underway; no resolve/drop/reset/reapply.",
-    "backup": "2026-10-22T06:10:47Z;101812bytes;Resultsuccess/ExecMainStatus0"
+    "postMigrationInspection": "Operator expected4totalpg_constraintrows; PostgreSQL18includes6validatedNOTNULLconstraints too. Fixonlyreadonlyinspectorp/c/ffilter+explicit6NOTNULLcolumns, preservefailureevidence. No code/schema/data defect or migrationrerun.",
+    "backup": "2026-10-22T06:10:47Z;101812bytes;Resultsuccess/ExecMainStatus0",
+    "migrationState": "18completed/0unfinished; newtableempty; all16oldtablesexact; requiredCHECK/FKs/4uniquesvalid"
   }
 }
