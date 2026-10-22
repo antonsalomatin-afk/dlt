@@ -1,6 +1,6 @@
 # ADR-008 — Shared Telegram group practice
 
-Status: Proposed for independent review
+Status: Accepted (TASK-079 independent review PASS)
 Date: 2026-10-22
 
 ## Context and boundary

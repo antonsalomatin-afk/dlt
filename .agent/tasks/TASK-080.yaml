@@ -1,0 +1,47 @@
+id: TASK-080
+title: Implement shared native group quizzes with individual practice credit
+status: READY
+owner_role: Builder
+depends_on:
+  - TASK-079
+objective: Make /quiz and /practice work in Telegram groups and supergroups with a shared native poll, separate participant accounting, finish/Next and preserved private behavior.
+specification:
+  - Follow accepted ADR-008 and .agent/admin/TASK-079-group-quiz-design.md exactly; read ADR-007 for existing private invariants.
+acceptance:
+  - Valid /quiz@bot and /practice@bot in group/supergroup start or recover one current round per chat/topic; clear bot-admin prerequisite and vehicle choice/default CAR; English shared language without personal preference changes.
+  - All real member participants can answer the same four-option quiz. Each gets exactly one owned presentation, AnswerAttempt and concept increment through the existing shared helper; replay, changed option, rollback and concurrency cannot double credit.
+  - Membership, anonymous/send-as-chat, malformed/foreign/retracted votes, forwarded-member limitation, scoped callbacks and topic boundaries follow ADR-008. No automatic private messages or per-vote groupwide answer disclosure.
+  - Durable sending/binding/uncertain/closed states, explicit authorized replacement, restart reuse, finish/full explanation/aggregate results and idempotent Next follow ADR-008. Network calls remain outside transactions.
+  - Precommit vote failures retain Telegram updates through safe sentinel and real polling/shutdown barrier; committed results survive replay. Existing private chat quizzes, Mini App/API scoring and opt-in reminders remain unchanged.
+  - Additive migration and relational constraints verified against isolated PostgreSQL. Required automated checks pass and independent source review returns PASS before acceptance.
+  - README explains setup, correct group command syntax, permissions, non-anonymous personal practice accounting, closure/recovery and current language. No deployment claim until a separate reviewed operational rollout.
+files_allowed:
+  - packages/database/prisma/schema.prisma
+  - packages/database/prisma/migrations/20261022100000_group_chat_quiz/migration.sql
+  - packages/database/src/group-chat-quiz.ts
+  - apps/bot/src/group-chat-quiz.ts
+  - apps/bot/src/chat-quiz.ts
+  - apps/bot/src/bot.ts
+  - tests/group-chat-quiz.test.ts
+  - tests/group-chat-quiz.integration.test.ts
+  - tests/bot-shutdown.test.ts
+  - tests/chat-quiz.test.ts
+  - README.md
+required_checks:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test
+  - pnpm prisma validate
+  - pnpm test:integration
+  - pnpm build
+  - git diff --check
+  - All specific meaningful cases in TASK-079-group-quiz-design.md test matrix, including actual injected grammY SIGTERM/SIGINT acknowledgement regressions
+files_forbidden:
+  - apps/web/**
+  - apps/api/**
+  - content/**
+  - .env
+  - pnpm-lock.yaml
+  - .agent/STATE.json
+scope_rule: If another source/test file or migration naming change is required, stop and ask Supervisor to amend scope before editing it. Do not weaken existing tests/security or rewrite accepted migrations.
+production_boundary: Implementation only. Exact accepted release, backup, additive migration and independent operational review follow in a separate task; no forced real group send, second polling instance or synthetic signed identity.

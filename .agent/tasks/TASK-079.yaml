@@ -1,6 +1,6 @@
 id: TASK-079
 title: Define durable multi-participant Telegram group quiz support
-status: REVIEW
+status: ACCEPTED
 owner_role: Builder
 depends_on:
   - TASK-078
@@ -23,3 +23,7 @@ required_checks:
   - git diff --check
   - Independent architecture review using the repository review template
 implementation_boundary: Documentation only; runtime, database, source, dependencies and production remain unchanged. Full source checks belong to the subsequent implementation task.
+
+accepted_commit: abc77865a6aeae37749dcebc03459f3ea4a536c5
+review: .agent/reviews/TASK-079-review-01.md
+review_verdict: PASS

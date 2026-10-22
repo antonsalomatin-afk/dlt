@@ -158,3 +158,6 @@ Potential scope:
 - load sanity checks
 - TASK-077 — ACCEPTED — native private-chat quizzes and safe shutdown/recovery; code review02 PASS, published through accepted TASK-078.
 - TASK-078 — ACCEPTED — native quiz release0a4d7b3 live; fresh backup, migration18 once, old16 tables preserved; independent operations PASS.
+
+- TASK-079 — ACCEPTED — shared group quiz architecture, per-user scoring and recovery; independent design PASS.
+- TASK-080 — READY — implement and test shared native group quizzes; not implemented/deployed, checkpoint at usage ceiling.
