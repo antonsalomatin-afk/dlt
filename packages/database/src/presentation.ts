@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from './index.ts';
+import type { Prisma, VehicleType } from './index.ts';
 
 const text = z.string().refine((value) => value.trim().length > 0);
 const translation = z.string().nullable();
@@ -41,6 +41,18 @@ export function snapshotQuestion(source: Prisma.QuestionGetPayload<{ include: { 
     explanationThai: source.explanationThai, explanationEnglish: source.explanationEnglish, explanationRussian: source.explanationRussian,
     trapExplanationThai: source.trapExplanationThai, trapExplanationEnglish: source.trapExplanationEnglish, trapExplanationRussian: source.trapExplanationRussian,
   });
+}
+
+/** The caller supplies a consistent transaction view for selection and its snapshot. */
+export async function selectPracticeQuestion(tx: Prisma.TransactionClient, vehicleType: VehicleType, randomOffset: (count: number) => unknown, categoryId?: string) {
+  const where: Prisma.QuestionWhereInput = { vehicleType, active: true, verificationStatus: 'VERIFIED', ...(categoryId === undefined ? {} : { categoryId }) };
+  const count = await tx.question.count({ where });
+  if (count === 0) return null;
+  const offset = randomOffset(count);
+  if (typeof offset !== 'number' || !Number.isSafeInteger(offset) || offset < 0 || offset >= count) throw new Error('Random offset is outside the candidate range');
+  const question = await tx.question.findFirst({ where, orderBy: { id: 'asc' }, skip: offset, include: { choices: { orderBy: { key: 'asc' } } } });
+  if (!question) throw new Error('Eligible question offset did not resolve');
+  return { question, snapshot: snapshotQuestion(question) };
 }
 
 export type RetryRandomOffset = (candidateCount: number) => unknown;

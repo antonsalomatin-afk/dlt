@@ -27,7 +27,7 @@ export function createBot(environment: Record<string, string | undefined>, optio
       const link = dailyStartAppUrl(context.me.username);
       if (link) keyboard.url('Open daily question', link);
     }
-    await context.reply('Open ThaiDLT to practice driving theory.', { reply_markup: keyboard });
+    await context.reply('Open ThaiDLT to practice driving theory. Send /quiz or /practice to answer questions here in this private chat.', { reply_markup: keyboard });
   });
   return bot;
 }

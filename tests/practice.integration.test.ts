@@ -125,9 +125,9 @@ it('authenticates, filters, validates, and preserves exactly the presented snaps
   const incorrectPresentation = await db.questionPresentation.create({ data: { userId, questionId: question.id, conceptId, snapshot } });
   const wrongChoice = snapshot.question.choices.find((choice) => choice.id !== snapshot.correctChoiceId);
   if (!wrongChoice) throw new Error('Missing test choice');
-  const wrongResponse = await submit({ presentationId: incorrectPresentation.id, choiceId: wrongChoice.id });
+  const wrongResponse = await submit({ presentationId: incorrectPresentation.id.toUpperCase(), choiceId: wrongChoice.id });
   expect(wrongResponse.statusCode).toBe(200);
-  expect(answerResponseSchema.parse(wrongResponse.json())).toMatchObject({ isCorrect: false, correctChoiceId: snapshot.correctChoiceId });
+  expect(answerResponseSchema.parse(wrongResponse.json())).toMatchObject({ presentationId: incorrectPresentation.id, isCorrect: false, correctChoiceId: snapshot.correctChoiceId });
   expect(await db.conceptLearningState.findUniqueOrThrow({
     where: { userId_conceptId: { userId, conceptId } },
   })).toMatchObject({

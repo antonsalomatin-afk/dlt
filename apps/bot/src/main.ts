@@ -1,5 +1,6 @@
 import { readQuestionPostConfig } from './config.ts';
 import { createBot } from './bot.ts';
+import { configureBotErrors, registerChatQuiz } from './chat-quiz.ts';
 import { createReminderScheduler } from './reminders.ts';
 import { runBot } from './lifecycle.ts';
 import { createDatabaseClient } from '../../../packages/database/src/index.ts';
@@ -10,6 +11,7 @@ try {
   const databaseUrl = process.env.DATABASE_URL;
   if (!databaseUrl) throw new Error('DATABASE_URL is required.');
   database = createDatabaseClient(databaseUrl);
+  registerChatQuiz(bot, database);
   const miniAppUrl = new URL(process.env.MINI_APP_URL ?? '').toString();
   const questionPostConfig = readQuestionPostConfig(process.env);
   const scheduler = createReminderScheduler({ database, api: bot.api, miniAppUrl,
@@ -18,7 +20,7 @@ try {
     } } : {}),
   });
   // Telegram errors can include sensitive request context. Emit fixed text only.
-  bot.catch(() => { console.error('Bot update failed.'); });
+  configureBotErrors(bot);
   await runBot(bot, process, scheduler);
 } catch {
   console.error('Bot startup or polling failed. Check server-side configuration and connectivity.');

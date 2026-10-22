@@ -2,7 +2,7 @@ import { createHash, randomBytes, randomInt } from 'node:crypto';
 import Fastify from 'fastify';
 import { z } from 'zod';
 import { Prisma, type PrismaClient } from '../../../packages/database/src/index.ts';
-import { parsePresentationSnapshot, practiceNextRequestSchema, presentationResponseSchema, retryMistakeRequestSchema, selectRetryCandidateSet, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
+import { parsePresentationSnapshot, practiceNextRequestSchema, presentationResponseSchema, retryMistakeRequestSchema, selectRetryCandidateSet, selectPracticeQuestion, snapshotQuestion } from '../../../packages/database/src/presentation.ts';
 import {
   dailyPracticeQuerySchema,
   dailyPracticeRequestSchema,
@@ -10,7 +10,7 @@ import {
   getOwnedDailyPresentation,
   ownedDailyPresentationRequestSchema,
 } from '../../../packages/database/src/daily-practice.ts';
-import { answerRequestSchema, answerResponseSchema, isDuplicateAnswer } from '../../../packages/database/src/answer.ts';
+import { answerRequestSchema, isDuplicateAnswer, submitPracticeAnswer } from '../../../packages/database/src/answer.ts';
 import { encodeHistoryCursor, historyResponseSchema, mistakesResponseSchema, parseHistoryQuery } from '../../../packages/database/src/history.ts';
 import { practiceCategoriesResponseSchema } from '../../../packages/database/src/practice-categories.ts';
 import { favoriteRequestSchema, favoriteResponseSchema } from '../../../packages/database/src/favorite.ts';
@@ -256,14 +256,6 @@ function mapExamHistorySession(exam: {
 }
 
 type RandomOffset = (eligibleCount: number) => unknown;
-
-function checkedRandomOffset(randomOffset: RandomOffset, eligibleCount: number) {
-  const offset = randomOffset(eligibleCount);
-  if (typeof offset !== 'number' || !Number.isSafeInteger(offset) || offset < 0 || offset >= eligibleCount) {
-    throw new Error('Random offset is outside the eligible question range');
-  }
-  return offset;
-}
 
 /** Caller owns the database connection. Credentials are never logged. */
 export function createApi(options: {
@@ -627,26 +619,10 @@ export function createApi(options: {
       if (!user.selectedVehicleType) return reply.code(409).send(errorSchema.parse({ error: 'Vehicle selection required' }));
       const vehicleType = user.selectedVehicleType;
       const categoryId = body.data?.categoryId;
-      const eligibleQuestion: Prisma.QuestionWhereInput = {
-        vehicleType,
-        active: true,
-        verificationStatus: 'VERIFIED',
-        ...(categoryId === undefined ? {} : { categoryId }),
-      };
       const result = await options.database.$transaction(async (tx) => {
-        const eligibleCount = await tx.question.count({ where: eligibleQuestion });
-        if (eligibleCount === 0) return null;
-        const offset = checkedRandomOffset(randomOffset, eligibleCount);
-        // Repeatable read covers the count, offset lookup and Prisma's separate relation
-        // query so selection, wording and choices all come from one MVCC view.
-        const question = await tx.question.findFirst({
-          where: eligibleQuestion,
-          orderBy: { id: 'asc' },
-          skip: offset,
-          include: { choices: { orderBy: { key: 'asc' } } },
-        });
-        if (!question) throw new Error('Eligible question offset did not resolve');
-        const snapshot = snapshotQuestion(question);
+        const selected = await selectPracticeQuestion(tx, vehicleType, randomOffset, categoryId);
+        if (!selected) return null;
+        const { question, snapshot } = selected;
         const presentation = await tx.questionPresentation.create({ data: {
           userId: user.id,
           questionId: question.id,
@@ -1627,39 +1603,7 @@ export function createApi(options: {
     if (!body.success) return reply.code(400).send(errorSchema.parse({ error: 'Bad Request' }));
     try {
       const result = await options.database.$transaction(async (tx) => {
-        const presentation = await tx.questionPresentation.findFirst({ where: { id: body.data.presentationId, userId: user.id } });
-        if (!presentation) return { error: 'Presentation not found' } as const;
-        const snapshot = parsePresentationSnapshot(presentation.snapshot);
-        if (!snapshot.question.choices.some((choice) => choice.id === body.data.choiceId)) return { error: 'Bad Request' } as const;
-        const submittedAt = now();
-        const answer = await tx.answerAttempt.create({ data: {
-          presentationId: presentation.id, selectedChoiceId: body.data.choiceId,
-          isCorrect: body.data.choiceId === snapshot.correctChoiceId, submittedAt,
-        } });
-        if (presentation.conceptId !== null) {
-          const learningStateUpdates = await tx.$executeRaw(Prisma.sql`
-            INSERT INTO "ConceptLearningState" (
-              "userId", "conceptId", "practiceAnswered", "practiceCorrect", "lastPracticeAt"
-            ) VALUES (
-              ${user.id}::uuid,
-              ${presentation.conceptId}::uuid,
-              1,
-              ${answer.isCorrect ? 1 : 0},
-              ${submittedAt}
-            )
-            ON CONFLICT ("userId", "conceptId") DO UPDATE SET
-              "practiceAnswered" = "ConceptLearningState"."practiceAnswered" + 1,
-              "practiceCorrect" = "ConceptLearningState"."practiceCorrect" + EXCLUDED."practiceCorrect",
-              "lastPracticeAt" = GREATEST("ConceptLearningState"."lastPracticeAt", EXCLUDED."lastPracticeAt")
-          `);
-          if (learningStateUpdates !== 1) throw new Error('Practice learning state update cardinality is inconsistent');
-        }
-        return answerResponseSchema.parse({
-          presentationId: presentation.id, selectedChoiceId: answer.selectedChoiceId, isCorrect: answer.isCorrect,
-          correctChoiceId: snapshot.correctChoiceId,
-          explanationThai: snapshot.explanationThai, explanationEnglish: snapshot.explanationEnglish, explanationRussian: snapshot.explanationRussian,
-          trapExplanationThai: snapshot.trapExplanationThai, trapExplanationEnglish: snapshot.trapExplanationEnglish, trapExplanationRussian: snapshot.trapExplanationRussian,
-        });
+        return submitPracticeAnswer(tx, user.id, body.data.presentationId, body.data.choiceId, now());
       });
       if ('error' in result) return reply.code(result.error === 'Bad Request' ? 400 : 404).send(errorSchema.parse(result));
       return result;

@@ -31,6 +31,7 @@ enum ReminderSummaryType {
 }
 
 model User {
+  chatQuizSession ChatQuizSession?
   dailyReminderDeliveries DailyReminderDelivery[]
   reminderSummaryDeliveries ReminderSummaryDelivery[]
   conceptLearningStates ConceptLearningState[]
@@ -198,6 +199,7 @@ model Session {
 }
 
 model QuestionPresentation {
+  chatQuizSession ChatQuizSession?
   answer     AnswerAttempt?
   favorites  Favorite[]
   report     QuestionReport?
@@ -252,6 +254,21 @@ model Favorite {
 
   @@unique([userId, questionId])
   @@index([userId, updatedAt(sort: Desc), id(sort: Desc)])
+}
+
+model ChatQuizSession {
+  userId String @id @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  presentationId String @unique @db.Uuid
+  questionId String @db.Uuid
+  presentation QuestionPresentation @relation(fields: [presentationId, userId, questionId], references: [id, userId, questionId], onDelete: Restrict)
+  language PreferredLanguage
+  deliveryState String
+  claimedAt DateTime @db.Timestamptz(3)
+  pollId String? @unique
+  messageId Int?
+
+  @@unique([presentationId, userId, questionId])
 }
 
 model AnswerAttempt {

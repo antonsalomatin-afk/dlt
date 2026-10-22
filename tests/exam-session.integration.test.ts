@@ -129,6 +129,7 @@ describe('mock exam persistence foundation', () => {
       '20261005060000_preferred_language',
       '20261012080000_daily_reminder_delivery',
       '20261013080000_reminder_summaries',
+      '20261021140000_chat_quiz_session',
     ]);
 
     const constraints = await database.$queryRaw<Array<{ conname: string }>>`

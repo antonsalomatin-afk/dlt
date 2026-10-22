@@ -1284,3 +1284,44 @@ remain unchanged and may be English-only until a later daily date is assigned.
 This handoff leaves production data, deployment and Telegram posting unchanged.
 Owner production approval is required before any production application or rollout;
 the local-only command guard must not be weakened to bypass that release boundary.
+
+## Native private-chat practice
+
+Send `/quiz` or `/practice` in the bot's private chat. If no vehicle is saved,
+choose Car or Motorcycle there; otherwise practice uses the saved vehicle.
+Answer the native quiz, read its full explanation and tap **Next question**.
+The same Telegram learner, practice history and concept counters are used by the
+Mini App and chat. Reminder subscriptions and language preferences are preserved.
+
+Each quiz uses one complete stored language for its question, four options and
+feedback. English is the default and fallback. Preferred Russian or Thai is used
+only when the corresponding choices and explanation are also available; the
+current Russian stem-only overlay therefore produces a coherent English quiz.
+No runtime translation occurs. Oversized questions/options appear in full as
+preceding plain-text messages with A/B/C/D poll options. Full feedback follows
+the answer even when it exceeds Telegram's optional native explanation limit.
+
+There is one durable current quiz per learner. `/quiz` resumes an unanswered
+bound poll and recovers feedback/Next after answering, including after restart
+or a feedback send failure. Commands never silently discard that quiz. Delivery
+is claimed before network access with a **60-second lease**. In-flight commands
+report busy; expired claims or an unconfirmed send/bind require the learner's
+explicit **Replace quiz** action. A superseded/unbound/retired poll cannot earn
+credit, and old or duplicate Next controls cannot advance again. Learning history
+is retained. Received votes first acquire a durable **ANSWERING** claim with the
+same 60-second lease; answer and concept credit then commit together with BOUND.
+A rolled-back/interrupted answer expires to explicit replacement. A committed
+answer always recovers feedback. If the database fails before a durable claim,
+polling exits safely before acknowledging the update, allowing restart to receive
+it again. Feedback send failures after commit do not restart polling.
+PostgreSQL and Telegram cannot commit atomically: delivery and
+feedback are recoverable, but end-to-end exactly-once message delivery is not
+guaranteed.
+
+Rollout requires applying the additive `20261021140000_chat_quiz_session`
+migration with `pnpm db:migrate` before starting the reviewed bot runtime.
+The existing bot polls `message`, `callback_query` and `poll_answer` updates;
+do not start a second polling process or drop pending updates. Existing Mini App
+confirmation and scheduled deep-link reminder formats remain available. Tests
+inject Telegram transports and use a randomly named isolated local PostgreSQL
+database. This implementation does not itself deploy or send production messages.

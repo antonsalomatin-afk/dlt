@@ -31,7 +31,7 @@ export async function runBot(bot: PollingBot, signals: Signals = process, schedu
     }
     if (!stopping) {
       scheduler?.start();
-      await bot.start();
+      await bot.start({ allowed_updates: ['message', 'callback_query', 'poll_answer'] });
     }
     await stopPromise;
     await schedulerStop;
