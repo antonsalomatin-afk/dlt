@@ -3,6 +3,10 @@
 Status: Accepted (TASK-079 independent review PASS)
 Date: 2026-10-22
 
+## Product correction — TASK-082 (2026-10-22)
+
+The owner's current instruction supersedes the original Finish-round interaction below. Group practice is an asynchronous feed of native quizzes: a member answers and Telegram shows that member correctness immediately. There is no mandatory finish action, shared summary/accuracy or competition ceremony. Any current member can request a new question; prior successfully bound polls remain answerable. The scope/current pointer protects only new-delivery/control allocation, not eligibility of historical bound polls. Atomic per-user/poll accounting and all membership/trust/shutdown safeguards remain. Migrating an old group retires all still-open historical questions. No schema change or history rewrite is authorized. TASK-082 criteria specify the exact replacement and independent review gate. The original design below records the TASK-080/081 release and is superseded on these interaction/lifecycle points.
+
 ## Context and boundary
 
 The owner confirmed private quizzes work and requested group support. ADR-007 remains authoritative for private chats. Extend the same single grammY long-polling process, PostgreSQL and practice scoring helper. Group IDs are delivery scopes, never learner identities. This decision specifies a subsequent implementation; no group feature is implemented or deployed by TASK-079.

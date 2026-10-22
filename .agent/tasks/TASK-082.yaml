@@ -1,0 +1,40 @@
+id: TASK-082
+title: Simplify group practice to independent native quiz answers
+status: BUILDING
+owner_role: Builder
+depends_on:
+  - TASK-081
+objective: Remove the unwanted competition-like Finish round flow so every member answers and immediately sees native Telegram correctness, with optional next questions and no shared results ceremony.
+authorization:
+  - Owner explicitly rejected Finish round and competition on 2026-10-22; wants each person's answer to show correct/incorrect immediately. This supersedes the previous round-closing product behavior in ADR-008.
+acceptance:
+  - New group posts contain the question/four native quiz choices and optional Next question only. No Finish round, wait-for-everyone, vote threshold, shared accuracy/answered totals, winner/leaderboard, automatic per-vote groupwide feedback or private messages.
+  - Native Telegram quiz correctness and existing short native explanation remain unchanged. No automatic full-answer broadcast. Private chat and Mini App explanations/confirmation are unchanged; adding a new long-explanation delivery mechanism is outside this correction.
+  - Any validated current member may request the next group question using the latest scoped Next control or /quiz command, without waiting for an answer or starter/admin approval. Bot administrator prerequisite for reliable membership verification remains. Vehicle arguments select the requested vehicle; absent argument retains current vehicle or defaults CAR. Personal preferences remain untouched.
+  - A next question does not close previous successfully BOUND polls. Real current members may answer those earlier polls later; each poll/user still owns one immutable presentation, atomic AnswerAttempt and concept increment, with replay/duplicate/rollback safety. No automatic expiry or new persistence/migration.
+  - Current pointer remains the send/control allocation boundary. Duplicate/stale Next controls cannot allocate twice or advance another topic/group; concurrent commands while a send is in flight remain serialized. Sending lease/uncertainty and explicit replacement remain safe and recoverable; replacement is available to a current member.
+  - Legacy CLOSED questions/history are not reopened or rewritten. /quiz starts a normal new question after legacy CLOSED; old Finish callbacks must never trigger a summary/stop or restore the old mandatory flow (safe mapping to Next or stale guidance is allowed).
+  - Group migration invalidation retires every still-open historical question in that old group/topic, not only the current pointer; membership, retired/unverified question and existing trust boundaries remain enforced.
+  - Meaningful coverage proves two asynchronous polls, late answer on an earlier poll, one-credit replay, new member-driven Next before any vote, legacy state/control recovery, concurrent/stale controls, migration invalidation of multiple polls and unchanged fatal precommit/shutdown behavior. Update intentionally superseded finish tests while preserving data-integrity/security assertions.
+  - Required checks and independent code review PASS precede acceptance. Publication is a separate exact-release operational cycle on existing approved hosts; no forced Telegram test send or configuration/content/data changes.
+files_allowed:
+  - apps/bot/src/group-chat-quiz.ts
+  - packages/database/src/group-chat-quiz.ts
+  - tests/group-chat-quiz.test.ts
+  - tests/group-chat-quiz.integration.test.ts
+  - README.md
+files_forbidden:
+  - packages/database/prisma/**
+  - apps/web/**
+  - apps/api/**
+  - .env
+  - pnpm-lock.yaml
+  - .agent/STATE.json
+required_checks:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test --maxWorkers=4
+  - pnpm test:integration
+  - pnpm build
+  - git diff --check
+scope_rule: Ask Supervisor before expanding source/test files. Do not weaken checks or rewrite accepted migrations; retain all historical learning data and the original three untracked starter files.

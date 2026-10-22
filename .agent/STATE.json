@@ -2,14 +2,20 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-072",
+  "currentTask": "TASK-082",
   "lastAcceptedTask": "TASK-081",
   "lastAcceptedCommit": "8c7a5ef03af5b5c8032d7529b000c0ad66ea01f0",
-  "status": "BLOCKED",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": "Group support is implemented, independently reviewed and live. Real owner must grant bot administrator status in the intended group and observe two-member answer/finish/Next; signed Mini App practice/exam smoke also remains unobserved. No engineering or deployment approval is pending.",
-  "parkedTasks": [],
+  "blockedReason": null,
+  "parkedTasks": [
+    {
+      "task": "TASK-072",
+      "status": "BLOCKED",
+      "reason": "Owner actual learning observations remain pending; prior Finish-round smoke requirement is superseded by TASK-082."
+    }
+  ],
   "updatedBy": "Supervisor",
   "russianStemOverlay": {
     "status": "PRODUCTION_PUBLISHED_ACCEPTED",
@@ -45,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK-080 code and TASK-081 existing-host group rollout accepted with independent PASS. Release3cbcbac live and all preservation/backup/runtime gates passed. Only TASK-072 owner interaction remains; native private success was reported before this rollout. Originaluntracked preserved; resetcredits untouched; below95ceiling.",
+  "notes": "Owner explicitly rejects mandatory Finish round/contest behavior. TASK-082 simplifies group practice to native per-voter correctness and optional member-driven Next; historical polls remain answerable. No schema migration. Fresh usage zero; resetcredits untouched.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -88,14 +94,14 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 77,
-    "latestObservedWeeklyUsedPercent": 57,
+    "latestObservedUsedPercent": 0,
+    "latestObservedWeeklyUsedPercent": 0,
     "weeklyWindowMinutes": 10080,
-    "weeklyResetsAt": "2026-10-28T05:55:51Z",
+    "weeklyResetsAt": "2026-10-29T17:14:26+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-22T13:36:51.764601+00:00",
+    "checkedAt": "2026-10-22T17:17:33.242329+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
-    "sessionResetsAt": "2026-10-22T16:42:47+00:00"
+    "sessionResetsAt": "2026-10-22T22:14:26+00:00"
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -259,5 +265,11 @@
     "operationalReview": ".agent/reviews/TASK-081-review-01.md",
     "operationalVerdict": "PASS",
     "productionAcceptedAt": "2026-10-22T13:36:51.764573+00:00"
+  },
+  "groupPracticeSimplification": {
+    "task": "TASK-082",
+    "status": "BUILDING",
+    "ownerRequested": true,
+    "productionDeployed": false
   }
 }
