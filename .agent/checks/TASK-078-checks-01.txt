@@ -73,3 +73,12 @@ Memory peak: 3.4M
 Memory swap peak: 0B
 
 GUEST_EXIT 0
+
+2026-10-22T06:19:27.203061+00:00 Supervisor independent backup metadata proof
+BACKUP /srv/thaidlt-db/dumps/thaidlt-20261022-061047.dump 101812 bytes 2026-10-22 06:10:49.325011897 +0000
+Result=success
+ExecMainStartTimestamp=Thu 2026-10-22 06:10:47 UTC
+ExecMainExitTimestamp=Thu 2026-10-22 06:10:49 UTC
+ExecMainStatus=0
+
+GUEST_EXIT 0
