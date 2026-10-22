@@ -1,0 +1,91 @@
+
+2026-10-22T05:23:12.114710+00:00 TASK-077 read-only existing runtime service version migration and content readiness preflight
+2026-10-22T05:23:16Z
+ubuntu-apps
+/srv/thaidlt/releases/611a5592ccf4f38612e56dd4c1bb9d906c32bef8
+MainPID=2196006
+NRestarts=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current/apps/web
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=
+MainPID=2196001
+NRestarts=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=
+MainPID=2196005
+NRestarts=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/question-posts.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=/etc/systemd/system/thaidlt-bot.service.d/75-question-posts.conf
+v24.22.0
+11.19.0
+600 root root /etc/thaidlt/app.env
+600 root root /etc/thaidlt/database.env
+600 root root /etc/thaidlt/bot.env
+600 root root /etc/thaidlt/question-posts.env
+Result=success
+ExecMainStartTimestamp=Thu 2026-10-22 01:30:01 UTC
+ExecMainExitTimestamp=Thu 2026-10-22 01:30:01 UTC
+ExecMainStatus=0
+active
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       1.2T   19G  1.2T   2% /
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+LISTEN 0      4096       127.0.0.1:5434      0.0.0.0:*
+LISTEN 0      511        127.0.0.1:3060      0.0.0.0:*
+LISTEN 0      511        127.0.0.1:3061      0.0.0.0:*
+{"singleBotInstance": true, "dailyQuestionPostsEnabled": true, "publicUsernameExpected": true, "shortNameUnset": true}
+{"migrationBaseline":{"completed":17,"unfinished":0},"chatQuizSessionAbsent":true,"ownedPresentationForeignKeyTargetExists":true,"verifiedContent":[{"vehicleType":"CAR","active_verified":50,"russian":50},{"vehicleType":"MOTORCYCLE","active_verified":50,"russian":50}]}
+Russian stems: 0 would apply, 0 applied, 100 matched.
+Read-only TASK-077 preflight complete. No archive/stage/install/generation/build/backup/migration/service/configuration/data change or Telegram send performed.
+Running as unit: run-u71506.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 7.210s
+CPU time consumed: 1.462s
+Memory peak: 368.0K
+Memory swap peak: 0B
+Running as unit: run-u71507.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 162ms
+CPU time consumed: 109ms
+Memory peak: 3.6M
+Memory swap peak: 0B
+Running as unit: run-u71508.service; invocation ID: b7653bbd647f4f15ad7c3ebc1047f070
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 740ms
+CPU time consumed: 1.140s
+Memory peak: 320.0K
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+Readiness assessment (preflight only; no reviewed release selected)
+- Infrastructure is ready for a later reviewed native-quiz rollout. Existing runtime611a559 and protected bot/reminder configuration remain healthy.
+- Inspected draft migration20261021140000_chat_quiz_session: additive CREATE TABLE ChatQuizSession plus unique indexes and owned presentation/user foreign keys; no drop, data rewrite or reset. Existing QuestionPresentation composite-unique target is present in production. This inspection is not code approval; Builder source is still uncommitted and independent review remains required.
+- Later publication must use the exact root-selected reviewed release/archive, fresh successful backup, checked migration deploy and generated client before activating the new runtime. Expected migration count then becomes18; baseline currently17, new table absent, no unfinished migration.
+- Preserve existing16 application tables and all content/learner/preferences/delivery history; migration should initially add an empty ChatQuizSession only. Keep prior611a559 runtime and do not drop the new table during a code rollback or restore production without separate approval.
+- Preserve existing protected env files, flagtrue, public bot username, unset short name and exactly one polling instance. No new env/dependency/provider is required by the task. Verify explicit update subscriptions and recoverable session behavior through the reviewed source/tests; do not use getUpdates or another bot for diagnostics.
+- Current English/Russian source stems remain exact100matched. Native-quiz coherent-language fallback and user-triggered commands must remain separate from the existing bilingual11:00ICT opt-in reminder format; no automatic opt-in or forced quiz/send is authorized.
+- Fresh backup/migration/build/cutover and real quiz behavior were not performed by this preflight. No archive or release directory was created. No established service/configuration/content/user-data/Telegram mutation was performed. Transient systemd units ran read-only version/catalog/content checks under the existing unprivileged service user.
+- Await root's explicit reviewed release handoff before any deployment mutation. No repository source, STATE, task or commits changed by Admin.

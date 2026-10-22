@@ -192,6 +192,8 @@
     "productionDeployed": false,
     "implementationStarted": true,
     "builderCheckpoint": "Baseline full349unit216integration/buildPASS; necessary ADR007 ANSWERING/preclaim-noack recovery refinement implementing, requires fresh final tests/commit. No rootauthoritativechecks or independentreview yet. Production still acceptedcompact611a559.",
-    "checkpoint": ".agent/checks/TASK-077-checkpoint-01.md"
+    "checkpoint": ".agent/checks/TASK-077-checkpoint-01.md",
+    "deployPreflight": ".agent/checks/TASK-077-deploy-preflight-01.txt",
+    "deployReadiness": "READ_ONLY_PASS; current611a559/17migrations/noChatQuizSession; no production mutation"
   }
 }
