@@ -2,10 +2,10 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-082",
+  "currentTask": "TASK-083",
   "lastAcceptedTask": "TASK-082",
   "lastAcceptedCommit": "90f751b90b9efd2d3c4c574eee7194200fdfa126",
-  "status": "ACCEPTED",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK082 simple asynchronous group practice accepted after fresh full authoritative gates and independentPASS; no schema changes. Separate exact existing-host code-only rollout next.",
+  "notes": "Accepted TASK082 source/tag pushed; separate no-migration TASK083 existing-host publication selected. All20 current tables and19 migrations must remain exact; no history or config rewrite.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -268,7 +268,7 @@
   },
   "groupPracticeSimplification": {
     "task": "TASK-082",
-    "status": "CODE_ACCEPTED",
+    "status": "ROLLOUT_BUILDING",
     "ownerRequested": true,
     "productionDeployed": false,
     "checkpoint": "FreshSupervisor lint/types/369unit/236integration/dbready/build/diff ALLPASS firstRootrun. PriorBuilderAPIparallelfailures didnotrecurfocused/fullretry/freshRoot. Independent source review01 next.",
@@ -277,6 +277,9 @@
     "review": ".agent/reviews/TASK-082-review-01.md",
     "reviewVerdict": "PASS",
     "acceptedCodeCommit": "90f751b90b9efd2d3c4c574eee7194200fdfa126",
-    "acceptedAt": "2026-10-22T17:57:49.253279+00:00"
+    "acceptedAt": "2026-10-22T17:57:49.253279+00:00",
+    "rolloutTask": "TASK-083",
+    "releaseCommit": "f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c",
+    "releaseTag": "thaidlt-simple-group-20261022"
   }
 }

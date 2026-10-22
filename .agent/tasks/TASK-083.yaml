@@ -1,0 +1,39 @@
+id: TASK-083
+title: Publish simple asynchronous group practice
+status: BUILDING
+owner_role: Admin
+depends_on:
+  - TASK-082
+objective: Publish the accepted removal of Finish/shared summaries on existing hosts while preserving every existing question, answer and configuration.
+release_commit: f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c
+release_tag: thaidlt-simple-group-20261022
+previous_runtime: 3cbcbac2976014f4d3bf6346341b6667f14b44d1
+authorization: Continue the established owner-authorized live deploy job with the owner's explicit group interaction correction. No new provider, spending, secret, group permission change, forced Telegram send, schema migration or history rewrite.
+plan: .agent/admin/TASK-082-simple-group-rollout-plan.md
+acceptance:
+  - Strict existing-host preflight confirms previous runtime, three healthy unprivileged units, one bot, protected settings and19 completed migrations/20 application tables.
+  - Exact accepted Git archive, full pinned LF comparison and all installed raw source identity; pinned frozen install, mandatory dbgenerate and production build succeed as thaidlt. Schema and all migration files remain exact to prior release.
+  - Fresh successful PGDMP backup precedes runtime cutover. Quiesce API/bot and fingerprint all20 current application tables before/after with no field exclusions; all unchanged. No DDL/migrate deploy/reset/seed/resolve/content apply/data repair or forced closure.
+  - Atomic shared runtime switch/restart, exact process CWDs/source, three active/running unprivileged units/exit0, one bot and protected root0600 config. Preserve prior release/dependencies for non-destructive rollback.
+  - Read-only public compact web200; protected local/public/same-origin API401/no-store; unknown404; Telegram bot/Main Mini App/group join/no webhook; exact installed simple group/private dispatcher; unchanged100RUstems and50 active VERIFIED per vehicle. No real test send, diagnostic getUpdates or synthetic signed identity.
+  - Safe Admin evidence, Supervisor independent live verification and independent operational Reviewer PASS before acceptance/main integration. Actual owner native interaction is unobserved unless separately reported.
+files_allowed:
+  - .agent/admin/TASK-083-production-report.md
+  - .agent/checks/TASK-083-admin-01.txt
+  - .agent/checks/TASK-083-checks-01.txt
+  - .agent/reviews/TASK-083-review-01.md
+  - .local-content/task083*
+  - .local-content/TASK-083*
+files_forbidden:
+  - apps/**
+  - packages/**
+  - content/**
+  - .env
+  - .agent/STATE.json
+  - .agent/tasks/**
+required_checks:
+  - Exact archive/all source, pinned install/generate/build
+  - Fresh backup before switch and full20table preservation, unchanged19 migrations
+  - Supervisor independent live source/runtime/data/backup/HTTP/content/Telegram checks
+  - Independent operational review PASS
+rollback: Restore retained prior runtime symlink/services if unhealthy; preserve all data/schema. No database restore or destructive action without separate authorization.
