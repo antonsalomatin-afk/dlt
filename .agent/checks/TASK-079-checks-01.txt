@@ -1,0 +1,9 @@
+TASK-079 Supervisor authoritative design checks
+UTC: 2026-10-22T09:46:42.854318+00:00
+Builder: abc77865a6aeae37749dcebc03459f3ea4a536c5
+PASS: git diff --check.
+PASS: source comparison against existing schema, presentation selection/snapshot parser, submitPracticeAnswer and bot lifecycle. Three additive group models preserve private state; per-voter owned presentation and atomic credit reuse existing invariants.
+PASS: existing acknowledgement protection applies across all updates and recognizes the prescribed safe sentinel. No network calls permitted inside DB transactions.
+PASS: official Telegram PollAnswer has no chat origin, sendPoll supports topic/protect_content, getChatMember other-user guarantee requires bot admin. Privacy FAQ supports /quiz@bot addressing. Membership validation and forwarded-member limitation are explicitly stated.
+PASS: source/test/production boundaries and required regression matrix explicit; no source tests run or claimed for documentation-only design.
+URLs: https://core.telegram.org/bots/api#pollanswer https://core.telegram.org/bots/api#sendpoll https://core.telegram.org/bots/api#getchatmember https://core.telegram.org/bots/faq#what-messages-will-my-bot-get
