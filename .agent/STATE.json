@@ -2,10 +2,10 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-080",
+  "currentTask": "TASK-081",
   "lastAcceptedTask": "TASK-080",
   "lastAcceptedCommit": "6a0fd0028c7036fa8a4d857af305fbefccddf094",
-  "status": "ACCEPTED",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK-080 accepted after fresh full authoritative checks and independent code review PASS; native group implementation ready for separate exact-release production rollout. Real group journey unobserved.",
+  "notes": "Accepted TASK-080 release3cbcbac/tag pushed. TASK-081 separate existing-host group rollout selected; exact plan, backup/additive migration and independent operations gates required. No production mutation yet.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -234,7 +234,7 @@
   },
   "groupChatQuiz": {
     "task": "TASK-080",
-    "status": "CODE_ACCEPTED",
+    "status": "ROLLOUT_BUILDING",
     "ownerRequested": true,
     "implemented": true,
     "productionDeployed": false,
@@ -248,6 +248,9 @@
     "implementationCommit": "6a0fd0028c7036fa8a4d857af305fbefccddf094",
     "authoritativeChecks": ".agent/checks/TASK-080-checks-01.txt",
     "acceptedCodeCommit": "6a0fd0028c7036fa8a4d857af305fbefccddf094",
-    "acceptedAt": "2026-10-22T13:17:43.240236+00:00"
+    "acceptedAt": "2026-10-22T13:17:43.240236+00:00",
+    "rolloutTask": "TASK-081",
+    "releaseCommit": "3cbcbac2976014f4d3bf6346341b6667f14b44d1",
+    "releaseTag": "thaidlt-group-quiz-20261022"
   }
 }

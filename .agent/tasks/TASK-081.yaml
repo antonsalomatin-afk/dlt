@@ -1,0 +1,41 @@
+id: TASK-081
+title: Publish accepted shared group quiz support
+status: BUILDING
+owner_role: Admin
+depends_on:
+  - TASK-080
+objective: Enable accepted native group quizzes on the existing production deployment without changing content, credentials, preferences or personal learning history.
+release_commit: 3cbcbac2976014f4d3bf6346341b6667f14b44d1
+release_tag: thaidlt-group-quiz-20261022
+previous_runtime: 0a4d7b3291f346581174aa5ac3ffe7d5404f73be
+authorization:
+  - Continue the owner's established live-launch/deploy job on existing hosts with explicitly requested group support and accepted TASK-080 code. No new provider, spending, secret, content publication, forced send, group-permission change or destructive migration is authorized or necessary.
+plan: .agent/admin/TASK-080-group-rollout-plan.md
+acceptance:
+  - Read-only strict existing-host preflight confirms previous runtime, three healthy unprivileged services, one bot, protected config and expected 18 completed migrations with group tables absent.
+  - Immutable archive from exact accepted Git release, full pinned source identity and raw installed source proof; pinned Node24.22.0/pnpm11.19.0 frozen prod=false install, dbgenerate and production build succeed.
+  - Fresh successful dump precedes migration. Quiesce API/bot, fingerprint every existing application table including ChatQuizSession (expected17), apply only additive group migration once, confirm19 completed/0 unfinished and new3tables initially empty. Verify named foreign keys/checks, uniqueness and non-null requirements. All17 full old-table count/content fingerprints remain unchanged with no exclusions.
+  - Atomic shared runtime switch/restart; exact actual process working directories/source, three active unprivileged services with exit0 and precisely one bot. Protected envfiles, enabled question posts and existing scheduler/config retained.
+  - Read-only web200/protected local/public/same-origin API401/no-store/unknown404; Telegram metadata/MainMiniApp/noWebhook/group-join readiness; exact group/private handlers and update subscriptions. Existing100RUstems and50 active VERIFIED questions per vehicle unchanged. No diagnostic getUpdates, real test send, synthetic identity or content apply.
+  - Safe Admin report/transcript, Supervisor independent live checks and independent operational Reviewer PASS before acceptance/main integration. Actual owner group and signed MiniApp journeys remain explicitly unobserved unless separately reported.
+files_allowed:
+  - .agent/admin/TASK-081-production-report.md
+  - .agent/checks/TASK-081-admin-01.txt
+  - .agent/checks/TASK-081-checks-01.txt
+  - .agent/reviews/TASK-081-review-01.md
+  - .local-content/task081*
+  - .local-content/TASK-081*
+files_forbidden:
+  - apps/**
+  - packages/**
+  - content/**
+  - .env
+  - .agent/STATE.json
+  - .agent/tasks/**
+required_checks:
+  - Exact archive and all installed source identity
+  - Pinned install, generated client, production build and migrate deploy exit0
+  - Fresh dump, exact additive schema and full17table preservation
+  - Supervisor independent live release/schema/service/HTTP/content checks
+  - Independent operational review PASS
+rollback: Retain previous runtime and dependencies. On failure diagnose and preserve evidence; restore prior application runtime/services if necessary while retaining additive tables and learner data. No drop, reset, seed, manual migration resolve or database restore without separate authorization.
