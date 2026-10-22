@@ -5,7 +5,7 @@
   "currentTask": "TASK-078",
   "lastAcceptedTask": "TASK-077",
   "lastAcceptedCommit": "bf32e5ae2b9034d42882a7a151a6ad3937150096",
-  "status": "READY",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -203,14 +203,17 @@
     "builderFixCommit": "bf32e5ae2b9034d42882a7a151a6ad3937150096",
     "acceptedCodeCommit": "bf32e5ae2b9034d42882a7a151a6ad3937150096",
     "acceptedAt": "2026-10-22T06:03:42.819001+00:00",
-    "releaseTag": "thaidlt-native-quiz-20261022"
+    "releaseTag": "thaidlt-native-quiz-20261022",
+    "rolloutTask": "TASK-078"
   },
   "nativeQuizRollout": {
     "task": "TASK-078",
-    "status": "READY",
+    "status": "ADMIN_STAGING",
     "releaseCommit": "0a4d7b3291f346581174aa5ac3ffe7d5404f73be",
     "releaseTag": "thaidlt-native-quiz-20261022",
     "previousRuntime": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8",
-    "productionMutated": false
+    "productionMutated": false,
+    "adminReport": ".agent/admin/TASK-078-production-report.md",
+    "adminChecks": ".agent/checks/TASK-078-admin-01.txt"
   }
 }

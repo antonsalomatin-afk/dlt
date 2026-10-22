@@ -1,6 +1,6 @@
 id: TASK-078
 title: Publish the accepted native private-chat quiz release
-status: READY
+status: BUILDING
 owner_role: Admin
 depends_on:
   - TASK-077
