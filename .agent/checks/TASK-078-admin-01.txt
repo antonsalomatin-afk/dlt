@@ -1,0 +1,346 @@
+
+2026-10-22T06:06:14.275061+00:00 Exact accepted native release archive proof
+{"release": "0a4d7b3291f346581174aa5ac3ffe7d5404f73be", "archiveSha256": "1fab1eb2d0c3f160e26e07d3ad1600c8230203879d075886ea181997f599008d", "size": 873297, "regularFiles": 599, "crlfOnlyConversions": 594}
+All regular files match separate pinned LF Git archive after CRLF-only normalization.
+
+2026-10-22T06:06:14.706633+00:00 Approved native release read-only production recheck before staging
+2026-10-22T06:06:19Z
+ubuntu-apps
+/srv/thaidlt/releases/611a5592ccf4f38612e56dd4c1bb9d906c32bef8
+MainPID=2196006
+NRestarts=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current/apps/web
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=
+MainPID=2196001
+NRestarts=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=
+MainPID=2196005
+NRestarts=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/question-posts.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=/etc/systemd/system/thaidlt-bot.service.d/75-question-posts.conf
+v24.22.0
+11.19.0
+600 root root /etc/thaidlt/app.env
+600 root root /etc/thaidlt/database.env
+600 root root /etc/thaidlt/bot.env
+600 root root /etc/thaidlt/question-posts.env
+Result=success
+ExecMainStartTimestamp=Thu 2026-10-22 01:30:01 UTC
+ExecMainExitTimestamp=Thu 2026-10-22 01:30:01 UTC
+ExecMainStatus=0
+active
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       1.2T   19G  1.2T   2% /
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+LISTEN 0      4096       127.0.0.1:5434      0.0.0.0:*
+LISTEN 0      511        127.0.0.1:3060      0.0.0.0:*
+LISTEN 0      511        127.0.0.1:3061      0.0.0.0:*
+{"singleBotInstance": true, "dailyQuestionPostsEnabled": true, "publicUsernameExpected": true, "shortNameUnset": true}
+{"migrationBaseline":{"completed":17,"unfinished":0},"chatQuizSessionAbsent":true,"ownedPresentationForeignKeyTargetExists":true,"verifiedContent":[{"vehicleType":"CAR","active_verified":50,"russian":50},{"vehicleType":"MOTORCYCLE","active_verified":50,"russian":50}]}
+Russian stems: 0 would apply, 0 applied, 100 matched.
+Read-only production preflight complete; no remote configuration/data/service/Telegram mutation performed.
+Running as unit: run-u71623.service; invocation ID: 429193e0cd624f1aa0ef4bf64cc2fcec
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 3.307s
+CPU time consumed: 1.041s
+Memory peak: 7.8M
+Memory swap peak: 0B
+Running as unit: run-u71624.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 126ms
+CPU time consumed: 121ms
+Memory peak: 3.6M
+Memory swap peak: 0B
+Running as unit: run-u71625.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 753ms
+CPU time consumed: 1.155s
+Memory peak: 3.4M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+2026-10-22T06:07:54.286966+00:00 Exact archive host+guest transfer
+{"exitcode": 0, "exited": 1, "out-data": "Guest archive verified 1fab1eb2d0c3f160e26e07d3ad1600c8230203879d075886ea181997f599008d\n"}
+
+2026-10-22T06:07:54.872271+00:00 Verify archive and extract exact native release without cutover
+/var/tmp/TASK-078-0a4d7b3.tar.gz: OK
+Exact accepted native release extracted; current runtime unchanged.
+
+GUEST_EXIT 0
+
+2026-10-22T06:07:58.783952+00:00 Raw proof unchanged web content tools dependencies and all previous migrations
+{"unchangedWebContentToolsDependenciesAndOldMigrationFiles": 91, "rawHashesMatchBothAcceptedReleases": true}
+
+GUEST_EXIT 0
+
+2026-10-22T06:08:02.740541+00:00 Unprivileged pinned frozen install client generation and production build for native release
+Scope: all 6 workspace projects
+â Lockfile passes supply-chain policies (verified 7d ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +382
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 382, reused 8, downloaded 0, added 0
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/thaidlt/.local/share/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Progress: resolved 382, reused 382, downloaded 0, added 109
+Progress: resolved 382, reused 382, downloaded 0, added 237
+Progress: resolved 382, reused 382, downloaded 0, added 380
+Progress: resolved 382, reused 382, downloaded 0, added 381
+Progress: resolved 382, reused 382, downloaded 0, added 382
+Progress: resolved 382, reused 382, downloaded 0, added 382, done
+.../node_modules/prisma preinstall$ node scripts/preinstall-entry.js
+.../node_modules/prisma preinstall: Done
+
+devDependencies:
++ @eslint/js 10.0.1
++ @playwright/test 1.63.0
++ @types/node 24.13.3
++ @types/node-fetch 2.6.13
++ @types/pg 8.23.1
++ embedded-postgres 18.4.0-beta.17
++ eslint 10.10.0
++ node-fetch 2.7.0
++ pg 8.23.0
++ prisma 7.10.0
++ typescript 5.9.3
++ typescript-eslint 8.69.0
++ vitest 5.0.0
++ zod 4.5.4
+
+Done in 16s using pnpm v11.19.0
+
+â Generated Prisma Client (7.10.0) to ./packages/database/generated in 273ms
+
+â² Next.js 16.3.5 (Turbopack)
+â Running next.config.ts took 61ms
+
+  Creating an optimized production build ...
+â Compiled successfully in 18.5s
+  Running TypeScript ...
+  Finished TypeScript in 8.5s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/3) ...
+â Generating static pages using 3 workers (3/3) in 264ms
+  Finalizing page optimization ...
+
+Route (app)
+â â /
+â â /_not-found
+
+
+â  (Static)  prerendered as static content
+
+Accepted native release frozen install, generation and build PASS; migration/current runtime not changed yet.
+Running as unit: thaidlt-task078-install.service
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts generate
+.env not found. Continuing without it.
+Loaded Prisma config from packages/database/prisma.config.ts.
+
+Prisma schema loaded from packages/database/prisma/schema.prisma.
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 36.131s
+CPU time consumed: 11.692s
+Memory peak: 6.4M
+Memory swap peak: 0B
+Running as unit: thaidlt-task078-build.service
+$ pnpm --filter @thai-dlt/web build
+$ next build
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 40.959s
+CPU time consumed: 33.777s
+Memory peak: 6.7M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-22T06:10:37.880667+00:00 Raw installed native API bot shared answer migration content and web source proof
+{"criticalRawArchiveHashesMatched": 19, "release": "/srv/thaidlt/releases/0a4d7b3291f346581174aa5ac3ffe7d5404f73be"}
+
+GUEST_EXIT 0
+
+2026-10-22T06:10:45.536514+00:00 Fresh backup additive quiz migration complete old data preservation and native runtime activation
+Result=success
+ExecMainStartTimestamp=Thu 2026-10-22 06:10:47 UTC
+ExecMainExitTimestamp=Thu 2026-10-22 06:10:49 UTC
+ExecMainStatus=0
+thaidlt-20261022-061047.dump 101812 bytes
+{"phase":"before","completeOldTables":16,"migrations":{"completed":17,"unfinished":0},"chatQuizSessionAbsent":true}
+Accepted Prisma migrate deploy exited0; full private diagnostic retained server-side.
+Migration/pre-cutover failure; previous runtime resumed. Database state retained without resolve/drop/reset.
+Running as unit: run-u71640.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 477ms
+CPU time consumed: 121ms
+Memory peak: 260.0K
+Memory swap peak: 0B
+Running as unit: run-u71642.service
+Production native migration/preservation inspection failed.
+Finished with result: exit-code
+Main processes terminated with: code=exited/status=1
+Service runtime: 121ms
+CPU time consumed: 105ms
+Memory peak: 3.8M
+Memory swap peak: 0B
+
+GUEST_EXIT 1
+
+2026-10-22T06:12:17.158127+00:00 Read-only diagnosis of successful migration and failed post-inspection guard; old runtime retained
+2026-10-22T06:12:21Z
+/srv/thaidlt/releases/611a5592ccf4f38612e56dd4c1bb9d906c32bef8
+active
+active
+active
+{"migrations":[{"completed":18,"unfinished":0}]}
+{"chatQuizSessionCount":0}
+{"constraints":[{"conname":"ChatQuizSession_claimedAt_not_null","contype":"n","convalidated":true,"definition":"NOT NULL \"claimedAt\""},{"conname":"ChatQuizSession_deliveryState_not_null","contype":"n","convalidated":true,"definition":"NOT NULL \"deliveryState\""},{"conname":"ChatQuizSession_delivery_valid","contype":"c","convalidated":true,"definition":"CHECK ((((\"deliveryState\" = ANY (ARRAY['SENDING'::text, 'UNCERTAIN'::text])) AND (\"pollId\" IS NULL) AND (\"messageId\" IS NULL)) OR ((\"deliveryState\" = ANY (ARRAY['BOUND'::text, 'ANSWERING'::text])) AND ((length(\"pollId\") >= 1) AND (length(\"pollId\") <= 256)) AND (\"messageId\" > 0) AND (\"pollId\" IS NOT NULL) AND (\"messageId\" IS NOT NULL))))"},{"conname":"ChatQuizSession_language_not_null","contype":"n","convalidated":true,"definition":"NOT NULL language"},{"conname":"ChatQuizSession_owned_presentation_fkey","contype":"f","convalidated":true,"definition":"FOREIGN KEY (\"presentationId\", \"userId\", \"questionId\") REFERENCES \"QuestionPresentation\"(id, \"userId\", \"questionId\") ON UPDATE CASCADE ON DELETE RESTRICT"},{"conname":"ChatQuizSession_pkey","contype":"p","convalidated":true,"definition":"PRIMARY KEY (\"userId\")"},{"conname":"ChatQuizSession_presentationId_not_null","contype":"n","convalidated":true,"definition":"NOT NULL \"presentationId\""},{"conname":"ChatQuizSession_questionId_not_null","contype":"n","convalidated":true,"definition":"NOT NULL \"questionId\""},{"conname":"ChatQuizSession_userId_fkey","contype":"f","convalidated":true,"definition":"FOREIGN KEY (\"userId\") REFERENCES \"User\"(id) ON UPDATE CASCADE ON DELETE CASCADE"},{"conname":"ChatQuizSession_userId_not_null","contype":"n","convalidated":true,"definition":"NOT NULL \"userId\""}]}
+{"indexes":[{"name":"ChatQuizSession_pkey","is_unique":true,"is_valid":true,"definition":"CREATE UNIQUE INDEX \"ChatQuizSession_pkey\" ON public.\"ChatQuizSession\" USING btree (\"userId\")"},{"name":"ChatQuizSession_pollId_key","is_unique":true,"is_valid":true,"definition":"CREATE UNIQUE INDEX \"ChatQuizSession_pollId_key\" ON public.\"ChatQuizSession\" USING btree (\"pollId\")"},{"name":"ChatQuizSession_presentationId_key","is_unique":true,"is_valid":true,"definition":"CREATE UNIQUE INDEX \"ChatQuizSession_presentationId_key\" ON public.\"ChatQuizSession\" USING btree (\"presentationId\")"},{"name":"ChatQuizSession_presentationId_userId_questionId_key","is_unique":true,"is_valid":true,"definition":"CREATE UNIQUE INDEX \"ChatQuizSession_presentationId_userId_questionId_key\" ON public.\"ChatQuizSession\" USING btree (\"presentationId\", \"userId\", \"questionId\")"}]}
+{"originalAliasParses":true}
+{"all16OldTablesStillMatchBeforeMigration":true,"changedTableNamesOnly":[]}
+Running as unit: run-u71647.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 136ms
+CPU time consumed: 122ms
+Memory peak: 3.6M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-22T06:13:37.861131+00:00 Corrected PostgreSQL18 catalog assertion; read-only full migration preservation and constraint proof
+{"phase":"after","all16CompleteOldTablesPreserved":true,"migrations":{"completed":18,"unfinished":0},"newMigrationAppliedExactlyOnce":true,"chatQuizSessionInitiallyEmpty":true,"validatedConstraintNames":["ChatQuizSession_delivery_valid","ChatQuizSession_owned_presentation_fkey","ChatQuizSession_pkey","ChatQuizSession_userId_fkey"],"validUniqueIndexNames":["ChatQuizSession_pkey","ChatQuizSession_pollId_key","ChatQuizSession_presentationId_key","ChatQuizSession_presentationId_userId_questionId_key"]}
+Running as unit: run-u71652.service; invocation ID: 19e2fac54ac84eb598a39052eb8eb278
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 136ms
+CPU time consumed: 121ms
+Memory peak: 332.0K
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-22T06:14:47.923279+00:00 Required6 NOT NULL columns plus corrected named constraints indexes and preservation proof; no migration replay
+{"sixRequiredNonNullColumnsVerified":["userId","presentationId","questionId","language","deliveryState","claimedAt"],"nullablePollAndMessageVerified":true}
+{"phase":"after","all16CompleteOldTablesPreserved":true,"migrations":{"completed":18,"unfinished":0},"newMigrationAppliedExactlyOnce":true,"chatQuizSessionInitiallyEmpty":true,"validatedConstraintNames":["ChatQuizSession_delivery_valid","ChatQuizSession_owned_presentation_fkey","ChatQuizSession_pkey","ChatQuizSession_userId_fkey"],"validUniqueIndexNames":["ChatQuizSession_pkey","ChatQuizSession_pollId_key","ChatQuizSession_presentationId_key","ChatQuizSession_presentationId_userId_questionId_key"]}
+Running as unit: run-u71657.service; invocation ID: d9bdd67370244f6f8168daad9bd420ec
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 218ms
+CPU time consumed: 119ms
+Memory peak: 292.0K
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-22T06:14:54.418830+00:00 Resume approved runtime cutover only after catalog proof; migration not replayed
+2026-10-22T06:14:56Z
+{"sixRequiredNonNullColumnsVerified":["userId","presentationId","questionId","language","deliveryState","claimedAt"],"nullablePollAndMessageVerified":true}
+{"phase":"after","all16CompleteOldTablesPreserved":true,"migrations":{"completed":18,"unfinished":0},"newMigrationAppliedExactlyOnce":true,"chatQuizSessionInitiallyEmpty":true,"validatedConstraintNames":["ChatQuizSession_delivery_valid","ChatQuizSession_owned_presentation_fkey","ChatQuizSession_pkey","ChatQuizSession_userId_fkey"],"validUniqueIndexNames":["ChatQuizSession_pkey","ChatQuizSession_pollId_key","ChatQuizSession_presentationId_key","ChatQuizSession_presentationId_userId_questionId_key"]}
+MainPID=2918710
+NRestarts=0
+ExecMainStatus=0
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+thaidlt-web actualCwd=/srv/thaidlt/releases/0a4d7b3291f346581174aa5ac3ffe7d5404f73be/apps/web
+MainPID=2918705
+NRestarts=0
+ExecMainStatus=0
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+thaidlt-api actualCwd=/srv/thaidlt/releases/0a4d7b3291f346581174aa5ac3ffe7d5404f73be
+MainPID=2918709
+NRestarts=0
+ExecMainStatus=0
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+thaidlt-bot actualCwd=/srv/thaidlt/releases/0a4d7b3291f346581174aa5ac3ffe7d5404f73be
+/srv/thaidlt/releases/0a4d7b3291f346581174aa5ac3ffe7d5404f73be
+600 root root /etc/thaidlt/app.env
+600 root root /etc/thaidlt/database.env
+600 root root /etc/thaidlt/bot.env
+600 root root /etc/thaidlt/question-posts.env
+Reviewed native runtime activated;18 migrations and all16 old tables preserved. No environment/content/preference change or forced Telegram send.
+Running as unit: run-u71658.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 132ms
+CPU time consumed: 111ms
+Memory peak: 3.6M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-22T06:16:48.344739+00:00 Final native quiz live read-only service working-directory source subscription schema content and HTTP checks
+2026-10-22T06:16:51Z
+/srv/thaidlt/releases/0a4d7b3291f346581174aa5ac3ffe7d5404f73be
+{"url": "https://dlt.thauto.app/", "status": 200, "cacheControl": "s-maxage=31536000"}
+{"liveCompactShell": true, "oldMarketingHeadlineAbsent": true, "oldRoadHeroAbsent": true}
+{"url": "https://tele.thauto.app/me", "status": 401, "cacheControl": "no-store"}
+{"url": "http://127.0.0.1:3061/me", "status": 401, "cacheControl": "no-store"}
+{"url": "https://tele.thauto.app/not-a-route", "status": 404, "cacheControl": ""}
+{"url": "https://tele.thauto.app/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"url": "https://dlt.thauto.app/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"singleBotInstance": true, "dailyQuestionPostsEnabled": true, "publicBotUsernameExpected": true, "shortNameUnset": true, "failureMessagesRecent3Minutes": 0}
+{"username":"thauto_dlt_bot","hasMainWebApp":true,"webhookConfigured":false,"pendingUpdateCount":0,"miniAppUrlExpected":true}
+Russian stems: 0 would apply, 0 applied, 100 matched.
+Native rollout compact UI, protected routes, unchanged content and enabled single-bot checks PASS; no forced user interaction.
+{"exactNativeHandlersInstalled": true, "allowedUpdates": ["message", "callback_query", "poll_answer"], "dropPendingUpdatesAbsent": true, "actualProcessWorkingDirectoriesMatchRelease": true, "runtimeProbeDidNotCallGetUpdates": true}
+{"migrations":{"completed":18,"unfinished":0},"nativeMigrationFinishedExactlyOnce":true,"currentNativeSessionCount":0,"postgresVersion":"18.6 (Debian 18.6-1.pgdg13+2)"}
+Running as unit: run-u71665.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 608ms
+CPU time consumed: 154ms
+Memory peak: 3.8M
+Memory swap peak: 0B
+Running as unit: run-u71666.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 740ms
+CPU time consumed: 1.122s
+Memory peak: 3.7M
+Memory swap peak: 0B
+Running as unit: run-u71667.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 104ms
+CPU time consumed: 106ms
+Memory peak: 3.8M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
