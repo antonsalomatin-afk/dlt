@@ -1,0 +1,43 @@
+id: TASK-078
+title: Publish the accepted native private-chat quiz release
+status: READY
+owner_role: Admin
+depends_on:
+  - TASK-077
+objective: Make the requested native private Telegram quiz flow available on the existing approved production hosts without changing content, credentials, user preferences or established reminder policy.
+release_commit: 0a4d7b3291f346581174aa5ac3ffe7d5404f73be
+release_tag: thaidlt-native-quiz-20261022
+previous_runtime: 611a5592ccf4f38612e56dd4c1bb9d906c32bef8
+authorization:
+  - Continue the owner's live-launch/deploy job on the established dlt.thauto.app and tele.thauto.app hosts with the explicitly requested native chat feature. Existing-host publication follows the accepted implementation and independent PASS; no new provider, spending, secret, content publication, forced Telegram send or destructive migration is included.
+  - TASK077 code accepted after authoritative checks01/02 and independent review02 PASS. Only the selected exact accepted source may be deployed. Current task is the separate operational work cycle; main remains accepted-only.
+owner_decision_required: false
+plan: .agent/admin/TASK-077-native-rollout-plan.md
+acceptance:
+  - Recheck read-only production preflight and immutable source/archive identity. Strict known-host SSH, exact archive SHA on host/guest, full pinned archive proof allowing only CRLF text conversion, raw critical source hashes and no unexpected source/dependency drift.
+  - Stage a new release under thaidlt using Node24.22.0 and pinned pnpm11.19.0; frozen prod=false install, mandatory dbgenerate and production build succeed without leaking credentials or weakening approvals.
+  - Fresh backup succeeds before migration/cutover. Quiesce API and the one bot; fingerprint all16 existing application tables, apply only the accepted additive ChatQuizSession migration through migrate deploy, confirm18 completed/zero unfinished and new named check/uniques/owned foreign keys. Initially new table empty and all16 existing table contents unchanged. No seed/reset/contentapply/profile change.
+  - Atomic shared runtime switch and established three-service restart complete. Current symlink, actual process working directories and critical raw source match exact release; three active unprivileged units, exit0 and one polling bot. Preserve protected root0600 env files, enabled bilingual question-post flag, public username and absent short name.
+  - Live read-only checks pass for compact web200, protected local/public API and same-origin presentation401/no-store, unknownAPI404, bot metadata/MainMiniApp/noWebhook and explicit native update subscription,18 completed migrations and100 exact Russian stems. No synthetic signed identity, real test message, diagnostic getUpdates, scheduler tick or second bot.
+  - Admin report and safe transcript bind release/archive/build/backup/migration/preservation/runtime evidence. Supervisor independently verifies exact live release and boundaries. Independent operational Reviewer returns PASS before acceptance/main integration. Real-owner native and MiniApp journeys remain honestly unobserved unless separately supplied.
+files_allowed:
+  - .agent/admin/TASK-078-production-report.md
+  - .agent/checks/TASK-078-admin-01.txt
+  - .local-content/task078*
+  - .local-content/TASK-078*
+files_forbidden:
+  - apps/**
+  - packages/**
+  - content/**
+  - tools/**
+  - .env
+  - .agent/STATE.json
+  - .agent/tasks/**
+required_checks:
+  - exact accepted archive and raw installed source proof
+  - frozen install, generated client, production build and migration deploy exit0
+  - fresh backup and full16-table preservation equality
+  - Supervisor independent live release/migration/service/HTTP/content verification
+  - independent operational review PASS
+rollback:
+  - Retain611a559 runtime and dependencies. Diagnose staging/migration failure without guessing or manually marking migrations resolved. If switched and unhealthy, restore the prior runtime symlink/restart established services; retain additive table and learner data. No drop, DB restore, content reversal or secret/config rewrite without separate authorization.

@@ -2,10 +2,10 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-077",
+  "currentTask": "TASK-078",
   "lastAcceptedTask": "TASK-077",
   "lastAcceptedCommit": "bf32e5ae2b9034d42882a7a151a6ad3937150096",
-  "status": "ACCEPTED",
+  "status": "READY",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK-077 codeaccepted afterrootchecks01/02andindependentreview02PASS; corrected shutdownack race provenbothsignals. Nativecodeimplemented, NOTyetpublished. Selectexactacceptedreleasefornextoperationaltask; currentproduction611a559. No resetcredits;95ceiling/originaluntracked preserved.",
+  "notes": "TASK-077 codeacceptedandpushed/tagged0a4d7b3 afterreview02PASS. SolecurrentTASK078 reviewednativequiz operationalrollout; stage/backup/additive18thmigration/preservation/cutover/rootchecks/opsreview required. Existinghost deployment continuation; no forcedTelegram sends or content/preferences changes.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -204,5 +204,13 @@
     "acceptedCodeCommit": "bf32e5ae2b9034d42882a7a151a6ad3937150096",
     "acceptedAt": "2026-10-22T06:03:42.819001+00:00",
     "releaseTag": "thaidlt-native-quiz-20261022"
+  },
+  "nativeQuizRollout": {
+    "task": "TASK-078",
+    "status": "READY",
+    "releaseCommit": "0a4d7b3291f346581174aa5ac3ffe7d5404f73be",
+    "releaseTag": "thaidlt-native-quiz-20261022",
+    "previousRuntime": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8",
+    "productionMutated": false
   }
 }

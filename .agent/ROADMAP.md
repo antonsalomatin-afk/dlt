@@ -157,3 +157,4 @@ Potential scope:
 - security review
 - load sanity checks
 - TASK-077 — ACCEPTED — native private-chat quizzes, atomic shared learning/recovery; independent review02 PASS after shutdown fix; existing-host publication is the next operational cycle.
+- TASK-078 — READY — publish accepted native quiz release0a4d7b3 with fresh backup, additive migration, preservation proof and independent operational review.
