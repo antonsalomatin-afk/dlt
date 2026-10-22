@@ -1,6 +1,6 @@
 id: TASK-077
 title: Answer native Telegram quizzes directly in the private bot chat
-status: BUILDING
+status: CHECKING
 owner_role: Builder
 objective: Add the owner's requested question-and-answer learning flow entirely inside the private Telegram bot chat, without opening the Mini App.
 depends_on:
@@ -76,3 +76,6 @@ review_fix_validation:
   - Supervisor-approved bounded validation applies only while the correction changes bot construction/lifecycle and injected lifecycle tests; no database/schema/migration/API/web/content/dependency change is permitted under this inheritance.
   - Run final lint, typecheck, all unit tests with2workers, targeted native+practice isolated integration (pnpm test:integration tests/chat-quiz.integration.test.ts tests/practice.integration.test.ts) and whitespace check. Root repeats these authoritatively, then independent review02 reproduces signal/restart regression.
   - Inherit rootchecks01 full218integration/Prismavalidation/productionbuild and TASK076229browser for unchanged associated source. Record precise inherited-vs-fresh evidence; do not claim a fresh full integration or build unless actually rerun. If correction expands outside bounded source, restore all full mandatory gates before acceptance.
+
+builder_fix_commit: bf32e5ae2b9034d42882a7a151a6ad3937150096
+corrective_authoritative_checks: .agent/checks/TASK-077-checks-02.txt

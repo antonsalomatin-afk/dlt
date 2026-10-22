@@ -5,7 +5,7 @@
   "currentTask": "TASK-077",
   "lastAcceptedTask": "TASK-076",
   "lastAcceptedCommit": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -182,7 +182,7 @@
   },
   "queuedNativeChatQuiz": {
     "task": "TASK-077",
-    "status": "FIX_SIGNAL_ACKNOWLEDGEMENT",
+    "status": "AUTHORITATIVE_FIX_CHECKS",
     "ownerRequested": true,
     "destination": "PRIVATE_BOT_CHAT",
     "mode": "NATIVE_SINGLE_LANGUAGE_QUIZ",
@@ -191,14 +191,15 @@
     "adr": ".agent/decisions/ADR-007-native-chat-practice.md",
     "productionDeployed": false,
     "implementationStarted": true,
-    "builderCheckpoint": "Final15filecommit; Builder350unit218integration/build/lint/types/Prisma PASS. No runningBuilderchecks. Supervisor frozen-source gates in progress; no independentreview/nativepublication yet.",
+    "builderCheckpoint": "Bounded3fileack/cleanupfix committed; Builderfresh356unit15targetintegration/lint/types/diffPASS,6realsignalregressions. Rootcorrectivechecks in progress; inheritedfullDB/build/browser baseline explicit.",
     "checkpoint": ".agent/checks/TASK-077-checkpoint-01.md",
     "deployPreflight": ".agent/checks/TASK-077-deploy-preflight-01.txt",
     "deployReadiness": "READ_ONLY_PASS; current611a559/17migrations/noChatQuizSession; no production mutation",
     "builderCommit": "362624c272e43561f5fa727313ab6e0f6fc99693",
-    "authoritativeChecks": ".agent/checks/TASK-077-checks-01.txt",
+    "authoritativeChecks": ".agent/checks/TASK-077-checks-02.txt",
     "review": ".agent/reviews/TASK-077-review-01.md",
     "reviewVerdict": "FAIL",
-    "reviewFinding": "SIGTERM/SIGINT bot.stop acknowledgement can consume an in-flight unclaimed native vote; independently reproduced by Reviewer."
+    "reviewFinding": "SIGTERM/SIGINT bot.stop acknowledgement can consume an in-flight unclaimed native vote; independently reproduced by Reviewer.",
+    "builderFixCommit": "bf32e5ae2b9034d42882a7a151a6ad3937150096"
   }
 }
