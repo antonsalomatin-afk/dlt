@@ -1,6 +1,6 @@
 id: TASK-077
 title: Answer native Telegram quizzes directly in the private bot chat
-status: BUILDING
+status: CHECKING
 owner_role: Builder
 objective: Add the owner's requested question-and-answer learning flow entirely inside the private Telegram bot chat, without opening the Mini App.
 depends_on:
@@ -64,3 +64,6 @@ supervisor_validation_scope:
   - Sequential generated-client generation/consumers only. Full unit338plusnew and full backend integration are authoritative. Web/bearer contracts and source remain unchanged; inherit accepted TASK-076 full229 browser evidence unless shared API responses/behavior differ or any regression requires a focused browser check.
   - Use existing isolated local database tooling and safety checks; inspect before resetting. Never log local .env credentials or use production DATABASE_URL in tests. No polling or real Telegram transport.
   - Maximum3 independent failed reviews. Builder commits scoped source/tests/README only and stops; no task acceptance or main change.
+
+builder_commit: 362624c272e43561f5fa727313ab6e0f6fc99693
+authoritative_checks: .agent/checks/TASK-077-checks-01.txt

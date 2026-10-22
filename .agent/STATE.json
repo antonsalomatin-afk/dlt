@@ -5,7 +5,7 @@
   "currentTask": "TASK-077",
   "lastAcceptedTask": "TASK-076",
   "lastAcceptedCommit": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "Resumed2026-10-22 freshwindow0percent. Finalnativecoveryfocused12unit13integrationPASS fromcheckpoint; Builderrunningfinalfullgates onpreserved15files beforecommit. Rootauthoritativechecks+independentReview thenacceptance/rollout remain. Productioncompact611a559unchanged. Preserve originaluntracked and95ceiling; noresetcredits.",
+  "notes": "TASK-077 Builder362624c complete; Supervisorauthoritativechecks runningsequentially, thenindependentreview. Productioncompact611a559 remainsunchanged; nativequiznotdeployed. Preserve95ceiling/originaluntracked; noresetcredits.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,12 +94,12 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 0,
-    "latestObservedWeeklyUsedPercent": 30,
+    "latestObservedUsedPercent": 22,
+    "latestObservedWeeklyUsedPercent": 34,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-22T05:16:14.011175+00:00",
+    "checkedAt": "2026-10-22T05:32:37.797273+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-22T10:15:35+00:00"
   },
@@ -182,7 +182,7 @@
   },
   "queuedNativeChatQuiz": {
     "task": "TASK-077",
-    "status": "FINAL_BUILDER_CHECKS",
+    "status": "AUTHORITATIVE_CHECKS",
     "ownerRequested": true,
     "destination": "PRIVATE_BOT_CHAT",
     "mode": "NATIVE_SINGLE_LANGUAGE_QUIZ",
@@ -191,9 +191,11 @@
     "adr": ".agent/decisions/ADR-007-native-chat-practice.md",
     "productionDeployed": false,
     "implementationStarted": true,
-    "builderCheckpoint": "Baseline full349unit216integration/buildPASS; necessary ADR007 ANSWERING/preclaim-noack recovery refinement implementing, requires fresh final tests/commit. No rootauthoritativechecks or independentreview yet. Production still acceptedcompact611a559.",
+    "builderCheckpoint": "Final15filecommit; Builder350unit218integration/build/lint/types/Prisma PASS. No runningBuilderchecks. Supervisor frozen-source gates in progress; no independentreview/nativepublication yet.",
     "checkpoint": ".agent/checks/TASK-077-checkpoint-01.md",
     "deployPreflight": ".agent/checks/TASK-077-deploy-preflight-01.txt",
-    "deployReadiness": "READ_ONLY_PASS; current611a559/17migrations/noChatQuizSession; no production mutation"
+    "deployReadiness": "READ_ONLY_PASS; current611a559/17migrations/noChatQuizSession; no production mutation",
+    "builderCommit": "362624c272e43561f5fa727313ab6e0f6fc99693",
+    "authoritativeChecks": ".agent/checks/TASK-077-checks-01.txt"
   }
 }
