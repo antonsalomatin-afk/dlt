@@ -1,6 +1,6 @@
 id: TASK-077
 title: Answer native Telegram quizzes directly in the private bot chat
-status: CHECKING
+status: REVIEW
 owner_role: Builder
 objective: Add the owner's requested question-and-answer learning flow entirely inside the private Telegram bot chat, without opening the Mini App.
 depends_on:
@@ -67,3 +67,6 @@ supervisor_validation_scope:
 
 builder_commit: 362624c272e43561f5fa727313ab6e0f6fc99693
 authoritative_checks: .agent/checks/TASK-077-checks-01.txt
+
+review_attempt: 1
+review_file: .agent/reviews/TASK-077-review-01.md
