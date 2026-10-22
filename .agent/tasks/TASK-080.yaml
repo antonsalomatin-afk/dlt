@@ -45,3 +45,6 @@ files_forbidden:
   - .agent/STATE.json
 scope_rule: If another source/test file or migration naming change is required, stop and ask Supervisor to amend scope before editing it. Do not weaken existing tests/security or rewrite accepted migrations.
 production_boundary: Implementation only. Exact accepted release, backup, additive migration and independent operational review follow in a separate task; no forced real group send, second polling instance or synthetic signed identity.
+
+implementation_clarification:
+  - GroupQuizRound may additionally store nullable controlMessageId for exact binding of separately sent finish, Next and uncertain-delivery recovery messages. This is a routine schema detail required by ADR-008 callback authorization, not a product or architecture expansion. Persist the returned validated control message identity before enabling it; recovery remains fail-closed.
