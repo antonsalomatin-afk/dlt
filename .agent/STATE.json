@@ -5,7 +5,7 @@
   "currentTask": "TASK-079",
   "lastAcceptedTask": "TASK-078",
   "lastAcceptedCommit": "36624e74104179a4053cbc9eb08491e3bea7d9b9",
-  "status": "READY",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -234,7 +234,7 @@
   },
   "groupChatQuiz": {
     "task": "TASK-079",
-    "status": "DESIGN_READY",
+    "status": "DESIGN_BUILDING",
     "ownerRequested": true,
     "implemented": false,
     "productionDeployed": false,
