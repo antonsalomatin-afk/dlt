@@ -3,10 +3,10 @@
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
   "currentTask": "TASK-077",
-  "lastAcceptedTask": "TASK-076",
-  "lastAcceptedCommit": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8",
-  "status": "REVIEW",
-  "reviewAttempt": 2,
+  "lastAcceptedTask": "TASK-077",
+  "lastAcceptedCommit": "bf32e5ae2b9034d42882a7a151a6ad3937150096",
+  "status": "ACCEPTED",
+  "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "parkedTasks": [
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK-077 rootchecks02PASS356unit15targetintegration/lint/types/localDB/diff atbf32e5a. Confirmedonlybot/lifecycle/new6tests changed over362624c; full218integration/Prisma/build and076browser inherited explicitly per4328577. Independentreview02 next, no productionmutation.",
+  "notes": "TASK-077 codeaccepted afterrootchecks01/02andindependentreview02PASS; corrected shutdownack race provenbothsignals. Nativecodeimplemented, NOTyetpublished. Selectexactacceptedreleasefornextoperationaltask; currentproduction611a559. No resetcredits;95ceiling/originaluntracked preserved.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,8 +94,8 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 22,
-    "latestObservedWeeklyUsedPercent": 34,
+    "latestObservedUsedPercent": 52,
+    "latestObservedWeeklyUsedPercent": 38,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
@@ -182,12 +182,12 @@
   },
   "queuedNativeChatQuiz": {
     "task": "TASK-077",
-    "status": "INDEPENDENT_REVIEW_02",
+    "status": "CODE_ACCEPTED_ROLLOUT_PENDING",
     "ownerRequested": true,
     "destination": "PRIVATE_BOT_CHAT",
     "mode": "NATIVE_SINGLE_LANGUAGE_QUIZ",
     "dependsOn": "TASK-076",
-    "implemented": false,
+    "implemented": true,
     "adr": ".agent/decisions/ADR-007-native-chat-practice.md",
     "productionDeployed": false,
     "implementationStarted": true,
@@ -198,8 +198,11 @@
     "builderCommit": "362624c272e43561f5fa727313ab6e0f6fc99693",
     "authoritativeChecks": ".agent/checks/TASK-077-checks-02.txt",
     "review": ".agent/reviews/TASK-077-review-02.md",
-    "reviewVerdict": "PENDING",
+    "reviewVerdict": "PASS",
     "reviewFinding": "SIGTERM/SIGINT bot.stop acknowledgement can consume an in-flight unclaimed native vote; independently reproduced by Reviewer.",
-    "builderFixCommit": "bf32e5ae2b9034d42882a7a151a6ad3937150096"
+    "builderFixCommit": "bf32e5ae2b9034d42882a7a151a6ad3937150096",
+    "acceptedCodeCommit": "bf32e5ae2b9034d42882a7a151a6ad3937150096",
+    "acceptedAt": "2026-10-22T06:03:42.819001+00:00",
+    "releaseTag": "thaidlt-native-quiz-20261022"
   }
 }

@@ -1,6 +1,6 @@
 id: TASK-077
 title: Answer native Telegram quizzes directly in the private bot chat
-status: REVIEW
+status: ACCEPTED
 owner_role: Builder
 objective: Add the owner's requested question-and-answer learning flow entirely inside the private Telegram bot chat, without opening the Mini App.
 depends_on:
@@ -79,3 +79,8 @@ review_fix_validation:
 
 builder_fix_commit: bf32e5ae2b9034d42882a7a151a6ad3937150096
 corrective_authoritative_checks: .agent/checks/TASK-077-checks-02.txt
+
+accepted_commit: bf32e5ae2b9034d42882a7a151a6ad3937150096
+review_verdict: PASS
+production_deployed: false
+release_tag: thaidlt-native-quiz-20261022

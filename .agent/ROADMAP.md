@@ -156,4 +156,4 @@ Potential scope:
 - production migrations
 - security review
 - load sanity checks
-- TASK-077 — BUILDING — native private-chat quizzes under ADR-007; focused tests green, full gates/review pending; not deployed.
+- TASK-077 — ACCEPTED — native private-chat quizzes, atomic shared learning/recovery; independent review02 PASS after shutdown fix; existing-host publication is the next operational cycle.
