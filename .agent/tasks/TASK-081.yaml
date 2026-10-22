@@ -1,6 +1,6 @@
 id: TASK-081
 title: Publish accepted shared group quiz support
-status: BUILDING
+status: REVIEW
 owner_role: Admin
 depends_on:
   - TASK-080
@@ -39,3 +39,7 @@ required_checks:
   - Supervisor independent live release/schema/service/HTTP/content checks
   - Independent operational review PASS
 rollback: Retain previous runtime and dependencies. On failure diagnose and preserve evidence; restore prior application runtime/services if necessary while retaining additive tables and learner data. No drop, reset, seed, manual migration resolve or database restore without separate authorization.
+
+admin_commit: 8c7a5ef03af5b5c8032d7529b000c0ad66ea01f0
+authoritative_checks: .agent/checks/TASK-081-checks-01.txt
+review_attempt: 1

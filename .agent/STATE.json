@@ -5,8 +5,8 @@
   "currentTask": "TASK-081",
   "lastAcceptedTask": "TASK-080",
   "lastAcceptedCommit": "6a0fd0028c7036fa8a4d857af305fbefccddf094",
-  "status": "BUILDING",
-  "reviewAttempt": 0,
+  "status": "REVIEW",
+  "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "parkedTasks": [
@@ -234,10 +234,10 @@
   },
   "groupChatQuiz": {
     "task": "TASK-080",
-    "status": "ROLLOUT_BUILDING",
+    "status": "OPERATIONAL_REVIEW",
     "ownerRequested": true,
     "implemented": true,
-    "productionDeployed": false,
+    "productionDeployed": true,
     "nextTask": "TASK-080",
     "builderCommit": "abc77865a6aeae37749dcebc03459f3ea4a536c5",
     "checks": ".agent/checks/TASK-079-checks-01.txt",
@@ -255,8 +255,12 @@
     "archiveSha256": "638599537516b0448f53a2d6958aa7ef45df42c69fe479e0a9bd21d578c18112",
     "archiveBytes": 913168,
     "archiveFiles": 619,
-    "rolloutCheckpoint": "Admin cutover reports3cbcbac live; fresh110421byte dump13:26:04 beforemigration13:26:12.740.19migrations/new3emptytables/13constraints10uniques19nonnull/full17oldtablepreservation/3healthyunits reported. Adminfinalreadonly/rootindependent/review stillpending.",
+    "rolloutCheckpoint": "Admin and rootlivechecksPASS:619archiveidentity/24criticalraw/19migrations/13constraints10uniques19nonnull/all17oldtablefullpreservation/freshPGDMPbackupbeforemigration/3healthyexactruntimeunits/onebot/HTTP/RU/Telegramgroupready. Rootcatalogcontypeinspectionfailedthenprovednativecharqueryfailure and textcastsuccess; onlyreadonlyinspectorcorrected, no app/schema/data mutation. Independent operations review next.",
     "productionMutated": true,
-    "backup": "thaidlt-20261022-132604.dump;110421bytes"
+    "backup": "thaidlt-20261022-132604.dump;110421bytes",
+    "adminCommit": "8c7a5ef03af5b5c8032d7529b000c0ad66ea01f0",
+    "adminReport": ".agent/admin/TASK-081-production-report.md",
+    "productionChecks": ".agent/checks/TASK-081-checks-01.txt",
+    "productionVerifiedAt": "2026-10-22T13:30:31Z"
   }
 }
