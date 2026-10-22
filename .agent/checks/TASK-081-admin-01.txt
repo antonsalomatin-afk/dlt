@@ -1,0 +1,359 @@
+2026-10-22T13:20:11.197452+00:00 Exact accepted group release archive proof
+{"release": "3cbcbac2976014f4d3bf6346341b6667f14b44d1", "archiveSha256": "638599537516b0448f53a2d6958aa7ef45df42c69fe479e0a9bd21d578c18112", "size": 913168, "regularFiles": 619, "crlfOnlyConversions": 0}
+All regular archive entries exactly match independent pinned LF Git archive. No working-tree files included.
+
+2026-10-22T13:20:11.843825+00:00 Group rollout read-only production preflight
+2026-10-22T13:20:17Z
+ubuntu-apps
+/srv/thaidlt/releases/0a4d7b3291f346581174aa5ac3ffe7d5404f73be
+MainPID=2918710
+NRestarts=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current/apps/web
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=
+MainPID=2918705
+NRestarts=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=
+MainPID=2918709
+NRestarts=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/question-posts.env (ignore_errors=no)
+WorkingDirectory=/srv/thaidlt/current
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=/etc/systemd/system/thaidlt-bot.service.d/75-question-posts.conf
+v24.22.0
+11.19.0
+600 root root /etc/thaidlt/app.env
+600 root root /etc/thaidlt/database.env
+600 root root /etc/thaidlt/bot.env
+600 root root /etc/thaidlt/question-posts.env
+Result=success
+ExecMainStartTimestamp=Thu 2026-10-22 06:10:47 UTC
+ExecMainExitTimestamp=Thu 2026-10-22 06:10:49 UTC
+ExecMainStatus=0
+active
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       1.2T   19G  1.2T   2% /
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+LISTEN 0      4096       127.0.0.1:5434      0.0.0.0:*          
+LISTEN 0      511        127.0.0.1:3060      0.0.0.0:*          
+LISTEN 0      511        127.0.0.1:3061      0.0.0.0:*          
+{"singleBotInstance": true, "dailyQuestionPostsEnabled": true, "publicUsernameExpected": true, "shortNameUnset": true}
+{"migrationBaseline":{"completed":18,"unfinished":0},"allThreeGroupTablesAbsent":3,"ownedPresentationForeignKeyTargetExists":true,"verifiedContent":[{"vehicleType":"CAR","active_verified":50,"russian":50},{"vehicleType":"MOTORCYCLE","active_verified":50,"russian":50}]}
+Russian stems: 0 would apply, 0 applied, 100 matched.
+Read-only production preflight complete; no remote configuration/data/service/Telegram mutation performed.
+Running as unit: run-u72851.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 2.566s
+CPU time consumed: 1.142s
+Memory peak: 256.0K
+Memory swap peak: 0B
+Running as unit: run-u72852.service; invocation ID: deb4292da0774bce862b2f895e10b3ff
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 114ms
+CPU time consumed: 116ms
+Memory peak: 1.0M
+Memory swap peak: 0B
+Running as unit: run-u72853.service; invocation ID: 9e0f4ae641f44276af4eaf64bad75a09
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 722ms
+CPU time consumed: 1.153s
+Memory peak: 1.0M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+2026-10-22T13:22:29.261192+00:00 Exact archive host+guest transfer
+{"exitcode": 0, "exited": 1, "out-data": "Guest archive verified 638599537516b0448f53a2d6958aa7ef45df42c69fe479e0a9bd21d578c18112\n"}
+
+2026-10-22T13:22:29.790183+00:00 Stage exact accepted group archive
+/var/tmp/TASK-081-3cbcbac.tar.gz: OK
+Exact accepted native release extracted; current runtime unchanged.
+
+GUEST_EXIT 0
+
+2026-10-22T13:23:32.978916+00:00 Inspection transport guard: all619file raw-proof SSH argument exceeded Windows command-line limit (WinError206) before process/guest dispatch. No remote verification command executed, no source mismatch inferred. Split identical static comparisons into100file batches. Current runtime remains previous0a4; staging only.
+
+2026-10-22T13:23:34.164144+00:00 Exact raw source batch 1 of7
+PASS raw source batch 1..100 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:23:39.591248+00:00 Exact raw source batch 2 of7
+PASS raw source batch 101..200 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:23:43.294755+00:00 Exact raw source batch 3 of7
+PASS raw source batch 201..300 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:23:47.210858+00:00 Exact raw source batch 4 of7
+PASS raw source batch 301..400 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:23:50.906334+00:00 Exact raw source batch 5 of7
+PASS raw source batch 401..500 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:23:54.649283+00:00 Exact raw source batch 6 of7
+PASS raw source batch 501..600 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:23:58.651551+00:00 Exact raw source batch 7 of7
+PASS raw source batch 601..619 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:24:02.516708+00:00 Pinned frozen install, generated client and production build
+Scope: all 6 workspace projects
+â Lockfile passes supply-chain policies (verified 7d ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +382
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+   â­ââââââââââââââââââââââââââââââââââââââââââââ®
+   â                                           â
+   â   Update available! 11.19.0 â 12.15.0.    â
+   â   Changelog: https://pnpm.io/v/12.15.0    â
+   â   To update, run: pnpm add -g @pnpm/exe   â
+   â                                           â
+   â°ââââââââââââââââââââââââââââââââââââââââââââ¯
+
+Progress: resolved 382, reused 6, downloaded 0, added 0
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/thaidlt/.local/share/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Progress: resolved 382, reused 382, downloaded 0, added 16
+Progress: resolved 382, reused 382, downloaded 0, added 296
+Progress: resolved 382, reused 382, downloaded 0, added 380
+Progress: resolved 382, reused 382, downloaded 0, added 381
+Progress: resolved 382, reused 382, downloaded 0, added 382
+Progress: resolved 382, reused 382, downloaded 0, added 382, done
+.../node_modules/prisma preinstall$ node scripts/preinstall-entry.js
+.../node_modules/prisma preinstall: Done
+
+devDependencies:
++ @eslint/js 10.0.1
++ @playwright/test 1.63.0
++ @types/node 24.13.3
++ @types/node-fetch 2.6.13
++ @types/pg 8.23.1
++ embedded-postgres 18.4.0-beta.17
++ eslint 10.10.0
++ node-fetch 2.7.0
++ pg 8.23.0
++ prisma 7.10.0
++ typescript 5.9.3
++ typescript-eslint 8.69.0
++ vitest 5.0.0
++ zod 4.5.4
+
+Done in 11.6s using pnpm v11.19.0
+
+â Generated Prisma Client (7.10.0) to ./packages/database/generated in 314ms
+
+â² Next.js 16.3.5 (Turbopack)
+â Running next.config.ts took 68ms
+
+  Creating an optimized production build ...
+â Compiled successfully in 17.4s
+  Running TypeScript ...
+  Finished TypeScript in 11.2s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/3) ...
+â Generating static pages using 3 workers (3/3) in 251ms
+  Finalizing page optimization ...
+
+Route (app)
+â â /
+â â /_not-found
+
+
+â  (Static)  prerendered as static content
+
+Accepted native release frozen install, generation and build PASS; migration/current runtime not changed yet.
+Running as unit: thaidlt-task081-install.service; invocation ID: 63a4d96319e84092a0b8e9109f07a8c8
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts generate
+.env not found. Continuing without it.
+Loaded Prisma config from packages/database/prisma.config.ts.
+
+Prisma schema loaded from packages/database/prisma/schema.prisma.
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 28.702s
+CPU time consumed: 11.859s
+Memory peak: 256.0K
+Memory swap peak: 0B
+Running as unit: thaidlt-task081-build.service
+$ pnpm --filter @thai-dlt/web build
+$ next build
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 43.329s
+CPU time consumed: 33.287s
+Memory peak: 7.7M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-22T13:25:33.860278+00:00 Post-build exact raw source batch 1 of7
+PASS raw source batch 1..100 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:25:38.557150+00:00 Post-build exact raw source batch 2 of7
+PASS raw source batch 101..200 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:25:42.713180+00:00 Post-build exact raw source batch 3 of7
+PASS raw source batch 201..300 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:25:46.842845+00:00 Post-build exact raw source batch 4 of7
+PASS raw source batch 301..400 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:25:50.650036+00:00 Post-build exact raw source batch 5 of7
+PASS raw source batch 401..500 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:25:54.404322+00:00 Post-build exact raw source batch 6 of7
+PASS raw source batch 501..600 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:25:58.254572+00:00 Post-build exact raw source batch 7 of7
+PASS raw source batch 601..619 of619.
+
+GUEST_EXIT 0
+
+2026-10-22T13:26:02.026511+00:00 Fresh backup, full17table preservation, additive migration and atomic cutover
+Result=success
+ExecMainStartTimestamp=Thu 2026-10-22 13:26:03 UTC
+ExecMainExitTimestamp=Thu 2026-10-22 13:26:05 UTC
+ExecMainStatus=0
+thaidlt-20261022-132604.dump 110421 bytes
+{"phase":"before","completeOldTables":17,"oldTableNames":["AnswerAttempt","Category","ChatQuizSession","Concept","ConceptLearningState","DailyReminderDelivery","ExamQuestion","ExamQuestionReport","ExamSession","Favorite","Question","QuestionChoice","QuestionPresentation","QuestionReport","ReminderSummaryDelivery","Session","User"],"migrations":{"completed":18,"unfinished":0,"rolledback":0},"allThreeGroupTablesAbsent":true}
+Accepted group Prisma migrate deploy exited0; private diagnostic retained server-side.
+{"phase":"after","all17CompleteOldTablesPreserved":true,"noFingerprintFieldExclusions":true,"migrations":{"completed":19,"unfinished":0,"rolledback":0},"newMigration":{"migration_name":"20261022100000_group_chat_quiz","started_at":"2026-10-22T13:26:12.740Z","finished_at":"2026-10-22T13:26:13.050Z"},"newGroupTablesInitiallyEmpty":{"GroupQuizScope":0,"GroupQuizRound":0,"GroupQuizVote":0},"validatedNamedConstraints":["GroupQuizRound_conceptId_fkey","GroupQuizRound_delivery_valid","GroupQuizRound_initiatorId_fkey","GroupQuizRound_pkey","GroupQuizRound_questionId_fkey","GroupQuizRound_scope_fkey","GroupQuizScope_bounds","GroupQuizScope_currentRound_fkey","GroupQuizScope_pkey","GroupQuizVote_owned_presentation_fkey","GroupQuizVote_pkey","GroupQuizVote_round_question_fkey","GroupQuizVote_userId_fkey"],"validUniqueIndexes":["GroupQuizRound_id_questionId_key","GroupQuizRound_id_telegramChatId_threadId_key","GroupQuizRound_pkey","GroupQuizRound_pollId_key","GroupQuizScope_currentRoundId_key","GroupQuizScope_currentRoundId_telegramChatId_threadId_key","GroupQuizScope_pkey","GroupQuizVote_pkey","GroupQuizVote_presentationId_key","GroupQuizVote_presentationId_userId_questionId_key"],"requiredNotNullColumns":19}
+MainPID=3219524
+NRestarts=0
+ExecMainStatus=0
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+thaidlt-web actualCwd=/srv/thaidlt/releases/3cbcbac2976014f4d3bf6346341b6667f14b44d1/apps/web
+MainPID=3219519
+NRestarts=0
+ExecMainStatus=0
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+thaidlt-api actualCwd=/srv/thaidlt/releases/3cbcbac2976014f4d3bf6346341b6667f14b44d1
+MainPID=3219523
+NRestarts=0
+ExecMainStatus=0
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+thaidlt-bot actualCwd=/srv/thaidlt/releases/3cbcbac2976014f4d3bf6346341b6667f14b44d1
+/srv/thaidlt/releases/3cbcbac2976014f4d3bf6346341b6667f14b44d1
+600 root root /etc/thaidlt/app.env
+600 root root /etc/thaidlt/database.env
+600 root root /etc/thaidlt/bot.env
+600 root root /etc/thaidlt/question-posts.env
+Reviewed group runtime activated;19 migrations and all17 full old tables preserved. Config/content/preferences unchanged; no forced Telegram send.
+Running as unit: run-u72872.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 548ms
+CPU time consumed: 142ms
+Memory peak: 1.3M
+Memory swap peak: 0B
+Running as unit: run-u72874.service; invocation ID: 885cf179b2a14f828c43d00a21f27ca8
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 212ms
+CPU time consumed: 126ms
+Memory peak: 268.0K
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-22T13:26:40.994427+00:00 Live compact web, protected API, single bot, Telegram group readiness and preserved content
+2026-10-22T13:26:43Z
+/srv/thaidlt/releases/3cbcbac2976014f4d3bf6346341b6667f14b44d1
+{"url": "https://dlt.thauto.app/", "status": 200, "cacheControl": "s-maxage=31536000"}
+{"liveCompactShell": true, "oldMarketingHeadlineAbsent": true, "oldRoadHeroAbsent": true}
+{"url": "https://tele.thauto.app/me", "status": 401, "cacheControl": "no-store"}
+{"url": "http://127.0.0.1:3061/me", "status": 401, "cacheControl": "no-store"}
+{"url": "https://tele.thauto.app/not-a-route", "status": 404, "cacheControl": ""}
+{"url": "https://tele.thauto.app/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"url": "https://dlt.thauto.app/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"singleBotInstance": true, "dailyQuestionPostsEnabled": true, "publicBotUsernameExpected": true, "shortNameUnset": true, "failureMessagesRecent3Minutes": 0}
+{"username":"thauto_dlt_bot","hasMainWebApp":true,"canJoinGroups":true,"webhookConfigured":false,"pendingUpdateCount":0,"miniAppUrlExpected":true}
+Russian stems: 0 would apply, 0 applied, 100 matched.
+Native rollout compact UI, protected routes, unchanged content and enabled single-bot checks PASS; no forced user interaction.
+{"exactNativeHandlersInstalled": true, "allowedUpdates": ["message", "callback_query", "poll_answer"], "dropPendingUpdatesAbsent": true, "actualProcessWorkingDirectoriesMatchRelease": true, "runtimeProbeDidNotCallGetUpdates": true}
+{"migrations":{"completed":19,"unfinished":0},"nativeMigrationFinishedExactlyOnce":true,"currentNativeSessionCount":2,"groupMigrationFinishedExactlyOnce":true,"postgresVersion":"18.6 (Debian 18.6-1.pgdg13+2)"}
+Running as unit: run-u72877.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 676ms
+CPU time consumed: 178ms
+Memory peak: 3.3M
+Memory swap peak: 0B
+Running as unit: run-u72878.service; invocation ID: 3c577f54841c4efb890faf9abe3d5975
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 771ms
+CPU time consumed: 1.144s
+Memory peak: 256.0K
+Memory swap peak: 0B
+Running as unit: run-u72879.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 103ms
+CPU time consumed: 104ms
+Memory peak: 3.6M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-22T13:27:41.595341+00:00 Fresh dump format and retained rollback runtime
+{"freshBackupPath": "/srv/thaidlt-db/dumps/thaidlt-20261022-132604.dump", "bytes": 110421, "customPGDMPHeader": true, "priorRuntimeAndDependenciesRetained": true}
+
+GUEST_EXIT 0
