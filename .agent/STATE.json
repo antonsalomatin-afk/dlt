@@ -255,6 +255,8 @@
     "archiveSha256": "638599537516b0448f53a2d6958aa7ef45df42c69fe479e0a9bd21d578c18112",
     "archiveBytes": 913168,
     "archiveFiles": 619,
-    "rolloutCheckpoint": "Admin read-only preflight PASS13:20:17Z: old0a4/18migrations/group3absent/3healthyunits/onebot/unchanged100bankRU. Root independent619file rawarchiveproofPASS; stagingnext, no mutation claimed."
+    "rolloutCheckpoint": "Admin cutover reports3cbcbac live; fresh110421byte dump13:26:04 beforemigration13:26:12.740.19migrations/new3emptytables/13constraints10uniques19nonnull/full17oldtablepreservation/3healthyunits reported. Adminfinalreadonly/rootindependent/review stillpending.",
+    "productionMutated": true,
+    "backup": "thaidlt-20261022-132604.dump;110421bytes"
   }
 }
