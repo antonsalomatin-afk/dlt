@@ -3,10 +3,10 @@
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
   "currentTask": "TASK-080",
-  "lastAcceptedTask": "TASK-079",
-  "lastAcceptedCommit": "abc77865a6aeae37749dcebc03459f3ea4a536c5",
-  "status": "REVIEW",
-  "reviewAttempt": 1,
+  "lastAcceptedTask": "TASK-080",
+  "lastAcceptedCommit": "6a0fd0028c7036fa8a4d857af305fbefccddf094",
+  "status": "ACCEPTED",
+  "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "parkedTasks": [
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "Fresh five-hour window verified at zero percent; resume TASK-080 Builder implementation under accepted ADR-008. Preserve original untracked files and never redeem reset credits.",
+  "notes": "TASK-080 accepted after fresh full authoritative checks and independent code review PASS; native group implementation ready for separate exact-release production rollout. Real group journey unobserved.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,8 +94,8 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 0,
-    "latestObservedWeeklyUsedPercent": 45,
+    "latestObservedUsedPercent": 47,
+    "latestObservedWeeklyUsedPercent": 53,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
@@ -234,18 +234,20 @@
   },
   "groupChatQuiz": {
     "task": "TASK-080",
-    "status": "REVIEW",
+    "status": "CODE_ACCEPTED",
     "ownerRequested": true,
-    "implemented": false,
+    "implemented": true,
     "productionDeployed": false,
     "nextTask": "TASK-080",
     "builderCommit": "abc77865a6aeae37749dcebc03459f3ea4a536c5",
     "checks": ".agent/checks/TASK-079-checks-01.txt",
-    "review": ".agent/reviews/TASK-079-review-01.md",
+    "review": ".agent/reviews/TASK-080-review-01.md",
     "reviewVerdict": "PASS",
     "architectureTask": "TASK-079",
     "builderCheckpoint": "Builder and fresh Supervisor full gates PASS:369unit62files/234integration44files/lint/types/Prisma/build/diff. Independent code review01 next.",
     "implementationCommit": "6a0fd0028c7036fa8a4d857af305fbefccddf094",
-    "authoritativeChecks": ".agent/checks/TASK-080-checks-01.txt"
+    "authoritativeChecks": ".agent/checks/TASK-080-checks-01.txt",
+    "acceptedCodeCommit": "6a0fd0028c7036fa8a4d857af305fbefccddf094",
+    "acceptedAt": "2026-10-22T13:17:43.240236+00:00"
   }
 }

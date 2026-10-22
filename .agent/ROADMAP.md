@@ -160,4 +160,4 @@ Potential scope:
 - TASK-078 — ACCEPTED — native quiz release0a4d7b3 live; fresh backup, migration18 once, old16 tables preserved; independent operations PASS.
 
 - TASK-079 — ACCEPTED — shared group quiz architecture, per-user scoring and recovery; independent design PASS.
-- TASK-080 — READY — implement and test shared native group quizzes; not implemented/deployed, checkpoint at usage ceiling.
+- TASK-080 — ACCEPTED — shared native group quizzes with individual credit, recovery and scoped controls; full authoritative checks and independent source review PASS. Production rollout next.

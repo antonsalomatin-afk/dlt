@@ -1,6 +1,6 @@
 id: TASK-080
 title: Implement shared native group quizzes with individual practice credit
-status: REVIEW
+status: ACCEPTED
 owner_role: Builder
 depends_on:
   - TASK-079
@@ -55,3 +55,7 @@ implementation_clarification:
 builder_commit: 6a0fd0028c7036fa8a4d857af305fbefccddf094
 authoritative_checks: .agent/checks/TASK-080-checks-01.txt
 review_attempt: 1
+review_file: .agent/reviews/TASK-080-review-01.md
+review_verdict: PASS
+accepted_commit: 6a0fd0028c7036fa8a4d857af305fbefccddf094
+production_deployed: false

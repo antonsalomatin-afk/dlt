@@ -146,6 +146,10 @@ It should not duplicate business logic from the API.
 
 ADR-007 permits the existing authenticated long-polling bot to offer user-triggered native quizzes using the same Telegram User, immutable question presentations, shared server-only practice answering and concept accounting. One PostgreSQL ChatQuizSession per learner durably binds the current owned presentation to the Telegram poll; explicit delivery uncertainty/recovery avoids false exactly-once guarantees. This does not create a new HTTP auth path or change Mini App pre-answer secrecy. Existing opt-in reminders and summaries remain independent. See TASK-077 for implementation and release gates; this paragraph is an architectural decision, not a claim that the feature is deployed.
 
+### Accepted shared group practice extension
+
+ADR-008 extends the same single bot to groups/supergroups and forum topics. Three additive PostgreSQL models retain one shared immutable question per scope and one owned presentation/atomic practice answer per real member voter. Current membership and starter/admin controls protect shared delivery; existing private sessions and Mini App authentication remain independent. Group production publication has separate backup/migration/operational review gates.
+
 ## Authentication
 
 Telegram Mini App authentication is based on signed `initData`.
