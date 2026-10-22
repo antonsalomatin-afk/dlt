@@ -1,0 +1,25 @@
+id: TASK-079
+title: Define durable multi-participant Telegram group quiz support
+status: READY
+owner_role: Builder
+depends_on:
+  - TASK-078
+objective: Resolve the group identity, shared poll lifecycle and individual scoring architecture before implementing the owner's explicitly requested group support.
+authorization:
+  - Owner confirmed private quizzes work and explicitly requested group support on 2026-10-22.
+  - Shared group question, four native quiz choices, individual answer accounting and in-chat continuation are within this request. No channel publishing, automatic group campaigns or paid provider.
+acceptance:
+  - ADR-008 precisely extends ADR-007 for group/supergroup commands, shared immutable question snapshots, authenticated real user votes and per-user owned presentations using the existing atomic answer/concept helper.
+  - Define command and callback authorization, vehicle/language selection independent of personal preferences, topic isolation, forwarded/foreign/anonymous vote policy, one-credit uniqueness and replay/restart/shutdown behavior. No identity fabricated from group IDs.
+  - Define additive persistence, constraints, safe lock ordering, delivery claims and ambiguous-send recovery; no network calls inside transactions or false exactly-once transport claims.
+  - Explain shared feedback timing without revealing correctness to other participants on the first vote, next-question controls, and safe failure/retry boundaries using existing acknowledgement protection.
+  - Cite current official Telegram documentation and actual repository interfaces. Provide a bounded implementation scope and meaningful automated test matrix, then separate production rollout gates.
+  - Independent Reviewer returns PASS on the design and Supervisor records acceptance. This task must not claim group support implemented or deployed.
+files_allowed:
+  - .agent/decisions/ADR-008-group-chat-practice.md
+  - .agent/admin/TASK-079-group-quiz-design.md
+required_checks:
+  - Supervisor independently verifies design against existing schema, answer helper, bot lifecycle and official Telegram interfaces
+  - git diff --check
+  - Independent architecture review using the repository review template
+implementation_boundary: Documentation only; runtime, database, source, dependencies and production remain unchanged. Full source checks belong to the subsequent implementation task.

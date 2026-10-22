@@ -35,3 +35,7 @@ The owner can send `/quiz` (or `/practice`) to `@thauto_dlt_bot`, choose a vehic
 Owner-reported results since this rollout: none. Actual native answer/feedback/Next, fresh signed Mini App practice for CAR and MOTORCYCLE, and a 50-question exam with reopen/resume remain UNOBSERVED. Automated local tests and live read-only health checks have passed but do not establish these owner observations. Scheduled-message receipt is also unobserved and is not required to close this initial smoke task.
 
 TASK-072 remains BLOCKED on real-owner interaction. Do not mark it passed, manufacture signed authentication or send a forced Telegram test message. Any concrete reported defect must receive a scoped Builder task, authoritative checks and independent review.
+
+### Owner report — 2026-10-22
+
+The owner states that the private chat works. This is an owner-reported positive observation, not independent observation or explicit confirmation of every answer/feedback/Next step. The supplied screenshot shows a group, where the accepted private-only implementation intentionally ignores quiz commands. The owner subsequently requested group support; TASK-079/080 address this new scope. Mini App practice/exam-resume observations remain outstanding.

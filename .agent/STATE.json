@@ -2,14 +2,20 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-072",
+  "currentTask": "TASK-079",
   "lastAcceptedTask": "TASK-078",
   "lastAcceptedCommit": "36624e74104179a4053cbc9eb08491e3bea7d9b9",
-  "status": "BLOCKED",
+  "status": "READY",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": "Fresh real-owner Telegram observations remain unavailable: native /quiz answer, feedback and Next, plus signed Mini App practice for both vehicles and exam resume. Code and production rollout are accepted; no engineering or deployment approval is pending.",
-  "parkedTasks": [],
+  "blockedReason": null,
+  "parkedTasks": [
+    {
+      "task": "TASK-072",
+      "status": "BLOCKED",
+      "reason": "Owner reports private chat works; detailed native feedback/Next and signed Mini App practice/exam observations remain unconfirmed."
+    }
+  ],
   "updatedBy": "Supervisor",
   "russianStemOverlay": {
     "status": "PRODUCTION_PUBLISHED_ACCEPTED",
@@ -45,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK-077 native implementation and TASK-078 production rollout accepted after authoritative checks and independent PASS. Release 0a4d7b3 is live. TASK-072 awaits real-owner learning observations only; automated checks cannot substitute for the signed owner journey. Original untracked starter files preserved; 95 percent ceiling and no-reset-credit policy retained.",
+  "notes": "Owner reports private chat works and explicitly requests group quiz support. TASK-079 establishes the required multi-participant architecture before TASK-080 implementation. Respect 95 percent ceiling; no reset credits.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -88,12 +94,12 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 87,
+    "latestObservedUsedPercent": 90,
     "latestObservedWeeklyUsedPercent": 44,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-22T06:30:18.987419+00:00",
+    "checkedAt": "2026-10-22T09:41:33.650354+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-22T10:15:35+00:00"
   },
@@ -225,5 +231,13 @@
     "reviewVerdict": "PASS",
     "adminCommit": "36624e74104179a4053cbc9eb08491e3bea7d9b9",
     "acceptedAt": "2026-10-22T06:26:29.057657+00:00"
+  },
+  "groupChatQuiz": {
+    "task": "TASK-079",
+    "status": "DESIGN_READY",
+    "ownerRequested": true,
+    "implemented": false,
+    "productionDeployed": false,
+    "nextTask": "TASK-080"
   }
 }
