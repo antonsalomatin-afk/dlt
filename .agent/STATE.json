@@ -243,6 +243,7 @@
     "checks": ".agent/checks/TASK-079-checks-01.txt",
     "review": ".agent/reviews/TASK-079-review-01.md",
     "reviewVerdict": "PASS",
-    "architectureTask": "TASK-079"
+    "architectureTask": "TASK-079",
+    "builderCheckpoint": "Group schema/DB/bot implemented. Targeted14integration PASS; full Builder gate01 retained failed testimport scope and exact18migration expectation. Both corrected without dependencychange or assertionweakening; frozen-source full gate02 in progress. Root authoritative checks and independent code review not yet run."
   }
 }
