@@ -15,7 +15,7 @@ const environment={BOT_TOKEN:'123456:synthetic_token_for_tests_only',MINI_APP_UR
 const botInfo={id:123456,is_bot:true as const,first_name:'Test',username:'test_bot',can_join_groups:true,can_read_all_group_messages:false,supports_inline_queries:false,can_connect_to_business:false,has_main_web_app:false,has_topics_enabled:false,allows_users_to_create_topics:false,can_manage_bots:false,supports_join_request_queries:false};
 const actor={id:42,is_bot:false as const,first_name:'Test'};
 const database=()=>createDatabaseClient('postgresql://test:test@127.0.0.1:19999/test');
-const api=():GroupQuizTransport=>({getChatMember:vi.fn(),sendMessage:vi.fn(),sendPoll:vi.fn(),sendPhoto:vi.fn(),stopPoll:vi.fn()});
+const api=():GroupQuizTransport=>({getChatMember:vi.fn(),sendMessage:vi.fn(),sendPoll:vi.fn(),sendPhoto:vi.fn()});
 function deferred(){let resolve=()=>{};const promise=new Promise<void>(done=>{resolve=done;});return{promise,resolve};}
 
 it('validates negative chat scopes, positive topics and real users independently',()=>{

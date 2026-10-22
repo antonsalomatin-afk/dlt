@@ -1,9 +1,8 @@
 import { z } from 'zod';
 import { GrammyError } from 'grammy';
 import { chatPollAnswerSchema, telegramLearnerSchema, UnclaimedQuizAnswerError } from '../../../packages/database/src/chat-quiz.ts';
-import { answerGroupQuiz, bindGroupControl, bindGroupQuiz, groupPollBinding, groupQuizResults, groupScopeSchema, markGroupQuizUncertain, requestGroupQuiz, type GroupRound, type GroupScope } from '../../../packages/database/src/group-chat-quiz.ts';
+import { answerGroupQuiz, bindGroupControl, bindGroupQuiz, groupPollBinding, groupScopeSchema, markGroupQuizUncertain, requestGroupQuiz, type GroupRound, type GroupScope } from '../../../packages/database/src/group-chat-quiz.ts';
 import type { PrismaClient } from '../../../packages/database/src/index.ts';
-import { parsePresentationSnapshot } from '../../../packages/database/src/presentation.ts';
 import { buildNativeQuiz, quizTextChunks, type QuizPollOptions } from './chat-quiz.ts';
 
 const messageId = z.number().int().positive().max(2 ** 31 - 1);
@@ -18,7 +17,6 @@ export type GroupQuizTransport = {
   sendMessage(chatId: number, text: string, options: GroupSendOptions): Promise<unknown>;
   sendPhoto(chatId: number, photo: string, options: GroupSendOptions): Promise<unknown>;
   sendPoll(chatId: number, question: string, choices: Array<{ text: string }>, options: QuizPollOptions & GroupSendOptions): Promise<unknown>;
-  stopPoll(chatId: number, messageId: number): Promise<unknown>;
 };
 const membershipSchema = z.object({ user: z.object({ id: telegramLearnerSchema.shape.id }), status: z.enum(['creator','administrator','member','restricted','left','kicked']), is_member: z.boolean().optional() });
 export function parseGroupMembership(input: unknown, userId: number) {
@@ -39,7 +37,7 @@ const roundScope = (round: GroupRound): GroupScope => ({ telegramChatId: Number(
 
 export function createGroupQuizService(database: PrismaClient, api: GroupQuizTransport, botId: () => number, now: () => Date = () => new Date(), randomOffset?: (count: number) => unknown) {
   const text = async (scope: GroupScope, content: string) => { for (const chunk of quizTextChunks(content)) await api.sendMessage(scope.telegramChatId, chunk, optionsFor(scope)); };
-  const controls = async (round: GroupRound, content: string, action: 'f'|'n'|'r', label: string) => {
+  const controls = async (round: GroupRound, content: string, action: 'n'|'r', label: string) => {
     const scope = roundScope(round);
     const sent = await api.sendMessage(scope.telegramChatId, content, { ...optionsFor(scope), reply_markup: { inline_keyboard: [[{ text: label, callback_data: `gq1:${action}:${round.id}` }]] } });
     await bindGroupControl(database, round, sent);
@@ -53,32 +51,18 @@ export function createGroupQuizService(database: PrismaClient, api: GroupQuizTra
     if (!own.administrator) return { botAdministrator: false, administrator: false, member: false };
     return { botAdministrator: true, ...await membership(scope, userId) };
   };
-  const feedback = async (round: GroupRound) => {
-    const scope = roundScope(round);
-    // CLOSED already prevents credit. stopPoll failure must not block explanation recovery.
-    if (round.messageId) { try { await api.stopPoll(scope.telegramChatId, round.messageId); } catch { /* Retry on the next explicit /quiz recovery. */ } }
-    const snapshot = parsePresentationSnapshot(round.snapshot); const result = await groupQuizResults(database, round);
-    const answer = snapshot.question.choices.find(({ id }) => id === snapshot.correctChoiceId)!;
-    await text(scope, [`Correct answer: ${answer.key}. ${answer.textEnglish}`, snapshot.explanationEnglish, snapshot.trapExplanationEnglish, `Answered: ${result.answered}. Correct: ${result.answered ? Math.round(result.correct / result.answered * 100) : 0}%.`].filter(Boolean).join('\n\n'));
-    await controls(round, 'Round finished. The starter or a group administrator can continue.', 'n', 'Next question');
-  };
   const request = async (scope: GroupScope, actor: z.infer<typeof telegramLearnerSchema>, action: unknown) => {
     const permission = await privileges(scope, actor.id);
-    if (!permission.botAdministrator) { await text(scope, 'Make this bot a group administrator to enable scored group quizzes. Then send /quiz@thauto_dlt_bot.'); return; }
+    if (!permission.botAdministrator) { await text(scope, 'Make this bot a group administrator to enable group practice. Then send /quiz@thauto_dlt_bot.'); return; }
     if (!permission.member) return;
-    const result = await requestGroupQuiz(database, scope, actor, action, permission.administrator, now(), randomOffset);
-    if (result.kind === 'forbidden') { await text(scope, 'Only the starter or a group administrator can finish or advance this round.'); return; }
-    if (result.kind === 'stale') { await text(scope, 'This control has expired. Send /quiz to recover the current round.'); return; }
-    if (result.kind === 'no-votes') { await text(scope, 'At least one participant must answer before finishing.'); return; }
+    const result = await requestGroupQuiz(database, scope, actor, action, now(), randomOffset);
+    if (result.kind === 'stale') { await text(scope, 'This control has expired. Send /quiz for another question.'); return; }
     if (result.kind === 'empty') { await text(scope, 'No verified questions are available for this vehicle.'); return; }
-    if (result.kind === 'busy') { await text(scope, 'The group quiz is being sent. Send /quiz again shortly.'); return; }
-    if (result.kind === 'closed') { await feedback(result.round); return; }
-    if (result.kind === 'uncertain') { await controls(result.round, 'Delivery is uncertain. The starter or an administrator can explicitly replace this round; earlier polls will not count.', 'r', 'Replace quiz'); return; }
-    if (result.kind === 'bound') { await controls(result.round, `Answer the current quiz above (message ${result.round.messageId}). Votes are non-anonymous and count toward personal practice. Finish when everyone is ready.`, 'f', 'Finish round'); return; }
+    if (result.kind === 'busy') { await text(scope, 'A question is being sent. Try again shortly.'); return; }
+    if (result.kind === 'uncertain') { await controls(result.round, 'Delivery is uncertain. Replace this question to continue; this uncertain poll will not count.', 'r', 'Replace quiz'); return; }
     let round = result.round;
     try {
       const quiz = buildNativeQuiz(round.snapshot, 'ENGLISH');
-      await text(scope, 'Group practice: votes are non-anonymous and count toward your personal practice. The starter or an administrator finishes the round when everyone is ready.');
       if (quiz.image) await api.sendPhoto(scope.telegramChatId, quiz.image, optionsFor(scope));
       if (quiz.context) await text(scope, quiz.context);
       const sent = await api.sendPoll(scope.telegramChatId, quiz.question, quiz.options, { ...quiz.other, ...optionsFor(scope) });
@@ -88,7 +72,7 @@ export function createGroupQuizService(database: PrismaClient, api: GroupQuizTra
       await text(scope, 'Quiz delivery could not be confirmed. Send /quiz to recover or explicitly replace it.');
       return;
     }
-    await controls(round, 'Answer above. Finish when everyone is ready.', 'f', 'Finish round');
+    await controls(round, 'Choose an answer above to see your result. Votes are non-anonymous and count toward personal practice.', 'n', 'Next question');
   };
   return {
     command: async (input: unknown, argument: unknown = '') => {
@@ -102,7 +86,7 @@ export function createGroupQuizService(database: PrismaClient, api: GroupQuizTra
       const parsed = callbackSchema.safeParse(input); if (!parsed.success || parsed.data.message.from.id !== botId()) return;
       const callback = parsed.data; const match = /^gq1:([fnr]):([0-9a-f-]{36})$/u.exec(callback.data);
       if (!match || !z.uuid().safeParse(match[2]).success) return;
-      await request(scopeFor(callback.message), callback.from, { kind: match[1] === 'f' ? 'finish' : match[1] === 'n' ? 'next' : 'replace', roundId: match[2], messageId: callback.message.message_id });
+      await request(scopeFor(callback.message), callback.from, { kind: match[1] === 'r' ? 'replace' : 'next', roundId: match[2], messageId: callback.message.message_id });
     },
     /** Returns true only when this poll belongs to the durable group namespace. */
     answer: async (input: unknown) => {

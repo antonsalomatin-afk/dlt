@@ -11,7 +11,6 @@ export type GroupScope = z.infer<typeof groupScopeSchema>;
 const control = { roundId: z.uuid(), messageId: z.number().int().positive().max(2 ** 31 - 1) };
 export const groupActionSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('start'), vehicle: z.enum(['CAR','MOTORCYCLE']).optional() }),
-  z.strictObject({ kind: z.literal('finish'), ...control }),
   z.strictObject({ kind: z.literal('next'), ...control }),
   z.strictObject({ kind: z.literal('replace'), ...control }),
 ]);
@@ -40,34 +39,22 @@ async function learner(tx: Prisma.TransactionClient, input: z.infer<typeof teleg
   await tx.$queryRaw(Prisma.sql`SELECT id FROM "User" WHERE id=${user.id}::uuid FOR UPDATE`);
   return user;
 }
-export async function requestGroupQuiz(database: PrismaClient, scopeInput: unknown, actorInput: unknown, actionInput: unknown, administrator: boolean, now = new Date(), randomOffset: (count: number) => unknown = randomInt) {
+export async function requestGroupQuiz(database: PrismaClient, scopeInput: unknown, actorInput: unknown, actionInput: unknown, now = new Date(), randomOffset: (count: number) => unknown = randomInt) {
   const scope = groupScopeSchema.parse(scopeInput); const actor = telegramLearnerSchema.parse(actorInput); const action = groupActionSchema.parse(actionInput);
   return retryDailyPractice(() => database.$transaction(async (tx) => {
     await lockScope(tx, scope);
     const pointer = await tx.groupQuizScope.findUniqueOrThrow({ where: { telegramChatId_threadId: scope } });
     let current = pointer.currentRoundId ? await lockRound(tx, pointer.currentRoundId) : null;
-    if (current && ((current.deliveryState === 'SENDING' && now.getTime() - current.claimedAt.getTime() >= CHAT_QUIZ_LEASE_MS) || (current.deliveryState === 'BOUND' && (!current.question.active || current.question.verificationStatus !== 'VERIFIED')))) {
+    if (current?.deliveryState === 'SENDING' && now.getTime() - current.claimedAt.getTime() >= CHAT_QUIZ_LEASE_MS) {
       current = await tx.groupQuizRound.update({ where: { id: current.id }, data: { deliveryState: 'UNCERTAIN', pollId: null, messageId: null, controlMessageId: null }, include });
     }
     if (action.kind !== 'start') {
       if (!current || current.id !== action.roundId || current.controlMessageId !== action.messageId) return { kind: 'stale' } as const;
-      if (!administrator && current.initiator.telegramUserId !== BigInt(actor.id)) return { kind: 'forbidden' } as const;
-      if (action.kind === 'finish') {
-        if (current.deliveryState === 'CLOSED') return { kind: 'closed', round: current } as const;
-        if (current.deliveryState !== 'BOUND') return { kind: 'stale' } as const;
-        if (await tx.groupQuizVote.count({ where: { roundId: current.id } }) === 0) return { kind: 'no-votes' } as const;
-        const round = await tx.groupQuizRound.update({ where: { id: current.id }, data: { deliveryState: 'CLOSED', closedAt: now, controlMessageId: null }, include });
-        return { kind: 'closed', round } as const;
-      }
-      if ((action.kind === 'next' && current.deliveryState !== 'CLOSED') || (action.kind === 'replace' && current.deliveryState !== 'UNCERTAIN')) return { kind: 'stale' } as const;
-    } else if (current) {
-      if (current.deliveryState === 'CLOSED' && action.vehicle) {
-        if (!administrator && current.initiator.telegramUserId !== BigInt(actor.id)) return { kind: 'forbidden' } as const;
-      } else {
-        return { kind: current.deliveryState === 'BOUND' ? 'bound' : current.deliveryState === 'CLOSED' ? 'closed' : current.deliveryState === 'SENDING' ? 'busy' : 'uncertain', round: current } as const;
-      }
+      if ((action.kind === 'next' && !['BOUND', 'CLOSED'].includes(current.deliveryState)) || (action.kind === 'replace' && current.deliveryState !== 'UNCERTAIN')) return { kind: 'stale' } as const;
+    } else if (current && ['SENDING', 'UNCERTAIN'].includes(current.deliveryState)) {
+      return { kind: current.deliveryState === 'SENDING' ? 'busy' : 'uncertain', round: current } as const;
     }
-    const vehicleType = action.kind === 'start' ? action.vehicle ?? 'CAR' : current!.vehicleType;
+    const vehicleType = action.kind === 'start' ? action.vehicle ?? current?.vehicleType ?? 'CAR' : current!.vehicleType;
     const selected = await selectPracticeQuestion(tx, vehicleType, randomOffset);
     if (!selected) return { kind: 'empty' } as const;
     if (current?.deliveryState === 'UNCERTAIN') await tx.groupQuizRound.update({ where: { id: current.id }, data: { deliveryState: 'CLOSED', closedAt: now, controlMessageId: null } });
@@ -110,9 +97,8 @@ export async function answerGroupQuiz(database: PrismaClient, round: GroupRound,
   try {
     return await retryDailyPractice(() => database.$transaction(async (tx) => {
       const scope = { telegramChatId: Number(round.telegramChatId), threadId: round.threadId }; await lockScope(tx, scope);
-      const pointer = await tx.groupQuizScope.findUniqueOrThrow({ where: { telegramChatId_threadId: scope } });
       const current = await lockRound(tx, round.id);
-      if (pointer.currentRoundId !== current.id || current.deliveryState !== 'BOUND' || current.pollId !== vote.poll_id || !current.question.active || current.question.verificationStatus !== 'VERIFIED') return null;
+      if (current.telegramChatId !== round.telegramChatId || current.threadId !== round.threadId || current.deliveryState !== 'BOUND' || current.pollId !== vote.poll_id || !current.question.active || current.question.verificationStatus !== 'VERIFIED') return null;
       const snapshot = parsePresentationSnapshot(current.snapshot);
       if (snapshot.question.id !== current.questionId) throw new Error('Group snapshot relationship mismatch');
       const user = await learner(tx, vote.user, now);
@@ -127,19 +113,15 @@ export async function answerGroupQuiz(database: PrismaClient, round: GroupRound,
     }, { isolationLevel: 'Serializable' }), retryable);
   } catch { throw new UnclaimedQuizAnswerError(); }
 }
-export async function groupQuizResults(database: PrismaClient, round: GroupRound) {
-  const votes = await database.groupQuizVote.findMany({ where: { roundId: round.id }, select: { presentation: { select: { answer: { select: { isCorrect: true } } } } } });
-  return { answered: votes.length, correct: votes.filter(({ presentation }) => presentation.answer?.isCorrect).length };
-}
-
 /** Old group capabilities must stop scoring when Telegram migrates to a new chat ID. */
 export async function invalidateMigratedGroup(database: PrismaClient, chatInput: unknown, now = new Date()) {
   const chat = groupScopeSchema.shape.telegramChatId.parse(chatInput);
   const scopes = await database.groupQuizScope.findMany({ where: { telegramChatId: BigInt(chat) }, orderBy: { threadId: 'asc' } });
   for (const scope of scopes) await database.$transaction(async (tx) => {
     const key = { telegramChatId: chat, threadId: scope.threadId }; await lockScope(tx, key);
-    const pointer = await tx.groupQuizScope.findUniqueOrThrow({ where: { telegramChatId_threadId: key } });
-    if (pointer.currentRoundId) { await lockRound(tx, pointer.currentRoundId); await tx.groupQuizRound.update({ where: { id: pointer.currentRoundId }, data: { deliveryState: 'CLOSED', closedAt: now, controlMessageId: null } }); }
+    // Votes and new deliveries take this same scope lock, so retiring every open
+    // historical poll is atomic with invalidating its current control pointer.
+    await tx.groupQuizRound.updateMany({ where: { telegramChatId: BigInt(chat), threadId: scope.threadId, deliveryState: { not: 'CLOSED' } }, data: { deliveryState: 'CLOSED', closedAt: now, controlMessageId: null } });
     await tx.groupQuizScope.update({ where: { telegramChatId_threadId: key }, data: { currentRoundId: null } });
   });
 }
