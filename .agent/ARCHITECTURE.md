@@ -148,7 +148,7 @@ ADR-007 permits the existing authenticated long-polling bot to offer user-trigge
 
 ### Accepted shared group practice extension
 
-ADR-008 extends the same single bot to groups/supergroups and forum topics. Three additive PostgreSQL models retain one shared immutable question per scope and one owned presentation/atomic practice answer per real member voter. Current membership and starter/admin controls protect shared delivery; existing private sessions and Mini App authentication remain independent. Group production publication has separate backup/migration/operational review gates.
+ADR-008 extends the same single bot to groups/supergroups and forum topics. Three PostgreSQL models retain shared immutable polls with one current send/control pointer per scope and one owned presentation/atomic practice answer per real member voter. TASK-082 makes group practice asynchronous: prior bound polls remain answerable, native Telegram shows individual correctness and any current member may request Next without Finish or shared summaries. Current membership and starter/admin controls protect shared delivery; existing private sessions and Mini App authentication remain independent. Group production publication has separate backup/migration/operational review gates.
 
 ## Authentication
 

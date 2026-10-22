@@ -1,6 +1,6 @@
 id: TASK-082
 title: Simplify group practice to independent native quiz answers
-status: REVIEW
+status: ACCEPTED
 owner_role: Builder
 depends_on:
   - TASK-081
@@ -45,3 +45,7 @@ validation_environment_clarification:
 builder_commit: 90f751b90b9efd2d3c4c574eee7194200fdfa126
 authoritative_checks: .agent/checks/TASK-082-checks-01.txt
 review_attempt: 1
+review_file: .agent/reviews/TASK-082-review-01.md
+review_verdict: PASS
+accepted_commit: 90f751b90b9efd2d3c4c574eee7194200fdfa126
+production_deployed: false

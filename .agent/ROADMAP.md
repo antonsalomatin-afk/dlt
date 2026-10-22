@@ -163,3 +163,5 @@ Potential scope:
 - TASK-080 — ACCEPTED — shared native group quizzes with individual credit, recovery and scoped controls; full authoritative checks and independent source review PASS. Published through accepted TASK-081.
 
 - TASK-081 — ACCEPTED — exact group release3cbcbac live; backup beforemigration19, all17oldtables preserved, healthyonebot and independent operational PASS.
+
+- TASK-082 — ACCEPTED — simple asynchronous group quizzes; no Finish/shared summary, native correctness and safe late answers; full checks and independent PASS. Code-only rollout next.

@@ -3,10 +3,10 @@
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
   "currentTask": "TASK-082",
-  "lastAcceptedTask": "TASK-081",
-  "lastAcceptedCommit": "8c7a5ef03af5b5c8032d7529b000c0ad66ea01f0",
-  "status": "REVIEW",
-  "reviewAttempt": 1,
+  "lastAcceptedTask": "TASK-082",
+  "lastAcceptedCommit": "90f751b90b9efd2d3c4c574eee7194200fdfa126",
+  "status": "ACCEPTED",
+  "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "parkedTasks": [
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "Owner explicitly rejects mandatory Finish round/contest behavior. TASK-082 simplifies group practice to native per-voter correctness and optional member-driven Next; historical polls remain answerable. No schema migration. Fresh usage zero; resetcredits untouched.",
+  "notes": "TASK082 simple asynchronous group practice accepted after fresh full authoritative gates and independentPASS; no schema changes. Separate exact existing-host code-only rollout next.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -268,11 +268,15 @@
   },
   "groupPracticeSimplification": {
     "task": "TASK-082",
-    "status": "REVIEW",
+    "status": "CODE_ACCEPTED",
     "ownerRequested": true,
     "productionDeployed": false,
     "checkpoint": "FreshSupervisor lint/types/369unit/236integration/dbready/build/diff ALLPASS firstRootrun. PriorBuilderAPIparallelfailures didnotrecurfocused/fullretry/freshRoot. Independent source review01 next.",
     "builderCommit": "90f751b90b9efd2d3c4c574eee7194200fdfa126",
-    "authoritativeChecks": ".agent/checks/TASK-082-checks-01.txt"
+    "authoritativeChecks": ".agent/checks/TASK-082-checks-01.txt",
+    "review": ".agent/reviews/TASK-082-review-01.md",
+    "reviewVerdict": "PASS",
+    "acceptedCodeCommit": "90f751b90b9efd2d3c4c574eee7194200fdfa126",
+    "acceptedAt": "2026-10-22T17:57:49.253279+00:00"
   }
 }
