@@ -1,0 +1,75 @@
+
+2026-10-22T06:16:01.739956+00:00 Supervisor independent read-only checks; expected flag=true
+Local exact archive verified against pinned commit LF archive: 599 files; 594 CRLF-only conversions; all remaining bytes exact. Remote source checks bind raw archive entry bytes.
+RELEASE /srv/thaidlt/releases/0a4d7b3291f346581174aa5ac3ffe7d5404f73be
+SOURCE_MATCH apps/api/src/index.ts
+SOURCE_MATCH apps/bot/src/main.ts
+SOURCE_MATCH apps/bot/src/question-post.ts
+SOURCE_MATCH apps/bot/src/bot.ts
+SOURCE_MATCH apps/bot/src/lifecycle.ts
+SOURCE_MATCH apps/bot/src/chat-quiz.ts
+SOURCE_MATCH packages/database/src/chat-quiz.ts
+SOURCE_MATCH packages/database/src/answer.ts
+SOURCE_MATCH packages/database/src/presentation.ts
+SOURCE_MATCH packages/database/prisma/schema.prisma
+SOURCE_MATCH packages/database/prisma/migrations/20261021140000_chat_quiz_session/migration.sql
+SOURCE_MATCH apps/web/next.config.ts
+SOURCE_MATCH apps/web/app/page.tsx
+SOURCE_MATCH apps/web/app/globals.css
+SOURCE_MATCH apps/web/app/practice.tsx
+SOURCE_MATCH apps/web/app/daily.tsx
+SOURCE_MATCH apps/web/app/app-menu.tsx
+SOURCE_MATCH apps/web/app/reminders.tsx
+SOURCE_MATCH packages/database/src/daily-practice.ts
+SOURCE_MATCH tools/content/russian-stems.ts
+SOURCE_MATCH .agent/reviews/TASK-074-translation-review-01.json
+MainPID=2918710
+NRestarts=0
+User=thaidlt
+Id=thaidlt-web.service
+ActiveState=active
+SubState=running
+MainPID=2918705
+NRestarts=0
+User=thaidlt
+Id=thaidlt-api.service
+ActiveState=active
+SubState=running
+MainPID=2918709
+NRestarts=0
+User=thaidlt
+Id=thaidlt-bot.service
+ActiveState=active
+SubState=running
+{"scope":"runtime-public-rollout-keys","flag":"true","username":"thauto_dlt_bot","shortNamePresent":false}
+Russian stems: 0 would apply, 0 applied, 100 matched.
+{"scope":"unauthenticated-http","url":"https://dlt.thauto.app/","method":"GET","status":200,"cacheControl":"s-maxage=31536000"}
+PASS public HTML compact-app present; former marketing headline absent.
+{"scope":"unauthenticated-http","url":"https://tele.thauto.app/me","method":"GET","status":401,"cacheControl":"no-store"}
+{"scope":"unauthenticated-http","url":"http://127.0.0.1:3061/me","method":"GET","status":401,"cacheControl":"no-store"}
+{"scope":"unauthenticated-http","url":"https://tele.thauto.app/practice/presentation","method":"POST","status":401,"cacheControl":"no-store"}
+{"scope":"unauthenticated-http","url":"https://dlt.thauto.app/practice/presentation","method":"POST","status":401,"cacheControl":"no-store"}
+{"scope":"unauthenticated-http","url":"https://tele.thauto.app/not-a-route","method":"GET","status":404,"cacheControl":null}
+PASS root independent read-only release/source/service/rollout/content/HTTP verification.
+RUNTIME_CWD thaidlt-web /srv/thaidlt/releases/0a4d7b3291f346581174aa5ac3ffe7d5404f73be/apps/web
+RUNTIME_CWD thaidlt-api /srv/thaidlt/releases/0a4d7b3291f346581174aa5ac3ffe7d5404f73be
+RUNTIME_CWD thaidlt-bot /srv/thaidlt/releases/0a4d7b3291f346581174aa5ac3ffe7d5404f73be
+PASS protected EnvironmentFile ownership/modes; values unread.
+PASS exactly one bot entry point; PID=2918709
+{"scope":"native-schema-read-only","completedMigrations":18,"newMigrationCount":1,"validatedConstraints":10,"notNullColumns":6,"uniqueIndexes":4,"nativeSessionCount":0}
+Running as unit: run-u71661.service; invocation ID: a44f2e413e434498ba00f932368b21f1
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 907ms
+CPU time consumed: 1.119s
+Memory peak: 256.0K
+Memory swap peak: 0B
+Running as unit: run-u71662.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 477ms
+CPU time consumed: 723ms
+Memory peak: 3.4M
+Memory swap peak: 0B
+
+GUEST_EXIT 0

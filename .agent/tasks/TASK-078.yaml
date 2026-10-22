@@ -1,6 +1,6 @@
 id: TASK-078
 title: Publish the accepted native private-chat quiz release
-status: BUILDING
+status: CHECKING
 owner_role: Admin
 depends_on:
   - TASK-077
@@ -41,3 +41,5 @@ required_checks:
   - independent operational review PASS
 rollback:
   - Retain611a559 runtime and dependencies. Diagnose staging/migration failure without guessing or manually marking migrations resolved. If switched and unhealthy, restore the prior runtime symlink/restart established services; retain additive table and learner data. No drop, DB restore, content reversal or secret/config rewrite without separate authorization.
+
+authoritative_checks: .agent/checks/TASK-078-checks-01.txt

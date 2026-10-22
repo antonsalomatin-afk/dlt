@@ -5,7 +5,7 @@
   "currentTask": "TASK-078",
   "lastAcceptedTask": "TASK-077",
   "lastAcceptedCommit": "bf32e5ae2b9034d42882a7a151a6ad3937150096",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK078 additive migrationcommandexit0 butoperator postcheckfailed. Currentruntime611a559 resumedhealthy; nativeNOTdeployed. Diagnoseactual18migration/schema/preservation read-only beforecutover; no repeatmigration or destructivefix. Noappsourcechanges/codeacceptance affected.",
+  "notes": "TASK078 exact0a4nativequizruntime live; Rootindependentarchive/source/runtimeCWD/service/env/schema/content/HTTPPASS. Adminfinalreport andindependentopsreview pending. CataloginspectionfalsefailurewasPG18extraNOTNULL, no migrationrerun/datachange. Main remainsacceptedcode077untiloperationsPASS; manualownerjourneyunobserved.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -182,14 +182,14 @@
   },
   "queuedNativeChatQuiz": {
     "task": "TASK-077",
-    "status": "CODE_ACCEPTED_ROLLOUT_PENDING",
+    "status": "LIVE_PENDING_OPERATIONAL_ACCEPTANCE",
     "ownerRequested": true,
     "destination": "PRIVATE_BOT_CHAT",
     "mode": "NATIVE_SINGLE_LANGUAGE_QUIZ",
     "dependsOn": "TASK-076",
     "implemented": true,
     "adr": ".agent/decisions/ADR-007-native-chat-practice.md",
-    "productionDeployed": false,
+    "productionDeployed": true,
     "implementationStarted": true,
     "builderCheckpoint": "Bounded3fileack/cleanupfix committed; Builderfresh356unit15targetintegration/lint/types/diffPASS,6realsignalregressions. Rootcorrectivechecks in progress; inheritedfullDB/build/browser baseline explicit.",
     "checkpoint": ".agent/checks/TASK-077-checkpoint-01.md",
@@ -208,20 +208,22 @@
   },
   "nativeQuizRollout": {
     "task": "TASK-078",
-    "status": "SCHEMA_PRESERVATION_CONFIRMED_CUTOVER_PENDING",
+    "status": "LIVE_VERIFIED_ADMIN_REPORT_PENDING",
     "releaseCommit": "0a4d7b3291f346581174aa5ac3ffe7d5404f73be",
     "releaseTag": "thaidlt-native-quiz-20261022",
     "previousRuntime": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8",
     "productionMutated": true,
     "adminReport": ".agent/admin/TASK-078-production-report.md",
     "adminChecks": ".agent/checks/TASK-078-admin-01.txt",
-    "productionDeployed": false,
+    "productionDeployed": true,
     "releaseArchiveSha256": "1fab1eb2d0c3f160e26e07d3ad1600c8230203879d075886ea181997f599008d",
     "releaseArchiveBytes": 873297,
     "staging": "Exactacceptedarchive599entries/594CRLFonly,91unchangedfiles, pinnedfrozeninstall/dbgenerate/productionbuildPASS. Currentruntime611a559 still active; freshbackup/migration/cutover next.",
     "migrationDeployExit": 0,
     "postMigrationInspection": "Operator expected4totalpg_constraintrows; PostgreSQL18includes6validatedNOTNULLconstraints too. Fixonlyreadonlyinspectorp/c/ffilter+explicit6NOTNULLcolumns, preservefailureevidence. No code/schema/data defect or migrationrerun.",
-    "backup": "2026-10-22T06:10:47Z;101812bytes;Resultsuccess/ExecMainStatus0",
-    "migrationState": "18completed/0unfinished; newtableempty; all16oldtablesexact; requiredCHECK/FKs/4uniquesvalid"
+    "backup": "thaidlt-20261022-061047.dump;101812bytes;Resultsuccess/ExecMainStatus0",
+    "migrationState": "Independentlyverified18completed/newmigrationonce;10validatedconstraintsincluding6NOTNULL;4uniques;nativecount0",
+    "authoritativeChecks": ".agent/checks/TASK-078-checks-01.txt",
+    "productionVerifiedAt": "2026-10-22T06:16:01Z"
   }
 }
