@@ -1,6 +1,6 @@
 id: TASK-082
 title: Simplify group practice to independent native quiz answers
-status: BUILDING
+status: CHECKING
 owner_role: Builder
 depends_on:
   - TASK-081
@@ -41,3 +41,5 @@ scope_rule: Ask Supervisor before expanding source/test files. Do not weaken che
 
 validation_environment_clarification:
   - Supervisor permits only the four ignored .local-content/task081*.mjs administrative diagnostic scratch files to be renamed to .mjs.txt, preserving their bytes/evidence. Lint scans them as source otherwise and reports process/console globals. Verify resolved paths remain within workspace .local-content, use native PowerShell Move-Item -LiteralPath without overwrite, record names. No eslint config/application/test exclusions or assertion changes are authorized.
+
+builder_commit: 90f751b90b9efd2d3c4c574eee7194200fdfa126

@@ -5,7 +5,7 @@
   "currentTask": "TASK-082",
   "lastAcceptedTask": "TASK-081",
   "lastAcceptedCommit": "8c7a5ef03af5b5c8032d7529b000c0ad66ea01f0",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -268,9 +268,10 @@
   },
   "groupPracticeSimplification": {
     "task": "TASK-082",
-    "status": "BUILDING",
+    "status": "CHECKING",
     "ownerRequested": true,
     "productionDeployed": false,
-    "checkpoint": "Scoped5file correction implemented; targeted13unit18integration and full369unit PASS. Initial fullintegration reported500vs200 in unchanged daily-practice/exam-start concurrent scenarios; focused18test rerun PASS withoutcodechanges. Exactfirstfailure/focused logs retained; fullintegrationretry underway, no source/testweakening. Rootchecks/review notyetstarted."
+    "checkpoint": "Final5file source frozen. Builder369unit/236integration(fullretry)/build/finallinttypes/diffPASS; firstunchangedAPIconcurrencyfailures retained with focused18PASS and fullretryPASS. Fresh Supervisor gates next.",
+    "builderCommit": "90f751b90b9efd2d3c4c574eee7194200fdfa126"
   }
 }

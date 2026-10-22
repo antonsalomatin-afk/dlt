@@ -1,0 +1,6 @@
+TASK082 Builder90f751b90b9efd2d3c4c574eee7194200fdfa126; only5allowedfiles.
+Finalsource:369unit/62files and236integration/44files,build,finallint,typecheck,diff PASS.
+Initial fullintegration failures retained: daily-practice.integration.test.ts389 expected200 received500; exam-start.integration.test.ts358 expected[200,200] received[500,200]. No API/sharedhelper/schema change. Focused18/18 plus full236/236 repeated withoutsource/testchanges passed; do not call firstfailuregreen.
+Logs ignored .local-content/TASK-082-builder-checks-01.txt, TASK-082-focused-retry.txt, TASK-082-builder-checks-02.txt.
+Authorized4oldtask081 diagnostic .mjs snippets movedbyteexactto.mjs.txt; noeslintconfigurationchange or source/test exclusions.
+Final lint/typecheck repeated after testsetup edit duringinitialtypecheck, so all finalchecks cover finalsource. No productionoperations. Rootchecks/reviewrequired.
