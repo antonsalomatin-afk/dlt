@@ -1,0 +1,120 @@
+TASK-080 Supervisor authoritative checks
+Commit: 50ba6043c7b9149af2e35c4086a6978d92653219
+UTC: 2026-10-22T12:53:39.665771+00:00
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD lint
+$ eslint .
+
+EXIT 0
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD typecheck
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 221ms
+
+$ tsc --noEmit
+
+EXIT 0
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD test --maxWorkers=2
+$ pnpm db:generate && vitest run "--maxWorkers=2"
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 325ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  62 passed (62)
+      Tests  369 passed (369)
+   Start at  14:54:26
+   Duration  50.75s (tests 75%, import 19%, transform 5%, worker 1%)
+
+    Isolate  62 workers spawned · ~249ms startup each (spawn + environment, per file)
+             at least ~7.46s faster with isolate: false — reuses workers across files instead of one per file
+
+
+EXIT 0
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD prisma validate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "validate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+The schema at packages\database\prisma\schema.prisma is valid 🚀
+
+EXIT 0
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD db:ready
+$ node --env-file=.env tools/database/local.ts ready
+Local PostgreSQL ready: OK
+
+EXIT 0
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD test:integration
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 342ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:47020) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:22436) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  44 passed (44)
+      Tests  234 passed (234)
+   Start at  14:55:27
+   Duration  342.74s (tests 90%, import 8%, transform 1%)
+
+    Isolate  44 workers spawned · ~254ms startup each (spawn + environment, per file)
+             at least ~10.93s faster with isolate: false — reuses workers across files instead of one per file
+
+
+EXIT 0
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD build
+$ pnpm --filter @thai-dlt/web build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 79ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 12.3min
+  Running TypeScript ...
+  Finished TypeScript in 3.0s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/3) ...
+✓ Generating static pages using 4 workers (3/3) in 1390ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+
+EXIT 0
+
+CHECK C:\Program Files\Git\cmd\git.EXE diff --check
+
+EXIT 0

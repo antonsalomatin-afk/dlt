@@ -5,8 +5,8 @@
   "currentTask": "TASK-080",
   "lastAcceptedTask": "TASK-079",
   "lastAcceptedCommit": "abc77865a6aeae37749dcebc03459f3ea4a536c5",
-  "status": "CHECKING",
-  "reviewAttempt": 0,
+  "status": "REVIEW",
+  "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "parkedTasks": [
@@ -234,7 +234,7 @@
   },
   "groupChatQuiz": {
     "task": "TASK-080",
-    "status": "CHECKING",
+    "status": "REVIEW",
     "ownerRequested": true,
     "implemented": false,
     "productionDeployed": false,
@@ -244,7 +244,8 @@
     "review": ".agent/reviews/TASK-079-review-01.md",
     "reviewVerdict": "PASS",
     "architectureTask": "TASK-079",
-    "builderCheckpoint": "Final Builder frozen gate03 all PASS: lint/types/369unit62files/Prisma/234integration44files/build/diff. Earlier run failures and pre-start delay retained in ignored logs; no tests weakened. Supervisor fresh authoritative gates next.",
-    "implementationCommit": "6a0fd0028c7036fa8a4d857af305fbefccddf094"
+    "builderCheckpoint": "Builder and fresh Supervisor full gates PASS:369unit62files/234integration44files/lint/types/Prisma/build/diff. Independent code review01 next.",
+    "implementationCommit": "6a0fd0028c7036fa8a4d857af305fbefccddf094",
+    "authoritativeChecks": ".agent/checks/TASK-080-checks-01.txt"
   }
 }

@@ -1,6 +1,6 @@
 id: TASK-080
 title: Implement shared native group quizzes with individual practice credit
-status: CHECKING
+status: REVIEW
 owner_role: Builder
 depends_on:
   - TASK-079
@@ -53,3 +53,5 @@ implementation_clarification:
   - Closed-round vehicle selection is explicit: /quiz car or /quiz motorcycle from the current starter/member or administrator starts the next round with that vehicle; no argument recovers closed feedback. Other members cannot advance, open rounds cannot be replaced and concurrent/repeated commands cannot advance twice. ADR-008 is clarified accordingly; include tests in final independent review.
 
 builder_commit: 6a0fd0028c7036fa8a4d857af305fbefccddf094
+authoritative_checks: .agent/checks/TASK-080-checks-01.txt
+review_attempt: 1
