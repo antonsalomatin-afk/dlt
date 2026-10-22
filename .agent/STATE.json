@@ -5,8 +5,8 @@
   "currentTask": "TASK-082",
   "lastAcceptedTask": "TASK-081",
   "lastAcceptedCommit": "8c7a5ef03af5b5c8032d7529b000c0ad66ea01f0",
-  "status": "CHECKING",
-  "reviewAttempt": 0,
+  "status": "REVIEW",
+  "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "parkedTasks": [
@@ -268,10 +268,11 @@
   },
   "groupPracticeSimplification": {
     "task": "TASK-082",
-    "status": "CHECKING",
+    "status": "REVIEW",
     "ownerRequested": true,
     "productionDeployed": false,
-    "checkpoint": "Final5file source frozen. Builder369unit/236integration(fullretry)/build/finallinttypes/diffPASS; firstunchangedAPIconcurrencyfailures retained with focused18PASS and fullretryPASS. Fresh Supervisor gates next.",
-    "builderCommit": "90f751b90b9efd2d3c4c574eee7194200fdfa126"
+    "checkpoint": "FreshSupervisor lint/types/369unit/236integration/dbready/build/diff ALLPASS firstRootrun. PriorBuilderAPIparallelfailures didnotrecurfocused/fullretry/freshRoot. Independent source review01 next.",
+    "builderCommit": "90f751b90b9efd2d3c4c574eee7194200fdfa126",
+    "authoritativeChecks": ".agent/checks/TASK-082-checks-01.txt"
   }
 }

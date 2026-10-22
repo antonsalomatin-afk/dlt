@@ -1,0 +1,111 @@
+TASK-082 Supervisor authoritative checks
+Commit: d3c6c85f124a57f5083929e7c9bbbbe1c3a2026b
+UTC: 2026-10-22T17:44:40.043623+00:00
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD lint
+$ eslint .
+
+EXIT 0
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD typecheck
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 481ms
+
+$ tsc --noEmit
+
+EXIT 0
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD test --maxWorkers=2
+$ pnpm db:generate && vitest run "--maxWorkers=2"
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 430ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  62 passed (62)
+      Tests  369 passed (369)
+   Start at  19:45:22
+   Duration  66.64s (tests 77%, import 20%, transform 2%, worker 1%)
+
+    Isolate  62 workers spawned · ~336ms startup each (spawn + environment, per file)
+             at least ~10.08s faster with isolate: false — reuses workers across files instead of one per file
+
+
+EXIT 0
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD db:ready
+$ node --env-file=.env tools/database/local.ts ready
+Local PostgreSQL ready: OK
+
+EXIT 0
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD test:integration
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 481ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:48972) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:45496) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  44 passed (44)
+      Tests  236 passed (236)
+   Start at  19:46:38
+   Duration  346.07s (tests 88%, import 11%, transform 1%)
+
+    Isolate  44 workers spawned · ~329ms startup each (spawn + environment, per file)
+             at least ~14.15s faster with isolate: false — reuses workers across files instead of one per file
+
+
+EXIT 0
+
+CHECK C:\Users\anton\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.CMD build
+$ pnpm --filter @thai-dlt/web build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 102ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1249ms
+  Running TypeScript ...
+  Finished TypeScript in 3.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/3) ...
+✓ Generating static pages using 4 workers (3/3) in 1661ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+
+EXIT 0
+
+CHECK C:\Program Files\Git\cmd\git.EXE diff --check
+
+EXIT 0
