@@ -82,5 +82,8 @@ corrective_authoritative_checks: .agent/checks/TASK-077-checks-02.txt
 
 accepted_commit: bf32e5ae2b9034d42882a7a151a6ad3937150096
 review_verdict: PASS
-production_deployed: false
+production_deployed: true
 release_tag: thaidlt-native-quiz-20261022
+
+production_task: TASK-078
+production_release_commit: 0a4d7b3291f346581174aa5ac3ffe7d5404f73be

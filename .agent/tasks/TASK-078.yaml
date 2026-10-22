@@ -1,6 +1,6 @@
 id: TASK-078
 title: Publish the accepted native private-chat quiz release
-status: REVIEW
+status: ACCEPTED
 owner_role: Admin
 depends_on:
   - TASK-077
@@ -49,3 +49,7 @@ authoritative_checks: .agent/checks/TASK-078-checks-01.txt
 review_attempt: 1
 review_file: .agent/reviews/TASK-078-review-01.md
 admin_commit: 36624e74104179a4053cbc9eb08491e3bea7d9b9
+
+accepted_commit: 36624e74104179a4053cbc9eb08491e3bea7d9b9
+review_verdict: PASS
+production_deployed: true
