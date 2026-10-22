@@ -94,12 +94,12 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 52,
-    "latestObservedWeeklyUsedPercent": 38,
+    "latestObservedUsedPercent": 62,
+    "latestObservedWeeklyUsedPercent": 40,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-28T05:55:51Z",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-22T05:32:37.797273+00:00",
+    "checkedAt": "2026-10-22T06:11:04.134458+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-22T10:15:35+00:00"
   },
@@ -208,12 +208,16 @@
   },
   "nativeQuizRollout": {
     "task": "TASK-078",
-    "status": "ADMIN_STAGING",
+    "status": "STAGED_BACKUP_MIGRATION_PENDING",
     "releaseCommit": "0a4d7b3291f346581174aa5ac3ffe7d5404f73be",
     "releaseTag": "thaidlt-native-quiz-20261022",
     "previousRuntime": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8",
-    "productionMutated": false,
+    "productionMutated": true,
     "adminReport": ".agent/admin/TASK-078-production-report.md",
-    "adminChecks": ".agent/checks/TASK-078-admin-01.txt"
+    "adminChecks": ".agent/checks/TASK-078-admin-01.txt",
+    "productionDeployed": false,
+    "releaseArchiveSha256": "1fab1eb2d0c3f160e26e07d3ad1600c8230203879d075886ea181997f599008d",
+    "releaseArchiveBytes": 873297,
+    "staging": "Exactacceptedarchive599entries/594CRLFonly,91unchangedfiles, pinnedfrozeninstall/dbgenerate/productionbuildPASS. Currentruntime611a559 still active; freshbackup/migration/cutover next."
   }
 }
