@@ -38,3 +38,6 @@ required_checks:
   - pnpm build
   - git diff --check
 scope_rule: Ask Supervisor before expanding source/test files. Do not weaken checks or rewrite accepted migrations; retain all historical learning data and the original three untracked starter files.
+
+validation_environment_clarification:
+  - Supervisor permits only the four ignored .local-content/task081*.mjs administrative diagnostic scratch files to be renamed to .mjs.txt, preserving their bytes/evidence. Lint scans them as source otherwise and reports process/console globals. Verify resolved paths remain within workspace .local-content, use native PowerShell Move-Item -LiteralPath without overwrite, record names. No eslint config/application/test exclusions or assertion changes are authorized.
