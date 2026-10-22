@@ -26,6 +26,7 @@ files_allowed:
   - tests/group-chat-quiz.integration.test.ts
   - tests/bot-shutdown.test.ts
   - tests/chat-quiz.test.ts
+  - tests/exam-session.integration.test.ts
   - README.md
 required_checks:
   - pnpm lint
@@ -48,3 +49,4 @@ production_boundary: Implementation only. Exact accepted release, backup, additi
 
 implementation_clarification:
   - GroupQuizRound may additionally store nullable controlMessageId for exact binding of separately sent finish, Next and uncertain-delivery recovery messages. This is a routine schema detail required by ADR-008 callback authorization, not a product or architecture expansion. Persist the returned validated control message identity before enabling it; recovery remains fail-closed.
+  - Supervisor authorizes tests/exam-session.integration.test.ts solely to append the new group migration to its exact complete migration-chain expectation; retain all assertions and existing entries. Full integration gate exposed the expected baseline change.
