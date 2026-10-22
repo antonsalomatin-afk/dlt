@@ -1,6 +1,6 @@
 id: TASK-078
 title: Publish the accepted native private-chat quiz release
-status: CHECKING
+status: REVIEW
 owner_role: Admin
 depends_on:
   - TASK-077
@@ -21,6 +21,8 @@ acceptance:
   - Live read-only checks pass for compact web200, protected local/public API and same-origin presentation401/no-store, unknownAPI404, bot metadata/MainMiniApp/noWebhook and explicit native update subscription,18 completed migrations and100 exact Russian stems. No synthetic signed identity, real test message, diagnostic getUpdates, scheduler tick or second bot.
   - Admin report and safe transcript bind release/archive/build/backup/migration/preservation/runtime evidence. Supervisor independently verifies exact live release and boundaries. Independent operational Reviewer returns PASS before acceptance/main integration. Real-owner native and MiniApp journeys remain honestly unobserved unless separately supplied.
 files_allowed:
+  - .agent/reviews/TASK-078-review-01.md
+  - .agent/checks/TASK-078-checks-01.txt
   - .agent/admin/TASK-078-production-report.md
   - .agent/checks/TASK-078-admin-01.txt
   - .local-content/task078*
@@ -43,3 +45,7 @@ rollback:
   - Retain611a559 runtime and dependencies. Diagnose staging/migration failure without guessing or manually marking migrations resolved. If switched and unhealthy, restore the prior runtime symlink/restart established services; retain additive table and learner data. No drop, DB restore, content reversal or secret/config rewrite without separate authorization.
 
 authoritative_checks: .agent/checks/TASK-078-checks-01.txt
+
+review_attempt: 1
+review_file: .agent/reviews/TASK-078-review-01.md
+admin_commit: 36624e74104179a4053cbc9eb08491e3bea7d9b9
