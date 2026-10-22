@@ -25,3 +25,13 @@ No UI code, runtime configuration, production content or deployment changed in t
 Owner supplied a fresh Telegram Mini App screenshot showing the existing promotional ThaiDLT onboarding screen and reported seeing no chat updates. This establishes rendering of that screen only, not practice/exam/scheduled-message success. Read-only production diagnosis at08:50:15UTC found the bot active/running with0 restarts,3 users,0 reminder opt-ins,0 opted-in users with a selected vehicle and no delivery rows for the current ICT date. No user identifiers, credentials or preferences were changed. The11:00 ICT send window preceded deployment; next normal window is2026-10-22 at11:00 ICT for opted-in learners.
 
 The owner explicitly clarified they expected both real chat-question messages and the compact Mini App design. TASK-076 implements the approved real interface and corrects the obsolete reminder settings claim that delivery is inactive. User opt-in remains required; no forced/test message is inferred from this feedback. Original real-owner learning smoke remains unpassed.
+
+## Current handoff — 2026-10-22
+
+The historical design discussion above has been resolved by the accepted compact Mini App (TASK-076). Native private-chat quizzes (TASK-077) and their production rollout (TASK-078) are also accepted after authoritative checks and independent PASS. Live release is `0a4d7b3291f346581174aa5ac3ffe7d5404f73be`; operational evidence is `.agent/admin/TASK-078-production-report.md`, with independent review `.agent/reviews/TASK-078-review-01.md`. No further deployment approval is pending.
+
+The owner can send `/quiz` (or `/practice`) to `@thauto_dlt_bot`, choose a vehicle if needed, answer the native quiz, read its explanation and use Next in the same private chat. Current Russian content contains translated stems only, so a coherent complete quiz uses English. Saved preferences and reminder opt-in are preserved.
+
+Owner-reported results since this rollout: none. Actual native answer/feedback/Next, fresh signed Mini App practice for CAR and MOTORCYCLE, and a 50-question exam with reopen/resume remain UNOBSERVED. Automated local tests and live read-only health checks have passed but do not establish these owner observations. Scheduled-message receipt is also unobserved and is not required to close this initial smoke task.
+
+TASK-072 remains BLOCKED on real-owner interaction. Do not mark it passed, manufacture signed authentication or send a forced Telegram test message. Any concrete reported defect must receive a scoped Builder task, authoritative checks and independent review.
