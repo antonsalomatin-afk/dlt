@@ -21,7 +21,7 @@ export function createBot(environment: Record<string, string | undefined>, optio
   protectPollingAcknowledgements(bot);
   bot.command('start', async (context) => {
     if (context.chat.type !== 'private') {
-      await context.reply('Open a private chat with this bot and send /start to launch ThaiDLT.');
+      await context.reply('Send /quiz@thauto_dlt_bot [car|motorcycle] for group practice (bot administrator required), or open a private chat and send /start for ThaiDLT.');
       return;
     }
     const keyboard = new InlineKeyboard().webApp('Open ThaiDLT', config.miniAppUrl);

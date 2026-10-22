@@ -1325,3 +1325,14 @@ do not start a second polling process or drop pending updates. Existing Mini App
 confirmation and scheduled deep-link reminder formats remain available. Tests
 inject Telegram transports and use a randomly named isolated local PostgreSQL
 database. This implementation does not itself deploy or send production messages.
+
+
+### Native quizzes in Telegram groups
+
+Add the bot to a group or supergroup and make it an administrator (membership checks require this; destructive administrator privileges are unnecessary). Send `/quiz@thauto_dlt_bot` or `/practice@thauto_dlt_bot`; use `motorcycle` or `car` after the command for a new idle round. After finishing, the starter (while still a member) or an administrator can explicitly send `/quiz@thauto_dlt_bot car` or `/quiz@thauto_dlt_bot motorcycle` to start the next round in that vehicle. With no argument, `/quiz` recovers the finished round and its Next button. An open round is always reused. A separate leading `@thauto_dlt_bot /quiz` is not the command syntax. Telegram privacy mode may remain enabled. Groups and forum topics each retain their own round.
+
+The default is CAR and the shared language is English. These choices do not change anyone's personal vehicle, language or reminder settings. All members answer the same four-option native quiz. Votes are non-anonymous and each member's first accepted answer counts once toward their personal practice; no private message is sent. The bot must remain an administrator to verify current membership. Anonymous/send-as-chat votes and votes from nonmembers are ignored. A member's vote on a forwarded poll cannot be distinguished by Telegram from their vote in the original group; protected content reduces forwarding.
+
+After at least one answer, the starter or a group administrator selects **Finish round**. The bot closes scoring, stops the poll and posts the complete explanation and aggregate answered/correct percentage, followed by **Next question**. It does not broadcast a participant's result after each vote. Native Telegram correctness/explanation controls retain their normal behavior. Repeated `/quiz` recovers the current poll or closed-round explanation; it does not silently replace an unanswered quiz. A delivery marked uncertain requires explicit **Replace quiz** by the starter or an administrator. Old or copied controls cannot advance a newer round. Delivery/feedback is not guaranteed exactly once; scoring is protected against retries. After Telegram migrates a basic group to a supergroup, start a fresh round in the new group.
+
+Group support requires the additive `20261022100000_group_chat_quiz` migration, followed by `pnpm db:generate` before bot/API startup. Follow the deployment backup/migration/release procedure above. Private quizzes, Mini App practice/exams and opt-in 11:00 ICT reminders retain their established behavior.

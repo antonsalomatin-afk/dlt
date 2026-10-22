@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { createGroupQuizService } from './group-chat-quiz.ts';
+import { invalidateMigratedGroup } from '../../../packages/database/src/group-chat-quiz.ts';
 import type { Bot } from 'grammy';
 import type { PrismaClient } from '../../../packages/database/src/index.ts';
 import { answerChatQuiz, bindChatQuiz, chatQuizFeedback, markChatQuizUncertain, requestChatQuiz, telegramLearnerSchema, UnclaimedQuizAnswerError, type ChatQuiz } from '../../../packages/database/src/chat-quiz.ts';
@@ -119,12 +121,18 @@ export function createChatQuizService(database: PrismaClient, api: QuizTransport
 
 export function registerChatQuiz(bot: Bot, database: PrismaClient) {
   const service = createChatQuizService(database, bot.api);
-  bot.command(['quiz', 'practice'], (context) => service.command({ from: context.from, chat: context.chat }));
+  const group = createGroupQuizService(database, bot.api, () => bot.botInfo.id);
+  bot.on('message:migrate_to_chat_id', async (context) => { await invalidateMigratedGroup(database, context.chat.id); });
+  bot.command(['quiz', 'practice'], async (context) => {
+    if (context.chat.type === 'private') await service.command({ from: context.from, chat: context.chat });
+    else await group.command(context.message, context.match);
+  });
+  bot.callbackQuery(/^gq1:/u, async (context) => { await group.callback(context.callbackQuery); await context.answerCallbackQuery(); });
   bot.callbackQuery(/^cq:/u, async (context) => {
     await service.callback(context.callbackQuery);
     await context.answerCallbackQuery();
   });
-  bot.on('poll_answer', (context) => service.answer(context.pollAnswer));
+  bot.on('poll_answer', async (context) => { if (!await group.answer(context.pollAnswer)) await service.answer(context.pollAnswer); });
 }
 
 export function configureBotErrors(bot: Bot) {

@@ -31,6 +31,8 @@ enum ReminderSummaryType {
 }
 
 model User {
+  initiatedGroupRounds GroupQuizRound[]
+  groupQuizVotes GroupQuizVote[]
   chatQuizSession ChatQuizSession?
   dailyReminderDeliveries DailyReminderDelivery[]
   reminderSummaryDeliveries ReminderSummaryDelivery[]
@@ -124,6 +126,7 @@ model Category {
 }
 
 model Concept {
+  groupQuizRounds GroupQuizRound[]
   learningStates ConceptLearningState[]
   id             String                 @id @default(uuid()) @db.Uuid
   slug           String                 @unique
@@ -136,6 +139,7 @@ model Concept {
 }
 
 model Question {
+  groupQuizRounds GroupQuizRound[]
   examQuestions          ExamQuestion[]
   examReports            ExamQuestionReport[]
   favorites              Favorite[]
@@ -199,6 +203,7 @@ model Session {
 }
 
 model QuestionPresentation {
+  groupQuizVote GroupQuizVote?
   chatQuizSession ChatQuizSession?
   answer     AnswerAttempt?
   favorites  Favorite[]
@@ -357,4 +362,59 @@ model ExamQuestionReport {
   @@index([questionId, createdAt(sort: Desc), id(sort: Desc)])
   @@index([userId, createdAt(sort: Desc), id(sort: Desc)])
   @@index([triageDecision, triagedAt(sort: Desc), id(sort: Desc)])
+}
+
+model GroupQuizScope {
+  telegramChatId BigInt
+  threadId Int @default(0)
+  currentRoundId String? @unique @db.Uuid
+  currentRound GroupQuizRound? @relation("CurrentGroupRound", fields: [currentRoundId, telegramChatId, threadId], references: [id, telegramChatId, threadId], onDelete: Restrict)
+  rounds GroupQuizRound[] @relation("GroupRounds")
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@id([telegramChatId, threadId])
+  @@unique([currentRoundId, telegramChatId, threadId])
+}
+
+model GroupQuizRound {
+  id String @id @default(uuid()) @db.Uuid
+  telegramChatId BigInt
+  threadId Int
+  scope GroupQuizScope @relation("GroupRounds", fields: [telegramChatId, threadId], references: [telegramChatId, threadId], onDelete: Restrict)
+  currentScope GroupQuizScope? @relation("CurrentGroupRound")
+  initiatorId String @db.Uuid
+  initiator User @relation(fields: [initiatorId], references: [id], onDelete: Restrict)
+  questionId String @db.Uuid
+  question Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  conceptId String? @db.Uuid
+  concept Concept? @relation(fields: [conceptId], references: [id], onDelete: Restrict)
+  snapshot Json
+  vehicleType VehicleType
+  language PreferredLanguage @default(ENGLISH)
+  deliveryState String
+  claimedAt DateTime @db.Timestamptz(3)
+  pollId String? @unique
+  messageId Int?
+  controlMessageId Int?
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  closedAt DateTime? @db.Timestamptz(3)
+  votes GroupQuizVote[]
+
+  @@unique([id, telegramChatId, threadId])
+  @@unique([id, questionId])
+  @@index([telegramChatId, threadId, createdAt])
+}
+
+model GroupQuizVote {
+  roundId String @db.Uuid
+  userId String @db.Uuid
+  questionId String @db.Uuid
+  round GroupQuizRound @relation(fields: [roundId, questionId], references: [id, questionId], onDelete: Restrict)
+  user User @relation(fields: [userId], references: [id], onDelete: Restrict)
+  presentationId String @unique @db.Uuid
+  presentation QuestionPresentation @relation(fields: [presentationId, userId, questionId], references: [id, userId, questionId], onDelete: Restrict)
+
+  @@id([roundId, userId])
+  @@unique([presentationId, userId, questionId])
 }
