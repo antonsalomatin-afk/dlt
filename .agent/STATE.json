@@ -5,8 +5,8 @@
   "currentTask": "TASK-077",
   "lastAcceptedTask": "TASK-076",
   "lastAcceptedCommit": "611a5592ccf4f38612e56dd4c1bb9d906c32bef8",
-  "status": "CHECKING",
-  "reviewAttempt": 1,
+  "status": "REVIEW",
+  "reviewAttempt": 2,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "parkedTasks": [
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK-077 review01FAIL one shutdown/preclaimack blocker, othercriteriaPASS. Return bounded lifecycle/native vote acknowledgement correction and realgrammyregression toBuilder; retain350unit218integration rootbaseline. No publication/mainacceptance. Max3reviews.",
+  "notes": "TASK-077 rootchecks02PASS356unit15targetintegration/lint/types/localDB/diff atbf32e5a. Confirmedonlybot/lifecycle/new6tests changed over362624c; full218integration/Prisma/build and076browser inherited explicitly per4328577. Independentreview02 next, no productionmutation.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -182,7 +182,7 @@
   },
   "queuedNativeChatQuiz": {
     "task": "TASK-077",
-    "status": "AUTHORITATIVE_FIX_CHECKS",
+    "status": "INDEPENDENT_REVIEW_02",
     "ownerRequested": true,
     "destination": "PRIVATE_BOT_CHAT",
     "mode": "NATIVE_SINGLE_LANGUAGE_QUIZ",
@@ -197,8 +197,8 @@
     "deployReadiness": "READ_ONLY_PASS; current611a559/17migrations/noChatQuizSession; no production mutation",
     "builderCommit": "362624c272e43561f5fa727313ab6e0f6fc99693",
     "authoritativeChecks": ".agent/checks/TASK-077-checks-02.txt",
-    "review": ".agent/reviews/TASK-077-review-01.md",
-    "reviewVerdict": "FAIL",
+    "review": ".agent/reviews/TASK-077-review-02.md",
+    "reviewVerdict": "PENDING",
     "reviewFinding": "SIGTERM/SIGINT bot.stop acknowledgement can consume an in-flight unclaimed native vote; independently reproduced by Reviewer.",
     "builderFixCommit": "bf32e5ae2b9034d42882a7a151a6ad3937150096"
   }
