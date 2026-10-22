@@ -72,3 +72,7 @@ review_attempt: 1
 review_file: .agent/reviews/TASK-077-review-01.md
 
 review_fix_scope: Correct signal shutdown acknowledgement during pending native pre-claim DB transaction; no valid vote acknowledged before durable claim or outcome. Add real injected grammY lifecycle SIGTERM/SIGINT failure and successful/restart coverage. Preserve bounded shutdown, scheduler cleanup, safe errors and existing contracts; no new model/dependency/feature.
+review_fix_validation:
+  - Supervisor-approved bounded validation applies only while the correction changes bot construction/lifecycle and injected lifecycle tests; no database/schema/migration/API/web/content/dependency change is permitted under this inheritance.
+  - Run final lint, typecheck, all unit tests with2workers, targeted native+practice isolated integration (pnpm test:integration tests/chat-quiz.integration.test.ts tests/practice.integration.test.ts) and whitespace check. Root repeats these authoritatively, then independent review02 reproduces signal/restart regression.
+  - Inherit rootchecks01 full218integration/Prismavalidation/productionbuild and TASK076229browser for unchanged associated source. Record precise inherited-vs-fresh evidence; do not claim a fresh full integration or build unless actually rerun. If correction expands outside bounded source, restore all full mandatory gates before acceptance.
