@@ -1,0 +1,224 @@
+2026-10-23T02:55:21.360938+00:00 Exact accepted simple group release proof
+{"release": "f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c", "archiveSha256": "bd21ef83be8d8b477babcbc63a4d06014b77bc9720b694cd85b47d7f352dd786", "size": 928506, "regularFiles": 629, "crlfOnlyConversions": 0, "unchangedSchemaMigrationFiles": 21}
+Every regular member exactly matches independently generated pinned Git LF bytes. Schema and every migration source byte are identical to previous accepted runtime; no migration/DDL is required or performed.
+
+2026-10-23T02:56:13.615678+00:00 Simple group code-only rollout read-only preflight
+2026-10-23T02:56:19Z
+ubuntu-apps
+/srv/thaidlt/releases/3cbcbac2976014f4d3bf6346341b6667f14b44d1
+MainPID=3219524
+NRestarts=0
+ExecMainStatus=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=
+MainPID=3219519
+NRestarts=0
+ExecMainStatus=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=
+MainPID=3219523
+NRestarts=0
+ExecMainStatus=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/question-posts.env (ignore_errors=no)
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=/etc/systemd/system/thaidlt-bot.service.d/75-question-posts.conf
+v24.22.0
+11.19.0
+600 root root /etc/thaidlt/app.env
+600 root root /etc/thaidlt/database.env
+600 root root /etc/thaidlt/bot.env
+600 root root /etc/thaidlt/question-posts.env
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       1.2T   20G  1.2T   2% /
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+LISTEN 0      4096       127.0.0.1:5434      0.0.0.0:*          
+LISTEN 0      511        127.0.0.1:3060      0.0.0.0:*          
+LISTEN 0      511        127.0.0.1:3061      0.0.0.0:*          
+{"singleBotInstance": true, "protectedEnvironmentModes": true, "questionPostsFlagPreserved": true, "expectedPublicUsername": true, "shortNameUnset": true}
+{"migrations":{"completed":19,"unfinished":0,"rolledback":0},"applicationTables":20,"requiredGroupAndPrivateTablesPresent":true,"verifiedContent":[{"vehicleType":"CAR","active_verified":50,"russian":50},{"vehicleType":"MOTORCYCLE","active_verified":50,"russian":50}]}
+Running as unit: run-u75108.service; invocation ID: 59f0707f7f7b442b8b6145595cf979ef
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 6.548s
+CPU time consumed: 1.205s
+Memory peak: 256.0K
+Memory swap peak: 0B
+Running as unit: run-u75109.service; invocation ID: ec86f7854b3a4de0af4b1b7320e3cb11
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 116ms
+CPU time consumed: 117ms
+Memory peak: 1.1M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+2026-10-23T02:58:23.705067+00:00 Exact archive host+guest transfer
+{"exitcode": 0, "exited": 1, "out-data": "Guest archive verified bd21ef83be8d8b477babcbc63a4d06014b77bc9720b694cd85b47d7f352dd786\n"}
+
+2026-10-23T02:58:24.191063+00:00 Stage exact accepted simple-group archive
+/var/tmp/TASK-083-f17b9ef.tar.gz: OK
+Exact accepted native release extracted; current runtime unchanged.
+
+GUEST_EXIT 0
+
+2026-10-23T02:58:28.597479+00:00 All629 staged raw source files match pinned archive
+{"allRawInstalledSourceFilesExact": 629, "archiveSha256": "bd21ef83be8d8b477babcbc63a4d06014b77bc9720b694cd85b47d7f352dd786"}
+
+GUEST_EXIT 0
+
+2026-10-23T03:03:08.821043+00:00 Staging transport interruption: strict SSH/QEMU exec-status poll failed while install/build guest command was in flight. Current runtime not switched; no migration/DDL/cutover attempted. Remote completion is not inferred. Diagnose actual task083 transient unit results and artifacts before any continuation; do not blindly duplicate install/build.
+
+2026-10-23T03:03:09.271773+00:00 Read-only staging completion diagnosis after transport interruption
+2026-10-23T03:03:13Z
+/srv/thaidlt/releases/3cbcbac2976014f4d3bf6346341b6667f14b44d1
+Result=success
+ExecMainStartTimestamp=
+ExecMainExitTimestamp=
+ExecMainStatus=0
+LoadState=not-found
+ActiveState=inactive
+SubState=dead
+Result=success
+ExecMainStartTimestamp=
+ExecMainExitTimestamp=
+ExecMainStatus=0
+LoadState=not-found
+ActiveState=inactive
+SubState=dead
+{"unit": "thaidlt-task083-install", "journalServiceResults": [{"timestampMicroseconds": "1792724316040808", "message": "Started thaidlt-task083-install.service - /bin/bash -c \"set -eu; test \\\"\\$(pnpm --version)\\\" = 11.19.0; pnpm install --frozen-lockfile --prod=false; pnpm db:generate\"."}, {"timestampMicroseconds": "1792724347680496", "message": "thaidlt-task083-install.service: Deactivated successfully."}]}
+{"unit": "thaidlt-task083-build", "journalServiceResults": [{"timestampMicroseconds": "1792724347704776", "message": "Started thaidlt-task083-build.service - /usr/bin/pnpm build."}, {"timestampMicroseconds": "1792724384984200", "message": "thaidlt-task083-build.service: Deactivated successfully."}]}
+{"newBuiltWebIdExists": true, "generatedClientExists": true, "installedDependenciesExist": true}
+
+GUEST_EXIT 0
+
+2026-10-23T03:05:27.586379+00:00 Trusted systemd staging success boundaries after transport interruption
+{"trustedSystemdSuccessfulStagingInvocations": {"thaidlt-task083-install": [{"timestampUtc": "2026-10-23T02:58:36.040808+00:00", "message": "Started thaidlt-task083-install.service - /bin/bash -c \"set -eu; test \\\"\\$(pnpm --version)\\\" = 11.19.0; pnpm install --frozen-lockfile --prod=false; pnpm db:generate\".", "UNIT": "thaidlt-task083-install.service", "_SYSTEMD_UNIT": "init.scope", "_PID": "1", "MESSAGE_ID": "39f53479d3a045ac8e11786248231fbf", "INVOCATION_ID": "ec0c191d9d344eeea74b5f80b2114d7d", "JOB_RESULT": "done", "CODE_FUNC": "job_emit_done_message"}, {"timestampUtc": "2026-10-23T02:59:07.680496+00:00", "message": "thaidlt-task083-install.service: Deactivated successfully.", "UNIT": "thaidlt-task083-install.service", "_SYSTEMD_UNIT": "init.scope", "_PID": "1", "MESSAGE_ID": "7ad2d189f7e94e70a38c781354912448", "INVOCATION_ID": "ec0c191d9d344eeea74b5f80b2114d7d", "CODE_FUNC": "unit_log_success"}], "thaidlt-task083-build": [{"timestampUtc": "2026-10-23T02:59:07.704776+00:00", "message": "Started thaidlt-task083-build.service - /usr/bin/pnpm build.", "UNIT": "thaidlt-task083-build.service", "_SYSTEMD_UNIT": "init.scope", "_PID": "1", "MESSAGE_ID": "39f53479d3a045ac8e11786248231fbf", "INVOCATION_ID": "e85696dcd25249ff8950f0c1b0393db8", "JOB_RESULT": "done", "CODE_FUNC": "job_emit_done_message"}, {"timestampUtc": "2026-10-23T02:59:44.984200+00:00", "message": "thaidlt-task083-build.service: Deactivated successfully.", "UNIT": "thaidlt-task083-build.service", "_SYSTEMD_UNIT": "init.scope", "_PID": "1", "MESSAGE_ID": "7ad2d189f7e94e70a38c781354912448", "INVOCATION_ID": "e85696dcd25249ff8950f0c1b0393db8", "CODE_FUNC": "unit_log_success"}]}, "sequentialInstallAndGenerateBeforeBuild": true, "noDuplicateStageExecuted": true}
+
+GUEST_EXIT 0
+
+2026-10-23T03:05:31.871272+00:00 Post-build all629 raw source bytes match accepted archive
+{"allRawInstalledSourceFilesExact": 629, "archiveSha256": "bd21ef83be8d8b477babcbc63a4d06014b77bc9720b694cd85b47d7f352dd786"}
+
+GUEST_EXIT 0
+
+2026-10-23T03:06:02.171730+00:00 All21 installed schema and migration source files identical across releases
+{"allInstalledSchemaAndMigrationFilesUnchanged": 21, "noMigrationRequired": true}
+
+GUEST_EXIT 0
+
+2026-10-23T03:06:07.804029+00:00 Fresh backup, quiescent full20table and19migration preservation, atomic runtime-only cutover
+Result=success
+ExecMainStartTimestamp=Fri 2026-10-23 03:06:10 UTC
+ExecMainExitTimestamp=Fri 2026-10-23 03:06:12 UTC
+ExecMainStatus=0
+thaidlt-20261023-030610.dump 122289 bytes
+{"phase":"before","fullApplicationTables":20,"tableNames":["AnswerAttempt","Category","ChatQuizSession","Concept","ConceptLearningState","DailyReminderDelivery","ExamQuestion","ExamQuestionReport","ExamSession","Favorite","GroupQuizRound","GroupQuizScope","GroupQuizVote","Question","QuestionChoice","QuestionPresentation","QuestionReport","ReminderSummaryDelivery","Session","User"],"completedMigrations":19,"unfinished":0,"baselineRetained":true,"noSchemaOrDataMutation":true}
+{"phase":"after-switch-before-restart","all20FullTableFingerprintsEqual":true,"noFieldExclusions":true,"all19FullMigrationRowsUnchanged":true,"noMigrationDeployOrDDL":true,"existingGroupAndPrivateHistoryRetained":true}
+MainPID=3770683
+NRestarts=0
+ExecMainStatus=0
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+thaidlt-web actualCwd=/srv/thaidlt/releases/f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c/apps/web
+MainPID=3770677
+NRestarts=0
+ExecMainStatus=0
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+thaidlt-api actualCwd=/srv/thaidlt/releases/f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c
+MainPID=3770682
+NRestarts=0
+ExecMainStatus=0
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+thaidlt-bot actualCwd=/srv/thaidlt/releases/f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c
+/srv/thaidlt/releases/f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c
+600 root root /etc/thaidlt/app.env
+600 root root /etc/thaidlt/database.env
+600 root root /etc/thaidlt/bot.env
+600 root root /etc/thaidlt/question-posts.env
+Simple group runtime activated; all20 application tables and19 migration rows unchanged. No migration command, DDL, content/config write or forced interaction.
+Running as unit: run-u75138.service; invocation ID: bbeb8d7eaed140c2bbfa767ef0f1a963
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 424ms
+CPU time consumed: 139ms
+Memory peak: 256.0K
+Memory swap peak: 0B
+Running as unit: run-u75139.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 131ms
+CPU time consumed: 114ms
+Memory peak: 3.8M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-23T03:06:55.740910+00:00 Live simple group/private source, HTTP, single bot, Telegram and unchanged content
+2026-10-23T03:06:58Z
+/srv/thaidlt/releases/f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c
+{"url": "https://dlt.thauto.app/", "status": 200, "cacheControl": "s-maxage=31536000"}
+{"liveCompactShell": true, "oldMarketingHeadlineAbsent": true, "oldRoadHeroAbsent": true}
+{"url": "https://tele.thauto.app/me", "status": 401, "cacheControl": "no-store"}
+{"url": "http://127.0.0.1:3061/me", "status": 401, "cacheControl": "no-store"}
+{"url": "https://tele.thauto.app/not-a-route", "status": 404, "cacheControl": ""}
+{"url": "https://tele.thauto.app/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"url": "https://dlt.thauto.app/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"singleBotInstance": true, "dailyQuestionPostsEnabled": true, "publicBotUsernameExpected": true, "shortNameUnset": true, "failureMessagesRecent3Minutes": 0}
+{"username":"thauto_dlt_bot","hasMainWebApp":true,"canJoinGroups":true,"webhookConfigured":false,"pendingUpdateCount":0,"miniAppUrlExpected":true}
+Russian stems: 0 would apply, 0 applied, 100 matched.
+Native rollout compact UI, protected routes, unchanged content and enabled single-bot checks PASS; no forced user interaction.
+{"simpleGroupSourceInstalled": true, "finishStopAndSharedSummaryAbsent": true, "legacyControlRoutesSafelyToNext": true}
+{"exactNativeHandlersInstalled": true, "allowedUpdates": ["message", "callback_query", "poll_answer"], "dropPendingUpdatesAbsent": true, "actualProcessWorkingDirectoriesMatchRelease": true, "runtimeProbeDidNotCallGetUpdates": true}
+{"migrations":{"completed":19,"unfinished":0},"nativeMigrationFinishedExactlyOnce":true,"currentNativeSessionCount":2,"groupMigrationFinishedExactlyOnce":true,"postgresVersion":"18.6 (Debian 18.6-1.pgdg13+2)"}
+Running as unit: run-u75144.service; invocation ID: 9bd170b8999c44e68b9d7f5286e87da1
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 593ms
+CPU time consumed: 148ms
+Memory peak: 256.0K
+Memory swap peak: 0B
+Running as unit: run-u75145.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 828ms
+CPU time consumed: 1.205s
+Memory peak: 844.0K
+Memory swap peak: 0B
+Running as unit: run-u75146.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 96ms
+CPU time consumed: 97ms
+Memory peak: 3.6M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-23T03:07:47.185354+00:00 Fresh backup format/timing before runtime switch and retained rollback
+{"freshBackupPath": "/srv/thaidlt-db/dumps/thaidlt-20261023-030610.dump", "bytes": 122289, "customPGDMPHeader": true, "backupCompletedUtc": "2026-10-23T03:06:12Z", "runtimeSymlinkSwitchUtc": "2026-10-23T03:06:13.956280+00:00", "backupPrecedesRuntimeSwitch": true, "priorRuntimeAndDependenciesRetained": true}
+
+GUEST_EXIT 0
