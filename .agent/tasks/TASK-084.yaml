@@ -1,6 +1,6 @@
 id: TASK-084
 title: Review complete bilingual chat teaching content for the launch bank
-status: BUILDING
+status: CHECKING
 owner_role: Builder
 depends_on:
   - TASK-083
@@ -47,3 +47,7 @@ review_outputs:
   - .agent/reviews/TASK-084-review-01.md
   - .agent/reviews/TASK-084-content-review-01.json
 scope_rule: One offline content task only. Stop after Builder commit; request Supervisor amendment before changing source or adding files. Preserve the original three untracked starter files. JS administrative scratch must use .mjs.txt rather than lint-visible .js/.mjs.
+
+builder_commit: aa4b2d9cc157a2cd7c24a8c1422e8dd50a8f961f
+builder_fix_commit: f023ea203472cb37384a19bf2abc3659bb185c58
+pack_sha256: 1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29
