@@ -5,7 +5,7 @@
   "currentTask": "TASK-085",
   "lastAcceptedTask": "TASK-084",
   "lastAcceptedCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -94,15 +94,15 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 63,
-    "latestObservedWeeklyUsedPercent": 22,
+    "latestObservedUsedPercent": 83,
+    "latestObservedWeeklyUsedPercent": 25,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-29T17:14:26+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-23T10:19:06.709469+00:00",
+    "checkedAt": "2026-10-23T10:29:03.219729+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-23T12:59:03+00:00",
-    "observationNote": "TASK085 selection measured63% primary/22%weekly, ceiling95; no reset credits."
+    "observationNote": "Builder tool observation83% primary/25% weekly; ceiling95, no credits redeemed."
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -301,7 +301,7 @@
   },
   "bilingualChatTeaching": {
     "task": "TASK-084",
-    "status": "SNAPSHOT_BUILDING",
+    "status": "SNAPSHOT_CHECKING",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
@@ -316,7 +316,7 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "Accepted reviewed100-entry content and actual manifest. Implement validated server-only static enrichment for new immutable snapshots; no bank/schema/history changes. Bot renderer TASK086 and publication TASK087 follow acceptance.",
+    "checkpoint": "Builder all gates PASS374unit/237integration/build; same owned test cluster process-only54329 avoids Windows excluded55432. Supervisor fresh full gates running; independent review static no blockers, formal awaits checks. No production change.",
     "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt",
     "acceptedContentCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "contentReview": ".agent/reviews/TASK-084-review-01.md",
@@ -324,6 +324,8 @@
     "contentReviewCommit": "a62990b90028b4217487b83d82a93d21595915b8",
     "contentVerdict": "PASS",
     "contentAcceptedAt": "2026-10-23T10:17:51.177294+00:00",
-    "snapshotTask": "TASK-085"
+    "snapshotTask": "TASK-085",
+    "snapshotBuilderCommit": "f3a17d39f58457b297b68162ab3be7aaa8282a20",
+    "snapshotChecks": ".agent/checks/TASK-085-checks-01.txt"
   }
 }

@@ -1,6 +1,6 @@
 id: TASK-085
 title: Enrich immutable presentations from the independently reviewed bilingual pack
-status: BUILDING
+status: CHECKING
 owner_role: Builder
 depends_on:
   - TASK-084
@@ -53,3 +53,5 @@ scope_rule: One snapshot/content-loader task only. Ask Supervisor before scope e
 implementation_clarification:
   - snapshotQuestion is shared with exam creation. Preserve its existing direct-call default payload; add an explicit backward-compatible teaching opt-in used for new practice/daily/private/group presentations. Existing exam callers and snapshots stay un-enriched; no exam call-site change. Tests prove both default and opt-in boundaries.
   - Supervisor scope amendment permits only the new-practice snapshot call in daily-practice.ts and the mistake-retry snapshot call in apps/api/src/index.ts to pass the explicit teaching opt-in. The separate exam snapshot call in that API file must remain untouched. No auth, route, retry eligibility/scoring, exam or daily-selection logic refactor. Add meaningful default/opt-in coverage; existing full regression gates still mandatory.
+
+builder_commit: f3a17d39f58457b297b68162ab3be7aaa8282a20
