@@ -199,7 +199,7 @@ export async function assignDailyPresentation(
       include: { choices: { orderBy: { key: 'asc' } } },
     });
     if (!question) throw new Error('Eligible daily question offset did not resolve');
-    const snapshot = snapshotQuestion(question);
+    const snapshot = snapshotQuestion(question, { reviewedTeaching: true });
     if (snapshot.question.id !== question.id) throw new Error('Daily question snapshot is inconsistent');
     const presentation = await transaction.questionPresentation.create({
       data: {

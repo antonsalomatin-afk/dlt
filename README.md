@@ -1195,6 +1195,12 @@ sequentially: `pnpm check`, `pnpm build`, `pnpm test:e2e`,
 `pnpm test:integration`, `pnpm test:fullstack`. The existing mocked browser suite
 and ordinary unit/integration suites remain separate.
 
+### Reviewed bilingual snapshot teaching (TASK-085)
+
+New practice, daily, private/group quiz and mistake-retry presentations opt into the independently reviewed TASK-084 teaching pack. The server reads five bounded module-relative JSON artifacts: the teaching pack, actual independent review manifest, two launch candidate batches and accepted Russian stems. Strict schemas, pinned canonical pack/review hashes, complete per-entry review declarations and source/stem hashes must validate before enrichment. Include these artifacts in release archives; there are no runtime fetches or translations.
+
+Only exact active VERIFIED launch rows with the accepted Russian stem and unchanged source/choice identities, wording, answer and citation receive Russian choice/explanation translations plus hidden immutable bilingual teaching/provenance. Conflicting translations or source drift retain existing behavior. Question-bank rows and historical snapshots are never rewritten. Existing HTTP question fields may show Russian choices; correctness, teaching, explanations and citations remain absent before answering. Direct snapshot creation defaults to the legacy payload, preserving exam snapshots. Version-1 readers accept optional strict teaching metadata; rollback to an older strict reader requires accounting for saved enriched presentations. Publication and Telegram teaching rendering are separate tasks.
+
 ### Private bilingual daily question posts (TASK-073)
 
 The bot keeps its opt-in 11:00 ICT reminder schedule. Question posts are server-only and **disabled by default**: omit `DAILY_QUESTION_POSTS_ENABLED` or set it to the exact string `false`. Disabled mode retains generic reminders and summaries without assigning or looking up questions. Only the exact string `true` enables enrichment; other values fail startup configuration validation.

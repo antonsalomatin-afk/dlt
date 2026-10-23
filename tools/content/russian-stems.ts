@@ -1,4 +1,5 @@
-import { createHash } from 'node:crypto';
+import { canonicalJsonSha256 } from '../../packages/database/src/content-identity.ts';
+export { canonicalJsonSha256 } from '../../packages/database/src/content-identity.ts';
 import { z } from 'zod';
 import type { PrismaClient } from '../../packages/database/src/index.ts';
 import { candidateContentMatches, mapCandidateQuestion } from './candidate-import.ts';
@@ -27,21 +28,6 @@ const reviewSchema = z.strictObject({
 });
 export type RussianStemPack = z.infer<typeof packSchema>;
 export type RussianStemReview = z.infer<typeof reviewSchema>;
-
-/** Sorted object keys, preserved array order and JSON scalar semantics; no file-byte hashing. */
-export function canonicalJsonSha256(input: unknown): string {
-  function canonical(value: unknown): string {
-    if (value === null || typeof value === 'string' || typeof value === 'boolean') return JSON.stringify(value);
-    if (typeof value === 'number' && Number.isFinite(value)) return JSON.stringify(value);
-    if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
-    if (typeof value === 'object' && value !== null && Object.getPrototypeOf(value) === Object.prototype) {
-      return `{${Object.entries(value).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0)
-        .map(([key, child]) => `${JSON.stringify(key)}:${canonical(child)}`).join(',')}}`;
-    }
-    throw new Error('Invalid JSON value.');
-  }
-  return createHash('sha256').update(canonical(input), 'utf8').digest('hex');
-}
 
 export function parseRussianStemPack(input: unknown, batches: CandidateBatch[], clock: Date): RussianStemPack {
   const pack = packSchema.parse(input);

@@ -1,4 +1,5 @@
-import { createHash } from 'node:crypto';
+import { candidateQuestionId, candidateChoiceId } from '../../packages/database/src/content-identity.ts';
+export { candidateQuestionId, candidateChoiceId } from '../../packages/database/src/content-identity.ts';
 import type { Prisma, PrismaClient } from '../../packages/database/src/index.ts';
 import type { CandidateBatch } from './candidates.ts';
 
@@ -11,14 +12,6 @@ export interface CandidateImportSummary {
   matchedQuestions: number;
   matchedChoices: number;
   state: 'inactive DRAFT';
-}
-
-export function candidateQuestionId(version: 1, batchId: string, externalId: string): string {
-  return candidateUuid(`thaidlt-candidate:v${version}:batch:${batchId}:question:${externalId}`);
-}
-
-export function candidateChoiceId(questionId: string, choiceKey: 'A' | 'B' | 'C' | 'D'): string {
-  return candidateUuid(`thaidlt-candidate:choice:${questionId}:${choiceKey}`);
 }
 
 export function mapCandidateQuestion(
@@ -135,11 +128,6 @@ export async function importCandidateBatch(database: PrismaClient, batch: Candid
       state: 'inactive DRAFT',
     };
   }, { isolationLevel: 'Serializable', timeout: 30000, maxWait: 5000 });
-}
-
-function candidateUuid(value: string): string {
-  const hash = createHash('sha256').update(value).digest('hex');
-  return `${hash.slice(0, 8)}-${hash.slice(8, 12)}-5${hash.slice(13, 16)}-8${hash.slice(17, 20)}-${hash.slice(20, 32)}`;
 }
 
 export function candidateContentMatches(

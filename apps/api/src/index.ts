@@ -713,7 +713,7 @@ export function createApi(options: {
           include: { choices: { orderBy: { key: 'asc' } } },
         });
         if (!question) throw new Error('Retry candidate offset did not resolve');
-        const snapshot = snapshotQuestion(question);
+        const snapshot = snapshotQuestion(question, { reviewedTeaching: true });
         const presentation = await tx.questionPresentation.create({ data: {
           userId: user.id,
           questionId: question.id,
