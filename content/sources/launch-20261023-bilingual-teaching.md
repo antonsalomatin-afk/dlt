@@ -15,7 +15,7 @@ Each entry contains:
 - `explanationRussian`, translating the original `explanationEnglish`;
 - `whyOthersWrongEnglish` and `whyOthersWrongRussian`, describing the actual wrong options by their existing keys;
 - `safetyReasonEnglish` and `safetyReasonRussian`, explaining practical reasoning rather than claiming a new legal requirement;
-- `guidanceCitation`, `basisKind: DLT_GUIDANCE` and `statute: null`.
+- `guidanceCitation`, `basisKind: DLT_GUIDANCE` and `statute`, normally null. Only CAR01 and MOTORCYCLE01 have the bounded Section 33 example described below.
 
 All text is trimmed plain text with a maximum of 4,000 characters per field. Rendering markup is not stored in content. A future renderer must escape content and apply spoilers separately; it must preserve option keys and cannot infer answer keys from these translations. Distractor explanations are post-answer material and must not appear in pre-answer question/choice payloads.
 
@@ -37,7 +37,13 @@ Two offline AI-assisted authoring passes covered the car and motorcycle halves s
 
 The retained citation is to the Department of Land Transport educational publication *Driving in Thailand: Thailand Driving Guide*, with printed and PDF page numbers already present in each candidate. Its existing URL is https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf. This is **DLT guidance**, not an exact statutory citation. The guide can describe legal requirements, road practice and practical advice; those descriptions must not be relabelled as independently established statutory clauses.
 
-Exact statutory coverage is **0 of 100**. Every `statute` is null. No act title/section, legislative excerpt, effective-date analysis, penalty or claim of independently verified current law has been added. Some subjects, such as documenting rental damage, are practical guidance rather than a traffic-law obligation. Providing the retained guide page is sufficient for this bounded pack; adding exact law references later requires primary-source verification and a separately reviewed content change.
+Statutory examples cover **2 of 100** questions, both keep-left questions (CAR01 and MOTORCYCLE01), using **one clause**, Section 33 of the *Road Traffic Act B.E. 2522 (1979)*. The other **98** entries have `statute: null`. The linked PDF is published on the Wang Nam Khiao Police Station's official domain. Its English text is explicitly labelled `UNOFFICIAL_ENGLISH_TRANSLATION`, not an authoritative English enactment. The Supervisor checked the published clause and its exceptions; the independent Reviewer must verify the PDF location and both entries before PASS. This is not a comprehensive audit of the current consolidated Thai law, amendments or effective dates, and no penalty is asserted.
+
+The Section 33 object contains exactly `titleEnglish`, `titleRussian`, `section`, `url`, `locator`, `sourceStatus`, `excerptEnglish`, `summaryEnglish` and `summaryRussian`. Its locator is printed page 13 / PDF page 13; the URL ends in `#page=13`. The ten-word excerpt is “driver must drive on the left side of the road”. The summaries explicitly mention that the section specifies exceptions. Those exceptions include an obstruction or inability to use the left, an officer-designated one-way road, and a road narrower than six metres. Neither summary turns the clause into an exceptionless command; both source questions describe ordinary two-way travel. The retained DLT guide citation remains separately labelled guidance in both entries, as in all other 98 entries.
+
+The Builder's direct PDF retrieval was unavailable (browser fetch inaccessible; direct HTTP 403), so this bounded addition uses the exact excerpt, location and exceptions supplied by the Supervisor from the published PDF. It makes no claim that the Builder independently downloaded that PDF. Independent Reviewer's direct source inspection remains an acceptance requirement.
+
+Some subjects, such as documenting rental damage, are practical guidance rather than a traffic-law obligation. Providing the retained guide page is sufficient for the remaining bounded pack; adding further exact law references requires primary-source verification and a separately reviewed content change. The two examples do not imply statutory coverage for unrelated questions.
 
 The planned teaching view must visibly distinguish the answer explanation, why other options are wrong, DLT guidance with its source/page, and practical reasoning. It must not display a fabricated “law” section when `statute` is null or suggest all guidance is statutory. Practical reasoning is educational rationale, not a guarantee of an outcome.
 

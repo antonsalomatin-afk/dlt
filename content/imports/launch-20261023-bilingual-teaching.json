@@ -46,7 +46,17 @@
       "safetyReasonRussian": "Движение по принятой стороне разделяет встречные потоки и делает манёвры предсказуемыми.",
       "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 8 (PDF p. 14): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
       "basisKind": "DLT_GUIDANCE",
-      "statute": null
+      "statute": {
+        "titleEnglish": "Road Traffic Act B.E. 2522 (1979)",
+        "titleRussian": "Закон о дорожном движении Таиланда 1979 года",
+        "section": "33",
+        "url": "https://wangnamkhiao.nakhonratchasima.police.go.th/wp-content/uploads/2024/03/%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%9A%E0%B8%B1%E0%B8%8D%E0%B8%8D%E0%B8%B1%E0%B8%95%E0%B8%B4%E0%B8%88%E0%B8%A3%E0%B8%B2%E0%B8%88%E0%B8%A3%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%9A%E0%B8%81-%E0%B8%9E.%E0%B8%A8.-%E0%B9%92%E0%B9%95%E0%B9%92%E0%B9%92eng.pdf#page=13",
+        "locator": "Section 33; printed page 13; PDF page 13",
+        "sourceStatus": "UNOFFICIAL_ENGLISH_TRANSLATION",
+        "excerptEnglish": "driver must drive on the left side of the road",
+        "summaryEnglish": "Keep left on an ordinary two-way road; the section also specifies exceptions.",
+        "summaryRussian": "Обычное правило — двигаться слева; в статье также предусмотрены исключения."
+      }
     },
     {
       "batchId": "launch-20261016-car",
@@ -1596,7 +1606,17 @@
       "safetyReasonRussian": "Движение по принятой стороне дороги уменьшает риск конфликта со встречным транспортом.",
       "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 8 (PDF p. 14): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
       "basisKind": "DLT_GUIDANCE",
-      "statute": null
+      "statute": {
+        "titleEnglish": "Road Traffic Act B.E. 2522 (1979)",
+        "titleRussian": "Закон о дорожном движении Таиланда 1979 года",
+        "section": "33",
+        "url": "https://wangnamkhiao.nakhonratchasima.police.go.th/wp-content/uploads/2024/03/%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%9A%E0%B8%B1%E0%B8%8D%E0%B8%8D%E0%B8%B1%E0%B8%95%E0%B8%B4%E0%B8%88%E0%B8%A3%E0%B8%B2%E0%B8%88%E0%B8%A3%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%9A%E0%B8%81-%E0%B8%9E.%E0%B8%A8.-%E0%B9%92%E0%B9%95%E0%B9%92%E0%B9%92eng.pdf#page=13",
+        "locator": "Section 33; printed page 13; PDF page 13",
+        "sourceStatus": "UNOFFICIAL_ENGLISH_TRANSLATION",
+        "excerptEnglish": "driver must drive on the left side of the road",
+        "summaryEnglish": "Keep left on an ordinary two-way road; the section also specifies exceptions.",
+        "summaryRussian": "Обычное правило — двигаться слева; в статье также предусмотрены исключения."
+      }
     },
     {
       "batchId": "launch-20261016-motorcycle",
