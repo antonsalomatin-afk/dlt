@@ -2,20 +2,14 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-083",
-  "lastAcceptedTask": "TASK-082",
-  "lastAcceptedCommit": "90f751b90b9efd2d3c4c574eee7194200fdfa126",
-  "status": "REVIEW",
-  "reviewAttempt": 1,
+  "currentTask": "TASK-072",
+  "lastAcceptedTask": "TASK-083",
+  "lastAcceptedCommit": "bb7ed6e15bbae52196945af5c7809490b7103b0d",
+  "status": "BLOCKED",
+  "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": null,
-  "parkedTasks": [
-    {
-      "task": "TASK-072",
-      "status": "BLOCKED",
-      "reason": "Owner actual learning observations remain pending; prior Finish-round smoke requirement is superseded by TASK-082."
-    }
-  ],
+  "blockedReason": "Actual owner observation of simple group answer/native correctness/optional Next and signed Mini App practice/exam resume remains outstanding. No Finish or multi-participant contest requirement; no further deployment decision is pending.",
+  "parkedTasks": [],
   "updatedBy": "Supervisor",
   "russianStemOverlay": {
     "status": "PRODUCTION_PUBLISHED_ACCEPTED",
@@ -51,7 +45,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK083 exact f17 runtime deployed; Admin and independent Supervisor live/backup/data/source/HTTP/content/Telegram checks PASS. Independent operational review01 required before acceptance.",
+  "notes": "TASK083 production accepted after Admin, Supervisor independent live checks and independent operational PASS. Exact f17 release live; no migration, all20 tables/19 migration rows preserved. Only actual owner smoke observations remain TASK072.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -99,10 +93,10 @@
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-29T17:14:26+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-22T17:39:22.206444+00:00",
+    "checkedAt": "2026-10-23T03:17:55.438573+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
-    "sessionResetsAt": "2026-10-22T22:14:26+00:00",
-    "primaryResetsAt": "2026-10-23T07:55:16+00:00"
+    "sessionResetsAt": "2026-10-23T07:55:16+00:00",
+    "observationNote": "Latest successful tool observation during TASK083 review handoff:21% five-hour,10% weekly; no reset credits redeemed."
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -265,14 +259,18 @@
     "productionVerifiedAt": "2026-10-22T13:30:31Z",
     "operationalReview": ".agent/reviews/TASK-081-review-01.md",
     "operationalVerdict": "PASS",
-    "productionAcceptedAt": "2026-10-22T13:36:51.764573+00:00"
+    "productionAcceptedAt": "2026-10-22T13:36:51.764573+00:00",
+    "currentReleaseCommit": "f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c",
+    "currentRolloutTask": "TASK-083",
+    "currentOperationalReview": ".agent/reviews/TASK-083-review-01.md",
+    "historicalRolloutBoundary": "Original TASK081 release/backup/review fields retained as history. TASK083 supersedes Finish/shared summaries with simple asynchronous practice; see groupPracticeSimplification."
   },
   "groupPracticeSimplification": {
     "task": "TASK-082",
-    "status": "ROLLOUT_REVIEW",
+    "status": "PRODUCTION_ACCEPTED",
     "ownerRequested": true,
     "productionDeployed": true,
-    "checkpoint": "FreshSupervisor lint/types/369unit/236integration/dbready/build/diff ALLPASS firstRootrun. PriorBuilderAPIparallelfailures didnotrecurfocused/fullretry/freshRoot. Independent source review01 next.",
+    "checkpoint": "Accepted TASK082 source after full authoritative checks and independent PASS; deployed and independently operationally accepted through TASK083.",
     "builderCommit": "90f751b90b9efd2d3c4c574eee7194200fdfa126",
     "authoritativeChecks": ".agent/checks/TASK-082-checks-01.txt",
     "review": ".agent/reviews/TASK-082-review-01.md",
@@ -285,9 +283,14 @@
     "archiveSha256": "bd21ef83be8d8b477babcbc63a4d06014b77bc9720b694cd85b47d7f352dd786",
     "archiveBytes": 928506,
     "archiveFiles": 629,
-    "rolloutCheckpoint": "Admin and Supervisor independent live checks PASS; fresh PGDMP before runtime switch, all20 full table fingerprints and19 migration rows unchanged. Await independent operational review01.",
+    "rolloutCheckpoint": "Accepted: exact f17 live,629 raw source files; fresh backup before cutover, no migration, all20 full table fingerprints/all19 migration rows unchanged; healthy three units/one bot. Supervisor and independent operational review PASS; actual owner simple-group interaction unobserved.",
     "adminCommit": "bb7ed6e15bbae52196945af5c7809490b7103b0d",
     "adminReport": ".agent/admin/TASK-083-production-report.md",
-    "productionChecks": ".agent/checks/TASK-083-checks-01.txt"
+    "productionChecks": ".agent/checks/TASK-083-checks-01.txt",
+    "operationalReview": ".agent/reviews/TASK-083-review-01.md",
+    "operationalVerdict": "PASS",
+    "operationalReviewCommit": "a50ccc2",
+    "productionAcceptedAt": "2026-10-23T03:17:55.438573+00:00",
+    "backup": "thaidlt-20261023-030610.dump;122289bytes;PGDMP;Resultsuccess/ExecMainStatus0"
   }
 }

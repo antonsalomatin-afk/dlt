@@ -1,6 +1,6 @@
 id: TASK-083
 title: Publish simple asynchronous group practice
-status: REVIEW
+status: ACCEPTED
 owner_role: Admin
 depends_on:
   - TASK-082
@@ -41,3 +41,9 @@ rollback: Restore retained prior runtime symlink/services if unhealthy; preserve
 admin_commit: bb7ed6e15bbae52196945af5c7809490b7103b0d
 review_attempt: 1
 authoritative_checks: .agent/checks/TASK-083-checks-01.txt
+accepted_commit: bb7ed6e15bbae52196945af5c7809490b7103b0d
+review_file: .agent/reviews/TASK-083-review-01.md
+review_verdict: PASS
+review_commit: a50ccc2
+production_deployed: true
+accepted_at: 2026-10-23T03:17:55.438573+00:00
