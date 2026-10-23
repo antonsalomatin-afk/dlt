@@ -1,0 +1,3121 @@
+{
+  "version": 1,
+  "packId": "launch-20261023-bilingual-teaching",
+  "createdAt": "2026-10-23T09:59:25.981Z",
+  "sources": [
+    {
+      "path": "content/imports/launch-20261016-car-candidates.json",
+      "sha256": "ba023401107ad762eaa434595b805dcbdbb49f79d8d1c64d76e5a51198b8f211"
+    },
+    {
+      "path": "content/imports/launch-20261016-motorcycle-candidates.json",
+      "sha256": "fa7996fc1891ee982deaddb7793630f42547eacca939482081af06cbba1abc33"
+    },
+    {
+      "path": "content/imports/launch-20261021-russian-stems.json",
+      "sha256": "c50e945d4f2371616ca5947a2551ec16ecbe8a6908d4b4c57fd8cf140f5e002d"
+    }
+  ],
+  "entries": [
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-01-keep-left",
+      "textRussian": "По какой стороне обычной двусторонней дороги в Таиланде следует ехать на автомобиле, если нет иных указаний?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "По левой стороне"
+        },
+        {
+          "key": "B",
+          "textRussian": "По правой стороне"
+        },
+        {
+          "key": "C",
+          "textRussian": "По той стороне, где меньше машин"
+        },
+        {
+          "key": "D",
+          "textRussian": "По осевой линии"
+        }
+      ],
+      "explanationRussian": "В Таиланде обычное движение осуществляется по левой стороне дороги.",
+      "whyOthersWrongEnglish": "B reverses the normal traffic direction. C confuses a lighter traffic flow with permission to change sides. D treats the center line as a travel lane.",
+      "whyOthersWrongRussian": "B меняет обычную сторону движения на противоположную. C ошибочно разрешает выбирать сторону по загруженности. D принимает осевую линию за полосу движения.",
+      "safetyReasonEnglish": "Keeping to the expected side separates opposing traffic and makes vehicle movements predictable.",
+      "safetyReasonRussian": "Движение по принятой стороне разделяет встречные потоки и делает манёвры предсказуемыми.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 8 (PDF p. 14): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-02-signal-lane-change",
+      "textRussian": "Вы собираетесь перестроиться на автомобиле в соседнюю полосу. Что нужно сделать помимо проверки безопасности перед перестроением?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Включить указатель поворота только после пересечения линии полосы"
+        },
+        {
+          "key": "B",
+          "textRussian": "Подать соответствующий сигнал поворота"
+        },
+        {
+          "key": "C",
+          "textRussian": "Использовать аварийную сигнализацию вместо указателя поворота"
+        },
+        {
+          "key": "D",
+          "textRussian": "Сначала перестроиться, чтобы водители сзади поняли намерение"
+        }
+      ],
+      "explanationRussian": "Перед перестроением следует подавать сигнал поворота, чтобы другие участники движения могли предвидеть манёвр.",
+      "whyOthersWrongEnglish": "A and D give warning only after the movement has begun. C substitutes hazard lights, which do not communicate the intended direction.",
+      "whyOthersWrongRussian": "A и D предупреждают лишь после начала манёвра. C заменяет указатель аварийной сигнализацией, которая не сообщает направление перестроения.",
+      "safetyReasonEnglish": "Advance warning gives nearby drivers time to respond; it accompanies, rather than replaces, checking that the lane is clear.",
+      "safetyReasonRussian": "Заблаговременный сигнал даёт соседним водителям время отреагировать; он дополняет проверку свободной полосы, а не заменяет её.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-03-safe-following-gap",
+      "textRussian": "Автомобили впереди начинают тормозить. Для чего прежде всего нужно соблюдать достаточную дистанцию до впереди идущего автомобиля?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Чтобы никто не мог перестроиться перед вами"
+        },
+        {
+          "key": "B",
+          "textRussian": "Чтобы не нужно было следить за стоп-сигналами"
+        },
+        {
+          "key": "C",
+          "textRussian": "Чтобы было место для безопасной остановки"
+        },
+        {
+          "key": "D",
+          "textRussian": "Чтобы заставить автомобиль впереди ехать быстрее"
+        }
+      ],
+      "explanationRussian": "Дистанция должна позволять безопасно остановиться, если автомобиль впереди замедлится или остановится.",
+      "whyOthersWrongEnglish": "A and D use the gap to control other drivers. B wrongly assumes distance removes the need to watch traffic and brake lights.",
+      "whyOthersWrongRussian": "A и D используют дистанцию для давления на других водителей. B ошибочно считает, что дистанция отменяет необходимость следить за движением и стоп-сигналами.",
+      "safetyReasonEnglish": "Space ahead allows time to notice braking, react and bring the car to a stop without striking the vehicle ahead.",
+      "safetyReasonRussian": "Свободное пространство позволяет заметить торможение, отреагировать и остановить автомобиль без удара в машину впереди.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 17 (PDF p. 23): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-04-school-area-caution",
+      "textRussian": "Вы подъезжаете на автомобиле к школьному входу, где дети могут выйти на дорогу. Как безопаснее всего действовать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Сохранять скорость, пока ребёнок не окажется на вашей полосе"
+        },
+        {
+          "key": "B",
+          "textRussian": "Непрерывно сигналить и сохранять скорость"
+        },
+        {
+          "key": "C",
+          "textRussian": "Проехать участок вплотную за автомобилем впереди"
+        },
+        {
+          "key": "D",
+          "textRussian": "Снизить скорость и быть готовым остановиться"
+        }
+      ],
+      "explanationRussian": "В населённых местах дети и другие пешеходы могут неожиданно выйти на дорогу; нужны низкая скорость и готовность остановиться.",
+      "whyOthersWrongEnglish": "A waits until the hazard is already in the lane. B treats the horn as a substitute for slowing. C removes the stopping gap.",
+      "whyOthersWrongRussian": "A предлагает ждать появления опасности прямо на полосе. B заменяет снижение скорости звуковым сигналом. C лишает водителя дистанции для остановки.",
+      "safetyReasonEnglish": "Near a school entrance, slower travel leaves more time to respond to a child who appears unexpectedly.",
+      "safetyReasonRussian": "Возле школьного входа меньшая скорость оставляет больше времени на реакцию, если ребёнок появится неожиданно.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 17 (PDF p. 23): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-05-conditions-appropriate-speed",
+      "textRussian": "Вы едете в пределах установленного ограничения скорости, но видимость плохая, а движение плотное. Как следует выбирать скорость автомобиля?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Снизить скорость с учётом условий"
+        },
+        {
+          "key": "B",
+          "textRussian": "Держать максимально разрешённую скорость независимо от условий"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ехать со скоростью самого быстрого автомобиля рядом"
+        },
+        {
+          "key": "D",
+          "textRussian": "Увеличить скорость, чтобы быстрее покинуть сложный участок"
+        }
+      ],
+      "explanationRussian": "Скорость нужно выбирать с учётом покрытия, погоды и движения, а не считать разрешённый предел целевой скоростью.",
+      "whyOthersWrongEnglish": "B treats a maximum limit as a safe target in every situation. C follows another driver's speed instead of the conditions. D increases speed when the conditions already demand care.",
+      "whyOthersWrongRussian": "B принимает предельную скорость за безопасную при любых обстоятельствах. C ориентируется на чужую скорость вместо условий. D предлагает ускориться там, где уже нужна осторожность.",
+      "safetyReasonEnglish": "Poor visibility reduces the time available to identify hazards; dense traffic also limits space for reacting.",
+      "safetyReasonRussian": "Плохая видимость сокращает время на обнаружение опасности, а плотное движение ограничивает пространство для реакции.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 18 (PDF p. 24): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-06-blind-spot-check",
+      "textRussian": "В зеркалах вашего автомобиля не видно транспорта в соседней полосе. Что всё равно необходимо проверить перед перестроением?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Если зеркала свободны, полоса точно пуста"
+        },
+        {
+          "key": "B",
+          "textRussian": "Транспорт всё ещё может находиться в слепой зоне"
+        },
+        {
+          "key": "C",
+          "textRussian": "Указатель поворота устраняет все слепые зоны"
+        },
+        {
+          "key": "D",
+          "textRussian": "Слепые зоны важны только при движении задним ходом"
+        }
+      ],
+      "explanationRussian": "Зеркала показывают не всё пространство вокруг; слепые зоны нужно тщательно проверять, особенно перед перестроением.",
+      "whyOthersWrongEnglish": "A assumes mirrors cover every area. C mistakes a warning signal for a visibility check. D wrongly limits blind spots to reversing.",
+      "whyOthersWrongRussian": "A считает, что зеркала показывают всё. C принимает предупреждающий сигнал за проверку обзора. D ошибочно связывает слепые зоны только с задним ходом.",
+      "safetyReasonEnglish": "A vehicle alongside can be hidden from the mirrors and be struck when the car changes lanes.",
+      "safetyReasonRussian": "Транспорт сбоку может быть не виден в зеркалах и попасть под удар при перестроении автомобиля.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 19 (PDF p. 25): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-07-truck-rear-space",
+      "textRussian": "Вы едете на автомобиле вплотную за большим грузовиком, который закрывает обзор дороги впереди. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Подъехать ближе, чтобы укрыться за грузовиком"
+        },
+        {
+          "key": "B",
+          "textRussian": "Ориентироваться на грузовик и не смотреть на дорогу впереди"
+        },
+        {
+          "key": "C",
+          "textRussian": "Увеличить дистанцию"
+        },
+        {
+          "key": "D",
+          "textRussian": "Оставаться близко и многократно мигать фарами"
+        }
+      ],
+      "explanationRussian": "Водителям автомобилей и мотоциклов следует избегать движения вплотную за грузовиками, в том числе в их задних слепых зонах.",
+      "whyOthersWrongEnglish": "A deliberately reduces the gap. B gives up an independent view of hazards. D uses flashing lights without restoring visibility or stopping space.",
+      "whyOthersWrongRussian": "A намеренно сокращает дистанцию. B предлагает отказаться от самостоятельного наблюдения за опасностями. D использует мигание фарами, не восстанавливая обзор и место для остановки.",
+      "safetyReasonEnglish": "More space improves the view past the truck and leaves room to stop if it brakes.",
+      "safetyReasonRussian": "Большая дистанция улучшает обзор за пределами грузовика и оставляет место для остановки при его торможении.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-08-truck-left-blind-spot",
+      "textRussian": "Вы выбираете положение автомобиля рядом с большим грузовиком. В каком положении не следует задерживаться?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Далеко позади с достаточной дистанцией для остановки"
+        },
+        {
+          "key": "B",
+          "textRussian": "В стороне от его непосредственного борта с хорошим обзором"
+        },
+        {
+          "key": "C",
+          "textRussian": "На безопасном расстоянии, позволяющем наблюдать за его движением"
+        },
+        {
+          "key": "D",
+          "textRussian": "Вплотную к грузовику слева"
+        }
+      ],
+      "explanationRussian": "Непосредственно слева от грузовика находится зона, которую его водителю особенно плохо видно.",
+      "whyOthersWrongEnglish": "A, B and C describe separation or a clear view, not the close left-side blind spot asked about.",
+      "whyOthersWrongRussian": "A, B и C описывают дистанцию или хороший обзор, а не опасное положение вплотную слева, о котором спрашивается.",
+      "safetyReasonEnglish": "Avoid lingering where the truck driver may not see your car before moving or turning.",
+      "safetyReasonRussian": "Не задерживайтесь там, где водитель грузовика может не заметить ваш автомобиль перед смещением или поворотом.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-09-truck-turning-clearance",
+      "textRussian": "Грузовик впереди начинает поворачивать. Что следует сделать на автомобиле вместо того, чтобы въезжать в пространство сбоку от него?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Держаться вне зоны поворота грузовика"
+        },
+        {
+          "key": "B",
+          "textRussian": "Протиснуться между грузовиком и бордюром"
+        },
+        {
+          "key": "C",
+          "textRussian": "Подъехать сбоку с внутренней стороны его поворота"
+        },
+        {
+          "key": "D",
+          "textRussian": "Въехать в промежуток до завершения поворота грузовика"
+        }
+      ],
+      "explanationRussian": "Попадая в зону поворота или движения грузовика задним ходом, можно оказаться зажатым при его манёвре.",
+      "whyOthersWrongEnglish": "B and C put the car inside the truck's turning space. D assumes that a gap visible before the turn finishes will remain open.",
+      "whyOthersWrongRussian": "B и C помещают автомобиль в пространство поворота грузовика. D ошибочно считает, что видимый до завершения поворота промежуток останется свободным.",
+      "safetyReasonEnglish": "A truck's turning movement can close a side gap and trap a smaller vehicle against the curb or another obstacle.",
+      "safetyReasonRussian": "При повороте грузовика боковой промежуток может закрыться и зажать меньший автомобиль у бордюра или другого препятствия.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-10-truck-front-clearance",
+      "textRussian": "Почему после обгона грузовика не следует сразу перестраиваться непосредственно перед ним?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Грузовик всегда останавливается быстрее небольшого автомобиля"
+        },
+        {
+          "key": "B",
+          "textRussian": "Грузовику может требоваться большее расстояние для остановки"
+        },
+        {
+          "key": "C",
+          "textRussian": "Водитель грузовика обязан тормозить при каждом обгоне"
+        },
+        {
+          "key": "D",
+          "textRussian": "Небольшому автомобилю не нужен запас места перед грузовиком"
+        }
+      ],
+      "explanationRussian": "Грузовикам может требоваться более длинный остановочный путь, поэтому резко перестраиваться вплотную перед ними небезопасно.",
+      "whyOthersWrongEnglish": "A assumes the opposite stopping advantage. C treats the other driver's braking as guaranteed protection. D disregards the space the truck needs.",
+      "whyOthersWrongRussian": "A ошибочно приписывает грузовику преимущество при остановке. C полагается на гарантированное торможение другого водителя. D игнорирует необходимое грузовику пространство.",
+      "safetyReasonEnglish": "Returning too close removes the truck driver's stopping margin if traffic ahead slows.",
+      "safetyReasonRussian": "Перестроение слишком близко перед грузовиком лишает его водителя запаса расстояния, если поток впереди замедлится.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-11-night-headlights",
+      "textRussian": "После захода солнца вы въезжаете на неосвещённую дорогу. Как следует пользоваться фарами автомобиля?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Включать свет только при приближении другого автомобиля"
+        },
+        {
+          "key": "B",
+          "textRussian": "Заменить фары аварийной сигнализацией"
+        },
+        {
+          "key": "C",
+          "textRussian": "Держать фары включёнными во время движения"
+        },
+        {
+          "key": "D",
+          "textRussian": "Выключать свет там, где дорога кажется пустой"
+        }
+      ],
+      "explanationRussian": "При движении ночью фары должны оставаться включёнными, чтобы видеть дорогу и быть заметнее.",
+      "whyOthersWrongEnglish": "A and D wait for visible traffic, overlooking unlit hazards and your own visibility. B substitutes warning flashers for road illumination.",
+      "whyOthersWrongRussian": "A и D привязывают свет к видимому движению, забывая о неосвещённых препятствиях и заметности автомобиля. B заменяет освещение дороги аварийной сигнализацией.",
+      "safetyReasonEnglish": "Headlights help reveal the road ahead and allow others to notice the car before they are close.",
+      "safetyReasonRussian": "Фары помогают видеть дорогу впереди и позволяют другим заметить автомобиль заблаговременно.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 24 (PDF p. 30): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-12-avoid-high-beam-glare",
+      "textRussian": "Вы едете с включённым дальним светом, и навстречу приближается другой автомобиль. Что нужно сделать, чтобы не ослепить его водителя?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Оставить дальний свет, чтобы заявить преимущество"
+        },
+        {
+          "key": "B",
+          "textRussian": "Непрерывно мигать дальним светом, пока другой автомобиль не уступит"
+        },
+        {
+          "key": "C",
+          "textRussian": "Направить дальний свет в зеркала другого водителя"
+        },
+        {
+          "key": "D",
+          "textRussian": "Переключиться на ближний свет, если дальний ослепляет других"
+        }
+      ],
+      "explanationRussian": "Неуместное использование дальнего света может ухудшать зрение водителей впереди и встречных водителей.",
+      "whyOthersWrongEnglish": "A and B misuse high beam to demand priority. C directs glare at another driver rather than reducing it.",
+      "whyOthersWrongRussian": "A и B используют дальний свет для требования преимущества. C направляет блики на другого водителя вместо их уменьшения.",
+      "safetyReasonEnglish": "Reducing glare helps the other driver keep sight of the road and maintain safe control.",
+      "safetyReasonRussian": "Уменьшение ослепления помогает другому водителю видеть дорогу и безопасно управлять автомобилем.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 13 (PDF p. 19): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-13-night-following-gap",
+      "textRussian": "Почему ночью следует оставлять больше обычного расстояния до впереди идущего автомобиля?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Чтобы было больше времени на реакцию и остановку"
+        },
+        {
+          "key": "B",
+          "textRussian": "Потому что стоп-сигналы перестают работать после наступления темноты"
+        },
+        {
+          "key": "C",
+          "textRussian": "Потому что автомобиль впереди имеет преимущество перед всем транспортом"
+        },
+        {
+          "key": "D",
+          "textRussian": "Чтобы не включать собственные фары"
+        }
+      ],
+      "explanationRussian": "Ночью увеличенная дистанция даёт больше времени на реакцию и остановку.",
+      "whyOthersWrongEnglish": "B falsely claims darkness disables brake lights. C invents priority for the vehicle ahead. D mistakes distance for a replacement for headlights.",
+      "whyOthersWrongRussian": "B ошибочно связывает темноту с отказом стоп-сигналов. C выдумывает преимущество автомобиля впереди. D принимает дистанцию за замену фарам.",
+      "safetyReasonEnglish": "Reduced night visibility makes extra reaction and stopping space useful when a hazard becomes visible late.",
+      "safetyReasonRussian": "При ограниченном ночном обзоре дополнительное время и расстояние полезны, если опасность стала видна поздно.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 24 (PDF p. 30): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-14-rain-reduce-speed",
+      "textRussian": "Во время поездки начинается дождь. Как следует изменить скорость автомобиля?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ускориться, чтобы скорее доехать до сухой дороги"
+        },
+        {
+          "key": "B",
+          "textRussian": "Снизить скорость с учётом мокрой дороги"
+        },
+        {
+          "key": "C",
+          "textRussian": "Сохранять скорость сухой дороги, если двигатель работает нормально"
+        },
+        {
+          "key": "D",
+          "textRussian": "Ускоряться, когда транспорт сзади едет близко"
+        }
+      ],
+      "explanationRussian": "В дождь следует снижать скорость, поскольку вероятность потери управления возрастает.",
+      "whyOthersWrongEnglish": "A adds speed in the wet. C confuses engine operation with tire grip. D allows pressure from a following driver to determine an unsafe speed.",
+      "whyOthersWrongRussian": "A увеличивает скорость на мокрой дороге. C путает работу двигателя со сцеплением шин. D предлагает выбирать опасную скорость под давлением водителя сзади.",
+      "safetyReasonEnglish": "Lower speed on a wet surface gives more margin for braking and steering when grip is reduced.",
+      "safetyReasonRussian": "Меньшая скорость на мокром покрытии оставляет больше запаса для торможения и управления при ухудшении сцепления.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-15-rain-following-gap",
+      "textRussian": "Как должна измениться дистанция до впереди идущего автомобиля, когда дорога становится мокрой?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Сократить дистанцию, чтобы ехать точно по его следам"
+        },
+        {
+          "key": "B",
+          "textRussian": "Оставить дистанцию прежней, потому что обе машины мокрые"
+        },
+        {
+          "key": "C",
+          "textRussian": "Увеличить дистанцию по сравнению с сухой дорогой"
+        },
+        {
+          "key": "D",
+          "textRussian": "Подъехать настолько близко, чтобы видеть сквозь его заднее стекло"
+        }
+      ],
+      "explanationRussian": "В дождь нужна большая дистанция, чем обычно.",
+      "whyOthersWrongEnglish": "A and D reduce stopping space. B assumes that both vehicles being wet removes the need for an extra margin.",
+      "whyOthersWrongRussian": "A и D сокращают пространство для остановки. B ошибочно считает, что одинаково мокрые автомобили не нуждаются в дополнительном запасе.",
+      "safetyReasonEnglish": "A larger gap provides room to react and stop on a surface with reduced grip.",
+      "safetyReasonRussian": "Большая дистанция оставляет место для реакции и остановки на покрытии с ухудшенным сцеплением.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-16-rain-smooth-braking",
+      "textRussian": "На мокрой дороге вам нужно снизить скорость автомобиля из-за транспорта впереди. Какой способ торможения безопаснее?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Резко затормозить в последний момент"
+        },
+        {
+          "key": "B",
+          "textRussian": "Чередовать резкое торможение с быстрым разгоном"
+        },
+        {
+          "key": "C",
+          "textRussian": "Начать тормозить только вплотную к следующему автомобилю"
+        },
+        {
+          "key": "D",
+          "textRussian": "Тормозить плавно и избегать резких действий"
+        }
+      ],
+      "explanationRussian": "Резкое торможение в дождь может вызвать занос, поэтому тормозить следует контролируемо.",
+      "whyOthersWrongEnglish": "A and C delay braking until little room remains. B adds abrupt braking and acceleration instead of smooth control.",
+      "whyOthersWrongRussian": "A и C откладывают торможение до момента, когда места почти не осталось. B добавляет резкие торможения и разгоны вместо плавного управления.",
+      "safetyReasonEnglish": "Planning braking early and applying it smoothly helps maintain tire grip and control on the wet road.",
+      "safetyReasonRussian": "Заблаговременное плавное торможение помогает сохранить сцепление шин и управление на мокрой дороге.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-17-rain-light-signals",
+      "textRussian": "Вы продолжаете обычное движение на автомобиле под дождём, не остановились и не сломались. Какие световые приборы следует использовать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Использовать фары и обычные указатели поворота по необходимости"
+        },
+        {
+          "key": "B",
+          "textRussian": "Держать аварийную сигнализацию включённой всю поездку"
+        },
+        {
+          "key": "C",
+          "textRussian": "Выключить фары и использовать вместо них аварийную сигнализацию"
+        },
+        {
+          "key": "D",
+          "textRussian": "Мигать обоими указателями поворота, чтобы потребовать преимущества"
+        }
+      ],
+      "explanationRussian": "В дождь нужно оставлять фары включёнными; ненужная аварийная сигнализация может скрывать намерение повернуть и путать других водителей.",
+      "whyOthersWrongEnglish": "B and C use hazard lights for ordinary travel and obscure direction signals; C also removes headlights. D assumes flashing both indicators grants priority.",
+      "whyOthersWrongRussian": "B и C используют аварийную сигнализацию при обычном движении и мешают понимать направление манёвра; C также убирает свет фар. D приписывает одновременному миганию указателей преимущество.",
+      "safetyReasonEnglish": "Headlights improve visibility while normal direction signals tell others where you intend to move.",
+      "safetyReasonRussian": "Фары улучшают видимость, а обычные указатели поворота сообщают другим о направлении манёвра.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-18-curve-control",
+      "textRussian": "Впереди крутой поворот. Как безопаснее всего действовать за рулём автомобиля?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Обогнать прямо перед поворотом, чтобы получить хороший обзор"
+        },
+        {
+          "key": "B",
+          "textRussian": "Снизить скорость до поворота и оставаться в своей полосе"
+        },
+        {
+          "key": "C",
+          "textRussian": "Срезать через осевую линию, чтобы выпрямить поворот"
+        },
+        {
+          "key": "D",
+          "textRussian": "Сохранить скорость и резко затормозить в середине поворота"
+        }
+      ],
+      "explanationRussian": "На поворотах нужно снижать скорость, оставаться в своей полосе и избегать обгона или резкой остановки.",
+      "whyOthersWrongEnglish": "A attempts an overtake near a restricted view. C enters opposing space. D postpones speed reduction and relies on abrupt braking while turning.",
+      "whyOthersWrongRussian": "A предлагает обгон при ограниченном обзоре. C выводит автомобиль на встречную сторону. D откладывает снижение скорости и предполагает резкое торможение на повороте.",
+      "safetyReasonEnglish": "Setting a suitable speed before the bend leaves more control for steering without crossing into opposing traffic.",
+      "safetyReasonRussian": "Подходящая скорость до поворота оставляет больше возможностей управлять автомобилем, не выезжая навстречу другим.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 26 (PDF p. 32): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-19-phone-safe-stop",
+      "textRussian": "Во время вождения вам звонят, и разговор обещает быть долгим. Как безопаснее всего поступить?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Держать телефон ниже, чтобы другие водители его не видели"
+        },
+        {
+          "key": "B",
+          "textRussian": "Ответить во время медленного движения"
+        },
+        {
+          "key": "C",
+          "textRussian": "Найти безопасное место для парковки перед использованием телефона"
+        },
+        {
+          "key": "D",
+          "textRussian": "Использовать прямой участок дороги, чтобы прочитать сообщение"
+        }
+      ],
+      "explanationRussian": "Телефон отвлекает водителя; длительный разговор следует отложить до безопасной парковки.",
+      "whyOthersWrongEnglish": "A hides the phone without removing distraction. B and D assume slow travel or a straight road makes divided attention safe.",
+      "whyOthersWrongRussian": "A скрывает телефон, но не устраняет отвлечение. B и D считают, что медленная езда или прямая дорога делают разделение внимания безопасным.",
+      "safetyReasonEnglish": "Parking safely separates the conversation from the task of monitoring traffic and controlling the moving car.",
+      "safetyReasonRussian": "Безопасная парковка отделяет разговор от наблюдения за движением и управления едущим автомобилем.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 14 (PDF p. 20): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-20-avoid-alcohol-driving",
+      "textRussian": "Вы употребляли алкоголь и хотите добраться домой. Какой план безопаснее всего?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ехать медленнее, чтобы нейтрализовать действие алкоголя"
+        },
+        {
+          "key": "B",
+          "textRussian": "Самому поехать знакомым маршрутом"
+        },
+        {
+          "key": "C",
+          "textRussian": "Открыть окна и самому сесть за руль"
+        },
+        {
+          "key": "D",
+          "textRussian": "Организовать поездку без самостоятельного управления автомобилем"
+        }
+      ],
+      "explanationRussian": "Управление автомобилем под воздействием алкоголя создаёт риск столкновения, поэтому его нужно избегать.",
+      "whyOthersWrongEnglish": "A assumes lower speed cancels impairment. B substitutes route familiarity for alertness. C assumes fresh air removes the effects of alcohol.",
+      "whyOthersWrongRussian": "A считает, что низкая скорость устраняет нарушение способностей. B заменяет трезвость знакомством с маршрутом. C предполагает, что свежий воздух устраняет действие алкоголя.",
+      "safetyReasonEnglish": "Using another means of transport avoids placing an impaired driver in control of the car.",
+      "safetyReasonRussian": "Другой способ добраться домой позволяет не передавать управление автомобилем водителю под воздействием алкоголя.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 9 (PDF p. 15): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-21-drowsy-medication",
+      "textRussian": "Перед запланированной поездкой на автомобиле лекарство от простуды вызвало у вас сонливость. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Не садиться за руль, пока внимание и бодрость снижены"
+        },
+        {
+          "key": "B",
+          "textRussian": "Ехать как обычно, потому что назначенное лекарство не может влиять на вождение"
+        },
+        {
+          "key": "C",
+          "textRussian": "Полагаться на громкую музыку, чтобы сделать вождение безопасным"
+        },
+        {
+          "key": "D",
+          "textRussian": "Ехать быстрее, чтобы закончить поездку до усиления усталости"
+        }
+      ],
+      "explanationRussian": "Лекарства, вызывающие сонливость, могут ухудшать состояние сознания и делают вождение небезопасным.",
+      "whyOthersWrongEnglish": "B assumes prescribed medicine cannot impair driving. C treats music as a remedy for drowsiness. D combines impairment with greater speed.",
+      "whyOthersWrongRussian": "B считает назначенное лекарство безвредным для вождения. C принимает музыку за средство от сонливости. D сочетает ухудшенное состояние с повышенной скоростью.",
+      "safetyReasonEnglish": "Drowsiness can delay recognition and reactions; postponing driving avoids relying on reduced alertness.",
+      "safetyReasonRussian": "Сонливость может замедлять обнаружение опасности и реакцию; отказ от поездки устраняет необходимость полагаться на сниженное внимание.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 67 (PDF p. 73): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-22-sidewalk-pedestrians",
+      "textRussian": "Рядом с пробкой находится пустой тротуар. Можно ли проехать по нему на автомобиле, чтобы объехать пробку?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Использовать тротуар, если прямо сейчас пешеходов не видно"
+        },
+        {
+          "key": "B",
+          "textRussian": "Оставаться на проезжей части и не занимать тротуар"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ехать по тротуару, подавая звуковой сигнал"
+        },
+        {
+          "key": "D",
+          "textRussian": "Использовать тротуар всякий раз, когда движение остановилось"
+        }
+      ],
+      "explanationRussian": "Тротуары предназначены для пешеходов, а не для движения или парковки транспортных средств.",
+      "whyOthersWrongEnglish": "A mistakes an apparently empty sidewalk for vehicle space. C treats the horn as permission. D assumes a queue changes the sidewalk's purpose.",
+      "whyOthersWrongRussian": "A принимает внешне пустой тротуар за место для машин. C считает звуковой сигнал разрешением. D предполагает, что пробка меняет назначение тротуара.",
+      "safetyReasonEnglish": "Keeping vehicles off the sidewalk preserves a space where pedestrians can walk without meeting moving cars.",
+      "safetyReasonRussian": "Свободный от автомобилей тротуар сохраняет пространство, где пешеходы могут идти, не сталкиваясь с движущимися машинами.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 16 (PDF p. 22): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-23-shoulder-no-shortcut",
+      "textRussian": "Впереди автомобили начинают объезжать пробку по обочине. Что следует сделать вам?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Поехать за ними, потому что пробка превращает обочину в дополнительную полосу"
+        },
+        {
+          "key": "B",
+          "textRussian": "Использовать обочину с включённой аварийной сигнализацией"
+        },
+        {
+          "key": "C",
+          "textRussian": "Оставаться в полосе и сохранять обочину для экстренных ситуаций"
+        },
+        {
+          "key": "D",
+          "textRussian": "Ехать по обочине, пока не появится экстренная служба"
+        }
+      ],
+      "explanationRussian": "Обочина служит для проезда экстренных служб и временной аварийной остановки, а не обычного объезда пробки.",
+      "whyOthersWrongEnglish": "A assumes congestion creates a lane. B assumes hazard lights authorize a shortcut. D waits until an emergency vehicle arrives, when the access may already be blocked.",
+      "whyOthersWrongRussian": "A считает, что пробка создаёт новую полосу. B принимает аварийную сигнализацию за разрешение объезда. D предлагает ждать экстренную машину, когда проезд уже может быть перекрыт.",
+      "safetyReasonEnglish": "Leaving the shoulder available helps preserve access and stopping space when an emergency occurs.",
+      "safetyReasonRussian": "Свободная обочина сохраняет возможность проезда и остановки при возникновении экстренной ситуации.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 16 (PDF p. 22): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-24-lane-discipline",
+      "textRussian": "Вы едете по дороге с двумя размеченными полосами в вашем направлении. Как следует располагать автомобиль при обычном движении?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ехать по разделителю, занимая обе полосы"
+        },
+        {
+          "key": "B",
+          "textRussian": "Постоянно пересекать линию, чтобы мешать обгону"
+        },
+        {
+          "key": "C",
+          "textRussian": "Занимать две полосы, когда движение слабое"
+        },
+        {
+          "key": "D",
+          "textRussian": "Оставаться в пределах одной полосы, не виляя через разделительную линию"
+        }
+      ],
+      "explanationRussian": "Постоянное движение по разделителю полос создаёт риск столкновения.",
+      "whyOthersWrongEnglish": "A reserves two lanes at once. B uses weaving to obstruct others. C assumes light traffic makes occupying the divider appropriate.",
+      "whyOthersWrongRussian": "A занимает сразу две полосы. B использует виляние, чтобы мешать другим. C считает малую загруженность основанием ехать по разделителю.",
+      "safetyReasonEnglish": "A stable position within a lane makes the car's path clearer and reduces conflicts with vehicles alongside.",
+      "safetyReasonRussian": "Устойчивое положение внутри полосы делает траекторию понятнее и уменьшает конфликты с транспортом сбоку.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 16 (PDF p. 22): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-25-horn-warning",
+      "textRussian": "В каком случае уместно использовать звуковой сигнал автомобиля?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Предупредить другого участника движения о непосредственной опасности"
+        },
+        {
+          "key": "B",
+          "textRussian": "Наказать водителя, который вас задержал"
+        },
+        {
+          "key": "C",
+          "textRussian": "Поторопить пешеходов, безопасно переходящих дорогу"
+        },
+        {
+          "key": "D",
+          "textRussian": "Выражать раздражение на протяжении всей пробки"
+        }
+      ],
+      "explanationRussian": "Звуковой сигнал предназначен для необходимых предупреждений или экстренных ситуаций, а не постоянного шума или запугивания.",
+      "whyOthersWrongEnglish": "B uses the horn as punishment. C pressures pedestrians who are crossing safely. D uses it to express frustration rather than warn of danger.",
+      "whyOthersWrongRussian": "B использует сигнал как наказание. C давит на пешеходов, которые переходят безопасно. D выражает раздражение вместо предупреждения об опасности.",
+      "safetyReasonEnglish": "A brief necessary warning can draw attention to a hazard without confusing road users with unrelated noise.",
+      "safetyReasonRussian": "Необходимое предупреждение может привлечь внимание к опасности, не отвлекая участников движения посторонним шумом.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 15 (PDF p. 21): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-26-narrow-road-oncoming",
+      "textRussian": "На узкой двусторонней дороге появляется встречный автомобиль. Как следует действовать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ускориться и занять середину дороги"
+        },
+        {
+          "key": "B",
+          "textRussian": "Снизить скорость и держаться слева, соблюдая безопасность"
+        },
+        {
+          "key": "C",
+          "textRussian": "Сместиться вправо, чтобы заставить встречного уступить"
+        },
+        {
+          "key": "D",
+          "textRussian": "Продолжать с прежней скоростью по центру"
+        }
+      ],
+      "explanationRussian": "На узкой дороге при встречном движении следует снижать скорость и держаться как можно левее.",
+      "whyOthersWrongEnglish": "A and D retain or increase speed while occupying shared central space. C moves toward the oncoming vehicle to force priority.",
+      "whyOthersWrongRussian": "A и D сохраняют или увеличивают скорость, занимая общее пространство посередине. C предлагает двигаться навстречу другому автомобилю, вынуждая уступить.",
+      "safetyReasonEnglish": "Slowing and keeping safely left give the two vehicles more room and time to pass without contact.",
+      "safetyReasonRussian": "Снижение скорости и безопасное положение слева дают двум автомобилям больше места и времени для разъезда.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 15 (PDF p. 21): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-27-red-signal-stop",
+      "textRussian": "Светофор, регулирующий движение по вашей полосе, переключается на красный. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Продолжить движение, если перекрёсток кажется пустым"
+        },
+        {
+          "key": "B",
+          "textRussian": "Проехать на красный вслед за большим автомобилем"
+        },
+        {
+          "key": "C",
+          "textRussian": "Остановиться и ждать сигнала, разрешающего движение"
+        },
+        {
+          "key": "D",
+          "textRussian": "Подать звуковой сигнал и осторожно продолжить"
+        }
+      ],
+      "explanationRussian": "Красный сигнал для транспорта требует остановки, чтобы пешеходы могли безопасно переходить дорогу.",
+      "whyOthersWrongEnglish": "A substitutes an impression of an empty junction for the signal. B follows another vehicle's violation. D treats a horn and caution as permission to proceed.",
+      "whyOthersWrongRussian": "A заменяет сигнал впечатлением о пустом перекрёстке. B предлагает повторить нарушение другого автомобиля. D считает сигнал и осторожность разрешением ехать.",
+      "safetyReasonEnglish": "Stopping keeps the lane clear of moving cars while pedestrians or conflicting traffic may have permission to move.",
+      "safetyReasonRussian": "Остановка освобождает путь от движущегося автомобиля, когда пешеходам или пересекающему потоку может быть разрешено движение.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 37 (PDF p. 43): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-28-yellow-signal-prepare-stop",
+      "textRussian": "В момент включения жёлтого сигнала вы находитесь достаточно далеко от стоп-линии, чтобы безопасно остановиться. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ускориться, чтобы успеть до красного"
+        },
+        {
+          "key": "B",
+          "textRussian": "Сохранить скорость, потому что жёлтый даёт преимущество"
+        },
+        {
+          "key": "C",
+          "textRussian": "Обогнать автомобиль впереди, чтобы первым попасть на перекрёсток"
+        },
+        {
+          "key": "D",
+          "textRussian": "Снизить скорость и остановиться перед линией"
+        }
+      ],
+      "explanationRussian": "Жёлтый сигнал предупреждает водителей о необходимости снизить скорость и подготовиться к остановке перед обозначенной линией.",
+      "whyOthersWrongEnglish": "A tries to beat the change of signal. B invents priority on yellow. C adds an overtake rather than preparing to stop; the question explicitly allows a safe stop.",
+      "whyOthersWrongRussian": "A предлагает проскочить до смены сигнала. B выдумывает преимущество на жёлтый. C добавляет обгон вместо подготовки к остановке; по условию остановиться безопасно возможно.",
+      "safetyReasonEnglish": "Stopping while there is sufficient distance avoids entering the junction as the permitted traffic movements change.",
+      "safetyReasonRussian": "Остановка при достаточной дистанции позволяет не въезжать на перекрёсток во время смены разрешённых направлений движения.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 26 (PDF p. 32): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-29-roundabout-yield",
+      "textRussian": "Вы подъезжаете к перекрёстку с круговым движением, а по кругу к вашему въезду уже приближается автомобиль. Кому следует уступить дорогу?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Транспортным средствам, уже движущимся по кругу"
+        },
+        {
+          "key": "B",
+          "textRussian": "Только автомобилям, въезжающим позади вас"
+        },
+        {
+          "key": "C",
+          "textRussian": "Никому, потому что въезжающий транспорт имеет преимущество"
+        },
+        {
+          "key": "D",
+          "textRussian": "Только транспортным средствам крупнее вашего"
+        }
+      ],
+      "explanationRussian": "При въезде на круговой перекрёсток нужно снизить скорость и уступить транспорту, уже движущемуся по кругу.",
+      "whyOthersWrongEnglish": "B considers vehicles behind instead of the circulating conflict. C reverses the stated priority. D makes vehicle size the priority rule.",
+      "whyOthersWrongRussian": "B смотрит на транспорт сзади вместо пересекающейся траектории на круге. C меняет установленную очерёдность на обратную. D определяет преимущество по размеру машины.",
+      "safetyReasonEnglish": "Waiting for circulating traffic leaves a clear entry gap and avoids crossing its path abruptly.",
+      "safetyReasonRussian": "Пропуск транспорта на круге позволяет дождаться свободного промежутка и не пересекать его путь внезапно.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-30-roundabout-path",
+      "textRussian": "Как следует вести автомобиль по траектории после въезда на перекрёсток с круговым движением?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Проехать прямо через центральную часть, если она пуста"
+        },
+        {
+          "key": "B",
+          "textRussian": "Следовать размеченной или установленной траектории движения по кругу"
+        },
+        {
+          "key": "C",
+          "textRussian": "Петлять между полосами, чтобы сократить путь"
+        },
+        {
+          "key": "D",
+          "textRussian": "Поехать против направления движения по кругу, если съезд рядом"
+        }
+      ],
+      "explanationRussian": "На круговом перекрёстке следует двигаться по установленной траектории, не срезая путь через него.",
+      "whyOthersWrongEnglish": "A cuts through the central area. C crosses circulating lanes to shorten the route. D reverses the traffic direction because the exit is near.",
+      "whyOthersWrongRussian": "A срезает через центральную часть. C пересекает полосы ради сокращения пути. D меняет направление движения на встречное из-за близкого съезда.",
+      "safetyReasonEnglish": "Following the designated path makes your movement predictable to vehicles entering, circulating and exiting.",
+      "safetyReasonRussian": "Установленная траектория делает движение понятным тем, кто въезжает, едет по кругу и выезжает.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-31-pedestrian-crossing-yield",
+      "textRussian": "Пешеход начинает переходить дорогу по обозначенному переходу перед вашим автомобилем. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Подать звуковой сигнал и проехать перед пешеходом"
+        },
+        {
+          "key": "B",
+          "textRussian": "Ускориться и проехать через оставшийся промежуток"
+        },
+        {
+          "key": "C",
+          "textRussian": "Остановиться и дать пешеходу безопасно перейти"
+        },
+        {
+          "key": "D",
+          "textRussian": "Объехать остановившийся автомобиль впереди, не проверяя переход"
+        }
+      ],
+      "explanationRussian": "У пешеходного перехода водители должны снижать скорость и останавливаться, чтобы пешеходы могли безопасно перейти.",
+      "whyOthersWrongEnglish": "A and B try to pass ahead of a person already crossing. D bypasses a stopped vehicle without checking whether it hides a pedestrian.",
+      "whyOthersWrongRussian": "A и B предлагают проехать перед уже переходящим человеком. D объезжает остановившуюся машину, не проверяя, не скрывает ли она пешехода.",
+      "safetyReasonEnglish": "Stopping preserves the pedestrian's crossing space and avoids a conflict with a vulnerable person in the road.",
+      "safetyReasonRussian": "Остановка сохраняет пространство для перехода и предотвращает конфликт с уязвимым участником движения на дороге.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 38 (PDF p. 44): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-32-crossing-no-parking",
+      "textRussian": "Единственное видимое свободное место у магазина находится на пешеходном переходе. Где следует припарковать автомобиль?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Припарковаться на переходе, если остаться рядом"
+        },
+        {
+          "key": "B",
+          "textRussian": "Оставить автомобиль на переходе с аварийной сигнализацией"
+        },
+        {
+          "key": "C",
+          "textRussian": "Занять переход, если пешеходы могут обойти автомобиль"
+        },
+        {
+          "key": "D",
+          "textRussian": "Найти разрешённое место парковки вне перехода"
+        }
+      ],
+      "explanationRussian": "Парковка на пешеходном переходе запрещена.",
+      "whyOthersWrongEnglish": "A treats staying nearby as permission. B uses hazard lights to justify blocking the crossing. C makes pedestrians detour rather than keeping their crossing clear.",
+      "whyOthersWrongRussian": "A принимает присутствие водителя рядом за разрешение. B оправдывает перекрытие перехода аварийной сигнализацией. C заставляет пешеходов обходить машину вместо сохранения свободного перехода.",
+      "safetyReasonEnglish": "A clear crossing lets pedestrians use the intended route and helps drivers see them.",
+      "safetyReasonRussian": "Свободный переход позволяет пешеходам идти по предусмотренному маршруту и помогает водителям их видеть.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 38 (PDF p. 44): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-33-entrance-no-blocking",
+      "textRussian": "Вы нашли свободное место у края дороги прямо перед выездом из жилого двора, где автомобиль перекроет проезд. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Выбрать другое место, оставляющее въезд свободным"
+        },
+        {
+          "key": "B",
+          "textRussian": "Припарковаться там, если скоро вернётесь"
+        },
+        {
+          "key": "C",
+          "textRussian": "Перекрыть въезд и оставить номер телефона вместо разрешения"
+        },
+        {
+          "key": "D",
+          "textRussian": "Парковаться там всякий раз, когда ворота закрыты"
+        }
+      ],
+      "explanationRussian": "Припаркованный автомобиль не должен перекрывать въезд на чужую территорию или выезд с неё.",
+      "whyOthersWrongEnglish": "B assumes a short stay excuses obstruction. C substitutes contact details for permission. D mistakes a closed gate for an unused entrance.",
+      "whyOthersWrongRussian": "B оправдывает препятствие короткой стоянкой. C заменяет разрешение контактным номером. D принимает закрытые ворота за неиспользуемый въезд.",
+      "safetyReasonEnglish": "Keeping entrances clear allows people and vehicles to enter or leave without needing the parked car moved first.",
+      "safetyReasonRussian": "Свободный въезд позволяет людям и транспорту въезжать и выезжать без необходимости сначала разыскивать водителя мешающей машины.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 14 (PDF p. 20): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-34-emergency-vehicle-yield",
+      "textRussian": "Сзади к вашему автомобилю приближается транспорт экстренной службы с включёнными специальными сигналами. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Оставаться на его пути, чтобы движение было предсказуемым"
+        },
+        {
+          "key": "B",
+          "textRussian": "Уступить, безопасно сместившись влево или остановившись по необходимости"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ускориться впереди него и использовать его для обхода потока"
+        },
+        {
+          "key": "D",
+          "textRussian": "Ехать вплотную за ним через образовавшийся проход"
+        }
+      ],
+      "explanationRussian": "Водители должны уступать экстренному транспорту, безопасно останавливаясь или смещаясь к левому краю.",
+      "whyOthersWrongEnglish": "A leaves the emergency vehicle blocked. C and D try to benefit from its passage instead of making room.",
+      "whyOthersWrongRussian": "A сохраняет препятствие экстренному транспорту. C и D пытаются воспользоваться его проездом вместо освобождения пути.",
+      "safetyReasonEnglish": "Making room safely helps the emergency vehicle pass without creating another collision risk through a sudden unsafe manoeuvre.",
+      "safetyReasonRussian": "Безопасное освобождение пути помогает экстренной машине проехать, не создавая новой опасности внезапным небезопасным манёвром.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 71 (PDF p. 77): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-35-railway-train-stop",
+      "textRussian": "Вы подъезжаете к железнодорожному переезду, к которому приближается поезд. Что следует сделать за рулём автомобиля?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Быстро пересечь пути до прибытия поезда"
+        },
+        {
+          "key": "B",
+          "textRussian": "Ждать, поставив переднее колесо на ближайший рельс"
+        },
+        {
+          "key": "C",
+          "textRussian": "Остановиться вне путей и подождать"
+        },
+        {
+          "key": "D",
+          "textRussian": "Объехать шлагбаум, если кажется, что места достаточно"
+        }
+      ],
+      "explanationRussian": "При приближении поезда нужно остановиться перед путями, а не на самих путях.",
+      "whyOthersWrongEnglish": "A races an approaching train. B waits within the track area. D bypasses the barrier based on an impression of available space.",
+      "whyOthersWrongRussian": "A предлагает соревноваться с приближающимся поездом. B оставляет автомобиль в зоне путей. D объезжает шлагбаум на основании впечатления о свободном месте.",
+      "safetyReasonEnglish": "Waiting clear of the tracks keeps the car outside the train's path until the crossing is safe.",
+      "safetyReasonRussian": "Ожидание вне путей сохраняет автомобиль за пределами траектории поезда до безопасного проезда.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 71 (PDF p. 77): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-36-railway-uncontrolled-check",
+      "textRussian": "Вы подъезжаете на автомобиле к железнодорожному переезду без предупредительной сигнализации. Как безопасно действовать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Считать, что отсутствие сигнала означает отсутствие поездов"
+        },
+        {
+          "key": "B",
+          "textRussian": "Сохранить скорость, чтобы меньше времени провести на путях"
+        },
+        {
+          "key": "C",
+          "textRussian": "Следовать за машиной впереди без собственной проверки"
+        },
+        {
+          "key": "D",
+          "textRussian": "Снизить скорость, проверить оба направления и пересечь пути только при безопасности"
+        }
+      ],
+      "explanationRussian": "На железнодорожном переезде без предупредительных сигналов нужны повышенная осторожность и тщательная проверка в обоих направлениях.",
+      "whyOthersWrongEnglish": "A assumes missing signals mean an unused railway. B substitutes speed for checking. C relies on the preceding driver's judgement instead of checking again.",
+      "whyOthersWrongRussian": "A принимает отсутствие сигналов за отсутствие поездов. B заменяет проверку скоростью. C полагается на оценку предыдущего водителя вместо собственной проверки.",
+      "safetyReasonEnglish": "Checking both directions gives the driver a chance to identify an approaching train before entering its path.",
+      "safetyReasonRussian": "Проверка обоих направлений позволяет обнаружить приближающийся поезд до выезда на его путь.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 71 (PDF p. 77): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-37-overtake-safe-gap",
+      "textRussian": "В чём необходимо убедиться перед обгоном другого транспортного средства на автомобиле?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Что можно подать сигнал и завершить обгон с безопасным запасом места"
+        },
+        {
+          "key": "B",
+          "textRussian": "Что машина впереди едет медленнее желаемой вами скорости"
+        },
+        {
+          "key": "C",
+          "textRussian": "Что водитель впереди увидел вас в зеркале, поэтому сигнал не нужен"
+        },
+        {
+          "key": "D",
+          "textRussian": "Что короткий звуковой сигнал автоматически даёт право обгона"
+        }
+      ],
+      "explanationRussian": "Обгон требует заблаговременного сигнала и достаточного свободного пространства без создания помех движению.",
+      "whyOthersWrongEnglish": "B gives a reason to want to pass, not proof that it is safe. C assumes being seen removes signalling. D invents an automatic right from sounding the horn.",
+      "whyOthersWrongRussian": "B объясняет желание обогнать, но не безопасность манёвра. C считает, что замеченному водителю сигнал не нужен. D приписывает звуковому сигналу автоматическое право обгона.",
+      "safetyReasonEnglish": "Adequate clearance and advance warning help complete the pass without forcing other traffic to brake or swerve.",
+      "safetyReasonRussian": "Достаточный запас места и заблаговременный сигнал помогают закончить обгон, не вынуждая других тормозить или резко менять траекторию.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-38-allow-overtaking",
+      "textRussian": "Водитель сзади подаёт сигнал о намерении обогнать ваш автомобиль. Как безопаснее всего действовать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ускориться, чтобы помешать обгону"
+        },
+        {
+          "key": "B",
+          "textRussian": "Оставить место и не соревноваться в скорости с обгоняющим"
+        },
+        {
+          "key": "C",
+          "textRussian": "Сместиться в его сторону, чтобы отговорить от обгона"
+        },
+        {
+          "key": "D",
+          "textRussian": "Сравнять скорость, чтобы он оставался рядом"
+        }
+      ],
+      "explanationRussian": "Когда другой автомобиль обгоняет, нужно содействовать безопасному проезду, оставляя место, а не соревноваться в скорости.",
+      "whyOthersWrongEnglish": "A blocks the pass by accelerating. C threatens the other vehicle's space. D prolongs side-by-side travel instead of allowing the pass to finish.",
+      "whyOthersWrongRussian": "A мешает обгону разгоном. C угрожает пространству другого автомобиля. D продлевает движение бок о бок вместо завершения обгона.",
+      "safetyReasonEnglish": "Cooperation reduces the time vehicles need to travel alongside each other and preserves room for a safe return.",
+      "safetyReasonRussian": "Взаимодействие сокращает время движения бок о бок и сохраняет пространство для безопасного возвращения в полосу.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 13 (PDF p. 19): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-39-red-white-curb",
+      "textRussian": "В месте, где вы собираетесь остановиться на автомобиле для посадки пассажира, бордюр окрашен в красно-белые цвета. Что означает эта разметка?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Парковка разрешена только мотоциклам"
+        },
+        {
+          "key": "B",
+          "textRussian": "Парковка разрешена при работающем двигателе"
+        },
+        {
+          "key": "C",
+          "textRussian": "Остановка и парковка здесь запрещены"
+        },
+        {
+          "key": "D",
+          "textRussian": "Участок предназначен для длительной парковки"
+        }
+      ],
+      "explanationRussian": "Красно-белая окраска бордюра обозначает место, где остановка и парковка запрещены.",
+      "whyOthersWrongEnglish": "A invents a motorcycle exception. B treats a running engine as permission. D reverses the meaning into permission for long-term parking.",
+      "whyOthersWrongRussian": "A выдумывает исключение для мотоциклов. B принимает работающий двигатель за разрешение. D меняет смысл на разрешение длительной парковки.",
+      "safetyReasonEnglish": "Recognizing the curb restriction helps keep the marked roadside area clear rather than obstructing it for a pickup.",
+      "safetyReasonRussian": "Понимание ограничения у бордюра помогает сохранять отмеченный участок свободным, а не занимать его для посадки пассажира.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 36 (PDF p. 42): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-40-posted-speed-limit",
+      "textRussian": "Знак впереди устанавливает более низкое ограничение скорости, чем на дороге, с которой вы только что съехали. Какое ограничение действует?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Более высокий предел с предыдущей дороги"
+        },
+        {
+          "key": "B",
+          "textRussian": "Скорость самого быстрого автомобиля рядом"
+        },
+        {
+          "key": "C",
+          "textRussian": "Тот предел, который подходит объёму двигателя вашего автомобиля"
+        },
+        {
+          "key": "D",
+          "textRussian": "Предел, указанный знаком для дороги, по которой вы едете"
+        }
+      ],
+      "explanationRussian": "Если установлен знак ограничения скорости, водители должны соблюдать указанный на нём предел.",
+      "whyOthersWrongEnglish": "A carries an old limit onto a different road. B substitutes surrounding traffic speed. C chooses a limit by engine size rather than the posted sign.",
+      "whyOthersWrongRussian": "A переносит старый предел на другую дорогу. B заменяет ограничение скоростью потока. C выбирает предел по объёму двигателя вместо знака.",
+      "safetyReasonEnglish": "Reading the current sign avoids carrying a higher speed into a road section with a lower posted limit.",
+      "safetyReasonRussian": "Внимание к текущему знаку позволяет не переносить более высокую скорость на участок с меньшим установленным пределом.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 31 (PDF p. 37): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-41-seatbelt-every-trip",
+      "textRussian": "Вы собираетесь проехать на автомобиле небольшое расстояние по тихому жилому району. Как следует поступить с ремнём безопасности?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Пристегнуть его перед началом движения"
+        },
+        {
+          "key": "B",
+          "textRussian": "Не пристёгиваться, потому что поездка короткая"
+        },
+        {
+          "key": "C",
+          "textRussian": "Пристегнуться только после выезда на оживлённую дорогу"
+        },
+        {
+          "key": "D",
+          "textRussian": "Полагаться на подушку безопасности вместо ремня"
+        }
+      ],
+      "explanationRussian": "Пристёгивание ремня перед поездкой уменьшает тяжесть травм при столкновении.",
+      "whyOthersWrongEnglish": "B and C postpone protection based on trip length or road busyness. D treats an airbag as a substitute for the belt.",
+      "whyOthersWrongRussian": "B и C откладывают защиту из-за короткой поездки или спокойной дороги. D считает подушку безопасности заменой ремню.",
+      "safetyReasonEnglish": "A collision can occur before a long or busy part of a trip; fastening the belt first provides restraint from the start.",
+      "safetyReasonRussian": "Столкновение возможно и до длинного или оживлённого участка поездки; заранее пристёгнутый ремень удерживает человека с самого начала.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 17 (PDF p. 23): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-42-roadworthy-equipment",
+      "textRussian": "Перед поездкой вы обнаружили неисправность обязательного оборудования автомобиля. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Использовать автомобиль до следующей ежегодной уплаты налога"
+        },
+        {
+          "key": "B",
+          "textRussian": "Устранить неисправность до использования автомобиля на дороге"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ездить только днём, потому что неисправности оборудования тогда не важны"
+        },
+        {
+          "key": "D",
+          "textRussian": "Возить предупреждающий треугольник вместо устранения неисправности"
+        }
+      ],
+      "explanationRussian": "У транспортных средств на дороге оборудование должно быть полным, исправным и соответствовать установленным требованиям.",
+      "whyOthersWrongEnglish": "A delays repair until an unrelated payment date. C assumes daylight makes every equipment defect harmless. D replaces repair with a warning device.",
+      "whyOthersWrongRussian": "A откладывает ремонт до не связанной с ним даты платежа. C считает дневной свет достаточным при любой неисправности. D заменяет ремонт предупреждающим устройством.",
+      "safetyReasonEnglish": "Correcting a known defect before use avoids relying on equipment that may fail to perform its safety function.",
+      "safetyReasonRussian": "Устранение известной неисправности до поездки позволяет не полагаться на оборудование, которое может не выполнить свою защитную функцию.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 29 (PDF p. 35): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-43-rental-inspection",
+      "textRussian": "При получении арендованного автомобиля вы заметили вмятину. Что следует сделать перед началом поездки?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Не обращать внимания, потому что любой ущерб арендной машине автоматически покрывается"
+        },
+        {
+          "key": "B",
+          "textRussian": "Сообщить о вмятине только при возврате автомобиля"
+        },
+        {
+          "key": "C",
+          "textRussian": "Сфотографировать и отметить существующую вмятину до выезда"
+        },
+        {
+          "key": "D",
+          "textRussian": "Попытаться скрыть повреждение багажом"
+        }
+      ],
+      "explanationRussian": "При получении арендного автомобиля нужно осмотреть его и зафиксировать имеющиеся повреждения, чтобы избежать последующих споров.",
+      "whyOthersWrongEnglish": "A assumes universal automatic coverage. B loses the chance to document the condition at collection. D conceals the damage instead of recording it.",
+      "whyOthersWrongRussian": "A предполагает автоматическое покрытие любого ущерба. B упускает фиксацию состояния при получении. D скрывает повреждение вместо документирования.",
+      "safetyReasonEnglish": "Documenting the starting condition clarifies responsibility for existing damage; inspection also offers a chance to notice a safety concern before driving.",
+      "safetyReasonRussian": "Фиксация исходного состояния проясняет ответственность за старые повреждения; осмотр также позволяет до поездки заметить возможную проблему безопасности.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 12 (PDF p. 18): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-44-brake-light-check",
+      "textRussian": "Почему нужно регулярно проверять исправность стоп-сигналов автомобиля?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Они заменяют необходимость соблюдать дистанцию"
+        },
+        {
+          "key": "B",
+          "textRussian": "Они дают вашему автомобилю преимущество на перекрёстках"
+        },
+        {
+          "key": "C",
+          "textRussian": "Они устраняют необходимость подавать сигнал поворота"
+        },
+        {
+          "key": "D",
+          "textRussian": "Они предупреждают водителей сзади о вашем торможении"
+        }
+      ],
+      "explanationRussian": "Стоп-сигналы нужно регулярно проверять, чтобы водители сзади получали понятное предупреждение.",
+      "whyOthersWrongEnglish": "A mistakes a warning for stopping space. B invents priority from brake lights. C confuses braking and direction signals.",
+      "whyOthersWrongRussian": "A принимает предупреждение за запас места для остановки. B выдумывает преимущество от стоп-сигналов. C путает сигналы торможения и поворота.",
+      "safetyReasonEnglish": "Working brake lights give following drivers a visible cue to react when your car slows.",
+      "safetyReasonRussian": "Исправные стоп-сигналы дают водителям сзади видимый сигнал для реакции при замедлении вашего автомобиля.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 14 (PDF p. 20): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-45-night-breakdown-warning",
+      "textRussian": "Ночью у вашего автомобиля возникла неисправность, и вы можете безопасно съехать с полосы движения. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Остановиться в безопасном месте сбоку и включить аварийную сигнализацию"
+        },
+        {
+          "key": "B",
+          "textRussian": "Остановиться посреди полосы с выключенным светом"
+        },
+        {
+          "key": "C",
+          "textRussian": "Продолжать движение с серьёзной неисправностью до рассвета"
+        },
+        {
+          "key": "D",
+          "textRussian": "Оставить неосвещённый автомобиль за поворотом"
+        }
+      ],
+      "explanationRussian": "При ночной поломке нужно припарковаться в безопасном месте вне траектории движения и включить аварийную сигнализацию для предупреждения других.",
+      "whyOthersWrongEnglish": "B stops in the traffic path without warning. C continues with a serious fault. D leaves an unlit obstacle where approaching drivers have limited sight.",
+      "whyOthersWrongRussian": "B оставляет автомобиль на пути потока без предупреждения. C продолжает движение с серьёзной неисправностью. D оставляет неосвещённое препятствие в месте ограниченного обзора.",
+      "safetyReasonEnglish": "Moving clear and providing a visible warning help approaching drivers notice and avoid the stopped car at night.",
+      "safetyReasonRussian": "Уход с пути потока и видимое предупреждение помогают приближающимся водителям ночью заметить и объехать остановившийся автомобиль.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 24 (PDF p. 30): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-46-expressway-breakdown",
+      "textRussian": "На скоростной автомагистрали ваш автомобиль начинает работать неисправно, но его ещё можно безопасно переместить. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Немедленно остановиться в полосе обгона"
+        },
+        {
+          "key": "B",
+          "textRussian": "Съехать из потока в безопасное место слева и включить аварийную сигнализацию"
+        },
+        {
+          "key": "C",
+          "textRussian": "Поехать задним ходом по скоростной дороге к последнему съезду"
+        },
+        {
+          "key": "D",
+          "textRussian": "Продолжать движение по полосе, пока двигатель не остановится"
+        }
+      ],
+      "explanationRussian": "Если неисправный автомобиль на скоростной дороге ещё может двигаться, нужно вывести его с пути потока и включить аварийную сигнализацию.",
+      "whyOthersWrongEnglish": "A creates an obstacle in the overtaking lane despite being able to move. C introduces reversing against traffic. D gives up the chance to reach a safer stopping place.",
+      "whyOthersWrongRussian": "A создаёт препятствие в полосе обгона, хотя машина ещё движется. C вводит движение задним ходом навстречу потоку. D упускает возможность добраться до более безопасного места остановки.",
+      "safetyReasonEnglish": "Leaving the live lane while the car can still move reduces exposure to fast approaching traffic.",
+      "safetyReasonRussian": "Уход из действующей полосы, пока автомобиль ещё может двигаться, уменьшает опасность от быстро приближающегося транспорта.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 70 (PDF p. 76): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-47-planned-stop-mirrors",
+      "textRussian": "Вы хотите съехать на автомобиле влево к краю дороги и остановиться. Какая последовательность действий учитывает безопасность транспорта сзади?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Резко затормозить и подать сигнал после остановки"
+        },
+        {
+          "key": "B",
+          "textRussian": "Сначала остановиться, потом посмотреть в зеркало заднего вида"
+        },
+        {
+          "key": "C",
+          "textRussian": "Проверить зеркала, заранее подать левый сигнал и плавно снизить скорость"
+        },
+        {
+          "key": "D",
+          "textRussian": "Сместиться влево без сигнала, если работают стоп-сигналы"
+        }
+      ],
+      "explanationRussian": "Перед остановкой у края дороги нужно проверить транспорт сзади, заранее подать сигнал и тормозить плавно.",
+      "whyOthersWrongEnglish": "A warns too late and brakes abruptly. B checks following traffic only after stopping. D confuses brake lights with a signal of lateral movement.",
+      "whyOthersWrongRussian": "A предупреждает поздно и резко тормозит. B проверяет транспорт сзади уже после остановки. D путает стоп-сигналы с указанием бокового манёвра.",
+      "safetyReasonEnglish": "Checking, signalling and slowing gently give following drivers time to understand and adjust to the planned stop.",
+      "safetyReasonRussian": "Проверка, сигнал и плавное замедление дают водителям сзади время понять намерение и приспособиться к остановке.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 14 (PDF p. 20): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-48-cyclist-at-entrance",
+      "textRussian": "Вы выезжаете на автомобиле из парка рядом с велосипедным маршрутом. Что нужно тщательно проверить перед выездом на дорогу?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Только автомобильную полосу прямо впереди"
+        },
+        {
+          "key": "B",
+          "textRussian": "Только то, сигналит ли водитель сзади"
+        },
+        {
+          "key": "C",
+          "textRussian": "Достаточно ли у велосипедистов места, чтобы объехать вас"
+        },
+        {
+          "key": "D",
+          "textRussian": "Путь и слепые зоны на предмет приближающихся велосипедистов"
+        }
+      ],
+      "explanationRussian": "При въезде на дорогу или съезде с неё возле жилых мест и парков нужно проверять слепые зоны на наличие велосипедистов.",
+      "whyOthersWrongEnglish": "A limits the check to one car lane. B looks for social pressure rather than crossing traffic. C expects cyclists to avoid the car instead of checking their route first.",
+      "whyOthersWrongRussian": "A ограничивает проверку одной автомобильной полосой. B ищет давление сзади вместо пересекающего путь транспорта. C ожидает объезда от велосипедистов вместо проверки их маршрута.",
+      "safetyReasonEnglish": "A cyclist may approach across the entrance outside the driver's first line of sight; checking the route and blind spots helps avoid cutting across them.",
+      "safetyReasonRussian": "Велосипедист может приблизиться поперёк выезда вне первоначального поля зрения; проверка пути и слепых зон помогает не пересечь его траекторию внезапно.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 18 (PDF p. 24): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-49-elderly-pedestrian-patience",
+      "textRussian": "Перед вашим автомобилем пожилой пешеход медленно переходит дорогу. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Подождать и дать человеку достаточно времени закончить переход"
+        },
+        {
+          "key": "B",
+          "textRussian": "Многократно сигналить, чтобы человек ускорился"
+        },
+        {
+          "key": "C",
+          "textRussian": "Подползать вплотную, заставляя человека торопиться"
+        },
+        {
+          "key": "D",
+          "textRussian": "Объехать человека по переходу"
+        }
+      ],
+      "explanationRussian": "Пожилым пешеходам может требоваться больше времени на переход, поэтому водителям нужно снижать скорость и останавливаться, обеспечивая безопасный проход.",
+      "whyOthersWrongEnglish": "B and C pressure a slower pedestrian instead of allowing time. D moves the car into the crossing space while the person is still there.",
+      "whyOthersWrongRussian": "B и C торопят медленно идущего пешехода вместо предоставления времени. D направляет автомобиль в пространство перехода, пока человек ещё там.",
+      "safetyReasonEnglish": "Patient waiting avoids forcing a pedestrian to rush or change path in front of a moving car.",
+      "safetyReasonRussian": "Спокойное ожидание не вынуждает пешехода торопиться или менять путь перед движущимся автомобилем.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 27 (PDF p. 33): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-car",
+      "externalId": "launch-car-50-right-lane-cooperation",
+      "textRussian": "Вы завершили обгон в правой полосе, и сзади приближается другой автомобиль. Что следует сделать, когда это будет безопасно?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Оставаться в правой полосе, чтобы контролировать его скорость"
+        },
+        {
+          "key": "B",
+          "textRussian": "Вернуться влево и дать ему проехать"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ускориться, чтобы помешать ему обогнать"
+        },
+        {
+          "key": "D",
+          "textRussian": "Резко затормозить, чтобы заставить его увеличить дистанцию"
+        }
+      ],
+      "explanationRussian": "Не следует продолжать медленное движение по полосе обгона; нужно безопасно сместиться влево, позволяя более быстрому транспорту проехать.",
+      "whyOthersWrongEnglish": "A uses lane position to police another driver's speed. C races to block a pass. D uses sudden braking to force a larger gap.",
+      "whyOthersWrongRussian": "A использует положение в полосе для контроля чужой скорости. C соревнуется, мешая обгону. D резким торможением принуждает увеличить дистанцию.",
+      "safetyReasonEnglish": "Returning left when safe keeps the overtaking path available and avoids escalating the encounter into blocking or abrupt braking.",
+      "safetyReasonRussian": "Безопасное возвращение влево освобождает путь для обгона и позволяет избежать блокирования и резких торможений.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 13 (PDF p. 19): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-01-keep-left",
+      "textRussian": "Вы выезжаете на мотоцикле на обычную двустороннюю дорогу в Таиланде. По какой стороне обычно следует двигаться?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "По левой стороне"
+        },
+        {
+          "key": "B",
+          "textRussian": "По правой стороне"
+        },
+        {
+          "key": "C",
+          "textRussian": "По той стороне, где меньше транспорта"
+        },
+        {
+          "key": "D",
+          "textRussian": "По осевой линии"
+        }
+      ],
+      "explanationRussian": "В обычных условиях транспорт в Таиланде движется по левой стороне дороги.",
+      "whyOthersWrongEnglish": "B assumes right-hand traffic; C lets traffic density decide the side; D treats the center line as a travel lane.",
+      "whyOthersWrongRussian": "B предполагает правостороннее движение; C предлагает выбирать сторону по плотности потока; D принимает осевую линию за полосу движения.",
+      "safetyReasonEnglish": "Keeping to the expected side reduces conflicts with approaching vehicles.",
+      "safetyReasonRussian": "Движение по принятой стороне дороги уменьшает риск конфликта со встречным транспортом.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 8 (PDF p. 14): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-02-signal-lane-change",
+      "textRussian": "Вы убедились, что соседняя полоса безопасна для вашего мотоцикла. Что нужно сделать перед перестроением в неё?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Включить указатель поворота только после пересечения линии разметки"
+        },
+        {
+          "key": "B",
+          "textRussian": "Подать соответствующий сигнал поворота"
+        },
+        {
+          "key": "C",
+          "textRussian": "Вместо указателя поворота включить аварийную сигнализацию"
+        },
+        {
+          "key": "D",
+          "textRussian": "Сначала начать перестроение, чтобы едущие сзади поняли намерение"
+        }
+      ],
+      "explanationRussian": "Перед перестроением следует подать сигнал, чтобы другие участники движения могли предвидеть манёвр.",
+      "whyOthersWrongEnglish": "A and D communicate only after the movement has begun; C substitutes an ambiguous hazard warning for a directional signal.",
+      "whyOthersWrongRussian": "A и D сообщают о намерении лишь после начала манёвра; C заменяет указание направления неоднозначным аварийным сигналом.",
+      "safetyReasonEnglish": "Advance signalling gives nearby drivers time to adjust their speed and spacing.",
+      "safetyReasonRussian": "Заблаговременный сигнал даёт водителям рядом время изменить скорость и дистанцию.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-03-safe-following-gap",
+      "textRussian": "Фургон впереди вашего мотоцикла может резко остановиться. Почему следует соблюдать достаточную дистанцию?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Чтобы никто не мог перестроиться"
+        },
+        {
+          "key": "B",
+          "textRussian": "Чтобы не было необходимости следить за стоп-сигналами"
+        },
+        {
+          "key": "C",
+          "textRussian": "Чтобы оставалось место для безопасной остановки"
+        },
+        {
+          "key": "D",
+          "textRussian": "Чтобы транспортное средство впереди ехало быстрее"
+        }
+      ],
+      "explanationRussian": "Дистанция должна позволять безопасно остановиться, если транспортное средство впереди замедлится или остановится.",
+      "whyOthersWrongEnglish": "A uses distance to exclude others, B substitutes it for observation, and D imagines that a gap controls the leading vehicle’s speed.",
+      "whyOthersWrongRussian": "A использует дистанцию для недопущения других машин, B заменяет ею наблюдение, а D предполагает, что дистанция управляет скоростью едущего впереди.",
+      "safetyReasonEnglish": "Space ahead provides room for both reaction and braking when the van stops unexpectedly.",
+      "safetyReasonRussian": "Свободное место впереди оставляет запас для реакции и торможения при неожиданной остановке фургона.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 17 (PDF p. 23): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-04-school-area-caution",
+      "textRussian": "Вы проезжаете на мотоцикле мимо оживлённого школьного входа. Как следует учитывать возможность появления детей на дороге?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Сохранять скорость, пока ребёнок не окажется на вашей полосе"
+        },
+        {
+          "key": "B",
+          "textRussian": "Непрерывно подавать звуковой сигнал и сохранять скорость"
+        },
+        {
+          "key": "C",
+          "textRussian": "Проехать этот участок вплотную за транспортным средством впереди"
+        },
+        {
+          "key": "D",
+          "textRussian": "Снизить скорость и быть готовым остановиться"
+        }
+      ],
+      "explanationRussian": "В населённых местах дети и пешеходы могут неожиданно выйти на дорогу; необходимы низкая скорость и готовность остановиться.",
+      "whyOthersWrongEnglish": "A waits until the danger is in the lane; B relies on noise without reducing speed; C removes stopping space behind another vehicle.",
+      "whyOthersWrongRussian": "A предлагает ждать, пока опасность окажется в полосе; B полагается на звуковой сигнал без снижения скорости; C лишает запаса для остановки за другим транспортом.",
+      "safetyReasonEnglish": "Children near a busy gate may enter the road suddenly; a slower approach leaves more time to respond.",
+      "safetyReasonRussian": "У оживлённого школьного входа дети могут внезапно выйти на дорогу; меньшая скорость оставляет больше времени на реакцию.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 17 (PDF p. 23): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-05-conditions-appropriate-speed",
+      "textRussian": "Установленное ограничение скорости выше скорости, которая кажется безопасной на мокрой дороге с плотным движением. Как следует выбирать скорость мотоцикла?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Снизить скорость с учётом условий"
+        },
+        {
+          "key": "B",
+          "textRussian": "Держать максимально разрешённую скорость независимо от условий"
+        },
+        {
+          "key": "C",
+          "textRussian": "Двигаться со скоростью самого быстрого транспортного средства поблизости"
+        },
+        {
+          "key": "D",
+          "textRussian": "Ускориться, чтобы быстрее покинуть сложный участок"
+        }
+      ],
+      "explanationRussian": "Скорость нужно выбирать с учётом покрытия, погоды и движения, а не считать разрешённый предел целевой скоростью.",
+      "whyOthersWrongEnglish": "B treats the limit as a required speed; C copies the fastest vehicle; D increases speed precisely where conditions call for caution.",
+      "whyOthersWrongRussian": "B принимает предел за обязательную скорость; C копирует скорость самого быстрого транспорта; D предлагает ускоряться там, где условия требуют осторожности.",
+      "safetyReasonEnglish": "Wet surfaces and crowded traffic leave less margin for sudden changes, so speed should preserve a controllable stopping margin.",
+      "safetyReasonRussian": "Мокрое покрытие и плотный поток уменьшают запас при внезапных изменениях; скорость должна позволять контролируемо остановиться.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 18 (PDF p. 24): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-06-blind-spot-check",
+      "textRussian": "О чём следует помнить, пользуясь зеркалами перед перестроением на мотоцикле в соседнюю полосу?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Если в зеркалах никого нет, полоса гарантированно свободна"
+        },
+        {
+          "key": "B",
+          "textRussian": "Транспортное средство всё ещё может находиться в слепой зоне"
+        },
+        {
+          "key": "C",
+          "textRussian": "Указатель поворота устраняет все слепые зоны"
+        },
+        {
+          "key": "D",
+          "textRussian": "Слепые зоны важны только при движении задним ходом"
+        }
+      ],
+      "explanationRussian": "Зеркала показывают не всё пространство вокруг; слепые зоны нужно тщательно проверять, особенно перед перестроением.",
+      "whyOthersWrongEnglish": "A assumes complete mirror coverage; C confuses signalling with visibility; D ignores blind spots during a forward lane change.",
+      "whyOthersWrongRussian": "A предполагает полный обзор в зеркалах; C путает сигнал с видимостью; D игнорирует слепые зоны при перестроении во время движения вперёд.",
+      "safetyReasonEnglish": "Checking areas the mirrors miss helps detect a vehicle alongside before moving into its path.",
+      "safetyReasonRussian": "Проверка пространства вне обзора зеркал помогает заметить транспорт сбоку до пересечения его траектории.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 19 (PDF p. 25): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-07-truck-rear-space",
+      "textRussian": "Вы едете на мотоцикле сразу за грузовиком, где его водитель может вас не видеть. Что следует изменить?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Приблизиться, чтобы укрыться за грузовиком"
+        },
+        {
+          "key": "B",
+          "textRussian": "Ориентироваться по грузовику и не следить за дорогой впереди"
+        },
+        {
+          "key": "C",
+          "textRussian": "Увеличить дистанцию"
+        },
+        {
+          "key": "D",
+          "textRussian": "Оставаться близко и многократно мигать фарой"
+        }
+      ],
+      "explanationRussian": "И водителям автомобилей, и мотоциклистам следует избегать движения вплотную за грузовиками, в том числе в их задних слепых зонах.",
+      "whyOthersWrongEnglish": "A and D keep the motorcycle in the same hazardous close position; B also abandons independent observation of the road.",
+      "whyOthersWrongRussian": "A и D сохраняют опасное положение вплотную к грузовику; B дополнительно предлагает отказаться от самостоятельного наблюдения за дорогой.",
+      "safetyReasonEnglish": "More space improves the rider’s view and leaves room to react if the truck brakes.",
+      "safetyReasonRussian": "Большая дистанция улучшает обзор для мотоциклиста и оставляет место для реакции на торможение грузовика.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-08-truck-left-blind-spot",
+      "textRussian": "Впереди медленно движется грузовик. В каком положении рядом с ним особенно опасно оставаться на мотоцикле?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Далеко позади с достаточной дистанцией для остановки"
+        },
+        {
+          "key": "B",
+          "textRussian": "На удалении от его борта, с хорошим обзором"
+        },
+        {
+          "key": "C",
+          "textRussian": "На безопасном расстоянии, позволяющем наблюдать за его движением"
+        },
+        {
+          "key": "D",
+          "textRussian": "Вплотную к левому борту грузовика"
+        }
+      ],
+      "explanationRussian": "В зоне вплотную к левому борту грузовика обзор для его водителя особенно ограничен.",
+      "whyOthersWrongEnglish": "A, B and C describe separation and observation, not the especially hazardous position; D places the motorcycle close in the truck’s limited-view area.",
+      "whyOthersWrongRussian": "A, B и C описывают дистанцию и возможность наблюдать, а не особенно опасное положение; D помещает мотоцикл вплотную в зону ограниченного обзора грузовика.",
+      "safetyReasonEnglish": "Remaining close beside a truck can leave the rider unseen when the truck changes position.",
+      "safetyReasonRussian": "При движении вплотную к борту мотоциклист может остаться незамеченным, когда грузовик сместится.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-09-truck-turning-clearance",
+      "textRussian": "Большой грузовик поворачивает на перекрёстке. Что следует сделать вам на мотоцикле?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Держаться вне зоны поворота грузовика"
+        },
+        {
+          "key": "B",
+          "textRussian": "Протиснуться между грузовиком и бордюром"
+        },
+        {
+          "key": "C",
+          "textRussian": "Поравняться с грузовиком с внутренней стороны поворота"
+        },
+        {
+          "key": "D",
+          "textRussian": "Въехать в промежуток до завершения поворота грузовика"
+        }
+      ],
+      "explanationRussian": "Въезд в зону поворота или движения грузовика задним ходом создаёт риск быть зажатым при его перемещении.",
+      "whyOthersWrongEnglish": "B, C and D all treat a temporary gap within the truck’s turning area as usable space even though that space can close.",
+      "whyOthersWrongRussian": "B, C и D принимают временный промежуток в зоне поворота за свободное место, хотя при манёвре он может закрыться.",
+      "safetyReasonEnglish": "Keeping clear leaves room for the truck’s changing swept path and avoids being trapped beside it.",
+      "safetyReasonRussian": "Дистанция от зоны манёвра оставляет место для изменяющейся траектории грузовика и помогает избежать зажатия сбоку.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-10-truck-front-clearance",
+      "textRussian": "Вы обогнали грузовик на мотоцикле. Почему перед возвращением в полосу перед ним следует оставить значительное расстояние?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Грузовик всегда останавливается быстрее меньшего транспортного средства"
+        },
+        {
+          "key": "B",
+          "textRussian": "Грузовику может потребоваться большее расстояние для остановки"
+        },
+        {
+          "key": "C",
+          "textRussian": "Его водитель обязан тормозить каждый раз, когда его обгоняют"
+        },
+        {
+          "key": "D",
+          "textRussian": "Небольшому транспортному средству не нужен запас пространства перед грузовиком"
+        }
+      ],
+      "explanationRussian": "Грузовику может потребоваться более длинный остановочный путь, поэтому опасно возвращаться в полосу вплотную перед ним.",
+      "whyOthersWrongEnglish": "A reverses the stopping-distance concern; C assumes the truck will create clearance by braking; D assumes a small motorcycle needs no separation.",
+      "whyOthersWrongRussian": "A переворачивает смысл риска остановочного пути; C рассчитывает, что грузовик сам создаст запас торможением; D считает, что малому мотоциклу дистанция не нужна.",
+      "safetyReasonEnglish": "A substantial gap avoids removing the truck driver’s stopping space if you need to slow soon after passing.",
+      "safetyReasonRussian": "Значительный промежуток сохраняет грузовику место для остановки, если вскоре после обгона вам понадобится замедлиться.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 22 (PDF p. 28): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-11-night-headlights",
+      "textRussian": "Вы продолжаете ехать на мотоцикле после наступления темноты по дороге с уличным освещением. Как следует пользоваться фарой мотоцикла?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Включать свет только при приближении другого транспорта"
+        },
+        {
+          "key": "B",
+          "textRussian": "Заменить свет фары аварийной сигнализацией"
+        },
+        {
+          "key": "C",
+          "textRussian": "Держать фару включённой во время движения"
+        },
+        {
+          "key": "D",
+          "textRussian": "Выключать свет везде, где дорога кажется пустой"
+        }
+      ],
+      "explanationRussian": "При езде ночью фары должны оставаться включёнными, чтобы видеть дорогу и быть заметнее.",
+      "whyOthersWrongEnglish": "A and D make lighting depend on whether other traffic is already visible; B replaces road illumination with warning signals.",
+      "whyOthersWrongRussian": "A и D ставят освещение в зависимость от уже замеченного транспорта; B заменяет освещение дороги предупреждающими сигналами.",
+      "safetyReasonEnglish": "Street lighting does not replace the motorcycle’s own light for seeing hazards and being seen.",
+      "safetyReasonRussian": "Уличное освещение не заменяет собственную фару мотоцикла, помогающую видеть опасности и быть заметным.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 24 (PDF p. 30): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-12-avoid-high-beam-glare",
+      "textRussian": "Ночью вы едете на мотоцикле за другим транспортным средством с включённым дальним светом. Что следует сделать, чтобы не ослепить его водителя?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Оставить дальний свет включённым, чтобы заявить о преимуществе"
+        },
+        {
+          "key": "B",
+          "textRussian": "Непрерывно мигать дальним, пока другой транспорт не уступит"
+        },
+        {
+          "key": "C",
+          "textRussian": "Направить дальний свет в зеркала другого водителя"
+        },
+        {
+          "key": "D",
+          "textRussian": "Переключиться на ближний свет, если дальний может ослепить других"
+        }
+      ],
+      "explanationRussian": "Неоправданное использование дальнего света может ухудшить зрение водителей впереди или на встречном направлении.",
+      "whyOthersWrongEnglish": "A and B misuse high beam to demand priority; C deliberately directs glare into mirrors instead of avoiding it.",
+      "whyOthersWrongRussian": "A и B используют дальний свет для требования преимущества; C намеренно направляет ослепляющий свет в зеркала вместо предотвращения ослепления.",
+      "safetyReasonEnglish": "Low beam reduces glare that could prevent the driver ahead from seeing the road clearly.",
+      "safetyReasonRussian": "Ближний свет уменьшает ослепление, которое может мешать едущему впереди водителю ясно видеть дорогу.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 13 (PDF p. 19): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-13-night-following-gap",
+      "textRussian": "Ночью вы заметили, что едете на мотоцикле слишком близко за такси. Почему следует увеличить дистанцию?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Чтобы было больше времени на реакцию и остановку"
+        },
+        {
+          "key": "B",
+          "textRussian": "Потому что после наступления темноты стоп-сигналы перестают работать"
+        },
+        {
+          "key": "C",
+          "textRussian": "Потому что транспортное средство впереди имеет преимущество перед всем остальным транспортом"
+        },
+        {
+          "key": "D",
+          "textRussian": "Чтобы не пользоваться собственной фарой"
+        }
+      ],
+      "explanationRussian": "Ночью увеличенная дистанция даёт больше времени на реакцию и остановку.",
+      "whyOthersWrongEnglish": "B invents a failure of brake lights after dark; C confuses following distance with universal priority; D treats the taxi as a replacement for your own lights.",
+      "whyOthersWrongRussian": "B выдумывает отказ стоп-сигналов после наступления темноты; C путает дистанцию с безусловным преимуществом; D заменяет собственный свет светом такси.",
+      "safetyReasonEnglish": "More separation gives the rider time to respond to a hazard that becomes apparent late in darkness.",
+      "safetyReasonRussian": "Больший промежуток даёт время отреагировать на опасность, которая в темноте стала заметна поздно.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 24 (PDF p. 30): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-14-rain-reduce-speed",
+      "textRussian": "Во время поездки на мотоцикле начинается дождь. Как следует изменить скорость?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ускориться, чтобы скорее добраться до сухой дороги"
+        },
+        {
+          "key": "B",
+          "textRussian": "Снизить скорость с учётом мокрой дороги"
+        },
+        {
+          "key": "C",
+          "textRussian": "Сохранять скорость для сухой дороги, если двигатель работает нормально"
+        },
+        {
+          "key": "D",
+          "textRussian": "Увеличивать скорость всякий раз, когда транспорт сзади приближается вплотную"
+        }
+      ],
+      "explanationRussian": "Во время дождя следует снижать скорость, поскольку вероятность потери управления возрастает.",
+      "whyOthersWrongEnglish": "A adds speed to wet-road risk; C confuses engine operation with tire grip; D lets pressure from following traffic override the conditions.",
+      "whyOthersWrongRussian": "A добавляет скорость к риску мокрой дороги; C путает работу двигателя со сцеплением шин; D позволяет давлению сзади определять скорость вопреки условиям.",
+      "safetyReasonEnglish": "Reducing speed gives more margin to maintain control on a wet surface.",
+      "safetyReasonRussian": "Снижение скорости оставляет больше запаса для сохранения управления на мокром покрытии.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-15-rain-following-gap",
+      "textRussian": "Вы едете на мотоцикле за развозным фургоном, когда начинается продолжительный дождь. Как следует изменить дистанцию?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Уменьшить дистанцию, чтобы ехать точно по его следам"
+        },
+        {
+          "key": "B",
+          "textRussian": "Не менять дистанцию, потому что оба транспортных средства мокрые"
+        },
+        {
+          "key": "C",
+          "textRussian": "Увеличить дистанцию по сравнению с сухой дорогой"
+        },
+        {
+          "key": "D",
+          "textRussian": "Приблизиться настолько, чтобы видеть через его заднее стекло"
+        }
+      ],
+      "explanationRussian": "Во время дождя необходима большая дистанция, чем обычно.",
+      "whyOthersWrongEnglish": "A and D deliberately reduce stopping space; B assumes that both vehicles being wet makes the dry-road gap sufficient.",
+      "whyOthersWrongRussian": "A и D намеренно уменьшают запас для остановки; B предполагает, что одинаково мокрые машины делают обычную сухую дистанцию достаточной.",
+      "safetyReasonEnglish": "A larger gap leaves room for a controlled stop when wet conditions make braking less forgiving.",
+      "safetyReasonRussian": "Большая дистанция оставляет место для контролируемой остановки, когда мокрые условия уменьшают запас при торможении.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-16-rain-smooth-braking",
+      "textRussian": "Во время езды на мотоцикле под дождём вы видите, что транспорт впереди замедляется. Как следует спланировать снижение скорости?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Резко затормозить в последний момент"
+        },
+        {
+          "key": "B",
+          "textRussian": "Чередовать сильное торможение с резкими ускорениями"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ждать с торможением до сближения вплотную со следующим транспортным средством"
+        },
+        {
+          "key": "D",
+          "textRussian": "Тормозить плавно и избегать резких воздействий на органы управления"
+        }
+      ],
+      "explanationRussian": "Резкое торможение под дождём может вызвать занос, поэтому тормозить нужно контролируемо.",
+      "whyOthersWrongEnglish": "A and C postpone braking until little space remains; B repeatedly applies abrupt forces instead of a controlled reduction in speed.",
+      "whyOthersWrongRussian": "A и C откладывают торможение до момента, когда места почти не осталось; B предлагает повторные резкие воздействия вместо контролируемого снижения скорости.",
+      "safetyReasonEnglish": "Planning ahead allows smoother braking and reduces the chance of a skid on the wet road.",
+      "safetyReasonRussian": "Заблаговременное планирование позволяет тормозить плавнее и уменьшает вероятность заноса на мокрой дороге.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-17-rain-light-signals",
+      "textRussian": "Вы продолжаете обычное движение на мотоцикле под дождём. Какие световые приборы лучше всего помогают другим участникам движения понимать ваши действия?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Использовать фару и обычные указатели поворота по необходимости"
+        },
+        {
+          "key": "B",
+          "textRussian": "Держать аварийную сигнализацию включённой всю поездку"
+        },
+        {
+          "key": "C",
+          "textRussian": "Выключить фару и вместо неё использовать аварийную сигнализацию"
+        },
+        {
+          "key": "D",
+          "textRussian": "Мигать обоими указателями поворота, чтобы потребовать преимущества"
+        }
+      ],
+      "explanationRussian": "Под дождём следует держать фару включённой; ненужная аварийная сигнализация может скрывать намеченное направление и вводить других участников движения в заблуждение.",
+      "whyOthersWrongEnglish": "B masks ordinary directional communication with continuous hazards; C also removes headlighting; D incorrectly treats both indicators as a priority request.",
+      "whyOthersWrongRussian": "B подменяет обычное указание направления непрерывной аварийной сигнализацией; C также убирает свет фары; D ошибочно считает оба указателя требованием преимущества.",
+      "safetyReasonEnglish": "A visible headlight and unambiguous turn signals help others judge both your presence and intended movement.",
+      "safetyReasonRussian": "Видимая фара и однозначные сигналы поворота помогают другим оценивать и ваше присутствие, и намеченный манёвр.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 25 (PDF p. 31): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-18-curve-control",
+      "textRussian": "Вы подъезжаете на мотоцикле к повороту дороги. Какой план действий снижает риск потери управления?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Обогнать прямо перед поворотом ради лучшего обзора"
+        },
+        {
+          "key": "B",
+          "textRussian": "Снизить скорость до поворота и оставаться в своей полосе"
+        },
+        {
+          "key": "C",
+          "textRussian": "Пересечь осевую линию, чтобы спрямить поворот"
+        },
+        {
+          "key": "D",
+          "textRussian": "Сохранять скорость и резко затормозить в середине поворота"
+        }
+      ],
+      "explanationRussian": "На поворотах нужно снижать скорость, оставаться в своей полосе и избегать обгонов или резких остановок.",
+      "whyOthersWrongEnglish": "A starts an overtake where the view is restricted; C enters the opposing side; D delays speed adjustment until an abrupt mid-curve brake.",
+      "whyOthersWrongRussian": "A начинает обгон при ограниченном обзоре; C выезжает на встречную сторону; D откладывает снижение скорости до резкого торможения в повороте.",
+      "safetyReasonEnglish": "Slowing before the bend lets the rider follow a stable path without sudden braking or crossing into oncoming traffic.",
+      "safetyReasonRussian": "Снижение скорости до поворота позволяет сохранять устойчивую траекторию без резкого торможения и выезда навстречу транспорту.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 26 (PDF p. 32): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-19-phone-safe-stop",
+      "textRussian": "Во время поездки на мотоцикле на телефон приходит сообщение, требующее подробного ответа. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Держать телефон низко, чтобы другие водители его не видели"
+        },
+        {
+          "key": "B",
+          "textRussian": "Ответить во время медленного движения"
+        },
+        {
+          "key": "C",
+          "textRussian": "Найти безопасное место для парковки и только затем пользоваться телефоном"
+        },
+        {
+          "key": "D",
+          "textRussian": "Прочитать сообщение на прямом участке дороги"
+        }
+      ],
+      "explanationRussian": "Использование телефона отвлекает водителя; длительный разговор следует отложить до безопасной парковки.",
+      "whyOthersWrongEnglish": "A hides the phone without removing distraction; B and D assume low speed or a straight road makes reading and replying safe while moving.",
+      "whyOthersWrongRussian": "A скрывает телефон, не устраняя отвлечение; B и D предполагают, что малая скорость или прямая дорога делают чтение и ответ на ходу безопасными.",
+      "safetyReasonEnglish": "Parking safely separates the attention needed for the message from the attention needed to balance and monitor traffic.",
+      "safetyReasonRussian": "Безопасная парковка разделяет внимание к сообщению и внимание, необходимое для равновесия и наблюдения за движением.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 14 (PDF p. 20): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-20-avoid-alcohol-driving",
+      "textRussian": "После употребления алкоголя за ужином вы думаете поехать домой на мотоцикле. Какой план безопаснее всего?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ехать медленнее, чтобы нейтрализовать действие алкоголя"
+        },
+        {
+          "key": "B",
+          "textRussian": "Выбрать знакомый маршрут и ехать самостоятельно"
+        },
+        {
+          "key": "C",
+          "textRussian": "Понадеяться на свежий воздух и ехать самостоятельно"
+        },
+        {
+          "key": "D",
+          "textRussian": "Организовать поездку без самостоятельного управления транспортом"
+        }
+      ],
+      "explanationRussian": "Управление транспортом под воздействием алкоголя создаёт риск столкновения, и его следует избегать.",
+      "whyOthersWrongEnglish": "A assumes slow riding cancels alcohol impairment; B substitutes familiarity for fitness to ride; C assumes fresh air removes the impairment.",
+      "whyOthersWrongRussian": "A считает, что медленная езда нейтрализует действие алкоголя; B заменяет готовность к управлению знакомым маршрутом; C рассчитывает устранить нарушение свежим воздухом.",
+      "safetyReasonEnglish": "Alternative transport avoids relying on judgement and reactions that alcohol may impair.",
+      "safetyReasonRussian": "Другой способ добраться домой позволяет не полагаться на оценку обстановки и реакцию, которые алкоголь может ухудшить.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 9 (PDF p. 15): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-21-drowsy-medication",
+      "textRussian": "После приёма лекарства вы чувствуете сонливость перед поездкой на мотоцикле. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Не управлять транспортом при сниженной бдительности"
+        },
+        {
+          "key": "B",
+          "textRussian": "Ехать как обычно, поскольку назначенные лекарства не могут влиять на вождение"
+        },
+        {
+          "key": "C",
+          "textRussian": "Положиться на громкую музыку, чтобы сделать поездку безопасной"
+        },
+        {
+          "key": "D",
+          "textRussian": "Ехать быстрее, чтобы закончить поездку до усиления усталости"
+        }
+      ],
+      "explanationRussian": "Лекарство, вызывающее сонливость, может снижать ясность сознания и делать управление транспортом небезопасным.",
+      "whyOthersWrongEnglish": "B assumes prescribed medicine is always harmless for driving; C substitutes stimulation for alertness; D adds speed rather than addressing drowsiness.",
+      "whyOthersWrongRussian": "B считает назначенное лекарство всегда безвредным для вождения; C заменяет бодрость внешним стимулом; D добавляет скорость вместо устранения сонливости.",
+      "safetyReasonEnglish": "Postponing the ride avoids relying on impaired attention to notice hazards and react in time.",
+      "safetyReasonRussian": "Отказ от поездки в таком состоянии позволяет не полагаться на ослабленное внимание при обнаружении опасности и своевременной реакции.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 67 (PDF p. 73): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-22-sidewalk-pedestrians",
+      "textRussian": "Пробка перекрывает ваш путь, но тротуар выглядит свободным. Что следует сделать вам на мотоцикле?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Выехать на тротуар, если прямо сейчас пешеходов не видно"
+        },
+        {
+          "key": "B",
+          "textRussian": "Оставаться на проезжей части и не занимать тротуар"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ехать по тротуару, подавая звуковой сигнал"
+        },
+        {
+          "key": "D",
+          "textRussian": "Использовать тротуар всякий раз, когда движение остановилось"
+        }
+      ],
+      "explanationRussian": "Тротуары предназначены для пешеходов, а не для движения или парковки транспорта.",
+      "whyOthersWrongEnglish": "A treats an apparently empty sidewalk as permission; C uses a horn to displace pedestrians; D lets a traffic queue change the sidewalk’s purpose.",
+      "whyOthersWrongRussian": "A принимает видимое отсутствие людей за разрешение; C использует сигнал для вытеснения пешеходов; D считает пробку основанием изменить назначение тротуара.",
+      "safetyReasonEnglish": "Keeping motorcycles off the sidewalk preserves a space where pedestrians can walk without conflicts with moving vehicles.",
+      "safetyReasonRussian": "Отсутствие мотоциклов на тротуаре сохраняет пространство для ходьбы без конфликтов с движущимся транспортом.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 16 (PDF p. 22): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-23-shoulder-no-shortcut",
+      "textRussian": "Другие мотоциклисты объезжают затор по обочине. Чем следует руководствоваться при принятии решения?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Поехать за ними, потому что пробка делает обочину дополнительной полосой"
+        },
+        {
+          "key": "B",
+          "textRussian": "Выехать на обочину с включённой аварийной сигнализацией"
+        },
+        {
+          "key": "C",
+          "textRussian": "Оставаться в полосе движения и сохранять обочину для экстренных случаев"
+        },
+        {
+          "key": "D",
+          "textRussian": "Ехать по обочине до появления экстренной службы"
+        }
+      ],
+      "explanationRussian": "Обочина служит для доступа экстренных служб и временных аварийных остановок, а не является обычной полосой для объезда затора.",
+      "whyOthersWrongEnglish": "A treats others’ behaviour as permission; B assumes hazard lights authorize shoulder use; D waits until an emergency vehicle arrives before clearing its route.",
+      "whyOthersWrongRussian": "A принимает чужое поведение за разрешение; B считает аварийную сигнализацию разрешением на обочину; D предлагает освобождать путь лишь после появления экстренного транспорта.",
+      "safetyReasonEnglish": "Leaving the shoulder clear preserves space for emergencies instead of filling it with bypassing traffic.",
+      "safetyReasonRussian": "Свободная обочина сохраняет место для экстренной ситуации вместо заполнения её объезжающим пробку транспортом.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 16 (PDF p. 22): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-24-lane-discipline",
+      "textRussian": "Как следует учитывать разметку полос при обычном движении на мотоцикле по размеченной дороге?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ехать по разделительной линии, занимая обе полосы"
+        },
+        {
+          "key": "B",
+          "textRussian": "Неоднократно пересекать линию, чтобы отбить желание обгонять"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ехать по разделительной линии всякий раз, когда движение слабое"
+        },
+        {
+          "key": "D",
+          "textRussian": "Оставаться в пределах полосы, а не вилять через разделительную линию"
+        }
+      ],
+      "explanationRussian": "Повторяющееся движение по разделительным линиям полос создаёт риск столкновения.",
+      "whyOthersWrongEnglish": "A and C treat the lane divider as a travel position; B deliberately weaves to influence other drivers rather than following a predictable path.",
+      "whyOthersWrongRussian": "A и C принимают линию между полосами за место для движения; B предлагает намеренно вилять для воздействия на других вместо предсказуемой траектории.",
+      "safetyReasonEnglish": "A stable position within a lane makes the motorcycle’s path easier for nearby drivers to anticipate.",
+      "safetyReasonRussian": "Устойчивое положение в пределах полосы делает траекторию мотоцикла более предсказуемой для водителей рядом.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 16 (PDF p. 22): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-25-horn-warning",
+      "textRussian": "Когда уместно использовать звуковой сигнал мотоцикла?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Чтобы предупредить другого участника движения о непосредственной опасности"
+        },
+        {
+          "key": "B",
+          "textRussian": "Чтобы наказать водителя, который вас задержал"
+        },
+        {
+          "key": "C",
+          "textRussian": "Чтобы поторопить пешеходов, безопасно переходящих дорогу"
+        },
+        {
+          "key": "D",
+          "textRussian": "Чтобы выражать раздражение на протяжении всей пробки"
+        }
+      ],
+      "explanationRussian": "Звуковой сигнал предназначен для необходимых предупреждений или экстренных ситуаций, а не для постоянного шума или запугивания.",
+      "whyOthersWrongEnglish": "B uses the horn as punishment; C pressures pedestrians who are crossing safely; D uses sustained noise to express frustration rather than warn of danger.",
+      "whyOthersWrongRussian": "B использует сигнал как наказание; C давит на безопасно переходящих пешеходов; D выражает раздражение постоянным шумом вместо предупреждения об опасности.",
+      "safetyReasonEnglish": "A necessary warning can draw attention to an immediate hazard without confusing it with routine impatience.",
+      "safetyReasonRussian": "Необходимое предупреждение привлекает внимание к непосредственной опасности, не смешивая её с обычным нетерпением.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 15 (PDF p. 21): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-26-narrow-road-oncoming",
+      "textRussian": "Во время поездки на мотоцикле по узкой дороге навстречу приближается автомобиль. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ускориться и занять середину дороги"
+        },
+        {
+          "key": "B",
+          "textRussian": "Снизить скорость и держаться безопасно слева"
+        },
+        {
+          "key": "C",
+          "textRussian": "Сместиться вправо, чтобы заставить другого водителя уступить"
+        },
+        {
+          "key": "D",
+          "textRussian": "Продолжать ехать по центру с прежней скоростью"
+        }
+      ],
+      "explanationRussian": "На узкой дороге при встречном движении следует снизить скорость и держаться как можно левее.",
+      "whyOthersWrongEnglish": "A and D keep the motorcycle in the limited shared center space; C moves toward the approaching vehicle to force priority.",
+      "whyOthersWrongRussian": "A и D оставляют мотоцикл в ограниченном общем пространстве посередине; C направляет его к встречному транспорту ради принуждения уступить.",
+      "safetyReasonEnglish": "Lower speed and safe left-side positioning provide more room for both vehicles to pass.",
+      "safetyReasonRussian": "Меньшая скорость и безопасное положение слева оставляют обоим транспортным средствам больше места для разъезда.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 15 (PDF p. 21): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-27-red-signal-stop",
+      "textRussian": "Вы подъезжаете на мотоцикле к светофору с красным сигналом, регулирующему вашу полосу. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Продолжить движение, если перекрёсток кажется пустым"
+        },
+        {
+          "key": "B",
+          "textRussian": "Проехать на красный следом за более крупным транспортным средством"
+        },
+        {
+          "key": "C",
+          "textRussian": "Остановиться и дождаться сигнала, разрешающего движение"
+        },
+        {
+          "key": "D",
+          "textRussian": "Подать звуковой сигнал и осторожно продолжить движение"
+        }
+      ],
+      "explanationRussian": "Красный сигнал для транспорта требует остановки, чтобы пешеходы могли безопасно перейти дорогу.",
+      "whyOthersWrongEnglish": "A substitutes a personal impression of an empty junction for the signal; B copies another vehicle’s violation; D treats the horn as permission to proceed.",
+      "whyOthersWrongRussian": "A заменяет сигнал личным впечатлением о пустом перекрёстке; B повторяет чужое нарушение; D принимает звуковой сигнал за разрешение ехать.",
+      "safetyReasonEnglish": "Stopping keeps the motorcycle out of paths that may be used by crossing pedestrians or permitted traffic.",
+      "safetyReasonRussian": "Остановка не допускает выезда мотоцикла на траектории пешеходов или транспорта, которому разрешено движение.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 37 (PDF p. 43): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-28-yellow-signal-prepare-stop",
+      "textRussian": "При включении жёлтого сигнала вы можете безопасно остановить мотоцикл перед стоп-линией. Как следует поступить?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ускориться, чтобы успеть до красного"
+        },
+        {
+          "key": "B",
+          "textRussian": "Сохранять скорость, потому что жёлтый даёт преимущество"
+        },
+        {
+          "key": "C",
+          "textRussian": "Обогнать транспорт впереди, чтобы первым попасть на перекрёсток"
+        },
+        {
+          "key": "D",
+          "textRussian": "Снизить скорость и остановиться перед стоп-линией"
+        }
+      ],
+      "explanationRussian": "Жёлтый сигнал предупреждает водителей о необходимости снизить скорость и подготовиться к остановке перед обозначенной линией.",
+      "whyOthersWrongEnglish": "A tries to beat the changing signal; B mistakes yellow for priority; C adds an overtake instead of taking the safe stop specified in the question.",
+      "whyOthersWrongRussian": "A предлагает проскочить меняющийся сигнал; B принимает жёлтый за преимущество; C добавляет обгон вместо указанной в вопросе безопасной остановки.",
+      "safetyReasonEnglish": "When a safe stop is available, taking it avoids entering the junction as the permitted movements change.",
+      "safetyReasonRussian": "Если безопасная остановка возможна, она помогает избежать въезда на перекрёсток в момент смены разрешённых направлений.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 26 (PDF p. 32): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-29-roundabout-yield",
+      "textRussian": "Вы собираетесь въехать на мотоцикле на перекрёсток с круговым движением, по которому уже движется транспорт. Кому следует уступить дорогу?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Транспортным средствам, уже движущимся по кругу"
+        },
+        {
+          "key": "B",
+          "textRussian": "Только транспортным средствам, въезжающим позади вас"
+        },
+        {
+          "key": "C",
+          "textRussian": "Никому, поскольку въезжающий транспорт имеет преимущество"
+        },
+        {
+          "key": "D",
+          "textRussian": "Только транспортным средствам крупнее вашего"
+        }
+      ],
+      "explanationRussian": "При въезде на круг следует снизить скорость и уступить транспортным средствам, уже движущимся по нему.",
+      "whyOthersWrongEnglish": "B looks to entering traffic behind rather than circulating traffic; C reverses the yielding relationship; D invents priority based on vehicle size.",
+      "whyOthersWrongRussian": "B ориентируется на въезжающих сзади вместо транспорта на круге; C меняет правило уступки на противоположное; D выдумывает преимущество по размеру.",
+      "safetyReasonEnglish": "Yielding before entry allows merging into a gap without forcing circulating vehicles to brake or swerve.",
+      "safetyReasonRussian": "Уступка перед въездом позволяет встроиться в промежуток, не вынуждая транспорт на круге тормозить или менять траекторию.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-30-roundabout-path",
+      "textRussian": "По какой траектории следует двигаться на мотоцикле через перекрёсток с круговым движением?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Проехать прямо через центральную часть, если она свободна"
+        },
+        {
+          "key": "B",
+          "textRussian": "Следовать обозначенной разметкой или установленной траектории движения по кругу"
+        },
+        {
+          "key": "C",
+          "textRussian": "Перестраиваться через полосы круга, чтобы сократить путь"
+        },
+        {
+          "key": "D",
+          "textRussian": "Ехать против направления движения по кругу, если нужный съезд близко"
+        }
+      ],
+      "explanationRussian": "На круговом перекрёстке следует придерживаться установленной траектории, не срезая путь через него.",
+      "whyOthersWrongEnglish": "A cuts through the center, C crosses circulating lanes to shorten the route, and D goes against the circulating direction; all abandon the designated path.",
+      "whyOthersWrongRussian": "A срезает через центр, C пересекает полосы ради сокращения пути, D едет против направления круга; все эти варианты отклоняются от установленной траектории.",
+      "safetyReasonEnglish": "Following the circulating path makes entries, exits and the motorcycle’s movement more predictable.",
+      "safetyReasonRussian": "Движение по установленной траектории делает въезды, съезды и перемещение мотоцикла более предсказуемыми.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-31-pedestrian-crossing-yield",
+      "textRussian": "Перед вашим мотоциклом человек переходит дорогу по обозначенному пешеходному переходу. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Подать звуковой сигнал и проехать перед пешеходом"
+        },
+        {
+          "key": "B",
+          "textRussian": "Ускориться и проехать через оставшийся промежуток"
+        },
+        {
+          "key": "C",
+          "textRussian": "Остановиться и дать пешеходу безопасно перейти"
+        },
+        {
+          "key": "D",
+          "textRussian": "Объехать остановившийся впереди транспорт, не проверяя переход"
+        }
+      ],
+      "explanationRussian": "У пешеходного перехода следует снижать скорость и останавливаться, чтобы дать пешеходам безопасно перейти дорогу.",
+      "whyOthersWrongEnglish": "A and B try to take space in front of the pedestrian; D passes a stopped vehicle without checking whether it is hiding someone on the crossing.",
+      "whyOthersWrongRussian": "A и B пытаются занять пространство перед пешеходом; D объезжает остановившийся транспорт, не проверяя, не скрывает ли он человека на переходе.",
+      "safetyReasonEnglish": "Stopping gives the person time and space to cross without needing to judge whether the motorcycle will squeeze past.",
+      "safetyReasonRussian": "Остановка оставляет человеку время и место для перехода без необходимости угадывать, не попытается ли мотоцикл проскочить рядом.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 38 (PDF p. 44): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-32-crossing-no-parking",
+      "textRussian": "Вы хотите оставить мотоцикл на время посещения магазина, но свободное место рядом является обозначенным пешеходным переходом. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Припарковаться на переходе, если оставаться рядом"
+        },
+        {
+          "key": "B",
+          "textRussian": "Оставить транспорт на переходе с включённой аварийной сигнализацией"
+        },
+        {
+          "key": "C",
+          "textRussian": "Занять переход, если пешеходы могут обойти транспорт"
+        },
+        {
+          "key": "D",
+          "textRussian": "Найти разрешённое место для парковки вне перехода"
+        }
+      ],
+      "explanationRussian": "Парковка на пешеходном переходе запрещена.",
+      "whyOthersWrongEnglish": "A treats staying nearby as an exemption; B substitutes hazard lights for permission; C assumes pedestrians can be displaced around the parked motorcycle.",
+      "whyOthersWrongRussian": "A принимает присутствие рядом за исключение; B заменяет разрешение аварийной сигнализацией; C предполагает, что пешеходов можно вынудить обходить мотоцикл.",
+      "safetyReasonEnglish": "An unobstructed crossing preserves the intended walking route and keeps pedestrians visible.",
+      "safetyReasonRussian": "Свободный переход сохраняет предназначенный для ходьбы путь и видимость пешеходов.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 38 (PDF p. 44): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-33-entrance-no-blocking",
+      "textRussian": "Вы собираетесь припарковать мотоцикл поперёк входа в здание. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Выбрать другое место, оставив вход свободным"
+        },
+        {
+          "key": "B",
+          "textRussian": "Припарковаться там, если скоро вернётесь"
+        },
+        {
+          "key": "C",
+          "textRussian": "Перекрыть вход и оставить номер телефона в качестве разрешения"
+        },
+        {
+          "key": "D",
+          "textRussian": "Парковаться там всякий раз, когда ворота закрыты"
+        }
+      ],
+      "explanationRussian": "Припаркованный транспорт не должен перекрывать въезды или выезды других объектов.",
+      "whyOthersWrongEnglish": "B assumes a short stay excuses blocking access; C treats a phone number as permission; D assumes a closed gate means access will not be needed.",
+      "whyOthersWrongRussian": "B считает краткую стоянку оправданием перекрытия; C принимает номер телефона за разрешение; D предполагает, что закрытые ворота не понадобятся.",
+      "safetyReasonEnglish": "Keeping access clear lets people enter or leave without first locating and moving the motorcycle.",
+      "safetyReasonRussian": "Свободный доступ позволяет войти или выехать без предварительного поиска владельца и перемещения мотоцикла.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 14 (PDF p. 20): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-34-emergency-vehicle-yield",
+      "textRussian": "Сзади к вашему мотоциклу приближается скорая помощь, следующая на экстренный вызов. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Оставаться на её пути, чтобы движение было предсказуемым"
+        },
+        {
+          "key": "B",
+          "textRussian": "Уступить, безопасно сместившись влево или остановившись при необходимости"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ускориться впереди неё и использовать её для объезда потока"
+        },
+        {
+          "key": "D",
+          "textRussian": "Ехать вплотную за ней через освобождающийся промежуток"
+        }
+      ],
+      "explanationRussian": "Экстренному транспорту следует уступать, безопасно останавливаясь или смещаясь к левому краю.",
+      "whyOthersWrongEnglish": "A keeps the route obstructed; C tries to exploit the ambulance to pass traffic; D follows into its clearance instead of preserving it.",
+      "whyOthersWrongRussian": "A сохраняет препятствие на пути; C пытается использовать скорую для объезда потока; D занимает освобождаемый для неё промежуток вместо сохранения пути.",
+      "safetyReasonEnglish": "A controlled move out of the way gives the ambulance room while avoiding a sudden conflict with surrounding traffic.",
+      "safetyReasonRussian": "Контролируемое освобождение пути оставляет скорой место и помогает избежать внезапного конфликта с окружающим транспортом.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 71 (PDF p. 77): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-35-railway-train-stop",
+      "textRussian": "У переезда вы видите и слышите приближающийся поезд. Что следует сделать вам на мотоцикле?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Быстро пересечь пути до прибытия поезда"
+        },
+        {
+          "key": "B",
+          "textRussian": "Ждать, поставив переднее колесо на ближайший рельс"
+        },
+        {
+          "key": "C",
+          "textRussian": "Остановиться вне железнодорожных путей и ждать"
+        },
+        {
+          "key": "D",
+          "textRussian": "Объехать шлагбаум, если места кажется достаточно"
+        }
+      ],
+      "explanationRussian": "При приближении поезда нужно остановиться перед путями; останавливаться на самих путях нельзя.",
+      "whyOthersWrongEnglish": "A attempts to race the train; B places part of the motorcycle on a rail; D treats a gap around the barrier as permission to cross.",
+      "whyOthersWrongRussian": "A предлагает опередить поезд; B ставит часть мотоцикла на рельс; D принимает промежуток у шлагбаума за разрешение на пересечение.",
+      "safetyReasonEnglish": "Waiting clear of the tracks keeps the rider outside the train’s path.",
+      "safetyReasonRussian": "Ожидание вне путей сохраняет мотоциклиста за пределами траектории поезда.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 71 (PDF p. 77): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-36-railway-uncontrolled-check",
+      "textRussian": "На железнодорожном переезде по вашему мотоциклетному маршруту нет предупредительной сигнализации. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Считать, что отсутствие сигнала означает отсутствие поездов на линии"
+        },
+        {
+          "key": "B",
+          "textRussian": "Сохранять скорость, чтобы меньше времени провести на путях"
+        },
+        {
+          "key": "C",
+          "textRussian": "Следовать за транспортом впереди без самостоятельной проверки"
+        },
+        {
+          "key": "D",
+          "textRussian": "Снизить скорость, проверить оба направления и пересекать только тогда, когда это безопасно"
+        }
+      ],
+      "explanationRussian": "Переезд без предупредительной сигнализации требует повышенной осторожности и тщательной проверки обоих направлений.",
+      "whyOthersWrongEnglish": "A interprets missing equipment as absence of trains; B replaces observation with speed; C delegates the safety check to the vehicle ahead.",
+      "whyOthersWrongRussian": "A принимает отсутствие оборудования за отсутствие поездов; B заменяет наблюдение скоростью; C перекладывает проверку на водителя впереди.",
+      "safetyReasonEnglish": "Independent checks in both directions help detect a train when no warning signal is available.",
+      "safetyReasonRussian": "Самостоятельная проверка обоих направлений помогает заметить поезд там, где нет предупреждающего сигнала.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 71 (PDF p. 77): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-37-overtake-safe-gap",
+      "textRussian": "Вы хотите обогнать на мотоцикле более медленное транспортное средство. В чём следует убедиться перед началом обгона?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Что можно подать сигнал и завершить обгон с безопасным запасом пространства"
+        },
+        {
+          "key": "B",
+          "textRussian": "Что транспорт впереди едет медленнее, чем вам хотелось бы"
+        },
+        {
+          "key": "C",
+          "textRussian": "Что водитель впереди увидел вас в зеркале, поэтому сигнал не нужен"
+        },
+        {
+          "key": "D",
+          "textRussian": "Что короткий звуковой сигнал автоматически даёт право на обгон"
+        }
+      ],
+      "explanationRussian": "Для обгона нужны заблаговременный сигнал и достаточное пространство, чтобы не создавать помех движению.",
+      "whyOthersWrongEnglish": "B gives a motive rather than a safety check; C removes signalling based on an assumption; D mistakes a horn warning for an automatic right to pass.",
+      "whyOthersWrongRussian": "B называет мотив вместо проверки безопасности; C отменяет сигнал на основании предположения; D принимает звуковое предупреждение за безусловное право обгона.",
+      "safetyReasonEnglish": "Enough clearance allows the whole pass and return to be completed without forcing others to take evasive action.",
+      "safetyReasonRussian": "Достаточное пространство позволяет завершить обгон и возвращение, не вынуждая других уклоняться или резко тормозить.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 34 (PDF p. 40): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-38-allow-overtaking",
+      "textRussian": "Транспортное средство сзади начинает безопасный обгон вашего мотоцикла. Как следует действовать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ускориться, чтобы не дать себя обогнать"
+        },
+        {
+          "key": "B",
+          "textRussian": "Оставить место и не соревноваться в скорости с обгоняющим"
+        },
+        {
+          "key": "C",
+          "textRussian": "Сместиться к нему, чтобы помешать обгону"
+        },
+        {
+          "key": "D",
+          "textRussian": "Сравнять скорость, чтобы он оставался рядом"
+        }
+      ],
+      "explanationRussian": "Когда вас обгоняют, нужно содействовать безопасному обгону, оставляя пространство, а не соревнуясь в скорости.",
+      "whyOthersWrongEnglish": "A races to prevent passing; C deliberately crowds the overtaker; D prolongs side-by-side travel instead of allowing the pass to finish.",
+      "whyOthersWrongRussian": "A предлагает гонку ради срыва обгона; C намеренно теснит обгоняющего; D продлевает движение бок о бок вместо завершения обгона.",
+      "safetyReasonEnglish": "Cooperation shortens the time spent alongside and leaves space for a safe completion of the manoeuvre.",
+      "safetyReasonRussian": "Содействие сокращает время движения рядом и оставляет место для безопасного завершения манёвра.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 13 (PDF p. 19): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-39-red-white-curb",
+      "textRussian": "У кафе, где вы хотите припарковать мотоцикл, бордюр окрашен в красно-белые цвета. Что это означает?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Парковка разрешена только мотоциклам"
+        },
+        {
+          "key": "B",
+          "textRussian": "Парковка разрешена при работающем двигателе"
+        },
+        {
+          "key": "C",
+          "textRussian": "Остановка и парковка здесь запрещены"
+        },
+        {
+          "key": "D",
+          "textRussian": "Место предназначено для длительной парковки"
+        }
+      ],
+      "explanationRussian": "Красно-белая окраска бордюра обозначает место, где остановка и парковка запрещены.",
+      "whyOthersWrongEnglish": "A invents a motorcycle exception; B invents an engine-running exception; D reverses the marking’s meaning into a parking reservation.",
+      "whyOthersWrongRussian": "A выдумывает исключение для мотоциклов; B — для работающего двигателя; D меняет смысл разметки на резервирование парковки.",
+      "safetyReasonEnglish": "Recognizing the restriction prevents choosing a stop where the marked space is intended to stay clear.",
+      "safetyReasonRussian": "Понимание ограничения помогает не останавливаться там, где обозначенное пространство должно оставаться свободным.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 36 (PDF p. 42): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-40-posted-speed-limit",
+      "textRussian": "Вы съезжаете на мотоцикле с дороги, где разрешена более высокая скорость, в зону с более низким обозначенным ограничением. Какое ограничение действует?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Более высокий предел с предыдущей дороги"
+        },
+        {
+          "key": "B",
+          "textRussian": "Скорость самого быстрого транспорта поблизости"
+        },
+        {
+          "key": "C",
+          "textRussian": "Любой предел, подходящий объёму двигателя вашего транспорта"
+        },
+        {
+          "key": "D",
+          "textRussian": "Предел на знаке для дороги, по которой вы движетесь"
+        }
+      ],
+      "explanationRussian": "Если установлен знак ограничения скорости, водители должны соблюдать указанный на нём предел.",
+      "whyOthersWrongEnglish": "A carries over a previous road’s limit; B substitutes other drivers’ speed for the sign; C invents a choice of limits based on engine size.",
+      "whyOthersWrongRussian": "A переносит предел с предыдущей дороги; B заменяет знак скоростью других; C выдумывает выбор предела по объёму двигателя.",
+      "safetyReasonEnglish": "Responding to the current road’s sign helps keep speed consistent with the restriction encountered there.",
+      "safetyReasonRussian": "Учёт знака на текущей дороге помогает удерживать скорость в пределах установленного именно здесь ограничения.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 31 (PDF p. 37): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-41-helmet-secure-all",
+      "textRussian": "Вы собираетесь в короткую поездку на мотоцикле с пассажиром. Как следует подготовиться в отношении шлемов?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Оба надевают шлемы с надёжно застёгнутыми подбородочными ремнями"
+        },
+        {
+          "key": "B",
+          "textRussian": "Шлем нужен только водителю"
+        },
+        {
+          "key": "C",
+          "textRussian": "Пассажир может не надевать шлем, а держать его в руках"
+        },
+        {
+          "key": "D",
+          "textRussian": "В короткой поездке оба могут оставить ремни незатянутыми"
+        }
+      ],
+      "explanationRussian": "И водитель мотоцикла, и пассажир должны надеть шлемы и надёжно отрегулировать подбородочные ремни.",
+      "whyOthersWrongEnglish": "B excludes the passenger; C treats carrying a helmet as wearing it; D assumes a short trip makes secure fastening unnecessary.",
+      "whyOthersWrongRussian": "B исключает пассажира; C приравнивает шлем в руках к надетому; D считает короткую поездку основанием не закреплять шлем.",
+      "safetyReasonEnglish": "A securely fastened helmet is better able to remain in place if the rider or passenger falls.",
+      "safetyReasonRussian": "Надёжно застёгнутый шлем лучше удерживается на месте при падении водителя или пассажира.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 20 (PDF p. 26): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-42-roadworthy-equipment",
+      "textRussian": "Перед выездом вы обнаружили, что тормоза мотоцикла работают ненадёжно. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Использовать звуковой сигнал вместо исправных тормозов"
+        },
+        {
+          "key": "B",
+          "textRussian": "Устранить неисправность до поездки"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ехать медленнее и откладывать ремонт на неопределённый срок"
+        },
+        {
+          "key": "D",
+          "textRussian": "Взять пассажира, чтобы он помогал останавливать мотоцикл"
+        }
+      ],
+      "explanationRussian": "Перед поездкой следует проверить тормоза, фару, шины и другое оборудование; ненадёжные детали требуют замены.",
+      "whyOthersWrongEnglish": "A substitutes a warning for stopping ability; C leaves a known fault unresolved; D assumes a passenger can replace functioning brakes.",
+      "whyOthersWrongRussian": "A заменяет способность остановиться предупреждением; C оставляет известную неисправность; D рассчитывает заменить исправные тормоза помощью пассажира.",
+      "safetyReasonEnglish": "Reliable brakes are needed for predictable stopping, including when another road user creates an unexpected hazard.",
+      "safetyReasonRussian": "Надёжные тормоза нужны для предсказуемой остановки, в том числе при неожиданной опасности от другого участника движения.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 20 (PDF p. 26): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-43-motorcycle-metal-plates",
+      "textRussian": "На вашем мотоциклетном маршруте раскопку поперёк дороги закрывает металлическая плита. Как безопаснее всего действовать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Резко ускориться на плите"
+        },
+        {
+          "key": "B",
+          "textRussian": "Отпустить одну руку, чтобы мотоцикл двигался свободнее"
+        },
+        {
+          "key": "C",
+          "textRussian": "Снизить скорость и крепко держать руль"
+        },
+        {
+          "key": "D",
+          "textRussian": "Резко затормозить на плите при наклоне мотоцикла"
+        }
+      ],
+      "explanationRussian": "Металлические плиты над дорожными работами могут быть скользкими; следует снизить скорость и крепко держать руль.",
+      "whyOthersWrongEnglish": "A and D add abrupt acceleration or braking on a potentially slippery plate; B removes one hand instead of maintaining a secure grip.",
+      "whyOthersWrongRussian": "A и D добавляют резкое ускорение или торможение на потенциально скользкой плите; B предлагает убрать руку вместо надёжного удержания руля.",
+      "safetyReasonEnglish": "A slower, controlled crossing leaves more margin if tire grip changes on the metal surface.",
+      "safetyReasonRussian": "Медленное контролируемое пересечение оставляет больше запаса при изменении сцепления шин с металлической поверхностью.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 23 (PDF p. 29): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-44-motorcycle-potholes",
+      "textRussian": "Во время езды на мотоцикле вы подъезжаете к повреждённому участку дороги с выбоинами и лужами. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Увеличить скорость, чтобы колёса перескакивали через ямы"
+        },
+        {
+          "key": "B",
+          "textRussian": "Резко тормозить в каждой луже"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ослабить хват и смотреть только на переднее колесо"
+        },
+        {
+          "key": "D",
+          "textRussian": "Снизить скорость, крепко держать руль и избегать резкого торможения"
+        }
+      ],
+      "explanationRussian": "Выбоины и лужи угрожают устойчивости; низкая скорость и отказ от резкого торможения помогают сохранять управление.",
+      "whyOthersWrongEnglish": "A tries to solve damage with speed; B adds abrupt braking on an uncertain surface; C weakens control and narrows observation to the front wheel.",
+      "whyOthersWrongRussian": "A пытается преодолеть повреждения скоростью; B добавляет резкое торможение на непредсказуемой поверхности; C ослабляет контроль и сужает обзор до переднего колеса.",
+      "safetyReasonEnglish": "Reduced speed and a secure grip make it easier to manage uneven surfaces without sudden loss of balance.",
+      "safetyReasonRussian": "Меньшая скорость и надёжный хват помогают проходить неровности без внезапной потери равновесия.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 23 (PDF p. 29): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-45-motorcycle-oil-spill",
+      "textRussian": "Впереди вы видите разлитое масло и можете безопасно выбрать для мотоцикла свободную от него траекторию. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Объехать масло по безопасной свободной траектории"
+        },
+        {
+          "key": "B",
+          "textRussian": "Проехать прямо по маслу, чтобы проверить сцепление"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ускориться на масле"
+        },
+        {
+          "key": "D",
+          "textRussian": "Резко затормозить на масляном пятне, чтобы очистить шины"
+        }
+      ],
+      "explanationRussian": "Разлитое масло создаёт риск заноса, и его следует объезжать, а не проезжать через него без необходимости.",
+      "whyOthersWrongEnglish": "B needlessly tests a slippery patch; C accelerates on it; D adds hard braking and incorrectly assumes this cleans the tires safely.",
+      "whyOthersWrongRussian": "B без необходимости проверяет скользкий участок; C ускоряется на нём; D добавляет резкое торможение и ошибочно считает это безопасной очисткой шин.",
+      "safetyReasonEnglish": "Choosing the already safe clear route avoids exposing the tires to a surface with reduced grip.",
+      "safetyReasonRussian": "Выбор уже доступной безопасной траектории позволяет не выводить шины на поверхность с пониженным сцеплением.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 23 (PDF p. 29): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-46-motorcycle-loose-surface",
+      "textRussian": "В зоне дорожных работ часть дороги покрыта рыхлым песком. Как следует проехать этот участок на мотоцикле?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Считать покрытие таким же, как чистый сухой асфальт"
+        },
+        {
+          "key": "B",
+          "textRussian": "Проявить повышенную осторожность, поскольку покрытие может ухудшить управление"
+        },
+        {
+          "key": "C",
+          "textRussian": "Ускоряться и вилять, чтобы стряхнуть песок с шин"
+        },
+        {
+          "key": "D",
+          "textRussian": "Сильнее наклоняться, чтобы улучшить контакт шин"
+        }
+      ],
+      "explanationRussian": "Гравий и песок, особенно рядом с дорожными работами, повышают риск потери управления мотоциклом.",
+      "whyOthersWrongEnglish": "A ignores the changed surface; C adds acceleration and weaving; D assumes sharper lean improves control on loose material.",
+      "whyOthersWrongRussian": "A игнорирует изменение покрытия; C добавляет ускорение и виляние; D считает больший наклон способом улучшить управление на сыпучем материале.",
+      "safetyReasonEnglish": "Loose material can reduce dependable tire contact, so extra caution preserves a margin against sliding.",
+      "safetyReasonRussian": "Сыпучий материал может ухудшать надёжный контакт шин с дорогой, поэтому осторожность оставляет запас против скольжения.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 23 (PDF p. 29): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-47-motorcycle-speed-bumps",
+      "textRussian": "Во время поездки на мотоцикле вы видите впереди обозначенную знаком искусственную неровность. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Ускориться, чтобы перепрыгнуть неровность"
+        },
+        {
+          "key": "B",
+          "textRussian": "Встать на одну подножку и резко повернуть"
+        },
+        {
+          "key": "C",
+          "textRussian": "Снизить скорость и сохранять устойчивую посадку"
+        },
+        {
+          "key": "D",
+          "textRussian": "Дождаться въезда на неровность и резко затормозить"
+        }
+      ],
+      "explanationRussian": "Перед искусственными неровностями следует снизить скорость согласно знакам и сохранять устойчивую посадку.",
+      "whyOthersWrongEnglish": "A turns the bump into a jump; B destabilizes the rider with an uneven stance and sharp turn; D postpones braking until the motorcycle is on the bump.",
+      "whyOthersWrongRussian": "A превращает неровность в трамплин; B нарушает устойчивость несимметричной стойкой и резким поворотом; D откладывает торможение до нахождения на неровности.",
+      "safetyReasonEnglish": "Reducing speed before the bump and remaining stable helps the rider absorb the change in road level with control.",
+      "safetyReasonRussian": "Снижение скорости до неровности и устойчивая посадка помогают контролируемо пройти изменение уровня дороги.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 23 (PDF p. 29): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-48-motorcycle-no-cutting",
+      "textRussian": "Впереди между движущимися автомобилями появляется узкий промежуток. Какое действие соответствует рекомендациям по безопасной езде на мотоцикле?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Немедленно протиснуться, пока промежуток не закрылся"
+        },
+        {
+          "key": "B",
+          "textRussian": "Вилять между автомобилями, непрерывно нажимая на сигнал"
+        },
+        {
+          "key": "C",
+          "textRussian": "Считать, что малые размеры делают любой промежуток безопасным"
+        },
+        {
+          "key": "D",
+          "textRussian": "Сохранять предсказуемую траекторию вместо проезда между автомобилями"
+        }
+      ],
+      "explanationRussian": "Безопасная езда исключает вклинивание между автомобилями и резкие перестроения.",
+      "whyOthersWrongEnglish": "A relies on a closing gap, B substitutes a horn for space and predictability, and C treats small size as a guarantee that every gap is safe.",
+      "whyOthersWrongRussian": "A полагается на закрывающийся промежуток, B заменяет место и предсказуемость звуковым сигналом, C считает малый размер гарантией безопасности любого зазора.",
+      "safetyReasonEnglish": "A predictable path reduces the chance that a nearby driver moves into the same narrow space unexpectedly.",
+      "safetyReasonRussian": "Предсказуемая траектория уменьшает риск того, что соседний водитель неожиданно займёт тот же узкий промежуток.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 20 (PDF p. 26): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-49-motorcycle-heavy-rain",
+      "textRussian": "Перед вашим выездом на мотоцикле сильный дождь значительно ухудшает видимость. Какой план безопаснее всего, если поездку можно отложить?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Отложить поездку до улучшения условий"
+        },
+        {
+          "key": "B",
+          "textRussian": "Немедленно выехать и ехать быстрее сквозь дождь"
+        },
+        {
+          "key": "C",
+          "textRussian": "Полагаться на аварийную сигнализацию, чтобы обычная скорость стала безопасной"
+        },
+        {
+          "key": "D",
+          "textRussian": "Ехать вплотную за грузовиком ради укрытия"
+        }
+      ],
+      "explanationRussian": "Сильный дождь ухудшает видимость и управляемость мотоцикла; по возможности рекомендуется отказаться от поездки.",
+      "whyOthersWrongEnglish": "B increases speed in poor visibility; C treats hazard lights as a cure for unsafe conditions; D trades exposure to rain for close following and limited visibility.",
+      "whyOthersWrongRussian": "B увеличивает скорость при плохой видимости; C считает аварийную сигнализацию средством устранения опасных условий; D меняет дождь на малую дистанцию и ограниченный обзор за грузовиком.",
+      "safetyReasonEnglish": "If travel can wait, delaying avoids unnecessary exposure to conditions in which hazards and grip are harder to judge.",
+      "safetyReasonRussian": "Если поездку можно отложить, это позволяет избежать ненужного риска в условиях, где труднее оценивать опасности и сцепление.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 20 (PDF p. 26): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    },
+    {
+      "batchId": "launch-20261016-motorcycle",
+      "externalId": "launch-motorcycle-50-keep-traffic-clear",
+      "textRussian": "Вы хотите остановить мотоцикл, чтобы поговорить, но при этом перекроете полосу движения. Что следует сделать?",
+      "choices": [
+        {
+          "key": "A",
+          "textRussian": "Остановиться в полосе, если разговор будет коротким"
+        },
+        {
+          "key": "B",
+          "textRussian": "Выбрать разрешённое место, сохраняя путь движения свободным"
+        },
+        {
+          "key": "C",
+          "textRussian": "Перекрыть полосу и оставить двигатель работающим"
+        },
+        {
+          "key": "D",
+          "textRussian": "Попросить следующих водителей выехать на встречную полосу"
+        }
+      ],
+      "explanationRussian": "Водители не должны создавать препятствия движению.",
+      "whyOthersWrongEnglish": "A assumes a brief conversation excuses obstruction; C treats a running engine as an exemption; D transfers the obstruction’s risk to following and oncoming traffic.",
+      "whyOthersWrongRussian": "A считает короткий разговор оправданием помехи; C принимает работающий двигатель за исключение; D переносит риск препятствия на попутный и встречный транспорт.",
+      "safetyReasonEnglish": "Stopping in a suitable place keeps others from having to brake suddenly or divert around a stationary motorcycle.",
+      "safetyReasonRussian": "Остановка в подходящем месте избавляет других от необходимости резко тормозить или объезжать стоящий мотоцикл.",
+      "guidanceCitation": "Department of Land Transport, Driving in Thailand: Thailand Driving Guide, printed p. 67 (PDF p. 73): https://safedrivedlt.com/wp-content/uploads/2025/06/Driving-EN-010468_compressed.pdf",
+      "basisKind": "DLT_GUIDANCE",
+      "statute": null
+    }
+  ]
+}
