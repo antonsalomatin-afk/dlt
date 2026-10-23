@@ -280,6 +280,10 @@
     "acceptedAt": "2026-10-22T17:57:49.253279+00:00",
     "rolloutTask": "TASK-083",
     "releaseCommit": "f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c",
-    "releaseTag": "thaidlt-simple-group-20261022"
+    "releaseTag": "thaidlt-simple-group-20261022",
+    "archiveSha256": "bd21ef83be8d8b477babcbc63a4d06014b77bc9720b694cd85b47d7f352dd786",
+    "archiveBytes": 928506,
+    "archiveFiles": 629,
+    "rolloutCheckpoint": "Root independent629file exactarchiveproofPASS; schema/migrationGitdiffempty. Adminpreflight/staging next; existingruntime unchanged."
   }
 }

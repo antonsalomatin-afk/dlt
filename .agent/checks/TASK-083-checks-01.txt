@@ -1,0 +1,5 @@
+2026-10-23T02:57:11.195936+00:00 Supervisor independent local archive proof
+Release f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c
+ArchiveSHA256 bd21ef83be8d8b477babcbc63a4d06014b77bc9720b694cd85b47d7f352dd786
+928506bytes/629regularfiles allrawbyteexact to separatelygenerated pinnedGitLFarchive. Gitdiffschema/allmigrationsemptyversus3cb; no migrationneeded.
+Live checks pending Admin rollout.
