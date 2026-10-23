@@ -46,3 +46,5 @@ required_checks:
   - pnpm build
   - git diff --check
 scope_rule: One snapshot/content-loader task only. Ask Supervisor before scope expansion. Do not implement bot UI or deploy, do not mutate actual source bank/old snapshots, preserve three original untracked files. JS administrative scratch uses .mjs.txt, never lint-visible .mjs/.js.
+implementation_clarification:
+  - snapshotQuestion is shared with exam creation. Preserve its existing direct-call default payload; add an explicit backward-compatible teaching opt-in used by selectPracticeQuestion for new practice/daily/private/group presentations. Existing exam callers and snapshots stay un-enriched without editing app/exam files. Tests prove both default and opt-in boundaries.

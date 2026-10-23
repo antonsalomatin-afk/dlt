@@ -17,6 +17,8 @@ Enrich only newly created immutable presentation snapshots for exact eligible so
 
 Extend strict snapshot version1 with optional validated teaching metadata and provenance, preserving legacy snapshots. Accepted Russian choices/explanation may be copied into their existing snapshot translation fields; hidden teaching carries bilingual distractor/safety notes, source guidance and pack hash. Do not add teaching/correctness/explanations to pre-answer HTTP question DTOs. Existing post-answer response may combine the teaching with its explanation/trap fields without changing scoring/authentication semantics; any DTO shape change requires explicit task coverage. Mock-exam timing, secrecy, option mapping and results remain unchanged.
 
+TASK-085 keeps direct snapshotQuestion(source) calls un-enriched by default because exam creation shares that function. selectPracticeQuestion explicitly opts into teaching for new practice/daily/private/group presentations. Exam callers and their snapshot payloads remain untouched; source bank and historical snapshot preservation are independent guarantees.
+
 ## Telegram formatting
 
 Use ordinary rich message entities for spoilers and bounded expandable explanation blocks. Preserve full meaning and UTF-16 entity ranges/surrogate pairs across4096-character Telegram limits; never slice raw HTML or discard long content. Exactly A-D native quiz options use the immutable stored order. English is primary for the approved bilingual mode; preserve saved personal preferences and coherent fallback for unrelated/legacy questions and Thai. Source URLs remain validated text/links with previews disabled, and source content is never interpreted as markup.
