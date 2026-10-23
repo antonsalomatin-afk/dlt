@@ -2,10 +2,10 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-084",
+  "currentTask": "TASK-085",
   "lastAcceptedTask": "TASK-084",
   "lastAcceptedCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
-  "status": "ACCEPTED",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK084 reviewed bilingual content accepted; implement reviewed immutable presentation enrichment next, then bot rich messages and separate publication. Production remains f17.",
+  "notes": "TASK085 new snapshot enrichment selected after accepted84; proposedADR009 governs required review. Production remains f17 and original bank/history unchanged.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,15 +94,15 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 58,
-    "latestObservedWeeklyUsedPercent": 21,
+    "latestObservedUsedPercent": 63,
+    "latestObservedWeeklyUsedPercent": 22,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-29T17:14:26+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-23T09:50:35.067024+00:00",
+    "checkedAt": "2026-10-23T10:19:06.709469+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
-    "sessionResetsAt": "2026-10-23T12:59:04+00:00",
-    "observationNote": "Latest measured during TASK084 final review:58% five-hour/21%weekly; ceiling95, no credits redeemed."
+    "sessionResetsAt": "2026-10-23T12:59:03+00:00",
+    "observationNote": "TASK085 selection measured63% primary/22%weekly, ceiling95; no reset credits."
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -301,7 +301,7 @@
   },
   "bilingualChatTeaching": {
     "task": "TASK-084",
-    "status": "CONTENT_ACCEPTED",
+    "status": "SNAPSHOT_BUILDING",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
@@ -316,13 +316,14 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "All100 content entries independently reviewed, exact manifest/source/stem/entry hashes verified; fresh lint/types/369unit and6negative validations PASS. Two bounded §33 examples,98 guidance-only; source bank and production untouched.",
+    "checkpoint": "Accepted reviewed100-entry content and actual manifest. Implement validated server-only static enrichment for new immutable snapshots; no bank/schema/history changes. Bot renderer TASK086 and publication TASK087 follow acceptance.",
     "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt",
     "acceptedContentCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "contentReview": ".agent/reviews/TASK-084-review-01.md",
     "contentManifest": ".agent/reviews/TASK-084-content-review-01.json",
     "contentReviewCommit": "a62990b90028b4217487b83d82a93d21595915b8",
     "contentVerdict": "PASS",
-    "contentAcceptedAt": "2026-10-23T10:17:51.177294+00:00"
+    "contentAcceptedAt": "2026-10-23T10:17:51.177294+00:00",
+    "snapshotTask": "TASK-085"
   }
 }
