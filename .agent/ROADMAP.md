@@ -168,4 +168,4 @@ Potential scope:
 
 - TASK-083 — ACCEPTED — exact simple-group release f17b9ef live; no migration, all20 tables/19 migration rows unchanged, fresh backup and healthy one-bot runtime; Supervisor and independent operational PASS.
 
-- TASK-084 — BUILDING — complete offline Russian options and bilingual teaching/source explanations for the approved per-line spoiler chat preview; independent100-entry review precedes code and publication.
+- TASK-084 — ACCEPTED — all100 bilingual teaching entries and400 RU choices independently reviewed;100-entry hash manifest and authoritative gates PASS. Two bounded §33 examples; implementation/publication next.

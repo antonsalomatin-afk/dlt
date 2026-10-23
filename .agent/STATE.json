@@ -3,10 +3,10 @@
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
   "currentTask": "TASK-084",
-  "lastAcceptedTask": "TASK-083",
-  "lastAcceptedCommit": "bb7ed6e15bbae52196945af5c7809490b7103b0d",
-  "status": "REVIEW",
-  "reviewAttempt": 1,
+  "lastAcceptedTask": "TASK-084",
+  "lastAcceptedCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
+  "status": "ACCEPTED",
+  "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "parkedTasks": [
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "Owner approved per-line spoiler preview. TASK084 prepares independently reviewed100-question bilingual teaching pack; next bounded code and existing-host rollout tasks follow acceptance. Existing f17 production unchanged.",
+  "notes": "TASK084 reviewed bilingual content accepted; implement reviewed immutable presentation enrichment next, then bot rich messages and separate publication. Production remains f17.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,15 +94,15 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 6,
-    "latestObservedWeeklyUsedPercent": 13,
+    "latestObservedUsedPercent": 58,
+    "latestObservedWeeklyUsedPercent": 21,
     "weeklyWindowMinutes": 10080,
-    "weeklyResetsAt": "2026-10-29T17:14:25+00:00",
+    "weeklyResetsAt": "2026-10-29T17:14:26+00:00",
     "windowMinutes": 300,
     "checkedAt": "2026-10-23T09:50:35.067024+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
-    "sessionResetsAt": "2026-10-23T12:59:03+00:00",
-    "observationNote": "Latest successful observation at TASK084 selection:6% five-hour/13%weekly; no reset credits redeemed."
+    "sessionResetsAt": "2026-10-23T12:59:04+00:00",
+    "observationNote": "Latest measured during TASK084 final review:58% five-hour/21%weekly; ceiling95, no credits redeemed."
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -301,7 +301,7 @@
   },
   "bilingualChatTeaching": {
     "task": "TASK-084",
-    "status": "CONTENT_REVIEW",
+    "status": "CONTENT_ACCEPTED",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
@@ -316,7 +316,13 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "Builder default lint/types/369unit PASS, final content structural/hash checks PASS; Supervisor fresh final lint/types PASS, unit gate running. Independent content inspection complete, formal review/manifest waits gates. Two sourced unofficial-English §33 examples;98 guidance-only entries.",
-    "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt"
+    "checkpoint": "All100 content entries independently reviewed, exact manifest/source/stem/entry hashes verified; fresh lint/types/369unit and6negative validations PASS. Two bounded §33 examples,98 guidance-only; source bank and production untouched.",
+    "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt",
+    "acceptedContentCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
+    "contentReview": ".agent/reviews/TASK-084-review-01.md",
+    "contentManifest": ".agent/reviews/TASK-084-content-review-01.json",
+    "contentReviewCommit": "a62990b90028b4217487b83d82a93d21595915b8",
+    "contentVerdict": "PASS",
+    "contentAcceptedAt": "2026-10-23T10:17:51.177294+00:00"
   }
 }

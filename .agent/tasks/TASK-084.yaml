@@ -1,6 +1,6 @@
 id: TASK-084
 title: Review complete bilingual chat teaching content for the launch bank
-status: REVIEW
+status: ACCEPTED
 owner_role: Builder
 depends_on:
   - TASK-083
@@ -53,3 +53,8 @@ builder_fix_commit: f023ea203472cb37384a19bf2abc3659bb185c58
 pack_sha256: 1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29
 review_attempt: 1
 authoritative_checks: .agent/checks/TASK-084-checks-01.txt
+accepted_commit: f023ea203472cb37384a19bf2abc3659bb185c58
+review_file: .agent/reviews/TASK-084-review-01.md
+content_manifest: .agent/reviews/TASK-084-content-review-01.json
+review_verdict: PASS
+accepted_at: 2026-10-23T10:17:51.177294+00:00
