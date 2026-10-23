@@ -1,6 +1,6 @@
 id: TASK-083
 title: Publish simple asynchronous group practice
-status: BUILDING
+status: REVIEW
 owner_role: Admin
 depends_on:
   - TASK-082
@@ -37,3 +37,7 @@ required_checks:
   - Supervisor independent live source/runtime/data/backup/HTTP/content/Telegram checks
   - Independent operational review PASS
 rollback: Restore retained prior runtime symlink/services if unhealthy; preserve all data/schema. No database restore or destructive action without separate authorization.
+
+admin_commit: bb7ed6e15bbae52196945af5c7809490b7103b0d
+review_attempt: 1
+authoritative_checks: .agent/checks/TASK-083-checks-01.txt
