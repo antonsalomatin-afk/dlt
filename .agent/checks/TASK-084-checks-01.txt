@@ -1,0 +1,68 @@
+TASK-084 Supervisor independent authoritative checks
+2026-10-23T10:12:04.671856+00:00
+Candidate HEAD f023ea203472cb37384a19bf2abc3659bb185c58
+
+COMMAND ["C:\\Users\\anton\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe", ".local-content/task084-root-validate.py"]
+{"scope": "Supervisor independent content validation", "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29", "entries": 100, "car": 50, "motorcycle": 50, "russianChoices": 400, "exactStems": 100, "exactGuidanceCitations": 100, "statutes": 2, "distinctClauses": 1, "sourceHashes": [{"path": "content/imports/launch-20261016-car-candidates.json", "sha256": "ba023401107ad762eaa434595b805dcbdbb49f79d8d1c64d76e5a51198b8f211"}, {"path": "content/imports/launch-20261016-motorcycle-candidates.json", "sha256": "fa7996fc1891ee982deaddb7793630f42547eacca939482081af06cbba1abc33"}, {"path": "content/imports/launch-20261021-russian-stems.json", "sha256": "c50e945d4f2371616ca5947a2551ec16ecbe8a6908d4b4c57fd8cf140f5e002d"}], "negativeCasesRejected": 6, "sourceBaseline": "633abd070d6ccf56cb2eb77c8f640a1dd941a490"}
+
+EXIT 0
+
+COMMAND ["C:\\Users\\anton\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\bin\\fallback\\pnpm.cmd", "lint"]
+$ eslint .
+
+EXIT 0
+
+COMMAND ["C:\\Users\\anton\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\bin\\fallback\\pnpm.cmd", "typecheck"]
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+┌─────────────────────────────────────────────────────────┐
+│  Update available 7.10.0 -> 8.0.0-rc.27                 │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 202ms
+
+$ tsc --noEmit
+
+EXIT 0
+
+COMMAND ["C:\\Users\\anton\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\bin\\fallback\\pnpm.cmd", "test", "--maxWorkers=4"]
+$ pnpm db:generate && vitest run "--maxWorkers=4"
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 257ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  62 passed (62)
+      Tests  369 passed (369)
+   Start at  12:12:34
+   Duration  33.52s (tests 76%, transform 12%, import 11%)
+
+    Isolate  62 workers spawned · ~327ms startup each (spawn + environment, per file)
+             at least ~4.74s faster with isolate: false — reuses workers across files instead of one per file
+
+
+EXIT 0
+
+COMMAND ["git", "diff", "--check"]
+
+EXIT 0
+
+PASS all TASK-084 independent gates. Pure offline content task; no application/production change or new legal audit claimed.

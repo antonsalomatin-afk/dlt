@@ -5,8 +5,8 @@
   "currentTask": "TASK-084",
   "lastAcceptedTask": "TASK-083",
   "lastAcceptedCommit": "bb7ed6e15bbae52196945af5c7809490b7103b0d",
-  "status": "CHECKING",
-  "reviewAttempt": 0,
+  "status": "REVIEW",
+  "reviewAttempt": 1,
   "maxReviewAttempts": 3,
   "blockedReason": null,
   "parkedTasks": [
@@ -301,7 +301,7 @@
   },
   "bilingualChatTeaching": {
     "task": "TASK-084",
-    "status": "CONTENT_CHECKING",
+    "status": "CONTENT_REVIEW",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
@@ -316,6 +316,7 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "Builder default lint/types/369unit PASS, final content structural/hash checks PASS; Supervisor fresh final lint/types PASS, unit gate running. Independent content inspection complete, formal review/manifest waits gates. Two sourced unofficial-English §33 examples;98 guidance-only entries."
+    "checkpoint": "Builder default lint/types/369unit PASS, final content structural/hash checks PASS; Supervisor fresh final lint/types PASS, unit gate running. Independent content inspection complete, formal review/manifest waits gates. Two sourced unofficial-English §33 examples;98 guidance-only entries.",
+    "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt"
   }
 }
