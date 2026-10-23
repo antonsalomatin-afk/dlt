@@ -1,0 +1,108 @@
+TASK-085 Supervisor independent authoritative checks
+2026-10-23T10:36:24.950641+00:00
+Candidate f3a17d39f58457b297b68162ab3be7aaa8282a20
+
+COMMAND pnpm lint
+$ eslint .
+
+EXIT 0
+
+COMMAND pnpm typecheck
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 232ms
+
+$ tsc --noEmit
+
+EXIT 0
+
+COMMAND pnpm test --maxWorkers=4
+$ pnpm db:generate && vitest run "--maxWorkers=4"
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 238ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  63 passed (63)
+      Tests  374 passed (374)
+   Start at  12:37:04
+   Duration  37.97s (tests 72%, transform 16%, import 11%)
+
+    Isolate  63 workers spawned · ~414ms startup each (spawn + environment, per file)
+             at least ~6.10s faster with isolate: false — reuses workers across files instead of one per file
+
+
+EXIT 0
+
+COMMAND pnpm db:ready
+$ node --env-file=.env tools/database/local.ts ready
+Local PostgreSQL ready: OK
+
+EXIT 0
+
+COMMAND pnpm test:integration
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 224ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:44748) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ❯ tests/daily-practice.integration.test.ts (12 tests | 1 failed) 6839ms
+   ❯ POST /practice/daily (7)
+     × converges concurrent same-user requests and keeps different learners independent 693ms
+(node:31968) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/daily-practice.integration.test.ts > POST /practice/daily > converges concurrent same-user requests and keeps different learners independent
+AssertionError: expected 500 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 500
+
+ ❯ tests/daily-practice.integration.test.ts:390:31
+    388|     ]);
+    389|     expect(primary.statusCode).toBe(200);
+    390|     expect(second.statusCode).toBe(200);
+       |                               ^
+    391|     const primaryBody = dailyPracticeResponseSchema.parse(primary.json…
+    392|     const secondBody = dailyPracticeResponseSchema.parse(second.json()…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 44 passed (45)
+      Tests  1 failed | 236 passed (237)
+   Start at  12:37:48
+   Duration  284.84s (tests 91%, import 7%, transform 2%)
+
+    Isolate  45 workers spawned · ~238ms startup each (spawn + environment, per file)
+             at least ~10.46s faster with isolate: false — reuses workers across files instead of one per file
+
+[ELIFECYCLE] Command failed with exit code 1.
+
+EXIT 1
