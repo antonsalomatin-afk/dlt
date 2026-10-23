@@ -2,14 +2,20 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-072",
+  "currentTask": "TASK-084",
   "lastAcceptedTask": "TASK-083",
   "lastAcceptedCommit": "bb7ed6e15bbae52196945af5c7809490b7103b0d",
-  "status": "BLOCKED",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": "Actual owner observation of simple group answer/native correctness/optional Next and signed Mini App practice/exam resume remains outstanding. No Finish or multi-participant contest requirement; no further deployment decision is pending.",
-  "parkedTasks": [],
+  "blockedReason": null,
+  "parkedTasks": [
+    {
+      "task": "TASK-072",
+      "status": "BLOCKED",
+      "reason": "Actual owner learning observations remain pending; approved bilingual spoiler feature selected separately."
+    }
+  ],
   "updatedBy": "Supervisor",
   "russianStemOverlay": {
     "status": "PRODUCTION_PUBLISHED_ACCEPTED",
@@ -45,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK083 production accepted after Admin, Supervisor independent live checks and independent operational PASS. Exact f17 release live; no migration, all20 tables/19 migration rows preserved. Only actual owner smoke observations remain TASK072.",
+  "notes": "Owner approved per-line spoiler preview. TASK084 prepares independently reviewed100-question bilingual teaching pack; next bounded code and existing-host rollout tasks follow acceptance. Existing f17 production unchanged.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -88,15 +94,15 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 21,
-    "latestObservedWeeklyUsedPercent": 10,
+    "latestObservedUsedPercent": 6,
+    "latestObservedWeeklyUsedPercent": 13,
     "weeklyWindowMinutes": 10080,
-    "weeklyResetsAt": "2026-10-29T17:14:26+00:00",
+    "weeklyResetsAt": "2026-10-29T17:14:25+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-23T03:17:55.438573+00:00",
+    "checkedAt": "2026-10-23T09:50:35.067024+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
-    "sessionResetsAt": "2026-10-23T07:55:16+00:00",
-    "observationNote": "Latest successful tool observation during TASK083 review handoff:21% five-hour,10% weekly; no reset credits redeemed."
+    "sessionResetsAt": "2026-10-23T12:59:03+00:00",
+    "observationNote": "Latest successful observation at TASK084 selection:6% five-hour/13%weekly; no reset credits redeemed."
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -292,5 +298,19 @@
     "operationalReviewCommit": "a50ccc2",
     "productionAcceptedAt": "2026-10-23T03:17:55.438573+00:00",
     "backup": "thaidlt-20261023-030610.dump;122289bytes;PGDMP;Resultsuccess/ExecMainStatus0"
+  },
+  "bilingualChatTeaching": {
+    "task": "TASK-084",
+    "status": "CONTENT_BUILDING",
+    "ownerApproved": true,
+    "selectedVariant": "PER_LINE_SPOILER",
+    "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
+    "productionDeployed": false,
+    "contentSourceBoundary": "Use existing reviewed DLT guide citations as guidance, not fictitious statute claims. Full choices/explanations need independent review.",
+    "nextSteps": [
+      "Reviewed100-question content pack",
+      "Guarded enrichment and Telegram rendering with per-answer explanation delivery",
+      "Exact established-host publication and independent operational review"
+    ]
   }
 }

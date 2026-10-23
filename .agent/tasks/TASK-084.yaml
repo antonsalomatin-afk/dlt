@@ -1,0 +1,49 @@
+id: TASK-084
+title: Review complete bilingual chat teaching content for the launch bank
+status: BUILDING
+owner_role: Builder
+depends_on:
+  - TASK-083
+objective: Prepare the missing reviewed Russian choices and bilingual teaching explanations for all100 launch questions before implementing the approved Telegram spoiler cards.
+authorization: Owner approved the shown per-line spoiler preview on2026-10-23 with "да, давай". English remains primary; native A-D quiz, immediate individual correctness, no Finish/contest. Implementation and established-host publication follow separate reviewed cycles.
+sources:
+  - content/imports/launch-20261016-car-candidates.json
+  - content/imports/launch-20261016-motorcycle-candidates.json
+  - content/imports/launch-20261021-russian-stems.json
+preview: C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html
+acceptance:
+  - One version1 JSON pack with packId launch-20261023-bilingual-teaching, createdAt UTC and canonical SHA256 bindings to the exact two candidate batches and accepted Russian-stems pack;100 unique batchId/externalId entries,50 per vehicle, no missing/extra questions.
+  - Each entry retains the exact accepted Russian stem and contains exactly A-D Russian choice translations faithful to the existing English options, without giving away the answer in a translation, changing answer key, adding/removing conditions or normalizing away a meaningful distinction.
+  - Each entry includes explanationRussian faithfully translating the existing explanationEnglish; whyOthersWrongEnglish/Russian identifying the actual distractor misunderstanding; safetyReasonEnglish/Russian explaining the real practical reasoning concisely without invented statistics or unsupported causal/legal claims. Keep each field nonempty, trimmed, plain text and bounded4000 characters.
+  - Each entry carries exact existing source.legalCitation as guidanceCitation and labels it DLT_GUIDANCE. Do not describe an educational guide as a statute. A guide citation plus correct page is sufficient for this bounded pack; do not invent law numbers, penalties or claim all100 questions have an independently verified exact statutory clause. Any optional additional statute must have exact title/section, primary-source URL and independently checkable excerpt/location; otherwise leave statute null. Separate rule guidance from practical safety reasoning visibly in the planned renderer.
+  - Source report states coverage, authoring method, verified existing-source boundary, exact missing statutory coverage and publication boundaries. The original candidate batches, accepted stems/review manifests, answer keys and live database/history are untouched. This is an offline candidate pack, not automatically VERIFIED production content.
+  - Builder lint/typecheck/unit gates pass; deterministic pack/source/coverage/text validations pass. Independent Reviewer examines all100 entries, returns a hash-bound per-question content manifest and VERDICT PASS before Supervisor acceptance. No runtime translator, paid provider, production mutation or forced message.
+pack_entry_contract:
+  - batchId, externalId, textRussian
+  - choices array of key A-D and textRussian
+  - explanationRussian, whyOthersWrongEnglish, whyOthersWrongRussian, safetyReasonEnglish, safetyReasonRussian
+  - guidanceCitation exact source legalCitation, basisKind DLT_GUIDANCE, statute null unless independently sourced
+files_allowed:
+  - content/imports/launch-20261023-bilingual-teaching.json
+  - content/sources/launch-20261023-bilingual-teaching.md
+  - .local-content/task084*
+  - .local-content/TASK-084*
+files_forbidden:
+  - apps/**
+  - packages/**
+  - tools/**
+  - .env
+  - .agent/STATE.json
+  - .agent/tasks/**
+  - content/imports/launch-20261016-*.json
+  - content/imports/launch-20261021-russian-stems.json
+required_checks:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test --maxWorkers=4
+  - deterministic full100 coverage, canonical source hashes, A-D, stem/citation equality and bounded text inspection
+  - git diff --check
+review_outputs:
+  - .agent/reviews/TASK-084-review-01.md
+  - .agent/reviews/TASK-084-content-review-01.json
+scope_rule: One offline content task only. Stop after Builder commit; request Supervisor amendment before changing source or adding files. Preserve the original three untracked starter files. JS administrative scratch must use .mjs.txt rather than lint-visible .js/.mjs.

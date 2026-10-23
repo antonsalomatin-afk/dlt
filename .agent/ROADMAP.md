@@ -167,3 +167,5 @@ Potential scope:
 - TASK-082 — ACCEPTED — simple asynchronous group quizzes; no Finish/shared summary, native correctness and safe late answers; full checks and independent PASS. Published through accepted TASK-083.
 
 - TASK-083 — ACCEPTED — exact simple-group release f17b9ef live; no migration, all20 tables/19 migration rows unchanged, fresh backup and healthy one-bot runtime; Supervisor and independent operational PASS.
+
+- TASK-084 — BUILDING — complete offline Russian options and bilingual teaching/source explanations for the approved per-line spoiler chat preview; independent100-entry review precedes code and publication.
