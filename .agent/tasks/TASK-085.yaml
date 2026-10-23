@@ -18,18 +18,22 @@ files_allowed:
   - packages/database/src/teaching.ts
   - packages/database/src/content-identity.ts
   - packages/database/src/presentation.ts
+  - packages/database/src/daily-practice.ts
+  - apps/api/src/index.ts
   - tools/content/candidate-import.ts
   - tools/content/russian-stems.ts
   - tests/teaching.test.ts
   - tests/teaching.integration.test.ts
   - tests/presentation.test.ts
+  - tests/daily-practice.integration.test.ts
   - tests/candidate-import.test.ts
   - tests/russian-stems.test.ts
   - README.md
   - .local-content/task085*
   - .local-content/TASK-085*
 files_forbidden:
-  - apps/**
+  - apps/bot/**
+  - apps/web/**
   - packages/database/prisma/**
   - content/**
   - .agent/reviews/TASK-084*
@@ -48,3 +52,4 @@ required_checks:
 scope_rule: One snapshot/content-loader task only. Ask Supervisor before scope expansion. Do not implement bot UI or deploy, do not mutate actual source bank/old snapshots, preserve three original untracked files. JS administrative scratch uses .mjs.txt, never lint-visible .mjs/.js.
 implementation_clarification:
   - snapshotQuestion is shared with exam creation. Preserve its existing direct-call default payload; add an explicit backward-compatible teaching opt-in used by selectPracticeQuestion for new practice/daily/private/group presentations. Existing exam callers and snapshots stay un-enriched without editing app/exam files. Tests prove both default and opt-in boundaries.
+  - Supervisor scope amendment permits only the new-practice snapshot call in daily-practice.ts and the mistake-retry snapshot call in apps/api/src/index.ts to pass the explicit teaching opt-in. The separate exam snapshot call in that API file must remain untouched. No auth, route, retry eligibility/scoring, exam or daily-selection logic refactor. Add meaningful default/opt-in coverage; existing full regression gates still mandatory.
