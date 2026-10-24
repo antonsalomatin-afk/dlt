@@ -1,6 +1,6 @@
 id: TASK-085
 title: Enrich immutable presentations from the independently reviewed bilingual pack
-status: BUILDING
+status: CHECKING
 owner_role: Builder
 depends_on:
   - TASK-084
@@ -62,3 +62,6 @@ authoritative_result: FAIL daily-practice.integration.test.ts390 concurrent requ
 checkpoint: Resource limit100percent; independent formal review not completed; no acceptance/publication
 resume_diagnosis_amendment:
   - User resumed2026-10-24. Diagnose retained concurrent daily HTTP500 with safe allowlisted exception metadata and focused reproduction. Existing daily-practice.ts plus daily unit/integration tests may receive the smallest evidence-based conflict-handling correction necessary to pass the authoritative gate. This explicitly supersedes the earlier no-daily-logic-change restriction only for that diagnosed defect; no unrelated refactor, weakened validation, blanket retry, increased concurrency limits, skipped tests or hidden failure. Preserve first failure and report actual cause before implementation.
+
+builder_fix_commit: 57732549f90a52d5b9aca7ed6579471477c20f74
+builder_fix_checks: .local-content/TASK-085-builder-fix-checks-02.txt

@@ -5,7 +5,7 @@
   "currentTask": "TASK-085",
   "lastAcceptedTask": "TASK-084",
   "lastAcceptedCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -301,7 +301,7 @@
   },
   "bilingualChatTeaching": {
     "task": "TASK-084",
-    "status": "SNAPSHOT_CHECKS_FAILED_CHECKPOINT",
+    "status": "SNAPSHOT_CHECKING",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
@@ -316,7 +316,7 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "Builder gates PASS374unit/237integration/build, but fresh Supervisor integration failed daily-practice.integration.test.ts:390 concurrent same-user request returned500 not200. Root lint/types/374unit/dbready PASS; root build not run after failed gate. Reviewer static inspection no blockers but formal review absent because workspace credits exhausted. TASK085 not accepted; lastaccepted084. Resume diagnose specific failure without skipping/weakening, fresh checks and independent Reviewer PASS before acceptance. TASK086 bot cards and TASK087 rollout not started; production stillf17.",
+    "checkpoint": "Actual PostgreSQL adapter40001 COMMIT conflict diagnosed; narrow classification fix with unchanged retry bounds. Builder full gates375unit/238integration/build PASS, initial failure/red/typecheck correction retained. Supervisor fresh gates02 now running before independent review.",
     "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt",
     "acceptedContentCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "contentReview": ".agent/reviews/TASK-084-review-01.md",
@@ -326,7 +326,8 @@
     "contentAcceptedAt": "2026-10-23T10:17:51.177294+00:00",
     "snapshotTask": "TASK-085",
     "snapshotBuilderCommit": "f3a17d39f58457b297b68162ab3be7aaa8282a20",
-    "snapshotChecks": ".agent/checks/TASK-085-checks-01.txt"
+    "snapshotChecks": ".agent/checks/TASK-085-checks-01.txt",
+    "snapshotFixCommit": "57732549f90a52d5b9aca7ed6579471477c20f74"
   },
   "localValidationDatabase": {
     "port": 54329,
