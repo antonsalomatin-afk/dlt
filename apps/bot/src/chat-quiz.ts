@@ -6,6 +6,7 @@ import type { PrismaClient } from '../../../packages/database/src/index.ts';
 import { answerChatQuiz, bindChatQuiz, chatQuizFeedback, markChatQuizUncertain, requestChatQuiz, telegramLearnerSchema, UnclaimedQuizAnswerError, type ChatQuiz } from '../../../packages/database/src/chat-quiz.ts';
 import { parsePresentationSnapshot } from '../../../packages/database/src/presentation.ts';
 import { publishableImageReference } from './question-post.ts';
+import { bilingualQuizCard, quizFeedbackText, richQuizChunks, type QuizTextOptions } from './chat-quiz-format.ts';
 
 const privateIdentitySchema = z.object({ from: telegramLearnerSchema, chat: z.object({ type: z.literal('private'), id: telegramLearnerSchema.shape.id }) }).refine(({ from, chat }) => from.id === chat.id);
 const callbackSchema = z.object({ id: z.string().min(1).max(256), from: telegramLearnerSchema, message: z.object({ chat: privateIdentitySchema.shape.chat }), data: z.string().max(64) }).refine(({ from, message }) => from.id === message.chat.id);
@@ -16,7 +17,7 @@ export type QuizPollOptions = {
   allows_revoting: false; shuffle_options: false; allow_adding_options: false; explanation?: string;
 };
 export type QuizTransport = {
-  sendMessage(chatId: number, text: string, options?: { reply_markup: Markup }): Promise<unknown>;
+  sendMessage(chatId: number, text: string, options?: QuizTextOptions & { reply_markup?: Markup }): Promise<unknown>;
   sendPhoto(chatId: number, photo: string): Promise<unknown>;
   sendPoll(chatId: number, question: string, options: Array<{ text: string }>, other: QuizPollOptions): Promise<unknown>;
 };
@@ -41,19 +42,21 @@ const labels = {
 export function buildNativeQuiz(snapshotInput: unknown, language: ChatQuiz['language']) {
   const snapshot = parsePresentationSnapshot(snapshotInput);
   const question = snapshot.question;
+  if (snapshot.teaching) language = 'ENGLISH';
   const stem = language === 'RUSSIAN' ? question.textRussian : language === 'THAI' ? question.textThai : question.textEnglish;
   const choices = question.choices.map((choice) => language === 'RUSSIAN' ? choice.textRussian : language === 'THAI' ? choice.textThai : choice.textEnglish);
   if (!stem || choices.some((value) => !value)) throw new Error('Incomplete chat quiz language');
   const texts = choices.map((value) => z.string().min(1).parse(value));
   const explanation = language === 'RUSSIAN' ? snapshot.explanationRussian : language === 'THAI' ? snapshot.explanationThai : snapshot.explanationEnglish;
-  const long = stem.length > 300 || texts.some((text) => text.length > 100);
-  const context = long ? `${stem}\n\n${texts.map((text, i) => `${question.choices[i]!.key}. ${text}`).join('\n\n')}` : null;
+  const bilingual = Boolean(snapshot.teaching);
+  const long = bilingual || stem.length > 300 || texts.some((text) => text.length > 100);
+  const context = long && !bilingual ? `${stem}\n\n${texts.map((text, i) => `${question.choices[i]!.key}. ${text}`).join('\n\n')}` : null;
   const options = (long ? question.choices.map(({ key }) => key) : texts).map((text) => ({ text }));
   const other: QuizPollOptions = { type: 'quiz', is_anonymous: false, correct_option_ids: [question.choices.findIndex(({ id }) => id === snapshot.correctChoiceId)],
     allows_multiple_answers: false, allows_revoting: false, shuffle_options: false, allow_adding_options: false,
-    ...(explanation && explanation.length <= 200 && (explanation.match(/\n/gu)?.length ?? 0) <= 2 ? { explanation } : {}),
+    ...(!bilingual && explanation && explanation.length <= 200 && (explanation.match(/\n/gu)?.length ?? 0) <= 2 ? { explanation } : {}),
   };
-  return { question: long ? labels[language].prompt : stem, options, other, context, image: publishableImageReference(snapshot.imageReference) };
+  return { question: long ? labels[language].prompt : stem, options, other, context, card: bilingual ? bilingualQuizCard(snapshot) : null, image: publishableImageReference(snapshot.imageReference) };
 }
 
 export function createChatQuizService(database: PrismaClient, api: QuizTransport, now: () => Date = () => new Date(), randomOffset?: (count: number) => unknown) {
@@ -63,14 +66,13 @@ export function createChatQuizService(database: PrismaClient, api: QuizTransport
   };
   const feedback = async (chatId: number, session: ChatQuiz) => {
     const result = chatQuizFeedback(session);
-    const language = session.language;
-    const wording = labels[language];
     const snapshot = parsePresentationSnapshot(session.presentation.snapshot);
-    const choice = snapshot.question.choices.find(({ id }) => id === result.correctChoiceId)!;
-    const answer = language === 'RUSSIAN' ? choice.textRussian : language === 'THAI' ? choice.textThai : choice.textEnglish;
-    const explanation = language === 'RUSSIAN' ? result.explanationRussian : language === 'THAI' ? result.explanationThai : result.explanationEnglish;
-    const trap = language === 'RUSSIAN' ? result.trapExplanationRussian : language === 'THAI' ? result.trapExplanationThai : result.trapExplanationEnglish;
-    await sendText(chatId, [result.isCorrect ? wording.correct : wording.incorrect, `${wording.answer}: ${choice.key}. ${answer}`, explanation, trap].filter(Boolean).join('\n\n'), keyboard(wording.next, `cq:n:${session.presentationId}`));
+    const content = quizFeedbackText(snapshot, result.isCorrect, session.language);
+    const chunks = richQuizChunks(content);
+    for (const [index, chunk] of chunks.entries()) await api.sendMessage(chatId, chunk.text, {
+      entities: chunk.entities, link_preview_options: { is_disabled: true },
+      ...(index === chunks.length - 1 ? { reply_markup: keyboard(labels[snapshot.teaching ? 'ENGLISH' : session.language].next, `cq:n:${session.presentationId}`) } : {}),
+    });
   };
   const request = async (identityInput: unknown, action: unknown) => {
     const parsed = privateIdentitySchema.safeParse(identityInput);
@@ -89,6 +91,7 @@ export function createChatQuizService(database: PrismaClient, api: QuizTransport
       const quiz = buildNativeQuiz(session.presentation.snapshot, session.language);
       if (quiz.image) await api.sendPhoto(chat.id, quiz.image);
       if (quiz.context) await sendText(chat.id, quiz.context);
+      if (quiz.card) for (const chunk of richQuizChunks(quiz.card)) await api.sendMessage(chat.id, chunk.text, { entities: chunk.entities, link_preview_options: { is_disabled: true } });
       const response = await api.sendPoll(chat.id, quiz.question, quiz.options, quiz.other);
       await bindChatQuiz(database, session, response, chat.id, quiz.options.map(({ text }) => text), now());
     } catch {

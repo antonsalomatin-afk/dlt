@@ -1299,13 +1299,18 @@ Answer the native quiz, read its full explanation and tap **Next question**.
 The same Telegram learner, practice history and concept counters are used by the
 Mini App and chat. Reminder subscriptions and language preferences are preserved.
 
-Each quiz uses one complete stored language for its question, four options and
-feedback. English is the default and fallback. Preferred Russian or Thai is used
-only when the corresponding choices and explanation are also available; the
-current Russian stem-only overlay therefore produces a coherent English quiz.
-No runtime translation occurs. Oversized questions/options appear in full as
-preceding plain-text messages with A/B/C/D poll options. Full feedback follows
-the answer even when it exceeds Telegram's optional native explanation limit.
+Accepted reviewed teaching snapshots use English question/choice cards, with each
+Russian counterpart hidden under its own spoiler, followed by a native A-D quiz
+in the immutable choice order. This bilingual mode keeps English primary for all
+saved language preferences. Full personal feedback includes the correct answer,
+explanation, actual distractor analysis, practical safety reasoning and the cited
+DLT guidance/page/link. Available statutory examples retain their actual source,
+section and unofficial-English label; missing law references are not invented.
+Russian feedback is individually spoilered and explanation blocks can expand.
+All text is preserved in bounded Unicode-safe Telegram entity chunks; source link
+previews are disabled and content is never parsed as HTML. No runtime translation
+occurs. Legacy/unrelated snapshots keep their coherent stored-language fallback,
+full plain-text overflow handling, optional validated images and complete feedback.
 
 There is one durable current quiz per learner. `/quiz` resumes an unanswered
 bound poll and recovers feedback/Next after answering, including after restart
@@ -1337,10 +1342,10 @@ database. This implementation does not itself deploy or send production messages
 
 Add the bot to a group or supergroup and make it an administrator (membership checks require this; destructive administrator privileges are unnecessary). Send `/quiz@thauto_dlt_bot` or `/practice@thauto_dlt_bot` for a native question. Any current member can request another question with **Next question** on the latest question or another `/quiz` command, without waiting for anyone else to answer. Use `car` or `motorcycle` after the command to choose the vehicle; otherwise the current vehicle is retained, with CAR as the initial default. Telegram privacy mode may remain enabled. Groups and forum topics keep separate delivery/control scopes.
 
-Everyone answers independently: Telegram immediately shows that voter correct/incorrect and the normal native explanation when it fits. There is no Finish round, wait-for-everyone step, shared score, ranking or group results message. Posting another question does not stop earlier successfully delivered polls: members may answer them later and each member's first accepted answer counts once per poll toward personal practice. Votes are non-anonymous; no automatic private or groupwide per-answer feedback message is sent. Long explanations remain available in private practice and the Mini App; this group flow does not add a separate long-explanation delivery mechanism.
+Everyone answers independently: Telegram immediately shows that voter correct/incorrect and the normal native explanation when it fits. There is no Finish round, wait-for-everyone step, shared score, ranking or group results message. Posting another question does not stop earlier successfully delivered polls: members may answer them later and each member's first accepted answer counts once per poll toward personal practice. Votes are non-anonymous. After a committed vote, the bot sends full personal teaching as ephemeral messages addressed only to that voter in the original group/topic. Delivery is best effort and may disappear or fail. **Explain my answer** on the original question control recovers only the requesting current member's own committed answer and immutable presentation, even after Next posts a newer question. The bot rechecks administrator access, membership and the original control/chat/topic binding; unanswered, copied, retired or migrated controls reveal no explanation. Recovery is read-only. There is no public explanation or direct-message fallback, and a feedback send failure cannot undo or duplicate practice credit.
 
-The shared language is English. Group vehicle choice does not change anyone's personal vehicle, language or reminder settings. The bot must remain an administrator to verify current membership. Anonymous/send-as-chat votes and votes from nonmembers are ignored. A member's vote on a forwarded poll cannot be distinguished by Telegram from their vote in the original group; protected content reduces forwarding.
+The shared language is English, with per-line Russian spoilers for reviewed teaching snapshots. Group vehicle choice does not change anyone's personal vehicle, language or reminder settings. The bot must remain an administrator to verify current membership. Anonymous/send-as-chat votes and votes from nonmembers are ignored. A member's vote on a forwarded poll cannot be distinguished by Telegram from their vote in the original group; protected content reduces forwarding.
 
 An in-flight send is serialized. Uncertain delivery requires explicit **Replace quiz** by a current member; it is not silently resent. Old or copied Next controls cannot advance a newer question. Existing Finish buttons from the previous release safely request Next instead of closing or publishing results. Previously CLOSED history remains closed. If Telegram migrates a basic group to a supergroup, all open questions in the old group are retired; start a fresh question in the new group. Message delivery is not guaranteed exactly once; scoring is protected against retries.
 
-The existing additive `20261022100000_group_chat_quiz` migration is still required; this simplification adds no migration or data rewrite. Run `pnpm db:generate` before bot/API startup and follow the deployment backup/release procedure above. Private quizzes, Mini App practice/exams and opt-in 11:00 ICT reminders retain their established behavior.
+The existing additive `20261022100000_group_chat_quiz` migration is still required; bilingual teaching and personal explanations add no migration or data rewrite. TASK-086 source changes require independent acceptance and separate TASK-087 publication before production use. Run `pnpm db:generate` before bot/API startup and follow the deployment backup/release procedure above. Private quizzes, Mini App practice/exams and opt-in 11:00 ICT reminders retain their established behavior.

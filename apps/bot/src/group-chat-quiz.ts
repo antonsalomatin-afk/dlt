@@ -1,8 +1,10 @@
 import { z } from 'zod';
 import { GrammyError } from 'grammy';
 import { chatPollAnswerSchema, telegramLearnerSchema, UnclaimedQuizAnswerError } from '../../../packages/database/src/chat-quiz.ts';
-import { answerGroupQuiz, bindGroupControl, bindGroupQuiz, groupPollBinding, groupScopeSchema, markGroupQuizUncertain, requestGroupQuiz, type GroupRound, type GroupScope } from '../../../packages/database/src/group-chat-quiz.ts';
+import { answerGroupQuiz, groupQuizFeedback, bindGroupControl, bindGroupQuiz, groupPollBinding, groupScopeSchema, markGroupQuizUncertain, requestGroupQuiz, type GroupRound, type GroupScope } from '../../../packages/database/src/group-chat-quiz.ts';
 import type { PrismaClient } from '../../../packages/database/src/index.ts';
+import type { EphemeralMessageParameters } from 'grammy/types';
+import { quizFeedbackText, richQuizChunks, type QuizTextOptions } from './chat-quiz-format.ts';
 import { buildNativeQuiz, quizTextChunks, type QuizPollOptions } from './chat-quiz.ts';
 
 const messageId = z.number().int().positive().max(2 ** 31 - 1);
@@ -11,7 +13,7 @@ const origin = { chat, message_thread_id: messageId.optional(), sender_chat: z.n
 export const groupCommandSchema = z.object({ ...origin, from: telegramLearnerSchema });
 const callbackSchema = z.object({ id: z.string().min(1).max(256), from: telegramLearnerSchema, data: z.string().max(64), message: z.object({ ...origin, message_id: messageId, from: z.object({ id: telegramLearnerSchema.shape.id, is_bot: z.literal(true) }) }) });
 type Markup = { inline_keyboard: Array<Array<{ text: string; callback_data: string }>> };
-type GroupSendOptions = { message_thread_id?: number; protect_content: true; reply_markup?: Markup };
+type GroupSendOptions = QuizTextOptions & { ephemeral_message_parameters?: EphemeralMessageParameters; message_thread_id?: number; protect_content: true; reply_markup?: Markup };
 export type GroupQuizTransport = {
   getChatMember(chatId: number, userId: number): Promise<unknown>;
   sendMessage(chatId: number, text: string, options: GroupSendOptions): Promise<unknown>;
@@ -39,7 +41,7 @@ export function createGroupQuizService(database: PrismaClient, api: GroupQuizTra
   const text = async (scope: GroupScope, content: string) => { for (const chunk of quizTextChunks(content)) await api.sendMessage(scope.telegramChatId, chunk, optionsFor(scope)); };
   const controls = async (round: GroupRound, content: string, action: 'n'|'r', label: string) => {
     const scope = roundScope(round);
-    const sent = await api.sendMessage(scope.telegramChatId, content, { ...optionsFor(scope), reply_markup: { inline_keyboard: [[{ text: label, callback_data: `gq1:${action}:${round.id}` }]] } });
+    const sent = await api.sendMessage(scope.telegramChatId, content, { ...optionsFor(scope), reply_markup: { inline_keyboard: [[{ text: label, callback_data: `gq1:${action}:${round.id}` }, ...(round.deliveryState === 'BOUND' ? [{ text: 'Explain my answer', callback_data: `gq1:e:${round.id}` }] : [])]] } });
     await bindGroupControl(database, round, sent);
   };
   const membership = async (scope: GroupScope, userId: number) => {
@@ -65,6 +67,7 @@ export function createGroupQuizService(database: PrismaClient, api: GroupQuizTra
       const quiz = buildNativeQuiz(round.snapshot, 'ENGLISH');
       if (quiz.image) await api.sendPhoto(scope.telegramChatId, quiz.image, optionsFor(scope));
       if (quiz.context) await text(scope, quiz.context);
+      if (quiz.card) for (const chunk of richQuizChunks(quiz.card)) await api.sendMessage(scope.telegramChatId, chunk.text, { ...optionsFor(scope), entities: chunk.entities, link_preview_options: { is_disabled: true } });
       const sent = await api.sendPoll(scope.telegramChatId, quiz.question, quiz.options, { ...quiz.other, ...optionsFor(scope) });
       round = await bindGroupQuiz(database, round, sent, quiz.options.map(({ text }) => text), now());
     } catch {
@@ -73,6 +76,16 @@ export function createGroupQuizService(database: PrismaClient, api: GroupQuizTra
       return;
     }
     await controls(round, 'Choose an answer above to see your result. Votes are non-anonymous and count toward personal practice.', 'n', 'Next question');
+  };
+  const personalFeedback = async (scope: GroupScope, actor: z.infer<typeof telegramLearnerSchema>, roundId: string, messageId?: number) => {
+    const result = await groupQuizFeedback(database, scope, actor, roundId, messageId);
+    if (!result) return;
+    for (const chunk of richQuizChunks(quizFeedbackText(result.snapshot, result.isCorrect, 'ENGLISH'))) {
+      await api.sendMessage(scope.telegramChatId, chunk.text, {
+        ...optionsFor(scope), entities: chunk.entities, link_preview_options: { is_disabled: true },
+        ephemeral_message_parameters: { receiver_user_id: actor.id },
+      });
+    }
   };
   return {
     command: async (input: unknown, argument: unknown = '') => {
@@ -84,8 +97,14 @@ export function createGroupQuizService(database: PrismaClient, api: GroupQuizTra
     },
     callback: async (input: unknown) => {
       const parsed = callbackSchema.safeParse(input); if (!parsed.success || parsed.data.message.from.id !== botId()) return;
-      const callback = parsed.data; const match = /^gq1:([fnr]):([0-9a-f-]{36})$/u.exec(callback.data);
+      const callback = parsed.data; const match = /^gq1:([efnr]):([0-9a-f-]{36})$/u.exec(callback.data);
       if (!match || !z.uuid().safeParse(match[2]).success) return;
+      if (match[1] === 'e') {
+        const scope = scopeFor(callback.message);
+        const permission = await privileges(scope, callback.from.id);
+        if (permission.botAdministrator && permission.member) await personalFeedback(scope, callback.from, match[2]!, callback.message.message_id);
+        return;
+      }
       await request(scopeFor(callback.message), callback.from, { kind: match[1] === 'r' ? 'replace' : 'next', roundId: match[2], messageId: callback.message.message_id });
     },
     /** Returns true only when this poll belongs to the durable group namespace. */
@@ -93,11 +112,17 @@ export function createGroupQuizService(database: PrismaClient, api: GroupQuizTra
       const parsed = chatPollAnswerSchema.safeParse(input); if (!parsed.success) return false;
       const round = await groupPollBinding(database, parsed.data.poll_id); if (!round) return false;
       if (round.deliveryState !== 'BOUND') return true;
+      let committed: boolean;
       try {
         const permission = await privileges(roundScope(round), parsed.data.user.id);
         if (!permission.botAdministrator || !permission.member) return true;
-        await answerGroupQuiz(database, round, parsed.data, now());
+        committed = Boolean(await answerGroupQuiz(database, round, parsed.data, now()));
       } catch { throw new UnclaimedQuizAnswerError(); }
+      // Transport/recovery lookup failure after commit must never poison polling or retry credit.
+      if (committed) {
+        try { await personalFeedback(roundScope(round), parsed.data.user, round.id); }
+        catch { /* Ephemeral delivery is best effort; the original Explain control can recover. */ }
+      }
       return true;
     },
   };

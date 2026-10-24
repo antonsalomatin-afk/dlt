@@ -1,3 +1,7 @@
+import { readFileSync } from 'node:fs';
+import { validateTeachingInputs } from '../packages/database/src/teaching.ts';
+import { mapCandidateQuestion } from '../tools/content/candidate-import.ts';
+import { quizFeedbackText, richQuizChunks } from '../apps/bot/src/chat-quiz-format.ts';
 import { EventEmitter } from 'node:events';
 import fetch, { Response } from 'node-fetch';
 import { z } from 'zod';
@@ -24,11 +28,11 @@ const person = () => ({ id: nextId++, is_bot: false as const, first_name: 'Synth
 const scope = (threadId = 0) => ({ telegramChatId: nextChat--, threadId });
 type Person = ReturnType<typeof person>; type Scope = ReturnType<typeof scope>;
 function transport() {
-  const messages: Array<{ chatId: number; text: string; options: unknown }> = []; const polls: Array<{ id: string; chatId: number; question: string; options: Array<{ text: string }>; other: unknown }> = [];
+  const messages: Array<{ chatId: number; text: string; options: Parameters<GroupQuizTransport['sendMessage']>[2] }> = []; const polls: Array<{ id: string; chatId: number; question: string; options: Array<{ text: string }>; other: unknown }> = [];
   const statuses = new Map<number, string>(); let sendFailure = false; let membershipFailure = false; let malformed = false; let count = 0;
   const api: GroupQuizTransport & { stopPoll(): Promise<unknown> } = {
     getChatMember: vi.fn(async (_chatId, userId) => { if (membershipFailure) throw new Error('Synthetic membership outage'); return { user: { id: userId }, status: statuses.get(userId) ?? (userId === 123 ? 'administrator' : 'member') }; }),
-    sendMessage: vi.fn(async (chatId, text, options) => { messages.push({ chatId, text, options }); return { message_id: ++count, chat: { id: chatId, type: 'supergroup' }, ...(options.message_thread_id ? { message_thread_id: options.message_thread_id } : {}) }; }),
+    sendMessage: vi.fn(async (chatId, text, options) => { messages.push({ chatId, text, options }); return { message_id: options.ephemeral_message_parameters ? 0 : ++count, chat: { id: chatId, type: 'supergroup' }, ...(options.message_thread_id ? { message_thread_id: options.message_thread_id } : {}) }; }),
     sendPhoto: vi.fn(async () => ({})),
     stopPoll: vi.fn(async () => ({})),
     sendPoll: vi.fn(async (chatId, question, options, other) => { const id = randomUUID(); polls.push({ id, chatId, question, options, other }); if (sendFailure) throw new Error('Synthetic delivery outage'); return { message_id: ++count, chat: { id: malformed ? chatId-1 : chatId, type: 'supergroup' }, ...(other.message_thread_id ? { message_thread_id: other.message_thread_id } : {}), poll: { id, type: 'quiz', is_anonymous: false, options } }; }),
@@ -38,7 +42,7 @@ function transport() {
 const command = (from: Person, key: Scope) => ({ from, chat: { id: key.telegramChatId, type: 'supergroup' }, ...(key.threadId ? { message_thread_id: key.threadId } : {}) });
 async function current(key: Scope) { const pointer = await db.groupQuizScope.findUniqueOrThrow({ where: { telegramChatId_threadId: key } }); return db.groupQuizRound.findUniqueOrThrow({ where: { id: pointer.currentRoundId! }, include: { question: { select: { active: true, verificationStatus: true } }, initiator: { select: { telegramUserId: true } } } }); }
 function service(t: ReturnType<typeof transport>, instant = now) { return createGroupQuizService(db, t.api, () => 123, () => instant, () => 0); }
-async function click(s: ReturnType<typeof service>, actor: Person, key: Scope, action: 'f'|'n'|'r', suppliedRound?: GroupRound) { const round = suppliedRound ?? await current(key); await s.callback({ id: 'callback', from: actor, message: { message_id: round.controlMessageId!, chat: { id: key.telegramChatId, type: 'supergroup' }, from: { id: 123, is_bot: true }, ...(key.threadId ? { message_thread_id: key.threadId } : {}) }, data: `gq1:${action}:${round.id}` }); }
+async function click(s: ReturnType<typeof service>, actor: Person, key: Scope, action: 'e'|'f'|'n'|'r', suppliedRound?: GroupRound) { const round = suppliedRound ?? await current(key); await s.callback({ id: 'callback', from: actor, message: { message_id: round.controlMessageId!, chat: { id: key.telegramChatId, type: 'supergroup' }, from: { id: 123, is_bot: true }, ...(key.threadId ? { message_thread_id: key.threadId } : {}) }, data: `gq1:${action}:${round.id}` }); }
 const vote = (user: Person, poll_id: string, option_ids = [2]) => ({ user, poll_id, option_ids });
 
 async function results(round: GroupRound) {
@@ -64,7 +68,7 @@ it('shares one poll, credits distinct real voters once and preserves all persona
   const beforeVotes = t.messages.length;
   await Promise.all([s.answer(vote(starter,round.pollId!)),s.answer(vote(second,round.pollId!,[0])),s.answer(vote(starter,round.pollId!))]);
   await s.answer(vote(starter,round.pollId!,[0]));
-  expect(t.messages).toHaveLength(beforeVotes); expect(await results(round)).toEqual({ answered: 2, correct: 1 });
+  expect(t.messages.slice(beforeVotes).every(({options})=>options.ephemeral_message_parameters)).toBe(true); expect(await results(round)).toEqual({ answered: 2, correct: 1 });
   const votes = await db.groupQuizVote.findMany({ where: { roundId: round.id }, include: { presentation: { include: { answer: true } } } });
   expect(new Set(votes.map(({ presentationId }) => presentationId)).size).toBe(2);
   for (const recorded of votes) { expect(recorded.presentation.snapshot).toEqual(round.snapshot); expect(recorded.presentation.answer).not.toBeNull(); const state = await db.conceptLearningState.findUniqueOrThrow({ where: { userId_conceptId: { userId: recorded.userId, conceptId } } }); expect(state.practiceAnswered).toBe(1); }
@@ -98,13 +102,13 @@ it('requires bot administration and current membership without writing for nonme
 it('lets any member request Next before a vote while earlier polls accept late answers exactly once', async () => {
   const a=person();const b=person();const c=person();const key=scope();const t=transport();const s=service(t);
   await s.command(command(a,key));const first=await current(key);
-  expect(t.messages.at(-1)?.options).toMatchObject({reply_markup:{inline_keyboard:[[{text:'Next question',callback_data:`gq1:n:${first.id}`}]]}});
+  expect(t.messages.at(-1)?.options).toMatchObject({reply_markup:{inline_keyboard:[[{text:'Next question',callback_data:`gq1:n:${first.id}`},{text:'Explain my answer',callback_data:`gq1:e:${first.id}`}]]}});
   await click(s,b,key,'n');const second=await current(key);expect(t.polls).toHaveLength(2);expect(second.id).not.toBe(first.id);
   expect((await db.groupQuizRound.findUniqueOrThrow({where:{id:first.id}})).deliveryState).toBe('BOUND');
   const before=t.messages.length;
   await Promise.all([s.answer(vote(c,first.pollId!)),s.answer(vote(b,first.pollId!,[0])),s.answer(vote(b,second.pollId!))]);
   await s.answer(vote(c,first.pollId!,[0]));expect(await results(first)).toEqual({answered:2,correct:1});expect(await results(second)).toEqual({answered:1,correct:1});
-  expect(t.messages).toHaveLength(before);expect(t.api.stopPoll).not.toHaveBeenCalled();
+  expect(t.messages.slice(before).every(({options})=>options.ephemeral_message_parameters)).toBe(true);expect(t.api.stopPoll).not.toHaveBeenCalled();
   const user=await db.user.findUniqueOrThrow({where:{telegramUserId:BigInt(b.id)}});expect(await db.conceptLearningState.findUniqueOrThrow({where:{userId_conceptId:{userId:user.id,conceptId}}})).toMatchObject({practiceAnswered:2,practiceCorrect:1});
   await click(s,a,key,'n',first);expect(t.polls).toHaveLength(2);
   await Promise.all([click(s,c,key,'n',second),click(s,a,key,'n',second)]);expect(t.polls).toHaveLength(3);
@@ -239,4 +243,81 @@ it('keeps a bound poll answerable when control delivery fails and a later comman
 it('serializes simultaneous commands into one in-flight send without invalidating older bound polls',async()=>{
   const a=person();const b=person();const key=scope();const outcomes=await Promise.all([requestGroupQuiz(db,key,a,{kind:'start'},now,()=>0),requestGroupQuiz(db,key,b,{kind:'start'},now,()=>0)]);
   expect(outcomes.filter(r=>r.kind==='send')).toHaveLength(1);expect(outcomes.filter(r=>r.kind==='busy')).toHaveLength(1);expect(await db.groupQuizRound.count({where:{telegramChatId:BigInt(key.telegramChatId)}})).toBe(1);
+});
+
+it('recovers only an own committed answer from original controls after Next, with strict recipient/topic gating',async()=>{
+  const a=person();const b=person();const key=scope(12);const t=transport();const s=service(t);
+  await s.command(command(a,key));const first=await current(key);
+  const before=t.messages.length;
+  await click(s,a,key,'e',first);expect(t.messages).toHaveLength(before);
+  await s.answer(vote(a,first.pollId!));
+  const automatic=t.messages.slice(before);expect(automatic.length).toBeGreaterThan(0);
+  for(const sent of automatic)expect(sent).toMatchObject({chatId:key.telegramChatId,options:{message_thread_id:12,protect_content:true,ephemeral_message_parameters:{receiver_user_id:a.id},link_preview_options:{is_disabled:true}}});
+  expect((await current(key)).controlMessageId).toBe(first.controlMessageId);
+  const publicCount=t.messages.filter(({options})=>!options.ephemeral_message_parameters).length;
+  await click(s,b,key,'e',first);expect(t.messages.filter(({options})=>!options.ephemeral_message_parameters)).toHaveLength(publicCount);
+  expect(t.messages).toHaveLength(before+automatic.length);
+  await click(s,b,key,'n',first);const afterNext=t.messages.length;
+  const votesBefore=await db.groupQuizVote.count();const answersBefore=await db.answerAttempt.count();const peopleBefore=await db.user.count();
+  await click(service(t),a,key,'e',first);
+  expect(t.messages.slice(afterNext).map(({text})=>text).join('')).toBe(automatic.map(({text})=>text).join(''));
+  expect(await db.groupQuizVote.count()).toBe(votesBefore);expect(await db.answerAttempt.count()).toBe(answersBefore);expect(await db.user.count()).toBe(peopleBefore);
+  const original={id:'x',from:a,data:`gq1:e:${first.id}`,message:{message_id:first.controlMessageId!,chat:{id:key.telegramChatId,type:'supergroup'},message_thread_id:12,from:{id:123,is_bot:true}}};
+  const stable=t.messages.length;
+  for(const message of [{...original.message,message_id:first.controlMessageId!+100},{...original.message,message_thread_id:13},{...original.message,chat:{id:key.telegramChatId-1,type:'supergroup'}},{...original.message,from:{id:124,is_bot:true}},{...original.message,forward_origin:{}},{...original.message,sender_chat:{id:key.telegramChatId}}])await s.callback({...original,message});
+  await s.callback({...original,from:{...a,is_bot:true}});await s.callback({...original,from:undefined});
+  t.statuses.set(a.id,'left');await s.callback(original);t.statuses.delete(a.id);
+  t.statuses.set(123,'member');await s.callback(original);t.statuses.delete(123);
+  await click(s,b,key,'e',first);expect(t.messages).toHaveLength(stable);
+  const question=await db.question.findUniqueOrThrow({where:{id:first.questionId}});
+  try{await db.question.update({where:{id:question.id},data:{active:false}});await s.callback(original);expect(t.messages).toHaveLength(stable);}
+  finally{await db.question.update({where:{id:question.id},data:{active:question.active}});}
+  await invalidateMigratedGroup(db,key.telegramChatId,now);await s.callback(original);expect(t.messages).toHaveLength(stable);
+});
+
+it('keeps committed votes and polling healthy when personal delivery or its postcommit read fails',async()=>{
+  const a=person();const key=scope(5);const t=transport();const s=service(t);await s.command(command(a,key));const round=await current(key);
+  const send=vi.spyOn(t.api,'sendMessage').mockRejectedValueOnce(new Error('Synthetic ephemeral delivery outage'));
+  await expect(s.answer(vote(a,round.pollId!))).resolves.toBe(true);send.mockRestore();
+  expect(await results(round)).toEqual({answered:1,correct:1});
+  const read=vi.spyOn(db.groupQuizRound,'findFirst').mockRejectedValueOnce(new Error('Synthetic postcommit read failure'));
+  await expect(s.answer(vote(a,round.pollId!,[0]))).resolves.toBe(true);read.mockRestore();
+  expect(await results(round)).toEqual({answered:1,correct:1});
+  const before=t.messages.length;await click(service(t),a,key,'e',round);
+  expect(t.messages.slice(before).map(({text})=>text).join('')).toContain('Correct answer: C. Answer C');
+  expect(t.messages.slice(before).every(({options})=>options.ephemeral_message_parameters?.receiver_user_id===a.id)).toBe(true);
+  expect((await current(key)).controlMessageId).toBe(round.controlMessageId);
+});
+
+async function installTeachingQuestion() {
+  const read = (path: string): unknown => JSON.parse(readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')) as unknown;
+  const inputs = validateTeachingInputs({
+    pack: read('content/imports/launch-20261023-bilingual-teaching.json'), review: read('.agent/reviews/TASK-084-content-review-01.json'),
+    car: read('content/imports/launch-20261016-car-candidates.json'), motorcycle: read('content/imports/launch-20261016-motorcycle-candidates.json'),
+    stems: read('content/imports/launch-20261021-russian-stems.json'),
+  });
+  const mapped = mapCandidateQuestion(inputs.car, inputs.car.questions[0]!, categoryId, conceptId);
+  const entry = inputs.pack.entries.find((item) => item.batchId === inputs.car.batchId && item.externalId === inputs.car.questions[0]!.externalId)!;
+  const row = await db.question.create({ data: { ...mapped.question, active: true, verificationStatus: 'VERIFIED', textRussian: entry.textRussian, choices: { create: mapped.choices.map(({ id, key, textThai, textEnglish, textRussian, isCorrect }) => ({ id, key, textThai, textEnglish, textRussian, isCorrect })) } } });
+  const candidates = await db.question.findMany({ where: { vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED' }, orderBy: { id: 'asc' } });
+  return { row, offset: candidates.findIndex(({ id }) => id === row.id) };
+}
+
+it('delivers every accepted teaching field as same-topic personal entities after a real atomic group vote',async()=>{
+  const {row,offset}=await installTeachingQuestion();const a=person();const b=person();const key=scope(19);const t=transport();
+  const s=createGroupQuizService(db,t.api,()=>123,()=>now,()=>offset);
+  try{
+    await s.command(command(a,key));const round=await current(key);const snapshot=parsePresentationSnapshot(round.snapshot);
+    expect(snapshot.teaching).toBeDefined();expect(t.polls[0]?.options.map(({text})=>text)).toEqual(['A','B','C','D']);
+    const card=t.messages.slice(0,-1);expect(card.every(({options})=>options.entities?.some(({type})=>type==='spoiler'))).toBe(true);
+    expect(card.map(({text})=>text).join('')).not.toContain(snapshot.teaching!.whyOthersWrongEnglish);
+    const before=t.messages.length;const index=snapshot.question.choices.findIndex(({id})=>id===snapshot.correctChoiceId);
+    await s.answer(vote(a,round.pollId!,[index]));const sent=t.messages.slice(before);const expected=richQuizChunks(quizFeedbackText(snapshot,true,'ENGLISH'));
+    expect(sent.map(({text})=>text)).toEqual(expected.map(({text})=>text));
+    for(const [index,message] of sent.entries())expect(message).toMatchObject({chatId:key.telegramChatId,options:{entities:expected[index]!.entities,ephemeral_message_parameters:{receiver_user_id:a.id},message_thread_id:19,link_preview_options:{is_disabled:true}}});
+    expect((await current(key)).controlMessageId).toBe(round.controlMessageId);
+    await click(s,b,key,'n',round);const afterNext=t.messages.length;await click(s,a,key,'e',round);
+    expect(t.messages.slice(afterNext).map(({text})=>text)).toEqual(expected.map(({text})=>text));
+    expect(await results(round)).toEqual({answered:1,correct:1});
+  }finally{await db.question.update({where:{id:row.id},data:{active:false}});}
 });

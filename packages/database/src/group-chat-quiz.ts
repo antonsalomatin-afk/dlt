@@ -125,3 +125,22 @@ export async function invalidateMigratedGroup(database: PrismaClient, chatInput:
     await tx.groupQuizScope.update({ where: { telegramChatId_threadId: key }, data: { currentRoundId: null } });
   });
 }
+
+/** Read-only recovery of this member's committed owned presentation, including historical BOUND rounds. */
+export async function groupQuizFeedback(database: PrismaClient, scopeInput: unknown, actorInput: unknown, roundInput: unknown, controlInput?: unknown) {
+  const scope = groupScopeSchema.parse(scopeInput);
+  const actor = telegramLearnerSchema.parse(actorInput);
+  const roundId = control.roundId.parse(roundInput);
+  const controlMessageId = controlInput === undefined ? undefined : control.messageId.parse(controlInput);
+  const round = await database.groupQuizRound.findFirst({
+    where: { id: roundId, telegramChatId: BigInt(scope.telegramChatId), threadId: scope.threadId,
+      deliveryState: 'BOUND', ...(controlMessageId === undefined ? {} : { controlMessageId }),
+      question: { active: true, verificationStatus: 'VERIFIED' } },
+    include: { votes: { where: { user: { telegramUserId: BigInt(actor.id) } }, include: { presentation: { include: { answer: true } } } } },
+  });
+  const vote = round?.votes[0];
+  if (!round || !vote?.presentation.answer) return null;
+  const snapshot = parsePresentationSnapshot(vote.presentation.snapshot);
+  if (snapshot.question.id !== round.questionId) throw new Error('Group feedback snapshot relationship mismatch');
+  return { snapshot, isCorrect: vote.presentation.answer.isCorrect };
+}

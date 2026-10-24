@@ -1,3 +1,7 @@
+import { readFileSync } from 'node:fs';
+import { validateTeachingInputs } from '../packages/database/src/teaching.ts';
+import { mapCandidateQuestion } from '../tools/content/candidate-import.ts';
+import { quizFeedbackText, richQuizChunks } from '../apps/bot/src/chat-quiz-format.ts';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import pg from 'pg';
@@ -39,7 +43,7 @@ function transport() {
   let failFeedback = false;
   let malformed = false;
   const api: QuizTransport = {
-    sendMessage: vi.fn(async (chatId, text, options) => { if (failFeedback && options?.reply_markup.inline_keyboard[0]?.[0]?.callback_data.startsWith('cq:n:')) throw new Error('Synthetic feedback failure'); messages.push({ chatId, text, options }); return {}; }),
+    sendMessage: vi.fn(async (chatId, text, options) => { if (failFeedback && options?.reply_markup?.inline_keyboard[0]?.[0]?.callback_data.startsWith('cq:n:')) throw new Error('Synthetic feedback failure'); messages.push({ chatId, text, options }); return {}; }),
     sendPhoto: vi.fn(async () => ({})),
     sendPoll: vi.fn(async (chatId, question, options, other) => {
       const id = randomUUID(); polls.push({ chatId, question, options, other, id });
@@ -257,4 +261,43 @@ it('recovers committed results ahead of uncertainty without another credit', asy
   await service.command(identity(from)); expect(t.messages.at(-1)?.text).toContain('Correct answer');
   await service.callback(callback(from, `cq:r:${session.presentationId}`)); expect(t.polls).toHaveLength(1);
   expect(await db.conceptLearningState.findUniqueOrThrow({ where: { userId_conceptId: { userId: user.id, conceptId } } })).toMatchObject({ practiceAnswered: 1, practiceCorrect: 1 });
+});
+
+async function installTeachingQuestion() {
+  const read = (path: string): unknown => JSON.parse(readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')) as unknown;
+  const inputs = validateTeachingInputs({
+    pack: read('content/imports/launch-20261023-bilingual-teaching.json'), review: read('.agent/reviews/TASK-084-content-review-01.json'),
+    car: read('content/imports/launch-20261016-car-candidates.json'), motorcycle: read('content/imports/launch-20261016-motorcycle-candidates.json'),
+    stems: read('content/imports/launch-20261021-russian-stems.json'),
+  });
+  const mapped = mapCandidateQuestion(inputs.car, inputs.car.questions[0]!, categoryId, conceptId);
+  const entry = inputs.pack.entries.find((item) => item.batchId === inputs.car.batchId && item.externalId === inputs.car.questions[0]!.externalId)!;
+  const row = await db.question.create({ data: { ...mapped.question, active: true, verificationStatus: 'VERIFIED', textRussian: entry.textRussian, choices: { create: mapped.choices.map(({ id, key, textThai, textEnglish, textRussian, isCorrect }) => ({ id, key, textThai, textEnglish, textRussian, isCorrect })) } } });
+  const candidates = await db.question.findMany({ where: { vehicleType: 'CAR', active: true, verificationStatus: 'VERIFIED' }, orderBy: { id: 'asc' } });
+  return { row, offset: candidates.findIndex(({ id }) => id === row.id) };
+}
+
+it('sends accepted bilingual cards and complete personal teaching, recovering a failed send through /quiz and Next',async()=>{
+  const {row,offset}=await installTeachingQuestion();const from=learner();const user=await saved(from);const t=transport();
+  const service=createChatQuizService(db,t.api,()=>now,()=>offset);
+  try{
+    await service.command(identity(from));const session=await current(from);const snapshot=parsePresentationSnapshot(session.presentation.snapshot);
+    expect(snapshot.teaching).toBeDefined();expect(t.polls[0]?.options.map(({text})=>text)).toEqual(['A','B','C','D']);
+    expect(t.polls[0]?.question).toBe('Choose the correct answer.');expect(t.polls[0]?.other.explanation).toBeUndefined();
+    const preanswer=t.messages.map(({text})=>text).join('');
+    expect(preanswer).toContain(snapshot.question.textEnglish);expect(preanswer).toContain(snapshot.question.textRussian);
+    expect(preanswer).not.toContain(snapshot.teaching!.safetyReasonEnglish);expect(preanswer).not.toContain(snapshot.teaching!.guidanceCitation);
+    const correctIndex=snapshot.question.choices.findIndex(({id})=>id===snapshot.correctChoiceId);
+    const send=vi.spyOn(t.api,'sendMessage').mockRejectedValueOnce(new Error('Synthetic rich feedback failure'));
+    await expect(service.answer(vote(from,session.pollId!,[correctIndex]))).rejects.toThrow('Synthetic rich feedback failure');send.mockRestore();
+    expect((await current(from)).presentation.answer?.isCorrect).toBe(true);
+    const before=t.messages.length;await createChatQuizService(db,t.api,()=>now,()=>offset).command(identity(from));
+    const expected=richQuizChunks(quizFeedbackText(snapshot,true,session.language));
+    expect(t.messages.slice(before).map(({text})=>text)).toEqual(expected.map(({text})=>text));
+    for(const [index,sent] of t.messages.slice(before).entries())expect(sent.options).toMatchObject({entities:expected[index]!.entities,link_preview_options:{is_disabled:true}});
+    expect(t.messages.at(-1)?.options).toMatchObject({reply_markup:{inline_keyboard:[[{text:'Next question',callback_data:`cq:n:${session.presentationId}`}]]}});
+    expect(await db.answerAttempt.count({where:{presentationId:session.presentationId}})).toBe(1);
+    expect(await db.user.findUniqueOrThrow({where:{id:user.id}})).toMatchObject({preferredLanguage:'RUSSIAN',dailyQuestionReminderEnabled:true});
+    await service.callback(callback(from,`cq:n:${session.presentationId}`));expect(t.polls).toHaveLength(2);
+  }finally{await db.question.update({where:{id:row.id},data:{active:false}});}
 });
