@@ -1,0 +1,111 @@
+TASK-086 Supervisor independent authoritative checks
+2026-10-24T06:47:36.012157+00:00
+Candidate 12306b1ede34804cd48055086b18c9485ae41026
+
+COMMAND pnpm lint
+$ eslint .
+
+EXIT 0
+
+COMMAND pnpm typecheck
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 229ms
+
+$ tsc --noEmit
+
+EXIT 0
+
+COMMAND pnpm test --maxWorkers=4
+$ pnpm db:generate && vitest run "--maxWorkers=4"
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 196ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  64 passed (64)
+      Tests  377 passed (377)
+   Start at  08:48:04
+   Duration  34.64s (tests 77%, import 14%, transform 9%, worker 1%)
+
+    Isolate  64 workers spawned · ~339ms startup each (spawn + environment, per file)
+             at least ~5.08s faster with isolate: false — reuses workers across files instead of one per file
+
+
+EXIT 0
+
+COMMAND pnpm db:ready
+$ node --env-file=.env tools/database/local.ts ready
+Local PostgreSQL ready: OK
+
+EXIT 0
+
+COMMAND pnpm test:integration
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 229ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:27904) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:17900) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  45 passed (45)
+      Tests  242 passed (242)
+   Start at  08:48:46
+   Duration  366.06s (tests 92%, import 6%, transform 2%)
+
+    Isolate  45 workers spawned · ~255ms startup each (spawn + environment, per file)
+             at least ~11.24s faster with isolate: false — reuses workers across files instead of one per file
+
+
+EXIT 0
+
+COMMAND pnpm build
+$ pnpm --filter @thai-dlt/web build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 75ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1771ms
+  Running TypeScript ...
+  Finished TypeScript in 2.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/3) ...
+✓ Generating static pages using 4 workers (3/3) in 1225ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+
+EXIT 0
+
+COMMAND git diff --check
+EXIT 0
+PASS all required independent TASK-086 gates. No production mutation.

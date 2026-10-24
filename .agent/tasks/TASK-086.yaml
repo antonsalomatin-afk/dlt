@@ -1,6 +1,6 @@
 id: TASK-086
 title: Publish bilingual teaching as native Telegram chat quizzes
-status: CHECKING
+status: REVIEW
 owner_role: Builder
 depends_on:
   - TASK-085

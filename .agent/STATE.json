@@ -5,7 +5,7 @@
   "currentTask": "TASK-086",
   "lastAcceptedTask": "TASK-085",
   "lastAcceptedCommit": "57732549f90a52d5b9aca7ed6579471477c20f74",
-  "status": "CHECKING",
+  "status": "REVIEW",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -301,7 +301,7 @@
   },
   "bilingualChatTeaching": {
     "task": "TASK-086",
-    "status": "TELEGRAM_CHECKING",
+    "status": "TELEGRAM_REVIEW",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
@@ -316,7 +316,7 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "Builder scoped feature commit fee3b569 with377unit/242integration/lint/typecheck/buildPASS. Fresh Supervisor full gates01 now run before independent source review. Production unchangedf17.",
+    "checkpoint": "Fresh Supervisor full gatesPASS lint/types/377unit/242integration/build/diff on fee3b569 source; independent source review01 next. Production remains f17.",
     "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt",
     "acceptedContentCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "contentReview": ".agent/reviews/TASK-084-review-01.md",
@@ -334,7 +334,8 @@
     "snapshotVerdict": "PASS",
     "snapshotAcceptedAt": "2026-10-24T06:30:34.098146+00:00",
     "telegramTask": "TASK-086",
-    "telegramBuilderCommit": "fee3b5694fa8adb2fe8d4262f454c68fefc0625b"
+    "telegramBuilderCommit": "fee3b5694fa8adb2fe8d4262f454c68fefc0625b",
+    "telegramChecks": ".agent/checks/TASK-086-checks-01.txt"
   },
   "localValidationDatabase": {
     "port": 54329,
