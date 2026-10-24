@@ -1,0 +1,290 @@
+
+PRE-FIX FOCUSED REPRODUCTION 1
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 11 skipped (12)
+   Start at  08:03:10
+   Duration  132.84s (tests 69%, import 28%, transform 3%)
+
+
+PRE-FIX FOCUSED REPRODUCTION 2
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 11 skipped (12)
+   Start at  08:05:24
+   Duration  11.02s (tests 68%, import 21%, transform 10%)
+
+
+PRE-FIX FOCUSED REPRODUCTION 3
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+PRE-FIX FOCUSED REPRODUCTION 1
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+ ❯ tests/daily-practice.integration.test.ts (12 tests | 1 failed | 11 skipped) 5807ms
+   ❯ POST /practice/daily (7)
+     × converges concurrent same-user requests and keeps different learners independent 2486ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/daily-practice.integration.test.ts > POST /practice/daily > converges concurrent same-user requests and keeps different learners independent
+AssertionError: expected 500 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 500
+
+ ❯ tests/daily-practice.integration.test.ts:404:31
+    402|     ]);
+    403|     expect(primary.statusCode).toBe(200);
+    404|     expect(second.statusCode).toBe(200);
+       |                               ^
+    405|     const primaryBody = dailyPracticeResponseSchema.parse(primary.json…
+    406|     const secondBody = dailyPracticeResponseSchema.parse(second.json()…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 skipped (12)
+   Start at  08:06:12
+   Duration  7.62s (tests 78%, import 16%, transform 6%)
+
+
+PRE-FIX FOCUSED REPRODUCTION 1
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+stdout | tests/daily-practice.integration.test.ts > POST /practice/daily > converges concurrent same-user requests and keeps different learners independent
+SAFE_DAILY_DIAG {"name":"DriverAdapterError","metadata":{"cause":{"originalCode":"40001","kind":"TransactionWriteConflict"}}}
+
+ ❯ tests/daily-practice.integration.test.ts (12 tests | 1 failed | 11 skipped) 4416ms
+   ❯ POST /practice/daily (7)
+     × converges concurrent same-user requests and keeps different learners independent 1258ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/daily-practice.integration.test.ts > POST /practice/daily > converges concurrent same-user requests and keeps different learners independent
+AssertionError: expected 500 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 500
+
+ ❯ tests/daily-practice.integration.test.ts:402:32
+    400|       daily(learners.second.token),
+    401|     ]);
+    402|     expect(primary.statusCode).toBe(200);
+       |                                ^
+    403|     expect(second.statusCode).toBe(200);
+    404|     const primaryBody = dailyPracticeResponseSchema.parse(primary.json…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 skipped (12)
+   Start at  08:06:44
+   Duration  5.98s (tests 76%, import 18%, transform 6%)
+
+
+DIAGNOSIS: raw DriverAdapterError cause.originalCode40001 cause.kindTransactionWriteConflict at COMMIT; existing P2034 classifier did not match. Fix recognizes only Error + exact adapter name + SQLSTATE40001/40P01 + TransactionWriteConflict. Bounds unchanged. Temporary diagnostics removed.
+POST-FIX FOCUSED DAILY UNIT + INTEGRATION
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  08:08:47
+   Duration  774ms (import 66%, transform 31%, tests 3%, worker 1%)
+
+EXIT 0
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  1 passed (1)
+      Tests  13 passed (13)
+   Start at  08:08:49
+   Duration  12.11s (tests 84%, import 12%, transform 4%)
+
+EXIT 0
+
+REGRESSION RED PROOF: temporarily restore old classifier only; forced real COMMIT conflict must fail. Source restored in finally.
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+ ❯ tests/daily-practice.integration.test.ts (13 tests | 1 failed | 12 skipped) 3152ms
+   ❯ POST /practice/daily (8)
+     × retries a real adapter serialization conflict at commit without losing either learner assignment 118ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/daily-practice.integration.test.ts > POST /practice/daily > retries a real adapter serialization conflict at commit without losing either learner assignment
+AssertionError: expected [ 'fulfilled', 'rejected' ] to deeply equal [ 'fulfilled', 'fulfilled' ]
+
+- Expected
++ Received
+
+  [
+    "fulfilled",
+-   "fulfilled",
++   "rejected",
+  ]
+
+ ❯ tests/daily-practice.integration.test.ts:261:49
+    259|     );
+    260|     const results = await Promise.allSettled([first, second]);
+    261|     expect(results.map(({ status }) => status)).toEqual(['fulfilled', …
+       |                                                 ^
+    262|     expect(adapterConflicts).toBe(1);
+    263|     expect(secondaryAttempts).toBe(2);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 skipped (13)
+   Start at  08:09:56
+   Duration  4.73s (tests 69%, import 23%, transform 8%)
+
+EXPECTED RED EXIT 1; fixed source restored
+
+COMMAND pnpm lint
+$ eslint .
+EXIT 0
+
+COMMAND pnpm typecheck
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 239ms
+
+tests/daily-practice.integration.test.ts(223,30): error TS2550: Property 'withResolvers' does not exist on type 'PromiseConstructor'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2024' or later.
+tests/daily-practice.integration.test.ts(224,31): error TS2550: Property 'withResolvers' does not exist on type 'PromiseConstructor'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2024' or later.
+tests/daily-practice.integration.test.ts(225,34): error TS2550: Property 'withResolvers' does not exist on type 'PromiseConstructor'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2024' or later.
+[ELIFECYCLE] Command failed with exit code 2.
+EXIT 2
+
+Full gate rerun after replacing test-only Promise.withResolvers (not in repo target lib) with existing-target deferred barrier; no compiler config change.
+
+COMMAND pnpm lint
+$ eslint .
+EXIT 0
+
+COMMAND pnpm typecheck
+$ pnpm db:generate && tsc --noEmit && pnpm --filter @thai-dlt/web typecheck
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 400ms
+
+$ tsc --noEmit
+EXIT 0
+
+COMMAND pnpm test --maxWorkers=4
+$ pnpm db:generate && vitest run "--maxWorkers=4"
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 278ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+
+ Test Files  63 passed (63)
+      Tests  375 passed (375)
+   Start at  08:12:46
+   Duration  40.00s (tests 76%, import 16%, transform 8%, worker 1%)
+
+    Isolate  63 workers spawned · ~407ms startup each (spawn + environment, per file)
+             at least ~6.00s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+
+COMMAND pnpm db:ready
+$ node --env-file=.env tools/database/local.ts ready
+Local PostgreSQL ready: OK
+EXIT 0
+
+COMMAND pnpm test:integration
+$ pnpm db:generate && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts "generate"
+Loaded Prisma config from packages\database\prisma.config.ts.
+
+Prisma schema loaded from packages\database\prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\packages\database\generated in 312ms
+
+
+ RUN  v5.0.0 C:/Users/anton/Documents/ChatGPT/DLT
+
+(node:23520) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:29176) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  45 passed (45)
+      Tests  238 passed (238)
+   Start at  08:13:33
+   Duration  314.89s (tests 92%, import 7%, transform 1%)
+
+    Isolate  45 workers spawned · ~239ms startup each (spawn + environment, per file)
+             at least ~10.53s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+
+COMMAND pnpm build
+$ pnpm --filter @thai-dlt/web build
+$ next build
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 928ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 35.9s
+  Running TypeScript ...
+  Finished TypeScript in 2.3s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/3) ...
+✓ Generating static pages using 4 workers (3/3) in 1394ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+EXIT 0
+warning: in the working copy of 'tests/daily-practice.integration.test.ts', LF will be replaced by CRLF the next time Git touches it
+
+COMMAND git diff --check
+EXIT 0
+PASS all required Builder fix gates. No production mutation; process-only owned-local port54329; original checks01 preserved.

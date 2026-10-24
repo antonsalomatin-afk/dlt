@@ -1,6 +1,6 @@
 id: TASK-085
 title: Enrich immutable presentations from the independently reviewed bilingual pack
-status: CHECKING
+status: REVIEW
 owner_role: Builder
 depends_on:
   - TASK-084
