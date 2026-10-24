@@ -146,7 +146,7 @@ Potential scope:
 - TASK-070 — ACCEPTED — approve the production launch boundary (dlt.thauto.app / tele.thauto.app)
 - TASK-071 — ACCEPTED — production hosts/services verified;50CAR +50MOTORCYCLE reviewed questions live; backup/restore and independent operational review PASS
 
-- TASK-072 — BLOCKED — compact/private/group modes are accepted and live; owner reports private success. Await actual simple-group native correctness/optional Next and signed Mini App practice/exam-resume observations; no Finish or two-member contest requirement.
+- TASK-072 — BLOCKED — accepted bilingual chat/native private+group and compact Mini App live. Await actual owner new spoiler/answer/personal Explain and signed Mini App practice/exam-resume observations; no Finish or second participant requirement.
 
 - deployment ADR
 - observability
@@ -173,4 +173,4 @@ Potential scope:
 - TASK-085 — ACCEPTED — reviewed static teaching loader and exact-source new practice/daily/retry/chat snapshot enrichment; full gates and independent PASS, no bank/history/exam change.
 
 - TASK-086 — ACCEPTED — per-line EN/RU spoiler Telegram cards, native A-D polls and personal post-answer group explanations; see ADR009/deliveryplan.
-- TASK-087 — READY — exact bilingual teaching release publication on established hosts, preservation checks and independent operations PASS.
+- TASK-087 — ACCEPTED — exact bilingual chat releasec472 live; compatible085fallback built, freshbackup/full20table+19migration preservation, Supervisor live probes and independent operationalPASS.

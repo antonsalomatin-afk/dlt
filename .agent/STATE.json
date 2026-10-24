@@ -2,20 +2,14 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-087",
-  "lastAcceptedTask": "TASK-086",
-  "lastAcceptedCommit": "fee3b5694fa8adb2fe8d4262f454c68fefc0625b",
-  "status": "REVIEW",
+  "currentTask": "TASK-072",
+  "lastAcceptedTask": "TASK-087",
+  "lastAcceptedCommit": "8799f6599df7b6f7c98ed4fb6ef901cd87271dd2",
+  "status": "BLOCKED",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
-  "blockedReason": null,
-  "parkedTasks": [
-    {
-      "task": "TASK-072",
-      "status": "BLOCKED",
-      "reason": "Actual owner learning observations remain pending; approved bilingual spoiler feature selected separately."
-    }
-  ],
+  "blockedReason": "Actual owner Telegram bilingual private/group answer-and-Explain and signed Mini App practice/exam-resume observations require real owner interaction. Approved feature and publication complete; no further deploy approval pending.",
+  "parkedTasks": [],
   "updatedBy": "Supervisor",
   "russianStemOverlay": {
     "status": "PRODUCTION_PUBLISHED_ACCEPTED",
@@ -51,7 +45,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK086 accepted and pushed; selected exact existing-host TASK087 deploy with compatible085fallback, freshbackup, no schema/bank/history rewrite. Production mutation pendingAdmin.",
+  "notes": "Accepted TASK085/086/087 and published bilingual per-line spoiler cards, nativeA-D quizzes and personal full explanations. TASK072 remains only actual owner interaction; no implementation/deployment decision pending. Preserve accepted bank/history and three original untracked starter files.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,15 +88,15 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 79,
-    "latestObservedWeeklyUsedPercent": 12,
+    "latestObservedUsedPercent": 86,
+    "latestObservedWeeklyUsedPercent": 13,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-31T06:00:25+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-24T07:13:25.777633+00:00",
+    "checkedAt": "2026-10-24T07:17:50.935393+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-24T11:00:25+00:00",
-    "observationNote": "Direct host79primary/12weekly after Root independent publication probes; no credits."
+    "observationNote": "Direct host86primary/13weekly at final operationalPASS; stopping after acceptance/manual-owner handoff below95ceiling. No resetcredits redeemed."
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -266,9 +260,9 @@
     "operationalReview": ".agent/reviews/TASK-081-review-01.md",
     "operationalVerdict": "PASS",
     "productionAcceptedAt": "2026-10-22T13:36:51.764573+00:00",
-    "currentReleaseCommit": "f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c",
-    "currentRolloutTask": "TASK-083",
-    "currentOperationalReview": ".agent/reviews/TASK-083-review-01.md",
+    "currentReleaseCommit": "c472c06b94252f170d9971bca70d4fef322b6f6f",
+    "currentRolloutTask": "TASK-087",
+    "currentOperationalReview": ".agent/reviews/TASK-087-review-01.md",
     "historicalRolloutBoundary": "Original TASK081 release/backup/review fields retained as history. TASK083 supersedes Finish/shared summaries with simple asynchronous practice; see groupPracticeSimplification."
   },
   "groupPracticeSimplification": {
@@ -301,7 +295,7 @@
   },
   "bilingualChatTeaching": {
     "task": "TASK-087",
-    "status": "DEPLOYED_REVIEW",
+    "status": "PRODUCTION_ACCEPTED",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
@@ -316,7 +310,7 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "Admin live checks and fresh Supervisor independent probesPASS. Initial Root timeline assertion precision diagnosed:humanseconds truncated actual subsecond start; --timestamp=us proves before/switch/after/beforewriter ordering, targeted recheckPASS retained alongside failure. c472live657files/fallback651files,100source400RU2statutes andfull20/19preservation verified. Independent operationalreview01 pending.",
+    "checkpoint": "TASK084content/085loader/086Telegram/087publication accepted after full source gates and independent source+operationalPASS. Exactc472live, compatible085fallbackready, freshPGDMPbackup and all20table/19migration preservation independently verified; healthythreeunits/onebot,100source/400RU/2statute coverage. No real owner journeys fabricated. ReturnTASK072blocked only actual owner interaction.",
     "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt",
     "acceptedContentCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "contentReview": ".agent/reviews/TASK-084-review-01.md",
@@ -352,7 +346,11 @@
     "backup": "thaidlt-20261024-070903.dump;125228bytes;PGDMP",
     "adminCommit": "8799f6599df7b6f7c98ed4fb6ef901cd87271dd2",
     "adminReport": ".agent/admin/TASK-087-production-report.md",
-    "productionChecks": ".agent/checks/TASK-087-checks-01.txt"
+    "productionChecks": ".agent/checks/TASK-087-checks-01.txt",
+    "operationalReview": ".agent/reviews/TASK-087-review-01.md",
+    "operationalVerdict": "PASS",
+    "operationalReviewCommit": "78c96eb33345b73993474279a5c90dbe91597f59",
+    "productionAcceptedAt": "2026-10-24T07:17:50.935393+00:00"
   },
   "localValidationDatabase": {
     "port": 54329,
@@ -361,5 +359,5 @@
     "envFileChanged": false,
     "reuse": ".local-content/task085-root-env.mjs.txt via node --env-file=.env --input-type=module; never print URL"
   },
-  "nextTask": "TASK-072"
+  "nextTask": null
 }

@@ -1,6 +1,6 @@
 id: TASK-087
 title: Publish accepted bilingual native Telegram teaching
-status: REVIEW
+status: ACCEPTED
 owner_role: Admin
 depends_on:
   - TASK-086
@@ -44,3 +44,11 @@ rollback: Quiesce writers then atomic switch to fully staged verified accepted T
 
 admin_commit: 8799f6599df7b6f7c98ed4fb6ef901cd87271dd2
 authoritative_checks: .agent/checks/TASK-087-checks-01.txt
+
+accepted_commit: 8799f6599df7b6f7c98ed4fb6ef901cd87271dd2
+review_file: .agent/reviews/TASK-087-review-01.md
+review_verdict: PASS
+review_commit: 78c96eb33345b73993474279a5c90dbe91597f59
+production_deployed: true
+release_tag: thaidlt-bilingual-chat-20261024
+accepted_at: 2026-10-24T07:17:50.935393+00:00
