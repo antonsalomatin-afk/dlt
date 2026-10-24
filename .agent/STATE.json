@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "Resource checkpoint; TASK085 source committed on codex/task-085 but NOT accepted or merged. Root authoritative daily concurrency failure retained; review not finalized. No new Telegram UI or deployment. Original three untracked preserved. Resume85 before86; no reset credit authorization.",
+  "notes": "User resumed. Diagnose retained authoritative daily concurrency500 before TASK085 acceptance, then TASK086 spoiler cards and TASK087 publication. Preserve95% ceiling and stop/checkpoint early enough; no credits.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,18 +94,18 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 100,
-    "latestObservedWeeklyUsedPercent": 28,
+    "latestObservedUsedPercent": 0,
+    "latestObservedWeeklyUsedPercent": 0,
     "weeklyWindowMinutes": 10080,
-    "weeklyResetsAt": "2026-10-29T17:14:26+00:00",
+    "weeklyResetsAt": "2026-10-31T06:00:25+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-23T15:37:07.226772+00:00",
+    "checkedAt": "2026-10-24T06:00:49.534580+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
-    "sessionResetsAt": "2026-10-23T12:59:03+00:00",
-    "observationNote": "Last direct tool call returned100% after prior90% observation; ceiling95 exceeded. Reviewer hit workspace out-of-credits. Stop; do not redeem reset credits."
+    "sessionResetsAt": "2026-10-24T11:00:25+00:00",
+    "observationNote": "Fresh direct observation at user resume2026-10-24:0%/0%; no reset credits redeemed."
   },
-  "executionPaused": true,
-  "pauseReason": "Usage cap checkpoint: latest tool observation100% exceeds user95% ceiling; stop engineering, no reset credits redeemed.",
+  "executionPaused": false,
+  "pauseReason": null,
   "scheduledContinuations": {
     "automationId": "thaidlt-pre-reset-continuation",
     "preResetAt": "2026-09-14T07:50:06Z",
