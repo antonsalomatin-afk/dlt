@@ -94,15 +94,15 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 57,
-    "latestObservedWeeklyUsedPercent": 9,
+    "latestObservedUsedPercent": 66,
+    "latestObservedWeeklyUsedPercent": 10,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-31T06:00:25+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-24T06:58:30.052622+00:00",
+    "checkedAt": "2026-10-24T07:04:04.902958+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-24T11:00:25+00:00",
-    "observationNote": "Direct host57primary/9weekly at TASK086 review milestone; no credits."
+    "observationNote": "Direct host66primary/10weekly during TASK087 staging; no credits."
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -316,7 +316,7 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "Exact accepted release and compatible fallback archived/proven locally; Admin existing-host publication selected. Production remains f17 until cutover.",
+    "checkpoint": "Admin preflightPASS f17/threehealthyunits/onebot/19migrations/20tables/content100. Release upload hitProxmox1MiBcap; failed sequential stage commands retained, no runtime cutover/disruption. Corrected512KiB chunked transfer and exact hash reassembly in progress, then stage both compatiblefallback/newrelease. Root live verification pending.",
     "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt",
     "acceptedContentCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "contentReview": ".agent/reviews/TASK-084-review-01.md",
