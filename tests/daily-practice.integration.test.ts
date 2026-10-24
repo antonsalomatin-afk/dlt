@@ -10,6 +10,8 @@ import { createDatabaseClient } from '../packages/database/src/index.ts';
 import {
   dailyPracticeResponseSchema,
   isDailyPresentationUniqueConflict,
+  isRetryableDailyPracticeConflict,
+  retryDailyPractice,
 } from '../packages/database/src/daily-practice.ts';
 import { answerResponseSchema } from '../packages/database/src/answer.ts';
 import { parsePresentationSnapshot, snapshotQuestion } from '../packages/database/src/presentation.ts';
@@ -212,6 +214,63 @@ describe('POST /practice/daily', () => {
     expect(isDailyPresentationUniqueConflict(rejected.reason)).toBe(true);
   });
 
+  it('retries a real adapter serialization conflict at commit without losing either learner assignment', async () => {
+    const source = await database.question.findUniqueOrThrow({
+      where: { id: questionIds.first }, include: { choices: { orderBy: { key: 'asc' } } },
+    });
+    const dailyDate = new Date('2026-09-30T00:00:00.000Z');
+    const snapshot = snapshotQuestion(source);
+    const barrier = () => {
+      let resolve = () => {};
+      const promise = new Promise<void>((done) => { resolve = done; });
+      return { promise, resolve };
+    };
+    const bothRead = barrier();
+    const bothWrote = barrier();
+    const firstSettled = barrier();
+    let readers = 0;
+    let writers = 0;
+    let secondaryAttempts = 0;
+    let adapterConflicts = 0;
+    const assign = (userId: string, secondary: boolean, synchronize: boolean) => (
+      database.$transaction(async (tx) => {
+        // Both serializable transactions read the same empty predicate, then insert distinct rows.
+        expect(await tx.questionPresentation.count({ where: { dailyDate } })).toBe(synchronize ? 0 : 1);
+        if (synchronize) {
+          if (++readers === 2) bothRead.resolve();
+          await bothRead.promise;
+        }
+        await tx.questionPresentation.create({ data: {
+          userId, questionId: source.id, conceptId, dailyDate, snapshot,
+        } });
+        if (synchronize) {
+          if (++writers === 2) bothWrote.resolve();
+          await bothWrote.promise;
+          // Let the first transaction commit before the second attempts COMMIT.
+          if (secondary) await firstSettled.promise;
+        }
+      }, { isolationLevel: 'Serializable', timeout: 10_000 })
+    );
+    const first = assign(learners.primary.id, false, true).finally(() => firstSettled.resolve());
+    const second = retryDailyPractice(
+      () => assign(learners.second.id, true, ++secondaryAttempts === 1),
+      (error) => {
+        expect(error instanceof Error && error.name === 'DriverAdapterError').toBe(true);
+        const retryable = isRetryableDailyPracticeConflict(error);
+        expect(retryable).toBe(true);
+        adapterConflicts++;
+        return retryable;
+      },
+    );
+    const results = await Promise.allSettled([first, second]);
+    expect(results.map(({ status }) => status)).toEqual(['fulfilled', 'fulfilled']);
+    expect(adapterConflicts).toBe(1);
+    expect(secondaryAttempts).toBe(2);
+    expect(await database.questionPresentation.findMany({
+      where: { dailyDate }, select: { userId: true }, orderBy: { userId: 'asc' },
+    })).toEqual([learners.primary.id, learners.second.id].sort().map((userId) => ({ userId })));
+  });
+
   it('authenticates before strict query/body parsing and applies vehicle precedence after replay lookup', async () => {
     const malformed = { raw: '{', query: '?unknown=1' };
     for (const token of [undefined, 'invalid', randomBytes(32).toString('base64url')]) {
@@ -370,30 +429,34 @@ describe('POST /practice/daily', () => {
   });
 
   it('converges concurrent same-user requests and keeps different learners independent', async () => {
-    requestInstant = new Date('2026-10-10T12:00:00.000Z');
-    injectedOffset = 2;
-    const concurrent = await Promise.all(Array.from({ length: 12 }, () => daily(learners.primary.token)));
-    expect(concurrent.map(({ statusCode }) => statusCode)).toEqual(Array.from({ length: 12 }, () => 200));
-    const parsed = concurrent.map((response) => dailyPracticeResponseSchema.parse(response.json()));
-    expect(new Set(parsed.map(({ presentationId }) => presentationId)).size).toBe(1);
-    expect(new Set(parsed.map(({ question }) => question.id))).toEqual(new Set([questionIds.last]));
-    expect(await database.questionPresentation.count({
-      where: { userId: learners.primary.id, dailyDate: new Date('2026-10-10T00:00:00.000Z') },
-    })).toBe(1);
+    for (let iteration = 0; iteration < 10; iteration++) {
+      const firstDate = new Date(Date.UTC(2026, 9, 10 + iteration * 2));
+      const secondDate = new Date(firstDate.getTime() + 86_400_000);
+      requestInstant = new Date(firstDate.getTime() + 43_200_000);
+      injectedOffset = 2;
+      const concurrent = await Promise.all(Array.from({ length: 12 }, () => daily(learners.primary.token)));
+      expect(concurrent.map(({ statusCode }) => statusCode)).toEqual(Array.from({ length: 12 }, () => 200));
+      const parsed = concurrent.map((response) => dailyPracticeResponseSchema.parse(response.json()));
+      expect(new Set(parsed.map(({ presentationId }) => presentationId)).size).toBe(1);
+      expect(new Set(parsed.map(({ question }) => question.id))).toEqual(new Set([questionIds.last]));
+      expect(await database.questionPresentation.count({
+        where: { userId: learners.primary.id, dailyDate: firstDate },
+      })).toBe(1);
 
-    requestInstant = new Date('2026-10-11T12:00:00.000Z');
-    const [primary, second] = await Promise.all([
-      daily(learners.primary.token),
-      daily(learners.second.token),
-    ]);
-    expect(primary.statusCode).toBe(200);
-    expect(second.statusCode).toBe(200);
-    const primaryBody = dailyPracticeResponseSchema.parse(primary.json());
-    const secondBody = dailyPracticeResponseSchema.parse(second.json());
-    expect(primaryBody.presentationId).not.toBe(secondBody.presentationId);
-    expect(await database.questionPresentation.count({
-      where: { dailyDate: new Date('2026-10-11T00:00:00.000Z') },
-    })).toBe(2);
+      requestInstant = new Date(secondDate.getTime() + 43_200_000);
+      const [primary, second] = await Promise.all([
+        daily(learners.primary.token),
+        daily(learners.second.token),
+      ]);
+      expect(primary.statusCode).toBe(200);
+      expect(second.statusCode).toBe(200);
+      const primaryBody = dailyPracticeResponseSchema.parse(primary.json());
+      const secondBody = dailyPracticeResponseSchema.parse(second.json());
+      expect(primaryBody.presentationId).not.toBe(secondBody.presentationId);
+      expect(await database.questionPresentation.count({
+        where: { dailyDate: secondDate },
+      })).toBe(2);
+    }
   }, 30_000);
 
   it('returns exact private fields and fails closed on a corrupt saved assignment without unrelated writes', async () => {

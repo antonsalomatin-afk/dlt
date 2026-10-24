@@ -195,4 +195,25 @@ describe('daily practice conflict and retry boundaries', () => {
     expect(Array.from({ length: DAILY_PRACTICE_MAX_ATTEMPTS - 1 }, (_, index) => dailyPracticeRetryDelayMs(index + 1)))
       .toEqual([10, 20, 40, 80, 160, 250, 250]);
   });
+
+  it('recognizes only validated PostgreSQL adapter serialization and deadlock errors', () => {
+    const adapterError = (originalCode: string, kind = 'TransactionWriteConflict') => (
+      Object.assign(new Error('synthetic'), {
+        name: 'DriverAdapterError', cause: { originalCode, kind },
+      })
+    );
+    for (const code of ['40001', '40P01']) {
+      expect(isRetryableDailyPracticeConflict(adapterError(code))).toBe(true);
+    }
+    for (const value of [
+      adapterError('23505'),
+      adapterError('23503'),
+      adapterError('08006'),
+      adapterError('40001', 'UnknownNativeError'),
+      Object.assign(new Error('synthetic'), { cause: { originalCode: '40001', kind: 'TransactionWriteConflict' } }),
+      Object.assign(new Error('synthetic'), { name: 'DriverAdapterError' }),
+      { name: 'DriverAdapterError', cause: { originalCode: '40001', kind: 'TransactionWriteConflict' } },
+      error('P2010', { code: '40001' }),
+    ]) expect(isRetryableDailyPracticeConflict(value)).toBe(false);
+  });
 });

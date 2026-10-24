@@ -92,9 +92,19 @@ export function isDailyPresentationUniqueConflict(error: unknown): boolean {
     && dailyPresentationUniqueMetadataSchema.safeParse(error.meta).success;
 }
 
+const dailyPracticeAdapterConflictSchema = z.object({
+  name: z.literal('DriverAdapterError'),
+  cause: z.object({
+    originalCode: z.enum(['40001', '40P01']),
+    kind: z.literal('TransactionWriteConflict'),
+  }),
+});
+
 export function isRetryableDailyPracticeConflict(error: unknown): boolean {
   return isDailyPresentationUniqueConflict(error)
-    || (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2034');
+    || (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2034')
+    // The PostgreSQL adapter can surface a COMMIT conflict without Prisma wrapping it.
+    || (error instanceof Error && dailyPracticeAdapterConflictSchema.safeParse(error).success);
 }
 
 export function dailyPracticeRetryDelayMs(failedAttempt: number): number {
