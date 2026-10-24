@@ -1,0 +1,437 @@
+TASK-087 Admin evidence; exact release c472c06b94252f170d9971bca70d4fef322b6f6f; compatible fallback d54f2d60252830d850b70b5803d6a35aa6a0a571. No migration/data/configuration action authorized.
+
+2026-10-24T07:01:21.296280+00:00 preflight
+2026-10-24T07:01:27Z
+ubuntu-apps
+/srv/thaidlt/releases/f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c
+MainPID=3770683
+NRestarts=0
+ExecMainStatus=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=
+MainPID=3770677
+NRestarts=0
+ExecMainStatus=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=
+MainPID=3770682
+NRestarts=0
+ExecMainStatus=0
+EnvironmentFiles=/etc/thaidlt/app.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/database.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/bot.env (ignore_errors=no)
+EnvironmentFiles=/etc/thaidlt/question-posts.env (ignore_errors=no)
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+DropInPaths=/etc/systemd/system/thaidlt-bot.service.d/75-question-posts.conf
+v24.22.0
+11.19.0
+600 root root /etc/thaidlt/app.env
+600 root root /etc/thaidlt/database.env
+600 root root /etc/thaidlt/bot.env
+600 root root /etc/thaidlt/question-posts.env
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       1.2T   20G  1.2T   2% /
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+LISTEN 0      4096       127.0.0.1:5434      0.0.0.0:*
+LISTEN 0      511        127.0.0.1:3060      0.0.0.0:*
+LISTEN 0      511        127.0.0.1:3061      0.0.0.0:*
+{"singleBotInstance": true, "protectedEnvironmentModes": true, "questionPostsFlagPreserved": true, "expectedPublicUsername": true, "shortNameUnset": true}
+{"migrations":{"completed":19,"unfinished":0,"rolledback":0},"applicationTables":20,"requiredGroupAndPrivateTablesPresent":true,"verifiedContent":[{"vehicleType":"CAR","active_verified":50,"russian":50},{"vehicleType":"MOTORCYCLE","active_verified":50,"russian":50}]}
+Protected settings/unit baseline retained without exposing values
+Running as unit: run-u79760.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 11.867s
+CPU time consumed: 4.418s
+Memory peak: 288.0K
+Memory swap peak: 0B
+Running as unit: run-u79763.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 870ms
+CPU time consumed: 206ms
+Memory peak: 1.0M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+2026-10-24T07:02:14.290280+00:00 Exact archive host+guest transfer
+{"exitcode": 0, "exited": 1, "out-data": "Guest archive verified ab6a8ab3179c5dbab91532f57fbaf596715789fa9785869421c8728f53d8bf34\n"}
+
+2026-10-24T07:02:14.974566+00:00 extract-both
+/var/tmp/TASK-087-release.tar.gz: FAILED open or read
+sha256sum: /var/tmp/TASK-087-release.tar.gz: No such file or directory
+sha256sum: WARNING: 1 listed file could not be read
+
+GUEST_EXIT 1
+
+2026-10-24T07:02:18.941000+00:00 raw-source-before-build
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+  File "/usr/lib/python3.12/pathlib.py", line 1021, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/var/tmp/TASK-087-release.tar.gz'
+
+GUEST_EXIT 1
+
+2026-10-24T07:02:23.545109+00:00 fallback-install-generate-build
+Running as unit: thaidlt-task087-rollback-install.service
+Finished with result: exit-code
+Main processes terminated with: code=exited/status=200
+Service runtime: 5ms
+CPU time consumed: 1ms
+Memory peak: 256.0K
+Memory swap peak: 0B
+
+GUEST_EXIT 200
+
+Observed staging attempt failure: Proxmox pass-stdin rejects release1053222 bytes above1MiB. No release directory created. Initial sequential local wrapper continued: source proof failed missing release archive; fallback transient install failed status200 absent WorkingDirectory. Current f17 runtime untouched. Corrected transfer to512KiB chunks and exact reassembly/hash; retries only after observed guest completion.
+2026-10-24T07:03:15.395625+00:00 Exact archive host+guest chunked transfer
+{"exitcode": 0, "exited": 1, "out-data": "Guest exact archive assembled 3646b0301368469e54cafa0eb2c2bd365bd22491935c8737062230183602dca7; bytes 1053222\n"}
+
+2026-10-24T07:03:31.559829+00:00 extract-both-corrected
+/var/tmp/TASK-087-release.tar.gz: OK
+/var/tmp/TASK-087-rollback.tar.gz: OK
+
+GUEST_EXIT 0
+
+2026-10-24T07:03:36.417399+00:00 raw-source-before-build-corrected
+{"runtime": "release", "allRawInstalledSourceFilesExact": 657, "archiveSha256": "3646b0301368469e54cafa0eb2c2bd365bd22491935c8737062230183602dca7"}
+{"runtime": "rollback", "allRawInstalledSourceFilesExact": 651, "archiveSha256": "ab6a8ab3179c5dbab91532f57fbaf596715789fa9785869421c8728f53d8bf34"}
+
+GUEST_EXIT 0
+
+2026-10-24T07:03:40.745787+00:00 fallback-install-generate-build-corrected
+Scope: all 6 workspace projects
+â Lockfile passes supply-chain policies (verified 9d ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +382
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+   â­ââââââââââââââââââââââââââââââââââââââââââââ®
+   â                                           â
+   â   Update available! 11.19.0 â 12.15.0.    â
+   â   Changelog: https://pnpm.io/v/12.15.0    â
+   â   To update, run: pnpm add -g @pnpm/exe   â
+   â                                           â
+   â°ââââââââââââââââââââââââââââââââââââââââââââ¯
+
+Progress: resolved 382, reused 0, downloaded 0, added 0
+Progress: resolved 382, reused 10, downloaded 0, added 0
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/thaidlt/.local/share/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Progress: resolved 382, reused 381, downloaded 0, added 7
+Progress: resolved 382, reused 382, downloaded 0, added 127
+Progress: resolved 382, reused 382, downloaded 0, added 253
+Progress: resolved 382, reused 382, downloaded 0, added 346
+Progress: resolved 382, reused 382, downloaded 0, added 380
+Progress: resolved 382, reused 382, downloaded 0, added 381
+Progress: resolved 382, reused 382, downloaded 0, added 382
+Progress: resolved 382, reused 382, downloaded 0, added 382, done
+.../node_modules/prisma preinstall$ node scripts/preinstall-entry.js
+.../node_modules/prisma preinstall: Done
+
+devDependencies:
++ @eslint/js 10.0.1
++ @playwright/test 1.63.0
++ @types/node 24.13.3
++ @types/node-fetch 2.6.13
++ @types/pg 8.23.1
++ embedded-postgres 18.4.0-beta.17
++ eslint 10.10.0
++ node-fetch 2.7.0
++ pg 8.23.0
++ prisma 7.10.0
++ typescript 5.9.3
++ typescript-eslint 8.69.0
++ vitest 5.0.0
++ zod 4.5.4
+
+Done in 20.9s using pnpm v11.19.0
+
+â Generated Prisma Client (7.10.0) to ./packages/database/generated in 852ms
+
+â² Next.js 16.3.5 (Turbopack)
+â Running next.config.ts took 748ms
+
+  Creating an optimized production build ...
+â Compiled successfully in 28.1s
+  Running TypeScript ...
+  Finished TypeScript in 16.0s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/3) ...
+â Generating static pages using 3 workers (3/3) in 375ms
+  Finalizing page optimization ...
+
+Route (app)
+â â /
+â â /_not-found
+
+
+â  (Static)  prerendered as static content
+
+Accepted native release frozen install, generation and build PASS; migration/current runtime not changed yet.
+Running as unit: thaidlt-task087-rollback-install.service
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts generate
+.env not found. Continuing without it.
+Loaded Prisma config from packages/database/prisma.config.ts.
+
+Prisma schema loaded from packages/database/prisma/schema.prisma.
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 1min 1.458s
+CPU time consumed: 23.813s
+Memory peak: 3.6M
+Memory swap peak: 0B
+Running as unit: thaidlt-task087-rollback-build.service
+$ pnpm --filter @thai-dlt/web build
+$ next build
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 1min 3.792s
+CPU time consumed: 50.661s
+Memory peak: 2.3M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-24T07:06:06.283900+00:00 release-install-generate-build
+Scope: all 6 workspace projects
+â Lockfile passes supply-chain policies (verified 9d ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +382
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 382, reused 0, downloaded 0, added 0
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/thaidlt/.local/share/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Progress: resolved 382, reused 382, downloaded 0, added 10
+Progress: resolved 382, reused 382, downloaded 0, added 309
+Progress: resolved 382, reused 382, downloaded 0, added 380
+Progress: resolved 382, reused 382, downloaded 0, added 381
+Progress: resolved 382, reused 382, downloaded 0, added 382
+Progress: resolved 382, reused 382, downloaded 0, added 382, done
+.../node_modules/prisma preinstall$ node scripts/preinstall-entry.js
+.../node_modules/prisma preinstall: Done
+
+devDependencies:
++ @eslint/js 10.0.1
++ @playwright/test 1.63.0
++ @types/node 24.13.3
++ @types/node-fetch 2.6.13
++ @types/pg 8.23.1
++ embedded-postgres 18.4.0-beta.17
++ eslint 10.10.0
++ node-fetch 2.7.0
++ pg 8.23.0
++ prisma 7.10.0
++ typescript 5.9.3
++ typescript-eslint 8.69.0
++ vitest 5.0.0
++ zod 4.5.4
+
+Done in 14.5s using pnpm v11.19.0
+
+â Generated Prisma Client (7.10.0) to ./packages/database/generated in 450ms
+
+â² Next.js 16.3.5 (Turbopack)
+â Running next.config.ts took 462ms
+
+  Creating an optimized production build ...
+â Compiled successfully in 22.6s
+  Running TypeScript ...
+  Finished TypeScript in 10.3s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/3) ...
+â Generating static pages using 3 workers (3/3) in 305ms
+  Finalizing page optimization ...
+
+Route (app)
+â â /
+â â /_not-found
+
+
+â  (Static)  prerendered as static content
+
+Accepted native release frozen install, generation and build PASS; migration/current runtime not changed yet.
+Running as unit: thaidlt-task087-release-install.service
+$ pnpm prisma generate
+$ node --env-file-if-exists=.env node_modules/prisma/build/index.js --config packages/database/prisma.config.ts generate
+.env not found. Continuing without it.
+Loaded Prisma config from packages/database/prisma.config.ts.
+
+Prisma schema loaded from packages/database/prisma/schema.prisma.
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 44.171s
+CPU time consumed: 17.078s
+Memory peak: 3.4M
+Memory swap peak: 0B
+Running as unit: thaidlt-task087-release-build.service
+$ pnpm --filter @thai-dlt/web build
+$ next build
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 48.296s
+CPU time consumed: 44.711s
+Memory peak: 2.5M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-24T07:07:56.709183+00:00 raw-source-after-both-builds
+{"runtime": "release", "allRawInstalledSourceFilesExact": 657, "archiveSha256": "3646b0301368469e54cafa0eb2c2bd365bd22491935c8737062230183602dca7"}
+{"runtime": "rollback", "allRawInstalledSourceFilesExact": 651, "archiveSha256": "ab6a8ab3179c5dbab91532f57fbaf596715789fa9785869421c8728f53d8bf34"}
+{"schemaAllMigrationsDependencyContractUnchanged": true, "comparedInstalledFiles": 29}
+
+GUEST_EXIT 0
+
+2026-10-24T07:08:14.917396+00:00 read-only-teaching-both-built-runtimes
+{"readOnlyTransaction":true,"exactSourceAndAcceptedStemMatches":100,"enrichedSnapshotsInMemoryOnly":100,"perVehicle":{"CAR":50,"MOTORCYCLE":50},"russianChoices":400,"boundedStatuteExamples":2,"noBankOrHistoryWrites":true}
+{"readOnlyTransaction":true,"exactSourceAndAcceptedStemMatches":100,"enrichedSnapshotsInMemoryOnly":100,"perVehicle":{"CAR":50,"MOTORCYCLE":50},"russianChoices":400,"boundedStatuteExamples":2,"noBankOrHistoryWrites":true}
+Running as unit: run-u79788.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 1.707s
+CPU time consumed: 634ms
+Memory peak: 1.6M
+Memory swap peak: 0B
+Running as unit: run-u79789.service; invocation ID: c14a9738362741658250da8d3f22b306
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 524ms
+CPU time consumed: 562ms
+Memory peak: 256.0K
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+Staging transport note: one exec-status transport error occurred in each owned fallback/release staging PID; same original PID was polled until actual guest exit0. No duplicated install/build. Optional read-only concurrent stage-status start calls returned transport failure, so no results claimed; authoritative owned staging output was recovered.
+
+2026-10-24T07:08:52.682210+00:00 publication-shell-syntax
+
+GUEST_EXIT 0
+
+2026-10-24T07:08:59.827354+00:00 guarded-backup-publication-final-probes
+Result=success
+ExecMainStartTimestamp=Sat 2026-10-24 07:09:02 UTC
+ExecMainExitTimestamp=Sat 2026-10-24 07:09:06 UTC
+ExecMainStatus=0
+thaidlt-20261024-070903.dump 125228 bytes
+{"backupPath": "/srv/thaidlt-db/dumps/thaidlt-20261024-070903.dump", "bytes": 125228, "customPGDMPHeader": true, "start": "Sat 2026-10-24 07:09:02 UTC", "completed": "Sat 2026-10-24 07:09:06 UTC", "recordedAt": "2026-10-24T07:09:06.912347+00:00"}
+quiesced:2026-10-24T07:09:07Z
+{"phase":"before","fullApplicationTables":20,"tableNames":["AnswerAttempt","Category","ChatQuizSession","Concept","ConceptLearningState","DailyReminderDelivery","ExamQuestion","ExamQuestionReport","ExamSession","Favorite","GroupQuizRound","GroupQuizScope","GroupQuizVote","Question","QuestionChoice","QuestionPresentation","QuestionReport","ReminderSummaryDelivery","Session","User"],"completedMigrations":19,"unfinished":0,"baselineRetained":true,"noSchemaOrDataMutation":true}
+before-switch:2026-10-24T07:09:07Z
+after-atomic-switch:2026-10-24T07:09:07Z
+{"phase":"after-switch-before-restart","all20FullTableFingerprintsEqual":true,"noFieldExclusions":true,"all19FullMigrationRowsUnchanged":true,"noMigrationDeployOrDDL":true,"existingGroupAndPrivateHistoryRetained":true}
+preserved-before-writers:2026-10-24T07:09:08Z
+MainPID=708500
+NRestarts=0
+ExecMainStatus=0
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+thaidlt-web actualCwd=/srv/thaidlt/releases/c472c06b94252f170d9971bca70d4fef322b6f6f/apps/web
+MainPID=708495
+NRestarts=0
+ExecMainStatus=0
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+thaidlt-api actualCwd=/srv/thaidlt/releases/c472c06b94252f170d9971bca70d4fef322b6f6f
+MainPID=708496
+NRestarts=0
+ExecMainStatus=0
+User=thaidlt
+Group=thaidlt
+ActiveState=active
+SubState=running
+thaidlt-bot actualCwd=/srv/thaidlt/releases/c472c06b94252f170d9971bca70d4fef322b6f6f
+/srv/thaidlt/releases/c472c06b94252f170d9971bca70d4fef322b6f6f
+600 root root /etc/thaidlt/app.env
+600 root root /etc/thaidlt/database.env
+600 root root /etc/thaidlt/bot.env
+600 root root /etc/thaidlt/question-posts.env
+Simple group runtime activated; all20 application tables and19 migration rows unchanged. No migration command, DDL, content/config write or forced interaction.
+{"protectedArtifactPaths": ["/var/tmp/TASK-087-preservation-before.json", "/var/tmp/TASK-087-preservation-after.json", "/var/tmp/TASK-087-migrations-before.json", "/var/tmp/TASK-087-migrations-after.json"], "beforeSwitchAfterOrderVerified": true, "backupPrecedesSwitch": true, "switchUtc": "2026-10-24T07:09:07.885483+00:00"}
+2026-10-24T07:09:13Z
+/srv/thaidlt/releases/c472c06b94252f170d9971bca70d4fef322b6f6f
+{"url": "https://dlt.thauto.app/", "status": 200, "cacheControl": "s-maxage=31536000"}
+{"liveCompactShell": true, "oldMarketingHeadlineAbsent": true, "oldRoadHeroAbsent": true}
+{"url": "https://tele.thauto.app/me", "status": 401, "cacheControl": "no-store"}
+{"url": "http://127.0.0.1:3061/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"url": "http://127.0.0.1:3061/me", "status": 401, "cacheControl": "no-store"}
+{"url": "https://tele.thauto.app/not-a-route", "status": 404, "cacheControl": ""}
+{"url": "https://tele.thauto.app/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"url": "https://dlt.thauto.app/practice/presentation", "status": 401, "cacheControl": "no-store"}
+{"singleBotInstance": true, "dailyQuestionPostsEnabled": true, "publicBotUsernameExpected": true, "shortNameUnset": true, "failureMessagesRecent3Minutes": 0}
+{"username":"thauto_dlt_bot","hasMainWebApp":true,"canJoinGroups":true,"webhookConfigured":false,"pendingUpdateCount":0,"miniAppUrlExpected":true}
+Native rollout compact UI, protected routes, unchanged content and enabled single-bot checks PASS; no forced user interaction.
+{"approvedRichPrivateAndGroupHandlersInstalled": true, "perLineSpoilersAndExpandableExplanations": true, "sameScopeEphemeralVoterReceiver": true, "ownAnswerExplainRecoveryInstalled": true, "normalUpdateSubscriptionPreserved": true}
+{"exactNativeHandlersInstalled": true, "allowedUpdates": ["message", "callback_query", "poll_answer"], "dropPendingUpdatesAbsent": true, "actualProcessWorkingDirectoriesMatchRelease": true, "runtimeProbeDidNotCallGetUpdates": true}
+{"migrations":{"completed":19,"unfinished":0},"nativeMigrationFinishedExactlyOnce":true,"currentNativeSessionCount":2,"groupMigrationFinishedExactlyOnce":true,"postgresVersion":"18.6 (Debian 18.6-1.pgdg13+2)"}
+{"allProtectedSettingsAndUnitsByteUnchanged": true, "rootRoot0600Preserved": true}
+{"readOnlyTransaction":true,"exactSourceAndAcceptedStemMatches":100,"enrichedSnapshotsInMemoryOnly":100,"perVehicle":{"CAR":50,"MOTORCYCLE":50},"russianChoices":400,"boundedStatuteExamples":2,"noBankOrHistoryWrites":true}
+{"runtime": "release", "allRawInstalledSourceFilesExact": 657, "archiveSha256": "3646b0301368469e54cafa0eb2c2bd365bd22491935c8737062230183602dca7"}
+{"runtime": "rollback", "allRawInstalledSourceFilesExact": 651, "archiveSha256": "ab6a8ab3179c5dbab91532f57fbaf596715789fa9785869421c8728f53d8bf34"}
+{"schemaAllMigrationsDependencyContractUnchanged": true, "comparedInstalledFiles": 29}
+TASK087 guarded runtime publication and final probes PASS
+Running as unit: run-u79792.service; invocation ID: 63194d8eac8943c08ce3d092da2f59c5
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 317ms
+CPU time consumed: 236ms
+Memory peak: 256.0K
+Memory swap peak: 0B
+Running as unit: run-u79793.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 181ms
+CPU time consumed: 160ms
+Memory peak: 3.3M
+Memory swap peak: 0B
+Running as unit: run-u79794.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 760ms
+CPU time consumed: 198ms
+Memory peak: 2.8M
+Memory swap peak: 0B
+Running as unit: run-u79795.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 154ms
+CPU time consumed: 155ms
+Memory peak: 3.6M
+Memory swap peak: 0B
+Running as unit: run-u79796.service; invocation ID: 264395019f1a43158c92cd616141e92f
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 626ms
+CPU time consumed: 767ms
+Memory peak: 256.0K
+Memory swap peak: 0B
+
+GUEST_EXIT 0
