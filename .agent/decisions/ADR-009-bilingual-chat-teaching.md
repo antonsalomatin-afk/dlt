@@ -1,6 +1,6 @@
 # ADR-009 — Reviewed bilingual teaching and personal group explanations
 
-Status: Proposed; implementation acceptance requires independent review in TASK-085/086.
+Status: Accepted for loader and practice snapshot enrichment (TASK-085 independent PASS); Telegram delivery remains proposed until TASK-086 implementation/review.
 Date: 2026-10-23
 
 ## Owner-approved behavior
@@ -17,7 +17,7 @@ Enrich only newly created immutable presentation snapshots for exact eligible so
 
 Extend strict snapshot version1 with optional validated teaching metadata and provenance, preserving legacy snapshots. Accepted Russian choices/explanation may be copied into their existing snapshot translation fields; hidden teaching carries bilingual distractor/safety notes, source guidance and pack hash. Do not add teaching/correctness/explanations to pre-answer HTTP question DTOs. Existing post-answer response may combine the teaching with its explanation/trap fields without changing scoring/authentication semantics; any DTO shape change requires explicit task coverage. Mock-exam timing, secrecy, option mapping and results remain unchanged.
 
-TASK-085 keeps direct snapshotQuestion(source) calls un-enriched by default because exam creation shares that function. selectPracticeQuestion explicitly opts into teaching for new practice/daily/private/group presentations. Exam callers and their snapshot payloads remain untouched; source bank and historical snapshot preservation are independent guarantees.
+TASK-085 keeps direct snapshotQuestion(source) calls un-enriched by default because exam creation shares that function. Practice selection, new daily selection and mistake retry explicitly opt into teaching. Exam callers and their snapshot payloads remain untouched; source bank and historical snapshot preservation are independent guarantees.
 
 ## Telegram formatting
 

@@ -170,4 +170,7 @@ Potential scope:
 
 - TASK-084 — ACCEPTED — all100 bilingual teaching entries and400 RU choices independently reviewed;100-entry hash manifest and authoritative gates PASS. Two bounded §33 examples; implementation/publication next.
 
-- TASK-085 — BUILDING — reviewed bilingual loader and exact-source immutable snapshot enrichment; preserve bank/history and pre-answer secrecy.
+- TASK-085 — ACCEPTED — reviewed static teaching loader and exact-source new practice/daily/retry/chat snapshot enrichment; full gates and independent PASS, no bank/history/exam change.
+
+- TASK-086 — PLANNED — per-line EN/RU spoiler Telegram cards, native A-D polls and personal post-answer group explanations; see ADR009/deliveryplan.
+- TASK-087 — PLANNED — exact bilingual teaching release publication on established hosts, preservation checks and independent operations PASS.

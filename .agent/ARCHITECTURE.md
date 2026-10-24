@@ -317,3 +317,7 @@ A future ADR may select:
 - managed Postgres.
 
 No production deployment without Product Owner approval.
+
+## Accepted reviewed practice teaching snapshots
+
+TASK-084 content and TASK-085 server loader validate the shipped bilingual teaching pack against canonical source/pack hashes and the actual independent100-entry manifest. Only exact eligible source matches enrich new practice/daily/retry/private/group snapshots; original bank and history remain untouched. Hidden teaching is never part of a pre-answer HTTP DTO. Direct snapshot creation used by exams stays un-enriched. ADR-009 defines the boundary; Telegram rich rendering and personal group explanations require TASK-086, followed by separate TASK-087 publication.

@@ -3,9 +3,9 @@
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
   "currentTask": "TASK-085",
-  "lastAcceptedTask": "TASK-084",
-  "lastAcceptedCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
-  "status": "REVIEW",
+  "lastAcceptedTask": "TASK-085",
+  "lastAcceptedCommit": "57732549f90a52d5b9aca7ed6579471477c20f74",
+  "status": "ACCEPTED",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "User resumed. Diagnose retained authoritative daily concurrency500 before TASK085 acceptance, then TASK086 spoiler cards and TASK087 publication. Preserve95% ceiling and stop/checkpoint early enough; no credits.",
+  "notes": "TASK085 accepted after diagnosed adapter conflict correction, fresh full gates and independent PASS; selectTASK086 next. No production deployment or forcedsend in84/85.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,15 +94,15 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 0,
-    "latestObservedWeeklyUsedPercent": 0,
+    "latestObservedUsedPercent": 31,
+    "latestObservedWeeklyUsedPercent": 5,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-31T06:00:25+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-24T06:00:49.534580+00:00",
+    "checkedAt": "2026-10-24T06:30:34.364814+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-24T11:00:25+00:00",
-    "observationNote": "Fresh direct observation at user resume2026-10-24:0%/0%; no reset credits redeemed."
+    "observationNote": "Direct host limits observed31percent primary/5weekly at TASK085 acceptance milestone; no credits redeemed."
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -301,7 +301,7 @@
   },
   "bilingualChatTeaching": {
     "task": "TASK-084",
-    "status": "SNAPSHOT_REVIEW",
+    "status": "SNAPSHOT_ACCEPTED",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
@@ -316,7 +316,7 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "Fresh Supervisor full gates PASS lint/typecheck/375unit/238integration/build/diff on source57732549. Independent source review01 next; prior failed gate retained.",
+    "checkpoint": "Reviewed100-entry content and source-matching immutable snapshot enrichment accepted; raw adapter commit-time serialization conflict diagnosed and narrowly retried within existing bounds. New practice/daily/retry/chat RU fields/hidden teaching verified; exam default/bank/history preserved. PendingTASK086 per-line rich Telegram cards+personal group feedback, thenTASK087 exact existing-host rollout. Production remains f17; no new bot rendering deployed.",
     "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt",
     "acceptedContentCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "contentReview": ".agent/reviews/TASK-084-review-01.md",
@@ -327,12 +327,19 @@
     "snapshotTask": "TASK-085",
     "snapshotBuilderCommit": "f3a17d39f58457b297b68162ab3be7aaa8282a20",
     "snapshotChecks": ".agent/checks/TASK-085-checks-02.txt",
-    "snapshotFixCommit": "57732549f90a52d5b9aca7ed6579471477c20f74"
+    "snapshotFixCommit": "57732549f90a52d5b9aca7ed6579471477c20f74",
+    "snapshotAcceptedCommit": "57732549f90a52d5b9aca7ed6579471477c20f74",
+    "snapshotReview": ".agent/reviews/TASK-085-review-01.md",
+    "snapshotReviewCommit": "888d94db44032f67a0c6562a25238357fd068d9d",
+    "snapshotVerdict": "PASS",
+    "snapshotAcceptedAt": "2026-10-24T06:30:34.098146+00:00"
   },
   "localValidationDatabase": {
     "port": 54329,
-    "reason": "Windows excluded55378-55477 contains55432",
+    "scope": "same owned local test cluster; process-only DATABASE_URL override",
+    "reason": "Windows excluded TCP range55378-55477 contains original55432",
     "envFileChanged": false,
-    "override": "process-only DATABASE_URL.port; same owned local cluster; .local-content/task085-root-env.mjs.txt"
-  }
+    "reuse": ".local-content/task085-root-env.mjs.txt via node --env-file=.env --input-type=module; never print URL"
+  },
+  "nextTask": "TASK-086"
 }
