@@ -1,0 +1,48 @@
+id: TASK-086
+title: Publish bilingual teaching as native Telegram chat quizzes
+status: READY
+owner_role: Builder
+depends_on:
+  - TASK-085
+adr: .agent/decisions/ADR-009-bilingual-chat-teaching.md
+objective: Implement the approved per-line hidden Russian translation and detailed personal post-answer explanation in private and group native quizzes, preserving asynchronous practice.
+acceptance:
+  - For snapshots with accepted teaching, send full English question and four English choices as ordinary messages with each Russian counterpart covered by its own spoiler. Native quiz uses exactly A-D in immutable choice order, one correct option, unchanged no-revote/no-shuffle flags. English primary regardless EN/RU preference in this approved bilingual mode; never change saved settings. Legacy/unrelated coherent monolingual fallback and validated optional image remain.
+  - Use typed Telegram message entities with bounded full-text chunking, valid UTF-16 offsets and no broken surrogate pairs/entities. Preserve all text and entity coverage across chunks, disable link previews for teaching sources and never interpolate untrusted HTML. Rich pre-answer messages contain only question/options/translations, never correctness, explanations, hidden teaching or source notes that reveal an answer.
+  - After private committed answer send full correct/incorrect, correct answer, explanation, actual distractor analysis, practical safety reasoning and DLT guidance/page/link. English primary with Russian spoilers, expandable explanation blocks where supported; optional actual statute shows title/section/source/link/summary and unofficial-English label, no invented law for null. Preserve Next and /quiz feedback recovery and old snapshot behavior.
+  - After committed group vote deliver the same full explanation only to that real member as ephemeral messages in the exact stored group/topic using installed typed ephemeral_message_parameters.receiver_user_id. Never broadcast a shared answer or send a direct message. Ephemeral response message_id0 is never bound as durable poll/control. Native correctness remains immediate; Next remains optional/current-member driven with no Finish, totals, wait-for-votes or contest.
+  - Include a round-bound Explain control on the durable control message. It recovers only the requesting current member's own already committed answer and stored snapshot; preserve round/group/topic/original bot message identity and bot-admin checks. Historical BOUND polls can recover after Next, without current-pointer eligibility. Anonymous/forwarded/copied/foreign-scope/unanswered/nonmember/retired or invalidated controls reveal no correctness. Recovery is read-only, no credit or answer creation. Preserve legacy f/n/r behavior.
+  - Vote claim/accounting/database failures remain fatal before polling acknowledgement as before. Rich/ephemeral delivery happens after the commit and outside precommit fatal handling; delivery failure cannot undo/double credit or stop polling as an unclaimed vote. Support explicit Explain recovery, no public/private-message fallback and no promise of guaranteed ephemeral delivery. Existing locks, duplicates, shutdown, migration invalidation and private/group dispatch remain.
+  - Tests prove all100 enriched question layouts/400 translations and exact A-D mapping; spoiler offsets, markup literals, Unicode and long chunk preservation; no pre-answer feedback leak; private full feedback/recovery; exact group receiver/topic/own-answer gating; historical Explain after Next; copied controls/other member without vote rejected; failure after durable commit/replay/rollback/retired/migration behavior and unchanged shutdown acknowledgement. Use mocks and isolated PostgreSQL only, no real Telegram send/getUpdates/second bot/synthetic signed identity.
+  - Required automated gates and independent source Reviewer PASS precede acceptance; separate TASK087 exact-release existing-host operational cycle publishes. No schema/content/source-bank/history rewrite, new provider, dependency upgrade or paid broadcast.
+files_allowed:
+  - apps/bot/src/chat-quiz-format.ts
+  - apps/bot/src/chat-quiz.ts
+  - apps/bot/src/group-chat-quiz.ts
+  - packages/database/src/group-chat-quiz.ts
+  - tests/chat-quiz-format.test.ts
+  - tests/chat-quiz.test.ts
+  - tests/chat-quiz.integration.test.ts
+  - tests/group-chat-quiz.test.ts
+  - tests/group-chat-quiz.integration.test.ts
+  - README.md
+  - .local-content/task086*
+  - .local-content/TASK-086*
+files_forbidden:
+  - apps/web/**
+  - apps/api/**
+  - packages/database/prisma/**
+  - content/**
+  - .env
+  - pnpm-lock.yaml
+  - .agent/STATE.json
+  - .agent/tasks/**
+required_checks:
+  - pnpm lint
+  - pnpm typecheck
+  - pnpm test --maxWorkers=4
+  - pnpm db:ready
+  - pnpm test:integration
+  - pnpm build
+  - git diff --check
+scope_rule: Ask Supervisor before expanding files. Preserve original three untracked starter files; use .mjs.txt for ignored JavaScript helpers. Test database uses process-only DATABASE_URL port54329 until Windows exclusions change; never print credentials or edit.env/reset data. Stop after Builder commit.

@@ -2,10 +2,10 @@
   "project": "ThaiDLT",
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
-  "currentTask": "TASK-085",
+  "currentTask": "TASK-086",
   "lastAcceptedTask": "TASK-085",
   "lastAcceptedCommit": "57732549f90a52d5b9aca7ed6579471477c20f74",
-  "status": "ACCEPTED",
+  "status": "READY",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK085 accepted after diagnosed adapter conflict correction, fresh full gates and independent PASS; selectTASK086 next. No production deployment or forcedsend in84/85.",
+  "notes": "TASK085 accepted and pushed after authoritative full gates and independentPASS; select approved TASK086 Telegram per-line spoilers and private/group personal explanations. Production remains f17 until separate TASK087.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -300,8 +300,8 @@
     "backup": "thaidlt-20261023-030610.dump;122289bytes;PGDMP;Resultsuccess/ExecMainStatus0"
   },
   "bilingualChatTeaching": {
-    "task": "TASK-084",
-    "status": "SNAPSHOT_ACCEPTED",
+    "task": "TASK-086",
+    "status": "TELEGRAM_READY",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
@@ -316,7 +316,7 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "Reviewed100-entry content and source-matching immutable snapshot enrichment accepted; raw adapter commit-time serialization conflict diagnosed and narrowly retried within existing bounds. New practice/daily/retry/chat RU fields/hidden teaching verified; exam default/bank/history preserved. PendingTASK086 per-line rich Telegram cards+personal group feedback, thenTASK087 exact existing-host rollout. Production remains f17; no new bot rendering deployed.",
+    "checkpoint": "TASK085 accepted57732549; implement approved native Telegram bilingual cards and per-voter personal teaching, then separate087 rollout.",
     "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt",
     "acceptedContentCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "contentReview": ".agent/reviews/TASK-084-review-01.md",
@@ -332,7 +332,8 @@
     "snapshotReview": ".agent/reviews/TASK-085-review-01.md",
     "snapshotReviewCommit": "888d94db44032f67a0c6562a25238357fd068d9d",
     "snapshotVerdict": "PASS",
-    "snapshotAcceptedAt": "2026-10-24T06:30:34.098146+00:00"
+    "snapshotAcceptedAt": "2026-10-24T06:30:34.098146+00:00",
+    "telegramTask": "TASK-086"
   },
   "localValidationDatabase": {
     "port": 54329,
@@ -341,5 +342,5 @@
     "envFileChanged": false,
     "reuse": ".local-content/task085-root-env.mjs.txt via node --env-file=.env --input-type=module; never print URL"
   },
-  "nextTask": "TASK-086"
+  "nextTask": "TASK-087"
 }
