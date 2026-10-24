@@ -1,6 +1,6 @@
 id: TASK-087
 title: Publish accepted bilingual native Telegram teaching
-status: READY
+status: BUILDING
 owner_role: Admin
 depends_on:
   - TASK-086

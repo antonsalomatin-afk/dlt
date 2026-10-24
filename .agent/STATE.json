@@ -5,7 +5,7 @@
   "currentTask": "TASK-087",
   "lastAcceptedTask": "TASK-086",
   "lastAcceptedCommit": "fee3b5694fa8adb2fe8d4262f454c68fefc0625b",
-  "status": "READY",
+  "status": "BUILDING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -301,7 +301,7 @@
   },
   "bilingualChatTeaching": {
     "task": "TASK-087",
-    "status": "ROLLOUT_READY",
+    "status": "ROLLOUT_BUILDING",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
