@@ -172,5 +172,5 @@ Potential scope:
 
 - TASK-085 — ACCEPTED — reviewed static teaching loader and exact-source new practice/daily/retry/chat snapshot enrichment; full gates and independent PASS, no bank/history/exam change.
 
-- TASK-086 — READY — per-line EN/RU spoiler Telegram cards, native A-D polls and personal post-answer group explanations; see ADR009/deliveryplan.
+- TASK-086 — ACCEPTED — per-line EN/RU spoiler Telegram cards, native A-D polls and personal post-answer group explanations; see ADR009/deliveryplan.
 - TASK-087 — PLANNED — exact bilingual teaching release publication on established hosts, preservation checks and independent operations PASS.

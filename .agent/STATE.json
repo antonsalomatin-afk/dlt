@@ -3,9 +3,9 @@
   "workflowVersion": 1,
   "currentEpic": "Epic 10 — Production Hardening",
   "currentTask": "TASK-086",
-  "lastAcceptedTask": "TASK-085",
-  "lastAcceptedCommit": "57732549f90a52d5b9aca7ed6579471477c20f74",
-  "status": "REVIEW",
+  "lastAcceptedTask": "TASK-086",
+  "lastAcceptedCommit": "fee3b5694fa8adb2fe8d4262f454c68fefc0625b",
+  "status": "ACCEPTED",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -51,7 +51,7 @@
     "implementationStarted": true,
     "productionPostingEnabled": true
   },
-  "notes": "TASK085 accepted and pushed after authoritative full gates and independentPASS; select approved TASK086 Telegram per-line spoilers and private/group personal explanations. Production remains f17 until separate TASK087.",
+  "notes": "TASK086 source accepted after full gates and independentPASS; next established-host TASK087 deploy with compatibleTASK085 fallback, no schema/bank/history rewrite.",
   "launchCandidates": {
     "builderCommit": "65d1c1ade2c48fc4e82388db85da93faf7eee9d8",
     "status": "PUBLISHED_ACCEPTED",
@@ -94,15 +94,15 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 52,
-    "latestObservedWeeklyUsedPercent": 8,
+    "latestObservedUsedPercent": 57,
+    "latestObservedWeeklyUsedPercent": 9,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-31T06:00:25+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-24T06:47:34.744728+00:00",
+    "checkedAt": "2026-10-24T06:58:30.052622+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-24T11:00:25+00:00",
-    "observationNote": "Builder direct host usage52primary/8weekly at final feature gates; no credits."
+    "observationNote": "Direct host57primary/9weekly at TASK086 review milestone; no credits."
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -301,7 +301,7 @@
   },
   "bilingualChatTeaching": {
     "task": "TASK-086",
-    "status": "TELEGRAM_REVIEW",
+    "status": "TELEGRAM_ACCEPTED",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
@@ -316,7 +316,7 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "Fresh Supervisor full gatesPASS lint/types/377unit/242integration/build/diff on fee3b569 source; independent source review01 next. Production remains f17.",
+    "checkpoint": "Accepted native EN/RU per-line spoiler cards, immutable A-D polls, complete post-answer private teaching and own-vote personal group Explain. Full authoritative gates and independent PASS. Production remains f17 pending separate TASK087 publication; owner journeys not fabricated.",
     "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt",
     "acceptedContentCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "contentReview": ".agent/reviews/TASK-084-review-01.md",
@@ -335,7 +335,12 @@
     "snapshotAcceptedAt": "2026-10-24T06:30:34.098146+00:00",
     "telegramTask": "TASK-086",
     "telegramBuilderCommit": "fee3b5694fa8adb2fe8d4262f454c68fefc0625b",
-    "telegramChecks": ".agent/checks/TASK-086-checks-01.txt"
+    "telegramChecks": ".agent/checks/TASK-086-checks-01.txt",
+    "telegramAcceptedCommit": "fee3b5694fa8adb2fe8d4262f454c68fefc0625b",
+    "telegramReview": ".agent/reviews/TASK-086-review-01.md",
+    "telegramReviewCommit": "93f3a77e6fafbe4d3916689a3024c989c821b392",
+    "telegramVerdict": "PASS",
+    "telegramAcceptedAt": "2026-10-24T06:58:29.552168+00:00"
   },
   "localValidationDatabase": {
     "port": 54329,

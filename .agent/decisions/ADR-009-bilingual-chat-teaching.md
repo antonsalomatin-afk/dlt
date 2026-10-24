@@ -1,6 +1,6 @@
 # ADR-009 — Reviewed bilingual teaching and personal group explanations
 
-Status: Accepted for loader and practice snapshot enrichment (TASK-085 independent PASS); Telegram delivery remains proposed until TASK-086 implementation/review.
+Status: Accepted for reviewed practice snapshots and bilingual private/group Telegram teaching (TASK-085 and TASK-086 independent PASS). Production publication requires TASK-087 operational acceptance.
 Date: 2026-10-23
 
 ## Owner-approved behavior

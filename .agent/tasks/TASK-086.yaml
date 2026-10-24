@@ -1,6 +1,6 @@
 id: TASK-086
 title: Publish bilingual teaching as native Telegram chat quizzes
-status: REVIEW
+status: ACCEPTED
 owner_role: Builder
 depends_on:
   - TASK-085
@@ -49,3 +49,10 @@ scope_rule: Ask Supervisor before expanding files. Preserve original three untra
 
 builder_commit: fee3b5694fa8adb2fe8d4262f454c68fefc0625b
 builder_checks: .agent/checks/TASK-086-builder-01.txt
+
+accepted_commit: fee3b5694fa8adb2fe8d4262f454c68fefc0625b
+review_file: .agent/reviews/TASK-086-review-01.md
+review_commit: 93f3a77e6fafbe4d3916689a3024c989c821b392
+review_verdict: PASS
+authoritative_checks: .agent/checks/TASK-086-checks-01.txt
+accepted_at: 2026-10-24T06:58:29.552168+00:00
