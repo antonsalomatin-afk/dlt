@@ -1,0 +1,18 @@
+2026-10-24T06:59:31.091126+00:00 Supervisor independent local packaging proof
+{
+  "release": {
+    "path": ".local-content/TASK-087-release.tar.gz",
+    "sha": "c472c06b94252f170d9971bca70d4fef322b6f6f",
+    "sha256": "3646b0301368469e54cafa0eb2c2bd365bd22491935c8737062230183602dca7",
+    "bytes": 1053222,
+    "regularFiles": 657
+  },
+  "rollback": {
+    "path": ".local-content/TASK-087-rollback.tar.gz",
+    "sha": "d54f2d60252830d850b70b5803d6a35aa6a0a571",
+    "sha256": "ab6a8ab3179c5dbab91532f57fbaf596715789fa9785869421c8728f53d8bf34",
+    "bytes": 1040785,
+    "regularFiles": 651
+  }
+}
+PASS both archives exactly match independently generated pinned Git LF bytes; no CRLF normalization, env/untracked files excluded. Schema/all migrations/dependency contract unchanged vs prior f17. Live probes pending.

@@ -1,0 +1,43 @@
+id: TASK-087
+title: Publish accepted bilingual native Telegram teaching
+status: READY
+owner_role: Admin
+depends_on:
+  - TASK-086
+objective: Publish the exact accepted bilingual chat release on existing hosts while preserving all question bank/history/settings and a compatible application rollback.
+release_commit: c472c06b94252f170d9971bca70d4fef322b6f6f
+previous_runtime: f17b9ef8b7db1e9a69546736e0ecc26ba47ea66c
+compatible_rollback_commit: d54f2d60252830d850b70b5803d6a35aa6a0a571
+plan: .agent/admin/TASK-087-bilingual-rollout-plan.md
+authorization: Continue the existing owner-authorized deploy job for the explicitly approved per-line spoiler and personal post-answer teaching. No new host/provider/spending/credential/config edit or forced Telegram interaction.
+acceptance:
+  - Strict known-host preflight verifies actual prior runtime, three healthy unprivileged units, one long-poll bot, protected settings,19 completed migrations and20 application tables. Resolve observed drift before any mutation.
+  - Exact accepted Git archive and all raw installed source files match independently pinned Git LF bytes, including actual TASK084 teaching/review/source artifacts. Pinned frozen install, mandatory dbgenerate and production build succeed as thaidlt. Schema/all migration files and lockfile/dependency contract unchanged; no migration/seed/content overlay/reset/DDL.
+  - Stage and verify accepted TASK085 compatible fallback runtime d54f2d6 with its exact source, generated client/dependencies and successful web build BEFORE disruption. It reads saved teaching snapshots. Preserve existing f17 release too, but never blindly restore its older strict reader after enriched rows exist. No saved snapshot/history rewriting or database restore.
+  - Fresh successful PGDMP backup before cutover. Quiesce API/bot, full20table no-field-exclusion fingerprints and all19 complete migration rows before/after atomic runtime switch before restarting writers must match. Preserve all private/group answer/history/state and settings exactly.
+  - Atomic shared runtime switch, three active/running services as thaidlt, exact process CWDs/source and precisely one bot. Root0600 settings preserved. On failure quiesce writers and restore staged compatible fallback without DB action; report actual failure instead of claiming success.
+  - Read-only public compact web200, local/public protected/me and presentation401/no-store, unknown404; Telegram getMe/MainMiniApp/groupjoin/no-webhook only. No real send/poll/vote/getUpdates/secondbot/scheduler tick or synthetic signedidentity. No public/DM fallback for personal explanations.
+  - Runtime read-only inspection proves all100 active VERIFIED launch rows still source/stem exact and enrich with accepted teaching,400 Russian choices,2 bounded statute examples; source bank unchanged and50 active VERIFIED per vehicle. Inspect exact installed approved rich/private/group handler, own-vote Explain and normal update subscription.
+  - Safe committed Admin report/transcript, independent Supervisor live archive/runtime/backup/data/content/HTTP/Telegram verification and independent operational Reviewer PASS precede acceptance/main integration. Actual owner journeys remain unobserved unless separately reported.
+files_allowed:
+  - .agent/admin/TASK-087-bilingual-rollout-plan.md
+  - .agent/admin/TASK-087-production-report.md
+  - .agent/checks/TASK-087-admin-01.txt
+  - .agent/checks/TASK-087-checks-01.txt
+  - .agent/reviews/TASK-087-review-01.md
+  - .local-content/task087*
+  - .local-content/TASK-087*
+files_forbidden:
+  - apps/**
+  - packages/**
+  - content/**
+  - .env
+  - .agent/STATE.json
+  - .agent/tasks/**
+required_checks:
+  - Exact release and compatible fallback archive/source proof
+  - Pinned install/generate/build and no schema/dependency change
+  - Fresh backup/full20table and19migration preservation
+  - Supervisor independent live probes and source/content proof
+  - Independent operational review PASS
+rollback: Quiesce writers then atomic switch to fully staged verified accepted TASK085 compatible runtime; retain all data/schema. Never blindly restore old strict reader after enriched snapshots, edit history or restore DB.
