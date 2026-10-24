@@ -5,7 +5,7 @@
   "currentTask": "TASK-086",
   "lastAcceptedTask": "TASK-085",
   "lastAcceptedCommit": "57732549f90a52d5b9aca7ed6579471477c20f74",
-  "status": "BUILDING",
+  "status": "CHECKING",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -94,15 +94,15 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 47,
-    "latestObservedWeeklyUsedPercent": 7,
+    "latestObservedUsedPercent": 52,
+    "latestObservedWeeklyUsedPercent": 8,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-31T06:00:25+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-24T06:40:30.337281+00:00",
+    "checkedAt": "2026-10-24T06:47:34.744728+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-24T11:00:25+00:00",
-    "observationNote": "Direct host usage47primary/7weekly duringTASK086 Builder full gates; no reset credits redeemed."
+    "observationNote": "Builder direct host usage52primary/8weekly at final feature gates; no credits."
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -301,7 +301,7 @@
   },
   "bilingualChatTeaching": {
     "task": "TASK-086",
-    "status": "TELEGRAM_BUILDING",
+    "status": "TELEGRAM_CHECKING",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
@@ -316,7 +316,7 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "TASK086 implementation in scoped bot/DBgroup/formatter/tests paths; focused27unit+35integration andtscPASS, full Builder gates running. Root preliminary inspection aligned, independent review remains after authoritative checks. Production unchangedf17.",
+    "checkpoint": "Builder scoped feature commit fee3b569 with377unit/242integration/lint/typecheck/buildPASS. Fresh Supervisor full gates01 now run before independent source review. Production unchangedf17.",
     "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt",
     "acceptedContentCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "contentReview": ".agent/reviews/TASK-084-review-01.md",
@@ -333,7 +333,8 @@
     "snapshotReviewCommit": "888d94db44032f67a0c6562a25238357fd068d9d",
     "snapshotVerdict": "PASS",
     "snapshotAcceptedAt": "2026-10-24T06:30:34.098146+00:00",
-    "telegramTask": "TASK-086"
+    "telegramTask": "TASK-086",
+    "telegramBuilderCommit": "fee3b5694fa8adb2fe8d4262f454c68fefc0625b"
   },
   "localValidationDatabase": {
     "port": 54329,

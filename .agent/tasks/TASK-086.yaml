@@ -1,6 +1,6 @@
 id: TASK-086
 title: Publish bilingual teaching as native Telegram chat quizzes
-status: BUILDING
+status: CHECKING
 owner_role: Builder
 depends_on:
   - TASK-085
@@ -46,3 +46,6 @@ required_checks:
   - pnpm build
   - git diff --check
 scope_rule: Ask Supervisor before expanding files. Preserve original three untracked starter files; use .mjs.txt for ignored JavaScript helpers. Test database uses process-only DATABASE_URL port54329 until Windows exclusions change; never print credentials or edit.env/reset data. Stop after Builder commit.
+
+builder_commit: fee3b5694fa8adb2fe8d4262f454c68fefc0625b
+builder_checks: .agent/checks/TASK-086-builder-01.txt
