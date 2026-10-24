@@ -16,3 +16,133 @@
   }
 }
 PASS both archives exactly match independently generated pinned Git LF bytes; no CRLF normalization, env/untracked files excluded. Schema/all migrations/dependency contract unchanged vs prior f17. Live probes pending.
+
+2026-10-24T07:10:50.173641+00:00 Supervisor independent read-only checks; expected flag=true
+Local exact archive verified against pinned commit LF archive: 657 files; 0 CRLF-only conversions; all remaining bytes exact. Remote source checks bind raw archive entry bytes.
+RELEASE /srv/thaidlt/releases/c472c06b94252f170d9971bca70d4fef322b6f6f
+SOURCE_MATCH apps/bot/src/chat-quiz-format.ts
+SOURCE_MATCH packages/database/src/teaching.ts
+SOURCE_MATCH packages/database/src/content-identity.ts
+SOURCE_MATCH .agent/reviews/TASK-084-content-review-01.json
+SOURCE_MATCH content/imports/launch-20261023-bilingual-teaching.json
+SOURCE_MATCH content/imports/launch-20261016-car-candidates.json
+SOURCE_MATCH content/imports/launch-20261016-motorcycle-candidates.json
+SOURCE_MATCH content/imports/launch-20261021-russian-stems.json
+SOURCE_MATCH apps/api/src/index.ts
+SOURCE_MATCH apps/bot/src/main.ts
+SOURCE_MATCH apps/bot/src/group-chat-quiz.ts
+SOURCE_MATCH packages/database/src/group-chat-quiz.ts
+SOURCE_MATCH packages/database/prisma/migrations/20261022100000_group_chat_quiz/migration.sql
+SOURCE_MATCH apps/bot/src/question-post.ts
+SOURCE_MATCH apps/bot/src/bot.ts
+SOURCE_MATCH apps/bot/src/lifecycle.ts
+SOURCE_MATCH apps/bot/src/chat-quiz.ts
+SOURCE_MATCH packages/database/src/chat-quiz.ts
+SOURCE_MATCH packages/database/src/answer.ts
+SOURCE_MATCH packages/database/src/presentation.ts
+SOURCE_MATCH packages/database/prisma/schema.prisma
+SOURCE_MATCH packages/database/prisma/migrations/20261021140000_chat_quiz_session/migration.sql
+SOURCE_MATCH apps/web/next.config.ts
+SOURCE_MATCH apps/web/app/page.tsx
+SOURCE_MATCH apps/web/app/globals.css
+SOURCE_MATCH apps/web/app/practice.tsx
+SOURCE_MATCH apps/web/app/daily.tsx
+SOURCE_MATCH apps/web/app/app-menu.tsx
+SOURCE_MATCH apps/web/app/reminders.tsx
+SOURCE_MATCH packages/database/src/daily-practice.ts
+SOURCE_MATCH tools/content/russian-stems.ts
+SOURCE_MATCH .agent/reviews/TASK-074-translation-review-01.json
+MainPID=708500
+NRestarts=0
+User=thaidlt
+Id=thaidlt-web.service
+ActiveState=active
+SubState=running
+MainPID=708495
+NRestarts=0
+User=thaidlt
+Id=thaidlt-api.service
+ActiveState=active
+SubState=running
+MainPID=708496
+NRestarts=0
+User=thaidlt
+Id=thaidlt-bot.service
+ActiveState=active
+SubState=running
+{"scope":"runtime-public-rollout-keys","flag":"true","username":"thauto_dlt_bot","shortNamePresent":false}
+Russian stems: 0 would apply, 0 applied, 100 matched.
+{"scope":"unauthenticated-http","url":"https://dlt.thauto.app/","method":"GET","status":200,"cacheControl":"s-maxage=31536000"}
+PASS public HTML compact-app present; former marketing headline absent.
+{"scope":"unauthenticated-http","url":"https://tele.thauto.app/me","method":"GET","status":401,"cacheControl":"no-store"}
+{"scope":"unauthenticated-http","url":"http://127.0.0.1:3061/me","method":"GET","status":401,"cacheControl":"no-store"}
+{"scope":"unauthenticated-http","url":"https://tele.thauto.app/practice/presentation","method":"POST","status":401,"cacheControl":"no-store"}
+{"scope":"unauthenticated-http","url":"https://dlt.thauto.app/practice/presentation","method":"POST","status":401,"cacheControl":"no-store"}
+{"scope":"unauthenticated-http","url":"https://tele.thauto.app/not-a-route","method":"GET","status":404,"cacheControl":null}
+PASS root independent read-only release/source/service/rollout/content/HTTP verification.
+RUNTIME_CWD thaidlt-web /srv/thaidlt/releases/c472c06b94252f170d9971bca70d4fef322b6f6f/apps/web
+RUNTIME_CWD thaidlt-api /srv/thaidlt/releases/c472c06b94252f170d9971bca70d4fef322b6f6f
+RUNTIME_CWD thaidlt-bot /srv/thaidlt/releases/c472c06b94252f170d9971bca70d4fef322b6f6f
+PASS protected EnvironmentFile ownership/modes; values unread.
+PASS exactly one bot entry point; PID=708496
+{"scope":"group-schema-read-only","completedMigrations":19,"namedValidatedConstraints":13,"validUniqueIndexes":10,"requiredNonNullColumns":19,"groupCounts":{"scope":1,"round":2,"vote":4},"privateSessionCount":2}
+{"scope":"readonly-telegram-metadata","username":"thauto_dlt_bot","mainMiniAppAvailable":true,"canJoinGroups":true,"noWebhook":true}
+{"scope": "independent-all-raw-source-and-ready-build", "label": "release", "files": 657, "allBytesExact": true, "buildAndDependenciesPresent": true}
+{"scope": "independent-all-raw-source-and-ready-build", "label": "rollback", "files": 651, "allBytesExact": true, "buildAndDependenciesPresent": true}
+{"scope":"independent-readonly-runtime-enrichment","exactEligibleSourceMatches":100,"russianChoices":400,"boundedStatutes":2,"car":50,"motorcycle":50,"sourceObjectsUnmodified":true,"compatibleFallbackReadsAll100":true,"noDatabaseWrites":true}
+Running as unit: run-u79803.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 1.061s
+CPU time consumed: 1.519s
+Memory peak: 3.5M
+Memory swap peak: 0B
+Running as unit: run-u79804.service; invocation ID: fe084a37f07d418b9b590b09a3134497
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 645ms
+CPU time consumed: 986ms
+Memory peak: 512.0K
+Memory swap peak: 0B
+Running as unit: run-u79805.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 887ms
+CPU time consumed: 1.521s
+Memory peak: 3.6M
+Memory swap peak: 0B
+Traceback (most recent call last):
+  File "<stdin>", line 15, in <module>
+AssertionError
+
+GUEST_EXIT 1
+
+Root precision diagnosis after retained timeline assertion failure
+Id=thaidlt-api.service
+ActiveEnterTimestamp=Sat 2026-10-24 07:09:08.207735 UTC
+
+Id=thaidlt-bot.service
+ActiveEnterTimestamp=Sat 2026-10-24 07:09:08.289701 UTC
+after_artifact=2026-10-24 07:09:08.104487496 +0000
+
+GUEST_EXIT 0
+
+Root targeted preservation recheck after diagnosed human timestamp truncation: --timestamp=us preserves required precision; initial failed probe retained. No production change.
+{"scope": "independent-quiescent-preservation-artifacts", "all20FullTableFingerprintsEqual": true, "fieldExclusions": 0, "all19FullMigrationRowsEqual": true, "beforeSwitchAfterBeforeWritersOrderVerified": true}
+{"scope":"independent-live-immutable-bank-and-migrations","all4FullContentTablesUnchanged":true,"all19FullMigrationRowsUnchanged":true,"normalLearnerWritesNotBlocked":true}
+Running as unit: run-u79810.service
+Finished with result: success
+Main processes terminated with: code=exited/status=0
+Service runtime: 123ms
+CPU time consumed: 117ms
+Memory peak: 3.6M
+Memory swap peak: 0B
+
+GUEST_EXIT 0
+
+2026-10-24T07:12:35.727390+00:00 Root independent fresh code-only backup check
+{"scope": "independent-code-only-backup", "file": "/srv/thaidlt-db/dumps/thaidlt-20261024-070903.dump", "bytes": 125228, "PGDMP": true, "successfulBackupBeforeRuntimeActivation": true, "backupStart": "Sat 2026-10-24 07:09:02 UTC", "backupEnd": "Sat 2026-10-24 07:09:06 UTC", "runtimeActive": "Sat 2026-10-24 07:09:08 UTC"}
+
+GUEST_EXIT 0
+
+FINAL PASS Supervisor independent publication gates. Exact657+651 raw source/runtime/HTTP/Telegram metadata,100source matches/400RU/2statutes, compatible fallback reads all100, full20quiescent fingerprints/19migration rows and backup order PASS. Initial timeline assertion used human seconds precision; diagnostic actual microsecond timestamps established correct order, only targeted corrected check rerunPASS. No runtime/data change to make checks pass. Initial failure retained. No real owner journey claimed.

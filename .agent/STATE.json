@@ -5,7 +5,7 @@
   "currentTask": "TASK-087",
   "lastAcceptedTask": "TASK-086",
   "lastAcceptedCommit": "fee3b5694fa8adb2fe8d4262f454c68fefc0625b",
-  "status": "BUILDING",
+  "status": "REVIEW",
   "reviewAttempt": 0,
   "maxReviewAttempts": 3,
   "blockedReason": null,
@@ -94,15 +94,15 @@
   },
   "usagePolicy": {
     "maxSessionUsedPercent": 95,
-    "latestObservedUsedPercent": 66,
-    "latestObservedWeeklyUsedPercent": 10,
+    "latestObservedUsedPercent": 79,
+    "latestObservedWeeklyUsedPercent": 12,
     "weeklyWindowMinutes": 10080,
     "weeklyResetsAt": "2026-10-31T06:00:25+00:00",
     "windowMinutes": 300,
-    "checkedAt": "2026-10-24T07:04:04.902958+00:00",
+    "checkedAt": "2026-10-24T07:13:25.777633+00:00",
     "instruction": "User explicitly authorized continuing this five-hour window up to 95 percent. Check usage frequently and checkpoint before reaching 95 percent. Never redeem reset credits without authorization.",
     "sessionResetsAt": "2026-10-24T11:00:25+00:00",
-    "observationNote": "Direct host66primary/10weekly during TASK087 staging; no credits."
+    "observationNote": "Direct host79primary/12weekly after Root independent publication probes; no credits."
   },
   "executionPaused": false,
   "pauseReason": null,
@@ -301,11 +301,11 @@
   },
   "bilingualChatTeaching": {
     "task": "TASK-087",
-    "status": "ROLLOUT_BUILDING",
+    "status": "DEPLOYED_REVIEW",
     "ownerApproved": true,
     "selectedVariant": "PER_LINE_SPOILER",
     "preview": "C:/Users/anton/.codex/visualizations/2026/09/07/01a07afa-915a-7310-8cb4-9eeff93d2903/telegram-hidden-translations.html",
-    "productionDeployed": false,
+    "productionDeployed": true,
     "contentSourceBoundary": "Use existing reviewed DLT guide citations as guidance, not fictitious statute claims. Full choices/explanations need independent review.",
     "nextSteps": [
       "Reviewed100-question content pack",
@@ -316,7 +316,7 @@
     "builderFixCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "packSha256": "1465c7a1b6800b53a5172bf26dea7dffbc787ff6887dcd5894a9a31e23165c29",
     "pack": "content/imports/launch-20261023-bilingual-teaching.json",
-    "checkpoint": "Admin preflightPASS f17/threehealthyunits/onebot/19migrations/20tables/content100. Release upload hitProxmox1MiBcap; failed sequential stage commands retained, no runtime cutover/disruption. Corrected512KiB chunked transfer and exact hash reassembly in progress, then stage both compatiblefallback/newrelease. Root live verification pending.",
+    "checkpoint": "Admin live checks and fresh Supervisor independent probesPASS. Initial Root timeline assertion precision diagnosed:humanseconds truncated actual subsecond start; --timestamp=us proves before/switch/after/beforewriter ordering, targeted recheckPASS retained alongside failure. c472live657files/fallback651files,100source400RU2statutes andfull20/19preservation verified. Independent operationalreview01 pending.",
     "authoritativeChecks": ".agent/checks/TASK-084-checks-01.txt",
     "acceptedContentCommit": "f023ea203472cb37384a19bf2abc3659bb185c58",
     "contentReview": ".agent/reviews/TASK-084-review-01.md",
@@ -347,7 +347,12 @@
     "releaseTag": "thaidlt-bilingual-chat-20261024",
     "archiveSha256": "3646b0301368469e54cafa0eb2c2bd365bd22491935c8737062230183602dca7",
     "archiveBytes": 1053222,
-    "archiveFiles": 657
+    "archiveFiles": 657,
+    "productionReleaseCommit": "c472c06b94252f170d9971bca70d4fef322b6f6f",
+    "backup": "thaidlt-20261024-070903.dump;125228bytes;PGDMP",
+    "adminCommit": "8799f6599df7b6f7c98ed4fb6ef901cd87271dd2",
+    "adminReport": ".agent/admin/TASK-087-production-report.md",
+    "productionChecks": ".agent/checks/TASK-087-checks-01.txt"
   },
   "localValidationDatabase": {
     "port": 54329,

@@ -1,6 +1,6 @@
 id: TASK-087
 title: Publish accepted bilingual native Telegram teaching
-status: BUILDING
+status: REVIEW
 owner_role: Admin
 depends_on:
   - TASK-086
@@ -41,3 +41,6 @@ required_checks:
   - Supervisor independent live probes and source/content proof
   - Independent operational review PASS
 rollback: Quiesce writers then atomic switch to fully staged verified accepted TASK085 compatible runtime; retain all data/schema. Never blindly restore old strict reader after enriched snapshots, edit history or restore DB.
+
+admin_commit: 8799f6599df7b6f7c98ed4fb6ef901cd87271dd2
+authoritative_checks: .agent/checks/TASK-087-checks-01.txt
